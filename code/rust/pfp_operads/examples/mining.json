@@ -1,0 +1,29 @@
+{
+  "catalogue": ["carrier", "operands", "terminal"],
+  "sources": {
+    "seed_prompt": "Add every integer in input.values. Return the exact total in answer.total.",
+    "input_json": "{\"values\":\"<hidden from the miner>\"}"
+  },
+  "checker": "integer_sum_v1",
+  "answer": {
+    "operad_candidates": [
+      {
+        "id": "sum",
+        "operation": "add every member of the list",
+        "source_colours": ["IntegerList"],
+        "target_colour": "Integer",
+        "arity": 1,
+        "source": {"kind": "seed_prompt", "quote": "Add every integer in input.values"},
+        "witness_refs": ["task_result", "operands"]
+      }
+    ],
+    "focus_slots": ["operands", "terminal"],
+    "failure_triggers": ["An operand is dropped or counted twice."],
+    "l2_guidance": [
+      {"slot": "concrete_spans", "source": {"kind": "seed_prompt", "quote": "input.values"}, "guidance": "Copy the input list exactly."},
+      {"slot": "parameter_bindings", "source": {"kind": "seed_prompt", "quote": "every integer"}, "guidance": "Bind every value; use exact integers."},
+      {"slot": "instantiated_arguments", "source": {"kind": "seed_prompt", "quote": "input.values"}, "guidance": "Apply the list operation to the whole list."},
+      {"slot": "preservation_obligations", "source": {"kind": "seed_prompt", "quote": "exact total"}, "guidance": "Keep signs; never round."}
+    ]
+  }
+}

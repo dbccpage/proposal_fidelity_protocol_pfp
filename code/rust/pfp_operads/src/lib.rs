@@ -14,6 +14,9 @@
 //! * [`envelope`]: the reply envelope of the full-slot workflows (slot report, operad candidates,
 //!   DDC moves), with each candidate typed against the canon.
 //! * [`judge`]: the host's own exact answer to a finite task, compared with the reply's.
+//! * [`mining`]: the screen of a mining reply (no digits outside quotes, well-formed and grounded
+//!   candidates, guidance for every grounded slot) and signature reuse between candidate lists.
+//! * [`grounding`]: the grounded slots of a solver reply, rechecked against the task's public input.
 //! * [`host`]: the JSON entry points a workflow calls, also exposed by the `pfp_operad` binary.
 //!
 //! Every vocabulary (colours, DDC letters, failure classes, capability kinds, statuses) is read
@@ -21,10 +24,12 @@
 //! is not a proof for all terms.
 
 pub mod envelope;
+pub mod grounding;
 pub mod host;
 pub mod judge;
 pub mod laws;
 pub mod ledger;
+pub mod mining;
 pub mod term;
 
 use serde::Serialize;

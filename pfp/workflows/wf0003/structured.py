@@ -2,6 +2,7 @@
 
 from copy import deepcopy
 
+from pfp.infrastructure import operad_host
 from pfp.infrastructure.adapters.pfp_campaign import canonical
 from pfp.workflows.wf0002 import workflow as codec
 
@@ -51,12 +52,11 @@ def answer_schema(spec, required, operations):
     )
     if spec["checker"] == "integer_sum_v1":
         values = deepcopy(spec["input"]["values"])
+        # The host says which mined operations have the checker's licensed signature.
         eligible = [
-            op["id"]
-            for op in operations
-            if op["arity"] == 1
-            and op["source_colours"] == ["IntegerList"]
-            and op["target_colour"] == "Integer"
+            row["id"]
+            for row in operad_host.typing(spec["checker"], operations)
+            if row["licensed_as"]
         ]
         if not eligible:
             raise ValueError("WF3_MINED_INTEGER_LIST_OPERATION_REQUIRED")

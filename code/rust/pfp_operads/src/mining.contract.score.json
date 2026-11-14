@@ -1,0 +1,107 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/mining.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/mining.rs",
+      "language": "Rust",
+      "sha256": "a659070eb2fdbbe1e205843bb75331d0e6a80c0a34fa8abd7eb26ba5e5ee3dc8"
+    },
+    "contract_urn": "urn:pfp-operads:mining:v1",
+    "symbols": [
+      "MinedCandidate",
+      "MiningReport",
+      "mining",
+      "ReuseReport",
+      "reuse"
+    ],
+    "owned_invariants": [
+      "The screen's rules, their error codes and their order are those the pre-mining workflows applied before, so a recorded mining reply keeps its verdict.",
+      "A text with a decimal digit in any script is refused unless it is the quote of a source; texts are read in the order the reply wrote them.",
+      "A mined candidate states an arity equal to its number of source colours, quotes a source that contains the quote, and cites only catalogue slots or the task result.",
+      "Guidance names each grounded slot of the checker exactly once and every guidance row quotes a source.",
+      "Each candidate is located by pointer, linked to the first candidate equal to it in every field, and typed and licensed as in the envelope.",
+      "reuse lists, in emitted order, the emitted records whose (source colours, target colour, integer arity) signature a mined record also has; a record without a typed signature matches nothing."
+    ],
+    "boundaries": [
+      "A screened candidate is unverified: the screen reads form, not meaning.",
+      "The digit screen does not catch a number written in words.",
+      "Reply schema validation happens before this call and is not repeated."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/mining.rs",
+      "language": "Rust",
+      "sha256": "a659070eb2fdbbe1e205843bb75331d0e6a80c0a34fa8abd7eb26ba5e5ee3dc8"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, vocabularies from the canon, exact integers, no unwrap or direct indexing.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "No arithmetic. Digits are the Unicode decimal digits of the regex crate, the same class the earlier host used. The old Python screen and this one gave the same verdict, errors and duplicate pointers on 3,000 random mining replies, and the same reuse lists on 1,500 random pairs (seed 20261114); that comparison is a scratch run, not a committed test.",
+      "G3": "Malformed or open requests are a typed BAD_REQUEST; a missing canon type is CANON_TYPE_MISSING. No unwrap or index; the one expect is on a fixed pattern. Not B: panic-freedom is tested, not proven.",
+      "G4": "13 mining tests assert every error code, the fixed order, document order of digit errors, duplicates, typing, reuse and the closed requests. One mutant is recorded as demonstrably equivalent with its justification in the report. Mutation campaign R = 44/44. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 10, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T09:54:56Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v3-test.run.json",
+        "sha256": "c91d7f0096a4bf4a60282222ae369bd98ba0bdb61a3477a259542e8defdcba79",
+        "note": "97 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v3-clippy.run.json",
+        "sha256": "2cb3d6973959966fc68a232c795137b2af538e8091188265c42e03c33e1f998f",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v3-fmt.run.json",
+        "sha256": "662a91eb9c31ff5b5b2ef2e0da47bbec7d20de292ae6c62bc1ee09392bd8f384",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v3-metrics.run.json",
+        "sha256": "61402cc961ac77c8ef2baa0c99685bb989cdc3a37a254d3c1d14d2f30c9d330d",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v3-metrics.json",
+        "sha256": "71d6ba047df075a29edc4ceaaac890216ed0356e8290120ac8f0418d7bc976be",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 44,
+      "survived": 0,
+      "demonstrably_equivalent": 1,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-mining.mutation.json",
+        "sha256": "21a3b49b92221bf1f5fa0c12777ecb781410c6f10014a241764b2a5018ef106f",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 45 mutants"
+      }
+    }
+  },
+  "history": []
+}

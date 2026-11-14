@@ -2,10 +2,10 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/pfp_operads/src/envelope.rs",
-  "target_sha256": "46041cf5a691b635543be22af4f3face732a5d66d12a98ab4bdddfd4580a687f",
+  "target_sha256": "1201a0f0ccdd14b3fb43fafc2a90c4642b7acc563230a31ca3a3c8ea818f5501",
   "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
   "counts": {
-    "killed": 48,
+    "killed": 54,
     "survived": 0,
     "demonstrably_equivalent": 0,
     "invalid": 0,
@@ -98,54 +98,6 @@
       "outcome": "killed"
     },
     {
-      "name": "arity not compared",
-      "old": "        if candidate.arity.as_f64() != Some(candidate.source_colours.len() as f64) {",
-      "new": "        if candidate.arity.as_f64().is_none() {",
-      "outcome": "killed"
-    },
-    {
-      "name": "arity compared with one",
-      "old": "        if candidate.arity.as_f64() != Some(candidate.source_colours.len() as f64) {",
-      "new": "        if candidate.arity.as_f64() != Some(1.0) {",
-      "outcome": "killed"
-    },
-    {
-      "name": "arity off by one",
-      "old": "        if candidate.arity.as_f64() != Some(candidate.source_colours.len() as f64) {",
-      "new": "        if candidate.arity.as_f64() != Some(candidate.source_colours.len() as f64 + 1.0) {",
-      "outcome": "killed"
-    },
-    {
-      "name": "fractional arity truncated",
-      "old": "        if candidate.arity.as_f64() != Some(candidate.source_colours.len() as f64) {",
-      "new": "        if candidate.arity.as_f64().map(f64::trunc) != Some(candidate.source_colours.len() as f64) {",
-      "outcome": "killed"
-    },
-    {
-      "name": "quote looked up in every source",
-      "old": "            .get(&candidate.source.kind)\n            .is_some_and(|text| text.contains(&candidate.source.quote));",
-      "new": "            .values()\n            .any(|text| text.contains(&candidate.source.quote));",
-      "outcome": "killed"
-    },
-    {
-      "name": "unknown source kind accepted",
-      "old": "            .is_some_and(|text| text.contains(&candidate.source.quote));",
-      "new": "            .is_none_or(|text| text.contains(&candidate.source.quote));",
-      "outcome": "killed"
-    },
-    {
-      "name": "quote not checked",
-      "old": "            .is_some_and(|text| text.contains(&candidate.source.quote));",
-      "new": "            .is_some();",
-      "outcome": "killed"
-    },
-    {
-      "name": "missing quote accepted",
-      "old": "        if !quoted {",
-      "new": "        if false && !quoted {",
-      "outcome": "killed"
-    },
-    {
       "name": "candidate witness refs not checked",
       "old": "        if unknown_reference(&candidate.witness_refs, known) {",
       "new": "        if false && unknown_reference(&candidate.witness_refs, known) {",
@@ -209,12 +161,6 @@
       "name": "word drops its letters",
       "old": "            trace.push_str(&step.op);",
       "new": "            let _ = &mut trace;",
-      "outcome": "killed"
-    },
-    {
-      "name": "licence ignores the checker",
-      "old": "            licensed.checker == checker\n                && candidate",
-      "new": "            candidate",
       "outcome": "killed"
     },
     {
@@ -296,9 +242,99 @@
       "outcome": "killed"
     },
     {
+      "name": "arity not compared",
+      "old": "self.arity.as_f64() == Some(self.source_colours.len() as f64)",
+      "new": "self.arity.as_f64().is_some()",
+      "outcome": "killed"
+    },
+    {
+      "name": "arity compared with one",
+      "old": "self.arity.as_f64() == Some(self.source_colours.len() as f64)",
+      "new": "self.arity.as_f64() == Some(1.0)",
+      "outcome": "killed"
+    },
+    {
+      "name": "arity off by one",
+      "old": "self.arity.as_f64() == Some(self.source_colours.len() as f64)",
+      "new": "self.arity.as_f64() == Some(self.source_colours.len() as f64 + 1.0)",
+      "outcome": "killed"
+    },
+    {
+      "name": "fractional arity truncated",
+      "old": "self.arity.as_f64() == Some(self.source_colours.len() as f64)",
+      "new": "self.arity.as_f64().map(f64::trunc) == Some(self.source_colours.len() as f64)",
+      "outcome": "killed"
+    },
+    {
+      "name": "arity mismatch accepted",
+      "old": "        if !candidate.arity_agrees() {",
+      "new": "        if false && !candidate.arity_agrees() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "quote looked up in every source",
+      "old": "            .get(&self.kind)\n            .is_some_and(|text| text.contains(&self.quote))",
+      "new": "            .values()\n            .any(|text| text.contains(&self.quote))",
+      "outcome": "killed"
+    },
+    {
+      "name": "unknown source kind accepted",
+      "old": "            .get(&self.kind)\n            .is_some_and(|text| text.contains(&self.quote))",
+      "new": "            .get(&self.kind)\n            .is_none_or(|text| text.contains(&self.quote))",
+      "outcome": "killed"
+    },
+    {
+      "name": "quote not checked",
+      "old": "            .get(&self.kind)\n            .is_some_and(|text| text.contains(&self.quote))",
+      "new": "            .get(&self.kind)\n            .is_some()",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing quote accepted",
+      "old": "        if !candidate.source.found_in(&request.sources) {",
+      "new": "        if false && !candidate.source.found_in(&request.sources) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "licence ignores the checker",
+      "old": "            licensed.checker == checker\n                && candidate.arity_agrees()",
+      "new": "            candidate.arity_agrees()",
+      "outcome": "killed"
+    },
+    {
+      "name": "licence ignores the stated arity",
+      "old": "                && candidate.arity_agrees()\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
       "name": "unknown candidate field accepted",
-      "old": "#[derive(Deserialize)]\n#[serde(deny_unknown_fields)]\nstruct Candidate {",
-      "new": "#[derive(Deserialize)]\nstruct Candidate {",
+      "old": "#[derive(PartialEq, Deserialize)]\n#[serde(deny_unknown_fields)]\npub(crate) struct Candidate {",
+      "new": "#[derive(PartialEq, Deserialize)]\npub(crate) struct Candidate {",
+      "outcome": "killed"
+    },
+    {
+      "name": "unknown quote field accepted",
+      "old": "#[derive(PartialEq, Deserialize)]\n#[serde(deny_unknown_fields)]\npub(crate) struct Quote {",
+      "new": "#[derive(PartialEq, Deserialize)]\npub(crate) struct Quote {",
+      "outcome": "killed"
+    },
+    {
+      "name": "typing request left open",
+      "old": "#[derive(Deserialize)]\n#[serde(deny_unknown_fields)]\nstruct TypingRequest {",
+      "new": "#[derive(Deserialize)]\nstruct TypingRequest {",
+      "outcome": "killed"
+    },
+    {
+      "name": "typing ignores the checker",
+      "old": "        candidates: typings(&request.candidates, &request.checker)?,",
+      "new": "        candidates: typings(&request.candidates, \"\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "typing malformed request gets another code",
+      "old": "    let request: TypingRequest = serde_json::from_str(text)\n        .map_err(|error| Refusal::new(\"BAD_REQUEST\", error.to_string()))?;",
+      "new": "    let request: TypingRequest = serde_json::from_str(text)\n        .map_err(|error| Refusal::new(\"BAD_CASE\", error.to_string()))?;",
       "outcome": "killed"
     }
   ]

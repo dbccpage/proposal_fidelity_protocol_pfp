@@ -87,23 +87,44 @@ def identity() -> dict:
     return result(call(("version",)))
 
 
+def ask(command: str, **request) -> dict:
+    """Send one request to a host command and return the host's result."""
+    return result(call((command,), request))
+
+
 def judge(checker: str, case: object, answer: object) -> tuple[bool, str]:
     """The host's verdict on a task result: it recomputes the answer itself."""
-    verdict = result(call(("judge",), dict(checker=checker, case=case, answer=answer)))
+    verdict = ask("judge", checker=checker, case=case, answer=answer)
     return verdict["accepted"], verdict["reason"]
 
 
 def envelope(*, catalogue: list, required: list, sources: dict, checker: str, answer: dict) -> dict:
     """The host's reading of a full-slot reply: structure errors and canon typing."""
-    return result(
-        call(
-            ("envelope",),
-            dict(
-                catalogue=catalogue,
-                required=required,
-                sources=sources,
-                checker=checker,
-                answer=answer,
-            ),
-        )
+    return ask(
+        "envelope",
+        catalogue=catalogue,
+        required=required,
+        sources=sources,
+        checker=checker,
+        answer=answer,
     )
+
+
+def mining(*, catalogue: list, sources: dict, checker: str, answer: dict) -> dict:
+    """The host's screen of a mining reply: digits, candidates and guidance."""
+    return ask("mining", catalogue=catalogue, sources=sources, checker=checker, answer=answer)
+
+
+def typing(checker: str, candidates: list) -> list:
+    """The host's canon typing of a candidate list, one row per candidate."""
+    return ask("typing", checker=checker, candidates=candidates)["candidates"]
+
+
+def grounding(*, checker: str, values: list, slot_report: dict, candidates: list) -> dict:
+    """The host's recheck of a solver reply's grounded slots against the public input."""
+    return ask("grounding", checker=checker, values=values, slot_report=slot_report, candidates=candidates)
+
+
+def reuse(mined: list, emitted: list) -> list:
+    """The ids of the emitted candidates whose signature a mined candidate also has."""
+    return ask("reuse", mined=mined, emitted=emitted)["reused"]

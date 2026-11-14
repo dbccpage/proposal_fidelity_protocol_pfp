@@ -7,7 +7,7 @@
     "artifact": {
       "path": "code/rust/pfp_operads/src/envelope.rs",
       "language": "Rust",
-      "sha256": "46041cf5a691b635543be22af4f3face732a5d66d12a98ab4bdddfd4580a687f"
+      "sha256": "1201a0f0ccdd14b3fb43fafc2a90c4642b7acc563230a31ca3a3c8ea818f5501"
     },
     "contract_urn": "urn:pfp-operads:envelope:v1",
     "symbols": [
@@ -18,14 +18,17 @@
       "LICENSED",
       "CandidateTyping",
       "EnvelopeReport",
-      "envelope"
+      "envelope",
+      "TypingReport",
+      "typing"
     ],
     "owned_invariants": [
       "The structure rules, their error codes and their order are those the full-slot workflows applied before, so a recorded reply keeps its verdict.",
       "Every catalogue slot is reported exactly once; a provided slot has a value, any other has only a reason; a required slot must be provided.",
       "A candidate's arity equals its number of source colours, its quote occurs in the named source, and every reference is a slot, a candidate or the task result.",
       "A DDC move is logged or refused, names only known things, and joins the word only if its letter is in the canon.",
-      "Typing and licensing are reported and never change the verdict: typed means every colour is a canon task_value_colour; licensed_as names the checker's own operation when the signature is equal."
+      "Typing and licensing are reported and never change the verdict: typed means every colour is a canon task_value_colour; licensed_as names the checker's own operation when the signature, including the stated arity, is equal.",
+      "typing gives the same reading for a bare candidate list."
     ],
     "boundaries": [
       "A candidate is never verified here: its meaning is free text.",
@@ -38,7 +41,7 @@
     "artifact": {
       "path": "code/rust/pfp_operads/src/envelope.rs",
       "language": "Rust",
-      "sha256": "46041cf5a691b635543be22af4f3face732a5d66d12a98ab4bdddfd4580a687f"
+      "sha256": "1201a0f0ccdd14b3fb43fafc2a90c4642b7acc563230a31ca3a3c8ea818f5501"
     },
     "profile": "Non-Numeric",
     "level": "L4",
@@ -52,45 +55,45 @@
     },
     "basis": {
       "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
-      "G2": "No arithmetic beyond comparing a stated arity with a count; 1.0 is read as 1, as JSON Schema does. Colours come from the canon. The old and new rule sets gave the same errors in the same order on 4,000 random envelopes (seed 20261114); that comparison is not a committed test.",
+      "G2": "No arithmetic beyond comparing a stated arity with a count; 1.0 is read as 1, as JSON Schema does. Colours come from the canon. The old and new rule sets gave the same errors in the same order on 4,000 random envelopes (seed 20261114); that comparison is a scratch run, not a committed test.",
       "G3": "Malformed or open requests are a typed BAD_REQUEST; a missing canon type is CANON_TYPE_MISSING. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
-      "G4": "16 envelope tests assert every error code, the fixed order, typing, licensing and the closed request. Mutation campaign R = 48/48. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G4": "16 envelope tests plus the typing, mining and grounding tests that share its candidate type. Mutation campaign R = 54/54. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
       "G5": "Measured worst cyclomatic 11, cognitive complexity is not measured for Rust, nesting 1; ceiling B, recorded B."
     },
     "composite_grade": "C",
     "score_token": "L4C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-14T09:19:59Z",
+    "evaluation_timestamp": "2026-11-14T09:54:56Z",
     "evidence": [
       {
-        "path": "governance/evidence/pfp-operads-v2-test.run.json",
-        "sha256": "765ccc06ec162d9c03b1768aee8936e0a3f773bf454f0220e02c2af0d3ee8e32",
-        "note": "73 tests: pfp_operads and core_operad_canon, locked build."
+        "path": "governance/evidence/pfp-operads-v3-test.run.json",
+        "sha256": "c91d7f0096a4bf4a60282222ae369bd98ba0bdb61a3477a259542e8defdcba79",
+        "note": "97 tests: pfp_operads and core_operad_canon, locked build."
       },
       {
-        "path": "governance/evidence/pfp-operads-v2-clippy.run.json",
-        "sha256": "032b6806d16575ff802401b5b192ded1a5cb995579237dac31b3c188e249e910",
+        "path": "governance/evidence/pfp-operads-v3-clippy.run.json",
+        "sha256": "2cb3d6973959966fc68a232c795137b2af538e8091188265c42e03c33e1f998f",
         "note": "clippy with -D warnings on both crates, all targets."
       },
       {
-        "path": "governance/evidence/pfp-operads-v2-fmt.run.json",
-        "sha256": "6b1b5edcb7930b736d58cfa254a61e735940f9bd67ab01818c7b927fd186608c",
+        "path": "governance/evidence/pfp-operads-v3-fmt.run.json",
+        "sha256": "662a91eb9c31ff5b5b2ef2e0da47bbec7d20de292ae6c62bc1ee09392bd8f384",
         "note": "rustfmt --check on both crates."
       },
       {
-        "path": "governance/evidence/pfp-operads-v2-metrics.run.json",
-        "sha256": "6d4fa19db7517c42c27a749136736ea17ad009a615fe2dca3f9eba5ed7173d67",
+        "path": "governance/evidence/pfp-operads-v3-metrics.run.json",
+        "sha256": "61402cc961ac77c8ef2baa0c99685bb989cdc3a37a254d3c1d14d2f30c9d330d",
         "note": "The run that measured Gate 5 structure."
       },
       {
-        "path": "governance/evidence/pfp-operads-v2-metrics.json",
-        "sha256": "9b625cca33d29cb7f52e956c11372a8dc6d20a99e53f359a84e92db405df975b",
+        "path": "governance/evidence/pfp-operads-v3-metrics.json",
+        "sha256": "71d6ba047df075a29edc4ceaaac890216ed0356e8290120ac8f0418d7bc976be",
         "note": "Measured Gate 5 structure of every source this change touches."
       }
     ],
     "mutation_accounting": {
-      "killed": 48,
+      "killed": 54,
       "survived": 0,
       "demonstrably_equivalent": 0,
       "invalid": 0,
@@ -99,10 +102,116 @@
       "conservative_ratio": 1.0,
       "report": {
         "path": "governance/evidence/m-pfp-operads-envelope.mutation.json",
-        "sha256": "df730531354d3b1812f54b0a273b20db7a75690e3d777ba016d5a83ee1e79e65",
-        "note": "lexical campaign of one-line mutants, crate tests as oracle; 48 mutants"
+        "sha256": "deffc37df5778dc1671f1b257421fe794bbfeb059ea8c912ab92ce3fd63a7cbd",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 54 mutants"
       }
     }
   },
-  "history": []
+  "history": [
+    {
+      "recorded_at": "2026-11-14T09:54:57.478997Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/envelope.rs",
+          "language": "Rust",
+          "sha256": "46041cf5a691b635543be22af4f3face732a5d66d12a98ab4bdddfd4580a687f"
+        },
+        "contract_urn": "urn:pfp-operads:envelope:v1",
+        "symbols": [
+          "COLOUR_TYPE",
+          "TASK_RESULT",
+          "TaskValueColour",
+          "Licensed",
+          "LICENSED",
+          "CandidateTyping",
+          "EnvelopeReport",
+          "envelope"
+        ],
+        "owned_invariants": [
+          "The structure rules, their error codes and their order are those the full-slot workflows applied before, so a recorded reply keeps its verdict.",
+          "Every catalogue slot is reported exactly once; a provided slot has a value, any other has only a reason; a required slot must be provided.",
+          "A candidate's arity equals its number of source colours, its quote occurs in the named source, and every reference is a slot, a candidate or the task result.",
+          "A DDC move is logged or refused, names only known things, and joins the word only if its letter is in the canon.",
+          "Typing and licensing are reported and never change the verdict: typed means every colour is a canon task_value_colour; licensed_as names the checker's own operation when the signature is equal."
+        ],
+        "boundaries": [
+          "A candidate is never verified here: its meaning is free text.",
+          "Reply schema validation happens before this call and is not repeated; UNKNOWN_DDC_LETTER is unreachable for a schema-valid reply."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/envelope.rs",
+          "language": "Rust",
+          "sha256": "46041cf5a691b635543be22af4f3face732a5d66d12a98ab4bdddfd4580a687f"
+        },
+        "profile": "Non-Numeric",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, vocabularies from the canon, exact integers, no unwrap or direct indexing.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "B"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "No arithmetic beyond comparing a stated arity with a count; 1.0 is read as 1, as JSON Schema does. Colours come from the canon. The old and new rule sets gave the same errors in the same order on 4,000 random envelopes (seed 20261114); that comparison is not a committed test.",
+          "G3": "Malformed or open requests are a typed BAD_REQUEST; a missing canon type is CANON_TYPE_MISSING. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
+          "G4": "16 envelope tests assert every error code, the fixed order, typing, licensing and the closed request. Mutation campaign R = 48/48. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 11, cognitive complexity is not measured for Rust, nesting 1; ceiling B, recorded B."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T09:19:59Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v2-test.run.json",
+            "sha256": "765ccc06ec162d9c03b1768aee8936e0a3f773bf454f0220e02c2af0d3ee8e32",
+            "note": "73 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v2-clippy.run.json",
+            "sha256": "032b6806d16575ff802401b5b192ded1a5cb995579237dac31b3c188e249e910",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v2-fmt.run.json",
+            "sha256": "6b1b5edcb7930b736d58cfa254a61e735940f9bd67ab01818c7b927fd186608c",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v2-metrics.run.json",
+            "sha256": "6d4fa19db7517c42c27a749136736ea17ad009a615fe2dca3f9eba5ed7173d67",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v2-metrics.json",
+            "sha256": "9b625cca33d29cb7f52e956c11372a8dc6d20a99e53f359a84e92db405df975b",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 48,
+          "survived": 0,
+          "demonstrably_equivalent": 0,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-envelope.mutation.json",
+            "sha256": "df730531354d3b1812f54b0a273b20db7a75690e3d777ba016d5a83ee1e79e65",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 48 mutants"
+          }
+        }
+      }
+    }
+  ]
 }

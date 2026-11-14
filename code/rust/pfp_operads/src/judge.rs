@@ -46,7 +46,7 @@ pub struct Verdict {
 }
 
 /// The integer a JSON number denotes, if it is written as one: an optional minus, then digits.
-fn integer(literal: &RawValue) -> Option<BigInt> {
+pub(crate) fn integer(literal: &RawValue) -> Option<BigInt> {
     let text = literal.get();
     let digits = text.strip_prefix('-').unwrap_or(text);
     if !digits.bytes().all(|byte| byte.is_ascii_digit()) {

@@ -1,15 +1,16 @@
 [package]
 name = "pfp_operads"
-version = "0.2.0"
+version = "0.3.0"
 license.workspace = true
 edition = "2021"
-description = "The operad host for PFP workflows: typed terms over the canon, a law battery, the failure ledger, and the reply checks of the full-slot workflows"
+description = "The operad host for PFP workflows: typed terms over the canon, a law battery, the failure ledger, and the reply checks of the full-slot and pre-mining workflows"
 
 [dependencies]
 core_operad_canon = { path = "../core_operad_canon" }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0", features = ["raw_value"] }
 num-bigint = "0.4"
+regex = "1.10"
 sha2 = "0.10"
 hex = "0.4"
 
@@ -36,3 +37,11 @@ path = "tests/envelope.rs"
 [[test]]
 name = "judge"
 path = "tests/judge.rs"
+
+[[test]]
+name = "mining"
+path = "tests/mining.rs"
+
+[[test]]
+name = "grounding"
+path = "tests/grounding.rs"

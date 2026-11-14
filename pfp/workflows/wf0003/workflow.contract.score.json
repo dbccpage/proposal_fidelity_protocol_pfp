@@ -7,7 +7,7 @@
     "artifact": {
       "path": "pfp/workflows/wf0003/workflow.py",
       "language": "Python",
-      "sha256": "12d592a14866c85e3be226c0dd2bddc7404f84f3606ce8d4ca4fbffa272480c2"
+      "sha256": "7d296df8b86be4686753021287b21114002b08477ceb71457f27e9d872dc6925"
     },
     "contract_urn": "urn:pfp-workflows:pfp-workflows-wf0003-workflow-py:v1",
     "symbols": [
@@ -24,11 +24,13 @@
       "assess_l2"
     ],
     "owned_invariants": [
-      "Screen/freeze mining before one solver; concrete public L2 bindings and shared allowance."
+      "Screen/freeze mining before one solver; concrete public L2 bindings and shared allowance.",
+      "screen_mining and assess_l2 apply no rule: the screen's verdict, error codes, duplicate pointers and typing, and the L2 recheck, are the Rust host's, attached as given."
     ],
     "boundaries": [
       "No authority promotion. Host checks only their declared finite task; provider billing estimates are not vendor-enforced caps.",
-      "Original historical receipts keep their implementation identities."
+      "Original historical receipts keep their implementation identities.",
+      "Reply schema validation, attachment custody and status routing are still Python until the workflow hosts are ported."
     ]
   },
   "score": {
@@ -37,7 +39,7 @@
     "artifact": {
       "path": "pfp/workflows/wf0003/workflow.py",
       "language": "Python",
-      "sha256": "12d592a14866c85e3be226c0dd2bddc7404f84f3606ce8d4ca4fbffa272480c2"
+      "sha256": "7d296df8b86be4686753021287b21114002b08477ceb71457f27e9d872dc6925"
     },
     "profile": "Exact",
     "level": "L4",
@@ -46,39 +48,52 @@
       "G1": "C",
       "G2": "C",
       "G3": "C",
-      "G4": "D",
-      "G5": "D"
+      "G4": "C",
+      "G5": "A"
     },
     "basis": {
       "G1": "Legacy origin, source paths, migration versions and SHA-256 binding are recorded. Contract names the narrow exported claim; AuthorityEffect is None. No external authenticity attestation is claimed.",
-      "G2": "The source-bound 204-test suite exercises native integer typing, independent finite task checking, scoped grammar preservation and/or this module through its corresponding runner. No arbitrary English equivalence or causal learning claim. 2026-11-05 committee fixes: WF4/WF5 per-agent receipts check the exact total; a malformed vendor envelope no longer loses a charged reply; replay ties response bytes to the retained wire body; a broken dispatch barrier still closes its reservation; the WF3 L2 recheck is documented as schema-pinned. Regression tests cover the first three.",
-      "G3": "Observed refusal controls cover malformed bindings, missing slots, wrong unanimous answers, unknown costs, aggregate budget refusal and changed replay bytes. Native absence is typed. External provider behavior beyond injected wire fixtures remains unverified live.",
-      "G4": "D: executed regression and negative controls are source-bound, including all five CLI paths. No implementation-mutation campaign or new live model trial was run, so no mutation ratio or statistical efficacy is claimed. This is an explicit verification audit deficit, not a fabricated unassessed pass.",
-      "G5": "Measured CCN 16, cognitive 29, nesting 4; ceiling D. Reused orchestration has remaining complexity and deliberate owner delegation; no unmeasured optimality claim."
+      "G2": "The source-bound 639-test suite exercises this module through the WF3-WF5 runners, including strict typed response formats on every model call and the host's operad checks. No arbitrary English equivalence or causal learning claim.",
+      "G3": "Observed refusal controls cover malformed bindings, missing slots, wrong unanimous answers, unknown costs, aggregate budget refusal and changed replay bytes. Native absence is typed. A host that cannot run or answer raises and yields no verdict. External provider behavior beyond injected wire fixtures remains unverified live.",
+      "G4": "The WF3 tests and pfp/workflows/tests/test_operad_host.py are the oracle. The eight survivors are JSON escaping flags of prompt text, the strict zip, the empty judge list, a source-list filter and two checker comparisons no offline fixture separates; no property tests and no live model trial, so no statistical efficacy is claimed. Mutation campaign R = 50/58.",
+      "G5": "Measured worst cyclomatic 4, cognitive 3, nesting 1; ceiling A+, recorded A."
     },
-    "composite_grade": "D",
-    "score_token": "L4D",
+    "composite_grade": "C",
+    "score_token": "L4C",
     "is_complete": true,
-    "grade_ceiling": "D",
-    "evaluation_timestamp": "2026-11-06T02:57:50.647733Z",
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T09:54:56Z",
     "evidence": [
       {
-        "path": "governance/evidence/workflow-review-fixes-tests.run.json",
-        "sha256": "62d57adbb49ed26faca2e22f52b9d8b59486b5c4f73a4972a76f210d82aec3cc",
-        "note": "204 offline tests after the 2026-11-05 committee fixes; exact source inputs bound. No live model performance claim."
+        "path": "governance/evidence/operad-host-workflow-tests-v3.run.json",
+        "sha256": "6649148c5d29d3682d6497ef7d68d84ac142426834d2fa16532e04471ba15b32",
+        "note": "639 offline tests (pfp/workflows, pfp_core/workflow_families, exclusions) against the release build of pfp_operad 0.3.0; exact source inputs bound. No live model performance claim."
       },
       {
-        "path": "governance/evidence/workflow-review-fixes-tests.log",
-        "sha256": "60cae54528159dd92a61436c18b291d5ae3265325e46c17ede3715be52202a7f",
-        "note": "Test outcomes and scope."
+        "path": "governance/evidence/pfp-operads-v3-metrics.run.json",
+        "sha256": "61402cc961ac77c8ef2baa0c99685bb989cdc3a37a254d3c1d14d2f30c9d330d",
+        "note": "The run that measured Gate 5 structure."
       },
       {
-        "path": "governance/evidence/workflow-review-fixes-metrics.json",
-        "sha256": "932b81f8ed03cab1c439eb0a6e26d956ecdbb2f177e690aa663021f429acabf3",
-        "note": "Measured structural ceilings for the changed sources."
+        "path": "governance/evidence/pfp-operads-v3-metrics.json",
+        "sha256": "71d6ba047df075a29edc4ceaaac890216ed0356e8290120ac8f0418d7bc976be",
+        "note": "Measured Gate 5 structure of every source this change touches."
       }
     ],
-    "mutation_accounting": null
+    "mutation_accounting": {
+      "killed": 50,
+      "survived": 8,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 0.8620689655172413,
+      "report": {
+        "path": "governance/evidence/m-wf0003-workflow.mutation.json",
+        "sha256": "22f3952e3a8f01b4a0e8317ff0a8f08d0bd2ce2ab2f06c678feffa9b0232c604",
+        "note": "AST campaign, governance.tools.mutation, pytest as oracle; 58 mutants"
+      }
+    }
   },
   "history": [
     {
@@ -157,6 +172,87 @@
             "path": "workflows/library/migration_metrics.json",
             "sha256": "1cce17133d384c5935779ad0a5a756b37538c7336269b16bde15a4588d619f3c",
             "note": "Measured structural ceilings; all migrated Python sources at D or better."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    },
+    {
+      "recorded_at": "2026-11-14T09:54:59.505771Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "pfp/workflows/wf0003/workflow.py",
+          "language": "Python",
+          "sha256": "12d592a14866c85e3be226c0dd2bddc7404f84f3606ce8d4ca4fbffa272480c2"
+        },
+        "contract_urn": "urn:pfp-workflows:pfp-workflows-wf0003-workflow-py:v1",
+        "symbols": [
+          "resource_text",
+          "validate_task",
+          "required_slots",
+          "solver_response_schema",
+          "MiningContract",
+          "screen_mining",
+          "freeze_attachment",
+          "verify_attachment",
+          "solver_attachment",
+          "SolverContract",
+          "assess_l2"
+        ],
+        "owned_invariants": [
+          "Screen/freeze mining before one solver; concrete public L2 bindings and shared allowance."
+        ],
+        "boundaries": [
+          "No authority promotion. Host checks only their declared finite task; provider billing estimates are not vendor-enforced caps.",
+          "Original historical receipts keep their implementation identities."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "pfp/workflows/wf0003/workflow.py",
+          "language": "Python",
+          "sha256": "12d592a14866c85e3be226c0dd2bddc7404f84f3606ce8d4ca4fbffa272480c2"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "L4 production integration scope: explicit workflow contracts, fresh attempt custody, delegated shared owners and tested refusal/replay boundaries. Thin entry points inherit these verified boundaries; this level asserts integration craft, not algorithmic novelty.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "D",
+          "G5": "D"
+        },
+        "basis": {
+          "G1": "Legacy origin, source paths, migration versions and SHA-256 binding are recorded. Contract names the narrow exported claim; AuthorityEffect is None. No external authenticity attestation is claimed.",
+          "G2": "The source-bound 204-test suite exercises native integer typing, independent finite task checking, scoped grammar preservation and/or this module through its corresponding runner. No arbitrary English equivalence or causal learning claim. 2026-11-05 committee fixes: WF4/WF5 per-agent receipts check the exact total; a malformed vendor envelope no longer loses a charged reply; replay ties response bytes to the retained wire body; a broken dispatch barrier still closes its reservation; the WF3 L2 recheck is documented as schema-pinned. Regression tests cover the first three.",
+          "G3": "Observed refusal controls cover malformed bindings, missing slots, wrong unanimous answers, unknown costs, aggregate budget refusal and changed replay bytes. Native absence is typed. External provider behavior beyond injected wire fixtures remains unverified live.",
+          "G4": "D: executed regression and negative controls are source-bound, including all five CLI paths. No implementation-mutation campaign or new live model trial was run, so no mutation ratio or statistical efficacy is claimed. This is an explicit verification audit deficit, not a fabricated unassessed pass.",
+          "G5": "Measured CCN 16, cognitive 29, nesting 4; ceiling D. Reused orchestration has remaining complexity and deliberate owner delegation; no unmeasured optimality claim."
+        },
+        "composite_grade": "D",
+        "score_token": "L4D",
+        "is_complete": true,
+        "grade_ceiling": "D",
+        "evaluation_timestamp": "2026-11-06T02:57:50.647733Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/workflow-review-fixes-tests.run.json",
+            "sha256": "62d57adbb49ed26faca2e22f52b9d8b59486b5c4f73a4972a76f210d82aec3cc",
+            "note": "204 offline tests after the 2026-11-05 committee fixes; exact source inputs bound. No live model performance claim."
+          },
+          {
+            "path": "governance/evidence/workflow-review-fixes-tests.log",
+            "sha256": "60cae54528159dd92a61436c18b291d5ae3265325e46c17ede3715be52202a7f",
+            "note": "Test outcomes and scope."
+          },
+          {
+            "path": "governance/evidence/workflow-review-fixes-metrics.json",
+            "sha256": "932b81f8ed03cab1c439eb0a6e26d956ecdbb2f177e690aa663021f429acabf3",
+            "note": "Measured structural ceilings for the changed sources."
           }
         ],
         "mutation_accounting": null

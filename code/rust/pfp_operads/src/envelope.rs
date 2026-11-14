@@ -77,24 +77,43 @@ struct SlotRow {
     reason: String,
 }
 
-#[derive(Deserialize)]
+/// A quotation from one of the texts a reply may cite.
+#[derive(PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
-struct Quote {
-    kind: String,
-    quote: String,
+pub(crate) struct Quote {
+    pub(crate) kind: String,
+    pub(crate) quote: String,
 }
 
-#[derive(Deserialize)]
+impl Quote {
+    /// The quote occurs in the source it names.
+    pub(crate) fn found_in(&self, sources: &BTreeMap<String, String>) -> bool {
+        sources
+            .get(&self.kind)
+            .is_some_and(|text| text.contains(&self.quote))
+    }
+}
+
+/// An operad candidate as a reply writes it. Two candidates are equal when every field is.
+#[derive(PartialEq, Deserialize)]
 #[serde(deny_unknown_fields)]
-struct Candidate {
-    id: String,
+pub(crate) struct Candidate {
+    pub(crate) id: String,
     #[serde(rename = "operation")]
     _operation: String,
-    source_colours: Vec<String>,
-    target_colour: String,
+    pub(crate) source_colours: Vec<String>,
+    pub(crate) target_colour: String,
     arity: Json,
-    source: Quote,
-    witness_refs: Vec<String>,
+    pub(crate) source: Quote,
+    pub(crate) witness_refs: Vec<String>,
+}
+
+impl Candidate {
+    /// The stated arity is the number of source colours. JSON Schema reads 1.0 as the integer 1,
+    /// and so did the earlier host.
+    pub(crate) fn arity_agrees(&self) -> bool {
+        self.arity.as_f64() == Some(self.source_colours.len() as f64)
+    }
 }
 
 #[derive(Deserialize)]
@@ -140,7 +159,8 @@ pub struct CandidateTyping {
     pub id: String,
     /// Every colour of the candidate is a canon task value colour.
     pub typed: bool,
-    /// The licensed operation whose signature this candidate has, if any.
+    /// The licensed operation whose signature this candidate has, if any. A candidate whose
+    /// stated arity disagrees with its source colours has no signature.
     pub licensed_as: Option<&'static str>,
 }
 
@@ -191,15 +211,10 @@ fn unknown_reference(refs: &[String], known: &BTreeSet<&str>) -> bool {
 
 fn candidate_errors(request: &Request, known: &BTreeSet<&str>, errors: &mut Vec<String>) {
     for candidate in &request.answer.operad_candidates {
-        // JSON Schema reads 1.0 as the integer 1, and so did the earlier host.
-        if candidate.arity.as_f64() != Some(candidate.source_colours.len() as f64) {
+        if !candidate.arity_agrees() {
             errors.push(format!("ARITY_MISMATCH:{}", candidate.id));
         }
-        let quoted = request
-            .sources
-            .get(&candidate.source.kind)
-            .is_some_and(|text| text.contains(&candidate.source.quote));
-        if !quoted {
+        if !candidate.source.found_in(&request.sources) {
             errors.push(format!("SOURCE_QUOTE_MISSING:{}", candidate.id));
         }
         if unknown_reference(&candidate.witness_refs, known) {
@@ -252,6 +267,7 @@ fn licensed_as(candidate: &Candidate, checker: &str) -> Option<&'static str> {
         .iter()
         .find(|licensed| {
             licensed.checker == checker
+                && candidate.arity_agrees()
                 && candidate.target_colour == licensed.target.as_str()
                 && candidate
                     .source_colours
@@ -262,11 +278,13 @@ fn licensed_as(candidate: &Candidate, checker: &str) -> Option<&'static str> {
         .map(|licensed| licensed.name)
 }
 
-fn typings(request: &Request) -> Result<Vec<CandidateTyping>, Refusal> {
+/// The canon typing of each candidate, in the order given.
+pub(crate) fn typings(
+    candidates: &[Candidate],
+    checker: &str,
+) -> Result<Vec<CandidateTyping>, Refusal> {
     let colours = canon_values(COLOUR_TYPE)?;
-    Ok(request
-        .answer
-        .operad_candidates
+    Ok(candidates
         .iter()
         .map(|candidate| CandidateTyping {
             id: candidate.id.clone(),
@@ -275,7 +293,7 @@ fn typings(request: &Request) -> Result<Vec<CandidateTyping>, Refusal> {
                 .iter()
                 .chain([&candidate.target_colour])
                 .all(|name| colours.contains(&name.as_str())),
-            licensed_as: licensed_as(candidate, &request.checker),
+            licensed_as: licensed_as(candidate, checker),
         })
         .collect())
 }
@@ -300,7 +318,29 @@ pub fn envelope(text: &str) -> Result<EnvelopeReport, Refusal> {
     Ok(EnvelopeReport {
         accepted: errors.is_empty(),
         errors,
-        candidates: typings(&request)?,
+        candidates: typings(candidates, &request.checker)?,
         ddc_trace,
+    })
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct TypingRequest {
+    checker: String,
+    candidates: Vec<Candidate>,
+}
+
+/// The canon typing of a list of candidates, with no structure check.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+pub struct TypingReport {
+    pub candidates: Vec<CandidateTyping>,
+}
+
+/// Type candidates against the canon and bind the ones with the checker's licensed signature.
+pub fn typing(text: &str) -> Result<TypingReport, Refusal> {
+    let request: TypingRequest = serde_json::from_str(text)
+        .map_err(|error| Refusal::new("BAD_REQUEST", error.to_string()))?;
+    Ok(TypingReport {
+        candidates: typings(&request.candidates, &request.checker)?,
     })
 }

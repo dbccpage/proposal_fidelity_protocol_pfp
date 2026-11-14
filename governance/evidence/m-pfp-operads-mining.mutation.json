@@ -1,0 +1,288 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/mining.rs",
+  "target_sha256": "a659070eb2fdbbe1e205843bb75331d0e6a80c0a34fa8abd7eb26ba5e5ee3dc8",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
+  "counts": {
+    "killed": 44,
+    "survived": 0,
+    "demonstrably_equivalent": 1,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "digit screen off",
+      "old": "            if !quoted && DIGIT.is_match(text) {",
+      "new": "            if false && !quoted && DIGIT.is_match(text) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "source quotes are screened too",
+      "old": "            if !quoted && DIGIT.is_match(text) {",
+      "new": "            if DIGIT.is_match(text) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only ascii digits count",
+      "old": "Regex::new(r\"\\d\")",
+      "new": "Regex::new(r\"[0-9]\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "any numeric sign counts",
+      "old": "Regex::new(r\"\\d\")",
+      "new": "Regex::new(r\"\\p{N}\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "any key named quote is exempt",
+      "old": "[.., a, b] if a == \"source\" && b == \"quote\"",
+      "new": "[.., b] if b == \"quote\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "any text under source is exempt",
+      "old": "[.., a, b] if a == \"source\" && b == \"quote\"",
+      "new": "[.., a, _] if a == \"source\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "lists are not walked",
+      "old": "                path.push(index.to_string());\n                digit_errors(item, path, errors);",
+      "new": "                path.push(index.to_string());\n                let _ = (item, &errors);",
+      "outcome": "killed"
+    },
+    {
+      "name": "maps are not walked",
+      "old": "                path.push(key.clone());\n                digit_errors(value, path, errors);",
+      "new": "                path.push(key.clone());\n                let _ = (value, &errors);",
+      "outcome": "killed"
+    },
+    {
+      "name": "list index left on the path",
+      "old": "                digit_errors(item, path, errors);\n                path.pop();",
+      "new": "                digit_errors(item, path, errors);",
+      "outcome": "killed"
+    },
+    {
+      "name": "map key left on the path",
+      "old": "                digit_errors(value, path, errors);\n                path.pop();",
+      "new": "                digit_errors(value, path, errors);",
+      "outcome": "killed"
+    },
+    {
+      "name": "list positions count from one",
+      "old": "                path.push(index.to_string());",
+      "new": "                path.push((index + 1).to_string());",
+      "outcome": "killed"
+    },
+    {
+      "name": "path joined with a dot",
+      "old": "path.join(\"/\")",
+      "new": "path.join(\".\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "numbers are read as text",
+      "old": "    fn visit_i64<E>(self, _: i64) -> Result<Node, E> {\n        Ok(Node::Other)",
+      "new": "    fn visit_i64<E>(self, number: i64) -> Result<Node, E> {\n        Ok(Node::Text(number.to_string()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "unsigned numbers are read as text",
+      "old": "    fn visit_u64<E>(self, _: u64) -> Result<Node, E> {\n        Ok(Node::Other)",
+      "new": "    fn visit_u64<E>(self, number: u64) -> Result<Node, E> {\n        Ok(Node::Text(number.to_string()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "fractions are read as text",
+      "old": "    fn visit_f64<E>(self, _: f64) -> Result<Node, E> {\n        Ok(Node::Other)",
+      "new": "    fn visit_f64<E>(self, number: f64) -> Result<Node, E> {\n        Ok(Node::Text(number.to_string()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "map entries are sorted",
+      "old": "        match map.as_slice() {",
+      "new": "        map.sort_by(|a, b| a.0.cmp(&b.0));\n        match map.as_slice() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "duplicate candidate ids accepted",
+      "old": "        errors.push(\"DUPLICATE_MINED_OPERAD_ID\".to_owned());",
+      "new": "        let _ = &errors;",
+      "outcome": "killed"
+    },
+    {
+      "name": "arity mismatch accepted",
+      "old": "        if !op.arity_agrees() {",
+      "new": "        if false && !op.arity_agrees() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing quote accepted",
+      "old": "        if !op.source.found_in(&request.sources) {",
+      "new": "        if false && !op.source.found_in(&request.sources) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness refs not checked",
+      "old": "        if !op.witness_refs.iter().all(known) {",
+      "new": "        if false && !op.witness_refs.iter().all(known) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "one known witness is enough",
+      "old": "        if !op.witness_refs.iter().all(known) {",
+      "new": "        if !op.witness_refs.is_empty() && !op.witness_refs.iter().any(known) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "task_result is not a known witness",
+      "old": "name == TASK_RESULT || request.catalogue.contains(name)",
+      "new": "request.catalogue.contains(name)",
+      "outcome": "killed"
+    },
+    {
+      "name": "slots are not known witnesses",
+      "old": "name == TASK_RESULT || request.catalogue.contains(name)",
+      "new": "name == TASK_RESULT",
+      "outcome": "killed"
+    },
+    {
+      "name": "duplicate guidance slots accepted",
+      "old": "        errors.push(\"DUPLICATE_L2_GUIDANCE_SLOT\".to_owned());",
+      "new": "        let _ = &errors;",
+      "outcome": "killed"
+    },
+    {
+      "name": "guidance coverage not checked",
+      "old": "    if !grounded.is_empty() && !slots.iter().eq(grounded.iter()) {",
+      "new": "    if false && !grounded.is_empty() && !slots.iter().eq(grounded.iter()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "coverage asked of every checker",
+      "old": "    if !grounded.is_empty() && !slots.iter().eq(grounded.iter()) {",
+      "new": "    if !slots.iter().eq(grounded.iter()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "extra guidance slots accepted",
+      "old": "!slots.iter().eq(grounded.iter())",
+      "new": "!grounded.iter().all(|slot| slots.contains(slot))",
+      "outcome": "killed"
+    },
+    {
+      "name": "guidance quote not checked",
+      "old": "        if !row.source.found_in(&request.sources) {",
+      "new": "        if false && !row.source.found_in(&request.sources) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "pointer names another list",
+      "old": "format!(\"/answer/operad_candidates/{index}\")",
+      "new": "format!(\"/answer/candidates/{index}\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "digit screen runs last",
+      "old": "    digit_errors(&tree, &mut Vec::new(), &mut errors);\n    candidate_errors(&request, &answer.operad_candidates, &mut errors);\n    guidance_errors(&request, &answer.l2_guidance, &mut errors);",
+      "new": "    candidate_errors(&request, &answer.operad_candidates, &mut errors);\n    guidance_errors(&request, &answer.l2_guidance, &mut errors);\n    digit_errors(&tree, &mut Vec::new(), &mut errors);",
+      "outcome": "killed"
+    },
+    {
+      "name": "guidance checked before candidates",
+      "old": "    candidate_errors(&request, &answer.operad_candidates, &mut errors);\n    guidance_errors(&request, &answer.l2_guidance, &mut errors);",
+      "new": "    guidance_errors(&request, &answer.l2_guidance, &mut errors);\n    candidate_errors(&request, &answer.operad_candidates, &mut errors);",
+      "outcome": "killed"
+    },
+    {
+      "name": "no duplicate is ever found",
+      "old": "                .position(|earlier| earlier == op)",
+      "new": "                .position(|_| false)",
+      "outcome": "killed"
+    },
+    {
+      "name": "duplicate points at the last copy",
+      "old": "                .position(|earlier| earlier == op)",
+      "new": "                .rposition(|earlier| earlier == op)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a later copy counts as a duplicate",
+      "old": "                .take(index)\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "accepted whatever the errors",
+      "old": "        accepted: errors.is_empty(),",
+      "new": "        accepted: true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "typing ignores the checker",
+      "old": "        .zip(typings(ops, &request.checker)?)",
+      "new": "        .zip(typings(ops, \"\")?)",
+      "outcome": "killed"
+    },
+    {
+      "name": "unknown request field accepted",
+      "old": "#[derive(Deserialize)]\n#[serde(deny_unknown_fields)]\nstruct Request<'a> {",
+      "new": "#[derive(Deserialize)]\nstruct Request<'a> {",
+      "outcome": "killed"
+    },
+    {
+      "name": "unknown guidance field accepted",
+      "old": "#[derive(Deserialize)]\n#[serde(deny_unknown_fields)]\nstruct Guidance {",
+      "new": "#[derive(Deserialize)]\nstruct Guidance {",
+      "outcome": "killed"
+    },
+    {
+      "name": "reuse ignores the source colours",
+      "old": "    Some((sources?, op.get(\"target_colour\")?.as_str()?, arity))",
+      "new": "    Some((sources.map(|_| Vec::new())?, op.get(\"target_colour\")?.as_str()?, arity))",
+      "outcome": "killed"
+    },
+    {
+      "name": "reuse ignores the arity",
+      "old": "    Some((sources?, op.get(\"target_colour\")?.as_str()?, arity))",
+      "new": "    Some((sources?, op.get(\"target_colour\")?.as_str()?, arity * 0))",
+      "outcome": "killed"
+    },
+    {
+      "name": "reuse reads the target from another field",
+      "old": "op.get(\"target_colour\")?.as_str()?",
+      "new": "op.get(\"id\")?.as_str()?",
+      "outcome": "killed"
+    },
+    {
+      "name": "reuse lists every emitted record",
+      "old": "        .filter(|op| signature(op).is_some_and(|found| mined.contains(&found)))",
+      "new": "        .filter(|op| signature(op).is_some())",
+      "outcome": "killed"
+    },
+    {
+      "name": "reuse lists the records that do not match",
+      "old": "signature(op).is_some_and(|found| mined.contains(&found))",
+      "new": "signature(op).is_some_and(|found| !mined.contains(&found))",
+      "outcome": "killed"
+    },
+    {
+      "name": "reuse request left open",
+      "old": "#[derive(Deserialize)]\n#[serde(deny_unknown_fields)]\nstruct ReuseRequest {",
+      "new": "#[derive(Deserialize)]\nstruct ReuseRequest {",
+      "outcome": "killed"
+    },
+    {
+      "name": "number token not recognised",
+      "old": "            [(key, _)] if key == NUMBER_TOKEN => Ok(Node::Other),\n",
+      "new": "",
+      "equivalent": "Without the arbitrary_precision feature serde_json never produces this key, and the closed reply schema lets no reply carry it; the arm only matters when another crate in the same build turns that feature on.",
+      "outcome": "demonstrably_equivalent"
+    }
+  ]
+}

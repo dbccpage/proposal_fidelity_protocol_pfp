@@ -1,0 +1,103 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/grounding.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/grounding.rs",
+      "language": "Rust",
+      "sha256": "1d9f489e07c09c5e29514f6070febd3c32f67b893380d14749d3c1689a1574ef"
+    },
+    "contract_urn": "urn:pfp-operads:grounding:v1",
+    "symbols": [
+      "SUM_SLOTS",
+      "grounded_slots",
+      "GroundingReport",
+      "grounding"
+    ],
+    "owned_invariants": [
+      "integer_sum_v1 grounds four slots, checked and reported in sorted order; a checker with no grounded slots is refused as UNKNOWN_CHECKER.",
+      "A grounded slot holds only if its value restates the public facts exactly: the input values as unbounded integers read from their JSON digits, the declared arithmetic, and the three preservation obligations.",
+      "instantiated_arguments must name a candidate with the checker's licensed signature (else UNBOUND_INTEGER_LIST_OPERATION) and apply it to exactly the input values.",
+      "Every failing slot is reported with its reason and every passing slot is listed as checked; null is a value, a missing key is not."
+    ],
+    "boundaries": [
+      "The WF3 solver schema already pins these slots to host-computed constants, so this is a recheck of copied bindings, not evidence that a model grounded anything.",
+      "A missing slot or value is reported as MISSING_SLOT or MISSING_VALUE; the earlier host named the missing key instead. Neither is reachable for a schema-valid reply."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/grounding.rs",
+      "language": "Rust",
+      "sha256": "1d9f489e07c09c5e29514f6070febd3c32f67b893380d14749d3c1689a1574ef"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, vocabularies from the canon, exact integers, no unwrap or direct indexing.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact profile: num-bigint comparison of integer literals, so 17.0 is not 17 and values beyond 64 bits are compared exactly. The old Python recheck and this one agreed on 3,000 random solver replies (seed 20261114); that comparison is a scratch run, not a committed test. Not B: no proof, and the big-integer library is trusted.",
+      "G3": "Three typed refusals (BAD_REQUEST, BAD_CASE, UNKNOWN_CHECKER); a slot value of the wrong shape is a mismatch, never a panic. Not B: panic-freedom is tested, not proven.",
+      "G4": "11 grounding tests cover each slot's rule, exact big integers, the licensed binding, error order, the refusals and the binary's exit codes. Mutation campaign R = 32/32. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 10, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T09:54:56Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v3-test.run.json",
+        "sha256": "c91d7f0096a4bf4a60282222ae369bd98ba0bdb61a3477a259542e8defdcba79",
+        "note": "97 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v3-clippy.run.json",
+        "sha256": "2cb3d6973959966fc68a232c795137b2af538e8091188265c42e03c33e1f998f",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v3-fmt.run.json",
+        "sha256": "662a91eb9c31ff5b5b2ef2e0da47bbec7d20de292ae6c62bc1ee09392bd8f384",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v3-metrics.run.json",
+        "sha256": "61402cc961ac77c8ef2baa0c99685bb989cdc3a37a254d3c1d14d2f30c9d330d",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v3-metrics.json",
+        "sha256": "71d6ba047df075a29edc4ceaaac890216ed0356e8290120ac8f0418d7bc976be",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 32,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-grounding.mutation.json",
+        "sha256": "52fbc70155bba19f01e26673012f2411cb3021955707c8befc5e909061584eb5",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 32 mutants"
+      }
+    }
+  },
+  "history": []
+}

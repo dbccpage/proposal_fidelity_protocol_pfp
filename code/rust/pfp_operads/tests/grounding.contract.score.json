@@ -1,0 +1,102 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/grounding.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/grounding.rs",
+      "language": "Rust",
+      "sha256": "7c380fdfb24f0a3b84204d5dc7d5ec16bb745515904221d6dd683314c966df78"
+    },
+    "contract_urn": "urn:pfp-operads:tests-grounding:v1",
+    "symbols": [
+      "candidate",
+      "row",
+      "lawful",
+      "edited",
+      "errors",
+      "slot",
+      "mismatch",
+      "a_reply_that_restates_the_public_input_is_grounded",
+      "the_span_slot_names_the_input_and_copies_its_values_exactly",
+      "values_beyond_sixty_four_bits_are_compared_exactly",
+      "the_binding_slot_copies_the_values_and_declares_exact_arithmetic",
+      "the_argument_slot_names_a_licensed_candidate_and_applies_it_to_the_values",
+      "the_obligation_slot_declares_all_three_obligations",
+      "every_failing_slot_is_reported_in_slot_order_and_the_rest_are_listed_as_checked",
+      "a_grounding_request_is_closed_and_needs_a_grounding_checker_and_integer_values",
+      "typing_reads_a_bare_candidate_list",
+      "status",
+      "respond_reports_grounding_and_typing",
+      "the_command_rechecks_a_grounding_file_and_types_a_candidate_file"
+    ],
+    "owned_invariants": [
+      "Each slot's rule is asserted by its exact error; integers beyond 64 bits are compared exactly.",
+      "Outcomes are asserted on the JSON a workflow would read, including exit codes of the built binary and the shipped example."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/grounding.rs",
+      "language": "Rust",
+      "sha256": "7c380fdfb24f0a3b84204d5dc7d5ec16bb745515904221d6dd683314c966df78"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 11 pass in the recorded run; the crate suite they belong to killed 32 of 32 eligible grounding mutants.",
+      "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T09:54:56Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v3-test.run.json",
+        "sha256": "c91d7f0096a4bf4a60282222ae369bd98ba0bdb61a3477a259542e8defdcba79",
+        "note": "97 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v3-clippy.run.json",
+        "sha256": "2cb3d6973959966fc68a232c795137b2af538e8091188265c42e03c33e1f998f",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v3-fmt.run.json",
+        "sha256": "662a91eb9c31ff5b5b2ef2e0da47bbec7d20de292ae6c62bc1ee09392bd8f384",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v3-metrics.run.json",
+        "sha256": "61402cc961ac77c8ef2baa0c99685bb989cdc3a37a254d3c1d14d2f30c9d330d",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v3-metrics.json",
+        "sha256": "71d6ba047df075a29edc4ceaaac890216ed0356e8290120ac8f0418d7bc976be",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}
