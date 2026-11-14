@@ -4,6 +4,9 @@ The assertions read the host's outcomes. Nothing in this file judges an answer.
 """
 
 import json
+import os
+import subprocess
+import sys
 from copy import deepcopy
 
 import pytest
@@ -65,8 +68,12 @@ def entries(ledger):
 
 
 def cli(capsys, *argv):
+    """Run the command; its output is one line of sorted ASCII JSON."""
     code = bridge.main([str(part) for part in argv])
-    return code, json.loads(capsys.readouterr().out)
+    out = capsys.readouterr().out
+    shown = json.loads(out)
+    assert out == json.dumps(shown, ensure_ascii=True, sort_keys=True) + "\n"
+    return code, shown
 
 
 @pytest.fixture
@@ -95,14 +102,14 @@ def arms(tmp_path, ledger, values, baseline, treated, name):
 
 def test_the_host_records_the_failures_of_a_run_and_nothing_else(tmp_path, capsys):
     ledger = tmp_path / "failures.jsonl"
-    wrong = wf1_run(tmp_path / "wrong", task([17, 25, -4]), 46)
+    wrong = wf1_run(tmp_path / "wrong_é", task([17, 25, -4]), 46)
     right = wf1_run(tmp_path / "right", task([17, 25, -4]), 38)
     code, rows = cli(capsys, "record", ledger, wrong, right)
     assert code == 0
-    assert statuses(rows) == [("wrong", "PASS", None), ("right", "REFUSED", "NOT_A_FAILURE")]
+    assert statuses(rows) == [("wrong_é", "PASS", None), ("right", "REFUSED", "NOT_A_FAILURE")]
     record = rows[0]["entry"]["result"]["record"]
-    assert (record["workflow"], record["run"], record["ddc_trace"]) == ("WF1", "wrong", "M")
-    assert record["id"].endswith("@wrong") and "entry" not in rows[1]
+    assert (record["workflow"], record["run"], record["ddc_trace"]) == ("WF1", "wrong_é", "M")
+    assert record["id"].endswith("@wrong_é") and "entry" not in rows[1]
     assert entries(ledger) == 1
     # A run already in the ledger is refused there and adds no line.
     code, rows = cli(capsys, "record", ledger, wrong)
@@ -236,6 +243,23 @@ def test_wf2_wf3_and_wf4_run_a_loaded_task_and_wf5_refuses_its_seed(tmp_path, pr
     # WF5 reads one seed language and ignores no suffix: a seed with rules is outside it.
     result = wf5_runner.run(four, tmp_path / "five", gateway_factory=wf5_factory([]))
     assert (result["status"], result["failure_class"]) == ("TYPED_REFUSAL", "WF5_UNSUPPORTED_SEED_LANGUAGE")
+
+
+def test_a_command_line_that_names_no_work_is_a_usage_error(tmp_path):
+    for argv in (
+        [],
+        ["load", "ledger.jsonl", "task.json"],
+        ["trial", "ledger.jsonl", "rule"],
+    ):
+        with pytest.raises(SystemExit) as stopped:
+            bridge.main(argv)
+        assert stopped.value.code == 2
+    # Run as a module, the command's exit code is the process's.
+    done = subprocess.run(  # noqa: S603
+        [sys.executable, "-m", "pfp.workflows.failure_ledger", "check", "none.jsonl"],
+        capture_output=True, check=False, cwd=tmp_path, env={**os.environ, "PYTHONPATH": os.pathsep.join(sys.path)},
+    )
+    assert done.returncode == 2 and b"usage:" in done.stderr
 
 
 def test_the_command_exits_2_when_the_host_did_not_run(tmp_path, monkeypatch, capsys):
