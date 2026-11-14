@@ -1,4 +1,4 @@
-# Workflow families WF6-WF49, WF51, WF55 and WF56
+# Workflow families WF6-WF49, WF51 and WF55-WF57
 
 Each family is one class in `pfp_core/workflow_families/` on a shared runtime: one spec, one budget per run, one host check that alone can certify, and offline fixtures that must be accepted or refused. WF1-WF5 keep their own runners (see [Workflows](workflows.md)).
 
@@ -25,6 +25,7 @@ python -m pfp_core.workflow_families check-all
 | [WF38](workflow_wf38.md) | Diagnostic-trace proposal selection | 3 | WF9 | `host_recomputed_defect_ranking` |
 | [WF46](workflow_wf46.md) | Boundary sufficiency and gluing diagnostic | 3 | WF4 | `glued_trace_global_evaluator` |
 | [WF47](workflow_wf47.md) | Resumable bounded frontier search | 3 | WF9 | `sign_gauge_checkpoint_chain` |
+| [WF57](workflow_wf57.md) | Host-tested patch repair | 3 | WF9, WF56 | `rust_patch_tested_on_working_copy` |
 | [WF6](workflow_wf6.md) | Dialect sweep | 4 | WF5 | `dialect_query_preservation_sweep` |
 | [WF8](workflow_wf8.md) | Staged sealed packets | 4 | WF2, WF5 | `stage_seal_chain_recompute` |
 | [WF16](workflow_wf16.md) | Substrate crosswalk | 4 | WF5, WF10 | `incidence_rank_crosswalk` |

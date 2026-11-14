@@ -1,0 +1,30 @@
+{
+  "run_key": "paper-example-1",
+  "objective": "adjust(2) must be 3 and adjust(-2) must stay -2.",
+  "sources": {
+    "adjust.py": "25ee73a46db0bacde94b0779c274ee649a88e0533d36931482bcaae90944ecd9"
+  },
+  "write_paths": [
+    "adjust.py"
+  ],
+  "checks": [
+    {
+      "check_id": "positive",
+      "argv": [
+        "python",
+        "-c",
+        "from adjust import adjust; assert adjust(2) == 3"
+      ]
+    },
+    {
+      "check_id": "control",
+      "argv": [
+        "python",
+        "-c",
+        "from adjust import adjust; assert adjust(-2) == -2"
+      ]
+    }
+  ],
+  "candidate_patch": "--- a/adjust.py\n+++ b/adjust.py\n@@ -4 +4 @@\n-    return n - 1\n+    return n + 1\n",
+  "workflow": "WF57"
+}
