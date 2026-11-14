@@ -5,8 +5,8 @@
   "target_sha256": "a659070eb2fdbbe1e205843bb75331d0e6a80c0a34fa8abd7eb26ba5e5ee3dc8",
   "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
   "counts": {
-    "killed": 38,
-    "survived": 6,
+    "killed": 44,
+    "survived": 0,
     "demonstrably_equivalent": 1,
     "invalid": 0,
     "inconclusive": 0,
@@ -47,7 +47,7 @@
       "name": "any text under source is exempt",
       "old": "[.., a, b] if a == \"source\" && b == \"quote\"",
       "new": "[.., a, _] if a == \"source\"",
-      "outcome": "survived"
+      "outcome": "killed"
     },
     {
       "name": "lists are not walked",
@@ -137,7 +137,7 @@
       "name": "one known witness is enough",
       "old": "        if !op.witness_refs.iter().all(known) {",
       "new": "        if !op.witness_refs.is_empty() && !op.witness_refs.iter().any(known) {",
-      "outcome": "survived"
+      "outcome": "killed"
     },
     {
       "name": "task_result is not a known witness",
@@ -167,7 +167,7 @@
       "name": "coverage asked of every checker",
       "old": "    if !grounded.is_empty() && !slots.iter().eq(grounded.iter()) {",
       "new": "    if !slots.iter().eq(grounded.iter()) {",
-      "outcome": "survived"
+      "outcome": "killed"
     },
     {
       "name": "extra guidance slots accepted",
@@ -209,7 +209,7 @@
       "name": "duplicate points at the last copy",
       "old": "                .position(|earlier| earlier == op)",
       "new": "                .rposition(|earlier| earlier == op)",
-      "outcome": "survived"
+      "outcome": "killed"
     },
     {
       "name": "a later copy counts as a duplicate",
@@ -245,7 +245,7 @@
       "name": "reuse ignores the source colours",
       "old": "    Some((sources?, op.get(\"target_colour\")?.as_str()?, arity))",
       "new": "    Some((sources.map(|_| Vec::new())?, op.get(\"target_colour\")?.as_str()?, arity))",
-      "outcome": "survived"
+      "outcome": "killed"
     },
     {
       "name": "reuse ignores the arity",
@@ -275,7 +275,7 @@
       "name": "reuse request left open",
       "old": "#[derive(Deserialize)]\n#[serde(deny_unknown_fields)]\nstruct ReuseRequest {",
       "new": "#[derive(Deserialize)]\nstruct ReuseRequest {",
-      "outcome": "survived"
+      "outcome": "killed"
     },
     {
       "name": "number token not recognised",
