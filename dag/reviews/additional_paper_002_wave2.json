@@ -1,0 +1,126 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md",
+      "sha256": "b8e22dcd0506a6a5707bcc706b924df043e363ae1b024430cd3db4a999196734",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          446
+        ]
+      ],
+      "assessment": "Reviewed Section 6 (Fock-space carrier, outgoing hop bounds, path weight bounds, and absolute convergence) and Section 7 (native binary refusal behavior and typed error handling)."
+    },
+    {
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
+      "sha256": "e147c06f6168a563e6af12357da9fe5b44f641ee518974c2deaf7c9612f7b1ad",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          67
+        ]
+      ],
+      "assessment": "Reviewed claim rows PFP002-11 (native sign-graph refusal non-replacement) and PFP002-12 (rooted-path expansion absolute convergence)."
+    },
+    {
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/native_sign_graph.py",
+      "sha256": "dd21fe331fc95f1bf239fb2bf11c7c3dc60d6d96f01841da06a6d1d9bcc6c876",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          225
+        ]
+      ],
+      "assessment": "Reviewed subprocess invocation, NativeSignGraphRefused on non-PASS or nonzero exit, NativeSignGraphUnavailable on malformed JSON or invalid witness structures, and strict absence of Python fallback."
+    },
+    {
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_native_refusals.py",
+      "sha256": "91f21a49b2692a0eb9c339fed9a565877a8a9bfa6f074f2182a564f5606832d3",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          86
+        ]
+      ],
+      "assessment": "Reviewed test_python_classifier_runs_only_without_a_binary, test_native_refusal_is_not_replaced, test_malformed_native_output_is_not_replaced, and test_malformed_native_witness_is_typed_and_not_replaced."
+    },
+    {
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/exact_fock_gap.py",
+      "sha256": "8fc09a9ae7d74eadd890a7827f0f3c9b53cc77cab09c9c16c0efde31fe2c2d67",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          101
+        ]
+      ],
+      "assessment": "Reviewed 64 occupation states, hopping amplitude calculation, 3-hop carrier enumeration, diagonal energy nonnegativity 0 <= E <= 6, and alternating-series exponential bounds."
+    },
+    {
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/fock_path_enumerator.py",
+      "sha256": "3fa45c742589ec938067c372b35e3876adf0e3227eb898a91d5258aa4d6a4830",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          302
+        ]
+      ],
+      "assessment": "Reviewed triangle carrier construction, rooted hopping path enumeration, energy tracking, and simplex integral weight estimation."
+    },
+    {
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_exact_fock_gap.py",
+      "sha256": "51a495d617c1a78283eac93ae1b67300b97051f9c70bee698b27ab8781f130b8",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          67
+        ]
+      ],
+      "assessment": "Reviewed test_exact_gap_covers_every_length_class and test_alternating_bounds_nest_without_numeric_exponentials."
+    }
+  ],
+  "claims": [
+    {
+      "id": "PAPER002-NATIVE-REFUSAL-PROPAGATION",
+      "statement": "When a native sign-graph executable is found, its refusals and malformed outputs raise typed errors and are never replaced by a Python answer.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Presence of a configured or compiled solve_sign_graph executable in native_sign_graph.find_binary.",
+        "Typed exception classes NativeSignGraphRefused and NativeSignGraphUnavailable in native_sign_graph.py."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/native_sign_graph.py",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_native_refusals.py",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md"
+      ],
+      "limits": "Applies to transport and refusal propagation in native_sign_graph.py; does not verify formal correctness of the external binary or provide platform-independent compilation promises."
+    },
+    {
+      "id": "PAPER002-ROOTED-PATH-ABSOLUTE-CONVERGENCE",
+      "statement": "The integrated rooted-path expansion on the specified triangle carrier converges absolutely for beta >= 0, with total absolute weight bounded by 64 * exp(4 * beta).",
+      "status": "mathematical_derivation_and_bound_support",
+      "dependencies": [
+        "Finite 3-site triangle Fock space with 64 occupation states and at most 4 outgoing single-particle hops per state.",
+        "Nonnegative diagonal occupation energies E(x) >= 0 bounding simplex time integrals by beta^n / n!."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/exact_fock_gap.py",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/fock_path_enumerator.py",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_exact_fock_gap.py"
+      ],
+      "limits": "Applies to the specified finite triangle carrier and nonnegative beta; neither a total-tail bound of 1/6144 nor an algorithmic sampling-efficiency claim."
+    }
+  ]
+}

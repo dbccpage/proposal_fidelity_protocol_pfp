@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-11-14T22:52:18.264862+00:00",
+  "generated_at_utc": "2026-11-14T23:31:38.826666+00:00",
   "repository": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp",
   "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
   "status": "in_progress",
@@ -170,6 +170,7 @@
     "dag/reviews/additional_native_systems.json",
     "dag/reviews/additional_native_systems_02.json",
     "dag/reviews/additional_native_systems_03.json",
+    "dag/reviews/additional_note001_wave2.json",
     "dag/reviews/additional_note_001_review.json",
     "dag/reviews/additional_operad_patterns_remaining.json",
     "dag/reviews/additional_operad_patterns_supporting_sources.json",
@@ -186,8 +187,10 @@
     "dag/reviews/additional_paper_001_support.json",
     "dag/reviews/additional_paper_002_support.json",
     "dag/reviews/additional_paper_002_wave1.json",
+    "dag/reviews/additional_paper_002_wave2.json",
     "dag/reviews/additional_paper_003_review.json",
     "dag/reviews/additional_paper_003_support.json",
+    "dag/reviews/additional_paper_003_wave2.json",
     "dag/reviews/additional_paper_004_support.json",
     "dag/reviews/additional_paper_005_support.json",
     "dag/reviews/additional_paper_006_support.json",
@@ -7427,6 +7430,61 @@
       "atlas_ledger_id": "ATL-D-NATIVE03-FIXTURES-011"
     },
     {
+      "id": "AUDIT-N001-002",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "On the integer 3-cycle, a gauge-fixed potential satisfies |f| <= C ||df||_{1,w} with C = 1/min(w) under positive integer weights.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Integer 3-cycle graph topology with positive integer weights.",
+        "Gauge fixing condition f_0 = 0.",
+        "Path bound expressing vertex potentials via accumulated edge coboundary differences."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t01_attainment.lean"
+      ],
+      "limits": "Formulated for the discrete integer 3-cycle with positive integer weights; does not claim arbitrary infinite complexes or non-gauge-fixed potentials.",
+      "atlas_ledger_id": "ATL-D-AUDIT-N001-002"
+    },
+    {
+      "id": "AUDIT-N001-004",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "On Z^3 with positive weights ||x|| = sum w_e |x_e| is positive definite, and residual representatives add subadditively; zero weight is refused.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Three-edge integer cochain space with positive integer weights.",
+        "Termwise triangle inequality on absolute values.",
+        "Linearity of the coboundary and residual operators under potential addition."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t02_quotient_norm.lean"
+      ],
+      "limits": "Applies to ambient cochain norm and supplied residual representatives; does not define the minimized quotient norm.",
+      "atlas_ledger_id": "ATL-D-AUDIT-N001-004"
+    },
+    {
+      "id": "AUDIT-N001-005",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For a finite graph with positive weights and conjugate exponents 1/p + 1/q = 1, strong Fenchel-Rockafellar duality establishes Phi_p(c) = max { <y, c> : d_0^T y = 0, ||y||_{q, w^*} <= 1 } with zero duality gap.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite graph with strictly positive edge weights.",
+        "Quotient infimum attainment on the gauge-fixed complement (AUDIT-N001-001).",
+        "Finite-dimensional Fenchel-Rockafellar convex duality theorem."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t03_weak_duality.lean",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_lp_duality.lean"
+      ],
+      "limits": "Applies to finite graphs with positive weights; zero duality gap relies on finite dimensionality and non-empty interior of the continuous primal norm domain.",
+      "atlas_ledger_id": "ATL-D-AUDIT-N001-005"
+    },
+    {
       "id": "AUDIT-N001-001",
       "kind": "mathematical_or_implementation_claim",
       "statement": "For a finite graph with strictly positive edge weights and p in [1, inf], the quotient infimum inf_f ||c - df||_{p,w} is attained.",
@@ -11108,6 +11166,43 @@
       "atlas_ledger_id": "ATL-D-PAPER002-SINGLE-SNAPSHOT-HASHING"
     },
     {
+      "id": "PAPER002-NATIVE-REFUSAL-PROPAGATION",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "When a native sign-graph executable is found, its refusals and malformed outputs raise typed errors and are never replaced by a Python answer.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Presence of a configured or compiled solve_sign_graph executable in native_sign_graph.find_binary.",
+        "Typed exception classes NativeSignGraphRefused and NativeSignGraphUnavailable in native_sign_graph.py."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/native_sign_graph.py",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_native_refusals.py",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md"
+      ],
+      "limits": "Applies to transport and refusal propagation in native_sign_graph.py; does not verify formal correctness of the external binary or provide platform-independent compilation promises.",
+      "atlas_ledger_id": "ATL-D-PAPER002-NATIVE-REFUSAL-PROPAGATION"
+    },
+    {
+      "id": "PAPER002-ROOTED-PATH-ABSOLUTE-CONVERGENCE",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The integrated rooted-path expansion on the specified triangle carrier converges absolutely for beta >= 0, with total absolute weight bounded by 64 * exp(4 * beta).",
+      "status": "mathematical_derivation_and_bound_support",
+      "dependencies": [
+        "Finite 3-site triangle Fock space with 64 occupation states and at most 4 outgoing single-particle hops per state.",
+        "Nonnegative diagonal occupation energies E(x) >= 0 bounding simplex time integrals by beta^n / n!."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/exact_fock_gap.py",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/fock_path_enumerator.py",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_exact_fock_gap.py"
+      ],
+      "limits": "Applies to the specified finite triangle carrier and nonnegative beta; neither a total-tail bound of 1/6144 nor an algorithmic sampling-efficiency claim.",
+      "atlas_ledger_id": "ATL-D-PAPER002-ROOTED-PATH-ABSOLUTE-CONVERGENCE"
+    },
+    {
       "id": "AUDIT-P003-001",
       "kind": "mathematical_or_implementation_claim",
       "statement": "The Demo 3 host decrements remaining fuel by one before processing each batch, restores semantic state (covered elements, witness candidate, and phase) on batch refusal, and retains the fuel decrement.",
@@ -11173,6 +11268,44 @@
       ],
       "limits": "Charged batches only; no total bytes/time/money bound, witness certificate, authenticated producer or native/Python refinement proof.",
       "atlas_ledger_id": "ATL-D-PAPER003-PACKAGE-ROLLBACK-BOUNDARY"
+    },
+    {
+      "id": "AUDIT-P003-002",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For every nonempty declared route (odd, cochain, ...) the baseline verify_route returns NO_NATIVE_PORT and certifies no witness.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Repository verify_route implementation refusing non-empty routes with NO_NATIVE_PORT.",
+        "Host execution environment where uncertified routes fail to populate certificate or terminal exit."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/host_engine.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py",
+        "pfp/infrastructure/adapters/mssn_scenarios/protocol.py"
+      ],
+      "limits": "Applies strictly to declared routes within the repository and package host fixtures; does not establish native verifier availability or absence of external verification ports.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P003-002"
+    },
+    {
+      "id": "AUDIT-P003-003",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "At the baseline: a move after VERIFY or a malformed element id is refused and rolled back; an empty batch is charged and recorded ACCEPTED; with fuel 0 the next batch is recorded FUEL_EXHAUSTED and phase becomes TERMINAL.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Baseline Demo3HostEngine state machine executing batch transactions under pre-decrement fuel accounting.",
+        "Baseline transaction loop where empty moves list bypasses validation failures and commits as ACCEPTED."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/host_engine.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py",
+        "pfp/infrastructure/adapters/mssn_scenarios/protocol.py"
+      ],
+      "limits": "Specific to the baseline repository host adapter; package re-implementation intentionally contrasts by refusing empty batches with REJECT_EMPTY_BATCH.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P003-003"
     },
     {
       "id": "PAPER004-FINITE-EXACT-WITNESS",
@@ -35581,6 +35714,60 @@
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
+      "id": "ASSUMPTION-a5003ceee4b9a27c",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Integer 3-cycle graph topology with positive integer weights.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-dc4d4ca2774348bc",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Gauge fixing condition f_0 = 0.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-cf457294afc1a3c9",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Path bound expressing vertex potentials via accumulated edge coboundary differences.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-d39f0440bf7538df",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Three-edge integer cochain space with positive integer weights.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-7503a765bf3e2d50",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Termwise triangle inequality on absolute values.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-92aadf8c8994b84d",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Linearity of the coboundary and residual operators under potential addition.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-6376bcc245cf5987",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Finite graph with strictly positive edge weights.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-6bf054099db093b3",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Quotient infimum attainment on the gauge-fixed complement (AUDIT-N001-001).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-7d22c020b79bd9fe",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Finite-dimensional Fenchel-Rockafellar convex duality theorem.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
       "id": "ASSUMPTION-aaf8dac8c78af92e",
       "kind": "explicit_assumption_or_obligation",
       "statement": "Finite connected graph with positive edge weights.",
@@ -35596,12 +35783,6 @@
       "id": "ASSUMPTION-b2607f73fcaafda3",
       "kind": "explicit_assumption_or_obligation",
       "statement": "Weierstrass extreme value theorem on compact sublevel sets.",
-      "status": "requires_evidence_not_discharged_by_this_edge"
-    },
-    {
-      "id": "ASSUMPTION-6376bcc245cf5987",
-      "kind": "explicit_assumption_or_obligation",
-      "statement": "Finite graph with strictly positive edge weights.",
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
@@ -35995,6 +36176,30 @@
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
+      "id": "ASSUMPTION-f6bcfd15ffd423c1",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Presence of a configured or compiled solve_sign_graph executable in native_sign_graph.find_binary.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-7e6be1b1f70f321b",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Typed exception classes NativeSignGraphRefused and NativeSignGraphUnavailable in native_sign_graph.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-199c1c1e3bb17ed5",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Finite 3-site triangle Fock space with 64 occupation states and at most 4 outgoing single-particle hops per state.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-b56bb5db53521270",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Nonnegative diagonal occupation energies E(x) >= 0 bounding simplex time integrals by beta^n / n!.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
       "id": "ASSUMPTION-e2095314edd33811",
       "kind": "explicit_assumption_or_obligation",
       "statement": "Demo 3 host engine state machine initialized with positive integer fuel in a non-terminal phase.",
@@ -36004,6 +36209,30 @@
       "id": "ASSUMPTION-7d2e042868e55d95",
       "kind": "explicit_assumption_or_obligation",
       "statement": "Batch processing executes with pre-decrement fuel accounting and snapshot-based atomic semantic rollback.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-30fa269490794596",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Repository verify_route implementation refusing non-empty routes with NO_NATIVE_PORT.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-ea3fcb74de423602",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Host execution environment where uncertified routes fail to populate certificate or terminal exit.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-918d5f8a6d932844",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Baseline Demo3HostEngine state machine executing batch transactions under pre-decrement fuel accounting.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-622049f2eb95156c",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Baseline transaction loop where empty moves list bypasses validation failures and commits as ACCEPTED.",
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
@@ -42517,6 +42746,20 @@
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
+      "id": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t03_weak_duality.lean",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t03_weak_duality.lean",
+      "sha256": "e224ec2cbb86e04e5273fe4cc0c878ebc318b0f47bbaca9766db3ef79ace78db",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_lp_duality.lean",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_lp_duality.lean",
+      "sha256": "2345e92fc04c970d7b7ead72e381aed21c75bebe1165226f5f2d6bf6e30d208c",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
       "id": "SOURCE:operads/patterns/helpful/rust/hp_rs_007_explicit_boundary_completion.md",
       "kind": "pinned_source_file",
       "path": "operads/patterns/helpful/rust/hp_rs_007_explicit_boundary_completion.md",
@@ -43468,6 +43711,41 @@
       "kind": "pinned_source_file",
       "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/PROVENANCE.md",
       "sha256": "a3e0c35a121f9f7cd76db6270d9d703db477d388779acb58295de75fd683cd68",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/native_sign_graph.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/native_sign_graph.py",
+      "sha256": "dd21fe331fc95f1bf239fb2bf11c7c3dc60d6d96f01841da06a6d1d9bcc6c876",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_native_refusals.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_native_refusals.py",
+      "sha256": "91f21a49b2692a0eb9c339fed9a565877a8a9bfa6f074f2182a564f5606832d3",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/exact_fock_gap.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/exact_fock_gap.py",
+      "sha256": "8fc09a9ae7d74eadd890a7827f0f3c9b53cc77cab09c9c16c0efde31fe2c2d67",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/fock_path_enumerator.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/fock_path_enumerator.py",
+      "sha256": "3fa45c742589ec938067c372b35e3876adf0e3227eb898a91d5258aa4d6a4830",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_exact_fock_gap.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_exact_fock_gap.py",
+      "sha256": "51a495d617c1a78283eac93ae1b67300b97051f9c70bee698b27ab8781f130b8",
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
@@ -51613,11 +51891,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
+        "verdict": "matched",
+        "nodes": [
+          "PAPER002-NATIVE-REFUSAL-PROPAGATION"
+        ],
         "relation": null,
-        "note": "No node records non-replacement of native sign-graph refusals.",
-        "proposed_derivation_file": "dag/derivations/atl_p002_011.md"
+        "note": "PAPER002-NATIVE-REFUSAL-PROPAGATION derives that when a native sign-graph executable is found, its refusals and malformed outputs raise typed errors and are never replaced by a Python answer."
       }
     },
     {
@@ -51641,11 +51920,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
+        "verdict": "matched",
+        "nodes": [
+          "PAPER002-ROOTED-PATH-ABSOLUTE-CONVERGENCE"
+        ],
         "relation": null,
-        "note": "No node derives absolute convergence of the rooted-path expansion.",
-        "proposed_derivation_file": "dag/derivations/atl_p002_012.md"
+        "note": "PAPER002-ROOTED-PATH-ABSOLUTE-CONVERGENCE derives that the integrated rooted-path expansion on the specified triangle carrier converges absolutely for beta >= 0 with total absolute weight bounded by 64 * exp(4 * beta)."
       }
     },
     {
@@ -51698,13 +51978,13 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PAPER003-PACKAGE-ROLLBACK-BOUNDARY"
+          "PAPER003-PACKAGE-ROLLBACK-BOUNDARY",
+          "AUDIT-P003-002"
         ],
-        "relation": "narrows",
-        "note": "The node states NO_NATIVE_PORT for every declared route of the package host; the baseline repository verify_route is not covered.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_002.md"
+        "relation": null,
+        "note": "Audited baseline route verification: verify_route returns NO_NATIVE_PORT and certifies no witness for any nonempty declared route."
       }
     },
     {
@@ -51728,11 +52008,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P003-003"
+        ],
         "relation": null,
-        "note": "No node records the baseline host's VERIFY-ordering, malformed-id, empty-batch ACCEPTED and FUEL_EXHAUSTED/TERMINAL behaviour.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_003.md"
+        "note": "Audited baseline host state machine transitions: move-after-VERIFY refusal and rollback, malformed element ID rollback, charging and accepting empty batches, and transition to TERMINAL with FUEL_EXHAUSTED at fuel 0."
       }
     },
     {
@@ -59873,11 +60154,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N001-002"
+        ],
         "relation": null,
-        "note": "No node records 3-cycle coercivity.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_002.md"
+        "note": "On the integer 3-cycle, a gauge-fixed potential satisfies |f| <= C ||df||_{1,w} with C = 1/min(w) under positive integer weights, establishing coercivity on the gauge-fixed complement; certified by AUDIT-N001-002."
       }
     },
     {
@@ -59930,11 +60212,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N001-004"
+        ],
         "relation": null,
-        "note": "Integer three-edge norm axioms not recorded in any node.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_004.md"
+        "note": "On Z^3 with positive weights ||x|| = sum w_e |x_e| is positive definite, and residual representatives add subadditively; zero weight is refused; certified by AUDIT-N001-004."
       }
     },
     {
@@ -59958,14 +60241,14 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
           "ROUT-C008",
-          "AC1120-C011"
+          "AC1120-C011",
+          "AUDIT-N001-005"
         ],
-        "relation": "narrows",
-        "note": "Nodes give only $p=1$ weak duality, not Hölder duality for all $p$.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_005.md"
+        "relation": null,
+        "note": "Fenchel-Rockafellar Hölder duality establishes strong duality Phi_p(c) = max { <y, c> : d0^T y = 0, ||y||_{q, w^*} <= 1 } with zero duality gap for all p in [1, inf] with conjugate exponent q = p/(p-1) on finite graphs under strictly positive weights; extends p=1 weak duality from ROUT-C008 and AC1120-C011 via AUDIT-N001-005."
       }
     },
     {
@@ -69703,6 +69986,51 @@
       "kind": "requires"
     },
     {
+      "from": "ASSUMPTION-a5003ceee4b9a27c",
+      "to": "AUDIT-N001-002",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-dc4d4ca2774348bc",
+      "to": "AUDIT-N001-002",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-cf457294afc1a3c9",
+      "to": "AUDIT-N001-002",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-d39f0440bf7538df",
+      "to": "AUDIT-N001-004",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-7503a765bf3e2d50",
+      "to": "AUDIT-N001-004",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-92aadf8c8994b84d",
+      "to": "AUDIT-N001-004",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-6376bcc245cf5987",
+      "to": "AUDIT-N001-005",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-6bf054099db093b3",
+      "to": "AUDIT-N001-005",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-7d22c020b79bd9fe",
+      "to": "AUDIT-N001-005",
+      "kind": "requires"
+    },
+    {
       "from": "ASSUMPTION-aaf8dac8c78af92e",
       "to": "AUDIT-N001-001",
       "kind": "requires"
@@ -70078,6 +70406,26 @@
       "kind": "requires"
     },
     {
+      "from": "ASSUMPTION-f6bcfd15ffd423c1",
+      "to": "PAPER002-NATIVE-REFUSAL-PROPAGATION",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-7e6be1b1f70f321b",
+      "to": "PAPER002-NATIVE-REFUSAL-PROPAGATION",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-199c1c1e3bb17ed5",
+      "to": "PAPER002-ROOTED-PATH-ABSOLUTE-CONVERGENCE",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-b56bb5db53521270",
+      "to": "PAPER002-ROOTED-PATH-ABSOLUTE-CONVERGENCE",
+      "kind": "requires"
+    },
+    {
       "from": "ASSUMPTION-e2095314edd33811",
       "to": "AUDIT-P003-001",
       "kind": "requires"
@@ -70085,6 +70433,26 @@
     {
       "from": "ASSUMPTION-7d2e042868e55d95",
       "to": "AUDIT-P003-001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-30fa269490794596",
+      "to": "AUDIT-P003-002",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-ea3fcb74de423602",
+      "to": "AUDIT-P003-002",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-918d5f8a6d932844",
+      "to": "AUDIT-P003-003",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-622049f2eb95156c",
+      "to": "AUDIT-P003-003",
       "kind": "requires"
     },
     {
@@ -76941,6 +77309,66 @@
     },
     {
       "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+      "to": "AUDIT-N001-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+      "to": "AUDIT-N001-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t01_attainment.lean",
+      "to": "AUDIT-N001-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t01_attainment.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+      "to": "AUDIT-N001-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+      "to": "AUDIT-N001-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t02_quotient_norm.lean",
+      "to": "AUDIT-N001-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t02_quotient_norm.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+      "to": "AUDIT-N001-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+      "to": "AUDIT-N001-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t03_weak_duality.lean",
+      "to": "AUDIT-N001-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t03_weak_duality.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_lp_duality.lean",
+      "to": "AUDIT-N001-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_lp_duality.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
       "to": "AUDIT-N001-001",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md"
@@ -79269,6 +79697,60 @@
       "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md"
     },
     {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/native_sign_graph.py",
+      "to": "PAPER002-NATIVE-REFUSAL-PROPAGATION",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/native_sign_graph.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_native_refusals.py",
+      "to": "PAPER002-NATIVE-REFUSAL-PROPAGATION",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_native_refusals.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md",
+      "to": "PAPER002-NATIVE-REFUSAL-PROPAGATION",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
+      "to": "PAPER002-NATIVE-REFUSAL-PROPAGATION",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md",
+      "to": "PAPER002-ROOTED-PATH-ABSOLUTE-CONVERGENCE",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
+      "to": "PAPER002-ROOTED-PATH-ABSOLUTE-CONVERGENCE",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/exact_fock_gap.py",
+      "to": "PAPER002-ROOTED-PATH-ABSOLUTE-CONVERGENCE",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/exact_fock_gap.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/fock_path_enumerator.py",
+      "to": "PAPER002-ROOTED-PATH-ABSOLUTE-CONVERGENCE",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/fock_path_enumerator.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_exact_fock_gap.py",
+      "to": "PAPER002-ROOTED-PATH-ABSOLUTE-CONVERGENCE",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_exact_fock_gap.py"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
       "to": "AUDIT-P003-001",
       "kind": "source_evidence_not_automatic_proof",
@@ -79345,6 +79827,66 @@
       "to": "PAPER003-PACKAGE-ROLLBACK-BOUNDARY",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "papers/pfp/003_pfp_host_admitted_failure_detectors/code/rust/src/host.rs"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+      "to": "AUDIT-P003-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+      "to": "AUDIT-P003-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/host_engine.py",
+      "to": "AUDIT-P003-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/host_engine.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py",
+      "to": "AUDIT-P003-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py"
+    },
+    {
+      "from": "SOURCE:pfp/infrastructure/adapters/mssn_scenarios/protocol.py",
+      "to": "AUDIT-P003-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/infrastructure/adapters/mssn_scenarios/protocol.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+      "to": "AUDIT-P003-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+      "to": "AUDIT-P003-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/host_engine.py",
+      "to": "AUDIT-P003-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/host_engine.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py",
+      "to": "AUDIT-P003-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py"
+    },
+    {
+      "from": "SOURCE:pfp/infrastructure/adapters/mssn_scenarios/protocol.py",
+      "to": "AUDIT-P003-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/infrastructure/adapters/mssn_scenarios/protocol.py"
     },
     {
       "from": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper.md",
@@ -98632,10 +99174,22 @@
       "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md:26"
     },
     {
+      "from": "PAPER002-NATIVE-REFUSAL-PROPAGATION",
+      "to": "ATL-P002-011",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
       "to": "ATL-P002-012",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md:27"
+    },
+    {
+      "from": "PAPER002-ROOTED-PATH-ABSOLUTE-CONVERGENCE",
+      "to": "ATL-P002-012",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
@@ -98658,7 +99212,13 @@
     {
       "from": "PAPER003-PACKAGE-ROLLBACK-BOUNDARY",
       "to": "ATL-P003-002",
-      "kind": "narrows",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "AUDIT-P003-002",
+      "to": "ATL-P003-002",
+      "kind": "states_same_claim_as",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
@@ -98666,6 +99226,12 @@
       "to": "ATL-P003-003",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:18"
+    },
+    {
+      "from": "AUDIT-P003-003",
+      "to": "ATL-P003-003",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
@@ -101278,6 +101844,12 @@
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:14"
     },
     {
+      "from": "AUDIT-N001-002",
+      "to": "ATL-N001-002",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-003",
       "kind": "source_evidence_not_automatic_proof",
@@ -101296,6 +101868,12 @@
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:16"
     },
     {
+      "from": "AUDIT-N001-004",
+      "to": "ATL-N001-004",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-005",
       "kind": "source_evidence_not_automatic_proof",
@@ -101304,13 +101882,19 @@
     {
       "from": "ROUT-C008",
       "to": "ATL-N001-005",
-      "kind": "narrows",
+      "kind": "states_same_claim_as",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "AC1120-C011",
       "to": "ATL-N001-005",
-      "kind": "narrows",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "AUDIT-N001-005",
+      "to": "ATL-N001-005",
+      "kind": "states_same_claim_as",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
@@ -154270,8 +154854,8 @@
     "Audit native implementations and claimed Lean correspondence at pinned source."
   ],
   "graph_validation": {
-    "unique_nodes": 3652,
-    "edges": 3857,
+    "unique_nodes": 3682,
+    "edges": 3910,
     "acyclic": true
   }
 }
