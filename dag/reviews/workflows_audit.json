@@ -4511,6 +4511,81 @@
         "pilot_test_sources": [],
         "file_count": 2,
         "runner_class": "HostRunOperadCandidates"
+      },
+      {
+        "id": "WF57",
+        "name": "Host-tested patch repair",
+        "status": "implemented",
+        "kind": "procedure_extension",
+        "merge_into": null,
+        "depends_on": [
+          "WF9",
+          "WF56"
+        ],
+        "layer": 3,
+        "sources": [
+          "docs/plans/operads_redesign.md slice 3: a supplied patch tested by the host on a working copy",
+          "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md section 4: the worked example"
+        ],
+        "task_families": [
+          "text_file_repair_with_exit_code_checks"
+        ],
+        "source_evidence": "Offline fixtures only; no model campaign.",
+        "process": [
+          "One reply gives a unified diff for files in the task's write set",
+          "The host verifies each declared file against its SHA-256 and copies the files to a new run folder",
+          "The host runs every check command on the copy and records each exit code",
+          "The host applies the patch to the copy, only inside the write set and only where each hunk fits exactly",
+          "The host runs every check again and compares the checks that fail before and after",
+          "The host confirms the declared files still have their declared hashes",
+          "A patch that was tested and did not repair leaves a failure record, which the host appends to the failure ledger"
+        ],
+        "math": [
+          "F0 = the checks with a nonzero exit before the patch, F1 = the checks with a nonzero exit after it",
+          "outcome, tested in this order: NO_REPAIR_NEEDED iff F0 is empty; REGRESSION iff F1 is not a subset of F0; REPAIRED iff F1 is empty; PARTIAL iff |F1| < |F0|; else INEFFECTIVE",
+          "certified iff the outcome is REPAIRED and every declared file still has its declared SHA-256",
+          "failure class: StructuralNonFit for a patch that is malformed or outside the write set, BoundaryLeakage on REGRESSION, CounterfeitExactness on PARTIAL or INEFFECTIVE"
+        ],
+        "host_check": "Rust test of a supplied patch on a working copy, by the task's check commands before and after (pfp_operad repair)",
+        "model_calls_normal_path": "1",
+        "team": {
+          "goal": "A patch the host applied to a copy of the task's files and found to make every failing check pass without breaking a passing one.",
+          "pattern": "solo",
+          "roles": [
+            {
+              "role": "coder",
+              "model_tier": "sonnet",
+              "count": 1,
+              "task": "Write one unified diff for the files in the write set."
+            },
+            {
+              "role": "host_checker",
+              "model_tier": "none",
+              "count": 1,
+              "task": "Deterministic check; the only component that can accept. Never a model."
+            }
+          ],
+          "boost": {
+            "trigger": "none",
+            "action": "none; a patch that did not repair is recorded in the failure ledger with the host's class",
+            "limit": 0
+          }
+        },
+        "path": "workflows/wf57_host_tested_patch_repair",
+        "definition": "workflows/wf57_host_tested_patch_repair/README.md",
+        "audited_availability": "offline_family_runner_with_fixture_tests",
+        "substantive_evidence_status": {
+          "family_definition_read": true,
+          "source_evidence_statement": "Offline fixtures only; no model campaign.",
+          "status_scope": "Documentation claims preserved as claims, not independently reproduced results",
+          "execution_verified_in_this_audit": false
+        },
+        "runner_source": "pfp_core/workflow_families/repair.py",
+        "tests": "pfp_core/workflow_families/tests/test_families.py",
+        "pilot_python_sources": [],
+        "pilot_test_sources": [],
+        "file_count": 4,
+        "runner_class": "HostTestedPatchRepair"
       }
     ],
     "family_edges": [
@@ -4912,6 +4987,16 @@
       {
         "from": "WF2",
         "to": "WF56",
+        "audit_edge_semantics": "documented_design_dependency_not_execution_or_proof"
+      },
+      {
+        "from": "WF9",
+        "to": "WF57",
+        "audit_edge_semantics": "documented_design_dependency_not_execution_or_proof"
+      },
+      {
+        "from": "WF56",
+        "to": "WF57",
         "audit_edge_semantics": "documented_design_dependency_not_execution_or_proof"
       }
     ],

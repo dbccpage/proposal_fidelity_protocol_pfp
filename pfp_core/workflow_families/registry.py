@@ -6,7 +6,7 @@ from importlib import import_module
 from .base import WorkflowFamily
 
 LAYER_MODULES = (*(f'{__package__}.layer{n}' for n in range(1, 10)),
-                 f'{__package__}.learning', f'{__package__}.candidates')
+                 f'{__package__}.learning', f'{__package__}.candidates', f'{__package__}.repair')
 _REGISTRY: dict[str, type[WorkflowFamily]] = {}
 
 

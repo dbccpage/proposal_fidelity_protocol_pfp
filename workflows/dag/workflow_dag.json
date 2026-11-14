@@ -2,7 +2,7 @@
   "schema_version": "pfp.workflow-dag.v1",
   "AuthorityEffect": "None",
   "date": "2026-11-05",
-  "scope": "Workflow families WF1-WF5 (implemented, own runners in pfp/workflows), WF6-WF49, WF51, WF55 and WF56 (implemented_offline: one class each in pfp_core/workflow_families, checked on offline fixtures with no model call; no live or local model campaign is recorded), WF52 (implemented, own runner with recorded live runs) and WF53-WF54 (implemented_offline, own runners). WF6-WF23 were first designed from the retained pilot experiments (pilots 0000000-0000203 and their auxiliary folders, recorded with an older harness), WF24-WF49 on 2026-11-06 from workflows/tasks/certified_challenges/findings and atlas/archive/, WF51 on 2026-11-13, WF55 and WF56 on 2026-11-14; their sources are cited per node. All were classified by kind after the 2026-11-05 research committee (docs/research/2026_11_05_committee_report.md). A node's status says what code exists, not a measured result.",
+  "scope": "Workflow families WF1-WF5 (implemented, own runners in pfp/workflows), WF6-WF49, WF51 and WF55-WF57 (implemented_offline: one class each in pfp_core/workflow_families, checked on offline fixtures with no model call; no live or local model campaign is recorded), WF52 (implemented, own runner with recorded live runs) and WF53-WF54 (implemented_offline, own runners). WF6-WF23 were first designed from the retained pilot experiments (pilots 0000000-0000203 and their auxiliary folders, recorded with an older harness), WF24-WF49 on 2026-11-06 from workflows/tasks/certified_challenges/findings and atlas/archive/, WF51 on 2026-11-13, WF55, WF56 and WF57 on 2026-11-14; their sources are cited per node. All were classified by kind after the 2026-11-05 research committee (docs/research/2026_11_05_committee_report.md). A node's status says what code exists, not a measured result.",
   "kinds": {
     "base": "The typed task turn: frozen task, one typed reply, independent host check, replay, accounting.",
     "procedure_extension": "Adds one step or contract to the base (or to another extension). A real procedure.",
@@ -3358,6 +3358,65 @@
           "limit": 0
         }
       }
+    },
+    {
+      "id": "WF57",
+      "name": "Host-tested patch repair",
+      "status": "implemented_offline",
+      "kind": "procedure_extension",
+      "merge_into": null,
+      "depends_on": [
+        "WF9",
+        "WF56"
+      ],
+      "layer": 3,
+      "sources": [
+        "workflows/wf57_host_tested_patch_repair/README.md"
+      ],
+      "task_families": [
+        "text_file_repair_with_exit_code_checks"
+      ],
+      "source_evidence": "Offline fixtures only; no model campaign.",
+      "process": [
+        "One reply gives a unified diff for files in the task's write set",
+        "The host verifies each declared file against its SHA-256 and copies the files to a new run folder",
+        "The host runs every check command on the copy and records each exit code",
+        "The host applies the patch to the copy, only inside the write set and only where each hunk fits exactly",
+        "The host runs every check again and compares the checks that fail before and after",
+        "The host confirms the declared files still have their declared hashes",
+        "A patch that was tested and did not repair leaves a failure record, which the host appends to the failure ledger"
+      ],
+      "math": [
+        "F0 = the checks with a nonzero exit before the patch, F1 = the checks with a nonzero exit after it",
+        "outcome, tested in this order: NO_REPAIR_NEEDED iff F0 is empty; REGRESSION iff F1 is not a subset of F0; REPAIRED iff F1 is empty; PARTIAL iff |F1| < |F0|; else INEFFECTIVE",
+        "certified iff the outcome is REPAIRED and every declared file still has its declared SHA-256",
+        "failure class: StructuralNonFit for a patch that is malformed or outside the write set, BoundaryLeakage on REGRESSION, CounterfeitExactness on PARTIAL or INEFFECTIVE"
+      ],
+      "host_check": "Rust test of a supplied patch on a working copy, by the task's check commands before and after (pfp_operad repair)",
+      "model_calls_normal_path": "1",
+      "team": {
+        "goal": "A patch the host applied to a copy of the task's files and found to make every failing check pass without breaking a passing one.",
+        "pattern": "solo",
+        "roles": [
+          {
+            "role": "coder",
+            "model_tier": "sonnet",
+            "count": 1,
+            "task": "Write one unified diff for the files in the write set."
+          },
+          {
+            "role": "host_checker",
+            "model_tier": "none",
+            "count": 1,
+            "task": "Deterministic check; the only component that can accept. Never a model."
+          }
+        ],
+        "boost": {
+          "trigger": "none",
+          "action": "none; a patch that did not repair is recorded in the failure ledger with the host's class",
+          "limit": 0
+        }
+      }
     }
   ],
   "perturbations": [
@@ -4082,6 +4141,14 @@
     {
       "from": "WF2",
       "to": "WF56"
+    },
+    {
+      "from": "WF9",
+      "to": "WF57"
+    },
+    {
+      "from": "WF56",
+      "to": "WF57"
     }
   ]
 }

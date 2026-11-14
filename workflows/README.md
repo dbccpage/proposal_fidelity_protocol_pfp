@@ -1,7 +1,7 @@
 # Workflows
 
 **One folder per workflow, numbered to match the wiki.** WF1-WF5 have their
-own runners. WF6-WF49, WF51, WF55 and WF56 run offline on a shared family runtime
+own runners. WF6-WF49, WF51 and WF55-WF57 run offline on a shared family runtime
 ([`pfp_core/workflow_families/`](../pfp_core/workflow_families/)): fixtures only,
 no model campaign yet. WF50 is a maintenance workflow. WF52-WF54 have their
 own runners: the finite-QM benchmark (live runs recorded), and the industry
@@ -72,19 +72,20 @@ guides are on the [Workflows wiki page](https://github.com/dbccpage/proposal_fid
 | 54 | [Five-seam mechanism showcase](wf54_five_seam_mechanism_showcase/README.md) | runnable offline | experiment design | WF12, WF24, WF27 | — |
 | 55 | [Failure ledger with trial-gated rules](wf55_failure_ledger_with_trial_gated_rules/README.md) | runnable offline | meta workflow | WF1, WF14 | — |
 | 56 | [Host-run operad candidates](wf56_host_run_operad_candidates/README.md) | runnable offline | procedure extension | WF2 | — |
+| 57 | [Host-tested patch repair](wf57_host_tested_patch_repair/README.md) | runnable offline | procedure extension | WF9, WF56 | — |
 
 ## Other folders here
 
 | Folder | What it is |
 | --- | --- |
 | [`tasks/`](tasks/README.md) | The problems workflows run on: 29 offline examples and 50 certified challenges, each with exact checkers |
-| [`dag/`](dag/README.md) | The dependency graph of WF1–WF56 (JSON, Mermaid; the SVG draws WF1–WF49), plus the recorded variations of each workflow |
+| [`dag/`](dag/README.md) | The dependency graph of WF1–WF57 (JSON, Mermaid; the SVG draws WF1–WF49), plus the recorded variations of each workflow |
 | [`library/`](library/README.md) | Recipe catalogue, contracts, the raw evidence of the WF1–WF5 runs, and the shared pilot-estate registers |
 
 **Where the code is.** The runnable code for WF1–WF5 is the installable
 `pfp.workflows` package ([`pfp/workflows/`](../pfp/workflows/README.md)), so
 `pip install` and the `pfp-wf1`…`pfp-wf5` commands keep working; each workflow
-README links straight to its code. WF6-WF49, WF51, WF55 and WF56 are one class each in
+README links straight to its code. WF6-WF49, WF51 and WF55-WF57 are one class each in
 [`pfp_core/workflow_families/`](../pfp_core/workflow_families/); `python -m
 pfp_core.workflow_families check-all` runs all their fixtures offline. Pilot
 experiments (earlier model runs with an older harness; most need a runtime that

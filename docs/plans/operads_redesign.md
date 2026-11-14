@@ -74,7 +74,7 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
 | 2. (cont.) candidates in WF2-WF5 stay unverified | Their meaning is free text. In WF56 a candidate carries a body from the closed list, and `pfp_operad run` executes it on the task's input and on sealed probe cases and compares with its own judge | 2d | **built** (offline) |
 | 3. Laws are signature-level only | Law battery on values, cost and tree | 1 | **built** |
 | 3. (cont.) no Lean statement | Lean 4 theorems for the term model: associativity, unit, composition is evaluation | 6 | planned |
-| 4. PFP 018 repair slice has no workflow | Workflow over the Rust DDC tape verifier (`code/rust/pfp/src/ddc.rs`), writing to the ledger | 3 | planned |
+| 4. PFP 018 repair slice has no workflow | `pfp_operad repair` tests a supplied patch on a working copy with the task's own check commands, and WF57 puts a model's patch through it. A patch that was tested and did not repair goes to the ledger. The first plan, to run it over the DDC tape verifier (`code/rust/pfp/src/ddc.rs`), was dropped: the slice's six stage letters are not a word that verifier accepts, so they are recorded as a trace of this run and nothing more | 3 | **built** (offline) |
 | 5. Operad tests cannot pass here | Retire Python `operads/` from pfp; engine-only tests go back to the engine | 5 | planned |
 | 6. Canonical IDs drifted | Rust is the only source; re-pin the fixture as a regression file; fix the two stale test-domain expectations in `core_operad_theory` | 5 | planned |
 | 7. Untouched families | Capability kinds, failure classes and statuses are used by the ledger; the rest are typed as workflows are ported | 1, 4 | partly built |
@@ -120,8 +120,19 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
      WF5 does not run a loaded seed (its rewrite accepts one seed language),
      and WF52 waits for slice 4. Next: one cheap live run to see whether an
      admitted rule changes a model's result.
-3. **Bounded DDC repair** as a workflow, from PFP 018's worked example and
-   negative cases.
+3. **Bounded repair of a supplied patch (built, offline).** The host command
+   `pfp_operad repair SOURCE_DIR RUN_DIR REQUEST.json` verifies the declared
+   files against their hashes, copies them to a new run folder, runs the
+   request's check commands, applies the patch to the copy (strictly: inside
+   the write set, each hunk at the line it names) and runs the checks again.
+   The outcome compares the failing checks before and after; the declared
+   files are never written. [WF57](../../workflows/wf57_host_tested_patch_repair/README.md)
+   asks a model for the patch and reports the host's outcome, and a failed
+   patch is appended to the failure ledger. PFP 018's worked example and its
+   negative cases (ineffective, regressive, out of scope, missing tool,
+   changed source) run as tests. A check is a command and may be in any
+   language; the host reads only its exit code. In the shipped fixtures the
+   checks are the host's own commands.
 4. **Port the workflow hosts.** The family runtime behind WF6-WF51, then
    WF1-WF5 and WF52-WF54. After this slice Python only calls the model and
    moves files.
@@ -151,6 +162,14 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
   workflow's own replay ties those to the reply bytes.
 - A loaded rule travels as text after the seed. The prompt template's own
   `antibody_injections` slot stays empty until the workflow hosts are ported.
+- `pfp_operad repair` shows that the listed check commands exit 0 on the
+  patched copy. Weak checks pass a wrong patch. The copy is not a sandbox,
+  and nothing installs the repaired files. No model has written a patch
+  through WF57 yet.
+- The stage letters in a repair record are a trace of that run. They are not
+  verified as a DDC word, and the archived paper's claims about the repair
+  slice (ATL-P018-002 to 005) stay as they are in the claim ledger until a
+  derivation is written for them.
 - Python still validates reply schemas, routes statuses and keeps run
   custody (manifests, replay). Those move in slice 4.
 - WF4's own local contract (public binding, native integer result, agreement

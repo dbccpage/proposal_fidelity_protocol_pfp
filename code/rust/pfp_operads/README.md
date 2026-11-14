@@ -140,6 +140,7 @@ patch and `[0, 0]` after it, and leaves `request.json`, `candidate.patch`,
   `PARTIAL`, `INEFFECTIVE`, `REGRESSION`, `NO_REPAIR_NEEDED` or `REFUSED`; only
   `REPAIRED` is a `PASS`. The record's `trace` lists the stages that took
   effect, `CREIMT` for a full run.
+  [WF57](../../../workflows/wf57_host_tested_patch_repair/README.md) uses it.
 - **A repair request** is closed JSON: `run_key`, `objective`, `sources` (path
   to SHA-256), `write_paths`, `checks` (`check_id`, `argv`, optional
   `timeout_seconds` up to 60, default 20), `candidate_patch` and an optional
