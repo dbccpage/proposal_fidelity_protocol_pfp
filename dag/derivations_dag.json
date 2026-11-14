@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-11-14T11:37:40.824619+00:00",
+  "generated_at_utc": "2026-11-14T12:13:33.116984+00:00",
   "repository": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp",
   "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
   "status": "in_progress",
@@ -10758,6 +10758,23 @@
         "dag/reviews/additional_paper_000_support_probes.json"
       ],
       "atlas_ledger_id": "ATL-D-PAPER000-TEACHING-CHECKER-REJECTIONS"
+    },
+    {
+      "id": "PAPER000-TEACHING-CHECKER-REFUSALS",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The teaching checker refuses an incomplete packet, malformed dictionary, or ill-typed carrier without mutating the candidate proposal.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Trust the declared finite input model, local checker and caller-retained expected identity.",
+        "SHA-256 content comparison is used as a binding assumption; it is not producer authentication."
+      ],
+      "evidence": [
+        "papers/pfp/000_pfp_introduction/code/basic_packets.py"
+      ],
+      "validation": [
+        "dag/reviews/additional_paper_000_support_probes.json"
+      ],
+      "atlas_ledger_id": "ATL-D-PAPER000-TEACHING-CHECKER-REFUSALS"
     },
     {
       "id": "PAPER001-ARTIFACT-ARCHIVE-CUSTODY",
@@ -50380,13 +50397,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PAPER000-FINITE-TEACHING-CONTRACT"
+          "PAPER000-TEACHING-CHECKER-REFUSALS"
         ],
-        "relation": "supports",
-        "note": "Node records the typed predicates; refusal without mutation is not stated.",
-        "proposed_derivation_file": "dag/derivations/atl_p000_004.md"
+        "relation": null,
+        "note": "Teaching checker refuses incomplete packets, malformed dictionaries, and ill-typed carriers without mutating inputs via basic_packets.py and test_basic_packets.py; certified by PAPER000-TEACHING-CHECKER-REFUSALS."
       }
     },
     {
@@ -69322,6 +69338,16 @@
       "kind": "requires"
     },
     {
+      "from": "ASSUMPTION-2289c9fd25e1ef0c",
+      "to": "PAPER000-TEACHING-CHECKER-REFUSALS",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-eea6385661495a65",
+      "to": "PAPER000-TEACHING-CHECKER-REFUSALS",
+      "kind": "requires"
+    },
+    {
       "from": "ASSUMPTION-306a65c8b7e5a2a3",
       "to": "PAPER001-EXACT-GRAPH-CERTIFICATE",
       "kind": "requires"
@@ -78251,6 +78277,12 @@
     {
       "from": "SOURCE:atlas/archive/pfp/000_pfp_introduction/code/basic_packets.py",
       "to": "PAPER000-TEACHING-CHECKER-REJECTIONS",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "papers/pfp/000_pfp_introduction/code/basic_packets.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/000_pfp_introduction/code/basic_packets.py",
+      "to": "PAPER000-TEACHING-CHECKER-REFUSALS",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "papers/pfp/000_pfp_introduction/code/basic_packets.py"
     },
@@ -97384,9 +97416,9 @@
       "citation": "atlas/archive/pfp/000_pfp_introduction/paper_claim_ledger.md:8"
     },
     {
-      "from": "PAPER000-FINITE-TEACHING-CONTRACT",
+      "from": "PAPER000-TEACHING-CHECKER-REFUSALS",
       "to": "ATL-P000-004",
-      "kind": "partially_supports",
+      "kind": "states_same_claim_as",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
@@ -153274,8 +153306,8 @@
     "Audit native implementations and claimed Lean correspondence at pinned source."
   ],
   "graph_validation": {
-    "unique_nodes": 3589,
-    "edges": 3779,
+    "unique_nodes": 3590,
+    "edges": 3782,
     "acyclic": true
   }
 }
