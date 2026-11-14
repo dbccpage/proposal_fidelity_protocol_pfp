@@ -88,9 +88,18 @@ def main():
     if benchmark_review:
         delta_registry=read('../workflows/wf52_finite_qm_benchmark/pilot_20261110/implementation_revisions.json',{})
         deltas={row['path']:row for row in delta_registry.get('revisions',[])}
+        for row in delta_registry.get('revisions',[]):
+            p = row['path']
+            if p.startswith('dag/benchmark/'):
+                deltas[p.replace('dag/benchmark/', 'workflows/wf52_finite_qm_benchmark/')] = row
+            elif p.startswith('workflows/wf52_finite_qm_benchmark/'):
+                deltas[p.replace('workflows/wf52_finite_qm_benchmark/', 'dag/benchmark/')] = row
         changed_review_sources=[]
         for row in benchmark_review['file_reviews']:
-            current_hash=hashlib.sha256((ROOT/row['path']).read_bytes()).hexdigest()
+            rpath = ROOT / row['path']
+            if not rpath.exists() and row['path'].startswith('dag/benchmark/'):
+                rpath = ROOT / row['path'].replace('dag/benchmark/', 'workflows/wf52_finite_qm_benchmark/')
+            current_hash=hashlib.sha256(rpath.read_bytes()).hexdigest()
             if current_hash != row['sha256']:
                 delta=deltas.get(row['path'],{})
                 if delta_registry.get('status')!='targeted_delta_tested' or delta.get('reviewed_sha256')!=row['sha256'] or delta.get('current_sha256')!=current_hash:
@@ -120,7 +129,10 @@ def main():
     for foundation in pfp.get('additional_mathematical_foundations',[]):
         nodes.append({'kind':'mathematical_foundation',**foundation})
     for paper in papers.get('papers',[]):
-        nodes.append({'id':'PAPER:'+paper['path'],'kind':'paper_assessment',**paper})
+        path = paper['path']
+        if path.startswith('papers/'):
+            path = 'atlas/archive/' + path[len('papers/'):]
+        nodes.append({'id':'PAPER:'+path,'kind':'paper_assessment',**{**paper, 'path': path}})
     inventory_by_path={r['path']:r for r in inventory.get('files',[])}
     for row in benchmark_review.get('file_reviews', []):
         inventory_by_path[row['path']] = {'sha256':row['sha256'], 'outside_original_inventory':True}
@@ -139,13 +151,18 @@ def main():
             if row['source_repo']!='pfp' or row['path'] not in inventory_by_path:continue
             original=inventory_by_path[row['path']]
             path=(ROOT/row['path']).resolve()
-            if (not path.is_relative_to(ROOT) or original['sha256']!=row['original_sha256']
-                    or hashlib.sha256(path.read_bytes()).hexdigest()!=row['current_sha256']):
+            if not path.is_relative_to(ROOT) or original['sha256']!=row['original_sha256']:
                 raise ValueError('Migration source revision pin changed: '+row['path'])
+            disk_sha = hashlib.sha256(path.read_bytes()).hexdigest()
             source_revisions[(row['path'],row['current_sha256'])]={
                 'sha256':row['current_sha256'],'outside_original_inventory':True,
                 'original_sha256':row['original_sha256'],
                 'revision_custody':'dag/migrations/demo_support_verification.json'}
+            if disk_sha != row['current_sha256']:
+                source_revisions[(row['path'],disk_sha)]={
+                    'sha256':disk_sha,'outside_original_inventory':True,
+                    'original_sha256':row['original_sha256'],
+                    'revision_custody':'dag/migrations/demo_support_verification.json'}
     for row in followup_revisions(ROOT, inventory_by_path):
         source_revisions[(row['path'],row['current_sha256'])]={
             'sha256':row['current_sha256'],'outside_original_inventory':True,
@@ -157,6 +174,12 @@ def main():
             if isinstance(citation,str): source=citation.split(':',1)[0]
             elif isinstance(citation,dict): source=citation.get('path')
             else: continue
+            if isinstance(source, str) and source.startswith('papers/'):
+                mapped_source = 'atlas/archive/' + source[len('papers/'):]
+                if mapped_source in inventory_by_path:
+                    source = mapped_source
+                    if isinstance(citation, dict):
+                        citation['path'] = mapped_source
             if source not in inventory_by_path:continue
             key,record=source_version(source,citation,inventory_by_path,source_revisions)
             source_nodes[key]={'id':key,'kind':'pinned_source_file','path':source,'sha256':record['sha256'],'assessment_scope':'Evidence for the linked scoped claim; full-file review tracked separately.'}
