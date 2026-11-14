@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-11-14T17:05:57.180658+00:00",
+  "generated_at_utc": "2026-11-14T21:50:58.759313+00:00",
   "repository": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp",
   "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
   "status": "in_progress",
@@ -10999,6 +10999,22 @@
       ],
       "limits": "Exponential enumeration illustrates a reusable search protocol. New-node bounds do not bound total replay time, dollars or prove a physical adapter.",
       "atlas_ledger_id": "ATL-D-PAPER002-CONTIGUOUS-SEARCH-REPLAY"
+    },
+    {
+      "id": "PAPER002-STOQUASTIC-THERMAL-NONNEGATIVITY",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For a finite real matrix H with nonpositive off-diagonal entries (H_ij <= 0 for i != j) and inverse temperature beta >= 0, the thermal exponential exp(-beta H) is entrywise nonnegative.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Finite real matrix with nonpositive off-diagonal entries and non-negative inverse temperature beta >= 0.",
+        "Commutative scalar identity shift c*I and absolute convergence of the matrix exponential power series in operator norm."
+      ],
+      "evidence": [
+        "papers/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md",
+        "papers/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md"
+      ],
+      "limits": "Applies to finite real matrices with nonpositive off-diagonal entries in a declared basis; does not provide a sampling-time, polynomial-time, or variance guarantee for quantum observables.",
+      "atlas_ledger_id": "ATL-D-PAPER002-STOQUASTIC-THERMAL-NONNEGATIVITY"
     },
     {
       "id": "PAPER003-DERIVED-SIGNAL-COLLAPSE",
@@ -35785,6 +35801,18 @@
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
+      "id": "ASSUMPTION-1978a17a174566ef",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Finite real matrix with nonpositive off-diagonal entries and non-negative inverse temperature beta >= 0.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-3746ed354d1cb942",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Commutative scalar identity shift c*I and absolute convergence of the matrix exponential power series in operator norm.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
       "id": "ASSUMPTION-e0b5cd6518bdd080",
       "kind": "explicit_assumption_or_obligation",
       "statement": "Finite-group axioms admitted by full table checks",
@@ -43183,6 +43211,20 @@
       "kind": "pinned_source_file",
       "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/frontier_search.py",
       "sha256": "d3529c2150f6b5d43be46a34c46bcde07ee2c082dc9f18ad522114977c417bc9",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md",
+      "sha256": "b8e22dcd0506a6a5707bcc706b924df043e363ae1b024430cd3db4a999196734",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
+      "sha256": "e147c06f6168a563e6af12357da9fe5b44f641ee518974c2deaf7c9612f7b1ad",
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
@@ -51075,11 +51117,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
+        "verdict": "matched",
+        "nodes": [
+          "PAPER002-STOQUASTIC-THERMAL-NONNEGATIVITY"
+        ],
         "relation": null,
-        "note": "No node derives entrywise nonnegativity of the thermal exponential.",
-        "proposed_derivation_file": "dag/derivations/atl_p002_003.md"
+        "note": "A finite stoquastic real matrix has an entrywise nonnegative thermal exponential for nonnegative beta via positive scalar shift and power-series expansion; verified by executable tests in tests/test_paper002_stoquastic_thermal_nonnegativity.py; certified by PAPER002-STOQUASTIC-THERMAL-NONNEGATIVITY."
       }
     },
     {
@@ -69701,6 +69744,16 @@
       "kind": "requires"
     },
     {
+      "from": "ASSUMPTION-1978a17a174566ef",
+      "to": "PAPER002-STOQUASTIC-THERMAL-NONNEGATIVITY",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-3746ed354d1cb942",
+      "to": "PAPER002-STOQUASTIC-THERMAL-NONNEGATIVITY",
+      "kind": "requires"
+    },
+    {
       "from": "ASSUMPTION-e0b5cd6518bdd080",
       "to": "PAPER010-RECTANGULAR-HOLONOMY-CLASSIFIER",
       "kind": "requires"
@@ -78772,6 +78825,18 @@
       "to": "PAPER002-CONTIGUOUS-SEARCH-REPLAY",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "papers/pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/frontier_search.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md",
+      "to": "PAPER002-STOQUASTIC-THERMAL-NONNEGATIVITY",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "papers/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
+      "to": "PAPER002-STOQUASTIC-THERMAL-NONNEGATIVITY",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "papers/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md"
     },
     {
       "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
@@ -97981,7 +98046,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier",
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
       "to": "ATL-P002-001",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md:16"
@@ -97993,7 +98058,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier",
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
       "to": "ATL-P002-002",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md:17"
@@ -98005,13 +98070,19 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier",
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
       "to": "ATL-P002-003",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md:18"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier",
+      "from": "PAPER002-STOQUASTIC-THERMAL-NONNEGATIVITY",
+      "to": "ATL-P002-003",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
       "to": "ATL-P002-004",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md:19"
@@ -98023,7 +98094,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier",
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
       "to": "ATL-P002-005",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md:20"
@@ -98035,7 +98106,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier",
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
       "to": "ATL-P002-006",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md:21"
@@ -98047,13 +98118,13 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier",
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
       "to": "ATL-P002-007",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md:22"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier",
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
       "to": "ATL-P002-008",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md:23"
@@ -98065,7 +98136,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier",
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
       "to": "ATL-P002-009",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md:24"
@@ -98077,19 +98148,19 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier",
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
       "to": "ATL-P002-010",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md:25"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier",
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
       "to": "ATL-P002-011",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md:26"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier",
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
       "to": "ATL-P002-012",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md:27"
@@ -153721,8 +153792,8 @@
     "Audit native implementations and claimed Lean correspondence at pinned source."
   ],
   "graph_validation": {
-    "unique_nodes": 3617,
-    "edges": 3814,
+    "unique_nodes": 3622,
+    "edges": 3819,
     "acyclic": true
   }
 }
