@@ -161,6 +161,11 @@ fn only_edits_to_existing_text_files_are_supported() {
         assert_eq!(refusal.code, SCOPE_REFUSED, "{marker}");
         assert!(refusal.message.contains(marker), "{marker}");
     }
+    let quoted = hunk("@@ -1 +1 @@", "-a\n+see new file mode 100644\n");
+    assert_eq!(
+        one(&quoted).apply("a\n").unwrap(),
+        "see new file mode 100644\n"
+    );
     assert_eq!(
         code("--- /dev/null\n+++ b/f\n@@ -0,0 +1 @@\n+a\n"),
         SCOPE_REFUSED
