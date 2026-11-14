@@ -1,0 +1,118 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf32.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf32.rs",
+      "language": "Rust",
+      "sha256": "cef7cbe313ca2e7f0bc71ab159b2e691571ae8d9426d646622e99d1220b39d49"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf32-tests:v1",
+    "symbols": [
+      "sha",
+      "task",
+      "exact_claim",
+      "exact_digest",
+      "quote_claim",
+      "quote_witness",
+      "quote_digest",
+      "reply",
+      "run",
+      "turn",
+      "bad_task",
+      "accepted",
+      "malformed",
+      "names",
+      "failed",
+      "evidence",
+      "the_family_is_registered_under_its_names",
+      "a_reply_whose_every_claim_is_checked_is_certified_in_full",
+      "what_no_check_covers_is_never_admitted_and_is_owed",
+      "the_admitted_list_is_optional_but_must_be_a_list",
+      "a_stated_digest_must_be_the_host_s",
+      "a_digest_covers_the_claim_but_not_its_free_text_or_its_stated_digest",
+      "an_exact_claim_its_checker_rejects_fails_and_is_not_admitted",
+      "each_declared_input_runs_under_the_checker_the_task_chose",
+      "an_exact_claim_on_an_input_the_task_did_not_declare_fails",
+      "a_quote_holds_only_when_its_byte_span_is_the_quoted_text",
+      "a_span_beyond_the_machine_s_range_is_an_exact_integer_that_quotes_nothing",
+      "a_quote_needs_an_exact_span_and_its_text",
+      "a_quote_with_no_declared_source_or_no_span_list_stays_open",
+      "listing_a_claim_the_host_did_not_admit_is_overreach",
+      "listing_a_claim_that_failed_its_check_is_overreach_too",
+      "a_reply_that_admits_nothing_is_refused",
+      "the_claims_are_a_nonempty_list_of_objects_with_unique_text_ids",
+      "sources_are_texts_and_declared_inputs_name_a_registered_checker"
+    ],
+    "owned_invariants": [
+      "Every digest is rebuilt in the test from the canonical text written out, so a change to what a digest covers fails here.",
+      "Quotes are asserted by byte span on a source with multi-byte characters, where character offsets give a different answer.",
+      "Each refusal is asserted with its code, its failed predicates and its detail, and open claims are asserted as obligations on certified and on refused runs."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf32.rs",
+      "language": "Rust",
+      "sha256": "cef7cbe313ca2e7f0bc71ab159b2e691571ae8d9426d646622e99d1220b39d49"
+    },
+    "profile": "Non-Numeric",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 18 pass in the recorded run; the suite they belong to killed 107 of 107 eligible WF32 mutants.",
+      "G5": "Measured worst cyclomatic 4, cognitive complexity is not measured for Rust, nesting 3; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T13:51:27Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v9-test.run.json",
+        "sha256": "75c065d96b64633778adc9bbc5a54eb150b58536223e4c3443f62215ad84017e",
+        "note": "427 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-clippy.run.json",
+        "sha256": "b095a186f720f679235b2f243d030a0c7412ecd11d687d13c61ad6cac778d72e",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-fmt.run.json",
+        "sha256": "17a3ba5175b2bb9bccc425d89628829ccaadff38dc36f614734ea800455c7625",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.run.json",
+        "sha256": "785da0a0586cbf62c7a8439e2a626fa5ba0df80942665c0838e344cc4f460f41",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.json",
+        "sha256": "e9c47748ca0777f0a16723ed4f2e9ddb5b44c2f4480bd78d2102e6cf92daa227",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

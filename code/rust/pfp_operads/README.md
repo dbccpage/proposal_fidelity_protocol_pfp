@@ -169,7 +169,8 @@ patch and `[0, 0]` after it, and leaves `request.json`, `candidate.patch`,
   (`CounterfeitExactness`), broke a passing one (`BoundaryLeakage`) or did
   not fit the sources or the write set (`StructuralNonFit`). A missing tool,
   a changed source or a full disk blames no candidate.
-- **Family runs**: a workflow family (WF7, WF30 and WF31 so far) is a walk
+- **Family runs**: a workflow family (WF7, WF13, WF24, WF30, WF31, WF32 and
+  WF45 so far) is a walk
   the host owns. The request is the family's id, the public `task`, the
   `sealed` part and the `replies` received so far, each `null` or
   `{"content": ...}`. `family next` returns the stage and the exact prompt to
@@ -183,6 +184,16 @@ patch and `[0, 0]` after it, and leaves `request.json`, `candidate.patch`,
   verdict or a typed refusal stands only when at least one predicate was
   recorded and every one passed. The caller sends each prompt to a model and
   appends the reply; it checks nothing.
+- **Open obligations**: a verdict lists under `uncertified_obligations` what
+  the reply asserts and no predicate covers, such as a prose claim in WF32.
+  A certified run with an open obligation is certified for the listed
+  predicates only.
+- **Exact domains**: `stabilizer_commutation`, `u1_anomaly`,
+  `group_commutator` and `linear_refusal` each have one checker
+  (`src/families/domains.rs`). WF13 refuses a battery that names any other
+  domain before it asks anything, and WF32 runs a claim only under the
+  checker the task chose for the claim's input. Permutations are lists of
+  images and compose in reading order (`src/perm.rs`).
 - **Exact numbers** in a family run: an integer is read from its digits and
   has no size limit. A number written with a fraction or an exponent is never
   an integer. A rational is an integer or the text `p/q`: an optional minus,

@@ -2,8 +2,8 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/pfp_operads/src/families/wf07.rs",
-  "target_sha256": "e000944ca74187ab236ff2367a2fb8cb151ca22b8699adca28770d5f09a60fd0",
-  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test datum --test exact --test families --test sealed --test wf07 --test wf30 --test wf31",
+  "target_sha256": "5f08c4fc4115597f1b90ce4f5dda791b32307ea7b878b2542f6e048b591b7a93",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf07 --test domains --test wf13",
   "counts": {
     "killed": 54,
     "survived": 0,
@@ -160,14 +160,14 @@
     },
     {
       "name": "non-object reply read as empty",
-      "old": "    require(reply.is_map(), \"the reply must be an object\")?;\n",
+      "old": "    if !reply.is_map() {\n        return Err(\"the reply must be an object\".to_owned());\n    }\n",
       "new": "",
       "outcome": "killed"
     },
     {
       "name": "non-object reason changed",
-      "old": "    require(reply.is_map(), \"the reply must be an object\")?;",
-      "new": "    require(reply.is_map(), \"reply\")?;",
+      "old": "        return Err(\"the reply must be an object\".to_owned());",
+      "new": "        return Err(\"reply\".to_owned());",
       "outcome": "killed"
     },
     {
@@ -268,14 +268,14 @@
     },
     {
       "name": "unreadable answer read as empty",
-      "old": "        Some(given) => rationals(given).ok_or_else(|| {\n            Stop::Malformed(\"answer must be a list of exact rationals\".to_owned())\n        })?,",
+      "old": "        Some(given) => rationals(given).ok_or(\"answer must be a list of exact rationals\")?,",
       "new": "        Some(given) => rationals(given).unwrap_or_default(),",
       "outcome": "killed"
     },
     {
       "name": "unreadable answer reason changed",
-      "old": "Stop::Malformed(\"answer must be a list of exact rationals\".to_owned())",
-      "new": "Stop::Malformed(\"answer\".to_owned())",
+      "old": "rationals(given).ok_or(\"answer must be a list of exact rationals\")?,",
+      "new": "rationals(given).ok_or(\"answer\")?,",
       "outcome": "killed"
     },
     {
@@ -344,5 +344,6 @@
       "new": "    Ok(checks.judge(super::CERTIFIED_CODE, Datum::map([])))",
       "outcome": "killed"
     }
-  ]
+  ],
+  "rerun_test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf07 --test families --test domains --test wf13"
 }

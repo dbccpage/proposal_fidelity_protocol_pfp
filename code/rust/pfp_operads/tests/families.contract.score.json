@@ -7,7 +7,7 @@
     "artifact": {
       "path": "code/rust/pfp_operads/tests/families.rs",
       "language": "Rust",
-      "sha256": "8189ecd1aeb5d50685b59e5760a51e21f6bf89d4a896c1334bd7e82fa63fc9ef"
+      "sha256": "22bdd704d5732c18a4b8ec7d3873f49b126c236177620faee89e5783bdc3603f"
     },
     "contract_urn": "urn:pfp-operads:families-tests:v1",
     "symbols": [
@@ -46,17 +46,20 @@
       "the_shipped_examples_ask_one_step_and_certify_its_answer",
       "any_task",
       "obedient",
+      "partwise",
       "told",
       "a_walk_cannot_certify_without_a_recorded_predicate",
       "a_walk_cannot_certify_past_a_failed_predicate",
       "a_walk_s_verdict_stands_when_every_recorded_predicate_passed",
       "a_walk_s_own_refusal_is_kept_as_it_is",
-      "a_registry_checks_only_its_own_families"
+      "a_registry_checks_only_its_own_families",
+      "a_verdict_names_what_no_predicate_covers",
+      "the_default_prompt_can_be_written_for_a_part_of_the_task"
     ],
     "owned_invariants": [
-      "The default prompt is asserted byte for byte, and prompt and evidence digests are rebuilt in the test.",
+      "The default prompt is asserted byte for byte for a task and for a part of one, and prompt and evidence digests are rebuilt in the test.",
       "Each refusal of the protocol is asserted by code and message.",
-      "A test family that does what its reply says is used to assert that a certified verdict or a typed refusal without a passed predicate, or past a failed one, is refused by the host.",
+      "A test family that does what its reply says is used to assert that a certified verdict or a typed refusal without a passed predicate, or past a failed one, is refused by the host, and that obligations survive either way.",
       "The binary is run for the three family commands, with exit codes 0, 1 and 2 and the shipped example requests."
     ],
     "boundaries": [
@@ -69,7 +72,7 @@
     "artifact": {
       "path": "code/rust/pfp_operads/tests/families.rs",
       "language": "Rust",
-      "sha256": "8189ecd1aeb5d50685b59e5760a51e21f6bf89d4a896c1334bd7e82fa63fc9ef"
+      "sha256": "22bdd704d5732c18a4b8ec7d3873f49b126c236177620faee89e5783bdc3603f"
     },
     "profile": "Non-Numeric",
     "level": "L2",
@@ -85,38 +88,38 @@
       "G1": "Each test name states the claim it checks.",
       "G2": "Expected values follow by hand from the request written in the test.",
       "G3": "Refusals are asserted by code.",
-      "G4": "All 31 pass in the recorded run; the suite they belong to killed 103 of 103 eligible protocol mutants and, with the rest of the crate's tests, 45 of 45 eligible command-line mutants.",
+      "G4": "All 33 pass in the recorded run; the suite they belong to killed 116 of 116 eligible protocol mutants and, with the rest of the crate's tests, 45 of 45 eligible command-line mutants.",
       "G5": "Measured worst cyclomatic 7, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
     },
     "composite_grade": "C",
     "score_token": "L2C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-14T12:56:03Z",
+    "evaluation_timestamp": "2026-11-14T13:51:27Z",
     "evidence": [
       {
-        "path": "governance/evidence/pfp-operads-v8-test.run.json",
-        "sha256": "39e3d54df0f53e66efe9e7c79ccb58d2c64b227e5ae057ba2db430c2248a81ef",
-        "note": "329 tests: pfp_operads and core_operad_canon, locked build."
+        "path": "governance/evidence/pfp-operads-v9-test.run.json",
+        "sha256": "75c065d96b64633778adc9bbc5a54eb150b58536223e4c3443f62215ad84017e",
+        "note": "427 tests: pfp_operads and core_operad_canon, locked build."
       },
       {
-        "path": "governance/evidence/pfp-operads-v8-clippy.run.json",
-        "sha256": "36f330c8dd7d904983f941e99b4eaed4ea0a5926c65e1506bee3a976a63b199f",
+        "path": "governance/evidence/pfp-operads-v9-clippy.run.json",
+        "sha256": "b095a186f720f679235b2f243d030a0c7412ecd11d687d13c61ad6cac778d72e",
         "note": "clippy with -D warnings on both crates, all targets."
       },
       {
-        "path": "governance/evidence/pfp-operads-v8-fmt.run.json",
-        "sha256": "304f9442ff6202fbcc60ee643fa68b521ca2229ef90cb498605391f139d1c684",
+        "path": "governance/evidence/pfp-operads-v9-fmt.run.json",
+        "sha256": "17a3ba5175b2bb9bccc425d89628829ccaadff38dc36f614734ea800455c7625",
         "note": "rustfmt --check on both crates."
       },
       {
-        "path": "governance/evidence/pfp-operads-v8-metrics.run.json",
-        "sha256": "5c9ed7ff128e413a3a694a13976441d3ab914d3ac77dcd1a8d1645c9805ec339",
+        "path": "governance/evidence/pfp-operads-v9-metrics.run.json",
+        "sha256": "785da0a0586cbf62c7a8439e2a626fa5ba0df80942665c0838e344cc4f460f41",
         "note": "The run that measured Gate 5 structure."
       },
       {
-        "path": "governance/evidence/pfp-operads-v8-metrics.json",
-        "sha256": "132913181d26af963eec9d6f7ed2a20ca7531a5b5347a857a7562e352ef2ee4d",
+        "path": "governance/evidence/pfp-operads-v9-metrics.json",
+        "sha256": "e9c47748ca0777f0a16723ed4f2e9ddb5b44c2f4480bd78d2102e6cf92daa227",
         "note": "Measured Gate 5 structure of every source this change touches."
       }
     ],
@@ -216,6 +219,129 @@
         "is_complete": true,
         "grade_ceiling": "A",
         "evaluation_timestamp": "2026-11-14T12:55:53Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v8-test.run.json",
+            "sha256": "39e3d54df0f53e66efe9e7c79ccb58d2c64b227e5ae057ba2db430c2248a81ef",
+            "note": "329 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v8-clippy.run.json",
+            "sha256": "36f330c8dd7d904983f941e99b4eaed4ea0a5926c65e1506bee3a976a63b199f",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v8-fmt.run.json",
+            "sha256": "304f9442ff6202fbcc60ee643fa68b521ca2229ef90cb498605391f139d1c684",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v8-metrics.run.json",
+            "sha256": "5c9ed7ff128e413a3a694a13976441d3ab914d3ac77dcd1a8d1645c9805ec339",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v8-metrics.json",
+            "sha256": "132913181d26af963eec9d6f7ed2a20ca7531a5b5347a857a7562e352ef2ee4d",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    },
+    {
+      "recorded_at": "2026-11-14T13:51:31.611638Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/families.rs",
+          "language": "Rust",
+          "sha256": "8189ecd1aeb5d50685b59e5760a51e21f6bf89d4a896c1334bd7e82fa63fc9ef"
+        },
+        "contract_urn": "urn:pfp-operads:families-tests:v1",
+        "symbols": [
+          "sha",
+          "task",
+          "request",
+          "passed",
+          "failed",
+          "refusal",
+          "the_host_lists_its_families_in_workflow_order",
+          "a_run_with_no_reply_is_told_what_to_ask",
+          "a_run_with_every_reply_has_nothing_left_to_ask",
+          "a_certified_run_reports_its_predicates_and_passes",
+          "a_typed_refusal_passes_and_a_refused_verdict_fails",
+          "a_missing_reply_is_a_refused_verdict_with_no_predicate",
+          "a_reply_that_cannot_be_read_is_a_malformed_candidate",
+          "a_verdict_is_refused_while_a_step_waits_for_its_reply",
+          "more_replies_than_steps_are_refused",
+          "a_reply_is_null_or_an_object_with_the_one_key_content",
+          "a_request_that_is_not_the_request_shape_is_refused",
+          "a_family_this_host_does_not_check_is_refused_by_name",
+          "a_task_or_sealed_part_of_the_wrong_kind_is_refused",
+          "a_task_the_family_cannot_read_is_refused_with_the_family_s_reason",
+          "a_prompt_that_carries_a_sealed_value_is_never_handed_out",
+          "a_sealed_value_that_is_not_in_the_prompt_changes_nothing",
+          "the_default_prompt_is_the_family_the_statement_and_the_rest_of_the_task",
+          "a_predicate_is_recorded_once_under_its_name",
+          "a_name_recorded_twice_is_kept_as_a_failed_predicate",
+          "the_first_failed_predicate_names_the_refusal",
+          "nothing_recorded_certifies_nothing",
+          "every_predicate_passing_certifies_under_the_family_s_code",
+          "the_verdict_builders_set_the_kind_and_keep_the_code_and_detail",
+          "require_stops_the_walk_with_its_reason_only_when_the_condition_fails",
+          "cli",
+          "the_command_line_runs_the_three_family_commands",
+          "the_shipped_examples_ask_one_step_and_certify_its_answer",
+          "any_task",
+          "obedient",
+          "told",
+          "a_walk_cannot_certify_without_a_recorded_predicate",
+          "a_walk_cannot_certify_past_a_failed_predicate",
+          "a_walk_s_verdict_stands_when_every_recorded_predicate_passed",
+          "a_walk_s_own_refusal_is_kept_as_it_is",
+          "a_registry_checks_only_its_own_families"
+        ],
+        "owned_invariants": [
+          "The default prompt is asserted byte for byte, and prompt and evidence digests are rebuilt in the test.",
+          "Each refusal of the protocol is asserted by code and message.",
+          "A test family that does what its reply says is used to assert that a certified verdict or a typed refusal without a passed predicate, or past a failed one, is refused by the host.",
+          "The binary is run for the three family commands, with exit codes 0, 1 and 2 and the shipped example requests."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/families.rs",
+          "language": "Rust",
+          "sha256": "8189ecd1aeb5d50685b59e5760a51e21f6bf89d4a896c1334bd7e82fa63fc9ef"
+        },
+        "profile": "Non-Numeric",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected values follow by hand from the request written in the test.",
+          "G3": "Refusals are asserted by code.",
+          "G4": "All 31 pass in the recorded run; the suite they belong to killed 103 of 103 eligible protocol mutants and, with the rest of the crate's tests, 45 of 45 eligible command-line mutants.",
+          "G5": "Measured worst cyclomatic 7, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T12:56:03Z",
         "evidence": [
           {
             "path": "governance/evidence/pfp-operads-v8-test.run.json",

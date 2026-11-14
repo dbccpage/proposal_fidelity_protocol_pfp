@@ -1,0 +1,104 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf13.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf13.rs",
+      "language": "Rust",
+      "sha256": "a4f484a10bffaf1296ec9520c999d81034c5cf6b1de3341282f73ade05d7b59b"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf13-tests:v1",
+    "symbols": [
+      "sha",
+      "capsules",
+      "task",
+      "good",
+      "request",
+      "run",
+      "all",
+      "turn",
+      "bad_task",
+      "predicate",
+      "the_family_is_registered_under_its_names",
+      "a_battery_in_which_every_capsule_passes_is_certified",
+      "each_capsule_is_asked_on_its_own_under_the_task_s_statement",
+      "a_capsule_s_own_statement_never_replaces_the_task_s",
+      "a_capsule_with_no_reply_counts_as_failed_and_the_rest_are_still_judged",
+      "a_reply_the_checker_cannot_read_counts_as_failed_with_the_reason",
+      "a_wrong_answer_fails_its_own_capsule_and_no_other",
+      "a_domain_without_a_checker_refuses_the_battery_before_any_capsule_is_asked",
+      "capsules_of_one_domain_share_a_tally",
+      "a_battery_needs_a_nonempty_list_of_well_formed_capsules"
+    ],
+    "owned_invariants": [
+      "Tallies are asserted per domain with the denominator, on a battery that passes and on batteries with one capsule missing, unreadable or wrong.",
+      "A capsule's prompt is asserted byte for byte, and an unregistered domain is asserted refused with nothing asked.",
+      "Each malformed task is asserted by its reason."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf13.rs",
+      "language": "Rust",
+      "sha256": "a4f484a10bffaf1296ec9520c999d81034c5cf6b1de3341282f73ade05d7b59b"
+    },
+    "profile": "Non-Numeric",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 10 pass in the recorded run; the suite they belong to killed 52 of 52 eligible WF13 mutants.",
+      "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T13:51:27Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v9-test.run.json",
+        "sha256": "75c065d96b64633778adc9bbc5a54eb150b58536223e4c3443f62215ad84017e",
+        "note": "427 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-clippy.run.json",
+        "sha256": "b095a186f720f679235b2f243d030a0c7412ecd11d687d13c61ad6cac778d72e",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-fmt.run.json",
+        "sha256": "17a3ba5175b2bb9bccc425d89628829ccaadff38dc36f614734ea800455c7625",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.run.json",
+        "sha256": "785da0a0586cbf62c7a8439e2a626fa5ba0df80942665c0838e344cc4f460f41",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.json",
+        "sha256": "e9c47748ca0777f0a16723ed4f2e9ddb5b44c2f4480bd78d2102e6cf92daa227",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

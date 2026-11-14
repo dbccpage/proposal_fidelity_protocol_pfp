@@ -420,6 +420,7 @@ class HostedFamily(WorkflowFamily):
         for row in report['predicates']:
             host.certified_predicates[row['name']] = row['passed']
             host.evidence[row['name']] = row['evidence_sha256']
+        host.uncertified_obligations = tuple(report['uncertified_obligations'])
         return Verdict(report['verdict'], report['code'], report['detail'])
 
     def validate(self, task: Mapping[str, Any]) -> Mapping[str, Any]:

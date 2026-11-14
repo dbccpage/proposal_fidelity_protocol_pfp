@@ -2,10 +2,10 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/pfp_operads/src/families.rs",
-  "target_sha256": "922c1f48a362e10c168d95b13b8badc62362ba5783d9582a283e0b9e5dc65aa0",
-  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test datum --test exact --test families --test sealed --test wf07 --test wf30 --test wf31",
+  "target_sha256": "3999ba660fa409e20811a8923ef5471bf2ea2d2a7ab307c4804fc7508f60e478",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test families --test wf07 --test wf13 --test wf32",
   "counts": {
-    "killed": 103,
+    "killed": 116,
     "survived": 0,
     "demonstrably_equivalent": 1,
     "invalid": 0,
@@ -59,24 +59,6 @@
       "name": "digest of the empty text",
       "old": "    hex::encode(Sha256::digest(text.as_bytes()))",
       "new": "    hex::encode(Sha256::digest(b\"\"))",
-      "outcome": "killed"
-    },
-    {
-      "name": "registry loses WF7",
-      "old": "pub const FAMILIES: &[&Family] = &[&wf07::FAMILY, &wf30::FAMILY, &wf31::FAMILY];",
-      "new": "pub const FAMILIES: &[&Family] = &[&wf30::FAMILY, &wf31::FAMILY];",
-      "outcome": "killed"
-    },
-    {
-      "name": "registry loses WF31",
-      "old": "pub const FAMILIES: &[&Family] = &[&wf07::FAMILY, &wf30::FAMILY, &wf31::FAMILY];",
-      "new": "pub const FAMILIES: &[&Family] = &[&wf07::FAMILY, &wf30::FAMILY];",
-      "outcome": "killed"
-    },
-    {
-      "name": "registry out of order",
-      "old": "pub const FAMILIES: &[&Family] = &[&wf07::FAMILY, &wf30::FAMILY, &wf31::FAMILY];",
-      "new": "pub const FAMILIES: &[&Family] = &[&wf30::FAMILY, &wf07::FAMILY, &wf31::FAMILY];",
       "outcome": "killed"
     },
     {
@@ -637,6 +619,102 @@
       "name": "judge uses an empty registry",
       "old": "    judge_in(FAMILIES, request)",
       "new": "    judge_in(&[], request)",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry loses wf07",
+      "old": "    &wf07::FAMILY,\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry loses wf13",
+      "old": "    &wf13::FAMILY,\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry loses wf24",
+      "old": "    &wf24::FAMILY,\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry loses wf30",
+      "old": "    &wf30::FAMILY,\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry loses wf31",
+      "old": "    &wf31::FAMILY,\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry loses wf32",
+      "old": "    &wf32::FAMILY,\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry loses wf45",
+      "old": "    &wf45::FAMILY,\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry out of order",
+      "old": "    &wf07::FAMILY,\n    &wf13::FAMILY,\n",
+      "new": "    &wf13::FAMILY,\n    &wf07::FAMILY,\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "a part is prompted with the whole statement",
+      "old": "        let statement = match task.get(\"statement\") {",
+      "new": "        let statement = match self.task.get(\"statement\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a part is prompted with the whole task",
+      "old": "        let rest = match task {\n            Datum::Map(map) => Datum::Map(",
+      "new": "        let rest = match self.task {\n            Datum::Map(map) => Datum::Map(",
+      "outcome": "killed"
+    },
+    {
+      "name": "owing drops the obligations",
+      "old": "        self.obligations = obligations;\n",
+      "new": "        let _ = obligations;\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "a settled refusal owes nothing",
+      "old": "    checks\n        .judge(CERTIFIED_CODE, claimed)\n        .owing(verdict.obligations)",
+      "new": "    checks.judge(CERTIFIED_CODE, claimed)",
+      "outcome": "killed"
+    },
+    {
+      "name": "the report owes nothing",
+      "old": "        uncertified_obligations: verdict.obligations,",
+      "new": "        uncertified_obligations: Vec::new(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a certified verdict starts with an obligation",
+      "old": "        verdict: CERTIFIED,\n        code: code.to_owned(),\n        detail,\n        obligations: Vec::new(),",
+      "new": "        verdict: CERTIFIED,\n        code: code.to_owned(),\n        detail,\n        obligations: vec![String::new()],",
+      "outcome": "killed"
+    },
+    {
+      "name": "a typed refusal starts with an obligation",
+      "old": "        verdict: TYPED_REFUSAL,\n        code: code.to_owned(),\n        detail,\n        obligations: Vec::new(),",
+      "new": "        verdict: TYPED_REFUSAL,\n        code: code.to_owned(),\n        detail,\n        obligations: vec![String::new()],",
+      "outcome": "killed"
+    },
+    {
+      "name": "a refusal starts with an obligation",
+      "old": "        verdict: REFUSED,\n        code: code.to_owned(),\n        detail,\n        obligations: Vec::new(),",
+      "new": "        verdict: REFUSED,\n        code: code.to_owned(),\n        detail,\n        obligations: vec![String::new()],",
       "outcome": "killed"
     }
   ]

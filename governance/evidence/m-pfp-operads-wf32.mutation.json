@@ -1,0 +1,659 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf32.rs",
+  "target_sha256": "c3e8fa6759fd6a701ff03128d0f11f8d0266066eb813a2b300f37bd1c82fe5c9",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf32 --test domains",
+  "counts": {
+    "killed": 107,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF32\",",
+      "new": "    workflow: \"WF3\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Claim-scoped receipt\",",
+      "new": "    name: \"Receipt\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"per_claim_independent_checkers\",",
+      "new": "    host_check: \"checkers\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "a source may be any value",
+      "old": "        Datum::Map(map) => map.values().all(|source| source.as_text().is_some()),",
+      "new": "        Datum::Map(_) => true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "one text source is enough",
+      "old": "        Datum::Map(map) => map.values().all(|source| source.as_text().is_some()),",
+      "new": "        Datum::Map(map) => map.values().any(|source| source.as_text().is_some()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "sources may be any value",
+      "old": "        Datum::Map(map) => map.values().all(|source| source.as_text().is_some()),\n        _ => false,",
+      "new": "        Datum::Map(map) => map.values().all(|source| source.as_text().is_some()),\n        _ => true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "sources read from another key",
+      "old": "    if !task.get(\"sources\").is_none_or(texts) {",
+      "new": "    if !task.get(\"texts\").is_none_or(texts) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "sources required",
+      "old": "    if !task.get(\"sources\").is_none_or(texts) {",
+      "new": "    if !task.get(\"sources\").is_some_and(texts) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "sources message changed",
+      "old": "        return Err(\"sources must be an object of texts\".to_owned());",
+      "new": "        return Err(\"sources\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "a declared input may be any value",
+      "old": "        Datum::Map(map) => map.values().all(|input| checked_input(input).is_some()),",
+      "new": "        Datum::Map(_) => true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "one good declared input is enough",
+      "old": "        Datum::Map(map) => map.values().all(|input| checked_input(input).is_some()),",
+      "new": "        Datum::Map(map) => map.values().any(|input| checked_input(input).is_some()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "inputs may be any value",
+      "old": "        Datum::Map(map) => map.values().all(|input| checked_input(input).is_some()),\n        _ => false,",
+      "new": "        Datum::Map(map) => map.values().all(|input| checked_input(input).is_some()),\n        _ => true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "inputs validated under another key",
+      "old": "    if !task.get(\"inputs\").is_none_or(declared) {",
+      "new": "    if !task.get(\"declared\").is_none_or(declared) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "inputs required",
+      "old": "    if !task.get(\"inputs\").is_none_or(declared) {",
+      "new": "    if !task.get(\"inputs\").is_some_and(declared) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "inputs message changed",
+      "old": "        return Err(\"declared inputs need a registered checker and an input object\".to_owned());",
+      "new": "        return Err(\"inputs\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "checker read from another key",
+      "old": "    let check = checker(declared.get(\"checker\")?.as_text()?)?;",
+      "new": "    let check = checker(declared.get(\"domain\")?.as_text()?)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "declared input may be any value",
+      "old": "    let input = declared.get(\"input\").filter(|input| input.is_map())?;",
+      "new": "    let input = declared.get(\"input\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "declared input read from another key",
+      "old": "    let input = declared.get(\"input\").filter(|input| input.is_map())?;",
+      "new": "    let input = declared.get(\"data\").filter(|input| input.is_map())?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "input reference read from another key",
+      "old": "    let reference = claim.get(\"input_ref\").unwrap_or(&Datum::Null);",
+      "new": "    let reference = claim.get(\"ref\").unwrap_or(&Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "declared inputs read from another key",
+      "old": "        .and_then(|name| task.get(\"inputs\")?.get(name))",
+      "new": "        .and_then(|name| task.get(\"sources\")?.get(name))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a self-supplied input is accepted",
+      "old": "        .filter(|_| claim.get(\"input\").is_none() && claim.get(\"checker\").is_none());",
+      "new": "        .filter(|_| claim.get(\"checker\").is_none());",
+      "outcome": "killed"
+    },
+    {
+      "name": "a self-supplied checker is accepted",
+      "old": "        .filter(|_| claim.get(\"input\").is_none() && claim.get(\"checker\").is_none());",
+      "new": "        .filter(|_| claim.get(\"input\").is_none());",
+      "outcome": "killed"
+    },
+    {
+      "name": "only self-supplied claims are checked",
+      "old": "        .filter(|_| claim.get(\"input\").is_none() && claim.get(\"checker\").is_none());",
+      "new": "        .filter(|_| claim.get(\"input\").is_some() || claim.get(\"checker\").is_some());",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness read from another key",
+      "old": "        Some((check, input)) => check(input, claim.get(\"witness\").unwrap_or(&Datum::Null)),",
+      "new": "        Some((check, input)) => check(input, claim.get(\"answer\").unwrap_or(&Datum::Null)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "input and witness swapped",
+      "old": "        Some((check, input)) => check(input, claim.get(\"witness\").unwrap_or(&Datum::Null)),",
+      "new": "        Some((check, input)) => check(claim.get(\"witness\").unwrap_or(&Datum::Null), input),",
+      "outcome": "killed"
+    },
+    {
+      "name": "an undeclared input passes",
+      "old": "        None => Ok((\n            false,\n            Datum::map([(\"undeclared_input\"",
+      "new": "        None => Ok((\n            true,\n            Datum::map([(\"undeclared_input\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "undeclared witness key changed",
+      "old": "            Datum::map([(\"undeclared_input\", Datum::text(reference.canonical()))]),",
+      "new": "            Datum::map([(\"undeclared\", Datum::text(reference.canonical()))]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "undeclared witness drops the reference",
+      "old": "            Datum::map([(\"undeclared_input\", Datum::text(reference.canonical()))]),",
+      "new": "            Datum::map([(\"undeclared_input\", Datum::text(String::new()))]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "quote source read from another key",
+      "old": "        .get(\"source\")\n        .and_then(Datum::as_text)",
+      "new": "        .get(\"from\")\n        .and_then(Datum::as_text)",
+      "outcome": "killed"
+    },
+    {
+      "name": "quote sources read from inputs",
+      "old": "        .and_then(|name| task.get(\"sources\")?.get(name))",
+      "new": "        .and_then(|name| task.get(\"inputs\")?.get(name))",
+      "outcome": "killed"
+    },
+    {
+      "name": "span read from another key",
+      "old": "    let (Some(source), Some(span)) = (source, claim.get(\"span\").and_then(Datum::as_list)) else {",
+      "new": "    let (Some(source), Some(span)) = (source, claim.get(\"range\").and_then(Datum::as_list)) else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "quote text read from another key",
+      "old": "    let ([start, end], Some(text)) = (span, claim.get(\"text\").and_then(Datum::as_text)) else {",
+      "new": "    let ([start, end], Some(text)) = (span, claim.get(\"quote\").and_then(Datum::as_text)) else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "quote shape message changed",
+      "old": "        return Err(\"quote needs [start, end] and text\".to_owned());",
+      "new": "        return Err(\"quote\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "an inexact start is read",
+      "old": "    if start.as_int().is_none() || end.as_int().is_none() {",
+      "new": "    if end.as_int().is_none() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an inexact end is read",
+      "old": "    if start.as_int().is_none() || end.as_int().is_none() {",
+      "new": "    if start.as_int().is_none() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "exact spans are refused",
+      "old": "    if start.as_int().is_none() || end.as_int().is_none() {",
+      "new": "    if start.as_int().is_some() || end.as_int().is_some() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "span message changed",
+      "old": "        return Err(\"span must be exact ints\".to_owned());",
+      "new": "        return Err(\"span\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty span holds",
+      "old": "        (Some(start), Some(end)) if start < end => {",
+      "new": "        (Some(start), Some(end)) if start <= end => {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a reversed span is read forward",
+      "old": "        (Some(start), Some(end)) if start < end => {\n            source.as_bytes().get(start..end) == Some(text.as_bytes())",
+      "new": "        (Some(start), Some(end)) if start != end => {\n            source.as_bytes().get(start.min(end)..end.max(start)) == Some(text.as_bytes())",
+      "outcome": "killed"
+    },
+    {
+      "name": "the quoted text is not compared",
+      "old": "            source.as_bytes().get(start..end) == Some(text.as_bytes())",
+      "new": "            source.as_bytes().get(start..end).is_some()",
+      "outcome": "killed"
+    },
+    {
+      "name": "a span is read by characters",
+      "old": "            source.as_bytes().get(start..end) == Some(text.as_bytes())",
+      "new": "            source.chars().skip(start).take(end - start).collect::<String>() == text",
+      "outcome": "killed"
+    },
+    {
+      "name": "a span includes its end",
+      "old": "            source.as_bytes().get(start..end) == Some(text.as_bytes())",
+      "new": "            source.as_bytes().get(start..=end) == Some(text.as_bytes())",
+      "outcome": "killed"
+    },
+    {
+      "name": "an unreadable span holds",
+      "old": "            source.as_bytes().get(start..end) == Some(text.as_bytes())\n        }\n        _ => false,",
+      "new": "            source.as_bytes().get(start..end) == Some(text.as_bytes())\n        }\n        _ => true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "source digest key changed",
+      "old": "            \"source_sha256\",",
+      "new": "            \"source\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "source digest is of the raw text",
+      "old": "            Datum::text(sha256_hex(&Datum::text(source).canonical())),",
+      "new": "            Datum::text(sha256_hex(source)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "source digest is of the quoted text",
+      "old": "            Datum::text(sha256_hex(&Datum::text(source).canonical())),",
+      "new": "            Datum::text(sha256_hex(&Datum::text(text).canonical())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "span witness key changed",
+      "old": "        (\"span\", Datum::List(vec![start.clone(), end.clone()])),",
+      "new": "        (\"range\", Datum::List(vec![start.clone(), end.clone()])),",
+      "outcome": "killed"
+    },
+    {
+      "name": "span witness reversed",
+      "old": "        (\"span\", Datum::List(vec![start.clone(), end.clone()])),",
+      "new": "        (\"span\", Datum::List(vec![end.clone(), start.clone()])),",
+      "outcome": "killed"
+    },
+    {
+      "name": "kind read from another key",
+      "old": "    match claim.get(\"kind\").and_then(Datum::as_text) {",
+      "new": "    match claim.get(\"type\").and_then(Datum::as_text) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "exact kind renamed",
+      "old": "        Some(\"exact\") => exact(task, claim).map(Some),",
+      "new": "        Some(\"checked\") => exact(task, claim).map(Some),",
+      "outcome": "killed"
+    },
+    {
+      "name": "quote kind renamed",
+      "old": "        Some(\"quote\") => quote(task, claim),",
+      "new": "        Some(\"cite\") => quote(task, claim),",
+      "outcome": "killed"
+    },
+    {
+      "name": "every other kind is checked as exact",
+      "old": "        _ => Ok(None),\n    }\n}\n\n/// The part of a claim",
+      "new": "        _ => exact(task, claim).map(Some),\n    }\n}\n\n/// The part of a claim",
+      "outcome": "killed"
+    },
+    {
+      "name": "digest covers the stated digest",
+      "old": "                    key.as_str() != \"evidence_sha256\" && (is_quote || key.as_str() != \"text\")",
+      "new": "                    (is_quote || key.as_str() != \"text\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "digest covers free text",
+      "old": "                    key.as_str() != \"evidence_sha256\" && (is_quote || key.as_str() != \"text\")",
+      "new": "                    key.as_str() != \"evidence_sha256\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "digest drops a quote text",
+      "old": "                    key.as_str() != \"evidence_sha256\" && (is_quote || key.as_str() != \"text\")",
+      "new": "                    key.as_str() != \"evidence_sha256\" && key.as_str() != \"text\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "digest covers only quote texts",
+      "old": "                    key.as_str() != \"evidence_sha256\" && (is_quote || key.as_str() != \"text\")",
+      "new": "                    key.as_str() != \"evidence_sha256\" && (!is_quote || key.as_str() != \"text\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage renamed",
+      "old": "    let Some(reply) = run.ask(\"solve\", run.prompt())? else {",
+      "new": "    let Some(reply) = run.ask(\"claims\", run.prompt())? else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "claims read from another key",
+      "old": "        .get(\"claims\")",
+      "new": "        .get(\"items\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty claim list is read",
+      "old": "        .filter(|claims| !claims.is_empty())\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "claims message changed",
+      "old": "        .ok_or(\"claims required\")?;",
+      "new": "        .ok_or(\"claims\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-object claims are read",
+      "old": "    if !claims.iter().all(Datum::is_map) {",
+      "new": "    if !claims.iter().any(Datum::is_map) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "objects message changed",
+      "old": "        return Err(\"claims are objects\".to_owned());",
+      "new": "        return Err(\"objects\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "ids read from another key",
+      "old": "        .map(|claim| claim.get(\"id\").and_then(Datum::as_text))",
+      "new": "        .map(|claim| claim.get(\"name\").and_then(Datum::as_text))",
+      "outcome": "killed"
+    },
+    {
+      "name": "repeated ids are read",
+      "old": "        .filter(|ids: &Vec<&str>| ids.iter().collect::<BTreeSet<_>>().len() == ids.len())\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "ids message changed",
+      "old": "        .ok_or(\"claims need unique string ids\")?;",
+      "new": "        .ok_or(\"ids\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "an open claim is not listed",
+      "old": "            open.push(id.to_owned());\n            continue;",
+      "new": "            continue;",
+      "outcome": "killed"
+    },
+    {
+      "name": "quote detection reads another kind",
+      "old": "        let is_quote = claim.get(\"kind\").and_then(Datum::as_text) == Some(\"quote\");",
+      "new": "        let is_quote = claim.get(\"kind\").and_then(Datum::as_text) == Some(\"exact\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "free text on an exact claim is not owed",
+      "old": "        if !is_quote && claim.get(\"text\").is_some() {",
+      "new": "        if false && !is_quote && claim.get(\"text\").is_some() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a quote text is owed",
+      "old": "        if !is_quote && claim.get(\"text\").is_some() {",
+      "new": "        if claim.get(\"text\").is_some() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "text obligation named without its suffix",
+      "old": "            open.push(format!(\"{id}:text\"));",
+      "new": "            open.push(format!(\"{id}\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "digest claim key changed",
+      "old": "        let bound = Datum::map([(\"claim\", scope(claim, is_quote)), (\"host\", witness.clone())]);",
+      "new": "        let bound = Datum::map([(\"c\", scope(claim, is_quote)), (\"host\", witness.clone())]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "digest host key changed",
+      "old": "        let bound = Datum::map([(\"claim\", scope(claim, is_quote)), (\"host\", witness.clone())]);",
+      "new": "        let bound = Datum::map([(\"claim\", scope(claim, is_quote)), (\"h\", witness.clone())]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "digest leaves out the witness",
+      "old": "        let bound = Datum::map([(\"claim\", scope(claim, is_quote)), (\"host\", witness.clone())]);",
+      "new": "        let bound = Datum::map([(\"claim\", scope(claim, is_quote)), (\"host\", Datum::Null)]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "digest leaves out the claim",
+      "old": "        let bound = Datum::map([(\"claim\", scope(claim, is_quote)), (\"host\", witness.clone())]);",
+      "new": "        let bound = Datum::map([(\"claim\", Datum::Null), (\"host\", witness.clone())]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "claim predicate prefix changed",
+      "old": "        checks.record(&format!(\"claim:{id}\"), holds, &witness);",
+      "new": "        checks.record(&format!(\"c:{id}\"), holds, &witness);",
+      "outcome": "killed"
+    },
+    {
+      "name": "claim predicate always passes",
+      "old": "        checks.record(&format!(\"claim:{id}\"), holds, &witness);",
+      "new": "        checks.record(&format!(\"claim:{id}\"), true, &witness);",
+      "outcome": "killed"
+    },
+    {
+      "name": "claim witness dropped",
+      "old": "        checks.record(&format!(\"claim:{id}\"), holds, &witness);",
+      "new": "        checks.record(&format!(\"claim:{id}\"), holds, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "stated digest read from another key",
+      "old": "        if let Some(stated) = claim.get(\"evidence_sha256\") {",
+      "new": "        if let Some(stated) = claim.get(\"digest\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "digest predicate suffix changed",
+      "old": "                &format!(\"claim:{id}:digest_bound\"),",
+      "new": "                &format!(\"claim:{id}:digest\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "any stated digest is bound",
+      "old": "                stated.as_text() == Some(bound.as_str()),",
+      "new": "                stated.as_text().is_some(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "digest evidence dropped",
+      "old": "                &Datum::text(bound.clone()),\n            );",
+      "new": "                &Datum::Null,\n            );",
+      "outcome": "killed"
+    },
+    {
+      "name": "a failed claim is admitted",
+      "old": "        if holds {\n            admitted.insert(id.to_owned(), bound);",
+      "new": "        if true {\n            admitted.insert(id.to_owned(), bound);",
+      "outcome": "killed"
+    },
+    {
+      "name": "no claim is admitted",
+      "old": "        if holds {\n            admitted.insert(id.to_owned(), bound);",
+      "new": "        if false {\n            admitted.insert(id.to_owned(), bound);",
+      "outcome": "killed"
+    },
+    {
+      "name": "admitted list read from another key",
+      "old": "    let listed = match reply.get(\"admitted\") {",
+      "new": "    let listed = match reply.get(\"listed\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "claims paired with the wrong ids",
+      "old": "    Ok(ids.into_iter().zip(claims).collect())",
+      "new": "    Ok(ids.into_iter().rev().zip(claims).collect())",
+      "outcome": "killed"
+    },
+    {
+      "name": "only the first claim is read",
+      "old": "    Ok(ids.into_iter().zip(claims).collect())",
+      "new": "    Ok(ids.into_iter().zip(claims).take(1).collect())",
+      "outcome": "killed"
+    },
+    {
+      "name": "admitted message changed",
+      "old": "        Some(listed) => listed.as_list().ok_or(\"admitted must be a list\")?,",
+      "new": "        Some(listed) => listed.as_list().ok_or(\"admitted\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-text listed ids are ignored",
+      "old": "        .map(|id| id.as_text().map_or_else(|| id.canonical(), str::to_owned))\n        .filter(|id| !admitted.contains_key(id))",
+      "new": "        .filter_map(|id| id.as_text().map(str::to_owned))\n        .filter(|id| !admitted.contains_key(id))",
+      "outcome": "killed"
+    },
+    {
+      "name": "admitted ids are the overreach",
+      "old": "        .filter(|id| !admitted.contains_key(id))",
+      "new": "        .filter(|id| admitted.contains_key(id))",
+      "outcome": "killed"
+    },
+    {
+      "name": "nothing is overreach",
+      "old": "        .filter(|id| !admitted.contains_key(id))",
+      "new": "        .filter(|_| false)",
+      "outcome": "killed"
+    },
+    {
+      "name": "overreach predicate renamed",
+      "old": "        \"no_admission_overreach\",",
+      "new": "        \"no_overreach\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "overreach always passes",
+      "old": "        overreach == Datum::List(Vec::new()),",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "overreach evidence dropped",
+      "old": "        overreach == Datum::List(Vec::new()),\n        &overreach,",
+      "new": "        overreach == Datum::List(Vec::new()),\n        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "admission predicate renamed",
+      "old": "    checks.record(\"some_claim_admitted\", !admitted.is_empty(), &admitted_ids);",
+      "new": "    checks.record(\"admitted\", !admitted.is_empty(), &admitted_ids);",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty receipt passes",
+      "old": "    checks.record(\"some_claim_admitted\", !admitted.is_empty(), &admitted_ids);",
+      "new": "    checks.record(\"some_claim_admitted\", true, &admitted_ids);",
+      "outcome": "killed"
+    },
+    {
+      "name": "admission evidence dropped",
+      "old": "    checks.record(\"some_claim_admitted\", !admitted.is_empty(), &admitted_ids);",
+      "new": "    checks.record(\"some_claim_admitted\", !admitted.is_empty(), &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal overreach key changed",
+      "old": "            (\"overreach\", overreach),",
+      "new": "            (\"over\", overreach),",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal admitted key changed",
+      "old": "            (\"admitted\", admitted_ids),",
+      "new": "            (\"ids\", admitted_ids),",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal unadmitted key changed",
+      "old": "            (\"unadmitted\", names(open.clone())),\n        ]);\n        return",
+      "new": "            (\"open\", names(open.clone())),\n        ]);\n        return",
+      "outcome": "killed"
+    },
+    {
+      "name": "a refusal owes nothing",
+      "old": "        return Ok(checks.judge(super::CERTIFIED_CODE, detail).owing(open));",
+      "new": "        return Ok(checks.judge(super::CERTIFIED_CODE, detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "scoped and full codes swapped",
+      "old": "    let code = if open.is_empty() {\n        \"ALL_CLAIMS_ADMITTED\"\n    } else {\n        \"CLAIM_SCOPED\"\n    };",
+      "new": "    let code = if open.is_empty() {\n        \"CLAIM_SCOPED\"\n    } else {\n        \"ALL_CLAIMS_ADMITTED\"\n    };",
+      "outcome": "killed"
+    },
+    {
+      "name": "full code changed",
+      "old": "        \"ALL_CLAIMS_ADMITTED\"",
+      "new": "        \"ALL_ADMITTED\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "scoped code changed",
+      "old": "        \"CLAIM_SCOPED\"\n    };",
+      "new": "        \"SCOPED\"\n    };",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipt drops the digests",
+      "old": "            .map(|(id, bound)| (id, Datum::Text(bound)))",
+      "new": "            .map(|(id, _bound)| (id, Datum::Text(String::new())))",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipt admitted key changed",
+      "old": "    let detail = Datum::map([(\"admitted\", receipt), (\"unadmitted\", names(open.clone()))]);",
+      "new": "    let detail = Datum::map([(\"receipt\", receipt), (\"unadmitted\", names(open.clone()))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipt unadmitted key changed",
+      "old": "    let detail = Datum::map([(\"admitted\", receipt), (\"unadmitted\", names(open.clone()))]);",
+      "new": "    let detail = Datum::map([(\"admitted\", receipt), (\"open\", names(open.clone()))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a certified receipt owes nothing",
+      "old": "    Ok(certified(code, detail).owing(open))",
+      "new": "    Ok(certified(code, detail))",
+      "outcome": "killed"
+    }
+  ]
+}

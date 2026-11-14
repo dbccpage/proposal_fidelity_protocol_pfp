@@ -1,0 +1,101 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/perm.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/perm.rs",
+      "language": "Rust",
+      "sha256": "e207e4ad1513191f242f7e460b205a6e898e07b3f4a55fcd5cd80eb6f3e63917"
+    },
+    "contract_urn": "urn:pfp-operads:perm-tests:v1",
+    "symbols": [
+      "datum",
+      "a_list_with_each_point_once_is_a_permutation",
+      "a_repeated_missing_or_outside_point_is_not_a_permutation",
+      "a_permutation_is_read_for_exactly_the_number_of_points_asked",
+      "only_a_list_of_exact_integers_is_read",
+      "the_identity_fixes_every_point",
+      "a_product_applies_the_left_permutation_first",
+      "a_product_leaves_a_point_the_right_side_lacks_where_it_was_put",
+      "an_inverse_undoes_its_permutation_on_both_sides",
+      "an_inverse_of_a_list_that_is_no_permutation_keeps_its_length",
+      "the_matrix_of_a_permutation_has_its_one_in_the_image_column",
+      "a_matrix_product_is_rows_times_columns",
+      "a_matrix_product_reads_what_one_side_lacks_as_zeros",
+      "a_matrix_product_too_large_for_64_bits_stays_at_the_largest_value",
+      "the_matrix_of_a_product_is_the_product_of_the_matrices",
+      "a_permutation_is_read_back_from_its_matrix",
+      "a_matrix_that_is_not_a_permutation_matrix_gives_nothing"
+    ],
+    "owned_invariants": [
+      "What read accepts and refuses is asserted entry by entry, including a list that would be a permutation if its unreadable entry were left out.",
+      "Composition is asserted on permutations that do not commute, so the order is fixed by the expected value.",
+      "The matrix of a product is asserted equal to the product of the matrices, and each way a matrix fails to be a permutation matrix is asserted alone."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/perm.rs",
+      "language": "Rust",
+      "sha256": "e207e4ad1513191f242f7e460b205a6e898e07b3f4a55fcd5cd80eb6f3e63917"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 16 pass in the recorded run; the suite they belong to killed 31 of 31 eligible permutation mutants.",
+      "G5": "Measured worst cyclomatic 1, cognitive complexity is not measured for Rust, nesting 0; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T13:51:27Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v9-test.run.json",
+        "sha256": "75c065d96b64633778adc9bbc5a54eb150b58536223e4c3443f62215ad84017e",
+        "note": "427 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-clippy.run.json",
+        "sha256": "b095a186f720f679235b2f243d030a0c7412ecd11d687d13c61ad6cac778d72e",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-fmt.run.json",
+        "sha256": "17a3ba5175b2bb9bccc425d89628829ccaadff38dc36f614734ea800455c7625",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.run.json",
+        "sha256": "785da0a0586cbf62c7a8439e2a626fa5ba0df80942665c0838e344cc4f460f41",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.json",
+        "sha256": "e9c47748ca0777f0a16723ed4f2e9ddb5b44c2f4480bd78d2102e6cf92daa227",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}
