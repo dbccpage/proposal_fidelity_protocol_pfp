@@ -2,10 +2,10 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/pfp_operads/src/bin/pfp_operad.rs",
-  "target_sha256": "7ee8a760d92c051c197c95f45ec7b12b93f037b154695553d4df5ff0fe847d7c",
+  "target_sha256": "58b2a52a5fa41d295df9be9318c9f03d854ce85f46256bc7e4f3091cabadb9e2",
   "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
   "counts": {
-    "killed": 27,
+    "killed": 34,
     "survived": 0,
     "demonstrably_equivalent": 0,
     "invalid": 0,
@@ -173,6 +173,48 @@
       "name": "a loaded seed is written to the ledger",
       "old": "if let [\"ledger\", \"append\", file, _] = args {",
       "new": "if let [\"ledger\", \"append\" | \"load\", file, _] = args {",
+      "outcome": "killed"
+    },
+    {
+      "name": "repair renamed",
+      "old": "if let [\"repair\", source, folder, request] = args {",
+      "new": "if let [\"mend\", source, folder, request] = args {",
+      "outcome": "killed"
+    },
+    {
+      "name": "repair takes the request first",
+      "old": "if let [\"repair\", source, folder, request] = args {",
+      "new": "if let [\"repair\", request, source, folder] = args {",
+      "outcome": "killed"
+    },
+    {
+      "name": "repair takes the run folder first",
+      "old": "if let [\"repair\", source, folder, request] = args {",
+      "new": "if let [\"repair\", folder, source, request] = args {",
+      "outcome": "killed"
+    },
+    {
+      "name": "repair needs no run folder",
+      "old": "if let [\"repair\", source, folder, request] = args {",
+      "new": "if let [\"repair\", source, request] = args {\n        let folder = source;",
+      "outcome": "killed"
+    },
+    {
+      "name": "repair result discarded for a usage error",
+      "old": "        return Ok(repair_in(\n            &read(request)?,\n            Path::new(source),\n            Path::new(folder),\n            std::env::current_exe().ok().as_deref(),\n        ));",
+      "new": "        let _ = repair_in(\n            &read(request)?,\n            Path::new(source),\n            Path::new(folder),\n            std::env::current_exe().ok().as_deref(),\n        );",
+      "outcome": "killed"
+    },
+    {
+      "name": "repair does not run",
+      "old": "    if let [\"repair\", source, folder, request] = args {",
+      "new": "    if let (true, [\"repair\", source, folder, request]) = (false, args) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "repair gives its checks no host",
+      "old": "            std::env::current_exe().ok().as_deref(),",
+      "new": "            None,",
       "outcome": "killed"
     }
   ]
