@@ -87,3 +87,9 @@ stated evidence grade.
 
 Related papers: [014](paper_014.md) (recursive re-entry with evidence scope)
 and [019](paper_019.md) (evidence-bound harness evolution).
+
+## Native host and ledger integration
+
+- `code/rust/core_prompt_civilization` provides the native genome, inheritance, selection, and taint calculus (consolidated onto `code/rust/core_epistemic_immune_system` for immune checks in Draft PR `#108`, with compilation/identity fixes in Draft PR `#100`).
+- `code/rust/pfp_immune` (`taint` and `select` subcommands, Draft PR `#113`), `pfp_core/operad_ledger.py` (Draft PR `#118`), and `pfp_core/immune_host.py` (Draft PR `#121`) connect PCIV checks and cemetery failure records to `WF14`, `WF19`, `WF41`, and `WF51` (`pfp_core/exclusions.py`).
+- Package documentation in `pciv/documentation/` was updated to `code/rust/` paths on branch `gemini/eis-pciv-m8`.

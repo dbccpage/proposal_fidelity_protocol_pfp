@@ -15,14 +15,14 @@ evidence_grades:
 authority_effect: "None"
 source_paths:
   - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - engine/crates_rs/core_prompt_civilization/src/immunity.rs
+  - code/rust/core_prompt_civilization/src/immunity.rs
 ---
 
 # Prompt Civ Level 03: Lamarckian Retro-Inheritance & Hop-Bounded Immunity
 
 **AuthorityEffect:** None.  
 **Level:** Level 03 (Phenotypic Trace Inheritance & Backward Attenuation)  
-**Rust Immunity Seam:** [`core_prompt_civilization::immunity`](../../../engine/crates_rs/core_prompt_civilization/src/immunity.rs)  
+**Rust Immunity Seam:** [`core_prompt_civilization::immunity`](..\..\..\code\rust\core_prompt_civilization\src\immunity.rs)  
 **Primary Types:** `ImmunityAcquisitionV1`, `ImmunityPropagationV1`, `AntibodyRefV1`  
 **Core Falsifiers:** `F-IMMUNE-09`, `F-IMMUNE-10`, `F-IMMUNE-11`, `F-SCOPE-01`
 
@@ -52,7 +52,7 @@ graph TD
     end
 ```
 
-Classical Darwinian genetic algorithms mutate prompt text blindly, discarding the rich diagnostic receipts generated when execution fails. Lamarckian evolution, in contrast, incorporates acquired phenotypic adaptations directly into the organism's hereditary lineage. In Prompt Civilization, when a prompt execution triggers a formal failure receipt or cochain obstruction, the Epistemic Immune System (OEEIS) generates an **antibody reference** ([`AntibodyRefV1`](../../../engine/crates_rs/core_prompt_civilization/src/immunity.rs)).
+Classical Darwinian genetic algorithms mutate prompt text blindly, discarding the rich diagnostic receipts generated when execution fails. Lamarckian evolution, in contrast, incorporates acquired phenotypic adaptations directly into the organism's hereditary lineage. In Prompt Civilization, when a prompt execution triggers a formal failure receipt or cochain obstruction, the Epistemic Immune System (OEEIS) generates an **antibody reference** ([`AntibodyRefV1`](..\..\..\code\rust\core_prompt_civilization\src\immunity.rs)).
 
 Level 03 defines how acquired immunity propagates across the inheritance topology:
 1. **Durable Forward Inheritance:** All future descendants inherit the acquired antibody reference without expiration.

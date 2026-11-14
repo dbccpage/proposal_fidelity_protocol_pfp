@@ -110,3 +110,7 @@ changed and nothing is deleted.
 2. A prompt answers "this system has a nonzero obstruction" and the host
    confirms it. Is that a failure? *No. A correct obstruction report is a valid,
    compliant outcome.*
+
+## Native host integration
+
+- Host-side Pareto/rank selection delegates through `code/rust/pfp_immune select` (Draft PR `#113`) and `pfp_core/immune_host.py` (Draft PR `#121`), preserving exact-rational arithmetic in `code/rust/core_prompt_civilization`.

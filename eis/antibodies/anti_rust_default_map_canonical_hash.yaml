@@ -25,11 +25,11 @@ repaired_invariant_fixture: "pub fn canonical_sha256(domain: &str, payload: &Val
 benign_control_fixture: "pub fn presentation_bytes(payload: &Value) -> Result<String, Error> {\n\
   \ serde_json::to_string(payload)\n}\n// Intentional source-order display is not a canonical\
   \ identity boundary."
-implementation_binding: engine/crates_rs/core_homology/src/cochain_realization.rs
+implementation_binding: code/rust/core_homology/src/cochain_realization.rs
 additional_implementation_bindings:
-- engine/crates_rs/core_solvers/src/router_plan_grammar.rs
-- engine/crates_rs/core_solvers/src/router_structure_extension.rs
-native_test_binding: engine/crates_rs/core_homology/src/cochain_realization.rs
+- code/rust/core_solvers/src/router_plan_grammar.rs
+- code/rust/core_solvers/src/router_structure_extension.rs
+native_test_binding: code/rust/core_homology/src/cochain_realization.rs
 harmful_control_tests:
 - canonical_sha256_sorts_nested_maps_without_reordering_arrays
 benign_control_tests:

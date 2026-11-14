@@ -15,14 +15,14 @@ evidence_grades:
 authority_effect: "None"
 source_paths:
   - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - engine/crates_rs/core_prompt_civilization/src/fitness.rs
+  - code/rust/core_prompt_civilization/src/fitness.rs
 ---
 
 # Prompt Civ Level 04: Pareto Selection & Fitness: Multi-Objective Exact Evaluation
 
 **AuthorityEffect:** None.  
 **Level:** Level 04 (Multi-Objective Rational Frontiers & Honest Accounting)  
-**Rust Fitness Seam:** [`core_prompt_civilization::fitness`](../../../engine/crates_rs/core_prompt_civilization/src/fitness.rs)  
+**Rust Fitness Seam:** [`core_prompt_civilization::fitness`](..\..\..\code\rust\core_prompt_civilization\src\fitness.rs)  
 **Primary Types:** `PromptFitnessV1`, `PromptMaturity`, `ParetoFrontier`  
 **Core Falsifiers:** `F-SELECT-01`, `F-SELECT-02`, `F-SELECT-03`, `F-RES-06`
 

@@ -15,7 +15,7 @@ authority_effect: "None"
 **AuthorityEffect:** None.  
 **Track:** 410 (Selection, Ranking & Retrieval)  
 **Level Source:** Level 05 ([`level_05_inverse_lineage_pagerank.md`](../../levels/level_05_inverse_lineage_pagerank.md))  
-**Rust Seam:** [`core_prompt_civilization::rank`](../../../../engine/crates_rs/core_prompt_civilization/src/rank.rs)
+**Rust Seam:** [`core_prompt_civilization::rank`](..\..\..\..\..\code\rust\core_prompt_civilization\src\rank.rs)
 
 ## 1. Pedagogical Objective
 Understand how ancestral utility is computed via an exact fixed-point certificate over $\mathbb{Q}$ under contract `core.spectral.pagerank.v2`, allocating human review budget without minting proof authority.

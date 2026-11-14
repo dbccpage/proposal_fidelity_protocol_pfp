@@ -41,11 +41,13 @@ operator act, real deployment data, or a research result.
 
 `DetectorRule.affinity_score` is a float in Python and in the native wire, and
 the non-exact `stimulate` path in
-`crates_rs/core_epistemic_immune_system/src/clonal_selection.rs`
+`code/rust/core_epistemic_immune_system/src/clonal_selection.rs`
 adds f64 values. The exact path (`exact_boost`) refuses float boosts. Moving
 affinity to exact rationals changes the Python value object, the native wire and
 stored fixtures together; it was not done in the closeout and is recorded here
-as open.
+as open. *(2026-11-14 review note: Draft PR #108 on branch `gemini/eis-pciv-m4`
+proposes moving `AffinityScore` and `clonal_selection.rs` to exact `BigRational`;
+operator, deployment, and empirical obligations above remain open.)*
 
 ## Boundaries that stay in force
 
