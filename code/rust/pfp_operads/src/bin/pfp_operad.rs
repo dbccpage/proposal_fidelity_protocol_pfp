@@ -9,6 +9,9 @@
 //! pfp_operad ledger verify LEDGER.jsonl     replay every rule and hash of a failure ledger
 //! pfp_operad ledger admitted LEDGER.jsonl   list the rules a run may load
 //! pfp_operad ledger append LEDGER.jsonl RECORD.json   check a record and add it to the ledger
+//! pfp_operad envelope REQUEST.json         check a full-slot reply: slots, candidates, DDC moves
+//! pfp_operad judge REQUEST.json            compare a reply's task result with the host's own
+//! pfp_operad version                       name, version and canon of this host
 //! ```
 //!
 //! Exit 0: the check held. Exit 1: it ran and did not hold, or the input was refused.
@@ -20,7 +23,7 @@ use std::process::ExitCode;
 
 use pfp_operads::host::{respond, Command, Outcome};
 
-const USAGE: &str = "usage: pfp_operad laws FILE | check FILE | ledger verify FILE | ledger admitted FILE | ledger append FILE RECORD";
+const USAGE: &str = "usage: pfp_operad laws FILE | check FILE | envelope FILE | judge FILE | version | ledger verify FILE | ledger admitted FILE | ledger append FILE RECORD";
 
 fn read(path: &str) -> Result<String, String> {
     fs::read_to_string(path).map_err(|error| format!("cannot read {path}: {error}"))
@@ -39,6 +42,9 @@ fn command(args: &[&str]) -> Result<Command, String> {
     match args {
         ["laws", file] => Ok(Command::Laws(read(file)?)),
         ["check", file] => Ok(Command::Check(read(file)?)),
+        ["envelope", file] => Ok(Command::Envelope(read(file)?)),
+        ["judge", file] => Ok(Command::Judge(read(file)?)),
+        ["version"] => Ok(Command::Version),
         ["ledger", "verify", file] => Ok(Command::LedgerVerify(read(file)?)),
         ["ledger", "admitted", file] => Ok(Command::LedgerAdmitted(read(file)?)),
         ["ledger", "append", file, record] => Ok(Command::LedgerAppend {

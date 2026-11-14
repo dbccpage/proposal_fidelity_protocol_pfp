@@ -10,6 +10,7 @@ import yaml
 
 from pfp.domain.contracts.pfp_runtime import PfpPromptTemplate
 from pfp.domain.pfp_ingress import strict_json
+from pfp.infrastructure import operad_host
 from pfp.use_cases.pfp_proposal import task_turn_validator
 
 REASONING_ENV = "PFP_REASONING"
@@ -95,11 +96,9 @@ def basic_task_template(instruction) -> PfpPromptTemplate:
 
 
 def integer_sum_judge(case: dict, answer: object) -> tuple[bool, str]:
-    """Check the declared finite integer task, without a model or stored answer."""
-    accepted = (
-        type(answer) is dict
-        and set(answer) == {"total"}
-        and (type(answer["total"]) is int)
-        and (answer["total"] == sum(case["values"]))
-    )
-    return (accepted, "Exact integer sum agrees." if accepted else "Incorrect integer sum.")
+    """The Rust host's exact check of the declared finite integer task.
+
+    The host sums the public input itself, on unbounded integers, and compares.
+    No model, no stored answer, and no arithmetic here.
+    """
+    return operad_host.judge("integer_sum_v1", case, answer)

@@ -136,6 +136,15 @@
       "note": "A separate vocabulary from operad_colour. It types spans inside one prompt, not skill ports, so the two are not reconciled. The source repository's Rust prompt runtime also had an open Custom colour; that crate is not in this repository and the Python enum has no Custom, so the set here is closed."
     },
     {
+      "id": "task_value_colour",
+      "family": "colours_and_wires",
+      "description": "Value sorts of a finite workflow task: what an operation proposed in a reply consumes and produces.",
+      "status": "SETTLED",
+      "closed": true,
+      "values": ["Integer", "IntegerList"],
+      "note": "A separate vocabulary from prompt_colour (spans inside one prompt) and operad_colour (skill ports). The full-slot workflows prompt for these names. A reply may name another sort; the host then reports that candidate as untyped and leaves it unverified. A new task family adds its sorts here before a workflow may license an operation over them."
+    },
+    {
       "id": "capability_wire_type",
       "family": "colours_and_wires",
       "description": "Wire types of typed capability ports.",

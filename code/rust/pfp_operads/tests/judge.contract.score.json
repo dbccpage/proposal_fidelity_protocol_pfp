@@ -1,0 +1,93 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/judge.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/judge.rs",
+      "language": "Rust",
+      "sha256": "74d8c134e208c9e7cd7b4acd3bb844fd6b39c0b220b002b3132722b05910a070"
+    },
+    "contract_urn": "urn:pfp-operads:tests-judge:v1",
+    "symbols": [
+      "request",
+      "accepted",
+      "the_exact_sum_is_accepted_and_any_other_total_is_not",
+      "only_an_object_holding_one_integer_total_can_be_accepted",
+      "integers_are_unbounded_and_exact",
+      "a_case_may_carry_more_than_its_values",
+      "a_case_the_judge_cannot_sum_is_refused_not_judged",
+      "an_unknown_checker_or_an_open_request_is_refused",
+      "respond_and_the_command_report_pass_fail_and_refused",
+      "the_shipped_example_is_accepted"
+    ],
+    "owned_invariants": [
+      "Totals beyond 64 bits are asserted exactly; refusals are asserted by code.",
+      "Outcomes are asserted on the JSON a workflow would read, including exit codes of the built binary and the shipped example."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/judge.rs",
+      "language": "Rust",
+      "sha256": "74d8c134e208c9e7cd7b4acd3bb844fd6b39c0b220b002b3132722b05910a070"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 8 pass in the recorded run; the crate suite they belong to killed 14 of 14 eligible judge mutants.",
+      "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T09:19:59Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v2-test.run.json",
+        "sha256": "765ccc06ec162d9c03b1768aee8936e0a3f773bf454f0220e02c2af0d3ee8e32",
+        "note": "73 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v2-clippy.run.json",
+        "sha256": "032b6806d16575ff802401b5b192ded1a5cb995579237dac31b3c188e249e910",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v2-fmt.run.json",
+        "sha256": "6b1b5edcb7930b736d58cfa254a61e735940f9bd67ab01818c7b927fd186608c",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v2-metrics.run.json",
+        "sha256": "6d4fa19db7517c42c27a749136736ea17ad009a615fe2dca3f9eba5ed7173d67",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v2-metrics.json",
+        "sha256": "9b625cca33d29cb7f52e956c11372a8dc6d20a99e53f359a84e92db405df975b",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

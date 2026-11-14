@@ -31,7 +31,7 @@ The generated files are written by `cargo run -p core_operad_canon -- write`
 either file differs from what the crate renders, so neither can be edited by
 hand.
 
-**Count: 56 types** (49 settled, 7 proposed) in six families. The tables below
+**Count: 57 types** (50 settled, 7 proposed) in six families. The tables below
 follow those families, then list the things the registry does not cover.
 
 ### The registry check
@@ -66,6 +66,7 @@ colours and produces one.
 | Operad colour | Audit, Code, Contract, Diagram, Ledger, Paper, Post, Proof, Receipt, State | 10, closed | [`core_operad_canon`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/core_operad_canon/src/lib.rs) `OperadColour` |
 | Sub-colour | `Audit.hype_hits`, `Audit.lint_diff`, `Audit.sfh_findings`, `Audit.shadow_violations`, `Audit.layout_findings`, `Audit.verdict`, `Code.purged`, `Ledger.source_hashes` | 8 | [`op_inventory.yaml`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/operads/skill_operad/yaml/op_inventory.yaml) `subcolours` |
 | Prompt colour (types the spans inside one prompt) | RawTextSpan, Equation, IsolatedVariable, SubstitutionStep, RationalValue, InvariantWitness, TargetResult | 7 | [`pfp/domain/operad/prompt.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp/domain/operad/prompt.py) `PromptColour` |
+| Task value colour (value sorts of a finite workflow task; candidates in WF2 to WF5 replies are typed by it) | Integer, IntegerList | 2 | [`code/rust/pfp_operads/src/envelope.rs`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/pfp_operads/src/envelope.rs) `TaskValueColour` |
 | Capability wire type | anti_skill_subject, anti_skill_hits, typed_audit_receipt, code_text | 4 | [`operads/contracts/typed_capabilities_v1.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/operads/contracts/typed_capabilities_v1.py) `WireType` |
 | Adversary port | AdversaryRuntime, NativeBout, SeatTransport, SgtEmission, ImmuneAntibodies, OeopLearning, OeopAntiSkill, PromptGenealogy, CodaEvaluation, LggrGluing, EnvelopeStore | 11 | [`code/rust/core_adversary/src/specialization.rs`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/core_adversary/src/specialization.rs) `PortName` |
 | Adversary wire type | CandidateProposal, CochainDefect, Context, Contract, DualMultiplier, DualityReceipt, FlawAudit, GateWitness, GroundTruth, PrimalResidual, RawPacket, RawSpan, SanitizedPacket, SessionHintRequest, SessionHintResult, TerminalStatus | 16 | [`ops/adversary/infrastructure/typed_operad.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/ops/adversary/infrastructure/typed_operad.py) `_COLOURS` |
@@ -290,7 +291,7 @@ Some names that come up in conversation have no counterpart in the code:
 
 | Thing | Count |
 | --- | --- |
-| Operad types (one definition each, in `core_operad_canon`) | 56 (49 settled, 7 proposed; 10 with external sources) |
+| Operad types (one definition each, in `core_operad_canon`) | 57 (50 settled, 7 proposed; 10 with external sources) |
 | Operad colours | 10 (+ 8 sub-colours) |
 | DDC letters | 8 (6 repair stages) |
 | Capability kinds | 6 |

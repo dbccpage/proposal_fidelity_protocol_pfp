@@ -2,10 +2,10 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/pfp_operads/src/bin/pfp_operad.rs",
-  "target_sha256": "6ed0db09f7a6027bfdabbd31c949c84fbce263bc71af51ca23ba18ec72ac2799",
+  "target_sha256": "fd52625f8e20565bf7e6e001055ad2f40a0dfe65cf8ea0afe41faaf884f7ab70",
   "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
   "counts": {
-    "killed": 10,
+    "killed": 13,
     "survived": 0,
     "demonstrably_equivalent": 0,
     "invalid": 0,
@@ -71,6 +71,24 @@
       "name": "program name read as an argument",
       "old": "std::env::args().skip(1).collect()",
       "new": "std::env::args().collect()",
+      "outcome": "killed"
+    },
+    {
+      "name": "envelope routed to check",
+      "old": "Ok(Command::Envelope(read(file)?))",
+      "new": "Ok(Command::Check(read(file)?))",
+      "outcome": "killed"
+    },
+    {
+      "name": "judge routed to envelope",
+      "old": "Ok(Command::Judge(read(file)?))",
+      "new": "Ok(Command::Envelope(read(file)?))",
+      "outcome": "killed"
+    },
+    {
+      "name": "version takes a file",
+      "old": "        [\"version\"] => Ok(Command::Version),",
+      "new": "        [\"version\", _] => Ok(Command::Version),",
       "outcome": "killed"
     }
   ]

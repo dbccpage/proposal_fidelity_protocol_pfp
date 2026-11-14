@@ -2,10 +2,10 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/pfp_operads/src/host.rs",
-  "target_sha256": "9036ef33875bf3311e9df837d0ddf75f30298cb6c44b1994d02bdb7388c06863",
+  "target_sha256": "51af3117a38175bba410504107b3d7a4c634d47e7c2733aacbf0bb39ca2786ae",
   "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
   "counts": {
-    "killed": 18,
+    "killed": 25,
     "survived": 0,
     "demonstrably_equivalent": 0,
     "invalid": 0,
@@ -99,14 +99,14 @@
     },
     {
       "name": "law violations pass",
-      "old": "            Ok((report.holds(), encode(&report)?))",
-      "new": "            Ok((true, encode(&report)?))",
+      "old": "verdict(report.holds(), &report)",
+      "new": "verdict(true, &report)",
       "outcome": "killed"
     },
     {
       "name": "refused candidates pass",
-      "old": "            Ok((report.accepted, encode(&report)?))",
-      "new": "            Ok((true, encode(&report)?))",
+      "old": "check(text).and_then(|report| verdict(report.accepted, &report))",
+      "new": "check(text).and_then(|report| verdict(true, &report))",
       "outcome": "killed"
     },
     {
@@ -119,6 +119,48 @@
       "name": "duplicate rows listed twice",
       "old": "        .filter(|wire| listed.insert(wire.id.as_str()))",
       "new": "        .filter(|wire| listed.insert(wire.id.as_str()) || true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "envelope verdict ignored",
+      "old": "envelope(text).and_then(|report| verdict(report.accepted, &report))",
+      "new": "envelope(text).and_then(|report| verdict(true, &report))",
+      "outcome": "killed"
+    },
+    {
+      "name": "judge verdict ignored",
+      "old": "verdict(found.accepted, &found)",
+      "new": "verdict(true, &found)",
+      "outcome": "killed"
+    },
+    {
+      "name": "version reports another canon",
+      "old": "        \"canon\": SCHEMA_VERSION,",
+      "new": "        \"canon\": \"\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "version reports no version",
+      "old": "        \"version\": env!(\"CARGO_PKG_VERSION\"),",
+      "new": "        \"version\": \"\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "version reports another name",
+      "old": "        \"name\": env!(\"CARGO_PKG_NAME\"),",
+      "new": "        \"name\": \"host\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "every verdict fails",
+      "old": "    Ok((holds, encode(report)?))",
+      "new": "    Ok((false, encode(report)?))",
+      "outcome": "killed"
+    },
+    {
+      "name": "verify counts no entries",
+      "old": "\"entries\": ledger.entries().len()",
+      "new": "\"entries\": 0",
       "outcome": "killed"
     }
   ]

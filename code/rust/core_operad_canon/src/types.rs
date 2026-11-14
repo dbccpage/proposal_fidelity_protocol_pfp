@@ -177,6 +177,18 @@ pub const OPERAD_TYPES: &[OperadType] = &[
         legacy_map: &[],
     },
     OperadType {
+        id: "task_value_colour",
+        family: Family::ColoursAndWires,
+        description: "Value sorts of a finite workflow task: what an operation proposed in a reply consumes and produces.",
+        status: Status::Settled,
+        closed: true,
+        values: &["Integer", "IntegerList"],
+        decision: None,
+        note: Some("A separate vocabulary from prompt_colour (spans inside one prompt) and operad_colour (skill ports). The full-slot workflows prompt for these names. A reply may name another sort; the host then reports that candidate as untyped and leaves it unverified. A new task family adds its sorts here before a workflow may license an operation over them."),
+        letters_of: None,
+        legacy_map: &[],
+    },
+    OperadType {
         id: "capability_wire_type",
         family: Family::ColoursAndWires,
         description: "Wire types of typed capability ports.",

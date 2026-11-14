@@ -1,0 +1,115 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/judge.rs",
+  "target_sha256": "1ec6e219b913a0e7fff208e7f36dc586e22f288842132bb30d733a12090dc3c9",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
+  "counts": {
+    "killed": 14,
+    "survived": 0,
+    "demonstrably_equivalent": 2,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "digits not required",
+      "old": "    if !digits.bytes().all(|byte| byte.is_ascii_digit()) {\n        return None;\n    }\n",
+      "new": "",
+      "equivalent": "The literal is one JSON value. The only JSON values BigInt parses are integer literals: a fraction, an exponent, a string, an object, an array, true, false and null all fail to parse. The explicit digit rule states the grammar without relying on the library's.",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "minus sign not allowed",
+      "old": "text.strip_prefix('-').unwrap_or(text)",
+      "new": "text",
+      "outcome": "killed"
+    },
+    {
+      "name": "sum starts at one",
+      "old": "let mut total = BigInt::from(0);",
+      "new": "let mut total = BigInt::from(1);",
+      "outcome": "killed"
+    },
+    {
+      "name": "sum subtracts",
+      "old": "        total += integer(literal)",
+      "new": "        total -= integer(literal)",
+      "outcome": "killed"
+    },
+    {
+      "name": "sum keeps the last value only",
+      "old": "        total += integer(literal)",
+      "new": "        total = integer(literal)",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-integer case value gets another code",
+      "old": "            Refusal::new(\"BAD_CASE\", format!(\"{} is not an integer\", literal.get()))",
+      "new": "            Refusal::new(\"BAD_REQUEST\", format!(\"{} is not an integer\", literal.get()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "malformed case gets another code",
+      "old": "        .map_err(|error| Refusal::new(\"BAD_CASE\", error.to_string()))?;",
+      "new": "        .map_err(|error| Refusal::new(\"BAD_REQUEST\", error.to_string()))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "extra answer fields accepted",
+      "old": "        (1, Some(total)) => integer(total),",
+      "new": "        (_, Some(total)) => integer(total),",
+      "outcome": "killed"
+    },
+    {
+      "name": "unknown checker judged as the sum",
+      "old": "    if request.checker != INTEGER_SUM {",
+      "new": "    if false && request.checker != INTEGER_SUM {",
+      "outcome": "killed"
+    },
+    {
+      "name": "unknown checker gets another code",
+      "old": "            \"UNKNOWN_CHECKER\",",
+      "new": "            \"BAD_REQUEST\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "verdict inverted",
+      "old": "    let accepted = stated_total(request.answer) == Some(sum_case(request.case)?);",
+      "new": "    let accepted = stated_total(request.answer) != Some(sum_case(request.case)?);",
+      "outcome": "killed"
+    },
+    {
+      "name": "always accepted",
+      "old": "    let accepted = stated_total(request.answer) == Some(sum_case(request.case)?);",
+      "new": "    let accepted = sum_case(request.case).is_ok();",
+      "outcome": "killed"
+    },
+    {
+      "name": "reasons swapped",
+      "old": "        reason: if accepted {",
+      "new": "        reason: if !accepted {",
+      "outcome": "killed"
+    },
+    {
+      "name": "checker id changed",
+      "old": "pub const INTEGER_SUM: &str = \"integer_sum_v1\";",
+      "new": "pub const INTEGER_SUM: &str = \"integer_sum_v2\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "unknown request field accepted",
+      "old": "#[derive(Deserialize)]\n#[serde(deny_unknown_fields)]\nstruct Request<'a> {",
+      "new": "#[derive(Deserialize)]\nstruct Request<'a> {",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty digits rejected early",
+      "old": "    if !digits.bytes().all(|byte| byte.is_ascii_digit()) {",
+      "new": "    if digits.is_empty() || !digits.bytes().all(|byte| byte.is_ascii_digit()) {",
+      "equivalent": "A JSON number is never empty and never a lone minus, and BigInt parsing refuses both, so the early return changes no outcome.",
+      "outcome": "demonstrably_equivalent"
+    }
+  ]
+}

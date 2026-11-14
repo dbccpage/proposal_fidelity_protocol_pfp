@@ -1,7 +1,10 @@
 # Standalone automated PFP workflows
 
 Five segregated workflow folders, one canonical provider/accounting boundary.
-Install `python -m pip install ".[workflows]"` from the repository root.
+Install `python -m pip install ".[workflows]"` from the repository root, and
+build the checker once: `cargo build --release -p pfp_operads --manifest-path code/rust/Cargo.toml`.
+The integer-sum judge and the reply-envelope checks run in that Rust program
+(`pfp_operad`); Python carries the request and the outcome.
 
 | Folder | Contract | Maximum normal calls |
 | --- | --- | ---: |

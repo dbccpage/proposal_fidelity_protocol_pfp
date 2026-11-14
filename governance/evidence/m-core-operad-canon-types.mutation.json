@@ -1,0 +1,113 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/core_operad_canon/src/types.rs",
+  "target_sha256": "d1bfc320844507dd2d4e3913968768cb7103a2e3e0f38fbedcd2c2804d09b2c4",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p core_operad_canon -p pfp_operads",
+  "counts": {
+    "killed": 16,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "task value colours lose IntegerList",
+      "old": "        values: &[\"Integer\", \"IntegerList\"],",
+      "new": "        values: &[\"Integer\"],",
+      "outcome": "killed"
+    },
+    {
+      "name": "task value colours gain a sort",
+      "old": "        values: &[\"Integer\", \"IntegerList\"],",
+      "new": "        values: &[\"Integer\", \"IntegerList\", \"Text\"],",
+      "outcome": "killed"
+    },
+    {
+      "name": "task value colour type renamed",
+      "old": "        id: \"task_value_colour\",",
+      "new": "        id: \"task_colour\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "task value colours left open",
+      "old": "        id: \"task_value_colour\",\n        family: Family::ColoursAndWires,\n        description: \"Value sorts of a finite workflow task: what an operation proposed in a reply consumes and produces.\",\n        status: Status::Settled,\n        closed: true,",
+      "new": "        id: \"task_value_colour\",\n        family: Family::ColoursAndWires,\n        description: \"Value sorts of a finite workflow task: what an operation proposed in a reply consumes and produces.\",\n        status: Status::Settled,\n        closed: false,",
+      "outcome": "killed"
+    },
+    {
+      "name": "task value colours only proposed",
+      "old": "what an operation proposed in a reply consumes and produces.\",\n        status: Status::Settled,",
+      "new": "what an operation proposed in a reply consumes and produces.\",\n        status: Status::Proposed,",
+      "outcome": "killed"
+    },
+    {
+      "name": "task value colours filed under another family",
+      "old": "        id: \"task_value_colour\",\n        family: Family::ColoursAndWires,",
+      "new": "        id: \"task_value_colour\",\n        family: Family::Operations,",
+      "outcome": "killed"
+    },
+    {
+      "name": "table entry loses its first value: values: &[\"skill\", \"anti_skill\", \"rule\", \"helpful_pattern\", ",
+      "old": "        values: &[\"skill\", \"anti_skill\", \"rule\", \"helpful_pattern\", \"anti_pattern\", \"antibody\"],\n",
+      "new": "        values: &[\"anti_skill\", \"rule\", \"helpful_pattern\", \"anti_pattern\", \"antibody\"],\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "table entry loses its first value: values: &[\"Unchecked\", \"Validated\", \"Failed\"],",
+      "old": "        values: &[\"Unchecked\", \"Validated\", \"Failed\"],\n",
+      "new": "        values: &[\"Validated\", \"Failed\"],\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "table entry loses its first value: values: &[\"Audit\", \"Code\", \"Contract\", \"Diagram\", \"Ledger\", ",
+      "old": "        values: &[\"Audit\", \"Code\", \"Contract\", \"Diagram\", \"Ledger\", \"Paper\", \"Post\", \"Proof\", \"Receipt\", \"State\"],\n",
+      "new": "        values: &[\"Code\", \"Contract\", \"Diagram\", \"Ledger\", \"Paper\", \"Post\", \"Proof\", \"Receipt\", \"State\"],\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "table entry loses its first value: values: &[\"Identity\", \"Generator\", \"Composite\"],",
+      "old": "        values: &[\"Identity\", \"Generator\", \"Composite\"],\n",
+      "new": "        values: &[\"Generator\", \"Composite\"],\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "table entry loses its first value: values: &[\"ara.bind_source_hashes\", \"ara.receipt\", \"ara.refu",
+      "old": "        values: &[\"ara.bind_source_hashes\", \"ara.receipt\", \"ara.refute\", \"glossa.merge_hits\", \"glossa.propose_replacements\", \"glossa.report\", \"glossa.scan_hype_code\", \"glossa.scan_hype_prose\", \"gti.layout_check\", \"gti.receipt\", \"gti.shadow_scan\", \"mnc.gate\", \"mnc.purge\", \"sfh.report\", \"sfh.scan\"],\n",
+      "new": "        values: &[\"ara.receipt\", \"ara.refute\", \"glossa.merge_hits\", \"glossa.propose_replacements\", \"glossa.report\", \"glossa.scan_hype_code\", \"glossa.scan_hype_prose\", \"gti.layout_check\", \"gti.receipt\", \"gti.shadow_scan\", \"mnc.gate\", \"mnc.purge\", \"sfh.report\", \"sfh.scan\"],\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "table entry loses its first value: values: &[\"unknown\", \"contractive\", \"neutral\", \"dilative\"],",
+      "old": "        values: &[\"unknown\", \"contractive\", \"neutral\", \"dilative\"],\n",
+      "new": "        values: &[\"contractive\", \"neutral\", \"dilative\"],\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "table entry loses its first value: values: &[\"meta-code-audit--code--contractive\", \"meta-contra",
+      "old": "        values: &[\"meta-code-audit--code--contractive\", \"meta-contract-audit--contract--contractive\", \"meta-contract-code--audit--contractive\", \"meta-paper--audit--contractive\", \"meta-paper--receipt--contractive\", \"meta-proof-code--proof--contractive\", \"meta-state--receipt--contractive\", \"meta-state--state--contractive\"],\n",
+      "new": "        values: &[\"meta-contract-audit--contract--contractive\", \"meta-contract-code--audit--contractive\", \"meta-paper--audit--contractive\", \"meta-paper--receipt--contractive\", \"meta-proof-code--proof--contractive\", \"meta-state--receipt--contractive\", \"meta-state--state--contractive\"],\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "table entry loses its first value: values: &[\"op_exact_cochain_coboundary_repair\", \"op_f2_gauge",
+      "old": "        values: &[\"op_exact_cochain_coboundary_repair\", \"op_f2_gauge_board_classification\", \"op_meron_surgery_sign_inversion\", \"op_unpromoted_candidate_template\", \"op_adversary_hermetic_task_evidence_attestation\", \"op_adversary_strict_typed_input_refusal\", \"op_lean4_constructive_kernel_axiom_audit\"],\n",
+      "new": "        values: &[\"op_f2_gauge_board_classification\", \"op_meron_surgery_sign_inversion\", \"op_unpromoted_candidate_template\", \"op_adversary_hermetic_task_evidence_attestation\", \"op_adversary_strict_typed_input_refusal\", \"op_lean4_constructive_kernel_axiom_audit\"],\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "table entry loses its first value: values: &[\"repairable\", \"fatal\"],",
+      "old": "        values: &[\"repairable\", \"fatal\"],\n",
+      "new": "        values: &[\"fatal\"],\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "table entry loses its first value: values: &[\"SELF_CERTIFICATION\", \"FAKE_RECEIPT\", \"CONCLUSION_",
+      "old": "        values: &[\"SELF_CERTIFICATION\", \"FAKE_RECEIPT\", \"CONCLUSION_PRELOAD\", \"SCHEMA_SEMANTIC_LAUNDERING\", \"THEOREM_NAME_LAUNDERING\", \"OPTIMALITY_HALLUCINATION\", \"COMPLEXITY_HALLUCINATION\", \"BRANCH_DROP_EXHAUSTION\", \"PERSONA_AUTHORITY_LEAK\", \"PRIVATE_COT_DEPENDENCY\", \"VERSION_DUPLICATION\", \"DETECT_REPAIR_COUPLING\"],\n",
+      "new": "        values: &[\"FAKE_RECEIPT\", \"CONCLUSION_PRELOAD\", \"SCHEMA_SEMANTIC_LAUNDERING\", \"THEOREM_NAME_LAUNDERING\", \"OPTIMALITY_HALLUCINATION\", \"COMPLEXITY_HALLUCINATION\", \"BRANCH_DROP_EXHAUSTION\", \"PERSONA_AUTHORITY_LEAK\", \"PRIVATE_COT_DEPENDENCY\", \"VERSION_DUPLICATION\", \"DETECT_REPAIR_COUPLING\"],\n",
+      "outcome": "killed"
+    }
+  ]
+}

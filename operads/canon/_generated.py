@@ -26,6 +26,7 @@ OPERAD_COLOUR: tuple[str, ...] = ("Audit", "Code", "Contract", "Diagram", "Ledge
 OPERAD_SUBCOLOUR: tuple[str, ...] = ("Audit.hype_hits", "Audit.lint_diff", "Audit.sfh_findings", "Audit.shadow_violations", "Audit.layout_findings", "Audit.verdict", "Code.purged", "Ledger.source_hashes")
 OPERAND_COLOUR: tuple[str, ...] = ("Audit", "Code", "Contract", "Diagram", "Ledger", "Paper", "Post", "Proof", "Receipt", "State")
 PROMPT_COLOUR: tuple[str, ...] = ("RawTextSpan", "Equation", "IsolatedVariable", "SubstitutionStep", "RationalValue", "InvariantWitness", "TargetResult")
+TASK_VALUE_COLOUR: tuple[str, ...] = ("Integer", "IntegerList")
 CAPABILITY_WIRE_TYPE: tuple[str, ...] = ("anti_skill_subject", "anti_skill_hits", "typed_audit_receipt", "code_text")
 ADVERSARY_PORT: tuple[str, ...] = ("AdversaryRuntime", "NativeBout", "SeatTransport", "SgtEmission", "ImmuneAntibodies", "OeopLearning", "OeopAntiSkill", "PromptGenealogy", "CodaEvaluation", "LggrGluing", "EnvelopeStore")
 ADVERSARY_WIRE_TYPE: tuple[str, ...] = ("CandidateProposal", "CochainDefect", "Context", "Contract", "DualMultiplier", "DualityReceipt", "FlawAudit", "GateWitness", "GroundTruth", "PrimalResidual", "RawPacket", "RawSpan", "SanitizedPacket", "SessionHintRequest", "SessionHintResult", "TerminalStatus")
@@ -236,6 +237,17 @@ TYPES: dict[str, dict[str, object]] = {
         "values": PROMPT_COLOUR,
         "decision": None,
         "note": "A separate vocabulary from operad_colour. It types spans inside one prompt, not skill ports, so the two are not reconciled. The source repository's Rust prompt runtime also had an open Custom colour; that crate is not in this repository and the Python enum has no Custom, so the set here is closed.",
+        "letters_of": None,
+        "legacy_map": {},
+    },
+    "task_value_colour": {
+        "family": "colours_and_wires",
+        "description": "Value sorts of a finite workflow task: what an operation proposed in a reply consumes and produces.",
+        "status": "SETTLED",
+        "closed": True,
+        "values": TASK_VALUE_COLOUR,
+        "decision": None,
+        "note": "A separate vocabulary from prompt_colour (spans inside one prompt) and operad_colour (skill ports). The full-slot workflows prompt for these names. A reply may name another sort; the host then reports that candidate as untyped and leaves it unverified. A new task family adds its sorts here before a workflow may license an operation over them.",
         "letters_of": None,
         "legacy_map": {},
     },

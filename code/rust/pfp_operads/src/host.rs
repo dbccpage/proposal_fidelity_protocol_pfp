@@ -5,10 +5,13 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
+use core_operad_canon::render::SCHEMA_VERSION;
 use core_operad_canon::DdcOp;
 use serde::{Deserialize, Serialize};
 use serde_json::Value as Json;
 
+use crate::envelope::envelope;
+use crate::judge::judge;
 use crate::laws::{run_battery, Panel};
 use crate::ledger::{Ledger, Record};
 use crate::term::{Body, Colour, Operation, Term, Value, Variant};
@@ -128,6 +131,9 @@ pub enum Command {
     LedgerVerify(String),
     LedgerAdmitted(String),
     LedgerAppend { ledger: String, record: String },
+    Envelope(String),
+    Judge(String),
+    Version,
 }
 
 /// The host's answer. `Fail` means the check ran and did not hold; `Refused` means it could not run.
@@ -329,29 +335,44 @@ pub fn check(text: &str) -> Result<CandidateReport, Refusal> {
     })
 }
 
+fn verdict<T: Serialize>(holds: bool, report: &T) -> Result<(bool, Json), Refusal> {
+    Ok((holds, encode(report)?))
+}
+
+fn appended(ledger: &str, record: &str) -> Result<(bool, Json), Refusal> {
+    let mut ledger = Ledger::from_lines(ledger)?;
+    let record: Record = parse(record)?;
+    verdict(true, ledger.append(record)?)
+}
+
+/// Which host and which canon this is; a workflow binds every run to it.
+fn version() -> Json {
+    serde_json::json!({
+        "name": env!("CARGO_PKG_NAME"),
+        "version": env!("CARGO_PKG_VERSION"),
+        "canon": SCHEMA_VERSION,
+    })
+}
+
 fn answer(command: &Command) -> Result<(bool, Json), Refusal> {
     match command {
-        Command::Laws(text) => {
-            let report = laws(text)?;
-            Ok((report.holds(), encode(&report)?))
+        Command::Laws(text) => laws(text).and_then(|report| verdict(report.holds(), &report)),
+        Command::Check(text) => check(text).and_then(|report| verdict(report.accepted, &report)),
+        Command::Envelope(text) => {
+            envelope(text).and_then(|report| verdict(report.accepted, &report))
         }
-        Command::Check(text) => {
-            let report = check(text)?;
-            Ok((report.accepted, encode(&report)?))
-        }
-        Command::LedgerVerify(text) => {
-            let ledger = Ledger::from_lines(text)?;
-            Ok((
+        Command::Judge(text) => judge(text).and_then(|found| verdict(found.accepted, &found)),
+        Command::LedgerVerify(text) => Ledger::from_lines(text).map(|ledger| {
+            (
                 true,
                 serde_json::json!({ "entries": ledger.entries().len() }),
-            ))
+            )
+        }),
+        Command::LedgerAdmitted(text) => {
+            Ledger::from_lines(text).and_then(|ledger| verdict(true, &ledger.admitted()))
         }
-        Command::LedgerAdmitted(text) => Ok((true, encode(&Ledger::from_lines(text)?.admitted())?)),
-        Command::LedgerAppend { ledger, record } => {
-            let mut ledger = Ledger::from_lines(ledger)?;
-            let record: Record = parse(record)?;
-            Ok((true, encode(ledger.append(record)?)?))
-        }
+        Command::LedgerAppend { ledger, record } => appended(ledger, record),
+        Command::Version => Ok((true, version())),
     }
 }
 
