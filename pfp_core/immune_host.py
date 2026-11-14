@@ -117,20 +117,36 @@ def call(
     return proc.returncode, outcome
 
 
-def _as_rational(val: Fraction | tuple[int, int] | Mapping[str, int]) -> dict[str, int]:
-    """Convert rational representations to serde WireRational, prohibiting floats."""
+def _as_rational(
+    val: int | Fraction | tuple[int, int] | Mapping[str, int],
+) -> dict[str, int]:
+    """Convert rational representations to serde WireRational, prohibiting floats and booleans."""
+    if isinstance(val, bool) or type(val) is bool:
+        raise TypeError(f"boolean values prohibited as rationals: {val!r}")
     if isinstance(val, float):
         raise TypeError(f"floating point values prohibited in check paths: {val!r}")
+    if isinstance(val, int):
+        return {"num": val, "den": 1}
     if isinstance(val, Fraction):
         return {"num": val.numerator, "den": val.denominator}
     if isinstance(val, (tuple, list)) and len(val) == 2:
+        if isinstance(val[0], bool) or isinstance(val[1], bool):
+            raise TypeError(f"boolean values prohibited in check paths: {val!r}")
         if isinstance(val[0], float) or isinstance(val[1], float):
             raise TypeError(f"floating point values prohibited in check paths: {val!r}")
-        return {"num": int(val[0]), "den": int(val[1])}
+        den = int(val[1])
+        if den == 0:
+            raise ZeroDivisionError(f"rational denominator cannot be zero: {val!r}")
+        return {"num": int(val[0]), "den": den}
     if isinstance(val, Mapping) and "num" in val and "den" in val:
+        if isinstance(val["num"], bool) or isinstance(val["den"], bool):
+            raise TypeError(f"boolean values prohibited in check paths: {val!r}")
         if isinstance(val["num"], float) or isinstance(val["den"], float):
             raise TypeError(f"floating point values prohibited in check paths: {val!r}")
-        return {"num": int(val["num"]), "den": int(val["den"])}
+        den = int(val["den"])
+        if den == 0:
+            raise ZeroDivisionError(f"rational denominator cannot be zero: {val!r}")
+        return {"num": int(val["num"]), "den": den}
     raise ValueError(f"cannot convert {val!r} to wire rational")
 
 

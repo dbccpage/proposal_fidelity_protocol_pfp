@@ -202,6 +202,126 @@ def test_select_reserve_partition_and_rational_ordering(require_host):
     assert res["novel_10"] == ["c9"]
 
 
+def test_as_rational_exact_integers_and_validation():
+    # 1. Exact integers
+    assert immune_host._as_rational(1) == {"num": 1, "den": 1}
+    assert immune_host._as_rational(0) == {"num": 0, "den": 1}
+    assert immune_host._as_rational(-5) == {"num": -5, "den": 1}
+
+    # 2. Fractions and tuples
+    assert immune_host._as_rational(Fraction(3, 4)) == {"num": 3, "den": 4}
+    assert immune_host._as_rational((3, 4)) == {"num": 3, "den": 4}
+    assert immune_host._as_rational({"num": 3, "den": 4}) == {"num": 3, "den": 4}
+
+    # 3. Reject booleans
+    with pytest.raises(TypeError, match="boolean values prohibited"):
+        immune_host._as_rational(True)
+    with pytest.raises(TypeError, match="boolean values prohibited"):
+        immune_host._as_rational(False)
+    with pytest.raises(TypeError, match="boolean values prohibited"):
+        immune_host._as_rational((True, 1))
+    with pytest.raises(TypeError, match="boolean values prohibited"):
+        immune_host._as_rational({"num": 1, "den": True})
+
+    # 4. Reject floats
+    with pytest.raises(TypeError, match="floating point values prohibited"):
+        immune_host._as_rational(0.5)
+    with pytest.raises(TypeError, match="floating point values prohibited"):
+        immune_host._as_rational((0.5, 1))
+
+    # 5. Reject zero denominator
+    with pytest.raises(ZeroDivisionError, match="cannot be zero"):
+        immune_host._as_rational((1, 0))
+    with pytest.raises(ZeroDivisionError, match="cannot be zero"):
+        immune_host._as_rational({"num": 1, "den": 0})
+
+
+def test_civilization_select_governed_by_host_binary(require_host, monkeypatch):
+    """Verify civilization.select delegates reserve allocation to immune_host.select."""
+    candidates = [
+        Candidate(
+            f"c{i}",
+            passed=10 - i,
+            attempted=10,
+            spent_microusd=100,
+            total_tokens=1000,
+            wall_ms=(10 - i) * 10,
+        )
+        for i in range(10)
+    ]
+
+    host_called = []
+    real_select = immune_host.select
+
+    def spy_select(pop):
+        host_called.append(pop)
+        return real_select(pop)
+
+    monkeypatch.setattr(immune_host, "select", spy_select)
+
+    out = py_select(candidates, cap=10)
+
+    # 1. Host binary was actually called
+    assert len(host_called) == 1
+    assert len(host_called[0]) == 10
+
+    # 2. Host returned partitions genuinely govern Front, Unmeasured, Baseline
+    assert out["slots"] == {"Front": 6, "Unmeasured": 3, "Baseline": 1}
+    assert out["Front"] == ["c0", "c1", "c2", "c3", "c4", "c5"]
+    assert out["Unmeasured"] == ["c6", "c7", "c8"]
+    assert out["Baseline"] == ["c9"]
+    assert out["demoted"] == {}
+
+
+def test_host_exceptions_propagate_without_silent_swallowing(require_host, monkeypatch):
+    """Verify that when immune_host is available, ImmuneHostError propagates."""
+    monkeypatch.setattr(
+        immune_host,
+        "select",
+        lambda pop: (_ for _ in ()).throw(immune_host.ImmuneHostError("select failure")),
+    )
+    cand = [Candidate("c1", 1, 1, 10, 10, 1)]
+    with pytest.raises(immune_host.ImmuneHostError, match="select failure"):
+        py_select(cand, cap=10)
+
+    monkeypatch.setattr(
+        immune_host,
+        "taint",
+        lambda edges, seeds: (_ for _ in ()).throw(immune_host.ImmuneHostError("taint failure")),
+    )
+    lin = Lineage()
+    with pytest.raises(immune_host.ImmuneHostError, match="taint failure"):
+        lin.taint({"seed1"})
+
+    monkeypatch.setattr(
+        immune_host,
+        "screen",
+        lambda panel, rules: (_ for _ in ()).throw(immune_host.ImmuneHostError("screen failure")),
+    )
+    with pytest.raises(immune_host.ImmuneHostError, match="screen failure"):
+        py_screen_rules([DetectorRule("r1", "Detector", "test")], ["sample"])
+
+    monkeypatch.setattr(
+        immune_host,
+        "decide",
+        lambda matches, danger, threshold: (_ for _ in ()).throw(immune_host.ImmuneHostError("decide failure")),
+    )
+    with pytest.raises(immune_host.ImmuneHostError, match="decide failure"):
+        py_decide([], None)
+
+    monkeypatch.setattr(
+        immune_host,
+        "exclusion",
+        lambda votes, hyps: (_ for _ in ()).throw(immune_host.ImmuneHostError("exclusion failure")),
+    )
+    hyp = ExclusionHypothesisV1(
+        "h_err", "b0", "claim", "[1]", 1,
+        (ExclusionVoteV1("s1", "f1", True), ExclusionVoteV1("s2", "f2", True)),
+    )
+    with pytest.raises(immune_host.ImmuneHostError, match="exclusion failure"):
+        hyp.classify(min_families=2)
+
+
 # ---------------------------------------------------------------------------
 # 5. Exclusion Subcommand Parity
 # ---------------------------------------------------------------------------

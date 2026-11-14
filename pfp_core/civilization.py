@@ -53,24 +53,18 @@ class Lineage:
         deterministic Python fallback for offline execution.
         """
         if immune_host.is_available():
-            try:
-                edges = [
-                    {
-                        "parent": edge.parent_id,
-                        "child": edge.child_id,
-                        "witness": getattr(edge, "witness", "sha256:00") or "sha256:00",
-                    }
-                    for edge in self.graph.edges
-                ]
-                res = immune_host.taint(edges, sorted(seeds))
-                if res.get("status") == "REFUSED":
-                    raise ValueError(res.get("reason", "LINEAGE_CYCLE_REFUSED"))
-                if "tainted_nodes" in res:
-                    return set(res["tainted_nodes"])
-            except ValueError:
-                raise
-            except (immune_host.ImmuneHostError, OSError, KeyError):
-                pass  # noqa: S110
+            edges = [
+                {
+                    "parent": edge.parent_id,
+                    "child": edge.child_id,
+                    "witness": getattr(edge, "witness", "sha256:00") or "sha256:00",
+                }
+                for edge in self.graph.edges
+            ]
+            res = immune_host.taint(edges, sorted(seeds))
+            if res.get("status") == "REFUSED":
+                raise ValueError(res.get("reason", "LINEAGE_CYCLE_REFUSED"))
+            return set(res.get("tainted_nodes", []))
 
         children: dict[str, set[str]] = {}
         for edge in self.graph.edges:
@@ -129,25 +123,57 @@ def select(candidates: list[Candidate], cap: int = 10, tainted: set[str] = froze
             demoted[c.genome_id] = 'dominated by direct baseline'
         elif any(dominates(o, c) for o in measured + baseline if o is not c):
             demoted[c.genome_id] = 'Pareto-dominated'
-    if immune_host.is_available() and (measured or baseline):
-        try:
+    order = lambda c: (-c.pass_rate, c.spent_microusd, c.total_tokens, c.wall_ms, c.genome_id)  # noqa: E731
+
+    if immune_host.is_available():
+        eligible = [c for c in candidates if c.genome_id not in demoted]
+        if eligible:
             pop = [
                 {
                     "id": c.genome_id,
                     "fitness": (c.passed, max(1, c.attempted)),
                     "lineage_depth": c.wall_ms,
                 }
-                for c in [*measured, *baseline]
+                for c in eligible
             ]
-            _host_res = immune_host.select(pop)
-        except (immune_host.ImmuneHostError, OSError, KeyError, TypeError):
-            pass  # noqa: S110
-    order = lambda c: (-c.pass_rate, c.spent_microusd, c.total_tokens, c.wall_ms, c.genome_id)  # noqa: E731
+            host_res = immune_host.select(pop)
+            has_explicit_roles = any(c.is_baseline for c in candidates) or any(not c.measured for c in candidates)
+            if has_explicit_roles:
+                front_eligible = set(host_res.get("core_60", []))
+                front_sorted = sorted((c for c in measured if c.genome_id not in demoted), key=order)
+                front_ids = [c.genome_id for c in front_sorted if c.genome_id in front_eligible][:slots['Front']]
+                if len(front_ids) < slots['Front']:
+                    remaining = [c.genome_id for c in front_sorted if c.genome_id not in front_ids]
+                    front_ids.extend(remaining[:slots['Front'] - len(front_ids)])
+                unmeasured_list = sorted((c for c in candidates if not c.measured and c.genome_id not in tainted),
+                                         key=lambda c: (c.total_tokens, c.genome_id))
+                return {
+                    'slots': slots,
+                    'Front': front_ids,
+                    'Unmeasured': [c.genome_id for c in unmeasured_list[:slots['Unmeasured']]],
+                    'Baseline': [c.genome_id for c in sorted(baseline, key=order)[:slots['Baseline']]],
+                    'demoted': dict(sorted(demoted.items()))
+                }
+            return {
+                'slots': slots,
+                'Front': host_res.get("core_60", [])[:slots['Front']],
+                'Unmeasured': host_res.get("exploratory_30", [])[:slots['Unmeasured']],
+                'Baseline': host_res.get("novel_10", [])[:slots['Baseline']],
+                'demoted': dict(sorted(demoted.items()))
+            }
+        return {
+            'slots': slots,
+            'Front': [],
+            'Unmeasured': [],
+            'Baseline': [],
+            'demoted': dict(sorted(demoted.items()))
+        }
+
     front = sorted((c for c in measured if c.genome_id not in demoted), key=order)
-    unmeasured = sorted((c for c in candidates if not c.measured and c.genome_id not in tainted),
-                        key=lambda c: (c.total_tokens, c.genome_id))
+    unmeasured_list = sorted((c for c in candidates if not c.measured and c.genome_id not in tainted),
+                             key=lambda c: (c.total_tokens, c.genome_id))
     return {'slots': slots,
             'Front': [c.genome_id for c in front[:slots['Front']]],
-            'Unmeasured': [c.genome_id for c in unmeasured[:slots['Unmeasured']]],
+            'Unmeasured': [c.genome_id for c in unmeasured_list[:slots['Unmeasured']]],
             'Baseline': [c.genome_id for c in sorted(baseline, key=order)[:slots['Baseline']]],
             'demoted': dict(sorted(demoted.items()))}

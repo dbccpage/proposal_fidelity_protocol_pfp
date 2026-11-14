@@ -65,29 +65,26 @@ def screen_rules(rules: list[DetectorRule], self_panel: list[str]) -> tuple[list
     deterministic Python fallback for offline execution.
     """
     if immune_host.is_available():
-        try:
-            candidates = [
-                {
-                    "rule_id": r.rule_id,
-                    "pattern": r.match_pattern,
-                    "capability_kind": getattr(r, "target_epitope", "rule"),
-                }
-                for r in rules
-            ]
-            res = immune_host.screen(self_panel, candidates)
-            admitted_ids = set(res.get("admitted", []))
-            admitted = [r for r in rules if r.rule_id in admitted_ids]
-            killed = [
-                {
-                    "rule_id": p["rule_id"],
-                    "violations": [p["reason"]],
-                    "rationale": p["reason"],
-                }
-                for p in res.get("purged", [])
-            ]
-            return admitted, killed
-        except (immune_host.ImmuneHostError, OSError, KeyError):
-            pass
+        candidates = [
+            {
+                "rule_id": r.rule_id,
+                "pattern": r.match_pattern,
+                "capability_kind": getattr(r, "target_epitope", "rule"),
+            }
+            for r in rules
+        ]
+        res = immune_host.screen(self_panel, candidates)
+        admitted_ids = set(res.get("admitted", []))
+        admitted = [r for r in rules if r.rule_id in admitted_ids]
+        killed = [
+            {
+                "rule_id": p["rule_id"],
+                "violations": [p["reason"]],
+                "rationale": p["reason"],
+            }
+            for p in res.get("purged", [])
+        ]
+        return admitted, killed
 
     gate = ThymusGate(self_panel=self_panel)
     admitted, killed = [], []
@@ -144,16 +141,13 @@ def decide(matches: list[Signal1Match], danger: Signal2Danger | None,
     status: str | None = None
     disposition_text: str | None = None
     if immune_host.is_available():
-        try:
-            defects = getattr(danger, 'defect_count', 1) or 1 if danger is not None else 0
-            danger_score = (defects, 1)
-            threshold = (1, 2)
-            rule_ids = [m.detector_id for m in matches]
-            res = immune_host.decide(rule_ids, danger_score, threshold)
-            status = res['status']
-            disposition_text = res['disposition']
-        except (immune_host.ImmuneHostError, OSError, KeyError):
-            pass
+        defects = getattr(danger, 'defect_count', 1) or 1 if danger is not None else 0
+        danger_score = (defects, 1)
+        threshold = (1, 2)
+        rule_ids = [m.detector_id for m in matches]
+        res = immune_host.decide(rule_ids, danger_score, threshold)
+        status = res['status']
+        disposition_text = res['disposition']
 
     if not matches and danger is None:
         return Decision(status or PASS, disposition_text or 'no rule match and no host danger')

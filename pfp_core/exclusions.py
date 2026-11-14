@@ -123,15 +123,12 @@ class ExclusionHypothesisV1:
         if type(min_families) is not int or min_families < 1:
             raise _refuse('MIN_FAMILIES_INVALID', 'min_families must be a positive int')
         if min_families == 2 and immune_host.is_available():
-            try:
-                positions = self.family_positions()
-                votes = {}
-                for fam, pos in positions.items():
-                    votes[fam] = "EXCLUDE" if pos == {True} else "INCLUDE"
-                res = immune_host.exclusion(votes, [self.exclusion_id])
-                return res["consensus"]
-            except (immune_host.ImmuneHostError, OSError, KeyError):
-                pass  # noqa: S110
+            positions = self.family_positions()
+            votes = {}
+            for fam, pos in positions.items():
+                votes[fam] = "EXCLUDE" if pos == {True} else "INCLUDE"
+            res = immune_host.exclusion(votes, [self.exclusion_id])
+            return res["consensus"]
         positions = self.family_positions()
         if any(pos != {True} for pos in positions.values()):
             return FRONTIER
