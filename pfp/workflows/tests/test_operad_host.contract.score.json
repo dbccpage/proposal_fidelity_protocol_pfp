@@ -7,7 +7,7 @@
     "artifact": {
       "path": "pfp/workflows/tests/test_operad_host.py",
       "language": "Python",
-      "sha256": "d205065722f5398980a474dadcda86435abdfc47a665a241d80b0e028dd8e5c5"
+      "sha256": "fe513a231b2b335556b9bd03d7625f27764c3048bf3bfc86a43487f539bb8685"
     },
     "contract_urn": "urn:pfp-workflows:pfp-workflows-tests-test_operad_host-py:v1",
     "symbols": [
@@ -25,12 +25,15 @@
       "test_a_mining_reply_that_failed_its_schema_is_not_screened",
       "test_the_solver_schema_binds_the_operation_the_host_licenses",
       "test_the_l2_recheck_is_the_hosts_and_covers_the_workflows_grounded_slots",
-      "test_signature_reuse_is_decided_by_the_host"
+      "test_signature_reuse_is_decided_by_the_host",
+      "test_a_refusal_is_an_outcome_for_a_caller_that_reports_it",
+      "test_only_the_host_writes_a_ledger_file"
     ],
     "owned_invariants": [
       "Tests run the real pfp_operad binary; none replaces the host's verdict with a Python one.",
       "The run-custody test asserts that a manifest names the host's version and canon.",
-      "The WF3 tests assert that the mining screen, the licensed binding, the L2 recheck and signature reuse are the host's."
+      "The WF3 tests assert that the mining screen, the licensed binding, the L2 recheck and signature reuse are the host's.",
+      "The ledger test asserts that a refused record adds no line to the ledger file."
     ],
     "boundaries": [
       "Offline fixtures only; fixtures are not live model trials."
@@ -42,7 +45,7 @@
     "artifact": {
       "path": "pfp/workflows/tests/test_operad_host.py",
       "language": "Python",
-      "sha256": "d205065722f5398980a474dadcda86435abdfc47a665a241d80b0e028dd8e5c5"
+      "sha256": "fe513a231b2b335556b9bd03d7625f27764c3048bf3bfc86a43487f539bb8685"
     },
     "profile": "Non-Numeric",
     "level": "L2",
@@ -58,33 +61,33 @@
       "G1": "Each test name states the claim it checks.",
       "G2": "Expected verdicts and error codes follow from the reply written in the test.",
       "G3": "Each way the host can fail to answer is asserted by its error code.",
-      "G4": "All 15 pass in the recorded run; with the WF2 tests they killed 24 of 27 transport mutants.",
+      "G4": "All 17 pass in the recorded run; with the WF2 tests they killed 26 of 29 transport mutants.",
       "G5": "Measured worst cyclomatic 2, cognitive 1, nesting 1; ceiling A+, recorded A."
     },
     "composite_grade": "C",
     "score_token": "L2C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-14T09:54:56Z",
+    "evaluation_timestamp": "2026-11-14T10:19:38Z",
     "evidence": [
       {
-        "path": "governance/evidence/operad-host-workflow-tests-v3.run.json",
-        "sha256": "6649148c5d29d3682d6497ef7d68d84ac142426834d2fa16532e04471ba15b32",
-        "note": "639 offline tests (pfp/workflows, pfp_core/workflow_families, exclusions) against the release build of pfp_operad 0.3.0; exact source inputs bound. No live model performance claim."
+        "path": "governance/evidence/operad-host-workflow-tests-v4.run.json",
+        "sha256": "c02c988542b8d6241d974253d4827b37110c9a968ec7818d8f9bae1aae5c0ed9",
+        "note": "661 offline tests (pfp/workflows, pfp_core/workflow_families, exclusions) against the release build of pfp_operad 0.4.0; exact source inputs bound. No live model performance claim."
       },
       {
-        "path": "governance/evidence/pfp-operads-v3-metrics.run.json",
-        "sha256": "61402cc961ac77c8ef2baa0c99685bb989cdc3a37a254d3c1d14d2f30c9d330d",
+        "path": "governance/evidence/pfp-operads-v4-metrics.run.json",
+        "sha256": "30e6dfd7118ba3803b13a0cccc337eaf306ee526196ec05528758e1c91976c52",
         "note": "The run that measured Gate 5 structure."
       },
       {
-        "path": "governance/evidence/pfp-operads-v3-metrics.json",
-        "sha256": "71d6ba047df075a29edc4ceaaac890216ed0356e8290120ac8f0418d7bc976be",
+        "path": "governance/evidence/pfp-operads-v4-metrics.json",
+        "sha256": "afaa67dcbd70b24057f91e560fb879f19a245d886517a285e46b26b6fc5842f1",
         "note": "Measured Gate 5 structure of every source this change touches."
       },
       {
         "path": "governance/evidence/m-operad-host-py.mutation.json",
-        "sha256": "d53c5941e5a19429a31b93eebed49499cd7d36c5b7e4e224ef57ecee4e2ec87c",
+        "sha256": "116b6646f87a39449bba01591156bfc8b7b97f90fe3150b64be86a760b2a1818",
         "note": "Transport campaign these tests are the oracle for."
       }
     ],
@@ -169,6 +172,97 @@
           {
             "path": "governance/evidence/m-operad-host-py.mutation.json",
             "sha256": "7dc9d4a2caabb02cc78813573580622acb594959006905f05ac8a0b83a6b4160",
+            "note": "Transport campaign these tests are the oracle for."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    },
+    {
+      "recorded_at": "2026-11-14T10:19:39.739311Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "pfp/workflows/tests/test_operad_host.py",
+          "language": "Python",
+          "sha256": "d205065722f5398980a474dadcda86435abdfc47a665a241d80b0e028dd8e5c5"
+        },
+        "contract_urn": "urn:pfp-workflows:pfp-workflows-tests-test_operad_host-py:v1",
+        "symbols": [
+          "test_the_host_states_its_name_version_and_canon",
+          "test_the_binary_is_taken_from_the_environment_then_path_then_a_checkout",
+          "test_a_host_that_cannot_run_or_answer_is_an_error_not_a_verdict",
+          "test_outcomes_pass_through_and_a_refusal_has_no_result",
+          "test_the_integer_sum_judge_is_the_hosts_exact_sum",
+          "test_wf2_records_the_hosts_typing_and_ddc_word",
+          "test_a_colour_outside_the_canon_is_reported_untyped_and_does_not_change_the_verdict",
+          "test_a_structure_error_comes_from_the_host_with_its_code",
+          "test_a_run_is_bound_to_the_host_that_checked_it",
+          "test_the_mining_screen_is_the_hosts_with_each_candidate_typed_and_located",
+          "test_mining_errors_keep_the_order_the_reply_was_written_in",
+          "test_a_mining_reply_that_failed_its_schema_is_not_screened",
+          "test_the_solver_schema_binds_the_operation_the_host_licenses",
+          "test_the_l2_recheck_is_the_hosts_and_covers_the_workflows_grounded_slots",
+          "test_signature_reuse_is_decided_by_the_host"
+        ],
+        "owned_invariants": [
+          "Tests run the real pfp_operad binary; none replaces the host's verdict with a Python one.",
+          "The run-custody test asserts that a manifest names the host's version and canon.",
+          "The WF3 tests assert that the mining screen, the licensed binding, the L2 recheck and signature reuse are the host's."
+        ],
+        "boundaries": [
+          "Offline fixtures only; fixtures are not live model trials."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "pfp/workflows/tests/test_operad_host.py",
+          "language": "Python",
+          "sha256": "d205065722f5398980a474dadcda86435abdfc47a665a241d80b0e028dd8e5c5"
+        },
+        "profile": "Non-Numeric",
+        "level": "L2",
+        "level_basis": "L2 verification support: explicit fixtures and finite negative controls with source-bound outcomes.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected verdicts and error codes follow from the reply written in the test.",
+          "G3": "Each way the host can fail to answer is asserted by its error code.",
+          "G4": "All 15 pass in the recorded run; with the WF2 tests they killed 24 of 27 transport mutants.",
+          "G5": "Measured worst cyclomatic 2, cognitive 1, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T09:54:56Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/operad-host-workflow-tests-v3.run.json",
+            "sha256": "6649148c5d29d3682d6497ef7d68d84ac142426834d2fa16532e04471ba15b32",
+            "note": "639 offline tests (pfp/workflows, pfp_core/workflow_families, exclusions) against the release build of pfp_operad 0.3.0; exact source inputs bound. No live model performance claim."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v3-metrics.run.json",
+            "sha256": "61402cc961ac77c8ef2baa0c99685bb989cdc3a37a254d3c1d14d2f30c9d330d",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v3-metrics.json",
+            "sha256": "71d6ba047df075a29edc4ceaaac890216ed0356e8290120ac8f0418d7bc976be",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          },
+          {
+            "path": "governance/evidence/m-operad-host-py.mutation.json",
+            "sha256": "d53c5941e5a19429a31b93eebed49499cd7d36c5b7e4e224ef57ecee4e2ec87c",
             "note": "Transport campaign these tests are the oracle for."
           }
         ],
