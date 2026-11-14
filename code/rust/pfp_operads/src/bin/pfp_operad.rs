@@ -108,6 +108,7 @@ fn run(args: &[&str]) -> Result<Outcome, String> {
             &read(request)?,
             Path::new(source),
             Path::new(folder),
+            std::env::current_exe().ok().as_deref(),
         ));
     }
     let outcome = respond(&command(args)?);

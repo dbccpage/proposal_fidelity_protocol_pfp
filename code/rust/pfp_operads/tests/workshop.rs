@@ -95,6 +95,7 @@ fn ran(body: &Value, folder: &Path) -> (String, Value) {
         &body.to_string(),
         &folder.join("source"),
         &folder.join("run"),
+        None,
     ) {
         Outcome::Pass { result } => ("PASS".to_owned(), result),
         Outcome::Fail { result } => ("FAIL".to_owned(), result),
@@ -365,7 +366,7 @@ fn the_run_folder_must_be_new_and_outside_the_source_tree() {
     );
     let (status, refusal) = {
         let body = request(&total("answer.json", 5, 6)).to_string();
-        match repair_in(&body, &source, &source.join("run")) {
+        match repair_in(&body, &source, &source.join("run"), None) {
             Outcome::Refused { refusal } => ("REFUSED", refusal.code),
             _ => ("RAN", ""),
         }
@@ -405,6 +406,11 @@ fn a_source_is_a_regular_file_of_bounded_size_under_the_root() {
             "SOURCE_FILE_REFUSED",
             "over.bin is not a regular file of at most 2097152 bytes"
         )
+    );
+    fs::create_dir(folder.join("source/sub")).unwrap();
+    assert_eq!(
+        bench.source("sub").unwrap_err().message,
+        "sub is not a regular file of at most 2097152 bytes"
     );
     assert!(
         !folder.join("run").exists(),
@@ -809,8 +815,75 @@ fn a_check_cannot_read_what_the_host_is_given_on_input() {
     assert_eq!(outcome["result"]["baseline"][1]["code"], 0);
 }
 
+#[test]
+fn a_check_named_pfp_operad_runs_the_host_the_bench_was_given() {
+    let folder = scratch();
+    let named = ["pfp_operad", "judge", "answer.json"];
+    let mut bench = opened(&folder).hosted(Some(Path::new(HOST)));
+    let judged = bench.run(&check(&named, 5)).unwrap();
+    assert_eq!(judged.code, 1, "the stored total is wrong");
+    assert!(
+        judged.stdout.head.starts_with("{\"status\":\"FAIL\""),
+        "{}",
+        judged.stdout.head
+    );
+    let other = bench
+        .run(&check(&["pfp_operad-x", "judge", "answer.json"], 5))
+        .unwrap_err();
+    assert_eq!(other.code, "CHECK_UNAVAILABLE", "only the exact name");
+    let nowhere = folder.join("no-such-host");
+    let mut unhosted = bench.hosted(Some(&nowhere));
+    assert_eq!(
+        unhosted.run(&check(&named, 5)).unwrap_err().code,
+        "CHECK_UNAVAILABLE",
+        "the name is the given host and nothing else"
+    );
+    assert_eq!(
+        unhosted.run(&check(&[HOST, "version"], 5)).unwrap().code,
+        0,
+        "any other program is run as named"
+    );
+
+    let by_name =
+        |id: &str, file: &str| json!({"check_id": id, "argv": ["pfp_operad", "judge", file]});
+    let body = with_checks(
+        request(&total("answer.json", 5, 6)),
+        json!([
+            by_name("positive", "answer.json"),
+            by_name("control", "control.json")
+        ]),
+    );
+    let run = scratch();
+    let outcome = repair_in(
+        &body.to_string(),
+        &run.join("source"),
+        &run.join("run"),
+        Some(Path::new(HOST)),
+    );
+    assert!(matches!(outcome, Outcome::Pass { .. }), "{outcome:?}");
+    let written = folder_text(&run.join("run/request.json"));
+    assert!(
+        written.contains("\"pfp_operad\""),
+        "the request keeps the name"
+    );
+    assert!(!written.contains(HOST), "and no path of this machine");
+}
+
+fn with_checks(mut body: Value, checks: Value) -> Value {
+    body["checks"] = checks;
+    body
+}
+
+fn folder_text(path: &Path) -> String {
+    fs::read_to_string(path).unwrap()
+}
+
 fn cli(args: &[&str]) -> (i32, Value) {
-    let output = Process::new(HOST).args(args).output().unwrap();
+    let output = Process::new(HOST)
+        .args(args)
+        .env("PATH", "")
+        .output()
+        .unwrap();
     (
         output.status.code().unwrap(),
         serde_json::from_slice(&output.stdout).unwrap_or(Value::Null),
@@ -834,6 +907,18 @@ fn the_binary_runs_a_repair_and_exits_by_outcome() {
         (0, &json!("PASS"), &json!("REPAIRED"))
     );
     assert!(folder.join("run-good/record.json").is_file());
+
+    let named = with_checks(
+        request(&total("answer.json", 5, 6)),
+        json!([{"check_id": "positive", "argv": ["pfp_operad", "judge", "answer.json"]}]),
+    );
+    let named = write("named.json", &named);
+    let (code, outcome) = cli(&["repair", &source, &run("run-named"), &named]);
+    assert_eq!(
+        (code, &outcome["result"]["outcome"]),
+        (0, &json!("REPAIRED")),
+        "the binary is the host its checks name, with no search path"
+    );
 
     let weak = write("weak.json", &request(&total("answer.json", 5, 7)));
     let (code, outcome) = cli(&["repair", &source, &run("run-weak"), &weak]);

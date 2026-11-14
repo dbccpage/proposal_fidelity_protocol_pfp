@@ -8,10 +8,14 @@
 //! and the kept files beside it. A check runs in the working copy as the program and arguments
 //! the request gives, without a shell, with a deadline and a fixed environment profile.
 //!
+//! A check whose program is `pfp_operad` runs the host that is running the repair, so a request
+//! that uses the host's own commands as checks reads the same on every machine.
+//!
 //! This separates a working copy from the source. It is not a sandbox: a check is a trusted
 //! command chosen by the host's operator and can do whatever the operator's account can.
 
 use std::collections::BTreeMap;
+use std::ffi::OsStr;
 use std::fs;
 use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
@@ -27,6 +31,8 @@ use crate::Refusal;
 
 /// The name of the working copy inside the run folder.
 pub const WORKSPACE: &str = "workspace";
+/// The program name that means the host itself, wherever its binary is.
+pub const HOST: &str = "pfp_operad";
 /// A source file larger than this is refused.
 pub const MAX_SOURCE_BYTES: u64 = 2 * 1024 * 1024;
 /// How much of each output stream a record keeps as text. The hash covers the whole stream.
@@ -88,6 +94,7 @@ pub fn stream(mut reader: impl Read) -> Stream {
 pub struct Workshop {
     source: PathBuf,
     run: PathBuf,
+    host: Option<PathBuf>,
     opened: bool,
 }
 
@@ -121,8 +128,16 @@ impl Workshop {
         Ok(Self {
             source,
             run,
+            host: None,
             opened: false,
         })
+    }
+
+    /// Name the host's binary: a check whose program is [`HOST`] then runs it.
+    #[must_use]
+    pub fn hosted(mut self, host: Option<&Path>) -> Self {
+        self.host = host.map(Path::to_path_buf);
+        self
     }
 
     fn workspace(&self) -> PathBuf {
@@ -238,6 +253,10 @@ impl Bench for Workshop {
         let Some((program, arguments)) = check.argv.split_first() else {
             return Err(unavailable("no program".to_owned()));
         };
+        let program = match &self.host {
+            Some(host) if program == HOST => host.as_os_str(),
+            _ => OsStr::new(program),
+        };
         let mut command = Command::new(program);
         command
             .args(arguments)
@@ -284,9 +303,10 @@ impl Bench for Workshop {
 }
 
 /// Run one repair request on a source tree, with everything kept under a new run folder.
-pub fn repair_in(request: &str, source: &Path, run: &Path) -> Outcome {
+/// `host` is the binary a check named [`HOST`] runs; without it that name is looked up like any other.
+pub fn repair_in(request: &str, source: &Path, run: &Path, host: Option<&Path>) -> Outcome {
     match Workshop::new(source, run) {
-        Ok(mut bench) => repair::respond(request, &mut bench),
+        Ok(bench) => repair::respond(request, &mut bench.hosted(host)),
         Err(refusal) => Outcome::Refused { refusal },
     }
 }

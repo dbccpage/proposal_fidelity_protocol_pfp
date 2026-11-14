@@ -59,11 +59,10 @@ cargo run -p pfp_operads -- ledger verify my_ledger.jsonl
 ```
 
 The repair example's two checks are the host itself (`pfp_operad judge` on a
-stored answer), so the binary must be on `PATH`:
+stored answer), so it needs no other program:
 
 ```
-cargo build --release -p pfp_operads
-PATH="$PWD/target/release:$PATH" pfp_operad repair pfp_operads/examples/repair/source my_run pfp_operads/examples/repair/request.json
+cargo run -p pfp_operads -- repair pfp_operads/examples/repair/source my_run pfp_operads/examples/repair/request.json
 ```
 
 It prints `PASS` with `"outcome":"REPAIRED"`, check exits `[1, 0]` before the
@@ -155,7 +154,9 @@ patch and `[0, 0]` after it, and leaves `request.json`, `candidate.patch`,
   without a shell, with closed input, a deadline, and Git and Python cache
   variables removed. Exit 0 passes. A check that cannot start, overruns or
   rewrites a declared file refuses the run. Each output stream is hashed whole
-  and its first 4096 bytes are kept.
+  and its first 4096 bytes are kept. A check whose program is `pfp_operad`
+  runs the host that is running the repair, wherever its binary is, so such a
+  request reads the same on every machine.
 - **A failed candidate is a ledger failure**: the record carries a `failure`
   for `ledger append` when the patch left a failing check failing
   (`CounterfeitExactness`), broke a passing one (`BoundaryLeakage`) or did
