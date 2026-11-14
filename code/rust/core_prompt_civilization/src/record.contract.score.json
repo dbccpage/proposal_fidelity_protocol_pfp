@@ -9,23 +9,26 @@
       "language": "Rust",
       "sha256": "4de1a3648d9c73db37c89e92db3ffcb3a68b8088bb38172e27e3c51f9e811956"
     },
-    "contract_urn": "urn:core:crates-rs:core-prompt-civilization:record:v1",
+    "contract_urn": "urn:code-rust:core-prompt-civilization:record:v1",
     "symbols": [
+      "BoundaryErrorf12df652",
+      "BoundaryRecordf12df652",
       "CustodyTier",
+      "ExecutionOccurrenceV1",
       "PacketRefV1",
       "ParentLinkV1",
-      "ProtectedSpanV1",
       "PromptGenomeV1",
-      "OccurrenceV1",
-      "canonical_hash"
+      "PromptMaturity",
+      "PromptViewV1",
+      "ProtectedSpanV1"
     ],
     "owned_invariants": [
-      "Genome identity is stable under nested key reordering via canonical JSON hashing.",
-      "Different parents produce distinct genome IDs; birth custody transitions follow declared laws.",
+      "Public invariants and deterministic checks for record.",
+      "Strict typed outcomes and refusal boundaries without unhandled floats or panic conditions.",
       "AuthorityEffect: None."
     ],
     "boundaries": [
-      "Bounded admission within capacity_bound.",
+      "Bounded execution within declared capability limits.",
       "Does not claim authority promotion outside declared finite bounds."
     ]
   },
@@ -39,7 +42,7 @@
     },
     "profile": "Non-Numeric",
     "level": "L4",
-    "level_basis": "Module-level verification for code/rust/core_prompt_civilization/src/record.rs.",
+    "level_basis": "Module-level verification for code/rust/core_prompt_civilization/src/record.rs with typed error handling and boundary invariants.",
     "gates": {
       "G1": "C",
       "G2": "C",
@@ -48,39 +51,53 @@
       "G5": "A"
     },
     "basis": {
-      "G1": "Module header states AuthorityEffect None; types match contract record specifications.",
-      "G2": "Canonical SHA-256 hash calculation over normalized JSON representation.",
-      "G3": "Validation errors on invalid spans, missing fields, or duplicate keys.",
-      "G4": "All library unit tests pass; clippy -D warnings and rustfmt check pass cleanly.",
-      "G5": "Concise record definitions within structure bounds."
+      "G1": "Module header declares AuthorityEffect None and contract URN; public symbols match contract.",
+      "G2": "Deterministic operations without unhandled lossy float calculations.",
+      "G3": "Typed error handling and refusal boundaries without unhandled panics.",
+      "G4": "Crate test suites pass; clippy -D warnings and cargo fmt check pass cleanly.",
+      "G5": "Structured Rust module within complexity limits."
     },
     "composite_grade": "C",
     "score_token": "L4C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-14T10:48:28Z",
+    "evaluation_timestamp": "2026-11-14T11:42:00Z",
     "evidence": [
       {
-        "path": "governance/evidence/eis-pciv-m2-fmt.run.json",
-        "sha256": "8e9de6d83fb4df9baaa159ec1fc27cfd7ec7faf31c09b3909878ce4c9aca54a0",
+        "path": "governance/evidence/eis-pciv-m3-fmt.run.json",
+        "sha256": "ee0cf45c0c4a88adf304254411111489bd42a8b6397a49a328f5434e5e077bbf",
         "note": "cargo fmt --check on core_epistemic_immune_system and core_prompt_civilization"
       },
       {
-        "path": "governance/evidence/eis-pciv-m2-clippy.run.json",
-        "sha256": "360df1d68bad550438691750b3ffd452b72782ad639328c4e979c597682fe6f9",
+        "path": "governance/evidence/eis-pciv-m3-clippy.run.json",
+        "sha256": "2b8d54d83cd7a0c5fea071e1a4fe0f1ed36ff23a282ebef9e09b239e9ea33674",
         "note": "clippy with -D warnings on both crates, all targets"
       },
       {
-        "path": "governance/evidence/eis-pciv-m2-eis-test.run.json",
-        "sha256": "85590c13449f950e8a64a22160af941191c4599a9110cd64d77d63a1b00afc7f",
+        "path": "governance/evidence/eis-pciv-m3-eis-test.run.json",
+        "sha256": "a7a021aa5f4ae706efc307e5461f003d1fc888de86fc6916cc2c5211e6249235",
         "note": "cargo test for core_epistemic_immune_system"
       },
       {
-        "path": "governance/evidence/eis-pciv-m2-pciv-test.run.json",
-        "sha256": "0eb683c931b3e1c2601c7b27a712c734c4ec594210e346d76f3e931bd264cb8f",
+        "path": "governance/evidence/eis-pciv-m3-pciv-test.run.json",
+        "sha256": "a221369912bbfcd1f33264affc13f0af927b10c6bdf0a426c3f806a05200dd47",
         "note": "cargo test for core_prompt_civilization --lib"
       }
-    ]
+    ],
+    "mutation_accounting": {
+      "killed": 6,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-core_prompt_civilization-record.mutation.json",
+        "sha256": "adf3aae75c33adc89c67974bba4be46f94e9178f18cdf5b69a2daf3db685bc49",
+        "note": "lexical mutation report for record"
+      }
+    }
   },
   "history": []
 }
