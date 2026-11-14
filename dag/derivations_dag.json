@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-11-14T11:12:06.509159+00:00",
+  "generated_at_utc": "2026-11-14T11:37:40.824619+00:00",
   "repository": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp",
   "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
   "status": "in_progress",
@@ -10741,6 +10741,23 @@
       ],
       "external_source": "https://kerodon.net/tag/000K",
       "atlas_ledger_id": "ATL-D-PAPER000-FINITE-CAPSTONE-SCOPE"
+    },
+    {
+      "id": "PAPER000-TEACHING-CHECKER-REJECTIONS",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The teaching checker rejects a self-relation, carrier escape, and reversed goal over the declared finite teaching carrier without mutating the candidate proposal.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Trust the declared finite input model, local checker and caller-retained expected identity.",
+        "SHA-256 content comparison is used as a binding assumption; it is not producer authentication."
+      ],
+      "evidence": [
+        "papers/pfp/000_pfp_introduction/code/basic_packets.py"
+      ],
+      "validation": [
+        "dag/reviews/additional_paper_000_support_probes.json"
+      ],
+      "atlas_ledger_id": "ATL-D-PAPER000-TEACHING-CHECKER-REJECTIONS"
     },
     {
       "id": "PAPER001-ARTIFACT-ARCHIVE-CUSTODY",
@@ -50334,13 +50351,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PAPER000-FINITE-TEACHING-CONTRACT"
+          "PAPER000-TEACHING-CHECKER-REJECTIONS"
         ],
-        "relation": "supports",
-        "note": "Node records the typed directed-triple checker but not these three named rejections.",
-        "proposed_derivation_file": "dag/derivations/atl_p000_003.md"
+        "relation": null,
+        "note": "Teaching checker rejects self-relation, carrier escape, and reversed goal via basic_packets.py and test_basic_packets.py; certified by PAPER000-TEACHING-CHECKER-REJECTIONS."
       }
     },
     {
@@ -69296,6 +69312,16 @@
       "kind": "requires"
     },
     {
+      "from": "ASSUMPTION-2289c9fd25e1ef0c",
+      "to": "PAPER000-TEACHING-CHECKER-REJECTIONS",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-eea6385661495a65",
+      "to": "PAPER000-TEACHING-CHECKER-REJECTIONS",
+      "kind": "requires"
+    },
+    {
       "from": "ASSUMPTION-306a65c8b7e5a2a3",
       "to": "PAPER001-EXACT-GRAPH-CERTIFICATE",
       "kind": "requires"
@@ -78221,6 +78247,12 @@
       "to": "PAPER000-FINITE-CAPSTONE-SCOPE",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "papers/pfp/000_pfp_introduction/_lev_examiner_theoretical_minimum_quiz/quiz.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/000_pfp_introduction/code/basic_packets.py",
+      "to": "PAPER000-TEACHING-CHECKER-REJECTIONS",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "papers/pfp/000_pfp_introduction/code/basic_packets.py"
     },
     {
       "from": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py",
@@ -97340,9 +97372,9 @@
       "citation": "atlas/archive/pfp/000_pfp_introduction/paper_claim_ledger.md:7"
     },
     {
-      "from": "PAPER000-FINITE-TEACHING-CONTRACT",
+      "from": "PAPER000-TEACHING-CHECKER-REJECTIONS",
       "to": "ATL-P000-003",
-      "kind": "partially_supports",
+      "kind": "states_same_claim_as",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
@@ -153242,8 +153274,8 @@
     "Audit native implementations and claimed Lean correspondence at pinned source."
   ],
   "graph_validation": {
-    "unique_nodes": 3588,
-    "edges": 3776,
+    "unique_nodes": 3589,
+    "edges": 3779,
     "acyclic": true
   }
 }
