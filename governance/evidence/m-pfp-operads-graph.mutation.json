@@ -1,0 +1,293 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/graph.rs",
+  "target_sha256": "f25a4cd5c0e4ff9e18ea128e2bb7864884ff1b238449fc9981cb09717e8c87e5",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test graph --test xor --test wf09 --test wf20 --test wf27 --test wf33 --test wf40",
+  "counts": {
+    "killed": 46,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "an edge is read backwards",
+      "old": "[from, to] => Some((from.as_int()?, to.as_int()?)),",
+      "new": "[from, to] => Some((to.as_int()?, from.as_int()?)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a longer list is read as an edge",
+      "old": "        [from, to] => Some(",
+      "new": "        [from, to, ..] => Some(",
+      "outcome": "killed"
+    },
+    {
+      "name": "the head is numbered before the tail",
+      "old": "            let from = graph.number(from);\n            let to = graph.number(to);",
+      "new": "            let to = graph.number(to);\n            let from = graph.number(from);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a new vertex gets the next number up",
+      "old": "                self.names.len() - 1\n",
+      "new": "                self.names.len()\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "every mention is a new vertex",
+      "old": "            .position(|known| known == name)\n            .unwrap_or_else",
+      "new": "            .position(|_| false)\n            .unwrap_or_else",
+      "outcome": "killed"
+    },
+    {
+      "name": "one right name is numbered",
+      "old": "(0..self.names.len()).all(|number| names.contains(&BigInt::from(number)))",
+      "new": "(0..self.names.len()).any(|number| names.contains(&BigInt::from(number)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "numbering starts at one",
+      "old": "(0..self.names.len()).all(|number| names.contains(&BigInt::from(number)))",
+      "new": "(1..=self.names.len()).all(|number| names.contains(&BigInt::from(number)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "numbering ignores the last vertex",
+      "old": "(0..self.names.len()).all(|number| names.contains(&BigInt::from(number)))",
+      "new": "(1..self.names.len()).all(|number| names.contains(&BigInt::from(number - 1)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "vertex finds another name",
+      "old": "        self.names.iter().position(|known| known == name)\n    }",
+      "new": "        self.names.iter().position(|known| known != name)\n    }",
+      "outcome": "killed"
+    },
+    {
+      "name": "forward neighbour signed backwards",
+      "old": "neighbours[from].push((to, edge, 1));",
+      "new": "neighbours[from].push((to, edge, -1));",
+      "outcome": "killed"
+    },
+    {
+      "name": "backward neighbour signed forwards",
+      "old": "neighbours[to].push((from, edge, -1));",
+      "new": "neighbours[to].push((from, edge, 1));",
+      "outcome": "killed"
+    },
+    {
+      "name": "backward neighbours are left out",
+      "old": "neighbours[to].push((from, edge, -1));",
+      "new": "neighbours[from].push((to, edge, -1));",
+      "outcome": "killed"
+    },
+    {
+      "name": "roots taken from the last vertex",
+      "old": "        for root in 0..self.names.len() {",
+      "new": "        for root in (0..self.names.len()).rev() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a reached vertex is a root again",
+      "old": "            if reached[root] {\n                continue;",
+      "new": "            if false && reached[root] {\n                continue;",
+      "outcome": "killed"
+    },
+    {
+      "name": "search is depth first",
+      "old": "while let Some(at) = queue.pop_front() {",
+      "new": "while let Some(at) = queue.pop_back() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only reached neighbours are taken",
+      "old": "                    if !reached[next] {",
+      "new": "                    if reached[next] && parent[next].is_none() && next != root {",
+      "outcome": "killed"
+    },
+    {
+      "name": "parent link sign negated",
+      "old": "parent[next] = Some((at, edge, sign));",
+      "new": "parent[next] = Some((at, edge, -sign));",
+      "outcome": "killed"
+    },
+    {
+      "name": "forest edges are not marked",
+      "old": "                        in_forest[edge] = true;",
+      "new": "                        in_forest[edge] = false;",
+      "outcome": "killed"
+    },
+    {
+      "name": "new vertices jump the queue",
+      "old": "                        queue.push_back(next);",
+      "new": "                        queue.push_front(next);",
+      "outcome": "killed"
+    },
+    {
+      "name": "order lists the root each time",
+      "old": "                order.push(at);",
+      "new": "                order.push(root);",
+      "outcome": "killed"
+    },
+    {
+      "name": "chords are the forest edges",
+      "old": "            .filter(|&edge| !in_forest[edge])",
+      "new": "            .filter(|&edge| in_forest[edge])",
+      "outcome": "killed"
+    },
+    {
+      "name": "path to root signed backwards",
+      "old": "                path.push((edge, sign));",
+      "new": "                path.push((edge, -sign));",
+      "outcome": "killed"
+    },
+    {
+      "name": "chord read head first",
+      "old": "                let (tail, head) = self.edges[chord];",
+      "new": "                let (head, tail) = self.edges[chord];",
+      "outcome": "killed"
+    },
+    {
+      "name": "shared means every edge",
+      "old": "other.iter().any(|step| step.0 == edge);",
+      "new": "other.iter().all(|step| step.0 == edge);",
+      "outcome": "killed"
+    },
+    {
+      "name": "head path keeps the shared edges",
+      "old": "                    .filter(|step| !shared(step.0, &from_tail))",
+      "new": "                    .filter(|_| true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "head path keeps only the shared edges",
+      "old": "                    .filter(|step| !shared(step.0, &from_tail))",
+      "new": "                    .filter(|step| shared(step.0, &from_tail))",
+      "outcome": "killed"
+    },
+    {
+      "name": "tail path keeps the shared edges",
+      "old": "                    .filter(|step| !shared(step.0, &from_head))",
+      "new": "                    .filter(|_| true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "tail path keeps only the shared edges",
+      "old": "                    .filter(|step| !shared(step.0, &from_head))",
+      "new": "                    .filter(|step| shared(step.0, &from_head))",
+      "outcome": "killed"
+    },
+    {
+      "name": "head path not reversed",
+      "old": "                    .map(|&(edge, sign)| (edge, -sign));",
+      "new": "                    .map(|&(edge, sign)| (edge, sign));",
+      "outcome": "killed"
+    },
+    {
+      "name": "chord taken backwards",
+      "old": "[(chord, 1)].into_iter().chain(down).chain(up).collect()",
+      "new": "[(chord, -1)].into_iter().chain(down).chain(up).collect()",
+      "outcome": "killed"
+    },
+    {
+      "name": "tail path before head path",
+      "old": "[(chord, 1)].into_iter().chain(down).chain(up).collect()",
+      "new": "[(chord, 1)].into_iter().chain(up).chain(down).collect()",
+      "outcome": "killed"
+    },
+    {
+      "name": "coboundary is tail less head",
+      "old": ".map(|&(from, to)| at(potential, to) - at(potential, from))",
+      "new": ".map(|&(from, to)| at(potential, from) - at(potential, to))",
+      "outcome": "killed"
+    },
+    {
+      "name": "coboundary adds the ends",
+      "old": ".map(|&(from, to)| at(potential, to) - at(potential, from))",
+      "new": ".map(|&(from, to)| at(potential, to) + at(potential, from))",
+      "outcome": "killed"
+    },
+    {
+      "name": "roots start at one",
+      "old": "let mut potential = vec![Rational::zero(); self.names.len()];",
+      "new": "let mut potential = vec![Rational::from_integer(BigInt::from(1)); self.names.len()];",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential walks children first",
+      "old": "        for &vertex in &forest.order {",
+      "new": "        for &vertex in forest.order.iter().rev() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential subtracts along the forest",
+      "old": "potential[vertex] = &potential[above] + signed(values, edge, sign);",
+      "new": "potential[vertex] = &potential[above] - signed(values, edge, sign);",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential ignores the link sign",
+      "old": "potential[vertex] = &potential[above] + signed(values, edge, sign);",
+      "new": "potential[vertex] = &potential[above] + signed(values, edge, 1);",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential forgets the parent",
+      "old": "potential[vertex] = &potential[above] + signed(values, edge, sign);",
+      "new": "potential[vertex] = signed(values, edge, sign);",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual adds the coboundary",
+      "old": "            .map(|(edge, explained)| at(values, edge) - explained)",
+      "new": "            .map(|(edge, explained)| at(values, edge) + explained)",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual is negated",
+      "old": "            .map(|(edge, explained)| at(values, edge) - explained)",
+      "new": "            .map(|(edge, explained)| explained - at(values, edge))",
+      "outcome": "killed"
+    },
+    {
+      "name": "defect sums signed residuals",
+      "old": "            .map(Signed::abs)\n            .sum()",
+      "new": "            .cloned()\n            .sum()",
+      "outcome": "killed"
+    },
+    {
+      "name": "a short list ends in ones",
+      "old": "values.get(index).cloned().unwrap_or_else(Rational::zero)",
+      "new": "values.get(index).cloned().unwrap_or_else(|| Rational::from_integer(BigInt::from(1)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "entries read one along",
+      "old": "values.get(index).cloned().unwrap_or_else(Rational::zero)",
+      "new": "values.get(index + 1).cloned().unwrap_or_else(Rational::zero)",
+      "outcome": "killed"
+    },
+    {
+      "name": "forward steps are negated",
+      "old": "    if sign == 1 {\n        at(values, edge)",
+      "new": "    if sign != 1 {\n        at(values, edge)",
+      "outcome": "killed"
+    },
+    {
+      "name": "backward steps are not negated",
+      "old": "    } else {\n        -at(values, edge)\n    }",
+      "new": "    } else {\n        at(values, edge)\n    }",
+      "outcome": "killed"
+    },
+    {
+      "name": "walk sum ignores signs",
+      "old": "        .map(|&(edge, sign)| signed(values, edge, sign))\n        .sum()",
+      "new": "        .map(|&(edge, _)| signed(values, edge, 1))\n        .sum()",
+      "outcome": "killed"
+    }
+  ]
+}

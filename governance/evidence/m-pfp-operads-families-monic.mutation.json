@@ -1,0 +1,299 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/monic.rs",
+  "target_sha256": "5921199ebad65aa2f4c09d5c9e6653035125e7a93bc67b586907b3a770cb498c",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test monic --test wf26",
+  "counts": {
+    "killed": 47,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "clean renamed",
+      "old": "pub const CLEAN: &str = \"CLEAN\";",
+      "new": "pub const CLEAN: &str = \"OK\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "epitope list starts with notation",
+      "old": "    \"MALFORMED_JSON\",\n    \"RATIONAL_NONCANONICAL\",\n    \"NONMONIC_LEADING_COEFFICIENT\",",
+      "new": "    \"RATIONAL_NONCANONICAL\",\n    \"MALFORMED_JSON\",\n    \"NONMONIC_LEADING_COEFFICIENT\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "epitope list reordered",
+      "old": "    \"SIGN_MISMATCH\",\n    \"WRONG_VALUE\",\n];",
+      "new": "    \"WRONG_VALUE\",\n    \"SIGN_MISMATCH\",\n];",
+      "outcome": "killed"
+    },
+    {
+      "name": "loose numbers take no sign",
+      "old": "r\"^[ \\t\\n\\r]*[-+]?(?:[0-9]+/0*[1-9][0-9]*\",",
+      "new": "r\"^[ \\t\\n\\r]*(?:[0-9]+/0*[1-9][0-9]*\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "loose numbers take no plus",
+      "old": "r\"^[ \\t\\n\\r]*[-+]?(?:[0-9]+/0*[1-9][0-9]*\",",
+      "new": "r\"^[ \\t\\n\\r]*-?(?:[0-9]+/0*[1-9][0-9]*\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "loose numbers take no leading space",
+      "old": "r\"^[ \\t\\n\\r]*[-+]?(?:[0-9]+/0*[1-9][0-9]*\",",
+      "new": "r\"^[-+]?(?:[0-9]+/0*[1-9][0-9]*\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "loose fractions may divide by zero",
+      "old": "r\"^[ \\t\\n\\r]*[-+]?(?:[0-9]+/0*[1-9][0-9]*\",",
+      "new": "r\"^[ \\t\\n\\r]*[-+]?(?:[0-9]+/[0-9]+\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "loose fractions take no leading zero below",
+      "old": "r\"^[ \\t\\n\\r]*[-+]?(?:[0-9]+/0*[1-9][0-9]*\",",
+      "new": "r\"^[ \\t\\n\\r]*[-+]?(?:[0-9]+/[1-9][0-9]*\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "loose numbers are fractions only",
+      "old": "r\"|(?:[0-9]+\\.?[0-9]*|\\.[0-9]+)(?:[eE][-+]?[0-9]+)?)[ \\t\\n\\r]*$\"",
+      "new": "r\")[ \\t\\n\\r]*$\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "loose numbers take no point",
+      "old": "r\"|(?:[0-9]+\\.?[0-9]*|\\.[0-9]+)(?:[eE][-+]?[0-9]+)?)[ \\t\\n\\r]*$\"",
+      "new": "r\"|(?:[0-9]+)(?:[eE][-+]?[0-9]+)?)[ \\t\\n\\r]*$\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "loose numbers need a digit before the point",
+      "old": "r\"|(?:[0-9]+\\.?[0-9]*|\\.[0-9]+)(?:[eE][-+]?[0-9]+)?)[ \\t\\n\\r]*$\"",
+      "new": "r\"|(?:[0-9]+\\.?[0-9]*)(?:[eE][-+]?[0-9]+)?)[ \\t\\n\\r]*$\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "loose numbers take no exponent",
+      "old": "r\"|(?:[0-9]+\\.?[0-9]*|\\.[0-9]+)(?:[eE][-+]?[0-9]+)?)[ \\t\\n\\r]*$\"",
+      "new": "r\"|(?:[0-9]+\\.?[0-9]*|\\.[0-9]+))[ \\t\\n\\r]*$\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "loose exponents take no sign",
+      "old": "r\"|(?:[0-9]+\\.?[0-9]*|\\.[0-9]+)(?:[eE][-+]?[0-9]+)?)[ \\t\\n\\r]*$\"",
+      "new": "r\"|(?:[0-9]+\\.?[0-9]*|\\.[0-9]+)(?:[eE][0-9]+)?)[ \\t\\n\\r]*$\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "loose numbers take no trailing space",
+      "old": "r\"|(?:[0-9]+\\.?[0-9]*|\\.[0-9]+)(?:[eE][-+]?[0-9]+)?)[ \\t\\n\\r]*$\"",
+      "new": "r\"|(?:[0-9]+\\.?[0-9]*|\\.[0-9]+)(?:[eE][-+]?[0-9]+)?)$\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "loose numbers may trail anything",
+      "old": "r\"|(?:[0-9]+\\.?[0-9]*|\\.[0-9]+)(?:[eE][-+]?[0-9]+)?)[ \\t\\n\\r]*$\"",
+      "new": "r\"|(?:[0-9]+\\.?[0-9]*|\\.[0-9]+)(?:[eE][-+]?[0-9]+)?)[ \\t\\n\\r]*\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "roots read from another key",
+      "old": "    task.get(\"roots\")",
+      "new": "    task.get(\"root\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty root list is allowed",
+      "old": "        .filter(|roots| !roots.is_empty())\n        .ok_or(\"roots required\")?",
+      "new": "        .ok_or(\"roots required\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "roots message changed",
+      "old": "        .ok_or(\"roots required\")?",
+      "new": "        .ok_or(\"roots\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "root type message changed",
+      "old": ".ok_or_else(|| \"every root must be an exact rational\".to_owned())",
+      "new": ".ok_or_else(|| \"root\".to_owned())",
+      "outcome": "killed"
+    },
+    {
+      "name": "expansion starts from zero",
+      "old": "    let mut coefficients = vec![Rational::one()];",
+      "new": "    let mut coefficients = vec![Rational::zero()];",
+      "outcome": "killed"
+    },
+    {
+      "name": "expansion appends a one",
+      "old": "        next.push(Rational::zero());",
+      "new": "        next.push(Rational::one());",
+      "outcome": "killed"
+    },
+    {
+      "name": "factors are x plus r",
+      "old": "            next[place + 1] -= root * coefficient;",
+      "new": "            next[place + 1] += root * coefficient;",
+      "outcome": "killed"
+    },
+    {
+      "name": "root term lands on the same power",
+      "old": "            next[place + 1] -= root * coefficient;",
+      "new": "            next[place] -= root * coefficient;",
+      "outcome": "killed"
+    },
+    {
+      "name": "root term ignores the root",
+      "old": "            next[place + 1] -= root * coefficient;",
+      "new": "            next[place + 1] -= coefficient;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a JSON integer is no number",
+      "old": "        Datum::Int(_) => Ok(rational(written)),",
+      "new": "        Datum::Int(_) => Err(()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a JSON integer is non-canonical",
+      "old": "        Datum::Int(_) => Ok(rational(written)),",
+      "new": "        Datum::Int(_) => Ok(None),",
+      "outcome": "killed"
+    },
+    {
+      "name": "an integer written p/1 is canonical",
+      "old": "rational(written).filter(|value| !value.is_integer() && *text == show(value));",
+      "new": "rational(written).filter(|value| *text == show(value));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a fraction not in lowest terms is canonical",
+      "old": "rational(written).filter(|value| !value.is_integer() && *text == show(value));",
+      "new": "rational(written).filter(|value| !value.is_integer());",
+      "outcome": "killed"
+    },
+    {
+      "name": "only whole text values are canonical",
+      "old": "rational(written).filter(|value| !value.is_integer() && *text == show(value));",
+      "new": "rational(written).filter(|value| value.is_integer() && *text == show(value));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a text is numeric only if both tests pass",
+      "old": "            if canonical.is_some() || numeric {",
+      "new": "            if canonical.is_some() && numeric {",
+      "outcome": "killed"
+    },
+    {
+      "name": "every text is a number",
+      "old": "            if canonical.is_some() || numeric {",
+      "new": "            if true || numeric {",
+      "outcome": "killed"
+    },
+    {
+      "name": "other JSON types are non-canonical numbers",
+      "old": "        }\n        _ => Err(()),\n    }",
+      "new": "        }\n        _ => Ok(None),\n    }",
+      "outcome": "killed"
+    },
+    {
+      "name": "coefficients read from another key",
+      "old": "        .get(\"coefficients\")?",
+      "new": "        .get(\"coefficient\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty coefficient list is read",
+      "old": "        .as_list()\n        .filter(|written| !written.is_empty())?\n",
+      "new": "        .as_list()?\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "malformed reported as wrong value",
+      "old": "        return \"MALFORMED_JSON\";",
+      "new": "        return \"WRONG_VALUE\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-canonical reported as malformed",
+      "old": "        return \"RATIONAL_NONCANONICAL\";",
+      "new": "        return \"MALFORMED_JSON\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "sizes compared on either test",
+      "old": "    let same_sizes = values.len() == expected.len()\n        && values",
+      "new": "    let same_sizes = values.len() == expected.len()\n        || values",
+      "outcome": "killed"
+    },
+    {
+      "name": "sizes ignore the length",
+      "old": "    let same_sizes = values.len() == expected.len()\n        && values",
+      "new": "    let same_sizes = values",
+      "outcome": "killed"
+    },
+    {
+      "name": "sizes compared with signs",
+      "old": ".all(|(given, wanted)| given.abs() == wanted.abs());",
+      "new": ".all(|(given, wanted)| given == wanted);",
+      "outcome": "killed"
+    },
+    {
+      "name": "one equal size is enough",
+      "old": "            .zip(expected)\n            .all(|(given, wanted)|",
+      "new": "            .zip(expected)\n            .any(|(given, wanted)|",
+      "outcome": "killed"
+    },
+    {
+      "name": "monic test inverted",
+      "old": "    if values.first() != Some(&Rational::one()) {",
+      "new": "    if values.first() == Some(&Rational::one()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "monic test reads the last coefficient",
+      "old": "    if values.first() != Some(&Rational::one()) {",
+      "new": "    if values.last() != Some(&Rational::one()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "nonmonic renamed",
+      "old": "        \"NONMONIC_LEADING_COEFFICIENT\"\n    } else if",
+      "new": "        \"NONMONIC\"\n    } else if",
+      "outcome": "killed"
+    },
+    {
+      "name": "clean test inverted",
+      "old": "    } else if values == expected {",
+      "new": "    } else if values != expected {",
+      "outcome": "killed"
+    },
+    {
+      "name": "sign mismatch test inverted",
+      "old": "    } else if same_sizes {",
+      "new": "    } else if !same_sizes {",
+      "outcome": "killed"
+    },
+    {
+      "name": "sign mismatch renamed",
+      "old": "        \"SIGN_MISMATCH\"\n    } else {",
+      "new": "        \"SIGNS\"\n    } else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "wrong value renamed",
+      "old": "        \"WRONG_VALUE\"\n    }\n}",
+      "new": "        \"WRONG\"\n    }\n}",
+      "outcome": "killed"
+    }
+  ]
+}

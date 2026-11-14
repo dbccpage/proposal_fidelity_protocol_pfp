@@ -169,9 +169,8 @@ patch and `[0, 0]` after it, and leaves `request.json`, `candidate.patch`,
   (`CounterfeitExactness`), broke a passing one (`BoundaryLeakage`) or did
   not fit the sources or the write set (`StructuralNonFit`). A missing tool,
   a changed source or a full disk blames no candidate.
-- **Family runs**: a workflow family (WF7, WF13, WF24, WF30, WF31, WF32 and
-  WF45 so far) is a walk
-  the host owns. The request is the family's id, the public `task`, the
+- **Family runs**: a workflow family (WF7, WF9, WF13, WF20, WF24, WF26, WF27,
+  WF30, WF31, WF32, WF33, WF40 and WF45 so far) is a walk the host owns. The request is the family's id, the public `task`, the
   `sealed` part and the `replies` received so far, each `null` or
   `{"content": ...}`. `family next` returns the stage and the exact prompt to
   send, and `family judge` returns `HOST_CERTIFIED`, `TYPED_REFUSAL` or
@@ -194,6 +193,26 @@ patch and `[0, 0]` after it, and leaves `request.json`, `candidate.patch`,
   domain before it asks anything, and WF32 runs a claim only under the
   checker the task chose for the claim's input. Permutations are lists of
   images and compose in reading order (`src/perm.rs`).
+- **Repair loops**: WF9 asks up to a fixed number of times and puts the
+  host's residual under the next prompt (`src/families/wf09.rs`). The
+  residual says what is still wrong, never the answer: the cycles still odd,
+  the edges that are off, the kind of mistake. WF27 adds the vertices of each
+  odd cycle and stops when a residual comes back three attempts later. WF20
+  adds a grant when an attempt does not improve on the last one: the
+  fundamental cycles or the chords, built from the graph alone
+  (`src/families/wf20.rs`). WF26 carries one fixed sentence per kind of
+  mistake seen. A reply the host cannot read uses up an attempt.
+- **Re-entry and restart**: WF33 splits a repair among children that draw on
+  one fuel counter, one unit per question, and binds each child to a receipt
+  of everything before it. WF40 shows the receipts of a failed repair and
+  admits one boundary action, fixed by the measured values alone: a refusal
+  naming a face that does not close, a lift with a closed witness, or a
+  restart seeded with the unchanged task and receipts the host showed.
+- **Graphs**: vertices are named by exact integers and numbered in the order
+  the edges first name them. The spanning forest is breadth first, roots in
+  vertex order and neighbours in edge order, so the fundamental cycles of a
+  task are the same on every machine (`src/graph.rs`). An XOR task has at
+  most 20 edges; the least repair is found by trying every set of flips.
 - **Exact numbers** in a family run: an integer is read from its digits and
   has no size limit. A number written with a fraction or an exponent is never
   an integer. A rational is an integer or the text `p/q`: an optional minus,

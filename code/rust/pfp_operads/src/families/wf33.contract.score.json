@@ -1,0 +1,104 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf33.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf33.rs",
+      "language": "Rust",
+      "sha256": "f0cb785a0ca25ef6220bfbdc2e232cde1e8ac8fa110d92c5793edc05d926f600"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf33:v1",
+    "symbols": [
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task is the XOR task, fuel, an exact integer of at least 1, and optionally max_attempts, an exact integer from 1 to 5, for each child; without it the limit is 5.",
+      "Every question put to the model takes one unit of fuel first, from one counter shared by the plan, every child header and every child attempt. A question the fuel does not cover is not asked: the run is refused as FUEL_EXHAUSTED before a header and CHILD_HALTED_ON_FUEL inside a child.",
+      "The first reply is a plan: one list of edge indices per child, each read as a set. The plan must hold every edge of the task exactly once, whatever the order of the children; otherwise the run is refused as COVERAGE_NOT_A_PARTITION under the predicate forward_coverage_partition.",
+      "A child's header must be an object that states the parent receipt the host just showed it, the digest of the task, and the fuel the host has left. Each is its own predicate, and the first that fails refuses the run as STALE_PARENT_RECEIPT, TASK_CHANGED, or FUEL_RESET when more fuel is stated and FUEL_MISMATCH when less.",
+      "A bound child's edges and labels are put through the WF20 loop as a task of their own, under the task's statement and the stages child:<n>:attempt:<k>. A child that does not end on a certificate refuses the run as CHILD_HALTED_ON_ and the name of its ending.",
+      "Receipts are SHA-256 digests of canonical JSON. The root receipt covers the digest of the task and the plan. After each child the receipt covers the receipt before it, the child's number, its flips as task edges, and the fuel left; the next child must state that receipt.",
+      "The flips of the children, mapped back to the task's edges, are united, and the run is certified as REENTRY_CERTIFIED only when that union leaves no cycle of the task odd and has the task's least size, under the predicate backward_solution_map. Children that each pass alone can fail here."
+    ],
+    "boundaries": [
+      "A receipt is a digest, not a signature. It binds a header to what the host showed; it does not prove who answered.",
+      "Fuel counts questions. The search for a least repair is paid for by the edge limit of xor.rs, not by fuel.",
+      "A plan that splits a cycle between children changes what each child sees as a cycle. The check on the union is what catches a split that loses a constraint."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf33.rs",
+      "language": "Rust",
+      "sha256": "f0cb785a0ca25ef6220bfbdc2e232cde1e8ac8fa110d92c5793edc05d926f600"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: fuel is an unbounded integer compared exactly with the stated fuel; edge indices are usize bounded by the task. Receipts are rebuilt in the tests from the canonical text written out. Not B: the hash library is trusted.",
+      "G3": "Each binding failure, each ending of a child and each unreadable plan or header has its own code or reason. The flips of an accepted child are read again against the size of its part before they are mapped back to task edges. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
+      "G4": "23 WF33 tests assert the registry entry, the plan and header prompts byte for byte with the fuel left, receipts rebuilt by hand and chained across two children, a plan in any order, each way a plan is not a partition, each binding refused alone with its code, the fuel trace across every question and a run that runs out, a child that halts, children that pass alone and fail together, a union of least size that leaves a cycle odd, and each malformed task, plan and header by its reason. One mutant is recorded as demonstrably equivalent with its justification in the report. Mutation campaign R = 103/103. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 12, cognitive complexity is not measured for Rust, nesting 1; ceiling B, recorded B."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T15:01:56Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v10-test.run.json",
+        "sha256": "2ac3c78c0d43c1d8afccff41082ba5766a3c997b4958118d8411ec48197bb9e4",
+        "note": "597 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-clippy.run.json",
+        "sha256": "bca267d7753f15b816eccc1004bdc6ce881b1819f40ee74e5c1c57e840c95cdb",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-fmt.run.json",
+        "sha256": "f6d1c8480e66c3f0cfb6f83e0bb819d7a7d861989fc9164bee66d15943552e9b",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-metrics.run.json",
+        "sha256": "896842a84d07003d020cd4e1e29115b2a6a075310f83be82779b4ac28bfdc7f3",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-metrics.json",
+        "sha256": "f0123515ac77c4cf93d96d509948e04b751df51b9f0d39da5f53a058f3164656",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 103,
+      "survived": 0,
+      "demonstrably_equivalent": 1,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf33.mutation.json",
+        "sha256": "96cbfb8ddca1e5ceb076899c7898201d681cf88991b4a0e45c43661917e2fc8a",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 104 mutants"
+      }
+    }
+  },
+  "history": []
+}

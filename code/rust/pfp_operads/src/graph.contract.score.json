@@ -1,0 +1,118 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/graph.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/graph.rs",
+      "language": "Rust",
+      "sha256": "f25a4cd5c0e4ff9e18ea128e2bb7864884ff1b238449fc9981cb09717e8c87e5"
+    },
+    "contract_urn": "urn:pfp-operads:graph:v1",
+    "symbols": [
+      "Step",
+      "Link",
+      "Graph",
+      "Forest",
+      "Graph::read",
+      "Graph::edges",
+      "Graph::names",
+      "Graph::is_numbered",
+      "Graph::vertex",
+      "Graph::forest",
+      "Graph::fundamental_cycles",
+      "Graph::coboundary",
+      "Graph::potential",
+      "Graph::residual",
+      "Graph::defect",
+      "walk_sum"
+    ],
+    "owned_invariants": [
+      "A graph is read only from a list of [u, v] pairs of exact integers; the list may be empty, and a loop or a second edge between two vertices is an edge like any other. Vertices are numbered in the order the edges first name them, and an edge runs from its first vertex to its second.",
+      "is_numbered holds exactly when the vertex names are 0 up to the vertex count less one, in any order.",
+      "forest is the breadth-first spanning forest that takes roots in vertex order and neighbours in edge order. Every vertex is reached once, a parent comes before its children in the order, and the edges outside the forest are the chords, in edge order.",
+      "fundamental_cycles gives one closed walk per chord, in chord order: the chord forwards, then the forest edges from its head up to where the two paths to the root meet, each against the way the forest climbs it, then the forest edges from its tail up to that point. Forest edges the two paths share are left out.",
+      "coboundary of a value on the vertices is, on each edge, the value at its head less the value at its tail. potential is zero at each root and matches the given edge values along the forest. residual is the edge values less the coboundary of a potential, and defect is the sum of the sizes of what the forest potential leaves.",
+      "defect is zero exactly when the edge values are a coboundary, which is exactly when their sum round every fundamental cycle is zero.",
+      "A list of values shorter than the edges or vertices it is read against is read as ending in zeros."
+    ],
+    "boundaries": [
+      "The forest and its cycles are rebuilt on every call; nothing is cached. Callers bound the size of the graph.",
+      "Vertex numbers are positions in names(). Callers that speak in vertex names translate with vertex()."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/graph.rs",
+      "language": "Rust",
+      "sha256": "f25a4cd5c0e4ff9e18ea128e2bb7864884ff1b238449fc9981cb09717e8c87e5"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: vertex names are unbounded integers, values are exact rationals, and signs are 1 or -1. Forests, cycles, potentials and defects are asserted against values worked by hand on graphs with several components, loops and doubled edges. Not B: the cycle criterion is tested on examples, not proven.",
+      "G3": "read returns nothing for what is not a list of pairs of exact integers. Every other function is total on any graph read: a short value list ends in zeros. No unwrap or expect. Where a slice is indexed, the index was produced by the same function from that slice's own length. Not B: panic-freedom is tested, not proven.",
+      "G4": "21 graph tests assert vertex numbering, what is and is not read, the forest's roots, order and chords on connected and disconnected graphs, each fundamental cycle step by step, coboundaries, potentials along paths deeper than one edge, residuals, short lists, and the defect on values that are and are not coboundaries. Mutation campaign R = 46/46. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 7, cognitive complexity is not measured for Rust, nesting 4; ceiling B, recorded B."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T15:01:56Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v10-test.run.json",
+        "sha256": "2ac3c78c0d43c1d8afccff41082ba5766a3c997b4958118d8411ec48197bb9e4",
+        "note": "597 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-clippy.run.json",
+        "sha256": "bca267d7753f15b816eccc1004bdc6ce881b1819f40ee74e5c1c57e840c95cdb",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-fmt.run.json",
+        "sha256": "f6d1c8480e66c3f0cfb6f83e0bb819d7a7d861989fc9164bee66d15943552e9b",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-metrics.run.json",
+        "sha256": "896842a84d07003d020cd4e1e29115b2a6a075310f83be82779b4ac28bfdc7f3",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-metrics.json",
+        "sha256": "f0123515ac77c4cf93d96d509948e04b751df51b9f0d39da5f53a058f3164656",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 46,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-graph.mutation.json",
+        "sha256": "6de4f88ffb7b40a914eb49fcfa6bd8e98bdd73afa5eccec44e9dec2f3aaf4f66",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 46 mutants"
+      }
+    }
+  },
+  "history": []
+}

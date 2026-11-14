@@ -18,6 +18,7 @@ from .base import (
     CERTIFIED,
     POSITIVE,
     REFUSED,
+    HostedFamily,
     MalformedCandidateError,
     Session,
     Verdict,
@@ -34,7 +35,6 @@ from .base import (
 )
 from .exact import commitment
 from .layer1 import TypedRefusal
-from .layer2 import Assessment, BoundedCheckAndRepair
 from .layer6 import (
     CLEAN,
     DANGER_KIND,
@@ -47,7 +47,6 @@ from .layer6 import (
     build_rules,
     canonical_rational,
     classify_reply,
-    poly_from_roots,
     require_items,
     text,
 )
@@ -350,17 +349,8 @@ class CertifiedCostLadder(WorkflowFamily):
 
 # ---------------------------------------------------------------- WF26
 
-ANTIBODIES = {
-    'MALFORMED_JSON': 'Reply with one JSON object of the form {"coefficients": [...]} and nothing else.',
-    'RATIONAL_NONCANONICAL': 'Write integers as integers and other rationals as p/q in lowest terms.',
-    'NONMONIC_LEADING_COEFFICIENT': 'The leading coefficient must be 1.',
-    'SIGN_MISMATCH': 'Some coefficient signs are wrong; the sign of each coefficient follows Vieta.',
-    'WRONG_VALUE': 'The coefficients do not vanish at the stated roots.',
-}
-
-
 @register
-class MultiRoundAntibodyDialogue(BoundedCheckAndRepair):
+class MultiRoundAntibodyDialogue(HostedFamily):
     """WF26. Each host-classified failure becomes a typed negative constraint carried into later rounds.
 
     Domain: the monic polynomial with stated roots (WF14). The exact oracle is
@@ -371,29 +361,6 @@ class MultiRoundAntibodyDialogue(BoundedCheckAndRepair):
     """
     spec = spec_from('WF26', 'Multi-round antibody dialogue', 7, ['WF9', 'WF14'], None,
                      'epitope_antibody_exact_oracle', 'wf26_multi_round_antibody_dialogue')
-
-    def validate(self, task):
-        require(isinstance(task.get('roots'), list) and task['roots'], 'roots required')
-        self.max_attempts(task)
-        return task
-
-    def assess(self, task, sealed, content) -> Assessment:
-        require(isinstance(content, str), 'reply must be text')
-        epitope = classify_reply(content, task['roots'])
-        if epitope != CLEAN and epitope not in [a['epitope'] for a in self._antibodies]:
-            self._antibodies.append({'epitope': epitope, 'constraint': ANTIBODIES[epitope]})
-        return Assessment(epitope == CLEAN, {'antibodies': list(self._antibodies)}, epitope)
-
-    def run(self, session: Session, host: HostOracleContext) -> Verdict:
-        self._antibodies: list[dict[str, str]] = []
-        verdict = super().run(session, host)
-        answer = [canonical_rational(c) for c in poly_from_roots(session.task['roots'])]
-        blob = canonical(self._antibodies).decode('utf-8') + json.dumps(self._antibodies)
-        forms = (canonical(answer).decode('utf-8'), json.dumps(answer))
-        free = host.record('antibodies_answer_free', not any(f in blob for f in forms), blob)
-        if verdict.verdict == CERTIFIED and not free:
-            return refused('ANSWER_LEAK')
-        return Verdict(verdict.verdict, verdict.code, {**verdict.detail, 'antibodies': len(self._antibodies)})
 
     def fixtures(self):
         task = {'statement': 'Give the monic polynomial with roots 1, 2, 3 as JSON coefficients, highest first.',

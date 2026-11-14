@@ -54,21 +54,33 @@ fn the_host_lists_its_families_in_workflow_order() {
         passed(list()),
         json!({"families": [
             {"workflow": "WF7", "name": "Typed refusal", "host_check": "typed_refusal_rank_test"},
+            {"workflow": "WF9", "name": "Bounded check-and-repair",
+             "host_check": "xor_cycle_minimal_repair"},
             {"workflow": "WF13", "name": "Exact-domain capsule battery",
              "host_check": "per_domain_registered_checker"},
+            {"workflow": "WF20", "name": "Derivation loop with lift grants",
+             "host_check": "structural_lift_grant_loop"},
             {"workflow": "WF24", "name": "Pinned-token operational scratchpad",
              "host_check": "dual_holonomy_checkers"},
+            {"workflow": "WF26", "name": "Multi-round antibody dialogue",
+             "host_check": "epitope_antibody_exact_oracle"},
+            {"workflow": "WF27", "name": "Hinted retraction with a stationary-loop detector",
+             "host_check": "xor_residual_gate_stationary_loop"},
             {"workflow": "WF30", "name": "Constraint-forcing anti-recitation",
              "host_check": "comparator_network_zero_one_principle"},
             {"workflow": "WF31", "name": "Multi-agent tournament with held-out cross-validation",
              "host_check": "exact_held_out_referee"},
             {"workflow": "WF32", "name": "Claim-scoped receipt",
              "host_check": "per_claim_independent_checkers"},
+            {"workflow": "WF33", "name": "Recursive re-entry with shared fuel",
+             "host_check": "shared_fuel_parent_bound_reentry"},
+            {"workflow": "WF40", "name": "Restart boundary after exhausted repair",
+             "host_check": "cochain_trichotomy_boundary"},
             {"workflow": "WF45", "name": "Finite terminal selector and plenitude test",
              "host_check": "finite_survivor_set_verifier"},
         ]})
     );
-    assert_eq!(FAMILIES.len(), 7);
+    assert_eq!(FAMILIES.len(), 13);
 }
 
 #[test]

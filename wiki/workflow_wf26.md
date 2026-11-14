@@ -4,7 +4,7 @@
 
 **Layer:** 7 · **Builds on:** [WF9](workflow_wf9.md), [WF14](workflow_wf14.md) · **Merges into:** nothing · **Kind:** procedure extension
 
-**Code:** [`pfp_core/workflow_families/layer7.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer7.py) (`MultiRoundAntibodyDialogue`) · **Folder:** [`workflows/wf26_multi_round_antibody_dialogue`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf26_multi_round_antibody_dialogue) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf26.rs`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/pfp_operads/src/families/wf26.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer7.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer7.py) (`MultiRoundAntibodyDialogue`) · **Folder:** [`workflows/wf26_multi_round_antibody_dialogue`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf26_multi_round_antibody_dialogue) · **Tests:** [`code/rust/pfp_operads/tests/wf26.rs`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/pfp_operads/tests/wf26.rs), [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Each host-classified failure becomes a typed negative constraint carried into later rounds.
 
@@ -29,13 +29,14 @@ From the DAG node. The runner checks the instance described above; items it does
 
 ## Host check
 
-`epitope_antibody_exact_oracle`. Only this check can certify. Proposers, detectors and adapters carry authority effect `None`; a reply is evidence for the check, never a verdict.
+`epitope_antibody_exact_oracle`. Only this check can certify. Proposers, detectors and adapters carry authority effect `None`; a reply is evidence for the check, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
 ## Run it offline
 
-No model call and no spend. From the repository root:
+No model call and no spend. From the repository root (the first line builds the host once):
 
 ```powershell
+cargo build --release -p pfp_operads --manifest-path code/rust/Cargo.toml
 python -m pfp_core.workflow_families run WF26
 python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF26-"
 ```

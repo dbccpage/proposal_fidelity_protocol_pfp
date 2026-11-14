@@ -5,16 +5,17 @@
 
 **Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet.
 
-**Run it offline** (no model call, no spend), from the repository root:
+**Run it offline** (no model call, no spend), from the repository root. The first line builds the Rust host once:
 
 ```powershell
+cargo build --release -p pfp_operads --manifest-path code/rust/Cargo.toml
 python -m pfp_core.workflow_families run WF40
 python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF40-"
 ```
 
-**The check:** `cochain_trichotomy_boundary`. Only this check can certify; a model reply is evidence for it, never a verdict.
+**The check:** `cochain_trichotomy_boundary`. Only this check can certify; a model reply is evidence for it, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
-**Code:** [`pfp_core/workflow_families/layer9.py`](../../pfp_core/workflow_families/layer9.py) (`RestartBoundaryAfterExhaustedRepair`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf40)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf40.rs`](../../code/rust/pfp_operads/src/families/wf40.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer9.py`](../../pfp_core/workflow_families/layer9.py) (`RestartBoundaryAfterExhaustedRepair`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf40)
 <!-- end generated -->
 
 **Kind:** procedure extension. **Builds on:** [WF9](../wf09_bounded_check_and_repair/README.md), [WF20](../wf20_derivation_loop_with_lift_grants/README.md).

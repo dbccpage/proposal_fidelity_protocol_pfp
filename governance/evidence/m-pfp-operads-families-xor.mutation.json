@@ -1,0 +1,307 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/xor.rs",
+  "target_sha256": "d0cbdf75b8f2458ca2759ec7b4b519ff80a2690c3db3dd99d9c7f9fbb2137c4d",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test xor --test wf09 --test wf20 --test wf27 --test wf33",
+  "counts": {
+    "killed": 46,
+    "survived": 0,
+    "demonstrably_equivalent": 2,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "edge limit raised",
+      "old": "pub const MAX_EDGES: usize = 20;",
+      "new": "pub const MAX_EDGES: usize = 21;",
+      "outcome": "killed"
+    },
+    {
+      "name": "edge limit lowered",
+      "old": "pub const MAX_EDGES: usize = 20;",
+      "new": "pub const MAX_EDGES: usize = 19;",
+      "outcome": "killed"
+    },
+    {
+      "name": "label 0 read as 1",
+      "old": "        0 => Some(false),",
+      "new": "        0 => Some(true),",
+      "outcome": "killed"
+    },
+    {
+      "name": "label 1 read as 0",
+      "old": "        1 => Some(true),",
+      "new": "        1 => Some(false),",
+      "outcome": "killed"
+    },
+    {
+      "name": "any other label read as 1",
+      "old": "        _ => None,",
+      "new": "        _ => Some(true),",
+      "outcome": "killed"
+    },
+    {
+      "name": "edges read from another key",
+      "old": "        task.get(\"edges\").and_then(Datum::as_list),",
+      "new": "        task.get(\"edge\").and_then(Datum::as_list),",
+      "outcome": "killed"
+    },
+    {
+      "name": "labels read from another key",
+      "old": "        task.get(\"labels\").and_then(Datum::as_list),",
+      "new": "        task.get(\"label\").and_then(Datum::as_list),",
+      "outcome": "killed"
+    },
+    {
+      "name": "list message changed",
+      "old": "return Err(\"edges and labels must be lists\".to_owned());",
+      "new": "return Err(\"lists\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "extra labels are allowed",
+      "old": "    if edges.len() != labels.len() {",
+      "new": "    if edges.len() > labels.len() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing labels are allowed",
+      "old": "    if edges.len() != labels.len() {",
+      "new": "    if edges.len() < labels.len() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "label count message changed",
+      "old": "return Err(\"one label per edge\".to_owned());",
+      "new": "return Err(\"labels\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "the limit itself is refused",
+      "old": "    if edges.len() > MAX_EDGES {",
+      "new": "    if edges.len() >= MAX_EDGES {",
+      "outcome": "killed"
+    },
+    {
+      "name": "no edge limit",
+      "old": "    if edges.len() > MAX_EDGES {",
+      "new": "    if false && edges.len() > MAX_EDGES {",
+      "outcome": "killed"
+    },
+    {
+      "name": "edge limit message changed",
+      "old": "return Err(format!(\"at most {MAX_EDGES} edges\"));",
+      "new": "return Err(format!(\"too many edges\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "edge message changed",
+      "old": ".ok_or(\"each edge is a pair of exact integers\")?;",
+      "new": ".ok_or(\"edge\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "label message changed",
+      "old": ".ok_or(\"every label must be the exact integer 0 or 1\")?;",
+      "new": ".ok_or(\"label\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "cycle membership is or-ed in",
+      "old": "            cycles_through[edge] ^= 1 << cycle;",
+      "new": "            cycles_through[edge] |= 1 << cycle;",
+      "equivalent": "A fundamental cycle holds each of its edges once: the chord, and forest edges on exactly one of the two paths to the root. So a bit is set at most once per edge and cycle, and xor and or give the same word.",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "cycle bits shifted one up",
+      "old": "            cycles_through[edge] ^= 1 << cycle;",
+      "new": "            cycles_through[edge] ^= 2 << cycle;",
+      "outcome": "killed"
+    },
+    {
+      "name": "every edge is put on cycle 0",
+      "old": "            cycles_through[edge] ^= 1 << cycle;",
+      "new": "            cycles_through[edge] ^= 1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the last cycle is not counted",
+      "old": "        cycles: cycles.len(),",
+      "new": "        cycles: cycles.len().saturating_sub(1),",
+      "outcome": "killed"
+    },
+    {
+      "name": "flip message changed",
+      "old": "value.and_then(Datum::as_list).ok_or(\"flip list required\")?;",
+      "new": "value.and_then(Datum::as_list).ok_or(\"flip\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "one integer makes a flip list",
+      "old": "    if !listed.iter().all(|index| index.as_int().is_some()) {",
+      "new": "    if !listed.iter().any(|index| index.as_int().is_some()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "flip type message changed",
+      "old": "return Err(\"flip must be an exact int\".to_owned());",
+      "new": "return Err(\"flip must be an int\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "the edge count is a flip index",
+      "old": ".map(|index| index.as_count().filter(|&index| index < edges))",
+      "new": ".map(|index| index.as_count().filter(|&index| index <= edges))",
+      "outcome": "killed"
+    },
+    {
+      "name": "flip range message changed",
+      "old": ".ok_or_else(|| \"flip index out of range\".to_owned())",
+      "new": ".ok_or_else(|| \"flip index\".to_owned())",
+      "outcome": "killed"
+    },
+    {
+      "name": "flipped labels are the ones not counted",
+      "old": ".filter(|(edge, (_, &label))| label != flips.contains(edge))",
+      "new": ".filter(|(edge, (_, &label))| label == flips.contains(edge))",
+      "outcome": "killed"
+    },
+    {
+      "name": "flips are ignored",
+      "old": ".filter(|(edge, (_, &label))| label != flips.contains(edge))",
+      "new": ".filter(|(_, (_, &label))| label)",
+      "outcome": "killed"
+    },
+    {
+      "name": "labels are ignored",
+      "old": ".filter(|(edge, (_, &label))| label != flips.contains(edge))",
+      "new": ".filter(|(edge, _)| flips.contains(edge))",
+      "outcome": "killed"
+    },
+    {
+      "name": "cycle parities are or-ed",
+      "old": ".fold(0, |odd, (_, (through, _))| odd ^ through)",
+      "new": ".fold(0, |odd, (_, (through, _))| odd | through)",
+      "outcome": "killed"
+    },
+    {
+      "name": "even cycles are listed",
+      "old": "            .filter(|cycle| odd & (1 << cycle) != 0)",
+      "new": "            .filter(|cycle| odd & (1 << cycle) == 0)",
+      "outcome": "killed"
+    },
+    {
+      "name": "least repair starts at zero",
+      "old": "        let mut least = self.labels.len();",
+      "new": "        let mut least = 0;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the empty set is not tried",
+      "old": "        for step in 0u32..(1 << self.labels.len()) {",
+      "new": "        for step in 1u32..(1 << self.labels.len()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "half the sets are tried",
+      "old": "        for step in 0u32..(1 << self.labels.len()) {",
+      "new": "        for step in 0u32..(1 << self.labels.len().saturating_sub(1)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "gray step flips the next edge up",
+      "old": "self.cycles_through.get(step.trailing_zeros() as usize)",
+      "new": "self.cycles_through.get(step.trailing_zeros() as usize + 1)",
+      "outcome": "killed"
+    },
+    {
+      "name": "reached parities are or-ed",
+      "old": "                reached ^= through;",
+      "new": "                reached |= through;",
+      "outcome": "killed"
+    },
+    {
+      "name": "set size counted from the step number",
+      "old": "let size = (step ^ (step >> 1)).count_ones() as usize;",
+      "new": "let size = step.count_ones() as usize;",
+      "outcome": "killed"
+    },
+    {
+      "name": "any smaller set counts as a repair",
+      "old": "            if reached == target && size < least {",
+      "new": "            if reached == target || size < least {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the largest repair is kept",
+      "old": "            if reached == target && size < least {",
+      "new": "            if reached == target && size > least {",
+      "outcome": "killed"
+    },
+    {
+      "name": "flip read from another key",
+      "old": "let flips = flips(reply.get(\"flip\"), self.labels.len())?;",
+      "new": "let flips = flips(reply.get(\"flips\"), self.labels.len())?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "any even repair is accepted",
+      "old": "let accepted = odd.is_empty() && flips.len() == self.least_repair();",
+      "new": "let accepted = odd.is_empty();",
+      "outcome": "killed"
+    },
+    {
+      "name": "a least-size set is accepted with odd cycles",
+      "old": "let accepted = odd.is_empty() && flips.len() == self.least_repair();",
+      "new": "let accepted = odd.is_empty() || flips.len() == self.least_repair();",
+      "outcome": "killed"
+    },
+    {
+      "name": "a smaller set is accepted",
+      "old": "let accepted = odd.is_empty() && flips.len() == self.least_repair();",
+      "new": "let accepted = odd.is_empty() && flips.len() <= self.least_repair();",
+      "equivalent": "When no cycle is left odd the flips are a repair, and least_repair is the smallest size of any repair, so the size cannot be below it. With that, at-most and equal are the same test.",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "measure is the flip count",
+      "old": "            measure: Datum::from(odd.len()),",
+      "new": "            measure: Datum::from(flips.len()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "flip count key renamed",
+      "old": "(\"flip_count\", Datum::from(flips.len())),",
+      "new": "(\"flips\", Datum::from(flips.len())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "flip count holds the odd count",
+      "old": "(\"flip_count\", Datum::from(flips.len())),",
+      "new": "(\"flip_count\", Datum::from(odd.len())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "minimal known key renamed",
+      "old": "(\"minimal_known\", Datum::Bool(odd.is_empty())),",
+      "new": "(\"minimal\", Datum::Bool(odd.is_empty())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "minimal known says accepted",
+      "old": "(\"minimal_known\", Datum::Bool(odd.is_empty())),",
+      "new": "(\"minimal_known\", Datum::Bool(accepted)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "odd cycles key renamed",
+      "old": "(\"odd_cycles\", Datum::from(odd)),",
+      "new": "(\"odd\", Datum::from(odd)),",
+      "outcome": "killed"
+    }
+  ]
+}
