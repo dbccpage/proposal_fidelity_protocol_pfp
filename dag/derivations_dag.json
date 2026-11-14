@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-11-14T14:14:30.486023+00:00",
+  "generated_at_utc": "2026-11-14T14:49:50.849430+00:00",
   "repository": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp",
   "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
   "status": "in_progress",
@@ -10888,6 +10888,22 @@
       ],
       "limits": "Applies to finite directed cycles with strictly positive penalties; does not assert residual uniqueness when multiple edges achieve minimum penalty, nor does cycle rank bound optimal residual face dimension.",
       "atlas_ledger_id": "ATL-D-PAPER001-DIRECTED-CYCLE-MINIMUM-FORMULA"
+    },
+    {
+      "id": "PAPER001-SPARSE-OPTIMAL-RESIDUAL",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Some optimal residual uses at most |E| - rank B edges.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Finite directed graph with incidence matrix B, positive rational edge penalties, and exact rational arithmetic.",
+        "Linear programming extreme point / basic feasible solution representation of quotient residual defect."
+      ],
+      "evidence": [
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py"
+      ],
+      "limits": "Existence only; does not bound all minimizers or the optimal-face dimension; requires strictly positive penalties.",
+      "atlas_ledger_id": "ATL-D-PAPER001-SPARSE-OPTIMAL-RESIDUAL"
     },
     {
       "id": "PAPER002-FINITE-SIGNED-BALANCE",
@@ -35651,6 +35667,18 @@
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
+      "id": "ASSUMPTION-c531d1b96ef55c68",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Finite directed graph with incidence matrix B, positive rational edge penalties, and exact rational arithmetic.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-91b7fec62bca1405",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Linear programming extreme point / basic feasible solution representation of quotient residual defect.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
       "id": "ASSUMPTION-168b6c31415d60f5",
       "kind": "explicit_assumption_or_obligation",
       "statement": "Declared vertices, edges and binary labels; trusted finite checker.",
@@ -50685,11 +50713,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
+        "verdict": "matched",
+        "nodes": [
+          "PAPER001-SPARSE-OPTIMAL-RESIDUAL"
+        ],
         "relation": null,
-        "note": "No node proves the basic-feasible-solution sparsity bound.",
-        "proposed_derivation_file": "dag/derivations/atl_p001_005.md"
+        "note": "Some optimal residual uses at most |E| - rank B edges; certified by basic feasible solution LP structure in PAPER001-SPARSE-OPTIMAL-RESIDUAL."
       }
     },
     {
@@ -69483,6 +69512,16 @@
       "kind": "requires"
     },
     {
+      "from": "ASSUMPTION-c531d1b96ef55c68",
+      "to": "PAPER001-SPARSE-OPTIMAL-RESIDUAL",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-91b7fec62bca1405",
+      "to": "PAPER001-SPARSE-OPTIMAL-RESIDUAL",
+      "kind": "requires"
+    },
+    {
       "from": "ASSUMPTION-168b6c31415d60f5",
       "to": "PAPER002-FINITE-SIGNED-BALANCE",
       "kind": "requires"
@@ -78479,6 +78518,18 @@
       "to": "PAPER001-DIRECTED-CYCLE-MINIMUM-FORMULA",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/demo1_holonomy.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py",
+      "to": "PAPER001-SPARSE-OPTIMAL-RESIDUAL",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py",
+      "to": "PAPER001-SPARSE-OPTIMAL-RESIDUAL",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py"
     },
     {
       "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/sign_graph.py",
@@ -97644,6 +97695,12 @@
       "to": "ATL-P001-005",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/paper_claim_ledger.md:17"
+    },
+    {
+      "from": "PAPER001-SPARSE-OPTIMAL-RESIDUAL",
+      "to": "ATL-P001-005",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "PAPER:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions",
@@ -153440,8 +153497,8 @@
     "Audit native implementations and claimed Lean correspondence at pinned source."
   ],
   "graph_validation": {
-    "unique_nodes": 3599,
-    "edges": 3792,
+    "unique_nodes": 3602,
+    "edges": 3797,
     "acyclic": true
   }
 }
