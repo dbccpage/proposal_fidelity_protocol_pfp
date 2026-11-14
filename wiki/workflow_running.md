@@ -132,6 +132,27 @@ WF3's programmatic reused-miner continuation remains explicit, with a separately
 declared remaining repair allowance. Its historical repair campaign is not
 automatically restarted by these fresh-run commands.
 
+## 5. Keep failures and reuse what was learned
+
+A finished run can be added to a failure ledger, and a later task can load the
+rules that ledger has admitted. All four commands ask `pfp_operad`; none can
+spend.
+
+```powershell
+& $pfpPython -m pfp.workflows.failure_ledger record runs/failures.jsonl runs/wf1-live runs/wf4-live
+& $pfpPython -m pfp.workflows.failure_ledger load runs/failures.jsonl pfp/workflows/wf0001/examples/integer_sum.task.json --output runs/loaded.task.json
+& $pfpPython -m pfp.workflows.wf0001 prepare runs/loaded.task.json --output runs/wf1-loaded
+& $pfpPython -m pfp.workflows.failure_ledger check runs/failures.jsonl runs/loaded.task.json
+```
+
+`record` adds one line for each turn whose answer the checker rejects, and
+nothing for a correct one. `load` writes the task with the admitted rules
+after its seed; with no admitted rule the task is unchanged, so the prompts
+are the ones you had before. A rule is admitted only after it wins a trial on
+tasks it was not derived from; the steps are in
+[`pfp/workflows/README.md`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp/workflows/README.md#failure-ledger).
+WF5 does not accept a loaded task yet.
+
 ## What was tested for this migration?
 
 The full migrated regression suite and additional CLI controls ran offline.

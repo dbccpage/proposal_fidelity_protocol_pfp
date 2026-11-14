@@ -28,6 +28,40 @@ Reservations use estimated rates, 2× headroom and the 80% stop threshold.
 It is not a vendor-enforced cap. Unknown cost retains liability and blocks dispatch.
 Failed attempts and immutable source identity remain part of custody.
 
+## Failure ledger
+
+A run's failures can be kept, and the rules learned from them loaded into
+later runs. The default path is unchanged: a task that was never loaded gives
+the same prompts as before. Every check below is made by `pfp_operad`;
+`failure_ledger.py` only carries files to it.
+
+```
+python -m pfp.workflows.failure_ledger record LEDGER.jsonl RUN_FOLDER...
+python -m pfp.workflows.failure_ledger load LEDGER.jsonl TASK.json --output LOADED_TASK.json [--on-trial RULE]
+python -m pfp.workflows.failure_ledger check LEDGER.jsonl LOADED_TASK.json
+python -m pfp.workflows.failure_ledger trial LEDGER.jsonl RULE --pair BASELINE_TURN TREATED_TURN LOADED_TASK.rules.json
+```
+
+1. `record` hands every turn folder of a finished run (the run folder of WF1
+   and WF2, the `solver` and `agent-N` folders of WF3 to WF5) to the host. The
+   host judges the stored task result and appends a failure record when it is
+   wrong. A correct turn, or a turn with no judge such as mining, adds nothing.
+2. A rule is proposed by appending a `candidate` record that names the
+   failures it comes from (`pfp_operad ledger append`).
+3. `load` writes a task whose seed carries the admitted rules, plus
+   `--on-trial RULE` for the treated arm of a trial, and a receipt beside it
+   (`.rules.json`: the base seed, the ledger head and the rules).
+4. `trial` gives the host pairs of turns on held-out tasks: one run from the
+   task loaded without the rule, one with it. The host refuses a pair whose
+   seeds differ by anything but that rule, scores the rest and appends the
+   trial. An `admission` record is accepted only on a trial the rule won.
+5. `check` asks the host whether a task's seed is exactly what the ledger
+   loaded. It works on the `task.json` inside a run folder with `--receipt`.
+
+WF1 to WF4 run a loaded task as any other. WF5 does not: its rewrite accepts
+one seed language and refuses a seed with rules after it
+(`WF5_UNSUPPORTED_SEED_LANGUAGE`). WF5 failures are still recorded.
+
 Historical captures are not rewritten to match new package identities.
 The baseline is reused from the original experiment; migration tests use fixtures,
 not another paid baseline or fresh model performance measurements.
