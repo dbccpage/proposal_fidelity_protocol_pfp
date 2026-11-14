@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-11-14T14:49:50.849430+00:00",
+  "generated_at_utc": "2026-11-14T15:31:27.441236+00:00",
   "repository": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp",
   "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
   "status": "in_progress",
@@ -10904,6 +10904,22 @@
       ],
       "limits": "Existence only; does not bound all minimizers or the optimal-face dimension; requires strictly positive penalties.",
       "atlas_ledger_id": "ATL-D-PAPER001-SPARSE-OPTIMAL-RESIDUAL"
+    },
+    {
+      "id": "PAPER001-WEIGHTED-NULL-SPACE-UNIQUENESS",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "A weighted null-space property on the residual support suffices for uniqueness: if r is optimal with support S and sum_{e in S} w_e |h_e| < sum_{e not in S} w_e |h_e| for all nonzero h in im B, then r is the unique optimal residual.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Finite directed graph with incidence matrix B, positive rational edge penalties, and exact rational arithmetic.",
+        "Triangle inequality decomposition on residual coset c + im B."
+      ],
+      "evidence": [
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py"
+      ],
+      "limits": "Sufficient condition only; failure of condition is not a nonuniqueness certificate; requires strictly positive penalties.",
+      "atlas_ledger_id": "ATL-D-PAPER001-WEIGHTED-NULL-SPACE-UNIQUENESS"
     },
     {
       "id": "PAPER002-FINITE-SIGNED-BALANCE",
@@ -35679,6 +35695,12 @@
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
+      "id": "ASSUMPTION-4e16d21d3517f95a",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Triangle inequality decomposition on residual coset c + im B.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
       "id": "ASSUMPTION-168b6c31415d60f5",
       "kind": "explicit_assumption_or_obligation",
       "statement": "Declared vertices, edges and binary labels; trusted finite checker.",
@@ -50742,13 +50764,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PAPER004-WEIGHTED-CYCLE"
+          "PAPER001-WEIGHTED-NULL-SPACE-UNIQUENESS"
         ],
-        "relation": "narrows",
-        "note": "PAPER004 gives a uniqueness condition only for a single cycle (unique cheapest edge); the general weighted null-space sufficient condition is not derived.",
-        "proposed_derivation_file": "dag/derivations/atl_p001_006.md"
+        "relation": null,
+        "note": "A weighted null-space property on the residual support suffices for uniqueness; certified by reverse triangle inequality coset decomposition in PAPER001-WEIGHTED-NULL-SPACE-UNIQUENESS."
       }
     },
     {
@@ -69522,6 +69543,16 @@
       "kind": "requires"
     },
     {
+      "from": "ASSUMPTION-c531d1b96ef55c68",
+      "to": "PAPER001-WEIGHTED-NULL-SPACE-UNIQUENESS",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-4e16d21d3517f95a",
+      "to": "PAPER001-WEIGHTED-NULL-SPACE-UNIQUENESS",
+      "kind": "requires"
+    },
+    {
       "from": "ASSUMPTION-168b6c31415d60f5",
       "to": "PAPER002-FINITE-SIGNED-BALANCE",
       "kind": "requires"
@@ -78528,6 +78559,18 @@
     {
       "from": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py",
       "to": "PAPER001-SPARSE-OPTIMAL-RESIDUAL",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py",
+      "to": "PAPER001-WEIGHTED-NULL-SPACE-UNIQUENESS",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py",
+      "to": "PAPER001-WEIGHTED-NULL-SPACE-UNIQUENESS",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py"
     },
@@ -97709,9 +97752,9 @@
       "citation": "atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/paper_claim_ledger.md:18"
     },
     {
-      "from": "PAPER004-WEIGHTED-CYCLE",
+      "from": "PAPER001-WEIGHTED-NULL-SPACE-UNIQUENESS",
       "to": "ATL-P001-006",
-      "kind": "narrows",
+      "kind": "states_same_claim_as",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
@@ -153497,8 +153540,8 @@
     "Audit native implementations and claimed Lean correspondence at pinned source."
   ],
   "graph_validation": {
-    "unique_nodes": 3602,
-    "edges": 3797,
+    "unique_nodes": 3604,
+    "edges": 3801,
     "acyclic": true
   }
 }
