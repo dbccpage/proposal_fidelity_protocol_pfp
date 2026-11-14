@@ -1,0 +1,101 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/ledger.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/ledger.rs",
+      "language": "Rust",
+      "sha256": "e4ff5cddf8e7cc9b3e88026e8a628acbafb1a71fca90863ef6c20c2a133bca83"
+    },
+    "contract_urn": "urn:pfp-operads:tests-ledger:v1",
+    "symbols": [
+      "failure",
+      "candidate",
+      "trial",
+      "admission",
+      "retirement",
+      "seeded",
+      "refused",
+      "statuses_are_the_canon_names",
+      "a_rule_is_loaded_only_after_it_wins_a_held_out_trial",
+      "no_gain_or_a_hit_on_clean_work_rejects_and_a_retest_can_recover",
+      "a_later_failed_trial_blocks_an_earlier_pass_and_leaves_an_admitted_rule_in_place",
+      "retirement_unloads_a_rule_for_good",
+      "a_failure_must_be_typed_by_the_canon",
+      "a_candidate_must_come_from_recorded_failures",
+      "a_trial_must_be_held_out_and_countable",
+      "the_chain_replays_and_any_edit_breaks_it",
+      "the_same_records_always_hash_the_same",
+      "the_hash_covers_the_domain_line_seq_prev_and_record"
+    ],
+    "owned_invariants": [
+      "Every refusal is asserted by its code and the ledger is asserted unchanged after it.",
+      "The entry hash is recomputed by hand with sha2, independently of the library."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/ledger.rs",
+      "language": "Rust",
+      "sha256": "e4ff5cddf8e7cc9b3e88026e8a628acbafb1a71fca90863ef6c20c2a133bca83"
+    },
+    "profile": "Non-Numeric",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Each test name states the rule it checks.",
+      "G2": "Statuses are compared with the canon's names; the hash test rebuilds the digest independently.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 11 pass in the recorded run; the crate suite they belong to killed 25 of 25 eligible ledger mutants.",
+      "G5": "lizard: worst cyclomatic 12, nesting 1; ceiling B. Cognitive complexity is not measured for Rust; complexipy was stubbed for the metrics run because it only reads .py files."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T08:36:12Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-test.run.json",
+        "sha256": "a98628c622710b3433ac689084a9393ca7f394d014d35a58ad140c96a0ac3523",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-operads-clippy.run.json",
+        "sha256": "b73240025baeebf5e429e6c5cbefadab2e5d0efe4179bb490bcf8f2b7d821666",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-operads-fmt.run.json",
+        "sha256": "51fd4d11c9b69b408b5a92411dfd070c9a2830397b43c963872a75b4c20d6739",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-operads-metrics.run.json",
+        "sha256": "59cf7a252170a119e7410df970e38fa653699d5a3ca9af18cc5d4e73bb688c8e",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-operads-metrics.json",
+        "sha256": "b28e4ee0fe0b90ebe32e55eeac9cabb6abf278d16e8744c2a8c3e16a7190419d",
+        "note": ""
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

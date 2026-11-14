@@ -1,0 +1,103 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/lib.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/lib.rs",
+      "language": "Rust",
+      "sha256": "275dc50601f2dfc63b23fa18865407b8e3ad718215dd4da7ffeb2987b6c5ffb3"
+    },
+    "contract_urn": "urn:pfp-operads:lib:v1",
+    "symbols": [
+      "host",
+      "laws",
+      "ledger",
+      "term",
+      "Refusal",
+      "Refusal::new",
+      "canon_values"
+    ],
+    "owned_invariants": [
+      "Every refusal carries a stable code and a sentence; Display prints code, colon, message.",
+      "Vocabularies are read from core_operad_canon; a type the canon lacks is refused as CANON_TYPE_MISSING, never defaulted."
+    ],
+    "boundaries": [
+      "AuthorityEffect None: the crate checks and records and admits nothing outside its own ledger."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/lib.rs",
+      "language": "Rust",
+      "sha256": "275dc50601f2dfc63b23fa18865407b8e3ad718215dd4da7ffeb2987b6c5ffb3"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed vocabularies from the canon, checked arithmetic, no unwrap or direct indexing.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "No arithmetic. Canon lookups return the canon's own slices unchanged.",
+      "G3": "The one failure (a missing canon type) is a typed refusal; no panic path.",
+      "G4": "3 unit tests in the file plus the 39 integration tests that depend on it. clippy -D warnings and rustfmt pass. Lexical mutation campaign R = 6/6. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "lizard: worst cyclomatic 2, nesting 1; ceiling A+. Cognitive complexity is not measured for Rust; complexipy was stubbed for the metrics run because it only reads .py files."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T08:36:12Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-test.run.json",
+        "sha256": "a98628c622710b3433ac689084a9393ca7f394d014d35a58ad140c96a0ac3523",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-operads-clippy.run.json",
+        "sha256": "b73240025baeebf5e429e6c5cbefadab2e5d0efe4179bb490bcf8f2b7d821666",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-operads-fmt.run.json",
+        "sha256": "51fd4d11c9b69b408b5a92411dfd070c9a2830397b43c963872a75b4c20d6739",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-operads-metrics.run.json",
+        "sha256": "59cf7a252170a119e7410df970e38fa653699d5a3ca9af18cc5d4e73bb688c8e",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-operads-metrics.json",
+        "sha256": "b28e4ee0fe0b90ebe32e55eeac9cabb6abf278d16e8744c2a8c3e16a7190419d",
+        "note": ""
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 6,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-lib.mutation.json",
+        "sha256": "631bd1d081002ea9264cb2eb75fce90c394f9007f3c50a8590f5b4138e87bb73",
+        "note": "lexical campaign, 6 one-line mutants, crate tests as oracle"
+      }
+    }
+  },
+  "history": []
+}

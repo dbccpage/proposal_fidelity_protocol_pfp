@@ -1,0 +1,77 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/bin/pfp_operad.rs",
+  "target_sha256": "6ed0db09f7a6027bfdabbd31c949c84fbce263bc71af51ca23ba18ec72ac2799",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
+  "counts": {
+    "killed": 10,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "exit code inverted",
+      "old": "u8::from(!matches!(outcome, Outcome::Pass { .. }))",
+      "new": "u8::from(matches!(outcome, Outcome::Pass { .. }))",
+      "outcome": "killed"
+    },
+    {
+      "name": "always exit zero",
+      "old": "u8::from(!matches!(outcome, Outcome::Pass { .. }))",
+      "new": "u8::from(false)",
+      "outcome": "killed"
+    },
+    {
+      "name": "usage errors exit one",
+      "old": "            ExitCode::from(2)",
+      "new": "            ExitCode::from(1)",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing ledger is an error",
+      "old": "        Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(String::new()),",
+      "new": "        Err(error) if false => Ok(error.to_string()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "refused records are written",
+      "old": "    let Outcome::Pass { result } = outcome else {\n        return Ok(());\n    };",
+      "new": "    let (Outcome::Pass { result } | Outcome::Fail { result }) = outcome else {\n        let result = \"x\";\n        return std::fs::write(path, result).map_err(|e| e.to_string());\n    };",
+      "outcome": "killed"
+    },
+    {
+      "name": "ledger file truncated on append",
+      "old": "        .append(true)",
+      "new": "        .write(true)\n        .truncate(true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "append writes nothing",
+      "old": "    if let [\"ledger\", \"append\", file, _] = args {",
+      "new": "    if let [\"ledger\", \"append\", file, _, _] = args {",
+      "outcome": "killed"
+    },
+    {
+      "name": "verify reads a missing ledger as empty",
+      "old": "        [\"ledger\", \"verify\", file] => Ok(Command::LedgerVerify(read(file)?)),",
+      "new": "        [\"ledger\", \"verify\", file] => Ok(Command::LedgerVerify(read_ledger(file)?)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "laws routed to check",
+      "old": "        [\"laws\", file] => Ok(Command::Laws(read(file)?)),",
+      "new": "        [\"laws\", file] => Ok(Command::Check(read(file)?)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "program name read as an argument",
+      "old": "std::env::args().skip(1).collect()",
+      "new": "std::env::args().collect()",
+      "outcome": "killed"
+    }
+  ]
+}

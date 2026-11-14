@@ -1,0 +1,39 @@
+name: pfp-operads
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "code/rust/pfp_operads/**"
+      - "code/rust/core_operad_canon/**"
+      - "code/rust/Cargo.toml"
+      - "code/rust/Cargo.lock"
+      - ".github/workflows/pfp_operads.yml"
+  pull_request:
+    paths:
+      - "code/rust/pfp_operads/**"
+      - "code/rust/core_operad_canon/**"
+      - "code/rust/Cargo.toml"
+      - "code/rust/Cargo.lock"
+      - ".github/workflows/pfp_operads.yml"
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: code/rust
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+      - run: cargo fmt -p pfp_operads -p core_operad_canon --check
+      - run: cargo clippy --locked -p pfp_operads -p core_operad_canon --all-targets --no-deps -- -D warnings
+      - run: cargo test --locked -p pfp_operads -p core_operad_canon
+      - run: cargo run --locked -p pfp_operads -- check pfp_operads/examples/check.json
+      - run: cargo run --locked -p pfp_operads -- laws pfp_operads/examples/laws.json
