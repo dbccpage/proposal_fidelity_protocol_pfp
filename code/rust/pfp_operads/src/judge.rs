@@ -55,16 +55,40 @@ pub(crate) fn integer(literal: &RawValue) -> Option<BigInt> {
     text.parse().ok()
 }
 
-fn sum_case(case: &RawValue) -> Result<BigInt, Refusal> {
+/// What a checker reads from a case and what it computes from it.
+pub(crate) struct Reference {
+    /// The integers the case holds, in order.
+    pub(crate) values: Vec<BigInt>,
+    /// The checker's own exact result on them.
+    pub(crate) result: BigInt,
+}
+
+fn case_values(case: &RawValue) -> Result<Vec<BigInt>, Refusal> {
     let case: SumCase = serde_json::from_str(case.get())
         .map_err(|error| Refusal::new("BAD_CASE", error.to_string()))?;
-    let mut total = BigInt::from(0);
+    let mut values = Vec::new();
     for literal in case.values {
-        total += integer(literal).ok_or_else(|| {
+        values.push(integer(literal).ok_or_else(|| {
             Refusal::new("BAD_CASE", format!("{} is not an integer", literal.get()))
-        })?;
+        })?);
     }
-    Ok(total)
+    Ok(values)
+}
+
+/// The checker's own reading of a case: its integers and the exact result on them.
+pub(crate) fn reference(checker: &str, case: &RawValue) -> Result<Reference, Refusal> {
+    if checker != INTEGER_SUM {
+        return Err(Refusal::new(
+            "UNKNOWN_CHECKER",
+            format!("no judge is registered for {checker}"),
+        ));
+    }
+    let values = case_values(case)?;
+    let mut result = BigInt::from(0);
+    for value in &values {
+        result += value;
+    }
+    Ok(Reference { values, result })
 }
 
 /// The total a reply states, if its answer is exactly `{"total": integer}`.
@@ -78,13 +102,7 @@ fn stated_total(answer: &RawValue) -> Option<BigInt> {
 
 /// Whether the checker's judge accepts an answer to a case.
 pub(crate) fn accepts(checker: &str, case: &RawValue, answer: &RawValue) -> Result<bool, Refusal> {
-    if checker != INTEGER_SUM {
-        return Err(Refusal::new(
-            "UNKNOWN_CHECKER",
-            format!("no judge is registered for {checker}"),
-        ));
-    }
-    Ok(stated_total(answer) == Some(sum_case(case)?))
+    Ok(stated_total(answer) == Some(reference(checker, case)?.result))
 }
 
 /// Judge one reply's task result against the host's own computation.

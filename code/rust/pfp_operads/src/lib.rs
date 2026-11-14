@@ -19,6 +19,8 @@
 //! * [`grounding`]: the grounded slots of a solver reply, rechecked against the task's public input.
 //! * [`learning`]: the ledger records the host writes itself, a failure it witnessed and a trial it
 //!   scored, from answers it judges with [`judge`].
+//! * [`running`]: a reply's operad candidates that name a body, run on the task's public input and
+//!   compared with the judge's own result.
 //! * [`host`]: the JSON entry points a workflow calls, also exposed by the `pfp_operad` binary.
 //!
 //! Every vocabulary (colours, DDC letters, failure classes, capability kinds, statuses) is read
@@ -33,6 +35,7 @@ pub mod laws;
 pub mod learning;
 pub mod ledger;
 pub mod mining;
+pub mod running;
 pub mod term;
 
 use serde::Serialize;

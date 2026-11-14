@@ -10,7 +10,7 @@ use serde::{Deserialize, Serialize};
 use crate::{canon_values, Refusal};
 
 /// The canon types whose values may colour an operation's ports.
-pub const COLOUR_TYPES: [&str; 2] = ["operad_colour", "prompt_colour"];
+pub const COLOUR_TYPES: [&str; 3] = ["operad_colour", "prompt_colour", "task_value_colour"];
 
 /// One colour: a value of one of the canon's colour types.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize)]

@@ -17,6 +17,7 @@ use crate::laws::{run_battery, Panel};
 use crate::learning::{trial, witness};
 use crate::ledger::{Ledger, Record};
 use crate::mining::{mining, reuse};
+use crate::running::run;
 use crate::term::{Body, Colour, Operation, Term, Value, Variant};
 use crate::Refusal;
 
@@ -36,7 +37,7 @@ pub struct OperationWire {
 }
 
 impl OperationWire {
-    fn build(&self, colour_type: &str) -> Result<Operation, Refusal> {
+    pub(crate) fn build(&self, colour_type: &str) -> Result<Operation, Refusal> {
         let sources: Result<Vec<Colour>, Refusal> = self
             .sources
             .iter()
@@ -142,6 +143,7 @@ pub enum Command {
     Reuse(String),
     Witness(String),
     Trial(String),
+    Run(String),
     Version,
 }
 
@@ -379,6 +381,7 @@ fn answer(command: &Command) -> Result<(bool, Json), Refusal> {
         Command::Reuse(text) => reuse(text).and_then(|report| verdict(true, &report)),
         Command::Witness(text) => witness(text).and_then(|found| verdict(true, &found)),
         Command::Trial(text) => trial(text).and_then(|scored| verdict(true, &scored)),
+        Command::Run(text) => run(text).and_then(|report| verdict(report.accepted, &report)),
         Command::LedgerVerify(text) => Ledger::from_lines(text).map(|ledger| {
             (
                 true,
