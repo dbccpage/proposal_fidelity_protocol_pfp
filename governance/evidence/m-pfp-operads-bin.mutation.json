@@ -2,10 +2,10 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/pfp_operads/src/bin/pfp_operad.rs",
-  "target_sha256": "bb93207ed501f2ff564dbd3a08feb0523c4e0b57feec3d9c6acaa594987ed527",
+  "target_sha256": "7ee8a760d92c051c197c95f45ec7b12b93f037b154695553d4df5ff0fe847d7c",
   "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
   "counts": {
-    "killed": 20,
+    "killed": 27,
     "survived": 0,
     "demonstrably_equivalent": 0,
     "invalid": 0,
@@ -131,6 +131,48 @@
       "name": "run routed to check",
       "old": "Ok(Command::Run(read(file)?))",
       "new": "Ok(Command::Check(read(file)?))",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness-turn renamed",
+      "old": "[\"witness-turn\", file] =>",
+      "new": "[\"witness_turn\", file] =>",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing ledger cannot be loaded from",
+      "old": "[\"ledger\", \"load\", file, request] => Ok(Command::LedgerLoad {\n            ledger: read_ledger(file)?,",
+      "new": "[\"ledger\", \"load\", file, request] => Ok(Command::LedgerLoad {\n            ledger: read(file)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "loaded runs load",
+      "old": "[\"ledger\", \"loaded\", file, request] => Ok(Command::LedgerLoaded {",
+      "new": "[\"ledger\", \"loaded\", file, request] => Ok(Command::LedgerLoad {",
+      "outcome": "killed"
+    },
+    {
+      "name": "trial runs loaded",
+      "old": "[\"ledger\", \"trial\", file, request] => Ok(Command::LedgerTrial {",
+      "new": "[\"ledger\", \"trial\", file, request] => Ok(Command::LedgerLoaded {",
+      "outcome": "killed"
+    },
+    {
+      "name": "load runs trial",
+      "old": "[\"ledger\", \"load\", file, request] => Ok(Command::LedgerLoad {",
+      "new": "[\"ledger\", \"load\", file, request] => Ok(Command::LedgerTrial {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a scored trial is written by the command",
+      "old": "if let [\"ledger\", \"append\", file, _] = args {",
+      "new": "if let [\"ledger\", \"append\" | \"trial\", file, _] = args {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a loaded seed is written to the ledger",
+      "old": "if let [\"ledger\", \"append\", file, _] = args {",
+      "new": "if let [\"ledger\", \"append\" | \"load\", file, _] = args {",
       "outcome": "killed"
     }
   ]

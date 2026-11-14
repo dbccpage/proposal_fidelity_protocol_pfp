@@ -2,10 +2,10 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/pfp_operads/src/host.rs",
-  "target_sha256": "dc9a9965f3b7b08b53c2a3beef90e1df938912058dfae9d5064be05af18052e4",
+  "target_sha256": "fdc0459bfee857bb01f1f8bf4644edcde6372aad1d6bed9e6a90b6e2e4e9e2fa",
   "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
   "counts": {
-    "killed": 33,
+    "killed": 41,
     "survived": 0,
     "demonstrably_equivalent": 0,
     "invalid": 0,
@@ -209,6 +209,54 @@
       "name": "run verdict inverted",
       "old": "run(text).and_then(|report| verdict(report.accepted, &report))",
       "new": "run(text).and_then(|report| verdict(!report.accepted, &report))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a witnessed turn reported as failed",
+      "old": "witness_turn(text).and_then(|found| verdict(true, &found))",
+      "new": "witness_turn(text).and_then(|found| verdict(false, &found))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a loaded seed reported as failed",
+      "old": "load(ledger, request).and_then(|seed| verdict(true, &seed))",
+      "new": "load(ledger, request).and_then(|seed| verdict(false, &seed))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a seed that does not match passes",
+      "old": "verdict(check.accepted, &check)",
+      "new": "verdict(true, &check)",
+      "outcome": "killed"
+    },
+    {
+      "name": "seed check inverted",
+      "old": "verdict(check.accepted, &check)",
+      "new": "verdict(!check.accepted, &check)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a scored turn trial reported as failed",
+      "old": "trial_turns(ledger, request).and_then(|scored| verdict(true, &scored))",
+      "new": "trial_turns(ledger, request).and_then(|scored| verdict(false, &scored))",
+      "outcome": "killed"
+    },
+    {
+      "name": "ledger and request swapped in load",
+      "old": "load(ledger, request).and_then",
+      "new": "load(request, ledger).and_then",
+      "outcome": "killed"
+    },
+    {
+      "name": "ledger and request swapped in check",
+      "old": "loaded(ledger, request).and_then",
+      "new": "loaded(request, ledger).and_then",
+      "outcome": "killed"
+    },
+    {
+      "name": "ledger and request swapped in trial",
+      "old": "trial_turns(ledger, request).and_then",
+      "new": "trial_turns(request, ledger).and_then",
       "outcome": "killed"
     }
   ]
