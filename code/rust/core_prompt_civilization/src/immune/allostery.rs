@@ -15,6 +15,9 @@ use num_rational::BigRational;
 use num_traits::Zero;
 use serde::{Deserialize, Serialize};
 
+// Re-export core EIS allostery gate primitives
+pub use core_epistemic_immune_system::allostery::{AllostericConsensusGate, HillParameters};
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum QuorumState {
     Quiescent,
@@ -59,9 +62,17 @@ impl AllostericGate {
     }
 
     /// Exact rational response: H(theta) = theta^n / (Kd^n + theta^n).
+    /// Utilizes `core_epistemic_immune_system::allostery::HillParameters`.
     pub fn compute_response(&self, theta: u32) -> BigRational {
         if theta == 0 {
             return BigRational::zero();
+        }
+        let kd_rat = BigRational::from_integer(BigInt::from(self.kd));
+        let theta_rat = BigRational::from_integer(BigInt::from(theta));
+        if let Ok(params) = HillParameters::new(self.hill_coefficient, kd_rat) {
+            if let Ok(resp) = params.response(&theta_rat) {
+                return resp;
+            }
         }
         let theta_n = BigInt::from(theta).pow(self.hill_coefficient);
         let kd_n = BigInt::from(self.kd).pow(self.hill_coefficient);

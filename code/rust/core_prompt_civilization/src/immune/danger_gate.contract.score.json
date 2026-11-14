@@ -1,0 +1,105 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/core_prompt_civilization/src/immune/danger_gate.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/core_prompt_civilization/src/immune/danger_gate.rs",
+      "language": "Rust",
+      "sha256": "1509af38a4a9caca25f09f1b08fca6d38d4eff4f937177ca597f79bb8ea20412"
+    },
+    "contract_urn": "urn:code-rust:core-prompt-civilization:immune-danger-gate:v1",
+    "symbols": [
+      "DangerDisposition",
+      "DangerGateReceipt",
+      "DangerGate",
+      "TwoSignalDangerGate",
+      "IndependentDangerSignal",
+      "DangerGateVerdict",
+      "DangerDecision",
+      "DangerSeverity",
+      "DangerEvaluationResult",
+      "BoundaryRecord8de3536a",
+      "BoundaryError8de3536a"
+    ],
+    "owned_invariants": [
+      "Two-signal activation: quarantine occurs iff both Signal 1 and Signal 2 are present.",
+      "Signal 1 alone yields FindingOnly; Signal 2 alone yields AlertOnly; neither yields Clear.",
+      "Wraps core_epistemic_immune_system::danger_gate::TwoSignalDangerGate for typed anti-skill specs.",
+      "AuthorityEffect: None."
+    ],
+    "boundaries": [
+      "Bounded admission within capacity_bound.",
+      "Does not claim authority promotion outside declared finite bounds."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/core_prompt_civilization/src/immune/danger_gate.rs",
+      "language": "Rust",
+      "sha256": "1509af38a4a9caca25f09f1b08fca6d38d4eff4f937177ca597f79bb8ea20412"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Module-level verification for code/rust/core_prompt_civilization/src/immune/danger_gate.rs.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header states AuthorityEffect None and declares two-signal danger gating types; public symbols match contract.",
+      "G2": "Boolean conjunction and typed disposition matching without float arithmetic.",
+      "G3": "Typed DangerDisposition enum outcomes and DangerGateReceipt.",
+      "G4": "All unit and integration tests pass; clippy -D warnings and rustfmt check pass cleanly.",
+      "G5": "Structured Rust module within complexity limits."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T12:20:00Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/eis-pciv-m4-fmt.run.json",
+        "sha256": "430797cf43ad75a5f96969e5ec859e09902b689dad99022de742708a0ba62ca2",
+        "note": "cargo fmt --check on core_epistemic_immune_system and core_prompt_civilization"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m4-clippy.run.json",
+        "sha256": "3e06011e0ba37ffc31b45734c5a6aadddb27ba75bdeafc415f3d0b7dd5039a74",
+        "note": "clippy with -D warnings on both crates, all targets"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m4-pciv-test.run.json",
+        "sha256": "4d29a149eb26c3b5988e5107c6989c58e8e293a5e0e327e1523405087031b4bc",
+        "note": "cargo test for core_prompt_civilization --lib"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m4-pciv-oeeis.run.json",
+        "sha256": "6272866546268dec0c3911bcd2a82c8e80a579ddefd9e39e992585e34520116b",
+        "note": "cargo test for core_prompt_civilization --test oeeis_kernel"
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 6,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-core-pciv-immune-danger-gate.mutation.json",
+        "sha256": "82232179aa402842fa407ab071d30d35e7986924beba230982226abbaa8e5a1c",
+        "note": "lexical mutation report for PCIV danger gate"
+      }
+    }
+  },
+  "history": []
+}

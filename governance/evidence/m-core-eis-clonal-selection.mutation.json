@@ -1,0 +1,53 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/core_epistemic_immune_system/src/clonal_selection.rs",
+  "target_sha256": "a50824b99c672844ef4ec5f7bd054040507af6ddcb6488a886a717e25e5ec630",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p core_epistemic_immune_system",
+  "counts": {
+    "killed": 6,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "admitted_items zero check inverted",
+      "old": "if admitted_items == 0",
+      "new": "if admitted_items != 0",
+      "outcome": "killed"
+    },
+    {
+      "name": "capacity_bound zero check inverted",
+      "old": "if capacity_bound == 0",
+      "new": "if capacity_bound != 0",
+      "outcome": "killed"
+    },
+    {
+      "name": "capacity overflow check inverted",
+      "old": "if admitted_items > capacity_bound",
+      "new": "if admitted_items < capacity_bound",
+      "outcome": "killed"
+    },
+    {
+      "name": "exact rational denominator positive check inverted",
+      "old": "if den <= BigInt::zero()",
+      "new": "if den > BigInt::zero()",
+      "outcome": "killed"
+    },
+    {
+      "name": "exact rational numerator non-negative check inverted",
+      "old": "if num < BigInt::zero()",
+      "new": "if num >= BigInt::zero()",
+      "outcome": "killed"
+    },
+    {
+      "name": "float detection in exact rational string ignored",
+      "old": "if text.contains(['.', 'e', 'E'])",
+      "new": "if false",
+      "outcome": "killed"
+    }
+  ]
+}

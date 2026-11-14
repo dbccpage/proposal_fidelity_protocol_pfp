@@ -11,6 +11,14 @@
 
 use serde::{Deserialize, Serialize};
 
+// Re-export core EIS danger gate and signal gate primitives
+pub use core_epistemic_immune_system::danger_gate::{
+    DangerGateVerdict, IndependentDangerSignal, TwoSignalDangerGate,
+};
+pub use core_epistemic_immune_system::signal_gate::{
+    DangerDecision, DangerEvaluationResult, DangerSeverity,
+};
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum DangerDisposition {
     Clear,
@@ -60,6 +68,15 @@ impl DangerGate {
             quarantined,
             authority_effect: "None".to_string(),
         }
+    }
+
+    /// Evaluates typed anti-skill spec using `core_epistemic_immune_system::danger_gate::TwoSignalDangerGate`.
+    pub fn evaluate_spec(
+        spec: &core_epistemic_immune_system::anti_skill::AntiSkillSpecV2,
+        subject: &str,
+        danger_signal: Option<IndependentDangerSignal>,
+    ) -> DangerGateVerdict {
+        TwoSignalDangerGate::evaluate(spec, subject, danger_signal)
     }
 }
 

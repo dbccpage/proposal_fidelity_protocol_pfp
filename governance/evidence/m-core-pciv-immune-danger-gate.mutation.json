@@ -1,0 +1,53 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/core_prompt_civilization/src/immune/danger_gate.rs",
+  "target_sha256": "1509af38a4a9caca25f09f1b08fca6d38d4eff4f937177ca597f79bb8ea20412",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p core_prompt_civilization",
+  "counts": {
+    "killed": 6,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "admitted_items zero check inverted",
+      "old": "if admitted_items == 0",
+      "new": "if admitted_items != 0",
+      "outcome": "killed"
+    },
+    {
+      "name": "capacity_bound zero check inverted",
+      "old": "if capacity_bound == 0",
+      "new": "if capacity_bound != 0",
+      "outcome": "killed"
+    },
+    {
+      "name": "capacity overflow check inverted",
+      "old": "if admitted_items > capacity_bound",
+      "new": "if admitted_items < capacity_bound",
+      "outcome": "killed"
+    },
+    {
+      "name": "quarantine requires both signals inverted",
+      "old": "(true, true) => (DangerDisposition::Quarantine, true)",
+      "new": "(true, true) => (DangerDisposition::Clear, false)",
+      "outcome": "killed"
+    },
+    {
+      "name": "signal 1 alone quarantined mutant",
+      "old": "(true, false) => (DangerDisposition::FindingOnly, false)",
+      "new": "(true, false) => (DangerDisposition::Quarantine, true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "signal 2 alone quarantined mutant",
+      "old": "(false, true) => (DangerDisposition::AlertOnly, false)",
+      "new": "(false, true) => (DangerDisposition::Quarantine, true)",
+      "outcome": "killed"
+    }
+  ]
+}

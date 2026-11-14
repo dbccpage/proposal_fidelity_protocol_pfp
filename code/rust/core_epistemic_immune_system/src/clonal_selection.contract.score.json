@@ -1,0 +1,102 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/core_epistemic_immune_system/src/clonal_selection.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/core_epistemic_immune_system/src/clonal_selection.rs",
+      "language": "Rust",
+      "sha256": "a50824b99c672844ef4ec5f7bd054040507af6ddcb6488a886a717e25e5ec630"
+    },
+    "contract_urn": "urn:code-rust:core-epistemic-immune-system:clonal-selection:v1",
+    "symbols": [
+      "DetectorRule",
+      "AnergyMonitor",
+      "autonomous_decay",
+      "execute",
+      "canonical_rational",
+      "parse_exact_rational",
+      "BoundaryRecord6ecc3c19",
+      "BoundaryError6ecc3c19"
+    ],
+    "owned_invariants": [
+      "Exact rational affinity score: DetectorRule.affinity_score parses exact rationals and integers without floating point arithmetic.",
+      "Exact rational stimulation: DetectorRule.stimulate adds exact BigRational boosts and refuses float boosts.",
+      "Autonomous decay requires external epoch decision.",
+      "AuthorityEffect: None."
+    ],
+    "boundaries": [
+      "Bounded admission within capacity_bound.",
+      "Does not claim authority promotion outside declared finite bounds."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/core_epistemic_immune_system/src/clonal_selection.rs",
+      "language": "Rust",
+      "sha256": "a50824b99c672844ef4ec5f7bd054040507af6ddcb6488a886a717e25e5ec630"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Module-level verification for code/rust/core_epistemic_immune_system/src/clonal_selection.rs.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header states AuthorityEffect None and declares exact rational wire types; public symbols match contract.",
+      "G2": "Exact rational parsing and BigRational addition; zero float arithmetic in check and mutate paths.",
+      "G3": "Typed Refusal errors returned on float boosts, zero denominators, negative affinities, and malformed JSON.",
+      "G4": "All unit and integration tests pass; clippy -D warnings and rustfmt check pass cleanly.",
+      "G5": "Structured Rust module within complexity limits."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T12:20:00Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/eis-pciv-m4-fmt.run.json",
+        "sha256": "430797cf43ad75a5f96969e5ec859e09902b689dad99022de742708a0ba62ca2",
+        "note": "cargo fmt --check on core_epistemic_immune_system and core_prompt_civilization"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m4-clippy.run.json",
+        "sha256": "3e06011e0ba37ffc31b45734c5a6aadddb27ba75bdeafc415f3d0b7dd5039a74",
+        "note": "clippy with -D warnings on both crates, all targets"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m4-eis-test.run.json",
+        "sha256": "935b915107b09a3de6c9744d93b1f7ebc6dc4a234d484dfa0f2d361277a0a5c7",
+        "note": "cargo test for core_epistemic_immune_system"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m4-pciv-test.run.json",
+        "sha256": "4d29a149eb26c3b5988e5107c6989c58e8e293a5e0e327e1523405087031b4bc",
+        "note": "cargo test for core_prompt_civilization --lib"
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 6,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-core-eis-clonal-selection.mutation.json",
+        "sha256": "9ea96fd73dadb4c78e11f27e4af3ead70ccf11c29f69a1ff3307c8a1c57b5ddc",
+        "note": "lexical mutation report for clonal selection"
+      }
+    }
+  },
+  "history": []
+}

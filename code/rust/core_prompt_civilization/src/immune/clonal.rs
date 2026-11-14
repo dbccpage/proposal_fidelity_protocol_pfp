@@ -12,6 +12,11 @@ use num_rational::BigRational;
 use num_traits::One;
 use serde::{Deserialize, Serialize};
 
+// Re-export core EIS clonal selection and anergy primitives
+pub use core_epistemic_immune_system::clonal_selection::{
+    execute as execute_clonal, AnergyMonitor, DetectorRule,
+};
+
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct DetectorClone {
     pub clone_id: String,
@@ -54,6 +59,22 @@ impl DetectorClone {
             BigInt::from(1) << (halving_steps.min(60) as usize),
         );
         base * decay_factor
+    }
+
+    /// Converts this clone to a `core_epistemic_immune_system::clonal_selection::DetectorRule`.
+    pub fn to_detector_rule(&self) -> Result<DetectorRule, core_epistemic_immune_system::Refusal> {
+        let aff_rat = BigRational::new(
+            BigInt::from(self.base_affinity_num),
+            BigInt::from(self.base_affinity_den),
+        );
+        let wire = serde_json::json!({
+            "rule_id": self.clone_id,
+            "target_epitope": "epitope",
+            "match_pattern": "pattern",
+            "affinity_score": format!("{}/{}", aff_rat.numer(), aff_rat.denom()),
+            "generation": self.created_generation.max(1),
+        });
+        DetectorRule::from_json(&wire)
     }
 }
 
