@@ -16,6 +16,7 @@ Paid model runs require a fail-closed aggregate budget for each run (all stages 
 
 Current artifacts:
 
+- [`operad_coverage.md`](operad_coverage.md) maps each operad concept to the workflows, DAG nodes, derivations, archive claims, Lean and Rust that cover it, with a ranked gap list (2026-11-14). `operad_coverage.py` regenerates the matrix.
 - `FOUNDATIONS.md` gives the mathematical synthesis, with assumptions and implementation limits.
 - `reviews/papers_audit.json` assesses all 38 primary manuscripts. Supporting code, references and historical artifacts remain a separate review obligation. The review does not infer authorship from prose style.
 - `file_inventory.json` and `structural_review.json` cover 32,261 eligible tracked files. `reviews/coverage.json` records full and partial substantive reading separately; the every-file substantive audit is unfinished.
