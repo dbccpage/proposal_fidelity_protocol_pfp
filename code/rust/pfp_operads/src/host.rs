@@ -403,7 +403,7 @@ fn answer(command: &Command) -> Result<(bool, Json), Refusal> {
             load(ledger, request).and_then(|seed| verdict(true, &seed))
         }
         Command::LedgerLoaded { ledger, request } => {
-            loaded(ledger, request).and_then(|found| verdict(found.accepted, &found))
+            loaded(ledger, request).and_then(|check| verdict(check.accepted, &check))
         }
         Command::LedgerTrial { ledger, request } => {
             trial_turns(ledger, request).and_then(|scored| verdict(true, &scored))
