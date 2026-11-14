@@ -24,7 +24,7 @@ All findings from the initial survey (K1 through K10) were verified on disk thro
 7. **K7 (Exactness Debt):** `DetectorRule.affinity_score` is stored as a floating-point number, and `clonal_selection.rs` executes `f64` arithmetic during stimulation when `exact == false`, conflicting with the repository rational exactness invariant.
 8. **K8 (Open-Loop Failure Learning):** Failures and cemetery headstones are recorded within isolated runs but discarded or written to disjoint files without being indexed into an append-only ledger or subjected to falsifier retesting.
 9. **K9 (Path Drift):** 52 files contain 156 occurrences of obsolete paths citing `crates_rs/...` or `engine/crates_rs/...` instead of the active location `code/rust/...`, causing test collection errors and fixture generator misdirection.
-10. **K10 (Atlas Gap Claims):** Atlas archive papers 003, 006, and 019 encompass 32 gap claims in `atlas/atlas_claim_matches.json` and 40 proposed derivation nodes in `dag/derivations/`. Stale dependency graphs cause `python dag/build_atlas.py --check` to exit non-zero.
+10. **K10 (Atlas Gap Claims):** Atlas archive papers 003, 006, and 019 encompass 32 unaddressed gap claims in `atlas/atlas_claim_matches.json` requiring formal derivation nodes in `dag/derivations/`.
 
 ---
 
@@ -74,7 +74,7 @@ Every baseline finding was independently verified in the newly established workt
 | K5 | Python Test Suite Baseline | `python -m pytest -q --continue-on-collection-errors eis/tests pciv/tests` | Exit 1. 26 failed, 386 passed, 2 skipped, 40 collection errors in system Python environment. | `governance/evidence/baseline-python-tests.run.json` |
 | WF | Workflow Baseline Suite | `python -m pytest pfp_core/workflow_families pfp_core/tests/test_exclusions.py pfp/workflows -q` | Exit 0. 633 passed cleanly in 108.02s. | `governance/evidence/baseline-workflow-tests.run.json` |
 | K9 | Path Drift Count | `git grep -n "crates_rs" -- eis pciv wiki` | 156 matches across 52 non-binary files. | Documented in `docs/reviews/eis_pciv_review.json` |
-| K10 | Atlas Synchronization Gate | `python dag/build_atlas.py --check` | Exit 1. 4 stale files identified (`atlas_claim_ledger.*`, `derivations_dag.json`, `atlas.md`). | Documented in `docs/reviews/eis_pciv_review.json` |
+| K10 | Atlas Gap Claims & DAG Sync | `python dag/build_atlas.py --check` | Exit 0 on current checkout `32b6860b` (`"stale": []`); defect consists of 32 unaddressed gap claims in `atlas/atlas_claim_matches.json`. | Documented in `docs/reviews/eis_pciv_review.json` |
 
 ---
 
@@ -106,12 +106,15 @@ Every baseline finding was independently verified in the newly established workt
 
 | ID | Locus | Class | Reproduction Command | Proposed Fix |
 |---|---|---|---|---|
+| `REV-K04-QUAD-DUPLICATE-EIS-DOMAIN` | `domain/thymus.py:1` | `duplicate` | `Get-ChildItem eis/domain/` | Retain Python domain for offline fallback/fixture compatibility while pointing active pipeline callers to Rust host binary. |
 | `REV-K05-COLLECT-FFI-RUST-SYMBOL-GAME` | `infrastructure/native_domain.py:9` | `engine_dependency` | `python -m pytest eis/tests` | Decouple module import from out-of-repo FFI host; route execution to `pfp_immune`. |
 | `REV-K05-COLLECT-CHARPOLY-IMPORT-PATH` | `tests/unit/test_challenger_two_signal_regulation.py:37` | `drift` | `python -m pytest eis/tests` | Correct import path to `workflows.wf52_finite_qm_benchmark.charpoly_wire`. |
+| `REV-K05-COLLECT-OPS-ROP-RESULT` | `use_cases/pharmacy_search.py:18` | `engine_dependency` | `python -m pytest -q eis/tests/integration/test_native_pharmacy_search.py` | Add ops/operations to PYTHONPATH or vendor minimal Result monad (Ok, Err, Refusal) in repo. |
 | `REV-K06-BUG-CHARPOLY-NORM-SILENT-NONE` | `use_cases/two_signal_regulation.py:57` | `bug` | `python -m pytest eis/tests -k test_signal1_alone` | Fix import and implement exact rational normalization in Rust. |
 | `REV-K06-BUG-NORMALIZED-MATCHER-CENTRAL-TOLERANCE` | `tests/unit/test_two_signal_regulation.py:113` | `bug` | `python -m pytest eis/tests -k test_normalized_matcher` | Implement central tolerance in Rust preventing apoptosis on self panel rational variants. |
 | `REV-K06-BUG-AB09-CHSH-HEADER-REGEX` | `tests/unit/test_two_signal_regulation.py:601` | `bug` | `python -m pytest eis/tests -k test_ab09_fails` | Implement CHSH check in Rust and align test fixture text to include "CHSH expectation = 4". |
 | `REV-K06-BUG-THYMUS-EVAL-ERROR-PREFIX` | `domain/thymus.py:141` | `bug` | `python -m pytest eis/tests -k test_invalid_pattern` | Format error prefix as `"error: "` across Python 3.12 (`re.error`) and 3.13+ (`re.PatternError`). |
+| `REV-K06-DEP-RUST-CAPTURE-ANTIBODY-SPEC` | `tests/unit/test_rust_capture_antibody_candidate.py:31` | `engine_dependency` | `python -m pytest -q eis/tests/unit/test_rust_capture_antibody_candidate.py` | Ensure antibody specification .agents/antibodies/specs/anti_rust_capture_completion_loss.yaml is mirrored or resolved from eis/antibodies/. |
 | `REV-K07-FLOAT-DETECTOR-AFFINITY-PYTHON` | `domain/clonal_selection.py:25` | `float` | Code inspection | Support exact rational / `Fraction` representation in Python model. |
 
 ### 4.4 Python: Prompt Civilization (`pciv/`)
@@ -128,6 +131,7 @@ Every baseline finding was independently verified in the newly established workt
 | `REV-K06-BUG-PCIV-RES-FALSIFIER-05` | `tests/falsifiers/test_falsifiers_support_and_admission.py:324` | `bug` | `python -m pytest pciv/tests -k test_f_res_05` | Enforce propagated references are never treated as direct observations in Rust. |
 | `REV-K06-DEP-PCIV-RANK-FALSIFIERS` | `tests/falsifiers/test_falsifiers_rank_and_events.py:54` | `engine_dependency` | `python -m pytest pciv/tests` | Port PageRank solver and transition matrix verification to Rust. |
 | `REV-K06-DEP-PCIV-CUSTODY-FALSIFIER` | `tests/falsifiers/test_falsifiers_immune_and_danger.py:243` | `engine_dependency` | `python -m pytest pciv/tests -k test_f_custody_01` | Implement provisional custody check in Rust. |
+| `REV-K06-DEP-OPERAND-REGISTRY-JSON` | `tests/intelligence_metabolism/test_operand_registry.py:43` | `engine_dependency` | `python -m pytest -q pciv/tests/intelligence_metabolism/test_operand_registry.py` | Place or link operand_registry.json under operations/skill_operad/json/ or adjust fixture search path. |
 | `REV-K06-DRIFT-METABOLISM-FIXTURE-PATH` | `tests/intelligence_metabolism/test_native_metabolism.py:24` | `drift` | `python -m pytest pciv/tests` | Update fixture path to `code/rust/tests/core_prompt_civilization/fixtures/metabolism.json`. |
 | `REV-K08-OPENLOOP-HEADSTONE-FALSIFIERS` | `domain/models.py:184` | `untyped` | Code inspection | Align `CemeteryHeadstoneV1` schema with operad canon failure types. |
 
@@ -150,7 +154,7 @@ Every baseline finding was independently verified in the newly established workt
 | `REV-K03-CI-MISSING-WORKFLOW` | `.github/workflows/eis_pciv_rust.yml:1` | `drift` | Directory inspection | Author GitHub Actions CI workflow executing fmt, clippy, and cargo tests. |
 | `REV-K09-DRIFT-FIXTURE-GENERATORS` | `eis/tests/generate_rust_activation_fixtures.py:93` | `drift` | Path grep | Update 7 fixture generators to output into `code/rust/tests/...`. |
 | `REV-K09-DRIFT-ANTIBODY-SPECS` | `eis/antibodies/anti_rust_capture_completion_loss.yaml:42` | `doc_wrong` | Path grep | Update 12 antibody YAML specs from `crates_rs` to `code/rust`. |
-| `REV-K09-DRIFT-PCIV-CURRICULUM-DOCS` | `pciv/documentation/README.md:120` | `doc_wrong` | Path grep | Update 20 PCIV documentation files from `crates_rs` to `code/rust`. |
+| `REV-K09-DRIFT-PCIV-CURRICULUM-DOCS` | `pciv/documentation/README.md:16` | `doc_wrong` | Path grep | Update 20 PCIV documentation files from `crates_rs` to `code/rust`. |
 | `REV-K09-DRIFT-OEEIS-RESIDUAL-DOC` | `eis/documentation/oeeis_residual_obligations.md:44` | `doc_wrong` | Path grep | Update path reference from `crates_rs` to `code/rust`. |
 | `REV-K09-DRIFT-WIKI-TYPE-INVENTORY` | `wiki/operads_type_inventory.md:145` | `doc_wrong` | Path grep | Update path reference from `crates_rs` to `code/rust` without running `publish_wiki.py`. |
 | `REV-K10-ATLAS-GAP-CLAIMS-P003-006-019` | `atlas/atlas_claim_matches.json:1` | `drift` | `python dag/build_atlas.py --check` | Author derivations in `dag/derivations/` for covered gap claims across Papers 003, 006, 019. |
