@@ -7,7 +7,7 @@
     "artifact": {
       "path": "pfp/infrastructure/operad_host.py",
       "language": "Python",
-      "sha256": "90a47b956aed39ffaec1096529d75b934a0f2d340a61b8678521a52ec45fefec"
+      "sha256": "1b8e2e2ee125c55657a6f026c8cd70b1e653741e54aaa0302c7d4e17b57790db"
     },
     "contract_urn": "urn:pfp-workflows:pfp-infrastructure-operad_host-py:v1",
     "symbols": [
@@ -25,11 +25,15 @@
       "mining",
       "typing",
       "grounding",
-      "reuse"
+      "reuse",
+      "outcome",
+      "ledger"
     ],
     "owned_invariants": [
       "This module decides nothing: every verdict it returns was computed by the Rust host pfp_operad.",
-      "A host that is missing, cannot run, times out, prints no outcome or refuses the request raises OperadHostError; there is no fallback verdict.",
+      "A host that is missing, cannot run, times out or prints no outcome raises OperadHostError; there is no fallback verdict.",
+      "ask and the named helpers raise on a refusal. outcome and ledger return the host's whole outcome, refusal included, for a caller whose job is to report it.",
+      "Only the host writes a ledger file: ledger passes the path and the record and writes nothing itself.",
       "The host is found at PFP_OPERAD_BIN, then on PATH, then in a checkout's code/rust/target build directory.",
       "identity() is the host's own statement of its name, version and canon."
     ],
@@ -44,7 +48,7 @@
     "artifact": {
       "path": "pfp/infrastructure/operad_host.py",
       "language": "Python",
-      "sha256": "90a47b956aed39ffaec1096529d75b934a0f2d340a61b8678521a52ec45fefec"
+      "sha256": "1b8e2e2ee125c55657a6f026c8cd70b1e653741e54aaa0302c7d4e17b57790db"
     },
     "profile": "Non-Numeric",
     "level": "L4",
@@ -60,43 +64,43 @@
       "G1": "Module docstring states the role and AuthorityEffect None; the contract names every exported symbol. Not B: no requirement-to-symbol trace beyond docs/plans/operads_redesign.md.",
       "G2": "No arithmetic and no comparison of results. Requests are written with allow_nan=False; outcomes are read with the strict JSON reader.",
       "G3": "Four closed error codes (OPERAD_HOST_NOT_FOUND, OPERAD_HOST_DID_NOT_RUN, OPERAD_HOST_NO_OUTCOME, OPERAD_HOST_REFUSED), each tested; a 60 second timeout. Not B: the timeout path is not exercised by a test.",
-      "G4": "15 tests in pfp/workflows/tests/test_operad_host.py plus the 639-test workflow suite that reaches the host through it. The three survivors are the timeout constant, the cache size of a zero-argument function and ASCII escaping of the request file, which the host reads to the same value. Not B: one generated campaign, no property tests. Mutation campaign R = 24/27.",
+      "G4": "17 tests in pfp/workflows/tests/test_operad_host.py plus the 661-test workflow suite that reaches the host through it. The three survivors are the timeout constant, the cache size of a zero-argument function and ASCII escaping of the request file, which the host reads to the same value. Not B: one generated campaign, no property tests. Mutation campaign R = 26/29.",
       "G5": "Measured worst cyclomatic 5, cognitive 5, nesting 2; ceiling A+, recorded A."
     },
     "composite_grade": "C",
     "score_token": "L4C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-14T09:54:56Z",
+    "evaluation_timestamp": "2026-11-14T10:19:38Z",
     "evidence": [
       {
-        "path": "governance/evidence/operad-host-workflow-tests-v3.run.json",
-        "sha256": "6649148c5d29d3682d6497ef7d68d84ac142426834d2fa16532e04471ba15b32",
-        "note": "639 offline tests (pfp/workflows, pfp_core/workflow_families, exclusions) against the release build of pfp_operad 0.3.0; exact source inputs bound. No live model performance claim."
+        "path": "governance/evidence/operad-host-workflow-tests-v4.run.json",
+        "sha256": "c02c988542b8d6241d974253d4827b37110c9a968ec7818d8f9bae1aae5c0ed9",
+        "note": "661 offline tests (pfp/workflows, pfp_core/workflow_families, exclusions) against the release build of pfp_operad 0.4.0; exact source inputs bound. No live model performance claim."
       },
       {
-        "path": "governance/evidence/pfp-operads-v3-metrics.run.json",
-        "sha256": "61402cc961ac77c8ef2baa0c99685bb989cdc3a37a254d3c1d14d2f30c9d330d",
+        "path": "governance/evidence/pfp-operads-v4-metrics.run.json",
+        "sha256": "30e6dfd7118ba3803b13a0cccc337eaf306ee526196ec05528758e1c91976c52",
         "note": "The run that measured Gate 5 structure."
       },
       {
-        "path": "governance/evidence/pfp-operads-v3-metrics.json",
-        "sha256": "71d6ba047df075a29edc4ceaaac890216ed0356e8290120ac8f0418d7bc976be",
+        "path": "governance/evidence/pfp-operads-v4-metrics.json",
+        "sha256": "afaa67dcbd70b24057f91e560fb879f19a245d886517a285e46b26b6fc5842f1",
         "note": "Measured Gate 5 structure of every source this change touches."
       }
     ],
     "mutation_accounting": {
-      "killed": 24,
+      "killed": 26,
       "survived": 3,
       "demonstrably_equivalent": 0,
       "invalid": 0,
       "inconclusive": 0,
       "unrun": 0,
-      "conservative_ratio": 0.8888888888888888,
+      "conservative_ratio": 0.896551724137931,
       "report": {
         "path": "governance/evidence/m-operad-host-py.mutation.json",
-        "sha256": "d53c5941e5a19429a31b93eebed49499cd7d36c5b7e4e224ef57ecee4e2ec87c",
-        "note": "AST campaign, governance.tools.mutation, pytest as oracle; 27 mutants"
+        "sha256": "116b6646f87a39449bba01591156bfc8b7b97f90fe3150b64be86a760b2a1818",
+        "note": "AST campaign, governance.tools.mutation, pytest as oracle; 29 mutants"
       }
     }
   },
@@ -193,6 +197,107 @@
             "path": "governance/evidence/m-operad-host-py.mutation.json",
             "sha256": "7dc9d4a2caabb02cc78813573580622acb594959006905f05ac8a0b83a6b4160",
             "note": "AST campaign, governance.tools.mutation, pytest as oracle; 22 mutants"
+          }
+        }
+      }
+    },
+    {
+      "recorded_at": "2026-11-14T10:19:39.511930Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "pfp/infrastructure/operad_host.py",
+          "language": "Python",
+          "sha256": "90a47b956aed39ffaec1096529d75b934a0f2d340a61b8678521a52ec45fefec"
+        },
+        "contract_urn": "urn:pfp-workflows:pfp-infrastructure-operad_host-py:v1",
+        "symbols": [
+          "ENVIRONMENT",
+          "NAME",
+          "TIMEOUT_SECONDS",
+          "OperadHostError",
+          "binary",
+          "call",
+          "result",
+          "identity",
+          "ask",
+          "judge",
+          "envelope",
+          "mining",
+          "typing",
+          "grounding",
+          "reuse"
+        ],
+        "owned_invariants": [
+          "This module decides nothing: every verdict it returns was computed by the Rust host pfp_operad.",
+          "A host that is missing, cannot run, times out, prints no outcome or refuses the request raises OperadHostError; there is no fallback verdict.",
+          "The host is found at PFP_OPERAD_BIN, then on PATH, then in a checkout's code/rust/target build directory.",
+          "identity() is the host's own statement of its name, version and canon."
+        ],
+        "boundaries": [
+          "Trusts the binary it is pointed at; it does not verify the binary's hash.",
+          "Python moves the request and the outcome and applies no rule."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "pfp/infrastructure/operad_host.py",
+          "language": "Python",
+          "sha256": "90a47b956aed39ffaec1096529d75b934a0f2d340a61b8678521a52ec45fefec"
+        },
+        "profile": "Non-Numeric",
+        "level": "L4",
+        "level_basis": "A transport with one job: closed error codes for every way the host can fail to answer, no fallback verdict, strict JSON on the way back, and the host's identity bound into every run.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module docstring states the role and AuthorityEffect None; the contract names every exported symbol. Not B: no requirement-to-symbol trace beyond docs/plans/operads_redesign.md.",
+          "G2": "No arithmetic and no comparison of results. Requests are written with allow_nan=False; outcomes are read with the strict JSON reader.",
+          "G3": "Four closed error codes (OPERAD_HOST_NOT_FOUND, OPERAD_HOST_DID_NOT_RUN, OPERAD_HOST_NO_OUTCOME, OPERAD_HOST_REFUSED), each tested; a 60 second timeout. Not B: the timeout path is not exercised by a test.",
+          "G4": "15 tests in pfp/workflows/tests/test_operad_host.py plus the 639-test workflow suite that reaches the host through it. The three survivors are the timeout constant, the cache size of a zero-argument function and ASCII escaping of the request file, which the host reads to the same value. Not B: one generated campaign, no property tests. Mutation campaign R = 24/27.",
+          "G5": "Measured worst cyclomatic 5, cognitive 5, nesting 2; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T09:54:56Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/operad-host-workflow-tests-v3.run.json",
+            "sha256": "6649148c5d29d3682d6497ef7d68d84ac142426834d2fa16532e04471ba15b32",
+            "note": "639 offline tests (pfp/workflows, pfp_core/workflow_families, exclusions) against the release build of pfp_operad 0.3.0; exact source inputs bound. No live model performance claim."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v3-metrics.run.json",
+            "sha256": "61402cc961ac77c8ef2baa0c99685bb989cdc3a37a254d3c1d14d2f30c9d330d",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v3-metrics.json",
+            "sha256": "71d6ba047df075a29edc4ceaaac890216ed0356e8290120ac8f0418d7bc976be",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 24,
+          "survived": 3,
+          "demonstrably_equivalent": 0,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 0.8888888888888888,
+          "report": {
+            "path": "governance/evidence/m-operad-host-py.mutation.json",
+            "sha256": "d53c5941e5a19429a31b93eebed49499cd7d36c5b7e4e224ef57ecee4e2ec87c",
+            "note": "AST campaign, governance.tools.mutation, pytest as oracle; 27 mutants"
           }
         }
       }

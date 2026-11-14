@@ -186,3 +186,26 @@ def test_signature_reuse_is_decided_by_the_host():
         None,
         "integer_list_sum",
     ]
+
+
+def test_a_refusal_is_an_outcome_for_a_caller_that_reports_it():
+    seen = dict(id="f1", workflow="WF1", run="r1", checker="integer_sum_v1", case={"values": [1, 2]})
+    wrong = operad_host.outcome("witness", dict(seen, answer={"total": 4}))
+    assert wrong["status"] == "PASS" and wrong["result"]["record"]["kind"] == "failure"
+    right = operad_host.outcome("witness", dict(seen, answer={"total": 3}))
+    assert (right["status"], right["refusal"]["code"]) == ("REFUSED", "NOT_A_FAILURE")
+
+
+def test_only_the_host_writes_a_ledger_file(tmp_path):
+    book = tmp_path / "ledger.jsonl"
+    book.write_text("", encoding="utf-8")
+    assert operad_host.ledger("verify", book)["result"] == {"entries": 0}
+    seen = dict(id="f1", workflow="WF1", run="r1", checker="integer_sum_v1", case={"values": [1, 2]})
+    record = operad_host.outcome("witness", dict(seen, answer={"total": 4}))["result"]["record"]
+    kept = operad_host.ledger("append", book, record)
+    assert (kept["status"], kept["result"]["seq"]) == ("PASS", 0)
+    again = operad_host.ledger("append", book, record)
+    assert (again["status"], again["refusal"]["code"]) == ("REFUSED", "DUPLICATE_ID")
+    assert book.read_text(encoding="utf-8").count("\n") == 1
+    assert operad_host.ledger("verify", book)["result"] == {"entries": 1}
+    assert operad_host.ledger("admitted", book)["result"] == []

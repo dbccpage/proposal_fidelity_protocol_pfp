@@ -1,0 +1,100 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/learning.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/learning.rs",
+      "language": "Rust",
+      "sha256": "6a7cb6457b4812db8cd071061c72c7899589cae8c4bd395a69743db164c44c21"
+    },
+    "contract_urn": "urn:pfp-operads:tests-learning:v1",
+    "symbols": [
+      "seen",
+      "failure",
+      "sha256",
+      "a_rejected_answer_becomes_a_failure_record_bound_to_what_was_seen",
+      "the_evidence_hash_separates_checker_case_and_answer",
+      "the_hosts_refusal_closes_the_replys_own_ddc_word",
+      "a_correct_answer_cannot_be_recorded_as_a_failure",
+      "scored",
+      "held_out",
+      "a_trial_is_scored_by_the_judge_case_by_case",
+      "a_trial_the_judge_cannot_score_is_refused",
+      "record",
+      "the_ledger_admits_a_rule_only_on_records_the_host_wrote",
+      "status",
+      "respond_and_the_command_write_records_and_refuse_what_is_not_a_failure",
+      "the_shipped_examples_give_a_failure_and_a_winning_trial"
+    ],
+    "owned_invariants": [
+      "A failure record is asserted field by field, and its hash against one the test computes itself.",
+      "A trial is asserted case by case, with its counts, and then taken through the ledger to an admission, a NOT_EARNED refusal and a SPLIT_OVERLAP refusal.",
+      "Outcomes are asserted on the JSON a workflow would read, including exit codes of the built binary and the shipped examples."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/learning.rs",
+      "language": "Rust",
+      "sha256": "6a7cb6457b4812db8cd071061c72c7899589cae8c4bd395a69743db164c44c21"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 9 pass in the recorded run; the crate suite they belong to killed 38 of 38 eligible learning mutants.",
+      "G5": "Measured worst cyclomatic 1, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T10:19:38Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v4-test.run.json",
+        "sha256": "e2335bf167572ce371f769568750355a94ea28413587512a269245897cf0a44b",
+        "note": "106 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v4-clippy.run.json",
+        "sha256": "50e8407fcca0920444a54b335c9b3bc7d511a28f7f59c9cc5f815f333e798bf8",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v4-fmt.run.json",
+        "sha256": "98c566bcff32e22301ec7729f9091905ea96c5379103c2f7926988d74098dc10",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v4-metrics.run.json",
+        "sha256": "30e6dfd7118ba3803b13a0cccc337eaf306ee526196ec05528758e1c91976c52",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v4-metrics.json",
+        "sha256": "afaa67dcbd70b24057f91e560fb879f19a245d886517a285e46b26b6fc5842f1",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

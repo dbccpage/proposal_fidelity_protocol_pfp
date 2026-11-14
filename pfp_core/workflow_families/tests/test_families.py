@@ -20,7 +20,7 @@ from pfp_core.workflow_families.base import (
 )
 
 REGISTRY = load()
-TARGET = {f'WF{n}' for n in range(6, 50)} | {'WF51'}
+TARGET = {f'WF{n}' for n in range(6, 50)} | {'WF51', 'WF55'}
 CASES = [(wf_id, name, expected) for wf_id, cls in REGISTRY.items()
          for name, (_bundle, expected) in cls().fixtures().items()]
 
@@ -31,7 +31,7 @@ def audit_nodes():
     return {n['id']: n for n in audit['registry']['family_nodes']}
 
 
-def test_registry_covers_wf6_to_wf49_and_wf51_exactly():
+def test_registry_covers_wf6_to_wf49_wf51_and_wf55_exactly():
     assert set(REGISTRY) == TARGET
 
 

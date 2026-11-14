@@ -16,6 +16,8 @@ outcome and decides nothing. AuthorityEffect: None.
 | `pfp_operad grounding REQUEST.json` | Do the grounded slots of a solver reply restate the task's public input exactly, and name a licensed candidate? |
 | `pfp_operad typing REQUEST.json` | Which candidates in a list are typed by the canon, and which have the licensed signature? |
 | `pfp_operad reuse REQUEST.json` | Which emitted candidates have the signature of a mined candidate? |
+| `pfp_operad witness REQUEST.json` | Is this answer a failure? The host judges it itself and, if it is wrong, writes the failure record for the ledger. |
+| `pfp_operad trial REQUEST.json` | How did a rule do on held-out cases? The host judges each baseline and treated answer and writes the trial record. |
 | `pfp_operad version` | Which host and which canon is this? Workflows record it in every run. |
 | `pfp_operad laws REQUEST.json` | Do these operations obey the operad laws on this panel of inputs? |
 | `pfp_operad ledger append LEDGER.jsonl RECORD.json` | Is this record lawful? If so, add it to the failure ledger. |
@@ -37,6 +39,8 @@ cargo run -p pfp_operads -- judge pfp_operads/examples/judge.json
 cargo run -p pfp_operads -- mining pfp_operads/examples/mining.json
 cargo run -p pfp_operads -- grounding pfp_operads/examples/grounding.json
 cargo run -p pfp_operads -- laws pfp_operads/examples/laws.json
+cargo run -p pfp_operads -- witness pfp_operads/examples/witness.json
+cargo run -p pfp_operads -- trial pfp_operads/examples/trial.json
 cargo run -p pfp_operads -- ledger append my_ledger.jsonl pfp_operads/examples/failure.json
 cargo run -p pfp_operads -- ledger verify my_ledger.jsonl
 ```
@@ -71,13 +75,21 @@ cargo run -p pfp_operads -- ledger verify my_ledger.jsonl
   → `admission` → optional `retirement`. A rule is admitted only on its latest
   trial, when it beat the baseline and fired on no clean case. Each entry
   carries the hash of the one before it.
+- **Host-written records**: `witness` and `trial` judge the answers they are
+  given and return the record to append, so a workflow never states that a
+  reply failed or how a trial went. A failure's DDC word is the reply's own
+  word followed by `M`, the host's refusal. A clean-panel hit is a held-out
+  case the baseline answered correctly and the treated run did not.
+  [WF55](../../../workflows/wf55_failure_ledger_with_trial_gated_rules/README.md)
+  runs the whole loop.
 
 ## Limits
 
 - A law pass covers the supplied operations on the supplied panel. It is not a
   proof for all terms; that belongs in Lean.
 - The ledger checks that a trial's numbers are well formed and held out. It
-  does not rerun the trial.
+  does not rerun the trial. `trial` judges the answers it is handed; it cannot
+  see whether the treated answers were produced with the rule loaded.
 - Admission means "may be loaded", not "is correct".
 - `envelope`, `mining` and `typing` never verify a candidate. A candidate's
   meaning is free text; the host can only say it is well formed, typed, and

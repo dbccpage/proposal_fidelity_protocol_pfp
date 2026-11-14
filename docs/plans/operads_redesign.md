@@ -31,7 +31,10 @@ model reply (typed JSON)
       │
       ▼
 pfp_operad judge / envelope / mining / grounding / check ──► PASS / FAIL / REFUSED
-      │ a refusal or a wrong answer is a failure
+      │ a wrong answer is a failure
+      ▼
+pfp_operad witness         the host judges the answer and writes the failure record
+pfp_operad trial           the host judges a rule's held-out trial and writes its record
       ▼
 pfp_operad ledger append   failure ─► candidate rule ─► held-out trial ─► admission
       │
@@ -62,11 +65,12 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
 | Gap | Fix | Slice | Status |
 | --- | --- | --- | --- |
 | 1. Failure learning is open-loop | Failure ledger with trial-gated admission | 1 | **built** |
-| 1. (cont.) no workflow writes or reads it | Failure-to-antibody workflow; WF1-WF5 and WF52 write failures, every run loads admitted rules | 2c | planned |
+| 1. (cont.) no workflow writes or reads it | WF55 keeps failures in the ledger, trials a proposed rule on held-out cases and loads admitted rules into later runs. The host writes the failure and trial records itself (`pfp_operad witness`, `trial`) | 2c | **built** (offline) |
+| 1. (cont.) WF1-WF5 and WF52 do not write to it | Their runs write failures to a ledger and load its admitted rules, as an option that leaves the default prompts unchanged | 2d | planned |
 | 2. Workflows do not use the canon | `pfp_operad check` types candidates by canon colours and runs them | 1 | **built** |
 | 2. (cont.) WF2-WF5 used their own colours | The colours they prompt for are now the canon type `task_value_colour`. `pfp_operad envelope` checks the reply envelope and types every candidate; `pfp_operad judge` is the exact integer sum. The Python versions are deleted | 2a | **built** |
 | 2. (cont.) WF3-WF5 kept extra operad checks in Python | `pfp_operad mining` screens a mining reply, `grounding` rechecks the four L2 slots, `typing` says which mined operation is licensed, `reuse` compares mined and emitted signatures. The Python versions are deleted | 2b | **built** |
-| 2. (cont.) candidates in WF2-WF5 stay unverified | Their meaning is free text. A workflow whose candidates carry a body from the closed list lets the host run the candidate itself | 2c | planned |
+| 2. (cont.) candidates in WF2-WF5 stay unverified | Their meaning is free text. A workflow whose candidates carry a body from the closed list lets the host run the candidate itself | 2d | planned |
 | 3. Laws are signature-level only | Law battery on values, cost and tree | 1 | **built** |
 | 3. (cont.) no Lean statement | Lean 4 theorems for the term model: associativity, unit, composition is evaluation | 6 | planned |
 | 4. PFP 018 repair slice has no workflow | Workflow over the Rust DDC tape verifier (`code/rust/pfp/src/ddc.rs`), writing to the ledger | 3 | planned |
@@ -91,11 +95,17 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
    - **2b (built).** The operad checks that were still Python inside WF3-WF5:
      the mining screen, the L2 recheck, the licensed-operation binding and
      mined-versus-emitted signature reuse. Same error codes in the same order.
-   - **2c.** A workflow whose candidates carry a body, so the host can run the
-     candidate and not only the licensed operation; and the
-     failure-to-antibody workflow, which turns recorded failures into rules,
-     scores them on held-out tasks and admits the winners. Offline first, then
-     one cheap live run to see whether an admitted rule changes a model's
+   - **2c (built, offline).**
+     [WF55](../../workflows/wf55_failure_ledger_with_trial_gated_rules/README.md),
+     the failure-to-rule loop: the host witnesses each failure, a model
+     proposes a rule, every held-out case is answered without it and with it,
+     the host scores the trial, and the ledger admits the rule or rejects it.
+     A later run that is given the ledger carries the admitted rules in its
+     prompts.
+   - **2d.** A workflow whose candidates carry a body, so the host can run the
+     candidate and not only the licensed operation. WF1-WF5 and WF52 write
+     their failures to a ledger and load its admitted rules. Then one cheap
+     live run of WF55 to see whether an admitted rule changes a model's
      result.
 3. **Bounded DDC repair** as a workflow, from PFP 018's worked example and
    negative cases.
@@ -115,7 +125,11 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
 - After 2a no candidate in WF2-WF5 is host-verified. The host verifies the
   task result with the licensed operation and reports which candidates have
   that operation's signature. It does not know what a candidate means.
-- No workflow writes to the ledger yet, so nothing is learned across runs.
+- WF55 writes to the ledger and loads from it, on fixtures only. No model has
+  run through it, so no rule has been shown to help a model. WF1-WF5 and WF52
+  do not write to a ledger yet.
+- The host judges the trial answers it is handed. It does not see that the
+  treated answers were produced with the rule loaded.
 - Python still validates reply schemas, routes statuses and keeps run
   custody (manifests, replay). Those move in slice 4.
 - WF4's own local contract (public binding, native integer result, agreement

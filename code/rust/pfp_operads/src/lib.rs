@@ -17,6 +17,8 @@
 //! * [`mining`]: the screen of a mining reply (no digits outside quotes, well-formed and grounded
 //!   candidates, guidance for every grounded slot) and signature reuse between candidate lists.
 //! * [`grounding`]: the grounded slots of a solver reply, rechecked against the task's public input.
+//! * [`learning`]: the ledger records the host writes itself, a failure it witnessed and a trial it
+//!   scored, from answers it judges with [`judge`].
 //! * [`host`]: the JSON entry points a workflow calls, also exposed by the `pfp_operad` binary.
 //!
 //! Every vocabulary (colours, DDC letters, failure classes, capability kinds, statuses) is read
@@ -28,6 +30,7 @@ pub mod grounding;
 pub mod host;
 pub mod judge;
 pub mod laws;
+pub mod learning;
 pub mod ledger;
 pub mod mining;
 pub mod term;
