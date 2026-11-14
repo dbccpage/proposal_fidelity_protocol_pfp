@@ -33,6 +33,8 @@ from collections.abc import Callable, Iterable, Mapping
 from dataclasses import dataclass, field
 from typing import Any
 
+from . import immune_host
+
 AUTHORITY_NONE = 'None'
 
 FRONTIER = 'FRONTIER'
@@ -113,8 +115,23 @@ class ExclusionHypothesisV1:
         return tuple(f for f, pos in self.family_positions().items() if pos == {True})
 
     def classify(self, min_families: int = 2) -> str:
+        """Classify consensus: FRONTIER, PROBABLY_DEAD, or UNCORROBORATED.
+
+        Invokes Rust host binary pfp_immune exclusion when available, retaining
+        deterministic Python fallback for offline execution.
+        """
         if type(min_families) is not int or min_families < 1:
             raise _refuse('MIN_FAMILIES_INVALID', 'min_families must be a positive int')
+        if min_families == 2 and immune_host.is_available():
+            try:
+                positions = self.family_positions()
+                votes = {}
+                for fam, pos in positions.items():
+                    votes[fam] = "EXCLUDE" if pos == {True} else "INCLUDE"
+                res = immune_host.exclusion(votes, [self.exclusion_id])
+                return res["consensus"]
+            except (immune_host.ImmuneHostError, OSError, KeyError):
+                pass  # noqa: S110
         positions = self.family_positions()
         if any(pos != {True} for pos in positions.values()):
             return FRONTIER

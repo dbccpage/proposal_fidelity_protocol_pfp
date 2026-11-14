@@ -40,22 +40,55 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from . import REPO_ROOT  # noqa: F401
-from .fidelity import sha256_hex
 from eis.domain.danger_signals import SignalIndependenceRefusal, assert_signals_independent
 from eis.domain.provisional_promotion import ObservationSupportPolicyV1, RawObservationV1
 from eis.domain.safe_pattern import compile_safe_pattern
 from eis.domain.thymus import ThymusGate
 from eis.domain.value_objects import DangerSeverity, DetectorRule, Signal1Match, Signal2Danger
 
-PASS = 'PASS'
+from . import (
+    REPO_ROOT,  # noqa: F401
+    immune_host,
+)
+from .fidelity import sha256_hex
+
+PASS = 'PASS'  # noqa: S105
 DIAGNOSTIC = 'DIAGNOSTIC_OR_NORMALIZE'
 HOLD = 'HOLD_OR_REPAIR'
 MATCHER_ID = 'regex'
 
 
 def screen_rules(rules: list[DetectorRule], self_panel: list[str]) -> tuple[list[DetectorRule], list[dict]]:
-    """Return (admitted rules, kill records) after thymic negative selection."""
+    """Return (admitted rules, kill records) after thymic negative selection.
+
+    Invokes Rust host binary pfp_immune screen when available, retaining
+    deterministic Python fallback for offline execution.
+    """
+    if immune_host.is_available():
+        try:
+            candidates = [
+                {
+                    "rule_id": r.rule_id,
+                    "pattern": r.match_pattern,
+                    "capability_kind": getattr(r, "target_epitope", "rule"),
+                }
+                for r in rules
+            ]
+            res = immune_host.screen(self_panel, candidates)
+            admitted_ids = set(res.get("admitted", []))
+            admitted = [r for r in rules if r.rule_id in admitted_ids]
+            killed = [
+                {
+                    "rule_id": p["rule_id"],
+                    "violations": [p["reason"]],
+                    "rationale": p["reason"],
+                }
+                for p in res.get("purged", [])
+            ]
+            return admitted, killed
+        except (immune_host.ImmuneHostError, OSError, KeyError):
+            pass
+
     gate = ThymusGate(self_panel=self_panel)
     admitted, killed = [], []
     for rule in rules:
@@ -97,25 +130,46 @@ HOST_OBSERVERS = frozenset({'host.ast_parse', 'host.contract_check', 'host.publi
 
 def decide(matches: list[Signal1Match], danger: Signal2Danger | None,
            host_observers: frozenset[str] = HOST_OBSERVERS) -> Decision:
-    """Disposition per the table above. Signal 2 counts only from an allowlisted host observer."""
+    """Disposition per the table above. Signal 2 counts only from an allowlisted host observer.
+
+    Invokes Rust host binary pfp_immune decide when available, retaining
+    deterministic Python fallback for offline execution.
+    """
     if danger is not None and danger.observer_id not in host_observers:
         code = 'TWO_SIGNAL_COLLAPSE' if matches else 'UNWITNESSED_DANGER_SIGNAL'
         disposition = DIAGNOSTIC if matches else PASS
         return Decision(disposition, f'danger from {danger.observer_id!r} is not an admitted host observer',
                         matches, code)
+
+    status: str | None = None
+    disposition_text: str | None = None
+    if immune_host.is_available():
+        try:
+            defects = getattr(danger, 'defect_count', 1) or 1 if danger is not None else 0
+            danger_score = (defects, 1)
+            threshold = (1, 2)
+            rule_ids = [m.detector_id for m in matches]
+            res = immune_host.decide(rule_ids, danger_score, threshold)
+            status = res['status']
+            disposition_text = res['disposition']
+        except (immune_host.ImmuneHostError, OSError, KeyError):
+            pass
+
     if not matches and danger is None:
-        return Decision(PASS, 'no rule match and no host danger')
+        return Decision(status or PASS, disposition_text or 'no rule match and no host danger')
     if danger is None:
-        return Decision(DIAGNOSTIC, 'rule match without host danger: diagnostic only', matches)
+        return Decision(status or DIAGNOSTIC, disposition_text or 'rule match without host danger: diagnostic only',
+                        matches)
     if not matches:
-        return Decision(HOLD, f'host predicate refusal: {danger.danger_type} by {danger.observer_id}')
+        return Decision(status or HOLD, f'host predicate refusal: {danger.danger_type} by {danger.observer_id}')
+
     try:
         basis = assert_signals_independent(matches, danger, detector_id=MATCHER_ID,
                                            detector_predicates=frozenset(), offsets_are_content=True)
     except SignalIndependenceRefusal as err:
         return Decision(HOLD, f'host predicate refusal: {danger.danger_type} by {danger.observer_id}; '
                               f'Signal 1 adds no independent activation: {err.detail}', matches, err.code)
-    return Decision(HOLD, basis, matches)
+    return Decision(status or HOLD, basis, matches)
 
 
 class AntibodyRegistry:
