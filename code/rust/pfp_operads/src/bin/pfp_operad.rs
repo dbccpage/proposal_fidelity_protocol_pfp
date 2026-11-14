@@ -1,4 +1,5 @@
 //! `pfp_operad`: the operad host as a command. Reads files, prints one JSON outcome, exits 0, 1 or 2.
+//! Two commands write: `ledger append` adds a line to a ledger, and `repair` fills a new run folder.
 //!
 //! AuthorityEffect: None.
 //! Contract: urn:pfp-operads:bin:v1
@@ -22,6 +23,7 @@
 //! pfp_operad trial REQUEST.json            judge a rule's held-out trial and write its record
 //! pfp_operad witness-turn REQUEST.json     judge a stored turn and write its failure record
 //! pfp_operad run REQUEST.json              run candidates on the task's input against the judge
+//! pfp_operad repair REQUEST.json SOURCE_DIR RUN_DIR   test a supplied patch on a working copy
 //! pfp_operad version                       name, version and canon of this host
 //! ```
 //!
@@ -30,11 +32,13 @@
 
 use std::fs;
 use std::io::Write;
+use std::path::Path;
 use std::process::ExitCode;
 
 use pfp_operads::host::{respond, Command, Outcome};
+use pfp_operads::workshop::repair_in;
 
-const USAGE: &str = "usage: pfp_operad laws FILE | check FILE | envelope FILE | judge FILE | mining FILE | typing FILE | grounding FILE | reuse FILE | witness FILE | trial FILE | witness-turn FILE | run FILE | version | ledger verify FILE | ledger admitted FILE | ledger append FILE RECORD | ledger load FILE REQUEST | ledger loaded FILE REQUEST | ledger trial FILE REQUEST";
+const USAGE: &str = "usage: pfp_operad laws FILE | check FILE | envelope FILE | judge FILE | mining FILE | typing FILE | grounding FILE | reuse FILE | witness FILE | trial FILE | witness-turn FILE | run FILE | repair FILE SOURCE_DIR RUN_DIR | version | ledger verify FILE | ledger admitted FILE | ledger append FILE RECORD | ledger load FILE REQUEST | ledger loaded FILE REQUEST | ledger trial FILE REQUEST";
 
 fn read(path: &str) -> Result<String, String> {
     fs::read_to_string(path).map_err(|error| format!("cannot read {path}: {error}"))
@@ -99,6 +103,13 @@ fn append_line(path: &str, outcome: &Outcome) -> Result<(), String> {
 }
 
 fn run(args: &[&str]) -> Result<Outcome, String> {
+    if let ["repair", request, source, folder] = args {
+        return Ok(repair_in(
+            &read(request)?,
+            Path::new(source),
+            Path::new(folder),
+        ));
+    }
     let outcome = respond(&command(args)?);
     if let ["ledger", "append", file, _] = args {
         append_line(file, &outcome)?;

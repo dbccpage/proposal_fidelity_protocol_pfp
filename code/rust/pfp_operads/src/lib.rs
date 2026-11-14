@@ -25,6 +25,11 @@
 //!   the check that a seed is exactly what a ledger state loads.
 //! * [`turns`]: a model turn as a workflow run stores it, judged by the host into a failure record
 //!   or, in fair pairs, into a rule's trial record.
+//! * [`patch`]: a text patch in unified format, read strictly and applied exactly where it says.
+//! * [`repair`]: bounded code repair, one supplied patch taken through capture, observe, evaluate,
+//!   incorporate, disposition and terminal, with a failure record when the candidate is at fault.
+//! * [`workshop`]: the source tree, run folder and local commands a repair run uses on a real
+//!   machine. This is the one module that writes files and starts processes.
 //! * [`host`]: the JSON entry points a workflow calls, also exposed by the `pfp_operad` binary.
 //!
 //! Every vocabulary (colours, DDC letters, failure classes, capability kinds, statuses) is read
@@ -40,9 +45,12 @@ pub mod learning;
 pub mod ledger;
 pub mod loading;
 pub mod mining;
+pub mod patch;
+pub mod repair;
 pub mod running;
 pub mod term;
 pub mod turns;
+pub mod workshop;
 
 use serde::Serialize;
 

@@ -20,6 +20,7 @@ outcome and decides nothing. AuthorityEffect: None.
 | `pfp_operad witness REQUEST.json` | Is this answer a failure? The host judges it itself and, if it is wrong, writes the failure record for the ledger. |
 | `pfp_operad trial REQUEST.json` | How did a rule do on held-out cases? The host judges each baseline and treated answer and writes the trial record. |
 | `pfp_operad witness-turn REQUEST.json` | Did this stored turn of a WF1 to WF5 run fail? The host reads the turn's `task.json` and `receipt.json` itself, judges the task result and writes the failure record, named after its case. |
+| `pfp_operad repair REQUEST.json SOURCE_DIR RUN_DIR` | Does a supplied patch make the failing checks pass without breaking a passing one? The host copies the declared sources to a new run folder, runs the request's check commands before and after the patch, and keeps a record. The sources are never written. |
 | `pfp_operad version` | Which host and which canon is this? Workflows record it in every run. |
 | `pfp_operad laws REQUEST.json` | Do these operations obey the operad laws on this panel of inputs? |
 | `pfp_operad ledger append LEDGER.jsonl RECORD.json` | Is this record lawful? If so, add it to the failure ledger. |
@@ -32,6 +33,9 @@ outcome and decides nothing. AuthorityEffect: None.
 Each command prints one JSON object with `"status"`: `PASS`, `FAIL` (the check
 ran and did not hold) or `REFUSED` (the input was not acceptable). Exit code 0
 is `PASS`, 1 is `FAIL` or `REFUSED`, 2 is a bad command line or unreadable file.
+Two commands write: `ledger append` adds one line to a ledger, and `repair`
+fills a run folder that must not exist yet. `repair` is also the only command
+that starts other programs: the checks its request names.
 
 ## Try it
 
@@ -53,6 +57,18 @@ cargo run -p pfp_operads -- ledger loaded ../../workflows/wf55_failure_ledger_wi
 cargo run -p pfp_operads -- ledger append my_ledger.jsonl pfp_operads/examples/failure.json
 cargo run -p pfp_operads -- ledger verify my_ledger.jsonl
 ```
+
+The repair example's two checks are the host itself (`pfp_operad judge` on a
+stored answer), so the binary must be on `PATH`:
+
+```
+cargo build --release -p pfp_operads
+PATH="$PWD/target/release:$PATH" pfp_operad repair pfp_operads/examples/repair/request.json pfp_operads/examples/repair/source my_run
+```
+
+It prints `PASS` with `"outcome":"REPAIRED"`, check exits `[1, 0]` before the
+patch and `[0, 0]` after it, and leaves `request.json`, `candidate.patch`,
+`record.json` and the patched `workspace/` in `my_run`.
 
 ## The pieces
 
@@ -115,6 +131,37 @@ cargo run -p pfp_operads -- ledger verify my_ledger.jsonl
   candidate is verified and none is refused.
   [WF56](../../../workflows/wf56_host_run_operad_candidates/README.md) uses it.
 
+- **Bounded repair**: `repair` takes one supplied patch through six stages.
+  `C` capture reads the declared sources, compares each SHA-256 and makes a
+  working copy. `R` observe runs every check for a baseline. `E` evaluate
+  applies the patch to the working copy and runs the checks again. `I`
+  incorporate decides whether the candidate is at fault. `M` disposition
+  compares the failing checks before and after. `T` terminal confirms the
+  sources still have their declared hashes. The outcome is `REPAIRED`,
+  `PARTIAL`, `INEFFECTIVE`, `REGRESSION`, `NO_REPAIR_NEEDED` or `REFUSED`; only
+  `REPAIRED` is a `PASS`. The record's `trace` lists the stages that took
+  effect, `CREIMT` for a full run.
+- **A repair request** is closed JSON: `run_key`, `objective`, `sources` (path
+  to SHA-256), `write_paths`, `checks` (`check_id`, `argv`, optional
+  `timeout_seconds` up to 60, default 20), `candidate_patch` and an optional
+  `workflow` name. The candidate id is the SHA-256 of the patch; the request
+  digest covers the whole request; the case name covers the sources and the
+  checks, so two patches for one task share a case.
+- **Patches** are unified diffs of existing text files with `a/` and `b/`
+  paths. A hunk applies at the line it names, with no offset or fuzz, and only
+  to a file in the write set. Creating, deleting, renaming or re-moding a
+  file, and binary data, are refused.
+- **Checks** are commands the operator trusts. Each runs in the working copy,
+  without a shell, with closed input, a deadline, and Git and Python cache
+  variables removed. Exit 0 passes. A check that cannot start, overruns or
+  rewrites a declared file refuses the run. Each output stream is hashed whole
+  and its first 4096 bytes are kept.
+- **A failed candidate is a ledger failure**: the record carries a `failure`
+  for `ledger append` when the patch left a failing check failing
+  (`CounterfeitExactness`), broke a passing one (`BoundaryLeakage`) or did
+  not fit the sources or the write set (`StructuralNonFit`). A missing tool,
+  a changed source or a full disk blames no candidate.
+
 ## Limits
 
 - A law pass covers the supplied operations on the supplied panel. It is not a
@@ -134,5 +181,14 @@ cargo run -p pfp_operads -- ledger verify my_ledger.jsonl
   catch a number written in words.
 - `run` verifies a candidate on the cases it is given, not on every input. It
   evaluates on 64-bit integers and refuses a case with a larger value.
+- `repair` separates a working copy from the sources. It is not a sandbox:
+  a check can do whatever the account running the host can. `REPAIRED` is a
+  statement about the supplied checks; weak checks admit a wrong patch. The
+  stage letters are spelled like DDC letters and are not the calculus; no
+  descent law is claimed for the word. Nothing is applied to the sources,
+  admitted or activated.
+- `repair` notices a check that rewrites a declared file. It does not notice
+  other files a check leaves in the working copy.
+- When no check fails before the patch, the patch is not read or applied.
 
 Plan and status: [`docs/plans/operads_redesign.md`](../../../docs/plans/operads_redesign.md).

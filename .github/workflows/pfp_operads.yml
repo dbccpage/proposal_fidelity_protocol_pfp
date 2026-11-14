@@ -48,3 +48,5 @@ jobs:
       - run: cargo run --locked -p pfp_operads -- ledger load ../../workflows/wf55_failure_ledger_with_trial_gated_rules/examples/ledger_after_first_run.jsonl pfp_operads/examples/load.json
       - run: cargo run --locked -p pfp_operads -- ledger loaded ../../workflows/wf55_failure_ledger_with_trial_gated_rules/examples/ledger_after_first_run.jsonl pfp_operads/examples/loaded.json
       - run: cargo run --locked -p pfp_operads -- ledger verify ../../workflows/wf55_failure_ledger_with_trial_gated_rules/examples/ledger_after_first_run.jsonl
+      - run: cargo build --locked --release -p pfp_operads
+      - run: PATH="$PWD/target/release:$PATH" pfp_operad repair pfp_operads/examples/repair/request.json pfp_operads/examples/repair/source "$RUNNER_TEMP/repair-run"
