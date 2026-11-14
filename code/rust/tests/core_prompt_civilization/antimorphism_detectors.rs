@@ -2,13 +2,13 @@
 //!
 //! AuthorityEffect: None.
 
-use num_rational::BigRational;
-use num_traits::Zero;
 use core_prompt_civilization::antimorphism::{
     AntimorphismVerdict, ExactOrbitSumDetector, ExactSignInversionDetector,
     ExactStationaryRepeatDetector, HarvestRow, JudgeSuiteExporter, SuiteExportError,
     PINNED_CLASSIFIER_DIGEST,
 };
+use num_rational::BigRational;
+use num_traits::Zero;
 
 #[test]
 fn test_exact_orbit_sum_mismatch_am_fsp_4() {

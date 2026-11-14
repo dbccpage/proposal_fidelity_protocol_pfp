@@ -1,0 +1,82 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/tests/core_epistemic_immune_system/activation_use_case_parity.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/tests/core_epistemic_immune_system/activation_use_case_parity.rs",
+      "language": "Rust",
+      "sha256": "d645d37461330977e95123bc93b057bd683cc55756e88cc531f2a651c51da052"
+    },
+    "contract_urn": "urn:core:crates-rs:tests:activation-use-case-parity:v1",
+    "symbols": [
+      "frozen_python_guard_ports_and_full_ordered_trace",
+      "injected_port_failures_remain_typed_and_stop_dependent_calls",
+      "run_guard_use_case_row",
+      "build_activation_request"
+    ],
+    "owned_invariants": [
+      "Tests assert parity with frozen Python use-case vectors across sensor, state, and activation calls.",
+      "Injected port failures remain typed and stop dependent calls.",
+      "AuthorityEffect: None."
+    ],
+    "boundaries": [
+      "Integration test suite verifying guard activation port and trace parity."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/tests/core_epistemic_immune_system/activation_use_case_parity.rs",
+      "language": "Rust",
+      "sha256": "d645d37461330977e95123bc93b057bd683cc55756e88cc531f2a651c51da052"
+    },
+    "profile": "Non-Numeric",
+    "level": "L2",
+    "level_basis": "Module-level verification for code/rust/tests/core_epistemic_immune_system/activation_use_case_parity.rs.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Test module states AuthorityEffect None and tests activation use-case parity.",
+      "G2": "Asserts exact match with frozen Python fixtures without floating-point tolerance.",
+      "G3": "Typed refusals verified on simulated port error injections.",
+      "G4": "All integration tests pass; clippy -D warnings and rustfmt check pass cleanly.",
+      "G5": "Standard test function layout within complexity limits."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T10:48:28Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/eis-pciv-m2-fmt.run.json",
+        "sha256": "8e9de6d83fb4df9baaa159ec1fc27cfd7ec7faf31c09b3909878ce4c9aca54a0",
+        "note": "cargo fmt --check on core_epistemic_immune_system and core_prompt_civilization"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m2-clippy.run.json",
+        "sha256": "360df1d68bad550438691750b3ffd452b72782ad639328c4e979c597682fe6f9",
+        "note": "clippy with -D warnings on both crates, all targets"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m2-eis-test.run.json",
+        "sha256": "85590c13449f950e8a64a22160af941191c4599a9110cd64d77d63a1b00afc7f",
+        "note": "cargo test for core_epistemic_immune_system"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m2-pciv-test.run.json",
+        "sha256": "0eb683c931b3e1c2601c7b27a712c734c4ec594210e346d76f3e931bd264cb8f",
+        "note": "cargo test for core_prompt_civilization --lib"
+      }
+    ]
+  },
+  "history": []
+}
