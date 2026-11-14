@@ -17,26 +17,27 @@ from pfp.infrastructure import operad_host
 
 from .. import REPO_ROOT
 from ..fidelity import HostOracleContext
-from .base import CERTIFIED, REFUSED, Session, Verdict, WorkflowFamily, canonical, certified, refused, spec_from
+from .base import (
+    CERTIFIED,
+    REFUSED,
+    Session,
+    Verdict,
+    WorkflowFamily,
+    canonical,
+    certified,
+    refused,
+    spec_from,
+)
+from .base import host_code as code
+from .base import host_passed as passed
 from .registry import register
 
 FOLDER = 'wf55_failure_ledger_with_trial_gated_rules'
 EXAMPLE_LEDGER = REPO_ROOT / 'workflows' / FOLDER / 'examples' / 'ledger_after_first_run.jsonl'
-PASS = 'PASS'
 
 
 def lines(path: Path) -> list[str]:
     return path.read_text(encoding='utf-8').splitlines()
-
-
-def passed(host: HostOracleContext, name: str, outcome: Mapping[str, Any]) -> bool:
-    """Record one host outcome under ``name``; True when the host passed it."""
-    return host.record(name, outcome['status'] == PASS, canonical(outcome).decode('utf-8'))
-
-
-def code(outcome: Mapping[str, Any]) -> str:
-    """The host's refusal code, or its status when the check ran and did not hold."""
-    return outcome.get('refusal', {}).get('code', outcome['status'])
 
 
 @register

@@ -30,7 +30,7 @@ SCORING.md checker (`governance/tools/checker.py`) and the atlas builder
 model reply (typed JSON)
       │
       ▼
-pfp_operad judge / envelope / mining / grounding / check ──► PASS / FAIL / REFUSED
+pfp_operad judge / envelope / mining / grounding / run ──► PASS / FAIL / REFUSED
       │ a wrong answer is a failure
       ▼
 pfp_operad witness         the host judges the answer and writes the failure record
@@ -66,11 +66,11 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
 | --- | --- | --- | --- |
 | 1. Failure learning is open-loop | Failure ledger with trial-gated admission | 1 | **built** |
 | 1. (cont.) no workflow writes or reads it | WF55 keeps failures in the ledger, trials a proposed rule on held-out cases and loads admitted rules into later runs. The host writes the failure and trial records itself (`pfp_operad witness`, `trial`) | 2c | **built** (offline) |
-| 1. (cont.) WF1-WF5 and WF52 do not write to it | Their runs write failures to a ledger and load its admitted rules, as an option that leaves the default prompts unchanged | 2d | planned |
+| 1. (cont.) WF1-WF5 and WF52 do not write to it | Their runs write failures to a ledger and load its admitted rules, as an option that leaves the default prompts unchanged | 2e | planned |
 | 2. Workflows do not use the canon | `pfp_operad check` types candidates by canon colours and runs them | 1 | **built** |
 | 2. (cont.) WF2-WF5 used their own colours | The colours they prompt for are now the canon type `task_value_colour`. `pfp_operad envelope` checks the reply envelope and types every candidate; `pfp_operad judge` is the exact integer sum. The Python versions are deleted | 2a | **built** |
 | 2. (cont.) WF3-WF5 kept extra operad checks in Python | `pfp_operad mining` screens a mining reply, `grounding` rechecks the four L2 slots, `typing` says which mined operation is licensed, `reuse` compares mined and emitted signatures. The Python versions are deleted | 2b | **built** |
-| 2. (cont.) candidates in WF2-WF5 stay unverified | Their meaning is free text. A workflow whose candidates carry a body from the closed list lets the host run the candidate itself | 2d | planned |
+| 2. (cont.) candidates in WF2-WF5 stay unverified | Their meaning is free text. In WF56 a candidate carries a body from the closed list, and `pfp_operad run` executes it on the task's input and on sealed probe cases and compares with its own judge | 2d | **built** (offline) |
 | 3. Laws are signature-level only | Law battery on values, cost and tree | 1 | **built** |
 | 3. (cont.) no Lean statement | Lean 4 theorems for the term model: associativity, unit, composition is evaluation | 6 | planned |
 | 4. PFP 018 repair slice has no workflow | Workflow over the Rust DDC tape verifier (`code/rust/pfp/src/ddc.rs`), writing to the ledger | 3 | planned |
@@ -83,7 +83,7 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
 1. **Operad host** (this change). Crate `code/rust/pfp_operads`, binary
    `pfp_operad`: typed terms, law battery, failure ledger, JSON entry points,
    CI. See its [README](../../code/rust/pfp_operads/README.md).
-2. **Wire the workflows to it**, in three steps.
+2. **Wire the workflows to it**, in steps.
    - **2a (built).** The integer-sum judge of WF1-WF5 and the reply envelope
      of WF2-WF5 (slot report, operad candidates, DDC moves) are checked by
      `pfp_operad judge` and `pfp_operad envelope`. The Python checks are
@@ -102,11 +102,15 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
      the host scores the trial, and the ledger admits the rule or rejects it.
      A later run that is given the ledger carries the admitted rules in its
      prompts.
-   - **2d.** A workflow whose candidates carry a body, so the host can run the
-     candidate and not only the licensed operation. WF1-WF5 and WF52 write
-     their failures to a ledger and load its admitted rules. Then one cheap
-     live run of WF55 to see whether an admitted rule changes a model's
-     result.
+   - **2d (built, offline).**
+     [WF56](../../workflows/wf56_host_run_operad_candidates/README.md): a
+     candidate names a body from the closed list, and the host runs it on the
+     task's input and on probe cases the prompt never carried. A body that
+     gives the judge's result on every case is `HOST_VERIFIED`; one that
+     differs is refused, even when the reply's answer is right.
+   - **2e.** WF1-WF5 and WF52 write their failures to a ledger and load its
+     admitted rules. Then one cheap live run of WF55 to see whether an
+     admitted rule changes a model's result.
 3. **Bounded DDC repair** as a workflow, from PFP 018's worked example and
    negative cases.
 4. **Port the workflow hosts.** The family runtime behind WF6-WF51, then
@@ -125,6 +129,9 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
 - After 2a no candidate in WF2-WF5 is host-verified. The host verifies the
   task result with the licensed operation and reports which candidates have
   that operation's signature. It does not know what a candidate means.
+- A candidate WF56 reports as verified agreed with the judge on the cases
+  given. That is not a proof for every input, and it does not show that the
+  model used the operation to reach its answer.
 - WF55 writes to the ledger and loads from it, on fixtures only. No model has
   run through it, so no rule has been shown to help a model. WF1-WF5 and WF52
   do not write to a ledger yet.

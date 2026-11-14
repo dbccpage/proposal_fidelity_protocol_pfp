@@ -313,6 +313,19 @@ def judge(host: HostOracleContext, ok_code: str = 'CERTIFIED', **detail: Any) ->
     return refused(failed[0].upper() if failed else 'NO_HOST_PREDICATE', failed=failed, **detail)
 
 
+HOST_PASS = 'PASS'
+
+
+def host_passed(host: HostOracleContext, name: str, outcome: Mapping[str, Any]) -> bool:
+    """Record one outcome of the Rust operad host under ``name``; True when the host passed it."""
+    return host.record(name, outcome['status'] == HOST_PASS, canonical(outcome).decode('utf-8'))
+
+
+def host_code(outcome: Mapping[str, Any], failed: str | None = None) -> str:
+    """The host's refusal code. For a check that ran and did not hold: ``failed``, or the host's status."""
+    return outcome.get('refusal', {}).get('code', failed or outcome['status'])
+
+
 class WorkflowFamily:
     """Base class. Subclasses set ``spec`` and implement ``check`` (or override ``run``)."""
     spec: ClassVar[WorkflowFamilySpecV1]

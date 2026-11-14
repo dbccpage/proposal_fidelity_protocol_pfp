@@ -4440,6 +4440,77 @@
         "pilot_test_sources": [],
         "file_count": 2,
         "runner_class": "FailureLedgerTrialGatedRules"
+      },
+      {
+        "id": "WF56",
+        "name": "Host-run operad candidates",
+        "status": "implemented",
+        "kind": "procedure_extension",
+        "merge_into": null,
+        "depends_on": [
+          "WF2"
+        ],
+        "layer": 2,
+        "sources": [
+          "docs/plans/operads_redesign.md slice 2d: a candidate with a body the host can run"
+        ],
+        "task_families": [
+          "finite_integer_sum"
+        ],
+        "source_evidence": "Offline fixtures only; no model campaign.",
+        "process": [
+          "One reply gives candidates and an answer; each candidate names source colours, a target colour and a body from the host's closed list",
+          "The host types every candidate by the canon's task value colours",
+          "The host runs each candidate that has a body on the task's case and on sealed probe cases",
+          "The host compares each result with its own judge's result; the caller supplies no expected value",
+          "The host judges the answer"
+        ],
+        "math": [
+          "HOST_VERIFIED(c) iff body(c) is in the closed list and eval(c, x) = f(x) for every case x, with f the host judge",
+          "REFUSED(c) iff c is ill typed, its id repeats, or eval(c, x) != f(x) for some case x it fits",
+          "certified iff some candidate is HOST_VERIFIED, none is REFUSED and the answer equals f(x0) on the task's case x0",
+          "probes: cases the prompt never carries, so a body that agrees on x0 by coincidence is still refused"
+        ],
+        "host_check": "Rust run of each candidate body against the host's own judge (pfp_operad run, judge)",
+        "model_calls_normal_path": "1",
+        "team": {
+          "goal": "An accepted answer together with an operation the host ran itself and found to give the same result.",
+          "pattern": "solo",
+          "roles": [
+            {
+              "role": "coder",
+              "model_tier": "sonnet",
+              "count": 1,
+              "task": "Answer the task and name the operation used, with a body from the closed list."
+            },
+            {
+              "role": "host_checker",
+              "model_tier": "none",
+              "count": 1,
+              "task": "Deterministic check; the only component that can accept. Never a model."
+            }
+          ],
+          "boost": {
+            "trigger": "none",
+            "action": "none; a refused run is reported with the host's code for each candidate",
+            "limit": 0
+          }
+        },
+        "path": "workflows/wf56_host_run_operad_candidates",
+        "definition": "workflows/wf56_host_run_operad_candidates/README.md",
+        "audited_availability": "offline_family_runner_with_fixture_tests",
+        "substantive_evidence_status": {
+          "family_definition_read": true,
+          "source_evidence_statement": "Offline fixtures only; no model campaign.",
+          "status_scope": "Documentation claims preserved as claims, not independently reproduced results",
+          "execution_verified_in_this_audit": false
+        },
+        "runner_source": "pfp_core/workflow_families/candidates.py",
+        "tests": "pfp_core/workflow_families/tests/test_families.py",
+        "pilot_python_sources": [],
+        "pilot_test_sources": [],
+        "file_count": 2,
+        "runner_class": "HostRunOperadCandidates"
       }
     ],
     "family_edges": [
@@ -4836,6 +4907,11 @@
       {
         "from": "WF14",
         "to": "WF55",
+        "audit_edge_semantics": "documented_design_dependency_not_execution_or_proof"
+      },
+      {
+        "from": "WF2",
+        "to": "WF56",
         "audit_edge_semantics": "documented_design_dependency_not_execution_or_proof"
       }
     ],
