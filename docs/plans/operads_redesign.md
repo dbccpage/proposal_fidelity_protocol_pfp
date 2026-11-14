@@ -66,7 +66,8 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
 | --- | --- | --- | --- |
 | 1. Failure learning is open-loop | Failure ledger with trial-gated admission | 1 | **built** |
 | 1. (cont.) no workflow writes or reads it | WF55 keeps failures in the ledger, trials a proposed rule on held-out cases and loads admitted rules into later runs. The host writes the failure and trial records itself (`pfp_operad witness`, `trial`) | 2c | **built** (offline) |
-| 1. (cont.) WF1-WF5 and WF52 do not write to it | Their runs write failures to a ledger and load its admitted rules, as an option that leaves the default prompts unchanged | 2e | planned |
+| 1. (cont.) WF1-WF5 do not write to it | The host reads the stored turns of a finished run and records the failures (`pfp_operad witness-turn`), writes the seed a later run loads (`ledger load`, `ledger loaded`) and scores a rule from paired runs (`ledger trial`). The workflows and their default prompts are unchanged; `pfp/workflows/failure_ledger.py` carries the files. WF1-WF4 run a loaded task. WF5 records failures but refuses a loaded seed | 2e | **built** (offline) |
+| 1. (cont.) WF52 does not write to it | Its grade comes from a private evaluator in Python. The host has no judge for it, so a WF52 failure cannot be host-witnessed until its checks are ported | 4 | planned |
 | 2. Workflows do not use the canon | `pfp_operad check` types candidates by canon colours and runs them | 1 | **built** |
 | 2. (cont.) WF2-WF5 used their own colours | The colours they prompt for are now the canon type `task_value_colour`. `pfp_operad envelope` checks the reply envelope and types every candidate; `pfp_operad judge` is the exact integer sum. The Python versions are deleted | 2a | **built** |
 | 2. (cont.) WF3-WF5 kept extra operad checks in Python | `pfp_operad mining` screens a mining reply, `grounding` rechecks the four L2 slots, `typing` says which mined operation is licensed, `reuse` compares mined and emitted signatures. The Python versions are deleted | 2b | **built** |
@@ -108,8 +109,16 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
      task's input and on probe cases the prompt never carried. A body that
      gives the judge's result on every case is `HOST_VERIFIED`; one that
      differs is refused, even when the reply's answer is right.
-   - **2e.** WF1-WF5 and WF52 write their failures to a ledger and load its
-     admitted rules. Then one cheap live run of WF55 to see whether an
+   - **2e (built, offline).** WF1-WF5 runs feed a ledger and load from it
+     without a change to any workflow. The host reads a run's stored turns
+     and records the ones its judge rejects. `ledger load` writes the seed a
+     later run uses: the task's seed with the admitted rules after it, and
+     the same seed byte for byte when no rule is admitted. `ledger trial`
+     scores a rule from paired runs and refuses a pair whose seeds differ by
+     anything but that rule. A failure is named after its case by content, so
+     a trial on the case a rule came from is refused under any task id.
+     WF5 does not run a loaded seed (its rewrite accepts one seed language),
+     and WF52 waits for slice 4. Next: one cheap live run to see whether an
      admitted rule changes a model's result.
 3. **Bounded DDC repair** as a workflow, from PFP 018's worked example and
    negative cases.
@@ -133,10 +142,15 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
   given. That is not a proof for every input, and it does not show that the
   model used the operation to reach its answer.
 - WF55 writes to the ledger and loads from it, on fixtures only. No model has
-  run through it, so no rule has been shown to help a model. WF1-WF5 and WF52
-  do not write to a ledger yet.
-- The host judges the trial answers it is handed. It does not see that the
-  treated answers were produced with the rule loaded.
+  run through it or through a loaded WF1-WF4 task, so no rule has been shown
+  to help a model. WF52 does not write to a ledger, and WF5 does not load
+  from one.
+- `pfp_operad trial` judges the answers it is handed and does not see that
+  the treated answers were produced with the rule loaded. `ledger trial`
+  checks the stored seeds of both arms, but trusts the stored turn files; a
+  workflow's own replay ties those to the reply bytes.
+- A loaded rule travels as text after the seed. The prompt template's own
+  `antibody_injections` slot stays empty until the workflow hosts are ported.
 - Python still validates reply schemas, routes statuses and keeps run
   custody (manifests, replay). Those move in slice 4.
 - WF4's own local contract (public binding, native integer result, agreement

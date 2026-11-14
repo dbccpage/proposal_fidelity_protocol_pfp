@@ -1,0 +1,245 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/loading.rs",
+  "target_sha256": "6f0dc70df42e07330ee94baf6472353cdfc544573fda17a295f2bbee80d0f4de",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
+  "counts": {
+    "killed": 38,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "head shortened to 8 digits",
+      "old": "pub const HEAD_DIGITS: usize = 16;",
+      "new": "pub const HEAD_DIGITS: usize = 8;",
+      "outcome": "killed"
+    },
+    {
+      "name": "whole head written",
+      "old": "pub const HEAD_DIGITS: usize = 16;",
+      "new": "pub const HEAD_DIGITS: usize = 64;",
+      "outcome": "killed"
+    },
+    {
+      "name": "carriage return allowed",
+      "old": "if text.contains(['\\n', '\\r']) {",
+      "new": "if text.contains(['\\n']) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "line feed allowed",
+      "old": "if text.contains(['\\n', '\\r']) {",
+      "new": "if text.contains(['\\r']) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "line breaks allowed",
+      "old": "if text.contains(['\\n', '\\r']) {",
+      "new": "if false && text.contains(['\\n', '\\r']) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "line break refusal mislabelled",
+      "old": "\"RULE_NOT_ONE_LINE\",",
+      "new": "\"BAD_REQUEST\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "admitted rules not loaded",
+      "old": "let mut rules = ledger.admitted();",
+      "new": "let mut rules: Vec<AdmittedRule> = Vec::new();",
+      "outcome": "killed"
+    },
+    {
+      "name": "rule under trial listed first",
+      "old": "rules.push(ledger.on_trial(candidate)?);",
+      "new": "rules.insert(0, ledger.on_trial(candidate)?);",
+      "outcome": "killed"
+    },
+    {
+      "name": "rule under trial not loaded",
+      "old": "rules.push(ledger.on_trial(candidate)?);",
+      "new": "ledger.on_trial(candidate)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "rule id may break the line",
+      "old": "        one_line(&rule.id, \"id\", &rule.id)?;\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "rule constraint may break the line",
+      "old": "        one_line(&rule.constraint, \"constraint\", &rule.id)?;\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "header written with no rule",
+      "old": "if rules.is_empty() {",
+      "new": "if false && rules.is_empty() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "head shortened from the wrong end",
+      "old": "head.chars().take(HEAD_DIGITS)",
+      "new": "head.chars().rev().take(HEAD_DIGITS)",
+      "outcome": "killed"
+    },
+    {
+      "name": "one blank line dropped",
+      "old": "format!(\"{seed}\\n\\nRules loaded",
+      "new": "format!(\"{seed}\\nRules loaded",
+      "outcome": "killed"
+    },
+    {
+      "name": "ledger state not named in the seed",
+      "old": "failure ledger {short}:\\n\")",
+      "new": "failure ledger:\\n\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "rule id and constraint swapped",
+      "old": "format!(\"- [{}] {}\\n\", rule.id, rule.constraint)",
+      "new": "format!(\"- [{}] {}\\n\", rule.constraint, rule.id)",
+      "outcome": "killed"
+    },
+    {
+      "name": "rule id not bracketed",
+      "old": "format!(\"- [{}] {}\\n\", rule.id, rule.constraint)",
+      "new": "format!(\"- {} {}\\n\", rule.id, rule.constraint)",
+      "outcome": "killed"
+    },
+    {
+      "name": "rule line not ended",
+      "old": "format!(\"- [{}] {}\\n\", rule.id, rule.constraint)",
+      "new": "format!(\"- [{}] {}\", rule.id, rule.constraint)",
+      "outcome": "killed"
+    },
+    {
+      "name": "rules listed but not written",
+      "old": "let seed_prompt = render(&request.seed_prompt, ledger.head(), &rules);",
+      "new": "let seed_prompt = render(&request.seed_prompt, ledger.head(), &[]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "load ignores the rule under trial",
+      "old": "    let rules = rules_of(&ledger, request.on_trial.as_deref())?;\n    let seed_prompt = render(",
+      "new": "    let rules = rules_of(&ledger, None)?;\n    let seed_prompt = render(",
+      "outcome": "killed"
+    },
+    {
+      "name": "head left out of the account",
+      "old": "ledger_head: ledger.head().to_owned(),",
+      "new": "ledger_head: String::new(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "entries not counted",
+      "old": "entries: ledger.entries().len(),",
+      "new": "entries: 0,",
+      "outcome": "killed"
+    },
+    {
+      "name": "base hash is the loaded hash",
+      "old": "base_seed_sha256: sha256(&request.seed_prompt),",
+      "new": "base_seed_sha256: sha256(&seed_prompt),",
+      "outcome": "killed"
+    },
+    {
+      "name": "loaded hash is the base hash",
+      "old": "seed_sha256: sha256(&seed_prompt),",
+      "new": "seed_sha256: sha256(&request.seed_prompt),",
+      "outcome": "killed"
+    },
+    {
+      "name": "rule under trial left out of the account",
+      "old": "on_trial: request.on_trial,",
+      "new": "on_trial: None,",
+      "outcome": "killed"
+    },
+    {
+      "name": "load request open",
+      "old": "#[serde(deny_unknown_fields)]\nstruct LoadRequest {",
+      "new": "struct LoadRequest {",
+      "outcome": "killed"
+    },
+    {
+      "name": "check request open",
+      "old": "#[serde(deny_unknown_fields)]\nstruct LoadedRequest {",
+      "new": "struct LoadedRequest {",
+      "outcome": "killed"
+    },
+    {
+      "name": "seed checked at the current head",
+      "old": "let ledger = Ledger::from_lines(ledger)?.at(&request.ledger_head)?;",
+      "new": "let ledger = Ledger::from_lines(ledger)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "check ignores the rule under trial",
+      "old": "    let rules = rules_of(&ledger, request.on_trial.as_deref())?;\n    let expected = render(",
+      "new": "    let rules = rules_of(&ledger, None)?;\n    let expected = render(",
+      "outcome": "killed"
+    },
+    {
+      "name": "the seed is compared with itself",
+      "old": "let expected = render(&request.base_seed_prompt, ledger.head(), &rules);",
+      "new": "let expected = render(&request.seed_prompt, ledger.head(), &rules);",
+      "outcome": "killed"
+    },
+    {
+      "name": "every seed matches",
+      "old": "accepted: expected == request.seed_prompt,",
+      "new": "accepted: true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "match inverted",
+      "old": "accepted: expected == request.seed_prompt,",
+      "new": "accepted: expected != request.seed_prompt,",
+      "outcome": "killed"
+    },
+    {
+      "name": "only lengths compared",
+      "old": "accepted: expected == request.seed_prompt,",
+      "new": "accepted: expected.len() == request.seed_prompt.len(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "rules reported by constraint",
+      "old": "rules: rules.into_iter().map(|rule| rule.id).collect(),",
+      "new": "rules: rules.into_iter().map(|rule| rule.constraint).collect(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "expected hash is the given hash",
+      "old": "expected_seed_sha256: sha256(&expected),",
+      "new": "expected_seed_sha256: sha256(&request.seed_prompt),",
+      "outcome": "killed"
+    },
+    {
+      "name": "given hash is the expected hash",
+      "old": "        seed_sha256: sha256(&request.seed_prompt),",
+      "new": "        seed_sha256: sha256(&expected),",
+      "outcome": "killed"
+    },
+    {
+      "name": "bad request mislabelled in load",
+      "old": "    let request: LoadRequest = serde_json::from_str(request)\n        .map_err(|error| Refusal::new(\"BAD_REQUEST\", error.to_string()))?;",
+      "new": "    let request: LoadRequest = serde_json::from_str(request)\n        .map_err(|error| Refusal::new(\"BAD_ENTRY\", error.to_string()))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "bad request mislabelled in check",
+      "old": "    let request: LoadedRequest = serde_json::from_str(request)\n        .map_err(|error| Refusal::new(\"BAD_REQUEST\", error.to_string()))?;",
+      "new": "    let request: LoadedRequest = serde_json::from_str(request)\n        .map_err(|error| Refusal::new(\"BAD_ENTRY\", error.to_string()))?;",
+      "outcome": "killed"
+    }
+  ]
+}

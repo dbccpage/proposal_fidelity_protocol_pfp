@@ -2,7 +2,7 @@
 //!
 //! AuthorityEffect: None.
 
-use pfp_operads::ledger::{Ledger, Record, Status, GENESIS};
+use pfp_operads::ledger::{case_of, Ledger, Record, Status, GENESIS};
 use sha2::{Digest, Sha256};
 
 type Edit = fn(&mut Record);
@@ -394,4 +394,89 @@ fn the_hash_covers_the_domain_line_seq_prev_and_record() {
     let body = format!("pfp.operads.ledger.v1\n[0,\"{GENESIS}\",{record}]");
     let by_hand = hex::encode(Sha256::digest(body.as_bytes()));
     assert_eq!(seeded().entries()[0].hash, by_hand);
+}
+
+#[test]
+fn an_id_names_its_case_before_the_first_at_sign() {
+    assert_eq!(case_of("c1@run-7"), "c1");
+    assert_eq!(case_of("c1@run-7@agent-2"), "c1");
+    assert_eq!(case_of("plain"), "plain");
+    assert_eq!(case_of("@run"), "");
+}
+
+#[test]
+fn a_trial_on_the_case_of_a_failure_the_rule_came_from_is_refused_whatever_the_run() {
+    let mut ledger = Ledger::new();
+    ledger.append(failure("c1@run-1")).unwrap();
+    ledger.append(failure("c2@run-1")).unwrap();
+    ledger.append(failure("f3")).unwrap();
+    ledger.append(candidate("a1", &["c1@run-1", "f3"])).unwrap();
+    for held_out in [
+        &["c1"][..],
+        &["c1@run-9"][..],
+        &["h1", "c1@run-1"][..],
+        &["f3@run-2"][..],
+        &["f3"][..],
+    ] {
+        assert_eq!(
+            refused(&mut ledger, trial("a1", held_out, 0, 1, 0)),
+            "SPLIT_OVERLAP"
+        );
+    }
+    // The case of a failure the rule did not come from is held out.
+    ledger.append(trial("a1", &["c2", "c11"], 0, 1, 0)).unwrap();
+}
+
+#[test]
+fn the_head_names_the_state_and_an_earlier_state_can_be_rebuilt() {
+    let empty = Ledger::new();
+    assert_eq!(empty.head(), GENESIS);
+    assert!(empty.at(GENESIS).unwrap().entries().is_empty());
+    let mut ledger = seeded();
+    let seq = ledger.append(trial("a1", &["h1"], 0, 1, 0)).unwrap().seq;
+    ledger.append(admission("a1", seq)).unwrap();
+    let hashes: Vec<String> = ledger
+        .entries()
+        .iter()
+        .map(|entry| entry.hash.clone())
+        .collect();
+    assert_eq!(ledger.head(), hashes[4]);
+    let whole = ledger.at(ledger.head()).unwrap();
+    assert_eq!(whole.to_lines().unwrap(), ledger.to_lines().unwrap());
+    assert_eq!(whole.status("a1"), Some(Status::Admitted));
+    let proposed = ledger.at(&hashes[2]).unwrap();
+    assert_eq!(proposed.entries().len(), 3);
+    assert_eq!(proposed.head(), hashes[2]);
+    assert_eq!(proposed.status("a1"), Some(Status::Candidate));
+    assert!(proposed.admitted().is_empty());
+    let first = ledger.at(&hashes[0]).unwrap();
+    assert_eq!((first.entries().len(), first.status("a1")), (1, None));
+    assert!(ledger.at(GENESIS).unwrap().entries().is_empty());
+    assert_eq!(ledger.at(HASH).unwrap_err().code, "UNKNOWN_LEDGER_HEAD");
+    // The earlier state is a copy: the ledger itself is unchanged.
+    assert_eq!(ledger.entries().len(), 5);
+}
+
+#[test]
+fn only_a_proposed_or_rejected_rule_can_be_put_on_trial() {
+    let mut ledger = seeded();
+    let rule = ledger.on_trial("a1").unwrap();
+    assert_eq!(
+        (rule.id.as_str(), rule.capability_kind.as_str()),
+        ("a1", "antibody")
+    );
+    assert!(rule.constraint.starts_with("State the sign"));
+    ledger.append(trial("a1", &["h1"], 0, 0, 0)).unwrap();
+    assert_eq!(ledger.status("a1"), Some(Status::Rejected));
+    assert_eq!(ledger.on_trial("a1").unwrap().id, "a1");
+    let seq = ledger.append(trial("a1", &["h1"], 0, 1, 0)).unwrap().seq;
+    ledger.append(admission("a1", seq)).unwrap();
+    let refusal = ledger.on_trial("a1").unwrap_err();
+    assert_eq!(
+        (refusal.code, refusal.message.as_str()),
+        ("NOT_ON_TRIAL", "a1 is admitted")
+    );
+    ledger.append(retirement("a1")).unwrap();
+    assert_eq!(ledger.on_trial("a1").unwrap_err().message, "a1 is retired");
+    assert_eq!(ledger.on_trial("a9").unwrap_err().code, "UNKNOWN_CANDIDATE");
 }

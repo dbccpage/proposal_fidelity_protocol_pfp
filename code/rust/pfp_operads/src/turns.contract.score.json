@@ -1,0 +1,107 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/turns.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/turns.rs",
+      "language": "Rust",
+      "sha256": "1ca9bd4de1b75eae8d6fdd7d8bbe7a9dfddce13c5ee61bd82132c320659542e1"
+    },
+    "contract_urn": "urn:pfp-operads:turns:v1",
+    "symbols": [
+      "CASE_DIGITS",
+      "witness_turn",
+      "trial_turns"
+    ],
+    "owned_invariants": [
+      "The host reads the checker, the public input, the seed, the workflow id and the checked answer from a turn's task.json and receipt.json itself. The caller supplies the two files and a name for the run, and cannot supply a verdict, a class, an id or a count.",
+      "A full-slot answer is judged on its task_result and gives its DDC letters in order; any other answer is judged as written. An object whose DDC moves cannot be read is refused as BAD_TURN.",
+      "A failure record is written only for a turn whose task result the judge rejects. A turn without a checked answer is refused as NO_ANSWER, a correct one as NOT_A_FAILURE, a turn with no judge as UNKNOWN_CHECKER.",
+      "A case is named c plus 16 hex digits of the SHA-256 of a domain tag, the checker and the case's integers in order, so the name does not depend on how the input was written, on the task id or on the run. A failure id is the case name, an @ and the run name.",
+      "The failure's evidence hash covers the checker, the public input and the whole stored answer.",
+      "A trial pair counts only when both turns are the same case, the baseline seed is the base seed with the rules admitted at the stated ledger head, and the treated seed is that plus the rule under trial. Anything else is refused as PAIR_MISMATCH, BASELINE_SEED_MISMATCH or TREATED_SEED_MISMATCH.",
+      "In a trial a turn without a checked answer is not correct. Held-out ids are the case names, so the ledger refuses a trial on the case of a failure the rule came from."
+    ],
+    "boundaries": [
+      "The host trusts the two stored files. The workflow's own replay is what ties a receipt to the reply bytes and a task to the prompt that was sent.",
+      "One judge exists: integer_sum_v1. A mining turn has no judge and is never a failure or a trial case.",
+      "Two cases with the same integers in another order are different cases.",
+      "A case name is 64 bits of a hash; equal names are treated as the same case."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/turns.rs",
+      "language": "Rust",
+      "sha256": "1ca9bd4de1b75eae8d6fdd7d8bbe7a9dfddce13c5ee61bd82132c320659542e1"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, vocabularies from the canon, exact integers, no unwrap or direct indexing.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact profile: every verdict is judge.rs's comparison of unbounded integers, and a case name hashes those integers in decimal. Seeds are compared as whole strings with the text loading.rs renders. Not B: no proof; the hash and big-integer libraries are trusted.",
+      "G3": "Typed refusals: BAD_REQUEST, BAD_TURN, NO_ANSWER, NOT_A_FAILURE, UNKNOWN_CHECKER, BAD_CASE, PAIR_MISMATCH, BASELINE_SEED_MISMATCH, TREATED_SEED_MISMATCH, UNKNOWN_LEDGER_HEAD, UNKNOWN_CANDIDATE, NOT_ON_TRIAL and every ledger replay refusal. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
+      "G4": "11 turns tests assert a failure record field by field with hashes the test computes itself, case names under rewritten input, envelope and bare answers, every refusal, a trial taken through the ledger to an admission, SPLIT_OVERLAP on a renamed case and each unfair pair; pfp/workflows/tests/test_failure_ledger.py runs the same commands on real WF1-WF5 run folders. Mutation campaign R = 45/45. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 11, cognitive complexity is not measured for Rust, nesting 1; ceiling B, recorded B."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T11:17:42Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v6-test.run.json",
+        "sha256": "0015073cbbd4f3cb71a51765a6ccd8e96f1ce21307d35dc85a893ccf1a61dbc1",
+        "note": "143 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v6-clippy.run.json",
+        "sha256": "aec4e9e626e30e4c8b04b8e691152730e9fdbb1e9629cfb80f3c4025103af479",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v6-fmt.run.json",
+        "sha256": "22353a3ef8d432002b2b4f873ced27261b5407a14b0c8309850e2644b6b2665e",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v6-metrics.run.json",
+        "sha256": "273342cfbdbee0e1cf5add613769ef5b3b0619f76d17ed8ddece27c29aa2f63d",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v6-metrics.json",
+        "sha256": "4f688b29cf8d50a27c6a468c7882cf8bfbc736317214f74fc958e01364fe4dd8",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 45,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-turns.mutation.json",
+        "sha256": "a5d3a68a30542bf7ccc571b802bad92be68ea26159ad0c3a090443cc89d8355c",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 45 mutants"
+      }
+    }
+  },
+  "history": []
+}

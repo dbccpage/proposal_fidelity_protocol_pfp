@@ -435,4 +435,214 @@ fn the_shipped_examples_pass() {
         record: example("failure.json"),
     };
     assert_eq!(status(&respond(&append)), "PASS");
+    assert_eq!(
+        status(&respond(&Command::WitnessTurn(example(
+            "witness_turn.json"
+        )))),
+        "PASS"
+    );
+    let ledger = std::fs::read_to_string(
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("../../../workflows/wf55_failure_ledger_with_trial_gated_rules/examples")
+            .join("ledger_after_first_run.jsonl"),
+    )
+    .unwrap();
+    let load = Command::LedgerLoad {
+        ledger: ledger.clone(),
+        request: example("load.json"),
+    };
+    let Outcome::Pass { result: seed } = respond(&load) else {
+        panic!("the example seed loads");
+    };
+    let shipped: Value = serde_json::from_str(&example("loaded.json")).unwrap();
+    assert_eq!(seed["seed_prompt"], shipped["seed_prompt"]);
+    let loaded = Command::LedgerLoaded {
+        ledger,
+        request: example("loaded.json"),
+    };
+    assert_eq!(status(&respond(&loaded)), "PASS");
+}
+
+fn stored_turn(values: Value, total: i64, seed: &str) -> Value {
+    json!({
+        "task": {"checker": "integer_sum_v1", "seed_prompt": seed, "input": {"values": values}},
+        "receipt": {"workflow_id": "WF1", "check": {"answer": {"total": total}}}
+    })
+}
+
+#[test]
+fn stored_turns_and_loaded_seeds_are_reachable_through_respond() {
+    const SEED: &str = "Add the integers.";
+    let pass = |command: Command| match respond(&command) {
+        Outcome::Pass { result } => result,
+        other => panic!("expected a pass, got {other:?}"),
+    };
+    let code = |command: Command| match respond(&command) {
+        Outcome::Refused { refusal } => refusal.code,
+        other => panic!("expected a refusal, got {other:?}"),
+    };
+    let witness = |total: i64| {
+        Command::WitnessTurn(
+            json!({"run": "r1", "turn": stored_turn(json!([9, -2]), total, SEED)}).to_string(),
+        )
+    };
+    assert_eq!(code(witness(7)), "NOT_A_FAILURE");
+    let failure = pass(witness(11))["record"].clone();
+    let mut ledger = String::new();
+    let mut append = |record: Value| {
+        let entry = pass(Command::LedgerAppend {
+            ledger: ledger.clone(),
+            record: record.to_string(),
+        });
+        ledger.push_str(&format!("{entry}\n"));
+        entry
+    };
+    append(failure.clone());
+    append(
+        json!({"kind": "candidate", "id": "sign", "capability_kind": "antibody",
+                  "constraint": "Keep the sign.", "derived_from": [failure["id"]]}),
+    );
+    let load = |ledger: &str, on_trial: Value| {
+        pass(Command::LedgerLoad {
+            ledger: ledger.to_owned(),
+            request: json!({"seed_prompt": SEED, "on_trial": on_trial}).to_string(),
+        })
+    };
+    let plain = load(&ledger, Value::Null);
+    assert_eq!(plain["seed_prompt"], SEED);
+    let treated = load(&ledger, json!("sign"));
+    let head = treated["ledger_head"].clone();
+    let trial = |treated_seed: &Value| Command::LedgerTrial {
+        ledger: ledger.clone(),
+        request: json!({"candidate": "sign", "cases": [{
+            "baseline": stored_turn(json!([8, -3]), 11, SEED),
+            "treated": stored_turn(json!([8, -3]), 5, treated_seed.as_str().unwrap()),
+            "base_seed_prompt": SEED,
+            "ledger_head": head
+        }]})
+        .to_string(),
+    };
+    assert_eq!(code(trial(&json!(SEED))), "TREATED_SEED_MISMATCH");
+    let scored = pass(trial(&treated["seed_prompt"]));
+    assert_eq!(scored["record"]["treated_correct"], 1);
+    let check = |seed: &Value, on_trial: Value| Command::LedgerLoaded {
+        ledger: ledger.clone(),
+        request: json!({"base_seed_prompt": SEED, "seed_prompt": seed, "ledger_head": head,
+                        "on_trial": on_trial})
+        .to_string(),
+    };
+    assert_eq!(
+        pass(check(&treated["seed_prompt"], json!("sign")))["accepted"],
+        true
+    );
+    let failed = respond(&check(&treated["seed_prompt"], Value::Null));
+    assert_eq!(status(&failed), "FAIL");
+    assert_eq!(
+        code(Command::LedgerLoad {
+            ledger: "garbage".to_owned(),
+            request: json!({"seed_prompt": SEED}).to_string()
+        }),
+        "BAD_ENTRY"
+    );
+}
+
+#[test]
+fn the_command_reads_stored_turns_and_loads_seeds_from_a_ledger_file() {
+    const SEED: &str = "Add the integers.";
+    let folder = scratch("turns");
+    let path = |name: &str| folder.join(name).to_string_lossy().into_owned();
+    let write = |name: &str, value: &Value| std::fs::write(path(name), value.to_string()).unwrap();
+    let ledger = path("failures.jsonl");
+    write(
+        "turn.json",
+        &json!({"run": "r1", "turn": stored_turn(json!([9, -2]), 11, SEED)}),
+    );
+    let (code, out, _) = run(&["witness-turn", &path("turn.json")]);
+    assert_eq!(code, 0);
+    let failure = out["result"]["record"].clone();
+    // A ledger file that does not exist yet loads nothing and the seed is unchanged.
+    write("seed.json", &json!({"seed_prompt": SEED}));
+    let (code, out, _) = run(&["ledger", "load", &ledger, &path("seed.json")]);
+    assert_eq!(
+        (code, out["result"]["seed_prompt"].as_str()),
+        (0, Some(SEED))
+    );
+    assert!(!std::path::Path::new(&ledger).exists());
+    write("failure.json", &failure);
+    write(
+        "rule.json",
+        &json!({"kind": "candidate", "id": "sign", "capability_kind": "antibody",
+                "constraint": "Keep the sign.", "derived_from": [failure["id"]]}),
+    );
+    for name in ["failure.json", "rule.json"] {
+        assert_eq!(run(&["ledger", "append", &ledger, &path(name)]).0, 0);
+    }
+    write(
+        "on_trial.json",
+        &json!({"seed_prompt": SEED, "on_trial": "sign"}),
+    );
+    let (code, out, _) = run(&["ledger", "load", &ledger, &path("on_trial.json")]);
+    assert_eq!(code, 0);
+    let treated = out["result"].clone();
+    let pair = |treated_total: i64| {
+        json!({"candidate": "sign", "cases": [{
+            "baseline": stored_turn(json!([8, -3]), 11, SEED),
+            "treated": stored_turn(json!([8, -3]), treated_total, treated["seed_prompt"].as_str().unwrap()),
+            "base_seed_prompt": SEED,
+            "ledger_head": treated["ledger_head"]
+        }]})
+    };
+    write("pairs.json", &pair(5));
+    let before = std::fs::read_to_string(&ledger).unwrap();
+    let (code, out, _) = run(&["ledger", "trial", &ledger, &path("pairs.json")]);
+    assert_eq!(
+        (code, out["result"]["record"]["treated_correct"].as_u64()),
+        (0, Some(1))
+    );
+    // Scoring a trial does not write it: only `ledger append` adds a line.
+    assert_eq!(std::fs::read_to_string(&ledger).unwrap(), before);
+    write("trial.json", &out["result"]["record"]);
+    let (code, out, _) = run(&["ledger", "append", &ledger, &path("trial.json")]);
+    assert_eq!(code, 0);
+    write(
+        "admit.json",
+        &json!({"kind": "admission", "candidate": "sign", "trial": out["result"]["seq"]}),
+    );
+    assert_eq!(
+        run(&["ledger", "append", &ledger, &path("admit.json")]).0,
+        0
+    );
+    let (_, out, _) = run(&["ledger", "load", &ledger, &path("seed.json")]);
+    let seed = out["result"].clone();
+    assert!(seed["seed_prompt"]
+        .as_str()
+        .unwrap()
+        .ends_with("- [sign] Keep the sign.\n"));
+    let check = |seed_prompt: &str| json!({"base_seed_prompt": SEED, "seed_prompt": seed_prompt, "ledger_head": seed["ledger_head"]});
+    write("good.json", &check(seed["seed_prompt"].as_str().unwrap()));
+    write("edited.json", &check("Add the integers. Answer 5."));
+    let (code, out, _) = run(&["ledger", "loaded", &ledger, &path("good.json")]);
+    assert_eq!((code, out["status"].as_str()), (0, Some("PASS")));
+    let (code, out, _) = run(&["ledger", "loaded", &ledger, &path("edited.json")]);
+    assert_eq!((code, out["status"].as_str()), (1, Some("FAIL")));
+    // Each command needs its request file, and the three ledger commands need both files.
+    for missing in [
+        &["witness-turn", "absent.json"][..],
+        &["ledger", "load", &ledger, "absent.json"][..],
+        &["ledger", "loaded", &ledger, "absent.json"][..],
+        &["ledger", "trial", &ledger, "absent.json"][..],
+    ] {
+        let (code, _, err) = run(missing);
+        assert_eq!(code, 2);
+        assert!(err.contains("cannot read"));
+    }
+    for short in [
+        &["witness-turn"][..],
+        &["ledger", "load", &ledger][..],
+        &["ledger", "loaded", &ledger][..],
+        &["ledger", "trial", &ledger][..],
+    ] {
+        assert!(run(short).2.contains("usage: pfp_operad"));
+    }
+    std::fs::remove_dir_all(folder).unwrap();
 }

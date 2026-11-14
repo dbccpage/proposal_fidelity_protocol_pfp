@@ -19,11 +19,15 @@ outcome and decides nothing. AuthorityEffect: None.
 | `pfp_operad reuse REQUEST.json` | Which emitted candidates have the signature of a mined candidate? |
 | `pfp_operad witness REQUEST.json` | Is this answer a failure? The host judges it itself and, if it is wrong, writes the failure record for the ledger. |
 | `pfp_operad trial REQUEST.json` | How did a rule do on held-out cases? The host judges each baseline and treated answer and writes the trial record. |
+| `pfp_operad witness-turn REQUEST.json` | Did this stored turn of a WF1 to WF5 run fail? The host reads the turn's `task.json` and `receipt.json` itself, judges the task result and writes the failure record, named after its case. |
 | `pfp_operad version` | Which host and which canon is this? Workflows record it in every run. |
 | `pfp_operad laws REQUEST.json` | Do these operations obey the operad laws on this panel of inputs? |
 | `pfp_operad ledger append LEDGER.jsonl RECORD.json` | Is this record lawful? If so, add it to the failure ledger. |
 | `pfp_operad ledger verify LEDGER.jsonl` | Has the ledger been edited, reordered or cut? |
 | `pfp_operad ledger admitted LEDGER.jsonl` | Which learned rules may the next run load? |
+| `pfp_operad ledger load LEDGER.jsonl REQUEST.json` | What seed does a run load? The task's seed with the admitted rules written after it, and the same seed byte for byte when there is none. |
+| `pfp_operad ledger loaded LEDGER.jsonl REQUEST.json` | Is this seed exactly what the ledger loaded onto that base seed, at that ledger state? |
+| `pfp_operad ledger trial LEDGER.jsonl REQUEST.json` | How did a rule do on paired stored turns? A pair counts only when both turns are the same case and their seeds differ by exactly the rule under trial. |
 
 Each command prints one JSON object with `"status"`: `PASS`, `FAIL` (the check
 ran and did not hold) or `REFUSED` (the input was not acceptable). Exit code 0
@@ -43,6 +47,9 @@ cargo run -p pfp_operads -- laws pfp_operads/examples/laws.json
 cargo run -p pfp_operads -- witness pfp_operads/examples/witness.json
 cargo run -p pfp_operads -- trial pfp_operads/examples/trial.json
 cargo run -p pfp_operads -- run pfp_operads/examples/run.json
+cargo run -p pfp_operads -- witness-turn pfp_operads/examples/witness_turn.json
+cargo run -p pfp_operads -- ledger load ../../workflows/wf55_failure_ledger_with_trial_gated_rules/examples/ledger_after_first_run.jsonl pfp_operads/examples/load.json
+cargo run -p pfp_operads -- ledger loaded ../../workflows/wf55_failure_ledger_with_trial_gated_rules/examples/ledger_after_first_run.jsonl pfp_operads/examples/loaded.json
 cargo run -p pfp_operads -- ledger append my_ledger.jsonl pfp_operads/examples/failure.json
 cargo run -p pfp_operads -- ledger verify my_ledger.jsonl
 ```
@@ -84,6 +91,20 @@ cargo run -p pfp_operads -- ledger verify my_ledger.jsonl
   case the baseline answered correctly and the treated run did not.
   [WF55](../../../workflows/wf55_failure_ledger_with_trial_gated_rules/README.md)
   runs the whole loop.
+- **Stored turns**: every WF1 to WF5 run keeps each model turn as a folder
+  with `task.json` and `receipt.json`. `witness-turn` and `ledger trial` take
+  those two files as they are and find the checker, the public input, the
+  task result and the DDC moves themselves. A failure from a stored turn is
+  named `c<16 hex>@<run>`, where the hex is a hash of the checker and the
+  case's integers. The ledger refuses a trial whose held-out case is the case
+  of a failure the rule came from, whatever the run or the task id.
+- **Loaded seeds**: `ledger load` is the only place a seed gets its rules. It
+  appends one line per rule under a line naming the first 16 hex digits of
+  the ledger's head hash. A rule whose id or constraint has a line break is
+  refused, so a rule cannot forge another rule's line. `--on-trial`
+  (`"on_trial"` in the request) adds one proposed rule for the treated arm of
+  its trial. `python -m pfp.workflows.failure_ledger` carries run folders and
+  task files to these commands.
 - **Candidates the host runs**: `run` takes candidates typed by
   `task_value_colour`, each with a body from the closed list, and the public
   input of one or more cases. A candidate's inputs take a case as one
@@ -101,6 +122,10 @@ cargo run -p pfp_operads -- ledger verify my_ledger.jsonl
 - The ledger checks that a trial's numbers are well formed and held out. It
   does not rerun the trial. `trial` judges the answers it is handed; it cannot
   see whether the treated answers were produced with the rule loaded.
+  `ledger trial` does check the stored seeds of both arms, but it trusts the
+  stored `task.json` and `receipt.json`; the workflow's own `replay` is what
+  ties those files to the reply bytes.
+- A loaded rule is text in the seed. Nothing here shows that a model obeys it.
 - Admission means "may be loaded", not "is correct".
 - `envelope`, `mining` and `typing` never verify a candidate. A candidate's
   meaning is free text; the host can only say it is well formed, typed, and

@@ -21,6 +21,10 @@
 //!   scored, from answers it judges with [`judge`].
 //! * [`running`]: a reply's operad candidates that name a body, run on the task's public input and
 //!   compared with the judge's own result.
+//! * [`loading`]: the seed a later run loads, a task's seed with the ledger's rules after it, and
+//!   the check that a seed is exactly what a ledger state loads.
+//! * [`turns`]: a model turn as a workflow run stores it, judged by the host into a failure record
+//!   or, in fair pairs, into a rule's trial record.
 //! * [`host`]: the JSON entry points a workflow calls, also exposed by the `pfp_operad` binary.
 //!
 //! Every vocabulary (colours, DDC letters, failure classes, capability kinds, statuses) is read
@@ -34,9 +38,11 @@ pub mod judge;
 pub mod laws;
 pub mod learning;
 pub mod ledger;
+pub mod loading;
 pub mod mining;
 pub mod running;
 pub mod term;
+pub mod turns;
 
 use serde::Serialize;
 

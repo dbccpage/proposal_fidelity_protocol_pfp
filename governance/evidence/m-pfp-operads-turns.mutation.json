@@ -1,0 +1,287 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/turns.rs",
+  "target_sha256": "1ca9bd4de1b75eae8d6fdd7d8bbe7a9dfddce13c5ee61bd82132c320659542e1",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
+  "counts": {
+    "killed": 45,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "case hash domain changed",
+      "old": "const CASE_DOMAIN: &str = \"pfp.operads.case.v1\";",
+      "new": "const CASE_DOMAIN: &str = \"pfp.operads.case.v2\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "case name shortened",
+      "old": "pub const CASE_DIGITS: usize = 16;",
+      "new": "pub const CASE_DIGITS: usize = 8;",
+      "outcome": "killed"
+    },
+    {
+      "name": "objects judged as written",
+      "old": "if !answer.get().starts_with('{') {",
+      "new": "if answer.get().starts_with('{') {",
+      "outcome": "killed"
+    },
+    {
+      "name": "every answer judged as written",
+      "old": "if !answer.get().starts_with('{') {",
+      "new": "if true {",
+      "outcome": "killed"
+    },
+    {
+      "name": "bad turn mislabelled",
+      "old": "\"BAD_TURN\",",
+      "new": "\"BAD_REQUEST\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "envelope judged whole",
+      "old": "result: envelope.task_result.unwrap_or(answer),",
+      "new": "result: answer,",
+      "outcome": "killed"
+    },
+    {
+      "name": "DDC word reversed",
+      "old": "            .ddc_moves\n            .iter()\n",
+      "new": "            .ddc_moves\n            .iter()\n            .rev()\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "only the first move kept",
+      "old": "            .ddc_moves\n            .iter()\n",
+      "new": "            .ddc_moves\n            .iter()\n            .take(1)\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "bare answer given a DDC word",
+      "old": "trace: String::new(),",
+      "new": "trace: \"T\".to_owned(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "checker left out of the case name",
+      "old": "for part in [CASE_DOMAIN, self.task.checker.as_str()] {",
+      "new": "for part in [CASE_DOMAIN] {",
+      "outcome": "killed"
+    },
+    {
+      "name": "domain left out of the case name",
+      "old": "for part in [CASE_DOMAIN, self.task.checker.as_str()] {",
+      "new": "for part in [self.task.checker.as_str()] {",
+      "outcome": "killed"
+    },
+    {
+      "name": "case name parts not separated",
+      "old": "            hasher.update(b\"\\n\");\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "values not separated",
+      "old": "            hasher.update(b\",\");\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "values left out of the case name",
+      "old": "            hasher.update(value.to_string().as_bytes());\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "case name without its prefix",
+      "old": "Ok(format!(\"c{}\", &digest[..CASE_DIGITS]))",
+      "new": "Ok(format!(\"{}\", &digest[..CASE_DIGITS]))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a turn without an answer counts as correct",
+      "old": "None => Ok(false),",
+      "new": "None => Ok(true),",
+      "outcome": "killed"
+    },
+    {
+      "name": "envelope judged whole in a trial",
+      "old": "Some(answer) => accepts(&self.task.checker, self.task.input, reply(answer)?.result),",
+      "new": "Some(answer) => accepts(&self.task.checker, self.task.input, answer),",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing answer mislabelled",
+      "old": "\"NO_ANSWER\",",
+      "new": "\"NOT_A_FAILURE\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "a correct answer is recorded as a failure",
+      "old": "if accepts(&turn.task.checker, turn.task.input, reply.result)? {",
+      "new": "if false && accepts(&turn.task.checker, turn.task.input, reply.result)? {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only correct answers are recorded",
+      "old": "if accepts(&turn.task.checker, turn.task.input, reply.result)? {",
+      "new": "if !accepts(&turn.task.checker, turn.task.input, reply.result)? {",
+      "outcome": "killed"
+    },
+    {
+      "name": "correct answer mislabelled",
+      "old": "\"NOT_A_FAILURE\",",
+      "new": "\"NO_ANSWER\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "failure id uses another separator",
+      "old": "id: format!(\"{case}@{}\", request.run),",
+      "new": "id: format!(\"{case}#{}\", request.run),",
+      "outcome": "killed"
+    },
+    {
+      "name": "failure named by run only",
+      "old": "id: format!(\"{case}@{}\", request.run),",
+      "new": "id: request.run.clone(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "workflow not read from the receipt",
+      "old": "workflow: turn.receipt.workflow_id.clone(),",
+      "new": "workflow: \"WF1\".to_owned(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "evidence binds only the task result",
+      "old": "evidence_sha256: evidence(&turn.task.checker, turn.task.input, answer),",
+      "new": "evidence_sha256: evidence(&turn.task.checker, turn.task.input, reply.result),",
+      "outcome": "killed"
+    },
+    {
+      "name": "reply DDC word dropped",
+      "old": "ddc_trace: reply.trace + HOST_REFUSAL,",
+      "new": "ddc_trace: HOST_REFUSAL.to_owned(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "host refusal letter dropped",
+      "old": "ddc_trace: reply.trace + HOST_REFUSAL,",
+      "new": "ddc_trace: reply.trace,",
+      "outcome": "killed"
+    },
+    {
+      "name": "failure class changed",
+      "old": "failure_class: WRONG_RESULT.to_owned(),",
+      "new": "failure_class: \"ToyPromotion\".to_owned(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "different cases paired",
+      "old": "if self.treated.case()? != id {",
+      "new": "if false && self.treated.case()? != id {",
+      "outcome": "killed"
+    },
+    {
+      "name": "pair mismatch mislabelled",
+      "old": "\"PAIR_MISMATCH\",",
+      "new": "\"BAD_REQUEST\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "pairs checked at the current head",
+      "old": "let then = ledger.at(&self.ledger_head)?;",
+      "new": "let then = ledger.at(ledger.head())?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "baseline may omit admitted rules",
+      "old": "let admitted = render(&self.base_seed_prompt, then.head(), &rules_of(&then, None)?);",
+      "new": "let admitted = render(&self.base_seed_prompt, then.head(), &[]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "baseline seed unchecked",
+      "old": "if self.baseline.task.seed_prompt != admitted {",
+      "new": "if false && self.baseline.task.seed_prompt != admitted {",
+      "outcome": "killed"
+    },
+    {
+      "name": "baseline mismatch mislabelled",
+      "old": "\"BASELINE_SEED_MISMATCH\",",
+      "new": "\"TREATED_SEED_MISMATCH\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "treated arm needs no rule",
+      "old": "&rules_of(&then, Some(candidate))?,",
+      "new": "&rules_of(&then, None)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "treated seed unchecked",
+      "old": "if self.treated.task.seed_prompt != with_rule {",
+      "new": "if false && self.treated.task.seed_prompt != with_rule {",
+      "outcome": "killed"
+    },
+    {
+      "name": "treated mismatch mislabelled",
+      "old": "\"TREATED_SEED_MISMATCH\",",
+      "new": "\"BASELINE_SEED_MISMATCH\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "baseline verdict taken from the treated turn",
+      "old": "baseline: self.baseline.correct()?,",
+      "new": "baseline: self.treated.correct()?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "treated verdict taken from the baseline turn",
+      "old": "treated: self.treated.correct()?,",
+      "new": "treated: self.baseline.correct()?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "verdicts not counted",
+      "old": "cases.push(pair.verdict(&ledger, &request.candidate)?);",
+      "new": "pair.verdict(&ledger, &request.candidate)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "turn open",
+      "old": "#[serde(deny_unknown_fields)]\nstruct Turn<'a> {",
+      "new": "struct Turn<'a> {",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness request open",
+      "old": "#[serde(deny_unknown_fields)]\nstruct WitnessTurnRequest<'a> {",
+      "new": "struct WitnessTurnRequest<'a> {",
+      "outcome": "killed"
+    },
+    {
+      "name": "pair open",
+      "old": "#[serde(deny_unknown_fields)]\nstruct Pair<'a> {",
+      "new": "struct Pair<'a> {",
+      "outcome": "killed"
+    },
+    {
+      "name": "trial request open",
+      "old": "#[serde(deny_unknown_fields)]\nstruct TrialTurnsRequest<'a> {",
+      "new": "struct TrialTurnsRequest<'a> {",
+      "outcome": "killed"
+    },
+    {
+      "name": "edited ledger accepted in a trial",
+      "old": "    let ledger = Ledger::from_lines(ledger)?;\n    let request: TrialTurnsRequest",
+      "new": "    let ledger = Ledger::from_lines(ledger).unwrap_or_default();\n    let request: TrialTurnsRequest",
+      "outcome": "killed"
+    }
+  ]
+}
