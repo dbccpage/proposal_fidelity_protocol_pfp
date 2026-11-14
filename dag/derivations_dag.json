@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-11-14T12:49:30.305433+00:00",
+  "generated_at_utc": "2026-11-14T13:29:21.349134+00:00",
   "repository": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp",
   "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
   "status": "in_progress",
@@ -10855,6 +10855,22 @@
       ],
       "limits": "Applies only to finite graphs with strictly positive penalties; zero penalties can conceal a nonzero residual. Strict rational descent alone does not guarantee finite termination.",
       "atlas_ledger_id": "ATL-D-PAPER001-ZERO-OBSTRUCTION-IFF-EXACT"
+    },
+    {
+      "id": "PAPER001-GAUGE-INVARIANCE-QUOTIENT-MINIMUM",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Adding a coboundary to the reports leaves the quotient minimum invariant (Phi(c + Bu) = Phi(c) for all u); a section update leaves it unchanged.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Finite graph with declared orientation, positive rational edge penalties, and exact rational arithmetic.",
+        "Potential shift s -> s + u is an affine bijection on the feasible potential domain."
+      ],
+      "evidence": [
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py"
+      ],
+      "limits": "Applies to finite graphs with positive rational penalties; changing reports arbitrarily outside im B changes the quotient class and problem.",
+      "atlas_ledger_id": "ATL-D-PAPER001-GAUGE-INVARIANCE-QUOTIENT-MINIMUM"
     },
     {
       "id": "PAPER002-FINITE-SIGNED-BALANCE",
@@ -35600,6 +35616,12 @@
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
+      "id": "ASSUMPTION-a809c57abffc07f4",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Potential shift s -> s + u is an affine bijection on the feasible potential domain.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
       "id": "ASSUMPTION-168b6c31415d60f5",
       "kind": "explicit_assumption_or_obligation",
       "statement": "Declared vertices, edges and binary labels; trusted finite checker.",
@@ -50539,14 +50561,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "OPSKILL-C011",
-          "PAPER005-WEIGHTED-COBOUNDARY-DISTANCE"
+          "PAPER001-GAUGE-INVARIANCE-QUOTIENT-MINIMUM"
         ],
-        "relation": "supports",
-        "note": "The nodes record that gauge shifts preserve the quotient class and the oriented cycle sum; the invariance of the minimum itself is not stated.",
-        "proposed_derivation_file": "dag/derivations/atl_p001_002.md"
+        "relation": null,
+        "note": "Adding a coboundary to the reports leaves the quotient minimum invariant (Phi(c + Bu) = Phi(c)); a section update leaves it unchanged; certified by PAPER001-GAUGE-INVARIANCE-QUOTIENT-MINIMUM."
       }
     },
     {
@@ -69409,6 +69429,16 @@
       "kind": "requires"
     },
     {
+      "from": "ASSUMPTION-f14124a5d27b8a3f",
+      "to": "PAPER001-GAUGE-INVARIANCE-QUOTIENT-MINIMUM",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-a809c57abffc07f4",
+      "to": "PAPER001-GAUGE-INVARIANCE-QUOTIENT-MINIMUM",
+      "kind": "requires"
+    },
+    {
       "from": "ASSUMPTION-168b6c31415d60f5",
       "to": "PAPER002-FINITE-SIGNED-BALANCE",
       "kind": "requires"
@@ -78373,6 +78403,18 @@
     {
       "from": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py",
       "to": "PAPER001-ZERO-OBSTRUCTION-IFF-EXACT",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py",
+      "to": "PAPER001-GAUGE-INVARIANCE-QUOTIENT-MINIMUM",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py",
+      "to": "PAPER001-GAUGE-INVARIANCE-QUOTIENT-MINIMUM",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py"
     },
@@ -97500,15 +97542,9 @@
       "citation": "atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/paper_claim_ledger.md:14"
     },
     {
-      "from": "OPSKILL-C011",
+      "from": "PAPER001-GAUGE-INVARIANCE-QUOTIENT-MINIMUM",
       "to": "ATL-P001-002",
-      "kind": "partially_supports",
-      "citation": "atlas/atlas_claim_matches.json"
-    },
-    {
-      "from": "PAPER005-WEIGHTED-COBOUNDARY-DISTANCE",
-      "to": "ATL-P001-002",
-      "kind": "partially_supports",
+      "kind": "states_same_claim_as",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
@@ -153348,8 +153384,8 @@
     "Audit native implementations and claimed Lean correspondence at pinned source."
   ],
   "graph_validation": {
-    "unique_nodes": 3593,
-    "edges": 3785,
+    "unique_nodes": 3595,
+    "edges": 3788,
     "acyclic": true
   }
 }
