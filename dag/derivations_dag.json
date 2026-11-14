@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-11-14T16:08:50.135017+00:00",
+  "generated_at_utc": "2026-11-14T17:05:57.180658+00:00",
   "repository": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp",
   "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
   "status": "in_progress",
@@ -10937,6 +10937,25 @@
       ],
       "limits": "No dual circulation in return struct; worst-case exponential complexity; Python adapter does not pin binary hash.",
       "atlas_ledger_id": "ATL-D-PAPER001-NATIVE-FOREST-SOLVER-REVIEW"
+    },
+    {
+      "id": "PAPER001-PYTHON-REFERENCE-SOLVER-GOVERNOR-REVIEW",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The paper-local Python reference returns a primal potential and dual circulation only after independent verification, caps tree enumeration at 100,000 per component, and its governor admits only strictly decreasing potential updates.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Pinned Python reference in papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py with exact rational arithmetic.",
+        "Independent primal-dual certificate verification via verify_phi_1_certificate.",
+        "Strictly descending section defect requirement for CUT updates under SymbolGameGovernor."
+      ],
+      "evidence": [
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_zenodo_regression_suite.py",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_review_regressions.py",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_governor.py"
+      ],
+      "limits": "Exponential in graph size; the per-component cap is established by source inspection, not by a test.",
+      "atlas_ledger_id": "ATL-D-PAPER001-PYTHON-REFERENCE-SOLVER-GOVERNOR-REVIEW"
     },
     {
       "id": "PAPER002-FINITE-SIGNED-BALANCE",
@@ -35730,6 +35749,24 @@
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
+      "id": "ASSUMPTION-f581f9e6a657e0c5",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Pinned Python reference in papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py with exact rational arithmetic.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-954743d22765abb5",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Independent primal-dual certificate verification via verify_phi_1_certificate.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-b9fd4e1b6366c26a",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Strictly descending section defect requirement for CUT updates under SymbolGameGovernor.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
       "id": "ASSUMPTION-168b6c31415d60f5",
       "kind": "explicit_assumption_or_obligation",
       "statement": "Declared vertices, edges and binary labels; trusted finite checker.",
@@ -43104,6 +43141,27 @@
       "kind": "pinned_source_file",
       "path": "atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/native_functional.py",
       "sha256": "3354511931ea000f9557c0a1a79502462fe70795647ddf615f58f2dd2a35f061",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_zenodo_regression_suite.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_zenodo_regression_suite.py",
+      "sha256": "3de2ab8583b2f625d8643a5877638a57c971aa4f6a10608a7df65029be492846",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_review_regressions.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_review_regressions.py",
+      "sha256": "02b1eeac153a90f5fc0749d98de675d088f24365a09bbc2c50c8fc30878b005f",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_governor.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_governor.py",
+      "sha256": "8e2206ebc153e2f52596214088e5b7104b0c26a8dac050e9041c2c84da2a1447",
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
@@ -50901,13 +50959,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PAPER001-EXACT-GRAPH-CERTIFICATE"
+          "PAPER001-PYTHON-REFERENCE-SOLVER-GOVERNOR-REVIEW"
         ],
-        "relation": "supports",
-        "note": "The node covers the governor's certificate checking and capped tree enumeration but not the per-component cap or the strict-descent admission rule.",
-        "proposed_derivation_file": "dag/derivations/atl_p001_009.md"
+        "relation": null,
+        "note": "The paper-local Python reference returns primal potential and dual circulation only after independent verification, caps tree enumeration at 100,000 per component, and its governor admits only strictly decreasing potential updates; certified in PAPER001-PYTHON-REFERENCE-SOLVER-GOVERNOR-REVIEW."
       }
     },
     {
@@ -69614,6 +69671,21 @@
       "kind": "requires"
     },
     {
+      "from": "ASSUMPTION-f581f9e6a657e0c5",
+      "to": "PAPER001-PYTHON-REFERENCE-SOLVER-GOVERNOR-REVIEW",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-954743d22765abb5",
+      "to": "PAPER001-PYTHON-REFERENCE-SOLVER-GOVERNOR-REVIEW",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-b9fd4e1b6366c26a",
+      "to": "PAPER001-PYTHON-REFERENCE-SOLVER-GOVERNOR-REVIEW",
+      "kind": "requires"
+    },
+    {
       "from": "ASSUMPTION-168b6c31415d60f5",
       "to": "PAPER002-FINITE-SIGNED-BALANCE",
       "kind": "requires"
@@ -78652,6 +78724,30 @@
       "to": "PAPER001-NATIVE-FOREST-SOLVER-REVIEW",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/native_functional.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py",
+      "to": "PAPER001-PYTHON-REFERENCE-SOLVER-GOVERNOR-REVIEW",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_zenodo_regression_suite.py",
+      "to": "PAPER001-PYTHON-REFERENCE-SOLVER-GOVERNOR-REVIEW",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_zenodo_regression_suite.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_review_regressions.py",
+      "to": "PAPER001-PYTHON-REFERENCE-SOLVER-GOVERNOR-REVIEW",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_review_regressions.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_governor.py",
+      "to": "PAPER001-PYTHON-REFERENCE-SOLVER-GOVERNOR-REVIEW",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_governor.py"
     },
     {
       "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/sign_graph.py",
@@ -97867,9 +97963,9 @@
       "citation": "atlas/archive/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/paper_claim_ledger.md:21"
     },
     {
-      "from": "PAPER001-EXACT-GRAPH-CERTIFICATE",
+      "from": "PAPER001-PYTHON-REFERENCE-SOLVER-GOVERNOR-REVIEW",
       "to": "ATL-P001-009",
-      "kind": "partially_supports",
+      "kind": "states_same_claim_as",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
@@ -153625,8 +153721,8 @@
     "Audit native implementations and claimed Lean correspondence at pinned source."
   ],
   "graph_validation": {
-    "unique_nodes": 3610,
-    "edges": 3807,
+    "unique_nodes": 3617,
+    "edges": 3814,
     "acyclic": true
   }
 }
