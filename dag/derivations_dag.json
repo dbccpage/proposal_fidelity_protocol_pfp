@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-11-14T21:50:58.759313+00:00",
+  "generated_at_utc": "2026-11-14T22:52:18.264862+00:00",
   "repository": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp",
   "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
   "status": "in_progress",
@@ -170,6 +170,7 @@
     "dag/reviews/additional_native_systems.json",
     "dag/reviews/additional_native_systems_02.json",
     "dag/reviews/additional_native_systems_03.json",
+    "dag/reviews/additional_note_001_review.json",
     "dag/reviews/additional_operad_patterns_remaining.json",
     "dag/reviews/additional_operad_patterns_supporting_sources.json",
     "dag/reviews/additional_operad_receipts_remaining.json",
@@ -184,6 +185,8 @@
     "dag/reviews/additional_paper_001_artifacts.json",
     "dag/reviews/additional_paper_001_support.json",
     "dag/reviews/additional_paper_002_support.json",
+    "dag/reviews/additional_paper_002_wave1.json",
+    "dag/reviews/additional_paper_003_review.json",
     "dag/reviews/additional_paper_003_support.json",
     "dag/reviews/additional_paper_004_support.json",
     "dag/reviews/additional_paper_005_support.json",
@@ -7424,6 +7427,42 @@
       "atlas_ledger_id": "ATL-D-NATIVE03-FIXTURES-011"
     },
     {
+      "id": "AUDIT-N001-001",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For a finite graph with strictly positive edge weights and p in [1, inf], the quotient infimum inf_f ||c - df||_{p,w} is attained.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite connected graph with positive edge weights.",
+        "Gauge-fixed complement decomposition C^0 = F + ker d_0.",
+        "Weierstrass extreme value theorem on compact sublevel sets."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t01_attainment.lean"
+      ],
+      "limits": "Applies to finite graphs with strictly positive weights; does not claim infinite complexes or continuous manifolds.",
+      "atlas_ledger_id": "ATL-D-AUDIT-N001-001"
+    },
+    {
+      "id": "AUDIT-N001-003",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The quotient functional Phi_p([c]) = inf_f ||c - df||_{p,w} defines a valid norm on the quotient space Q^1 = C^1 / im d_0 for all p in [1, inf] under strictly positive weights.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite graph with strictly positive edge weights.",
+        "Attainment of the quotient infimum (AUDIT-N001-001).",
+        "Subadditivity via representative addition and positive definiteness via positive edge weights."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t02_quotient_norm.lean"
+      ],
+      "limits": "Applies to finite graphs with strictly positive weights; permitting a zero weight violates positive definiteness.",
+      "atlas_ledger_id": "ATL-D-AUDIT-N001-003"
+    },
+    {
       "id": "OPR-C01",
       "kind": "mathematical_or_implementation_claim",
       "claim": "The slice is a catalog of proposed controls and historical audit cases, not198 executable operad mechanisms. Every assigned body was read; ten files explicitly admit zero patterns.",
@@ -11015,6 +11054,77 @@
       ],
       "limits": "Applies to finite real matrices with nonpositive off-diagonal entries in a declared basis; does not provide a sampling-time, polynomial-time, or variance guarantee for quantum observables.",
       "atlas_ledger_id": "ATL-D-PAPER002-STOQUASTIC-THERMAL-NONNEGATIVITY"
+    },
+    {
+      "id": "PAPER002-WORKED-FRONTIER-TRACE",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For the introductory 3-state matrix, candidates 000 and 001 fail off-diagonal nonpositivity; an initial search with node budget 2 returns status UNKNOWN on frontier interval [2, 8), and resumption with node budget 1 from that frontier verifies gauge 010 at candidate index 2.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Finite 3-state real matrix RUNNING in declared basis with lexicographic gauge order.",
+        "Resumable frontier candidate evaluation and contiguous receipt chaining protocol in frontier_search.py."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_manuscript_examples.py",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/frontier_search.py",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md"
+      ],
+      "limits": "Applies to the fixed 3-state introductory matrix and lexicographic candidate enumeration; does not establish polynomial-time search on general graphs or eliminate sign problems for arbitrary quantum Hamiltonians.",
+      "atlas_ledger_id": "ATL-D-PAPER002-WORKED-FRONTIER-TRACE"
+    },
+    {
+      "id": "PAPER002-PAIRWISE-CANCELLATION-NECESSITY",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Exact pairwise cancellation of a signed multiset into equal-weight zero-sum pairs requires a fixed-point-free involution pairing opposite signs with equal magnitudes; a nonnegative total sum alone does not suffice, as demonstrated by the counterexample multiset {+2, -1, -1}.",
+      "status": "mathematical_derivation_and_counterexample_support",
+      "dependencies": [
+        "Finite signed multiset with positive magnitudes and signs in {-1, +1}.",
+        "Pairwise cancellation defined as partition into disjoint zero-sum pairs."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md"
+      ],
+      "limits": "Applies to equal-weight pairwise (2-term) involutive cancellation certificates; does not exclude multi-term regroupings or higher-order cluster cancellations.",
+      "atlas_ledger_id": "ATL-D-PAPER002-PAIRWISE-CANCELLATION-NECESSITY"
+    },
+    {
+      "id": "PAPER002-SINGLE-SNAPSHOT-HASHING",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The matrix checker and presentation digest generator consume the same immutable in-memory snapshot of a one-shot matrix input, ensuring that single-pass streams and iterators cannot produce divergent digests or empty-matrix evaluations.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Eager tuple-of-tuples snapshotting in exact_matrix_digest and search_exact_matrix after 2026-09-24 repair.",
+        "Single traversal consumption of one-shot iterators."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/frontier_search.py",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_frontier_search.py",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/PROVENANCE.md",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md"
+      ],
+      "limits": "Ensures consistency under the declared Python memory model for matrices fitting in memory; does not address out-of-core streaming or external memory corruption.",
+      "atlas_ledger_id": "ATL-D-PAPER002-SINGLE-SNAPSHOT-HASHING"
+    },
+    {
+      "id": "AUDIT-P003-001",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The Demo 3 host decrements remaining fuel by one before processing each batch, restores semantic state (covered elements, witness candidate, and phase) on batch refusal, and retains the fuel decrement.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Demo 3 host engine state machine initialized with positive integer fuel in a non-terminal phase.",
+        "Batch processing executes with pre-decrement fuel accounting and snapshot-based atomic semantic rollback."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/host_engine.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py",
+        "pfp/infrastructure/adapters/mssn_scenarios/protocol.py"
+      ],
+      "limits": "Applies strictly to processed batches in the declared host state machine; fuel bounds only charged batch attempts, not total HTTP requests, uncharged calls, input bytes, or host execution time.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P003-001"
     },
     {
       "id": "PAPER003-DERIVED-SIGNAL-COLLAPSE",
@@ -35471,6 +35581,42 @@
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
+      "id": "ASSUMPTION-aaf8dac8c78af92e",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Finite connected graph with positive edge weights.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-6ce52a01ff0d55b6",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Gauge-fixed complement decomposition C^0 = F + ker d_0.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-b2607f73fcaafda3",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Weierstrass extreme value theorem on compact sublevel sets.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-6376bcc245cf5987",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Finite graph with strictly positive edge weights.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-ba5662151e8259ae",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Attainment of the quotient infimum (AUDIT-N001-001).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-d02a676935e97cfa",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Subadditivity via representative addition and positive definiteness via positive edge weights.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
       "id": "ASSUMPTION-adcbb5cb805846d9",
       "kind": "explicit_assumption_or_obligation",
       "statement": "A caller must load and follow the referenced contract; actual checker owners remain separate.",
@@ -35810,6 +35956,54 @@
       "id": "ASSUMPTION-3746ed354d1cb942",
       "kind": "explicit_assumption_or_obligation",
       "statement": "Commutative scalar identity shift c*I and absolute convergence of the matrix exponential power series in operator norm.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-e5bce3b134d3459e",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Finite 3-state real matrix RUNNING in declared basis with lexicographic gauge order.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-f0ac3cd0402f7390",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Resumable frontier candidate evaluation and contiguous receipt chaining protocol in frontier_search.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-743a7269424318d5",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Finite signed multiset with positive magnitudes and signs in {-1, +1}.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-5279cf8b03038569",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Pairwise cancellation defined as partition into disjoint zero-sum pairs.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-8ef09ea77c8fe157",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Eager tuple-of-tuples snapshotting in exact_matrix_digest and search_exact_matrix after 2026-09-24 repair.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-32d78b026a29301d",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Single traversal consumption of one-shot iterators.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-e2095314edd33811",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Demo 3 host engine state machine initialized with positive integer fuel in a non-terminal phase.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-7d2e042868e55d95",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Batch processing executes with pre-decrement fuel accounting and snapshot-based atomic semantic rollback.",
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
@@ -42295,6 +42489,34 @@
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
+      "id": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+      "sha256": "9825821217cd86175d3945be81ce9c9ccae25ee657aba75eba9584d9b2d23ad2",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+      "sha256": "2a0036fe3ef27352ec9d09f81451c89aeb209bb05232673e38e2f99a553acfc1",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t01_attainment.lean",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t01_attainment.lean",
+      "sha256": "510146e6686f820a5aa536497d8de080b5995744ff6798a6f1047d118442ecdc",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t02_quotient_norm.lean",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t02_quotient_norm.lean",
+      "sha256": "803737d35748a5e75507ae455e15fb67efa9fc6eb75685d09fa5949c12ec4b2e",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
       "id": "SOURCE:operads/patterns/helpful/rust/hp_rs_007_explicit_boundary_completion.md",
       "kind": "pinned_source_file",
       "path": "operads/patterns/helpful/rust/hp_rs_007_explicit_boundary_completion.md",
@@ -43228,6 +43450,27 @@
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
+      "id": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_manuscript_examples.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_manuscript_examples.py",
+      "sha256": "2eaad2a76d1369cd862807d31a6ea985be13a9d2caec94d4eeaec2459a0584a2",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_frontier_search.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_frontier_search.py",
+      "sha256": "c6d174036a0d531ee8d98c917637a84ac2674dfb7b11cd3d5a5e50356b6680f3",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/PROVENANCE.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/PROVENANCE.md",
+      "sha256": "a3e0c35a121f9f7cd76db6270d9d703db477d388779acb58295de75fd683cd68",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
       "id": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
       "kind": "pinned_source_file",
       "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
@@ -43235,10 +43478,10 @@
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
-      "id": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/detector_lemmas.py",
+      "id": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "kind": "pinned_source_file",
-      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/detector_lemmas.py",
-      "sha256": "c1f7626458231b27caca0113316dedddfce48fe5387b268b413738a3d465aca7",
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+      "sha256": "b93d68bf1e5092a8d6f9f054d2a5c487e0037715501632f03e1a525c87841626",
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
@@ -43246,6 +43489,27 @@
       "kind": "pinned_source_file",
       "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/host_engine.py",
       "sha256": "76df55eaefe09f8d3ac0ce99c6735badec5c3fb7c2c2f5dd4e1717b2ed963a25",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py",
+      "sha256": "29a35f2ba916f3acfec7373bb4fd1e2ee15f9b19c9e3151e9f5e90e35e4d01a6",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:pfp/infrastructure/adapters/mssn_scenarios/protocol.py",
+      "kind": "pinned_source_file",
+      "path": "pfp/infrastructure/adapters/mssn_scenarios/protocol.py",
+      "sha256": "62a4078c8ef4ddfcc5457f8d27d7b8079c90c97b5fc6f1afdb071114ce3a3c33",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/detector_lemmas.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/detector_lemmas.py",
+      "sha256": "c1f7626458231b27caca0113316dedddfce48fe5387b268b413738a3d465aca7",
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
@@ -51233,11 +51497,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
+        "verdict": "matched",
+        "nodes": [
+          "PAPER002-WORKED-FRONTIER-TRACE"
+        ],
         "relation": null,
-        "note": "No node records the worked frontier trace.",
-        "proposed_derivation_file": "dag/derivations/atl_p002_007.md"
+        "note": "PAPER002-WORKED-FRONTIER-TRACE derives the introductory 3-state worked search trace: candidates 000 and 001 fail, budget 2 yields UNKNOWN on [2, 8), and resumption with budget 1 verifies gauge 010 at candidate index 2."
       }
     },
     {
@@ -51261,13 +51526,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "ADAPT-C02"
+          "PAPER002-PAIRWISE-CANCELLATION-NECESSITY"
         ],
-        "relation": "supports",
-        "note": "ADAPT-C02 gives sufficiency of a sign-reversing weight-preserving involution; the necessity direction and the +2,-1,-1 counterexample are not derived.",
-        "proposed_derivation_file": "dag/derivations/atl_p002_008.md"
+        "relation": null,
+        "note": "PAPER002-PAIRWISE-CANCELLATION-NECESSITY derives the requirement that equal-weight pairwise cancellation into zero-sum pairs requires a fixed-point-free sign-reversing weight-preserving involution, showing that nonnegative total sum alone does not suffice via counterexample {+2, -1, -1}."
       }
     },
     {
@@ -51320,11 +51584,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
+        "verdict": "matched",
+        "nodes": [
+          "PAPER002-SINGLE-SNAPSHOT-HASHING"
+        ],
         "relation": null,
-        "note": "No node records the single-snapshot repair.",
-        "proposed_derivation_file": "dag/derivations/atl_p002_010.md"
+        "note": "PAPER002-SINGLE-SNAPSHOT-HASHING derives that checking and hashing consume the identical immutable snapshot of a one-shot matrix input, preventing iterator exhaustion divergence."
       }
     },
     {
@@ -51404,13 +51669,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PAPER003-PACKAGE-ROLLBACK-BOUNDARY"
+          "AUDIT-P003-001"
         ],
-        "relation": "narrows",
-        "note": "The node records charge-retaining rollback for the standalone package host, not for the baseline repository Demo 3 host.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_001.md"
+        "relation": null,
+        "note": "The baseline and package Demo 3 hosts decrement remaining fuel by one before processing each batch and restore semantic state (covered elements, witness candidate, and phase) upon refusal while retaining the fuel decrement; verified in AUDIT-P003-001."
       }
     },
     {
@@ -59580,13 +59844,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PAPER000-CYCLE-CAPSTONE"
+          "AUDIT-N001-001"
         ],
-        "relation": "narrows",
-        "note": "Node gives attainment only for $p=1$ on a single cycle.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_001.md"
+        "relation": null,
+        "note": "For a finite weighted graph with positive weights and p in [1, inf], the quotient infimum inf_f ||c - df||_{p,w} is attained on the gauge-fixed complement by compactness of sublevel sets under coercivity; certified by AUDIT-N001-001."
       }
     },
     {
@@ -59638,11 +59901,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N001-003"
+        ],
         "relation": null,
-        "note": "No node proves $\\Phi_p$ is a norm on $Q^1$.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_003.md"
+        "note": "Phi_p is a norm on the quotient space Q^1 = C^1 / im d_0 for all p in [1, inf] under strictly positive weights, satisfying well-definedness, absolute homogeneity, subadditivity via attainment, and positive definiteness; certified by AUDIT-N001-003."
       }
     },
     {
@@ -69439,6 +69703,36 @@
       "kind": "requires"
     },
     {
+      "from": "ASSUMPTION-aaf8dac8c78af92e",
+      "to": "AUDIT-N001-001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-6ce52a01ff0d55b6",
+      "to": "AUDIT-N001-001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-b2607f73fcaafda3",
+      "to": "AUDIT-N001-001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-6376bcc245cf5987",
+      "to": "AUDIT-N001-003",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-ba5662151e8259ae",
+      "to": "AUDIT-N001-003",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-d02a676935e97cfa",
+      "to": "AUDIT-N001-003",
+      "kind": "requires"
+    },
+    {
       "from": "ASSUMPTION-adcbb5cb805846d9",
       "to": "OPSKILL-C001",
       "kind": "requires"
@@ -69751,6 +70045,46 @@
     {
       "from": "ASSUMPTION-3746ed354d1cb942",
       "to": "PAPER002-STOQUASTIC-THERMAL-NONNEGATIVITY",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-e5bce3b134d3459e",
+      "to": "PAPER002-WORKED-FRONTIER-TRACE",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-f0ac3cd0402f7390",
+      "to": "PAPER002-WORKED-FRONTIER-TRACE",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-743a7269424318d5",
+      "to": "PAPER002-PAIRWISE-CANCELLATION-NECESSITY",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-5279cf8b03038569",
+      "to": "PAPER002-PAIRWISE-CANCELLATION-NECESSITY",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-8ef09ea77c8fe157",
+      "to": "PAPER002-SINGLE-SNAPSHOT-HASHING",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-32d78b026a29301d",
+      "to": "PAPER002-SINGLE-SNAPSHOT-HASHING",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-e2095314edd33811",
+      "to": "AUDIT-P003-001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-7d2e042868e55d95",
+      "to": "AUDIT-P003-001",
       "kind": "requires"
     },
     {
@@ -76606,6 +76940,42 @@
       "citation": "code/rust/tests/core_epistemic_immune_system/fixtures/python_independence_v1.json:1-1750"
     },
     {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+      "to": "AUDIT-N001-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+      "to": "AUDIT-N001-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t01_attainment.lean",
+      "to": "AUDIT-N001-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t01_attainment.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+      "to": "AUDIT-N001-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+      "to": "AUDIT-N001-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t02_quotient_norm.lean",
+      "to": "AUDIT-N001-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t02_quotient_norm.lean"
+    },
+    {
       "from": "SOURCE:operads/patterns/helpful/rust/hp_rs_007_explicit_boundary_completion.md",
       "to": "OPR-C04",
       "kind": "source_evidence_not_automatic_proof",
@@ -78837,6 +79207,96 @@
       "to": "PAPER002-STOQUASTIC-THERMAL-NONNEGATIVITY",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "papers/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_manuscript_examples.py",
+      "to": "PAPER002-WORKED-FRONTIER-TRACE",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_manuscript_examples.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/frontier_search.py",
+      "to": "PAPER002-WORKED-FRONTIER-TRACE",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/frontier_search.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md",
+      "to": "PAPER002-WORKED-FRONTIER-TRACE",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
+      "to": "PAPER002-WORKED-FRONTIER-TRACE",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md",
+      "to": "PAPER002-PAIRWISE-CANCELLATION-NECESSITY",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
+      "to": "PAPER002-PAIRWISE-CANCELLATION-NECESSITY",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/frontier_search.py",
+      "to": "PAPER002-SINGLE-SNAPSHOT-HASHING",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/frontier_search.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_frontier_search.py",
+      "to": "PAPER002-SINGLE-SNAPSHOT-HASHING",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_frontier_search.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/PROVENANCE.md",
+      "to": "PAPER002-SINGLE-SNAPSHOT-HASHING",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/PROVENANCE.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
+      "to": "PAPER002-SINGLE-SNAPSHOT-HASHING",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+      "to": "AUDIT-P003-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+      "to": "AUDIT-P003-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/host_engine.py",
+      "to": "AUDIT-P003-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/host_engine.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py",
+      "to": "AUDIT-P003-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py"
+    },
+    {
+      "from": "SOURCE:pfp/infrastructure/adapters/mssn_scenarios/protocol.py",
+      "to": "AUDIT-P003-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/infrastructure/adapters/mssn_scenarios/protocol.py"
     },
     {
       "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
@@ -98124,15 +98584,21 @@
       "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md:22"
     },
     {
+      "from": "PAPER002-WORKED-FRONTIER-TRACE",
+      "to": "ATL-P002-007",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
       "to": "ATL-P002-008",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md:23"
     },
     {
-      "from": "ADAPT-C02",
+      "from": "PAPER002-PAIRWISE-CANCELLATION-NECESSITY",
       "to": "ATL-P002-008",
-      "kind": "partially_supports",
+      "kind": "states_same_claim_as",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
@@ -98154,6 +98620,12 @@
       "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md:25"
     },
     {
+      "from": "PAPER002-SINGLE-SNAPSHOT-HASHING",
+      "to": "ATL-P002-010",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
       "to": "ATL-P002-011",
       "kind": "source_evidence_not_automatic_proof",
@@ -98166,19 +98638,19 @@
       "citation": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md:27"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-001",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:16"
     },
     {
-      "from": "PAPER003-PACKAGE-ROLLBACK-BOUNDARY",
+      "from": "AUDIT-P003-001",
       "to": "ATL-P003-001",
-      "kind": "narrows",
+      "kind": "states_same_claim_as",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-002",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:17"
@@ -98190,19 +98662,19 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-003",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:18"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-004",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:19"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-005",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:20"
@@ -98214,7 +98686,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-006",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:21"
@@ -98226,85 +98698,85 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-007",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:22"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-008",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:23"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-009",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:24"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-010",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:25"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-011",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:26"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-012",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:27"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-013",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:28"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-014",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:29"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-015",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:30"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-016",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:31"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-017",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:32"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-018",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:33"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-019",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:34"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-020",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:35"
@@ -98316,7 +98788,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-021",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:36"
@@ -98340,7 +98812,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-022",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:37"
@@ -98352,13 +98824,13 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-023",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:38"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-024",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:39"
@@ -98376,7 +98848,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-025",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:40"
@@ -98388,7 +98860,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-026",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:41"
@@ -98400,7 +98872,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-027",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:42"
@@ -98412,7 +98884,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-028",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:43"
@@ -98430,13 +98902,13 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-029",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:44"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-030",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:45"
@@ -100788,37 +101260,43 @@
       "citation": "atlas/archive/pfp/021_pfp_workflow_dag_process_and_mathematics/paper_claim_ledger.md:12"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/001_l1_native_cohomology",
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-001",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:13"
     },
     {
-      "from": "PAPER000-CYCLE-CAPSTONE",
+      "from": "AUDIT-N001-001",
       "to": "ATL-N001-001",
-      "kind": "narrows",
+      "kind": "states_same_claim_as",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/001_l1_native_cohomology",
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-002",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:14"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/001_l1_native_cohomology",
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-003",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:15"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/001_l1_native_cohomology",
+      "from": "AUDIT-N001-003",
+      "to": "ATL-N001-003",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-004",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:16"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/001_l1_native_cohomology",
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-005",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:17"
@@ -100836,7 +101314,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/001_l1_native_cohomology",
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-006",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:18"
@@ -100854,7 +101332,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/001_l1_native_cohomology",
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-007",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:19"
@@ -100878,7 +101356,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/001_l1_native_cohomology",
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-008",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:20"
@@ -100896,7 +101374,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/001_l1_native_cohomology",
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-009",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:21"
@@ -100914,7 +101392,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/001_l1_native_cohomology",
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-010",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:22"
@@ -100938,13 +101416,13 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/001_l1_native_cohomology",
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-011",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:23"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/001_l1_native_cohomology",
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-012",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:24"
@@ -100956,19 +101434,19 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/001_l1_native_cohomology",
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-013",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:25"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/001_l1_native_cohomology",
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-014",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:26"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/001_l1_native_cohomology",
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-015",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:27"
@@ -100992,13 +101470,13 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/001_l1_native_cohomology",
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-016",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:28"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/001_l1_native_cohomology",
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-017",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:29"
@@ -101010,19 +101488,19 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/001_l1_native_cohomology",
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-018",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:30"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/001_l1_native_cohomology",
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-019",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:31"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/001_l1_native_cohomology",
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-020",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:32"
@@ -153792,8 +154270,8 @@
     "Audit native implementations and claimed Lean correspondence at pinned source."
   ],
   "graph_validation": {
-    "unique_nodes": 3622,
-    "edges": 3819,
+    "unique_nodes": 3652,
+    "edges": 3857,
     "acyclic": true
   }
 }

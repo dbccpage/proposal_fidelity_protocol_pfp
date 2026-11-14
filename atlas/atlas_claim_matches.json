@@ -11,24 +11,13 @@
   "results": [
     {
       "atlas_id": "ATL-N001-001",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER000-CYCLE-CAPSTONE"
+        "AUDIT-N001-001"
       ],
-      "relation": "narrows",
-      "note": "Node gives attainment only for $p=1$ on a single cycle.",
-      "proposed_derivation": {
-        "title": "Finite $L^p$ quotient attainment",
-        "claim": "For finite weighted graph and $p\\in[1,\\infty]$, $\\inf_f\\|c-df\\|_{p,w}$ is attained.",
-        "hypotheses": [
-          "finite graph",
-          "positive weights"
-        ],
-        "derivation": "Restrict to $f\\perp\\ker d$; the objective is continuous and coercive on this finite-dimensional complement, so a minimizer exists by compactness of sublevel sets.",
-        "obligations": [
-          "Not mechanized."
-        ]
-      }
+      "relation": null,
+      "note": "For a finite weighted graph with positive weights and p in [1, inf], the quotient infimum inf_f ||c - df||_{p,w} is attained on the gauge-fixed complement by compactness of sublevel sets under coercivity; certified by AUDIT-N001-001.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N001-002",
@@ -49,22 +38,13 @@
     },
     {
       "atlas_id": "ATL-N001-003",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-N001-003"
+      ],
       "relation": null,
-      "note": "No node proves $\\Phi_p$ is a norm on $Q^1$.",
-      "proposed_derivation": {
-        "title": "$\\Phi_p$ quotient norm",
-        "claim": "$\\Phi_p$ is a norm on $C^1/\\mathrm{im}\\,d_0$ under positive weights.",
-        "hypotheses": [
-          "finite graph",
-          "positive weights"
-        ],
-        "derivation": "Quotient seminorm of a norm by a subspace; definiteness since $\\mathrm{im}\\,d_0$ is closed in finite dimension.",
-        "obligations": [
-          "Not mechanized."
-        ]
-      }
+      "note": "Phi_p is a norm on the quotient space Q^1 = C^1 / im d_0 for all p in [1, inf] under strictly positive weights, satisfying well-definedness, absolute homogeneity, subadditivity via attainment, and positive definiteness; certified by AUDIT-N001-003.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N001-004",
@@ -5064,39 +5044,23 @@
     },
     {
       "atlas_id": "ATL-P002-007",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "PAPER002-WORKED-FRONTIER-TRACE"
+      ],
       "relation": null,
-      "note": "No node records the worked frontier trace.",
-      "proposed_derivation": {
-        "title": "Worked frontier trace",
-        "claim": "For the introductory matrix, candidates 000 and 001 fail, budget 2 yields UNKNOWN with [2,8), and resume with budget 1 verifies 010 at index 2.",
-        "hypotheses": [
-          "Displayed matrix",
-          "Lexicographic gauge order"
-        ],
-        "derivation": "Evaluate the endpoint sign equations for gauges 000, 001, 010 by hand and replay the two named tests.",
-        "obligations": []
-      }
+      "note": "PAPER002-WORKED-FRONTIER-TRACE derives the introductory 3-state worked search trace: candidates 000 and 001 fail, budget 2 yields UNKNOWN on [2, 8), and resumption with budget 1 verifies gauge 010 at candidate index 2.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P002-008",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "ADAPT-C02"
+        "PAPER002-PAIRWISE-CANCELLATION-NECESSITY"
       ],
-      "relation": "supports",
-      "note": "ADAPT-C02 gives sufficiency of a sign-reversing weight-preserving involution; the necessity direction and the +2,-1,-1 counterexample are not derived.",
-      "proposed_derivation": {
-        "title": "Pairwise cancellation necessity",
-        "claim": "Exact pairwise cancellation of a signed multiset into equal-weight pairs requires a fixed-point-free involution pairing opposite signs with equal magnitudes; nonnegative total alone does not suffice.",
-        "hypotheses": [
-          "Finite signed weights",
-          "Cancellation means partition into zero-sum pairs"
-        ],
-        "derivation": "A zero-sum pair $\\{a,b\\}$ with $a+b=0$ has opposite signs and $|a|=|b|$; the pairing is an involution. For $\\{+2,-1,-1\\}$ the total is $0$ but no element equals $-2$, so no pairing exists.",
-        "obligations": []
-      }
+      "relation": null,
+      "note": "PAPER002-PAIRWISE-CANCELLATION-NECESSITY derives the requirement that equal-weight pairwise cancellation into zero-sum pairs requires a fixed-point-free sign-reversing weight-preserving involution, showing that nonnegative total sum alone does not suffice via counterexample {+2, -1, -1}.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P002-009",
@@ -5110,19 +5074,13 @@
     },
     {
       "atlas_id": "ATL-P002-010",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "PAPER002-SINGLE-SNAPSHOT-HASHING"
+      ],
       "relation": null,
-      "note": "No node records the single-snapshot repair.",
-      "proposed_derivation": {
-        "title": "Single snapshot hashing",
-        "claim": "The checker and hasher consume the same immutable snapshot of a one-shot matrix.",
-        "hypotheses": [
-          "frontier_search.py after 2026-09-24 repair"
-        ],
-        "derivation": "Replay the named test with a one-shot iterator input; the digest must equal the hash of the checked matrix.",
-        "obligations": []
-      }
+      "note": "PAPER002-SINGLE-SNAPSHOT-HASHING derives that checking and hashing consume the identical immutable snapshot of a one-shot matrix input, preventing iterator exhaustion divergence.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P002-011",
@@ -5161,25 +5119,13 @@
     },
     {
       "atlas_id": "ATL-P003-001",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER003-PACKAGE-ROLLBACK-BOUNDARY"
+        "AUDIT-P003-001"
       ],
-      "relation": "narrows",
-      "note": "The node records charge-retaining rollback for the standalone package host, not for the baseline repository Demo 3 host.",
-      "proposed_derivation": {
-        "title": "Baseline Demo 3 charge-then-rollback",
-        "claim": "At the baseline, the Demo 3 host decrements fuel by one before applying each processed batch, and on refusal restores covered elements, witness and phase while keeping the decrement.",
-        "hypotheses": [
-          "Baseline commit host.py as pinned",
-          "Batch processed while host not TERMINAL"
-        ],
-        "derivation": "Source-inspect host.py commit path; replay test_poisoned_batch_rolls_covered_elements_back and assert pre/post state equality for (covered, witness, phase) and fuel_after = fuel_before - 1.",
-        "obligations": [
-          "Fresh replay at the pinned baseline",
-          "Coverage of all refusal codes, not only the poisoned batch"
-        ]
-      }
+      "relation": null,
+      "note": "The baseline and package Demo 3 hosts decrement remaining fuel by one before processing each batch and restore semantic state (covered elements, witness candidate, and phase) upon refusal while retaining the fuel decrement; verified in AUDIT-P003-001.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P003-002",

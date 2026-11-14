@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "e24b4147ea86c5685e47d06d16d4bce48c733abc",
+  "scope_manifest": "dag/reviews/additional_paper_003_support_scope.json",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/host_engine.py",
+      "sha256": "76df55eaefe09f8d3ac0ce99c6735badec5c3fb7c2c2f5dd4e1717b2ed963a25",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          424
+        ]
+      ],
+      "assessment": "Complete source read of the package Demo 3 host engine. Assesses atomic batch transaction execution: pre-decrement fuel accounting, snapshot-based rollback of covered elements, witness candidate, and phase upon batch refusal, hash-chained receipts, and terminal transition on fuel exhaustion."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py",
+      "sha256": "29a35f2ba916f3acfec7373bb4fd1e2ee15f9b19c9e3151e9f5e90e35e4d01a6",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          407
+        ]
+      ],
+      "assessment": "Full source inspection of Demo 3 host test suite. Confirms test_poisoned_batch_rolls_covered_elements_back, test_move_after_verify_rolls_the_whole_batch_back, test_empty_batch_consumes_fuel_and_rolls_back, and test_repeated_refusals_consume_fuel_and_exhaust asserting charge-then-rollback."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+      "sha256": "db9ce2c20408e6b8267ebab33e94cc172bf01762b6c32600108ae57967f7c00b",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          650
+        ]
+      ],
+      "assessment": "Full source inspection of Paper 003 manuscript. Section 4 and Section 4.1 specify the host state machine, fuel consumption, atomic rollback, and differences between baseline and package hosts."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+      "sha256": "b93d68bf1e5092a8d6f9f054d2a5c487e0037715501632f03e1a525c87841626",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          50
+        ]
+      ],
+      "assessment": "Claim ledger row P3-01 specifies that the host charges one fuel unit before applying each batch, restores semantic state on refusal, and does not return fuel."
+    },
+    {
+      "path": "pfp/infrastructure/adapters/mssn_scenarios/protocol.py",
+      "sha256": "62a4078c8ef4ddfcc5457f8d27d7b8079c90c97b5fc6f1afdb071114ce3a3c33",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          228,
+          410
+        ]
+      ],
+      "assessment": "Source inspection of repository Demo3HostEngine adapter. Confirms line 285 remaining_fuel -= 1, lines 326-329 state snapshot, and lines 390-394 semantic rollback on failure with unrefunded fuel."
+    }
+  ],
+  "claims": [
+    {
+      "id": "AUDIT-P003-001",
+      "statement": "The Demo 3 host decrements remaining fuel by one before processing each batch, restores semantic state (covered elements, witness candidate, and phase) on batch refusal, and retains the fuel decrement.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Demo 3 host engine state machine initialized with positive integer fuel in a non-terminal phase.",
+        "Batch processing executes with pre-decrement fuel accounting and snapshot-based atomic semantic rollback."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/host_engine.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py",
+        "pfp/infrastructure/adapters/mssn_scenarios/protocol.py"
+      ],
+      "limits": "Applies strictly to processed batches in the declared host state machine; fuel bounds only charged batch attempts, not total HTTP requests, uncharged calls, input bytes, or host execution time."
+    }
+  ]
+}

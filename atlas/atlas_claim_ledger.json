@@ -1044,11 +1044,12 @@
       "paper": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier",
       "dag_node": "ATL-P002-007",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
+        "verdict": "matched",
+        "nodes": [
+          "PAPER002-WORKED-FRONTIER-TRACE"
+        ],
         "relation": null,
-        "note": "No node records the worked frontier trace.",
-        "proposed_derivation_file": "dag/derivations/atl_p002_007.md"
+        "note": "PAPER002-WORKED-FRONTIER-TRACE derives the introductory 3-state worked search trace: candidates 000 and 001 fail, budget 2 yields UNKNOWN on [2, 8), and resumption with budget 1 verifies gauge 010 at candidate index 2."
       }
     },
     {
@@ -1070,13 +1071,12 @@
       "paper": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier",
       "dag_node": "ATL-P002-008",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "ADAPT-C02"
+          "PAPER002-PAIRWISE-CANCELLATION-NECESSITY"
         ],
-        "relation": "supports",
-        "note": "ADAPT-C02 gives sufficiency of a sign-reversing weight-preserving involution; the necessity direction and the +2,-1,-1 counterexample are not derived.",
-        "proposed_derivation_file": "dag/derivations/atl_p002_008.md"
+        "relation": null,
+        "note": "PAPER002-PAIRWISE-CANCELLATION-NECESSITY derives the requirement that equal-weight pairwise cancellation into zero-sum pairs requires a fixed-point-free sign-reversing weight-preserving involution, showing that nonnegative total sum alone does not suffice via counterexample {+2, -1, -1}."
       }
     },
     {
@@ -1125,11 +1125,12 @@
       "paper": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier",
       "dag_node": "ATL-P002-010",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
+        "verdict": "matched",
+        "nodes": [
+          "PAPER002-SINGLE-SNAPSHOT-HASHING"
+        ],
         "relation": null,
-        "note": "No node records the single-snapshot repair.",
-        "proposed_derivation_file": "dag/derivations/atl_p002_010.md"
+        "note": "PAPER002-SINGLE-SNAPSHOT-HASHING derives that checking and hashing consume the identical immutable snapshot of a one-shot matrix input, preventing iterator exhaustion divergence."
       }
     },
     {
@@ -1203,13 +1204,12 @@
       "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
       "dag_node": "ATL-P003-001",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PAPER003-PACKAGE-ROLLBACK-BOUNDARY"
+          "AUDIT-P003-001"
         ],
-        "relation": "narrows",
-        "note": "The node records charge-retaining rollback for the standalone package host, not for the baseline repository Demo 3 host.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_001.md"
+        "relation": null,
+        "note": "The baseline and package Demo 3 hosts decrement remaining fuel by one before processing each batch and restore semantic state (covered elements, witness candidate, and phase) upon refusal while retaining the fuel decrement; verified in AUDIT-P003-001."
       }
     },
     {
@@ -8809,13 +8809,12 @@
       "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
       "dag_node": "ATL-N001-001",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PAPER000-CYCLE-CAPSTONE"
+          "AUDIT-N001-001"
         ],
-        "relation": "narrows",
-        "note": "Node gives attainment only for $p=1$ on a single cycle.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_001.md"
+        "relation": null,
+        "note": "For a finite weighted graph with positive weights and p in [1, inf], the quotient infimum inf_f ||c - df||_{p,w} is attained on the gauge-fixed complement by compactness of sublevel sets under coercivity; certified by AUDIT-N001-001."
       }
     },
     {
@@ -8863,11 +8862,12 @@
       "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
       "dag_node": "ATL-N001-003",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N001-003"
+        ],
         "relation": null,
-        "note": "No node proves $\\Phi_p$ is a norm on $Q^1$.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_003.md"
+        "note": "Phi_p is a norm on the quotient space Q^1 = C^1 / im d_0 for all p in [1, inf] under strictly positive weights, satisfying well-definedness, absolute homogeneity, subadditivity via attainment, and positive definiteness; certified by AUDIT-N001-003."
       }
     },
     {
@@ -18191,6 +18191,24 @@
       "area": "Native Rust kernels"
     },
     {
+      "atlas_id": "ATL-D-AUDIT-N001-001",
+      "dag_node": "AUDIT-N001-001",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For a finite graph with strictly positive edge weights and p in [1, inf], the quotient infimum inf_f ||c - df||_{p,w} is attained.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N001-003",
+      "dag_node": "AUDIT-N001-003",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The quotient functional Phi_p([c]) = inf_f ||c - df||_{p,w} defines a valid norm on the quotient space Q^1 = C^1 / im d_0 for all p in [1, inf] under strictly positive weights.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
+      "area": "Archived papers"
+    },
+    {
       "atlas_id": "ATL-D-OPR-C01",
       "dag_node": "OPR-C01",
       "kind": "mathematical_or_implementation_claim",
@@ -18809,6 +18827,42 @@
       "statement": "For a finite real matrix H with nonpositive off-diagonal entries (H_ij <= 0 for i != j) and inverse temperature beta >= 0, the thermal exponential exp(-beta H) is entrywise nonnegative.",
       "status_text": "bounded_source_and_local_execution_support",
       "paper": null,
+      "area": "PFP runtime, Lab, contracts and formal sources"
+    },
+    {
+      "atlas_id": "ATL-D-PAPER002-WORKED-FRONTIER-TRACE",
+      "dag_node": "PAPER002-WORKED-FRONTIER-TRACE",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For the introductory 3-state matrix, candidates 000 and 001 fail off-diagonal nonpositivity; an initial search with node budget 2 returns status UNKNOWN on frontier interval [2, 8), and resumption with node budget 1 from that frontier verifies gauge 010 at candidate index 2.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-PAPER002-PAIRWISE-CANCELLATION-NECESSITY",
+      "dag_node": "PAPER002-PAIRWISE-CANCELLATION-NECESSITY",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Exact pairwise cancellation of a signed multiset into equal-weight zero-sum pairs requires a fixed-point-free involution pairing opposite signs with equal magnitudes; a nonnegative total sum alone does not suffice, as demonstrated by the counterexample multiset {+2, -1, -1}.",
+      "status_text": "mathematical_derivation_and_counterexample_support",
+      "paper": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-PAPER002-SINGLE-SNAPSHOT-HASHING",
+      "dag_node": "PAPER002-SINGLE-SNAPSHOT-HASHING",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The matrix checker and presentation digest generator consume the same immutable in-memory snapshot of a one-shot matrix input, ensuring that single-pass streams and iterators cannot produce divergent digests or empty-matrix evaluations.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P003-001",
+      "dag_node": "AUDIT-P003-001",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The Demo 3 host decrements remaining fuel by one before processing each batch, restores semantic state (covered elements, witness candidate, and phase) on batch refusal, and retains the fuel decrement.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
       "area": "PFP runtime, Lab, contracts and formal sources"
     },
     {
@@ -23525,22 +23579,22 @@
   ],
   "correspondence": {
     "rule": "Every derivation node in dag/derivations_dag.json (kinds other than explicit_assumption_or_obligation, paper_assessment, pinned_source_file) carries exactly one atlas_ledger_id, and every ledger row names exactly one such node.",
-    "ledger_rows": 1357,
-    "derivation_nodes": 1357,
+    "ledger_rows": 1363,
+    "derivation_nodes": 1363,
     "archive_claims": 607,
     "archive_claims_without_earlier_dag_node": 607,
-    "dag_claims": 750,
-    "dag_claims_citing_an_archive_paper": 21,
+    "dag_claims": 756,
+    "dag_claims_citing_an_archive_paper": 27,
     "dag_claims_without_archive_source": 729,
     "archive_claim_review": {
-      "matched": 83,
-      "partial": 108,
-      "gap": 416
+      "matched": 89,
+      "partial": 105,
+      "gap": 413
     },
     "non_derivation_nodes_excluded": {
-      "explicit_assumption_or_obligation": 666,
+      "explicit_assumption_or_obligation": 680,
       "paper_assessment": 38,
-      "pinned_source_file": 1561
+      "pinned_source_file": 1571
     },
     "atlas_md_rows_cited_in_prose": 342
   }

@@ -1,0 +1,126 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/README.md",
+      "sha256": "d432fdd6e2e835d684cb28d4b542f9b5f9764d681adc98076cab27c8438fa2ee",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          65
+        ]
+      ],
+      "assessment": "Package description, reproduction steps, and mathematical scope of L1-native cohomology package read. Confirms finite graph boundary."
+    },
+    {
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/LICENSE",
+      "sha256": "cbd5af318286b74656f145dff5091907cc23d6d8c9ad09e0291ec2497792ba41",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          395
+        ]
+      ],
+      "assessment": "Package license inspected; standard terms."
+    },
+    {
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+      "sha256": "9825821217cd86175d3945be81ce9c9ccae25ee657aba75eba9584d9b2d23ad2",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          600
+        ]
+      ],
+      "assessment": "Full manuscript read. Section 2 establishes Theorem LpC-T1 (quotient attainment via gauge-fixed coercivity) and Theorem LpC-T2 (quotient norm axioms on Q^1)."
+    },
+    {
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+      "sha256": "2a0036fe3ef27352ec9d09f81451c89aeb209bb05232673e38e2f99a553acfc1",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          42
+        ]
+      ],
+      "assessment": "Ledger entries read. Line 13 LpC-T1 and line 15 LpC-T2 record classical propositions with proofs supplied in manuscript Section 2."
+    },
+    {
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/code/l1_cohomology.py",
+      "sha256": "b34cdf0cd283be69a560a62e8f827f1fe04926496eb92c2471764fff33afe321",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          1938
+        ]
+      ],
+      "assessment": "Full implementation read. DirectedGraph validates strictly positive weights and connectivity; ExactTwoPhaseSimplexSolver, ExactRationalL2LaplacianSolver, and ExactRationalLinfChebyshevSolver compute exact rational quotient norms; HighPrecisionLpConvexSolver performs interior Lp optimization."
+    },
+    {
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t01_attainment.lean",
+      "sha256": "510146e6686f820a5aa536497d8de080b5995744ff6798a6f1047d118442ecdc",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          100
+        ]
+      ],
+      "assessment": "Lean 4 mechanization read. Formalizes gauge_fixed_kernel_trivial and l1c_t01_coercivity_bound on the integer 3-cycle model with zero axioms."
+    },
+    {
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t02_quotient_norm.lean",
+      "sha256": "803737d35748a5e75507ae455e15fb67efa9fc6eb75685d09fa5949c12ec4b2e",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          167
+        ]
+      ],
+      "assessment": "Lean 4 mechanization read. Formalizes l1_norm3_nonneg, l1_norm3_triangle, l1_quotient_subadditive, l1_norm3_positive_definite, and zero_weight_refusal_counterexample with zero axioms."
+    }
+  ],
+  "remaining_scope": [],
+  "claims": [
+    {
+      "id": "AUDIT-N001-001",
+      "statement": "For a finite graph with strictly positive edge weights and p in [1, inf], the quotient infimum inf_f ||c - df||_{p,w} is attained.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite connected graph with positive edge weights.",
+        "Gauge-fixed complement decomposition C^0 = F + ker d_0.",
+        "Weierstrass extreme value theorem on compact sublevel sets."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t01_attainment.lean"
+      ],
+      "limits": "Applies to finite graphs with strictly positive weights; does not claim infinite complexes or continuous manifolds."
+    },
+    {
+      "id": "AUDIT-N001-003",
+      "statement": "The quotient functional Phi_p([c]) = inf_f ||c - df||_{p,w} defines a valid norm on the quotient space Q^1 = C^1 / im d_0 for all p in [1, inf] under strictly positive weights.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite graph with strictly positive edge weights.",
+        "Attainment of the quotient infimum (AUDIT-N001-001).",
+        "Subadditivity via representative addition and positive definiteness via positive edge weights."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t02_quotient_norm.lean"
+      ],
+      "limits": "Applies to finite graphs with strictly positive weights; permitting a zero weight violates positive definiteness."
+    }
+  ]
+}
