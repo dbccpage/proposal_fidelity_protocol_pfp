@@ -1,0 +1,104 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/mining.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/mining.rs",
+      "language": "Rust",
+      "sha256": "4bdfe45467e9cc0df77fdf999358d0c6a42a861ed18247fd454f9e992a0afd7e"
+    },
+    "contract_urn": "urn:pfp-operads:tests-mining:v1",
+    "symbols": [
+      "candidate",
+      "guidance",
+      "lawful",
+      "edited",
+      "errors",
+      "refused",
+      "a_lawful_mining_reply_is_accepted_with_its_candidates_typed_and_located",
+      "a_digit_outside_a_source_quote_is_refused_wherever_it_is",
+      "a_source_quote_may_hold_digits_and_nothing_else_named_quote_may",
+      "digit_errors_come_in_the_order_the_reply_was_written",
+      "a_mined_candidate_states_its_arity_quotes_a_source_and_cites_slots_only",
+      "a_repeated_candidate_is_an_error_and_points_at_its_first_copy",
+      "guidance_covers_each_grounded_slot_once_and_quotes_a_source",
+      "errors_come_in_the_fixed_order",
+      "a_mining_request_is_closed_and_typed",
+      "reused",
+      "reuse_lists_emitted_candidates_with_a_mined_signature_in_emitted_order",
+      "a_record_without_a_typed_signature_matches_nothing",
+      "status",
+      "respond_reports_mining_and_reuse",
+      "the_command_screens_a_mining_file_and_the_shipped_example"
+    ],
+    "owned_invariants": [
+      "Error codes and their order are asserted as the exact list a workflow would read; document order is asserted on text the test writes itself.",
+      "Outcomes are asserted on the JSON a workflow would read, including exit codes of the built binary and the shipped example."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/mining.rs",
+      "language": "Rust",
+      "sha256": "4bdfe45467e9cc0df77fdf999358d0c6a42a861ed18247fd454f9e992a0afd7e"
+    },
+    "profile": "Non-Numeric",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 13 pass in the recorded run; the crate suite they belong to killed 44 of 44 eligible mining mutants.",
+      "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T09:54:56Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v3-test.run.json",
+        "sha256": "c91d7f0096a4bf4a60282222ae369bd98ba0bdb61a3477a259542e8defdcba79",
+        "note": "97 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v3-clippy.run.json",
+        "sha256": "2cb3d6973959966fc68a232c795137b2af538e8091188265c42e03c33e1f998f",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v3-fmt.run.json",
+        "sha256": "662a91eb9c31ff5b5b2ef2e0da47bbec7d20de292ae6c62bc1ee09392bd8f384",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v3-metrics.run.json",
+        "sha256": "61402cc961ac77c8ef2baa0c99685bb989cdc3a37a254d3c1d14d2f30c9d330d",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v3-metrics.json",
+        "sha256": "71d6ba047df075a29edc4ceaaac890216ed0356e8290120ac8f0418d7bc976be",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

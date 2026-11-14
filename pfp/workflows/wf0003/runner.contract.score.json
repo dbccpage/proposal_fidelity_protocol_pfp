@@ -7,7 +7,7 @@
     "artifact": {
       "path": "pfp/workflows/wf0003/runner.py",
       "language": "Python",
-      "sha256": "3830b9c7f7ea77eecbb6bf24d024f9ea08b8919bd62859f4ca224d5e0b6238e8"
+      "sha256": "558eea2450d348cdc098cfe61ad819e2113bba154b612b5ac12b9117d1fe9726"
     },
     "contract_urn": "urn:pfp-workflows:pfp-workflows-wf0003-runner-py:v1",
     "symbols": [
@@ -21,7 +21,8 @@
       "main"
     ],
     "owned_invariants": [
-      "Screen/freeze mining before one solver; concrete public L2 bindings and shared allowance."
+      "Screen/freeze mining before one solver; concrete public L2 bindings and shared allowance.",
+      "mined_signature_reuse_ids is the Rust host's list; this module compares no signature itself."
     ],
     "boundaries": [
       "No authority promotion. Host checks only their declared finite task; provider billing estimates are not vendor-enforced caps.",
@@ -34,7 +35,7 @@
     "artifact": {
       "path": "pfp/workflows/wf0003/runner.py",
       "language": "Python",
-      "sha256": "3830b9c7f7ea77eecbb6bf24d024f9ea08b8919bd62859f4ca224d5e0b6238e8"
+      "sha256": "558eea2450d348cdc098cfe61ad819e2113bba154b612b5ac12b9117d1fe9726"
     },
     "profile": "Exact",
     "level": "L4",
@@ -48,31 +49,31 @@
     },
     "basis": {
       "G1": "Legacy origin, source paths, migration versions and SHA-256 binding are recorded. Contract names the narrow exported claim; AuthorityEffect is None. No external authenticity attestation is claimed.",
-      "G2": "The source-bound 590-test suite exercises this module through the WF1-WF5 runners and families, including strict typed response formats on every model call. No arbitrary English equivalence or causal learning claim.",
-      "G3": "Observed refusal controls cover malformed bindings, missing slots, wrong unanimous answers, unknown costs, aggregate budget refusal and changed replay bytes. Native absence is typed. External provider behavior beyond injected wire fixtures remains unverified live.",
-      "G4": "D: executed regression and negative controls are source-bound, including all five CLI paths. No implementation-mutation campaign or new live model trial was run, so no mutation ratio or statistical efficacy is claimed. This is an explicit verification audit deficit, not a fabricated unassessed pass.",
-      "G5": "Measured CCN 27, cognitive 20, nesting 2; ceiling D, recorded D. No unmeasured optimality claim."
+      "G2": "The source-bound 639-test suite exercises this module through the WF3-WF5 runners, including strict typed response formats on every model call and the host's operad checks. No arbitrary English equivalence or causal learning claim.",
+      "G3": "Observed refusal controls cover malformed bindings, missing slots, wrong unanimous answers, unknown costs, aggregate budget refusal and changed replay bytes. Native absence is typed. A host that cannot run or answer raises and yields no verdict. External provider behavior beyond injected wire fixtures remains unverified live.",
+      "G4": "D: executed regression and negative controls are source-bound, including all five CLI paths. No implementation-mutation campaign on this file or new live model trial was run, so no mutation ratio or statistical efficacy is claimed. This is an explicit verification audit deficit, not a fabricated unassessed pass.",
+      "G5": "Measured worst cyclomatic 23, cognitive 17, nesting 2; ceiling D, recorded D."
     },
     "composite_grade": "D",
     "score_token": "L4D",
     "is_complete": true,
-    "grade_ceiling": "D",
-    "evaluation_timestamp": "2026-11-13T06:34:01.831137Z",
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T09:54:56Z",
     "evidence": [
       {
-        "path": "governance/evidence/workflow-typed-output-tests.run.json",
-        "sha256": "09387230df11d1815a8ed8d403e9c016be340ada64ebda263f53e32d73630607",
-        "note": "590 offline tests (pfp/workflows, pfp_core/workflow_families); exact source inputs bound. No live model performance claim."
+        "path": "governance/evidence/operad-host-workflow-tests-v3.run.json",
+        "sha256": "6649148c5d29d3682d6497ef7d68d84ac142426834d2fa16532e04471ba15b32",
+        "note": "639 offline tests (pfp/workflows, pfp_core/workflow_families, exclusions) against the release build of pfp_operad 0.3.0; exact source inputs bound. No live model performance claim."
       },
       {
-        "path": "governance/evidence/workflow-typed-output-tests.log",
-        "sha256": "9c685ff1613a5d3f2ac76fb5bd6a15303cf303eb9fdbf0a16bddebd5ac48c1db",
-        "note": "Test outcomes and scope."
+        "path": "governance/evidence/pfp-operads-v3-metrics.run.json",
+        "sha256": "61402cc961ac77c8ef2baa0c99685bb989cdc3a37a254d3c1d14d2f30c9d330d",
+        "note": "The run that measured Gate 5 structure."
       },
       {
-        "path": "governance/evidence/workflow-typed-output-metrics.json",
-        "sha256": "91fd4b2023f24251f1f8fb484569a12bfa1bd26570a871db6711f65c943d1e64",
-        "note": "Measured Gate 5 structure of every edited source."
+        "path": "governance/evidence/pfp-operads-v3-metrics.json",
+        "sha256": "71d6ba047df075a29edc4ceaaac890216ed0356e8290120ac8f0418d7bc976be",
+        "note": "Measured Gate 5 structure of every source this change touches."
       }
     ],
     "mutation_accounting": null
@@ -235,6 +236,84 @@
             "path": "governance/evidence/workflow-live-round-metrics.json",
             "sha256": "6c3f13b8aa13df3d07fc52116de9d2b56fc361130efc8cdbba977b6a369b0b78",
             "note": "Measured structural ceilings for the changed sources."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    },
+    {
+      "recorded_at": "2026-11-14T09:54:59.929455Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "pfp/workflows/wf0003/runner.py",
+          "language": "Python",
+          "sha256": "3830b9c7f7ea77eecbb6bf24d024f9ea08b8919bd62859f4ca224d5e0b6238e8"
+        },
+        "contract_urn": "urn:pfp-workflows:pfp-workflows-wf0003-runner-py:v1",
+        "symbols": [
+          "read_json",
+          "prepare_run",
+          "freeze_run",
+          "dispatch_phase",
+          "finish_run",
+          "replay_run",
+          "run",
+          "main"
+        ],
+        "owned_invariants": [
+          "Screen/freeze mining before one solver; concrete public L2 bindings and shared allowance."
+        ],
+        "boundaries": [
+          "No authority promotion. Host checks only their declared finite task; provider billing estimates are not vendor-enforced caps.",
+          "Original historical receipts keep their implementation identities."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "pfp/workflows/wf0003/runner.py",
+          "language": "Python",
+          "sha256": "3830b9c7f7ea77eecbb6bf24d024f9ea08b8919bd62859f4ca224d5e0b6238e8"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "L4 production integration scope: explicit workflow contracts, fresh attempt custody, delegated shared owners and tested refusal/replay boundaries. Thin entry points inherit these verified boundaries; this level asserts integration craft, not algorithmic novelty.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "D",
+          "G5": "D"
+        },
+        "basis": {
+          "G1": "Legacy origin, source paths, migration versions and SHA-256 binding are recorded. Contract names the narrow exported claim; AuthorityEffect is None. No external authenticity attestation is claimed.",
+          "G2": "The source-bound 590-test suite exercises this module through the WF1-WF5 runners and families, including strict typed response formats on every model call. No arbitrary English equivalence or causal learning claim.",
+          "G3": "Observed refusal controls cover malformed bindings, missing slots, wrong unanimous answers, unknown costs, aggregate budget refusal and changed replay bytes. Native absence is typed. External provider behavior beyond injected wire fixtures remains unverified live.",
+          "G4": "D: executed regression and negative controls are source-bound, including all five CLI paths. No implementation-mutation campaign or new live model trial was run, so no mutation ratio or statistical efficacy is claimed. This is an explicit verification audit deficit, not a fabricated unassessed pass.",
+          "G5": "Measured CCN 27, cognitive 20, nesting 2; ceiling D, recorded D. No unmeasured optimality claim."
+        },
+        "composite_grade": "D",
+        "score_token": "L4D",
+        "is_complete": true,
+        "grade_ceiling": "D",
+        "evaluation_timestamp": "2026-11-13T06:34:01.831137Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/workflow-typed-output-tests.run.json",
+            "sha256": "09387230df11d1815a8ed8d403e9c016be340ada64ebda263f53e32d73630607",
+            "note": "590 offline tests (pfp/workflows, pfp_core/workflow_families); exact source inputs bound. No live model performance claim."
+          },
+          {
+            "path": "governance/evidence/workflow-typed-output-tests.log",
+            "sha256": "9c685ff1613a5d3f2ac76fb5bd6a15303cf303eb9fdbf0a16bddebd5ac48c1db",
+            "note": "Test outcomes and scope."
+          },
+          {
+            "path": "governance/evidence/workflow-typed-output-metrics.json",
+            "sha256": "91fd4b2023f24251f1f8fb484569a12bfa1bd26570a871db6711f65c943d1e64",
+            "note": "Measured Gate 5 structure of every edited source."
           }
         ],
         "mutation_accounting": null

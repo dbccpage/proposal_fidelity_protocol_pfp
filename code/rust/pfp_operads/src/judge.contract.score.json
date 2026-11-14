@@ -7,7 +7,7 @@
     "artifact": {
       "path": "code/rust/pfp_operads/src/judge.rs",
       "language": "Rust",
-      "sha256": "1ec6e219b913a0e7fff208e7f36dc586e22f288842132bb30d733a12090dc3c9"
+      "sha256": "df8d22092447c3609f50625104973eb86b0822a78a08c47c080189a167e35558"
     },
     "contract_urn": "urn:pfp-operads:judge:v1",
     "symbols": [
@@ -31,7 +31,7 @@
     "artifact": {
       "path": "code/rust/pfp_operads/src/judge.rs",
       "language": "Rust",
-      "sha256": "1ec6e219b913a0e7fff208e7f36dc586e22f288842132bb30d733a12090dc3c9"
+      "sha256": "df8d22092447c3609f50625104973eb86b0822a78a08c47c080189a167e35558"
     },
     "profile": "Exact",
     "level": "L4",
@@ -45,7 +45,7 @@
     },
     "basis": {
       "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
-      "G2": "Exact profile: num-bigint sums of literals read from raw JSON text, so there is no rounding and no overflow. The old Python judge and this one agreed on 3,000 random cases (seed 7); that comparison is not a committed test. Not B: no proof, and the big-integer library is trusted.",
+      "G2": "Exact profile: num-bigint sums of literals read from raw JSON text, so there is no rounding and no overflow. The old Python judge and this one agreed on 3,000 random cases (seed 7); that comparison is a scratch run, not a committed test. Not B: no proof, and the big-integer library is trusted.",
       "G3": "Three typed refusals (BAD_REQUEST, BAD_CASE, UNKNOWN_CHECKER); no panic path. Not B: panic-freedom is tested, not proven.",
       "G4": "8 judge tests cover integers beyond 64 bits, non-integer answers, extra answer fields, each refusal and the binary's exit codes. Two mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 14/14. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
       "G5": "Measured worst cyclomatic 5, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
@@ -54,31 +54,31 @@
     "score_token": "L4C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-14T09:19:59Z",
+    "evaluation_timestamp": "2026-11-14T09:54:56Z",
     "evidence": [
       {
-        "path": "governance/evidence/pfp-operads-v2-test.run.json",
-        "sha256": "765ccc06ec162d9c03b1768aee8936e0a3f773bf454f0220e02c2af0d3ee8e32",
-        "note": "73 tests: pfp_operads and core_operad_canon, locked build."
+        "path": "governance/evidence/pfp-operads-v3-test.run.json",
+        "sha256": "c91d7f0096a4bf4a60282222ae369bd98ba0bdb61a3477a259542e8defdcba79",
+        "note": "97 tests: pfp_operads and core_operad_canon, locked build."
       },
       {
-        "path": "governance/evidence/pfp-operads-v2-clippy.run.json",
-        "sha256": "032b6806d16575ff802401b5b192ded1a5cb995579237dac31b3c188e249e910",
+        "path": "governance/evidence/pfp-operads-v3-clippy.run.json",
+        "sha256": "2cb3d6973959966fc68a232c795137b2af538e8091188265c42e03c33e1f998f",
         "note": "clippy with -D warnings on both crates, all targets."
       },
       {
-        "path": "governance/evidence/pfp-operads-v2-fmt.run.json",
-        "sha256": "6b1b5edcb7930b736d58cfa254a61e735940f9bd67ab01818c7b927fd186608c",
+        "path": "governance/evidence/pfp-operads-v3-fmt.run.json",
+        "sha256": "662a91eb9c31ff5b5b2ef2e0da47bbec7d20de292ae6c62bc1ee09392bd8f384",
         "note": "rustfmt --check on both crates."
       },
       {
-        "path": "governance/evidence/pfp-operads-v2-metrics.run.json",
-        "sha256": "6d4fa19db7517c42c27a749136736ea17ad009a615fe2dca3f9eba5ed7173d67",
+        "path": "governance/evidence/pfp-operads-v3-metrics.run.json",
+        "sha256": "61402cc961ac77c8ef2baa0c99685bb989cdc3a37a254d3c1d14d2f30c9d330d",
         "note": "The run that measured Gate 5 structure."
       },
       {
-        "path": "governance/evidence/pfp-operads-v2-metrics.json",
-        "sha256": "9b625cca33d29cb7f52e956c11372a8dc6d20a99e53f359a84e92db405df975b",
+        "path": "governance/evidence/pfp-operads-v3-metrics.json",
+        "sha256": "71d6ba047df075a29edc4ceaaac890216ed0356e8290120ac8f0418d7bc976be",
         "note": "Measured Gate 5 structure of every source this change touches."
       }
     ],
@@ -92,10 +92,109 @@
       "conservative_ratio": 1.0,
       "report": {
         "path": "governance/evidence/m-pfp-operads-judge.mutation.json",
-        "sha256": "ec6b24414da67b15d2e8278e0c0adc80b6da3fbf45c752c6c5271e29bf028a73",
+        "sha256": "9e57ef7a88a43f557cf985ef73f063d1ef9b002b8d904edb6b4c8078e5d2f7f0",
         "note": "lexical campaign of one-line mutants, crate tests as oracle; 16 mutants"
       }
     }
   },
-  "history": []
+  "history": [
+    {
+      "recorded_at": "2026-11-14T09:54:57.700846Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/judge.rs",
+          "language": "Rust",
+          "sha256": "1ec6e219b913a0e7fff208e7f36dc586e22f288842132bb30d733a12090dc3c9"
+        },
+        "contract_urn": "urn:pfp-operads:judge:v1",
+        "symbols": [
+          "INTEGER_SUM",
+          "Verdict",
+          "judge"
+        ],
+        "owned_invariants": [
+          "The host computes the sum itself from the task's public input and accepts only an answer that is exactly {\"total\": n} with n equal to it.",
+          "Integers are unbounded and read from their JSON digits; a number with a fraction or an exponent is not an integer, whatever its value.",
+          "A case value that is not an integer is refused as BAD_CASE; a checker with no judge is refused as UNKNOWN_CHECKER."
+        ],
+        "boundaries": [
+          "One judge exists: integer_sum_v1.",
+          "The verdict covers the task result only, not the rest of the reply."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/judge.rs",
+          "language": "Rust",
+          "sha256": "1ec6e219b913a0e7fff208e7f36dc586e22f288842132bb30d733a12090dc3c9"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, vocabularies from the canon, exact integers, no unwrap or direct indexing.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Exact profile: num-bigint sums of literals read from raw JSON text, so there is no rounding and no overflow. The old Python judge and this one agreed on 3,000 random cases (seed 7); that comparison is not a committed test. Not B: no proof, and the big-integer library is trusted.",
+          "G3": "Three typed refusals (BAD_REQUEST, BAD_CASE, UNKNOWN_CHECKER); no panic path. Not B: panic-freedom is tested, not proven.",
+          "G4": "8 judge tests cover integers beyond 64 bits, non-integer answers, extra answer fields, each refusal and the binary's exit codes. Two mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 14/14. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 5, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T09:19:59Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v2-test.run.json",
+            "sha256": "765ccc06ec162d9c03b1768aee8936e0a3f773bf454f0220e02c2af0d3ee8e32",
+            "note": "73 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v2-clippy.run.json",
+            "sha256": "032b6806d16575ff802401b5b192ded1a5cb995579237dac31b3c188e249e910",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v2-fmt.run.json",
+            "sha256": "6b1b5edcb7930b736d58cfa254a61e735940f9bd67ab01818c7b927fd186608c",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v2-metrics.run.json",
+            "sha256": "6d4fa19db7517c42c27a749136736ea17ad009a615fe2dca3f9eba5ed7173d67",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v2-metrics.json",
+            "sha256": "9b625cca33d29cb7f52e956c11372a8dc6d20a99e53f359a84e92db405df975b",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 14,
+          "survived": 0,
+          "demonstrably_equivalent": 2,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-judge.mutation.json",
+            "sha256": "ec6b24414da67b15d2e8278e0c0adc80b6da3fbf45c752c6c5271e29bf028a73",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 16 mutants"
+          }
+        }
+      }
+    }
+  ]
 }

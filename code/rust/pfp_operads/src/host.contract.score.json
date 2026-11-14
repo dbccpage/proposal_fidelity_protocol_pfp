@@ -7,7 +7,7 @@
     "artifact": {
       "path": "code/rust/pfp_operads/src/host.rs",
       "language": "Rust",
-      "sha256": "51af3117a38175bba410504107b3d7a4c634d47e7c2733aacbf0bb39ca2786ae"
+      "sha256": "70eb918181d6af4cbc19425dc87c5573629b5c30cdcc8bcb6b310e11f1ff90ae"
     },
     "contract_urn": "urn:pfp-operads:host:v1",
     "symbols": [
@@ -26,7 +26,7 @@
       "Requests are closed JSON: unknown fields, unknown colours, unknown DDC letters and duplicate ids are refused or reported as findings.",
       "An operation is HOST_VERIFIED only if it has a body and every host check on it reproduced the expected value; a body-less operation stays UNVERIFIED_CANDIDATE.",
       "Any failed check or bad reference makes the candidate not accepted; a duplicated id leaves neither copy typed.",
-      "respond returns exactly one of PASS, FAIL or REFUSED, for every command including envelope, judge and version.",
+      "respond returns exactly one of PASS, FAIL or REFUSED for every command; FAIL carries the report of a check that ran and did not hold.",
       "version states the crate name, the crate version and the canon schema version, so a workflow can bind a run to the host that checked it."
     ],
     "boundaries": [
@@ -40,7 +40,7 @@
     "artifact": {
       "path": "code/rust/pfp_operads/src/host.rs",
       "language": "Rust",
-      "sha256": "51af3117a38175bba410504107b3d7a4c634d47e7c2733aacbf0bb39ca2786ae"
+      "sha256": "70eb918181d6af4cbc19425dc87c5573629b5c30cdcc8bcb6b310e11f1ff90ae"
     },
     "profile": "Exact",
     "level": "L4",
@@ -50,49 +50,49 @@
       "G2": "C",
       "G3": "C",
       "G4": "C",
-      "G5": "A"
+      "G5": "B"
     },
     "basis": {
       "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
       "G2": "Exact profile: expected values are compared with values recomputed by term.rs; no float can enter because Value has no float variant.",
       "G3": "Malformed input is a typed BAD_REQUEST refusal; findings carry code, scope and subject. Not B: panic-freedom is tested, not proven.",
-      "G4": "12 host tests plus the envelope and judge tests that go through respond and the built binary. Mutation campaign R = 25/25. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
-      "G5": "Measured worst cyclomatic 8, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+      "G4": "12 host tests plus the envelope, judge, mining and grounding tests that go through respond and the built binary. Mutation campaign R = 29/29. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 12, cognitive complexity is not measured for Rust, nesting 2; ceiling B, recorded B."
     },
     "composite_grade": "C",
     "score_token": "L4C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-14T09:19:59Z",
+    "evaluation_timestamp": "2026-11-14T09:54:56Z",
     "evidence": [
       {
-        "path": "governance/evidence/pfp-operads-v2-test.run.json",
-        "sha256": "765ccc06ec162d9c03b1768aee8936e0a3f773bf454f0220e02c2af0d3ee8e32",
-        "note": "73 tests: pfp_operads and core_operad_canon, locked build."
+        "path": "governance/evidence/pfp-operads-v3-test.run.json",
+        "sha256": "c91d7f0096a4bf4a60282222ae369bd98ba0bdb61a3477a259542e8defdcba79",
+        "note": "97 tests: pfp_operads and core_operad_canon, locked build."
       },
       {
-        "path": "governance/evidence/pfp-operads-v2-clippy.run.json",
-        "sha256": "032b6806d16575ff802401b5b192ded1a5cb995579237dac31b3c188e249e910",
+        "path": "governance/evidence/pfp-operads-v3-clippy.run.json",
+        "sha256": "2cb3d6973959966fc68a232c795137b2af538e8091188265c42e03c33e1f998f",
         "note": "clippy with -D warnings on both crates, all targets."
       },
       {
-        "path": "governance/evidence/pfp-operads-v2-fmt.run.json",
-        "sha256": "6b1b5edcb7930b736d58cfa254a61e735940f9bd67ab01818c7b927fd186608c",
+        "path": "governance/evidence/pfp-operads-v3-fmt.run.json",
+        "sha256": "662a91eb9c31ff5b5b2ef2e0da47bbec7d20de292ae6c62bc1ee09392bd8f384",
         "note": "rustfmt --check on both crates."
       },
       {
-        "path": "governance/evidence/pfp-operads-v2-metrics.run.json",
-        "sha256": "6d4fa19db7517c42c27a749136736ea17ad009a615fe2dca3f9eba5ed7173d67",
+        "path": "governance/evidence/pfp-operads-v3-metrics.run.json",
+        "sha256": "61402cc961ac77c8ef2baa0c99685bb989cdc3a37a254d3c1d14d2f30c9d330d",
         "note": "The run that measured Gate 5 structure."
       },
       {
-        "path": "governance/evidence/pfp-operads-v2-metrics.json",
-        "sha256": "9b625cca33d29cb7f52e956c11372a8dc6d20a99e53f359a84e92db405df975b",
+        "path": "governance/evidence/pfp-operads-v3-metrics.json",
+        "sha256": "71d6ba047df075a29edc4ceaaac890216ed0356e8290120ac8f0418d7bc976be",
         "note": "Measured Gate 5 structure of every source this change touches."
       }
     ],
     "mutation_accounting": {
-      "killed": 25,
+      "killed": 29,
       "survived": 0,
       "demonstrably_equivalent": 0,
       "invalid": 0,
@@ -101,8 +101,8 @@
       "conservative_ratio": 1.0,
       "report": {
         "path": "governance/evidence/m-pfp-operads-host.mutation.json",
-        "sha256": "5c14e4dbbf63a2b43a33048fefb6cb75a92cacc85446537fcfbc0d27551b9545",
-        "note": "lexical campaign of one-line mutants, crate tests as oracle; 25 mutants"
+        "sha256": "e26109da91aaefb4ac46d2f036a44fed23c300aa0489ae6a5452e20b2a316734",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 29 mutants"
       }
     }
   },
@@ -209,6 +209,113 @@
             "path": "governance/evidence/m-pfp-operads-host.mutation.json",
             "sha256": "513549e8bb774e53b1b130e7d6c541c075208151bdeca116393ad920d128c412",
             "note": "lexical campaign, 18 one-line mutants, crate tests as oracle"
+          }
+        }
+      }
+    },
+    {
+      "recorded_at": "2026-11-14T09:54:57.927243Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/host.rs",
+          "language": "Rust",
+          "sha256": "51af3117a38175bba410504107b3d7a4c634d47e7c2733aacbf0bb39ca2786ae"
+        },
+        "contract_urn": "urn:pfp-operads:host:v1",
+        "symbols": [
+          "OperationWire",
+          "Finding",
+          "Disposition",
+          "OperationStatus",
+          "CandidateReport",
+          "Command",
+          "Outcome",
+          "laws",
+          "check",
+          "respond"
+        ],
+        "owned_invariants": [
+          "Requests are closed JSON: unknown fields, unknown colours, unknown DDC letters and duplicate ids are refused or reported as findings.",
+          "An operation is HOST_VERIFIED only if it has a body and every host check on it reproduced the expected value; a body-less operation stays UNVERIFIED_CANDIDATE.",
+          "Any failed check or bad reference makes the candidate not accepted; a duplicated id leaves neither copy typed.",
+          "respond returns exactly one of PASS, FAIL or REFUSED, for every command including envelope, judge and version.",
+          "version states the crate name, the crate version and the canon schema version, so a workflow can bind a run to the host that checked it."
+        ],
+        "boundaries": [
+          "The host recomputes; it never trusts a value the caller supplies as the result.",
+          "WF1 to WF5 reach it through pfp/infrastructure/operad_host.py, which carries the request and the outcome only."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/host.rs",
+          "language": "Rust",
+          "sha256": "51af3117a38175bba410504107b3d7a4c634d47e7c2733aacbf0bb39ca2786ae"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, vocabularies from the canon, exact integers, no unwrap or direct indexing.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Exact profile: expected values are compared with values recomputed by term.rs; no float can enter because Value has no float variant.",
+          "G3": "Malformed input is a typed BAD_REQUEST refusal; findings carry code, scope and subject. Not B: panic-freedom is tested, not proven.",
+          "G4": "12 host tests plus the envelope and judge tests that go through respond and the built binary. Mutation campaign R = 25/25. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 8, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T09:19:59Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v2-test.run.json",
+            "sha256": "765ccc06ec162d9c03b1768aee8936e0a3f773bf454f0220e02c2af0d3ee8e32",
+            "note": "73 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v2-clippy.run.json",
+            "sha256": "032b6806d16575ff802401b5b192ded1a5cb995579237dac31b3c188e249e910",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v2-fmt.run.json",
+            "sha256": "6b1b5edcb7930b736d58cfa254a61e735940f9bd67ab01818c7b927fd186608c",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v2-metrics.run.json",
+            "sha256": "6d4fa19db7517c42c27a749136736ea17ad009a615fe2dca3f9eba5ed7173d67",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v2-metrics.json",
+            "sha256": "9b625cca33d29cb7f52e956c11372a8dc6d20a99e53f359a84e92db405df975b",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 25,
+          "survived": 0,
+          "demonstrably_equivalent": 0,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-host.mutation.json",
+            "sha256": "5c14e4dbbf63a2b43a33048fefb6cb75a92cacc85446537fcfbc0d27551b9545",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 25 mutants"
           }
         }
       }
