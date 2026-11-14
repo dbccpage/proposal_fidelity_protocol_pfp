@@ -447,6 +447,8 @@ pub fn handle_exclusion(payload: &str) -> Result<Outcome, String> {
 // CLI Entry Point
 // ---------------------------------------------------------------------------
 
+pub const USAGE: &str = "usage: pfp_immune <screen|decide|taint|select|exclusion> [--input <file>]";
+
 fn read_payload(source: Option<&str>) -> Result<String, String> {
     match source {
         None | Some("-") => {
@@ -463,16 +465,25 @@ fn read_payload(source: Option<&str>) -> Result<String, String> {
 }
 
 pub fn run(args: &[&str]) -> Result<Outcome, String> {
-    if args.is_empty() {
-        return Err("missing subcommand. Usage: pfp_immune <screen|decide|taint|select|exclusion> [--input <file>]".to_string());
+    if args.is_empty()
+        || args.contains(&"-h")
+        || args.contains(&"--help")
+        || args.first() == Some(&"help")
+    {
+        return Err(USAGE.to_string());
     }
 
     let subcommand = args[0];
+    match subcommand {
+        "screen" | "decide" | "taint" | "select" | "exclusion" => {}
+        other => return Err(format!("unknown subcommand: '{other}'. {USAGE}")),
+    }
+
     let input_source = match &args[1..] {
         [] => None,
         ["--input", file] => Some(*file),
         [file] if !file.starts_with("--") => Some(*file),
-        _ => return Err(format!("invalid arguments: {:?}", &args[1..])),
+        _ => return Err(format!("invalid arguments: {:?}. {USAGE}", &args[1..])),
     };
     let payload = read_payload(input_source)?;
 
@@ -482,7 +493,7 @@ pub fn run(args: &[&str]) -> Result<Outcome, String> {
         "taint" => handle_taint(&payload),
         "select" => handle_select(&payload),
         "exclusion" => handle_exclusion(&payload),
-        other => Err(format!("unknown subcommand: '{other}'")),
+        _ => unreachable!(),
     }
 }
 

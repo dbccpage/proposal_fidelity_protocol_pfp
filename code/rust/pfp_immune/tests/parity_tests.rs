@@ -464,17 +464,32 @@ fn test_exclusion_uncorroborated() {
 // ---------------------------------------------------------------------------
 
 #[test]
+fn test_help_flag_exits_two() {
+    let (exit_code, _, stderr) = run_cli_args(&["--help"], None);
+    assert_eq!(exit_code, 2);
+    assert!(stderr.contains("usage: pfp_immune"));
+}
+
+#[test]
+fn test_help_short_flag_exits_two() {
+    let (exit_code, _, stderr) = run_cli_args(&["-h"], None);
+    assert_eq!(exit_code, 2);
+    assert!(stderr.contains("usage: pfp_immune"));
+}
+
+#[test]
 fn test_usage_no_args_exits_two() {
     let (exit_code, _, stderr) = run_cli_args(&[], None);
     assert_eq!(exit_code, 2);
-    assert!(stderr.contains("missing subcommand"));
+    assert!(stderr.contains("usage: pfp_immune"));
 }
 
 #[test]
 fn test_unknown_subcommand_exits_two() {
     let (exit_code, _, stderr) = run_cli_args(&["unknown_cmd"], Some("{}"));
     assert_eq!(exit_code, 2);
-    assert!(stderr.contains("unknown subcommand"));
+    assert!(stderr.contains("unknown subcommand: 'unknown_cmd'"));
+    assert!(stderr.contains("usage: pfp_immune"));
 }
 
 #[test]
