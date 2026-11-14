@@ -1041,6 +1041,21 @@
         "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py"
       ],
       "limits": "Sufficient condition only; failure of condition is not a nonuniqueness certificate; requires strictly positive penalties."
+    },
+    {
+      "id": "PAPER001-NATIVE-FOREST-SOLVER-REVIEW",
+      "statement": "The native Rust solver enumerates spanning forests exactly, caps the search at 100,000 forests, refuses with EnumerationLimit beyond the cap, and returns phi1, gauge, and forests_checked.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Pinned Rust source in code/rust/core_solvers/src/solver_graph_phi1_distance.rs with cargo test harness.",
+        "Independent exact primal-dual evaluation via Phi1Functional certification."
+      ],
+      "evidence": [
+        "code/rust/core_solvers/src/solver_graph_phi1_distance.rs",
+        "code/rust/core_solvers/src/bin/solve_graph_phi1.rs",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/native_functional.py"
+      ],
+      "limits": "No dual circulation in return struct; worst-case exponential complexity; Python adapter does not pin binary hash."
     }
   ],
   "findings": [

@@ -4974,22 +4974,13 @@
     },
     {
       "atlas_id": "ATL-P001-008",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "PAPER001-NATIVE-FOREST-SOLVER-REVIEW"
+      ],
       "relation": null,
-      "note": "No node reviews the native graph_phi1 spanning-forest solver.",
-      "proposed_derivation": {
-        "title": "Native forest solver review",
-        "claim": "graph_phi1 enumerates spanning forests exactly, refuses with EnumerationLimit above 100,000 forests, and returns phi1, gauge and forests_checked.",
-        "hypotheses": [
-          "pinned Rust source"
-        ],
-        "derivation": "Source read plus fresh run of the three named Rust tests, including a graph exceeding the cap.",
-        "obligations": [
-          "No dual circulation returned",
-          "Python adapter does not pin the binary"
-        ]
-      }
+      "note": "The native Rust solver enumerates spanning forests exactly, caps search at 100,000 forests, refuses with EnumerationLimit beyond cap, and returns phi1, gauge, and forests_checked; certified in PAPER001-NATIVE-FOREST-SOLVER-REVIEW.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P001-009",
