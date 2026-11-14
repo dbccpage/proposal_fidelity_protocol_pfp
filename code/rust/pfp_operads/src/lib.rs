@@ -32,6 +32,7 @@
 //!   machine. This is the one module that writes files and starts processes.
 //! * [`datum`]: exact JSON, with integers read from their digits and nothing rounded.
 //! * [`exact`]: rational arithmetic and linear algebra over unbounded integers.
+//! * [`perm`]: permutations in one-line notation, composed directly and as matrices.
 //! * [`families`]: the host side of a workflow family run. The host writes each prompt, refuses
 //!   one that carries a sealed value, and gives the verdict with the predicates it recorded.
 //! * [`host`]: the JSON entry points a workflow calls, also exposed by the `pfp_operad` binary.
@@ -53,6 +54,7 @@ pub mod ledger;
 pub mod loading;
 pub mod mining;
 pub mod patch;
+pub mod perm;
 pub mod repair;
 pub mod running;
 pub mod term;

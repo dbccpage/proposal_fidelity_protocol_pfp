@@ -175,7 +175,7 @@ def test_the_rust_host_lists_every_hosted_family_under_the_registry_s_names():
     listed = operad_host.result(operad_host.call(('family', 'list')))['families']
     assert listed == [{'workflow': wf_id, 'name': cls.spec.name, 'host_check': cls.spec.host_check_id}
                       for wf_id, cls in HOSTED.items()]
-    assert {'WF7', 'WF30', 'WF31'} <= set(HOSTED)
+    assert {'WF7', 'WF13', 'WF24', 'WF30', 'WF31', 'WF32', 'WF45'} <= set(HOSTED)
 
 
 @pytest.mark.parametrize('wf_id', sorted(HOSTED))
@@ -220,6 +220,26 @@ def test_a_hosted_family_asks_exactly_what_the_host_wrote():
     assert {t['request_sha256'] for t in out.transcript} == {base.sha256_hex(prompts[0])}
     assert out.host['certified_predicates'] == {'splits_disjoint': True, 'winner_beats_baseline': True}
     assert out.host['final_output_certified'] is True
+
+
+def test_what_the_host_leaves_unchecked_keeps_the_run_from_being_fully_certified():
+    family = REGISTRY['WF32']()
+    scoped = run_fixture(family, 'checked_claims_admitted_rest_open')
+    assert (scoped.verdict, scoped.code) == ('HOST_CERTIFIED', 'CLAIM_SCOPED')
+    assert scoped.host['uncertified_obligations'] == ['c3', 'c4']
+    assert scoped.host['final_output_certified'] is False
+    full = run_fixture(family, 'every_claim_checked')
+    assert (full.verdict, full.code) == ('HOST_CERTIFIED', 'ALL_CLAIMS_ADMITTED')
+    assert full.host['uncertified_obligations'] == [] and full.host['final_output_certified'] is True
+
+
+def test_a_battery_asks_one_capsule_at_a_time_and_counts_a_missing_reply():
+    family = REGISTRY['WF13']()
+    out = run_fixture(family, 'dropped_capsule_keeps_denominator')
+    assert [t['stage'] for t in out.transcript] == ['capsule:stab5', 'capsule:stab3', 'capsule:anom', 'capsule:comm',
+                                                    'capsule:refuse']
+    assert out.verdict == 'REFUSED' and out.detail['denominator'] == 5
+    assert out.host['certified_predicates']['capsule:refuse'] is False
 
 
 def test_a_sealed_value_in_a_hosted_task_is_refused_by_the_host_and_never_dispatched():

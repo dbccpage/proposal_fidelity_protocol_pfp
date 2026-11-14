@@ -1,0 +1,105 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf24.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf24.rs",
+      "language": "Rust",
+      "sha256": "0e65a41e75bea7898b88c30f42d752938d003c9ae3ab2d35a9c7b4972f668527"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf24:v1",
+    "symbols": [
+      "MAX_POINTS",
+      "MAX_LOOP",
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task has n points, an exact integer from 1 to 64; links, an object in which every value is a permutation of the n points; and a loop of 1 to 4096 tokens. A token is a declared link's name, written e followed by ASCII digits, followed by + for the link or - for its inverse.",
+      "The host folds the loop in order, starting from the identity, composing one token's permutation at a time. The partial product after each token is the chain, and the last is the holonomy. The loop is flat when the holonomy is the identity.",
+      "The host folds the same loop a second time by multiplying permutation matrices, and records as a predicate that the two folds agree.",
+      "Five predicates are recorded for every readable reply: the reply's tokens are the task's loop, entry for entry; its scratchpad is the chain; the two folds agree; its holonomy is the host's; and its flat is the host's.",
+      "first_bad_step is the first position at which the scratchpad differs from the chain, or the length of the shorter when one is a prefix of the other, or null.",
+      "A reply without a tokens list, a scratchpad list or a boolean flat, or with a scratchpad entry or a holonomy that is not a permutation of the n points, is MALFORMED_CANDIDATE with the reason."
+    ],
+    "boundaries": [
+      "The limits of 64 points and 4096 tokens bound the work: at most 4096 products of 64 by 64 matrices. They are part of the contract.",
+      "The two folds share perm.rs. Their agreement guards against a fault in one fold, not against a wrong reading of the task.",
+      "The check covers the scratchpad as written. It does not show the model computed the holonomy from it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf24.rs",
+      "language": "Rust",
+      "sha256": "0e65a41e75bea7898b88c30f42d752938d003c9ae3ab2d35a9c7b4972f668527"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: permutations of at most 64 points in usize; matrix entries stay 0 or 1. Both limits are asserted by value, one inside and one outside. Not B: tested against hand-worked loops, not proven.",
+      "G3": "Each malformed task and reply has its reason. Every permutation is read by perm::read before it is composed. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
+      "G4": "19 WF24 tests assert a twisted and a flat loop with every predicate row by digest, a backward token as the inverse, the order of composition on links that do not commute, each predicate failing alone, the first bad step for wrong, short and long scratchpads, a loop at the limit, each malformed reply and task by its reason, and both limits by value. Two mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 76/76. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 10, cognitive complexity is not measured for Rust, nesting 0; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T13:51:27Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v9-test.run.json",
+        "sha256": "75c065d96b64633778adc9bbc5a54eb150b58536223e4c3443f62215ad84017e",
+        "note": "427 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-clippy.run.json",
+        "sha256": "b095a186f720f679235b2f243d030a0c7412ecd11d687d13c61ad6cac778d72e",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-fmt.run.json",
+        "sha256": "17a3ba5175b2bb9bccc425d89628829ccaadff38dc36f614734ea800455c7625",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.run.json",
+        "sha256": "785da0a0586cbf62c7a8439e2a626fa5ba0df80942665c0838e344cc4f460f41",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.json",
+        "sha256": "e9c47748ca0777f0a16723ed4f2e9ddb5b44c2f4480bd78d2102e6cf92daa227",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 76,
+      "survived": 0,
+      "demonstrably_equivalent": 2,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf24.mutation.json",
+        "sha256": "eac8ba453f0342ddcec14b2faf33704264f366cd76ef6390b057f9e3c5e1691b",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 78 mutants"
+      }
+    }
+  },
+  "history": []
+}

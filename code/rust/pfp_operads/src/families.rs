@@ -22,10 +22,15 @@
 //! family's walk returns, a certified verdict or a typed refusal stands only when at least one
 //! predicate was recorded and every one passed; otherwise the host refuses the run.
 
+pub mod domains;
 pub mod sealed;
 pub mod wf07;
+pub mod wf13;
+pub mod wf24;
 pub mod wf30;
 pub mod wf31;
+pub mod wf32;
+pub mod wf45;
 
 use serde::{Deserialize, Serialize};
 use serde_json::value::RawValue;
@@ -67,7 +72,15 @@ pub struct Family {
 }
 
 /// Every family this host checks, in workflow order.
-pub const FAMILIES: &[&Family] = &[&wf07::FAMILY, &wf30::FAMILY, &wf31::FAMILY];
+pub const FAMILIES: &[&Family] = &[
+    &wf07::FAMILY,
+    &wf13::FAMILY,
+    &wf24::FAMILY,
+    &wf30::FAMILY,
+    &wf31::FAMILY,
+    &wf32::FAMILY,
+    &wf45::FAMILY,
+];
 
 /// A question the host wants put to the model.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]
@@ -115,15 +128,20 @@ pub struct Run<'a> {
 }
 
 impl<'a> Run<'a> {
-    /// The family's default prompt: its id and name, the task's statement, then the rest of the
-    /// task as canonical JSON.
+    /// The family's default prompt for the run's task.
     pub fn prompt(&self) -> String {
-        let statement = match self.task.get("statement") {
+        self.prompt_for(self.task)
+    }
+
+    /// The family's default prompt for a task or a part of one: the family's id and name, the
+    /// statement, then the rest as canonical JSON.
+    pub fn prompt_for(&self, task: &Datum) -> String {
+        let statement = match task.get("statement") {
             Some(Datum::Text(text)) => text.clone(),
             Some(other) => other.canonical(),
             None => String::new(),
         };
-        let rest = match self.task {
+        let rest = match task {
             Datum::Map(map) => Datum::Map(
                 map.iter()
                     .filter(|(key, _)| key.as_str() != "statement")
@@ -240,6 +258,16 @@ pub struct Verdict {
     pub verdict: &'static str,
     pub code: String,
     pub detail: Datum,
+    /// What the reply asserts that no predicate of the host covers.
+    pub obligations: Vec<String>,
+}
+
+impl Verdict {
+    /// This verdict with the open obligations named.
+    pub fn owing(mut self, obligations: Vec<String>) -> Self {
+        self.obligations = obligations;
+        self
+    }
 }
 
 pub fn certified(code: &str, detail: Datum) -> Verdict {
@@ -247,6 +275,7 @@ pub fn certified(code: &str, detail: Datum) -> Verdict {
         verdict: CERTIFIED,
         code: code.to_owned(),
         detail,
+        obligations: Vec::new(),
     }
 }
 
@@ -255,6 +284,7 @@ pub fn typed_refusal(code: &str, detail: Datum) -> Verdict {
         verdict: TYPED_REFUSAL,
         code: code.to_owned(),
         detail,
+        obligations: Vec::new(),
     }
 }
 
@@ -263,6 +293,7 @@ pub fn refused(code: &str, detail: Datum) -> Verdict {
         verdict: REFUSED,
         code: code.to_owned(),
         detail,
+        obligations: Vec::new(),
     }
 }
 
@@ -304,6 +335,9 @@ pub struct Report {
     /// True when at least one predicate was recorded and none failed. The verdict can still be
     /// refused, for example when the reply a later step needed never came.
     pub every_predicate_passed: bool,
+    /// What the reply asserts that no predicate covers. A certified verdict that lists any is
+    /// certified for its predicates only.
+    pub uncertified_obligations: Vec<String>,
     pub asked: Vec<Asked>,
 }
 
@@ -370,7 +404,9 @@ fn settle(verdict: Verdict, checks: &Checks) -> Verdict {
         ("claimed_code", Datum::text(verdict.code)),
         ("claimed_detail", verdict.detail),
     ]);
-    checks.judge(CERTIFIED_CODE, claimed)
+    checks
+        .judge(CERTIFIED_CODE, claimed)
+        .owing(verdict.obligations)
 }
 
 fn walk(registry: &[&'static Family], text: &str) -> Result<Walked, Refusal> {
@@ -486,6 +522,7 @@ pub fn judge_in(registry: &[&'static Family], request: &str) -> Outcome {
         code: verdict.code,
         detail: verdict.detail.to_json(),
         every_predicate_passed: walked.checks.certified(),
+        uncertified_obligations: verdict.obligations,
         predicates: walked.checks.rows,
         asked: walked.asked,
     });

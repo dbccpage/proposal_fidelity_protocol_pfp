@@ -1,0 +1,329 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf13.rs",
+  "target_sha256": "be265fbea36d404035d35d2d842ddeee6a51d6dc05d5d7d3846511486b0c55cf",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test datum --test exact --test families --test sealed --test wf07 --test wf30 --test wf31 --test perm --test domains --test wf13 --test wf24 --test wf32 --test wf45",
+  "counts": {
+    "killed": 52,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF13\",",
+      "new": "    workflow: \"WF1\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Exact-domain capsule battery\",",
+      "new": "    name: \"Capsule battery\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"per_domain_registered_checker\",",
+      "new": "    host_check: \"registered_checker\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "id read from another key",
+      "old": "        id: whole.get(\"id\")?.as_text()?,",
+      "new": "        id: whole.get(\"name\")?.as_text()?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "domain read from another key",
+      "old": "        domain: whole.get(\"domain\")?.as_text()?,",
+      "new": "        domain: whole.get(\"kind\")?.as_text()?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "domain read from the id",
+      "old": "        domain: whole.get(\"domain\")?.as_text()?,",
+      "new": "        domain: whole.get(\"id\")?.as_text()?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "data may be any value",
+      "old": "        data: whole.get(\"data\").filter(|data| data.is_map())?,",
+      "new": "        data: whole.get(\"data\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "data read from another key",
+      "old": "        data: whole.get(\"data\").filter(|data| data.is_map())?,",
+      "new": "        data: whole.get(\"input\").filter(|data| data.is_map())?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "capsules read from another key",
+      "old": "        .get(\"capsules\")",
+      "new": "        .get(\"items\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty battery is accepted",
+      "old": "        .filter(|list| !list.is_empty())\n        .ok_or(\"capsules must be a nonempty list\")?",
+      "new": "        .ok_or(\"capsules must be a nonempty list\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "list message changed",
+      "old": "        .ok_or(\"capsules must be a nonempty list\")?",
+      "new": "        .ok_or(\"capsules\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "shape message changed",
+      "old": "        .ok_or(\"every capsule needs a text id, a text domain and a data object\")?;",
+      "new": "        .ok_or(\"capsule\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "malformed capsules are skipped",
+      "old": "        .map(capsule)\n        .collect::<Option<_>>()",
+      "new": "        .filter_map(capsule)\n        .map(Some)\n        .collect::<Option<_>>()",
+      "outcome": "killed"
+    },
+    {
+      "name": "repeated ids accepted",
+      "old": "    if ids.len() != capsules.len() {",
+      "new": "    if ids.len() > capsules.len() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "unique ids refused",
+      "old": "    if ids.len() != capsules.len() {",
+      "new": "    if ids.len() == capsules.len() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "unique message changed",
+      "old": "        return Err(\"capsule ids must be unique\".to_owned());",
+      "new": "        return Err(\"ids\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation accepts everything",
+      "old": "    capsules(task).map(|_| ())",
+      "new": "    capsules(task).map(|_| ()).or(Ok(()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a capsule keeps its own statement",
+      "old": "    shown.remove(\"statement\");\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "the task statement is not shown",
+      "old": "        shown.insert(\"statement\".to_owned(), statement.clone());",
+      "new": "        let _ = statement;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the task statement is shown under another key",
+      "old": "        shown.insert(\"statement\".to_owned(), statement.clone());",
+      "new": "        shown.insert(\"task\".to_owned(), statement.clone());",
+      "outcome": "killed"
+    },
+    {
+      "name": "the capsule is not shown",
+      "old": "        Datum::Map(map) => map.clone(),\n        _ => BTreeMap::new(),\n    };\n    shown.remove",
+      "new": "        Datum::Map(_) => BTreeMap::new(),\n        _ => BTreeMap::new(),\n    };\n    shown.remove",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered domains are the unregistered ones",
+      "old": "        .filter(|domain| checker(domain).is_none())",
+      "new": "        .filter(|domain| checker(domain).is_some())",
+      "outcome": "killed"
+    },
+    {
+      "name": "no domain is unregistered",
+      "old": "        .filter(|domain| checker(domain).is_none())",
+      "new": "        .filter(|_| false)",
+      "outcome": "killed"
+    },
+    {
+      "name": "registration predicate renamed",
+      "old": "        \"checkers_registered_before_dispatch\",",
+      "new": "        \"checkers_registered\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registration always passes",
+      "old": "        unregistered == Datum::List(Vec::new()),",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "registration evidence dropped",
+      "old": "        unregistered == Datum::List(Vec::new()),\n        &unregistered,",
+      "new": "        unregistered == Datum::List(Vec::new()),\n        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "an unregistered battery is dispatched",
+      "old": "    if !checks.record(\n        \"checkers_registered_before_dispatch\",",
+      "new": "    if false && !checks.record(\n        \"checkers_registered_before_dispatch\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "unregistered code changed",
+      "old": "            \"UNREGISTERED_DOMAIN\",",
+      "new": "            \"UNREGISTERED\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "unregistered detail key changed",
+      "old": "            Datum::map([(\"unregistered\", unregistered)]),",
+      "new": "            Datum::map([(\"domains\", unregistered)]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage named without the id",
+      "old": "        let stage = format!(\"capsule:{}\", capsule.id);",
+      "new": "        let stage = format!(\"capsule:{}\", capsule.domain);",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage prefix changed",
+      "old": "        let stage = format!(\"capsule:{}\", capsule.id);",
+      "new": "        let stage = format!(\"item:{}\", capsule.id);",
+      "outcome": "killed"
+    },
+    {
+      "name": "prompt shows the whole task",
+      "old": "        let prompt = run.prompt_for(&shown(capsule.whole, run.task));",
+      "new": "        let prompt = run.prompt();",
+      "outcome": "killed"
+    },
+    {
+      "name": "prompt shows only the data",
+      "old": "        let prompt = run.prompt_for(&shown(capsule.whole, run.task));",
+      "new": "        let prompt = run.prompt_for(&shown(capsule.data, run.task));",
+      "outcome": "killed"
+    },
+    {
+      "name": "an unreadable reply passes",
+      "old": "                .unwrap_or_else(|reason| (false, Datum::map([(\"malformed\", Datum::text(reason))]))),",
+      "new": "                .unwrap_or_else(|reason| (true, Datum::map([(\"malformed\", Datum::text(reason))]))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "malformed reason dropped",
+      "old": "(false, Datum::map([(\"malformed\", Datum::text(reason))]))),",
+      "new": "(false, Datum::map([(\"malformed\", Datum::text(reason.len().to_string()))]))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "malformed witness key changed",
+      "old": "(false, Datum::map([(\"malformed\", Datum::text(reason))]))),",
+      "new": "(false, Datum::map([(\"error\", Datum::text(reason))]))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing reply passes",
+      "old": "            _ => (false, Datum::map([(\"reply\", Datum::Null)])),",
+      "new": "            _ => (true, Datum::map([(\"reply\", Datum::Null)])),",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing reply witness changed",
+      "old": "            _ => (false, Datum::map([(\"reply\", Datum::Null)])),",
+      "new": "            _ => (false, Datum::map([(\"answer\", Datum::Null)])),",
+      "outcome": "killed"
+    },
+    {
+      "name": "data and reply swapped",
+      "old": "            (Some(reply), Some(check)) => check(capsule.data, reply)",
+      "new": "            (Some(reply), Some(check)) => check(reply, capsule.data)",
+      "outcome": "killed"
+    },
+    {
+      "name": "tally counts every capsule as passed",
+      "old": "        tally.0 += usize::from(passed);",
+      "new": "        tally.0 += 1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "tally counts no pass",
+      "old": "        tally.0 += usize::from(passed);",
+      "new": "        tally.0 += 0;",
+      "outcome": "killed"
+    },
+    {
+      "name": "tally counts failures",
+      "old": "        tally.0 += usize::from(passed);",
+      "new": "        tally.0 += usize::from(!passed);",
+      "outcome": "killed"
+    },
+    {
+      "name": "total counts only passes",
+      "old": "        tally.1 += 1;",
+      "new": "        tally.1 += usize::from(passed);",
+      "outcome": "killed"
+    },
+    {
+      "name": "total counts double",
+      "old": "        tally.1 += 1;",
+      "new": "        tally.1 += 2;",
+      "outcome": "killed"
+    },
+    {
+      "name": "capsule predicate always passes",
+      "old": "        checks.record(&stage, passed, &witness);",
+      "new": "        checks.record(&stage, true, &witness);",
+      "outcome": "killed"
+    },
+    {
+      "name": "capsule predicate not recorded",
+      "old": "        checks.record(&stage, passed, &witness);",
+      "new": "        let _ = (&stage, passed, &witness);",
+      "outcome": "killed"
+    },
+    {
+      "name": "capsule witness dropped",
+      "old": "        checks.record(&stage, passed, &witness);",
+      "new": "        checks.record(&stage, passed, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "passed and total swapped",
+      "old": "                    (\"passed\", Datum::from(passed)),\n                    (\"total\", Datum::from(total)),",
+      "new": "                    (\"passed\", Datum::from(total)),\n                    (\"total\", Datum::from(passed)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "certified code changed",
+      "old": "        \"BATTERY_PASSED\",",
+      "new": "        \"PASSED\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "per-domain key changed",
+      "old": "            (\"per_domain\", per_domain),",
+      "new": "            (\"domains\", per_domain),",
+      "outcome": "killed"
+    },
+    {
+      "name": "denominator key changed",
+      "old": "            (\"denominator\", Datum::from(capsules.len())),",
+      "new": "            (\"total\", Datum::from(capsules.len())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "denominator counts domains",
+      "old": "            (\"denominator\", Datum::from(capsules.len())),",
+      "new": "            (\"denominator\", Datum::from(capsules.iter().map(|capsule| capsule.domain).collect::<BTreeSet<_>>().len())),",
+      "outcome": "killed"
+    }
+  ]
+}

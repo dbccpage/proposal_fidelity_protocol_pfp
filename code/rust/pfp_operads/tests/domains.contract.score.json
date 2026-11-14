@@ -1,0 +1,105 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/domains.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/domains.rs",
+      "language": "Rust",
+      "sha256": "2bdc0f290999b57c4106238c8e7423905deacfabcfc72ea56ab0dc39625f24e5"
+    },
+    "contract_urn": "urn:pfp-operads:families-domains-tests:v1",
+    "symbols": [
+      "check",
+      "passes",
+      "reason",
+      "the_host_has_exactly_four_domains",
+      "each_name_runs_its_own_checker",
+      "five_qubit",
+      "commuting_stabilizers_have_no_anticommuting_pair",
+      "the_anticommuting_pairs_are_found_by_the_symplectic_product",
+      "pairs_may_come_in_any_order_and_either_way_round",
+      "each_pauli_letter_pair_commutes_or_not_as_it_should",
+      "generators_must_be_pauli_strings_of_one_length",
+      "an_anticommuting_reply_is_a_list_of_pairs_of_exact_integers",
+      "the_anomaly_sums_are_exact",
+      "anomaly_freedom_needs_both_sums_to_vanish",
+      "the_anomaly_checker_reads_exact_rationals_only",
+      "the_commutator_is_g_inverse_h_inverse_g_h_in_reading_order",
+      "a_commutator_item_permutes_one_to_eight_points",
+      "every_permutation_of_a_commutator_item_is_read_strictly",
+      "a_named_permutation_is_read_from_its_holder",
+      "a_linear_item_is_graded_by_the_rank_test",
+      "a_linear_item_that_cannot_be_read_gives_its_reason"
+    ],
+    "owned_invariants": [
+      "The registry is asserted by name, and an unregistered name is asserted to have no checker.",
+      "Each checker is asserted on an item worked by hand, with the witness it returns, and on a reply that is wrong in one field.",
+      "Each unreadable data and reply is asserted by its reason, and the commutator's point limit as the value 8."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/domains.rs",
+      "language": "Rust",
+      "sha256": "2bdc0f290999b57c4106238c8e7423905deacfabcfc72ea56ab0dc39625f24e5"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 17 pass in the recorded run; the suite they belong to killed 84 of 84 eligible domain mutants.",
+      "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T13:51:27Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v9-test.run.json",
+        "sha256": "75c065d96b64633778adc9bbc5a54eb150b58536223e4c3443f62215ad84017e",
+        "note": "427 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-clippy.run.json",
+        "sha256": "b095a186f720f679235b2f243d030a0c7412ecd11d687d13c61ad6cac778d72e",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-fmt.run.json",
+        "sha256": "17a3ba5175b2bb9bccc425d89628829ccaadff38dc36f614734ea800455c7625",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.run.json",
+        "sha256": "785da0a0586cbf62c7a8439e2a626fa5ba0df80942665c0838e344cc4f460f41",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.json",
+        "sha256": "e9c47748ca0777f0a16723ed4f2e9ddb5b44c2f4480bd78d2102e6cf92daa227",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

@@ -54,13 +54,21 @@ fn the_host_lists_its_families_in_workflow_order() {
         passed(list()),
         json!({"families": [
             {"workflow": "WF7", "name": "Typed refusal", "host_check": "typed_refusal_rank_test"},
+            {"workflow": "WF13", "name": "Exact-domain capsule battery",
+             "host_check": "per_domain_registered_checker"},
+            {"workflow": "WF24", "name": "Pinned-token operational scratchpad",
+             "host_check": "dual_holonomy_checkers"},
             {"workflow": "WF30", "name": "Constraint-forcing anti-recitation",
              "host_check": "comparator_network_zero_one_principle"},
             {"workflow": "WF31", "name": "Multi-agent tournament with held-out cross-validation",
              "host_check": "exact_held_out_referee"},
+            {"workflow": "WF32", "name": "Claim-scoped receipt",
+             "host_check": "per_claim_independent_checkers"},
+            {"workflow": "WF45", "name": "Finite terminal selector and plenitude test",
+             "host_check": "finite_survivor_set_verifier"},
         ]})
     );
-    assert_eq!(FAMILIES.len(), 3);
+    assert_eq!(FAMILIES.len(), 7);
 }
 
 #[test]
@@ -104,6 +112,7 @@ fn a_certified_run_reports_its_predicates_and_passes() {
                 "evidence_sha256": sha(witness),
             }],
             "every_predicate_passed": true,
+            "uncertified_obligations": [],
             "asked": [{"stage": "solve", "prompt_sha256": sha(PROMPT)}],
         })
     );
@@ -514,12 +523,35 @@ fn obedient(run: &mut Run, checks: &mut Checks) -> Result<Verdict, Stop> {
         checks.record(name.as_text().unwrap_or("unnamed"), false, &Datum::Null);
     }
     let detail = Datum::map([("note", Datum::from("kept"))]);
-    Ok(match reply.get("claim").and_then(Datum::as_text) {
+    let verdict = match reply.get("claim").and_then(Datum::as_text) {
         Some("certified") => certified("DONE", detail),
         Some("typed_refusal") => typed_refusal("WHY", detail),
         _ => refused("NO", detail),
-    })
+    };
+    let owed = reply.get("owe").and_then(Datum::as_list).unwrap_or(&[]);
+    Ok(verdict.owing(
+        owed.iter()
+            .filter_map(Datum::as_text)
+            .map(str::to_owned)
+            .collect(),
+    ))
 }
+
+/// A walk that asks about one part of its task, with the family's default prompt for that part.
+fn partwise(run: &mut Run, checks: &mut Checks) -> Result<Verdict, Stop> {
+    let part = run.task.get("part").unwrap_or(&Datum::Null);
+    let prompt = run.prompt_for(part);
+    run.ask("part", prompt)?;
+    Ok(checks.judge("DONE", Datum::map([])))
+}
+
+static PARTWISE: Family = Family {
+    workflow: "WF00",
+    name: "Partwise",
+    host_check: "none",
+    validate: any_task,
+    walk: partwise,
+};
 
 static OBEDIENT: Family = Family {
     workflow: "WF0",
@@ -578,6 +610,11 @@ fn a_walk_s_verdict_stands_when_every_recorded_predicate_passed() {
     assert_eq!(report["verdict"], "TYPED_REFUSAL");
     assert_eq!(report["code"], "WHY");
     assert_eq!(report["detail"], json!({"note": "kept"}));
+    // The flag reports the predicates, not the verdict: a walk may refuse past passed predicates.
+    let report = failed(told(json!({"pass": ["a"]})));
+    assert_eq!(report["verdict"], "REFUSED");
+    assert_eq!(report["code"], "NO");
+    assert_eq!(report["every_predicate_passed"], true);
 }
 
 #[test]
@@ -612,4 +649,58 @@ fn a_registry_checks_only_its_own_families() {
         "UNKNOWN_WORKFLOW"
     );
     assert_eq!(passed(next_in(FAMILIES, &shipped)), passed(next(&shipped)));
+}
+
+#[test]
+fn a_verdict_names_what_no_predicate_covers() {
+    let report = passed(told(
+        json!({"claim": "certified", "pass": ["a"], "owe": ["the rest", "and more"]}),
+    ));
+    assert_eq!(report["verdict"], "HOST_CERTIFIED");
+    assert_eq!(report["every_predicate_passed"], true);
+    assert_eq!(
+        report["uncertified_obligations"],
+        json!(["the rest", "and more"])
+    );
+    let report = failed(told(json!({"claim": "certified", "owe": ["still owed"]})));
+    assert_eq!(report["code"], "NO_HOST_PREDICATE");
+    assert_eq!(report["uncertified_obligations"], json!(["still owed"]));
+    let report = failed(told(json!({"owe": ["on a refusal"]})));
+    assert_eq!(report["uncertified_obligations"], json!(["on a refusal"]));
+    assert_eq!(
+        certified("A", Datum::Null).obligations,
+        Vec::<String>::new()
+    );
+    assert_eq!(typed_refusal("A", Datum::Null).obligations.len(), 0);
+    assert_eq!(refused("A", Datum::Null).obligations.len(), 0);
+    assert_eq!(
+        refused("A", Datum::Null)
+            .owing(vec!["x".to_owned()])
+            .obligations,
+        vec!["x".to_owned()]
+    );
+}
+
+#[test]
+fn the_default_prompt_can_be_written_for_a_part_of_the_task() {
+    let prompt = |task: Value| {
+        let request = json!({"workflow": "WF00", "task": task}).to_string();
+        passed(next_in(&[&PARTWISE], &request))["ask"]["prompt"]
+            .as_str()
+            .expect("a prompt")
+            .to_owned()
+    };
+    assert_eq!(
+        prompt(json!({"statement": "whole", "part": {"statement": "this part", "k": [2, 1]}})),
+        "WF00 Partwise. this part\n{\"k\":[2,1]}"
+    );
+    assert_eq!(
+        prompt(json!({"statement": "whole", "part": {"z": 1, "a": 2}})),
+        "WF00 Partwise. \n{\"a\":2,\"z\":1}"
+    );
+    assert_eq!(
+        prompt(json!({"statement": "whole", "part": [3, 4]})),
+        "WF00 Partwise. \n[3,4]"
+    );
+    assert_eq!(prompt(json!({})), "WF00 Partwise. \nnull");
 }

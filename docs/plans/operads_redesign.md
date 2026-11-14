@@ -143,9 +143,17 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
      rationals) and decides. The Python class of a ported family is a
      registry entry and fixtures; its base class, `HostedFamily`, sends
      prompts and carries replies. Prompts are byte for byte the old ones.
-   - **Next.** Layers 2 to 9 of the families, the WF9 inheritance group
-     (WF9, WF20, WF26, WF27, WF33, WF40) in one step. Then the WF1-WF5 and
-     WF52-WF54 host checks, the run budget and run custody.
+   - **4b (built, offline).** Layer 2 without WF9: WF13, WF24, WF32 and
+     WF45. The host now has permutations (`perm.rs`) and one checker per
+     exact domain (`families/domains.rs`: stabilizer commutation, U(1)
+     anomaly sums, commutators, and WF7's rank test as a capsule). WF13 asks
+     one capsule per stage and counts a missing or unreadable reply as a
+     failure. WF32 binds each admitted claim to a digest of the claim and the
+     host's witness, and a verdict now lists what no predicate covers
+     (`uncertified_obligations`).
+   - **Next.** The WF9 inheritance group (WF9, WF20, WF26, WF27, WF33, WF40)
+     in one step, then layers 3 to 9. Then the WF1-WF5 and WF52-WF54 host
+     checks, the run budget and run custody.
 5. **Retire Python `operads/`** (682 files) once nothing imports it, re-pin
    the canonical ID fixture, and score the Rust files that change.
 6. **Lean.** State and prove the laws for the term model, and link each
@@ -182,9 +190,10 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
   derivation is written for them.
 - Python still validates reply schemas, routes statuses and keeps run
   custody (manifests, replay). Those move in slice 4.
-- After 4a only WF7, WF30 and WF31 are checked by the host. Every other
-  family still runs its check and its sealed-value guard in Python. WF6,
-  WF13 and WF22 grade with WF7's check and so reach the host for that part.
+- After 4b the host checks WF7, WF13, WF24, WF30, WF31, WF32 and WF45.
+  Every other family still runs its check and its sealed-value guard in
+  Python. WF6 and WF22 grade with WF7's check and so reach the host for that
+  part.
 - For a ported family Python still keeps the run budget and the transcript,
   and sets the run's `final_output_certified` flag from the host's verdict.
   The host does not see that a reply came from the prompt it wrote.
@@ -193,6 +202,20 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
   Old and new agree on 3,400 random runs apart from those readings and one
   reply (`{"answer": null}`) on which the old check crashed. That compares
   checkers; no model has run through a ported family.
+- The layer 2 host is stricter than the Python it replaces in these ways. A
+  task it cannot read is refused before anything is asked (WF45 used to ask
+  first). WF13 capsule ids and domains must be text. WF24 takes at most 64
+  points and 4,096 tokens, and a token's link number is ASCII digits. WF32
+  sources must be texts. WF45 keeps the candidate name `~twin` for itself.
+  WF13 no longer records the `denominator_preserved` predicate, which could
+  not fail. A refused WF32 run now lists its open claims as obligations too.
+  Old and new agree on 6,000 random runs apart from those readings, reworded
+  reasons, and tasks on which the old check crashed.
+- In WF32 a digest covers a claim as written. A claim that contains a number
+  with a fraction or an exponent is hashed with that number's own text,
+  where the Python hashed its re-rendered value.
+- A WF32 quote is a byte span of the source. A WF13 or WF32 linear capsule
+  is judged by WF7's rank test and inherits its limits.
 - WF4's own local contract (public binding, native integer result, agreement
   of the five totals) is still Python. It is a workflow host check and moves
   in slice 4.

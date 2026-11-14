@@ -15,7 +15,7 @@
 use crate::datum::Datum;
 use crate::exact::{classify_linear, rationals, Rational, Solvability};
 
-use super::{no_reply, refused, require, typed_refusal, Checks, Family, Run, Stop, Verdict};
+use super::{no_reply, refused, typed_refusal, Checks, Family, Run, Stop, Verdict};
 
 pub const INCONSISTENT: &str = "UNRESOLVED_INCONSISTENT";
 pub const UNDERDETERMINED: &str = "UNRESOLVED_UNDERDETERMINED";
@@ -57,10 +57,16 @@ fn validate(task: &Datum, _sealed: &Datum) -> Result<(), String> {
 }
 
 fn walk(run: &mut Run, checks: &mut Checks) -> Result<Verdict, Stop> {
-    let (a, b) = system(run.task).map_err(Stop::Malformed)?;
     let Some(reply) = run.ask("solve", run.prompt())? else {
         return Ok(no_reply());
     };
+    grade(run.task, reply, checks).map_err(Stop::Malformed)
+}
+
+/// The verdict on one reply to one system, with the predicates recorded in `checks`. Other
+/// families grade a linear item with this.
+pub fn grade(task: &Datum, reply: &Datum, checks: &mut Checks) -> Result<Verdict, String> {
+    let (a, b) = system(task)?;
     let status = classify_linear(&a, &b);
     let witness = Datum::map([
         ("rank_A", Datum::from(status.rank_a)),
@@ -69,7 +75,9 @@ fn walk(run: &mut Run, checks: &mut Checks) -> Result<Verdict, Stop> {
         ("status", Datum::from(status.solvability.name())),
     ]);
     let detail = Datum::map([("witness", witness.clone())]);
-    require(reply.is_map(), "the reply must be an object")?;
+    if !reply.is_map() {
+        return Err("the reply must be an object".to_owned());
+    }
     if let Some(code) = reply.get("refusal") {
         let expected = match status.solvability {
             Solvability::Inconsistent => INCONSISTENT,
@@ -89,9 +97,7 @@ fn walk(run: &mut Run, checks: &mut Checks) -> Result<Verdict, Stop> {
         );
     }
     let answer = match reply.get("answer") {
-        Some(given) => rationals(given).ok_or_else(|| {
-            Stop::Malformed("answer must be a list of exact rationals".to_owned())
-        })?,
+        Some(given) => rationals(given).ok_or("answer must be a list of exact rationals")?,
         None => Vec::new(),
     };
     let Solvability::Unique(solution) = status.solvability else {
