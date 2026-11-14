@@ -1123,6 +1123,12 @@ fn a_check_is_a_named_bounded_command() {
     ] {
         assert_eq!(read(&refused), Err("CHECK_REFUSED"), "{refused}");
     }
+    let second = with(
+        base(),
+        "checks",
+        json!([check("a", &["x"]), check("B", &["x"])]),
+    );
+    assert_eq!(read(&second), Err("CHECK_REFUSED"), "every check is read");
     assert_eq!(
         Request::read(&one(check("9c", &["x"])).to_string())
             .unwrap_err()

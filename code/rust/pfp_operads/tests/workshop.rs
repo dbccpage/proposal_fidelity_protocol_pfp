@@ -14,11 +14,33 @@ use std::sync::atomic::{AtomicU32, Ordering};
 
 use pfp_operads::host::Outcome;
 use pfp_operads::repair::{Bench, Check, Exit};
-use pfp_operads::workshop::{
-    repair_in, stream, Workshop, HEAD_BYTES, MAX_SOURCE_BYTES, PINNED, SCRUBBED, WORKSPACE,
-};
+use pfp_operads::workshop::{repair_in, stream, Workshop, MAX_SOURCE_BYTES, WORKSPACE};
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
+
+/// The length of a kept stream head, written out so that a change to the limit fails here.
+const HEAD: usize = 4096;
+/// The variables a check must not inherit, written out for the same reason.
+const SCRUBBED: [&str; 12] = [
+    "GIT_DIR",
+    "GIT_WORK_TREE",
+    "GIT_INDEX_FILE",
+    "GIT_COMMON_DIR",
+    "GIT_NAMESPACE",
+    "GIT_OBJECT_DIRECTORY",
+    "GIT_ALTERNATE_OBJECT_DIRECTORIES",
+    "GIT_CONFIG",
+    "GIT_CONFIG_PARAMETERS",
+    "GIT_CONFIG_COUNT",
+    "PYTHONPYCACHEPREFIX",
+    "PYTHONOPTIMIZE",
+];
+/// The variables every check gets.
+const PINNED: [&str; 3] = [
+    "PYTHONDONTWRITEBYTECODE=1",
+    "GIT_CONFIG_NOSYSTEM=1",
+    "GIT_CONFIG_GLOBAL=/dev/null",
+];
 
 const HOST: &str = env!("CARGO_BIN_EXE_pfp_operad");
 const ANSWER: &str = "{\n  \"checker\": \"integer_sum_v1\",\n  \"case\": {\"values\": [1, 2, 3]},\n  \"answer\": {\"total\": 5}\n}\n";
@@ -622,13 +644,9 @@ fn a_check_gets_the_fixed_environment_no_input_and_no_shell() {
             "{name}"
         );
     }
-    for (name, value) in PINNED {
-        assert!(
-            lines.contains(&format!("{name}={value}").as_str()),
-            "{name}"
-        );
+    for pinned in PINNED {
+        assert!(lines.contains(&pinned), "{pinned}");
     }
-    assert!(lines.contains(&"GIT_CONFIG_GLOBAL=/dev/null"));
     assert!(lines.contains(&"PFP_WORKSHOP_KEPT=kept"));
     assert_eq!(
         bench.run(&check(&["cat"], 5)).unwrap().stdout.head,
@@ -668,18 +686,18 @@ fn a_stream_is_hashed_whole_and_kept_to_a_bounded_head() {
         (small.sha256, small.head.as_str(), small.truncated),
         (hex(b"hello\n"), "hello\n", false)
     );
-    let full = vec![b'a'; HEAD_BYTES];
+    let full = vec![b'a'; HEAD];
     let exact = stream(&full[..]);
     assert_eq!(
         (exact.head.len(), exact.truncated, exact.sha256),
-        (HEAD_BYTES, false, hex(&full))
+        (HEAD, false, hex(&full))
     );
-    let mut long = vec![b'a'; HEAD_BYTES];
+    let mut long = vec![b'a'; HEAD];
     long.push(b'b');
     let over = stream(&long[..]);
     assert_eq!(
         (over.head.len(), over.truncated, over.sha256),
-        (HEAD_BYTES, true, hex(&long))
+        (HEAD, true, hex(&long))
     );
     assert!(!over.head.contains('b'));
     let big: Vec<u8> = (0..50_000u32)
@@ -687,7 +705,7 @@ fn a_stream_is_hashed_whole_and_kept_to_a_bounded_head() {
         .collect();
     let chunks = stream(&big[..]);
     assert_eq!(chunks.sha256, hex(&big));
-    assert_eq!(chunks.head.as_bytes(), &big[..HEAD_BYTES]);
+    assert_eq!(chunks.head.as_bytes(), &big[..HEAD]);
     assert_eq!(stream(&[0xff, b'a'][..]).head, "\u{fffd}a");
     assert_eq!(Exit::default().stdout.sha256, "");
 }
@@ -717,13 +735,13 @@ fn a_head_is_filled_across_short_reads() {
         rest: &big,
         step: 1000,
     });
-    assert_eq!(slow.head.as_bytes(), &big[..HEAD_BYTES]);
+    assert_eq!(slow.head.as_bytes(), &big[..HEAD]);
     assert_eq!((slow.sha256, slow.truncated), (hex(&big), true));
     let short = stream(Slow {
-        rest: &big[..HEAD_BYTES],
+        rest: &big[..HEAD],
         step: 7,
     });
-    assert_eq!((short.head.len(), short.truncated), (HEAD_BYTES, false));
+    assert_eq!((short.head.len(), short.truncated), (HEAD, false));
 }
 
 #[test]
