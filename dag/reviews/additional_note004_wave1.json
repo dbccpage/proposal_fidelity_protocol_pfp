@@ -1,0 +1,167 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "ef32b193c497822486b0c635917ef6dfe5d98aba",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/001_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects.md",
+      "sha256": "f09fa0581d745cedff7e35ec5b0822efa6bc18d966709c63be5f725713a7d88d",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          951
+        ]
+      ],
+      "assessment": "Authoritative manuscript for Note 004 inspected. Section 2.2 documents the scalar diamond curvature witness K(v) = (beta * alpha - mu) * v. Section 3.1-3.2 defines cochains, coboundaries d0, d1, composition curvature K, Theorem 3.2 coboundary-curvature identity (d1 d0 s = K s(c)), and Corollary 3.3 flat locus equivalence. Section 4.10 documents Statement 4.10 rational enclosure 828/1000 < 2(sqrt(2)-1) < 829/1000."
+    },
+    {
+      "path": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
+      "sha256": "88606bd2d50c26d266421a28876a66a57bbd606a80bb16beb730007940aca5ce",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          39
+        ]
+      ],
+      "assessment": "Claim ledger inspected. Records PO001-C06 (Theorem 3.2 Coboundary-Curvature Identity), PO001-C07 (Corollary 3.3 Flat Locus Equivalence), PO001-C08 (Scalar Diamond Curvature Witness), and PO001-C25 (Example 4.10 Rational Enclosure)."
+    },
+    {
+      "path": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/curvature_cochain.py",
+      "sha256": "d99297102ff45630e8f016a2dd60252684d5045e7050b2c75d545527841b736c",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          183
+        ]
+      ],
+      "assessment": "Curvature cochain module inspected. Implements CurvatureOperator, compute_curvature_operator, is_flat_system, and verification utilities for d1 d0 = K."
+    },
+    {
+      "path": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_curvature_cochain.py",
+      "sha256": "abb55b7e7891b8743eecf717ba233b99ca2dfe0ba0dd979a4321e3aa58c62b65",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          127
+        ]
+      ],
+      "assessment": "Test suite inspected. Contains test_theorem_3_2_linear_chain and test_flat_locus_equivalence on 3-element chains."
+    },
+    {
+      "path": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_review_boundaries.py",
+      "sha256": "afc1037bff308d8489afda2b409bd2649b07481850e2785f174c2f7a2041bec0",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          118
+        ]
+      ],
+      "assessment": "Boundary tests inspected. Contains test_algebraic_contextuality_rational_enclosure checking exact rational containment of 2(sqrt(2)-1)."
+    },
+    {
+      "path": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/lean4/CurvatureCochain.lean",
+      "sha256": "15b846108b96d3345dad5d90ed046c468121e36839a29a57f944080101c04b46",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          155
+        ]
+      ],
+      "assessment": "Lean 4 mechanization file inspected. Mechanizes d1_d0_eq_curvature, flat_iff_chainComposable, d1_d0_zero_iff_flat, and scalar_diamond_curvature."
+    },
+    {
+      "path": "pfp/domain/ddc/coboundary.py",
+      "sha256": "e0e94b330ec8796fcbbd9d03542ca282e1f7d82d3335a62574a7a669a05e1659",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          138
+        ]
+      ],
+      "assessment": "Repository DDC coboundary module inspected. Implements d0, d1, and exact nilpotency verification for simplicial complexes (PFPDOMAIN-CL11)."
+    }
+  ],
+  "remaining_scope": [],
+  "claims": [
+    {
+      "id": "AUDIT-N004-006",
+      "statement": "For any finite poset with linear restrictions on additive fibers, the coboundary composition satisfies (d1 d0 s)(a,b,c) = K_{c,b,a}(s(c)) identically for every section s.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite poset with comparable triples a <= b <= c.",
+        "Additive fiber spaces F(x) and linear restriction maps preserving subtraction.",
+        "Definitions of coboundary operators d0 and d1.",
+        "Definition of composition curvature operator K_{c,b,a} = r_{b,a} r_{c,b} - r_{c,a}."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/001_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects.md",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/curvature_cochain.py",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_curvature_cochain.py",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/lean4/CurvatureCochain.lean",
+        "pfp/domain/ddc/coboundary.py"
+      ],
+      "limits": "Applies to linear restriction systems on finite posets; does not assert an infinity-categorical model structure or physical gauge curvature."
+    },
+    {
+      "id": "AUDIT-N004-007",
+      "statement": "On any finite poset with linear restrictions, curvature K = 0 everywhere is equivalent to nilpotency d1 d0 = 0 on all sections and to chain composability r_{c,a} = r_{b,a} r_{c,b}.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Coboundary-curvature identity AUDIT-N004-006: (d1 d0 s)(a,b,c) = K_{c,b,a}(s(c)).",
+        "Fiber inhabitation: for every v in F(c), existence of a section with s(c) = v.",
+        "Definition of Flat system and chain composability."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/001_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects.md",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/curvature_cochain.py",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_curvature_cochain.py",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/lean4/CurvatureCochain.lean"
+      ],
+      "limits": "Established for linear restriction systems on finite posets with inhabited fibers."
+    },
+    {
+      "id": "AUDIT-N004-008",
+      "statement": "On an elementary diamond with one-dimensional scalar fibers, restriction maps alpha, beta, and composite mu yield curvature K(v) = (beta * alpha - mu) * v.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Elementary diamond poset a < b < c with 1D vector fibers.",
+        "Scalar representation of linear maps between 1D vector spaces.",
+        "Definition of curvature defect K = r_{b,a} r_{c,b} - r_{c,a}."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/001_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects.md",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/curvature_cochain.py",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_curvature_cochain.py",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/lean4/CurvatureCochain.lean"
+      ],
+      "limits": "Specific to one-dimensional scalar fibers where multiplication is commutative and associative."
+    },
+    {
+      "id": "AUDIT-N004-025",
+      "statement": "Exact rational squaring encloses the algebraic number 2(sqrt(2)-1) strictly between 828/1000 and 829/1000 with certified width 1/1000.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Definition of the algebraic number q = 2(sqrt(2)-1).",
+        "Exact rational field arithmetic in Q.",
+        "Monotonicity of the squaring mapping t -> (1 + t/2)^2 on positive reals.",
+        "Exact inequalities (1 + 828/2000)^2 = 499849/250000 < 2 < 8003241/4000000 = (1 + 829/2000)^2."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/001_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects.md",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_review_boundaries.py"
+      ],
+      "limits": "Algebraic rational enclosure for 2(sqrt(2)-1); does not certify arbitrary transcendental numbers or replace metric deficit procedures."
+    }
+  ]
+}

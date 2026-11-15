@@ -1,0 +1,164 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "ef32b193c",
+  "file_reviews": [
+    {
+      "path": "pfp/domain/immune/danger_gate.py",
+      "sha256": "946bb772a8542b886ddcd0c4ab27ad3fee90bedea10aa673f09fe7c192748d97",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 290]
+      ],
+      "assessment": "Audited TwoSignalDangerGate.evaluate logic, zero-float invariant, categorical severity mapping, and dual-signal refusal disposition."
+    },
+    {
+      "path": "pfp/domain/immune/self_panel.json",
+      "sha256": "d405f3acd3d0d16ad9e6b0df9d59e8069fe1c10a939d51b1a410e21adb6c10af",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 6007]
+      ],
+      "assessment": "Audited canonical self panel corpus: exactly 1000 entries across 4 categories."
+    },
+    {
+      "path": "pfp/domain/immune/thymus.py",
+      "sha256": "3e31c4893979725e24e2b9ae666c946fc662b316514becfa3db13b662f5dfc54",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 416]
+      ],
+      "assessment": "Audited SelfPanel.base_content normalization and canonical loading yielding 40 distinct base contents."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/canaries.py",
+      "sha256": "4ff3771a14b44bb5b4dde754afdb344a29257fd43248d56fdf5d6fd57749a2cd",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 147]
+      ],
+      "assessment": "Audited candidate phrase detector patterns for AM-FSP-8, AM-FSP-2, AM-FSP-7, and AM-FSP-4."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/danger_gate.py",
+      "sha256": "bec5440fddb5a36b753b939af35a16321b2b4fc8e35af93d2d9e9f51cc1f5311",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 190]
+      ],
+      "assessment": "Audited package evaluate_two_signal_gate decision table and dual-signal QUARANTINED disposition."
+    },
+    {
+      "path": "code/rust/pfp/src/main.rs",
+      "sha256": "d57f717c18d3e9ec6877a00a92b0d8fd0d4fa35cb2ca7c2f50191d6286129455",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 249]
+      ],
+      "assessment": "Audited CLI entry dispatch separating default host evaluation, invoke runtime commands, and describe operations."
+    },
+    {
+      "path": "code/rust/pfp/src/lib.rs",
+      "sha256": "67daeaf130462d4392f9978bd949a2b4ca51d2324af36a36d28e5c0e39313e66",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 183]
+      ],
+      "assessment": "Audited restricted prime host library scope and internal execution barriers."
+    },
+    {
+      "path": "code/rust/pfp/src/invoke.rs",
+      "sha256": "f770e5e70cb903a59e4cd7c29e539cee2c982fa05a077849d6e422252b92776a",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 505]
+      ],
+      "assessment": "Audited runtime dispatcher contract, action routing, and byte limit guards."
+    },
+    {
+      "path": "code/rust/pfp/src/foundation.rs",
+      "sha256": "1d02852fa03adf0df5508e9286af6d145560a374c341857ce643f83ec2d6ebb0",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 152]
+      ],
+      "assessment": "Audited additive foundation library isolated from consequential host protocol dispatch."
+    }
+  ],
+  "claims": [
+    {
+      "id": "AUDIT-P003-008",
+      "statement": "In the two-signal table, Signal 1 alone is diagnostic, low/medium Signal 2 alone is diagnostic, high/critical Signal 2 alone refuses, and both signals refuse.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "TwoSignalDangerGate evaluation logic in pfp/domain/immune/danger_gate.py and evaluate_two_signal_gate in atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/danger_gate.py.",
+        "Strict two-signal categorical mapping over {absent, present} x {absent, LOW, MEDIUM, HIGH, CRITICAL} inputs."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "pfp/domain/immune/danger_gate.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/danger_gate.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_danger_gate.py"
+      ],
+      "limits": "Applies strictly to the two-signal evaluation decision tables; does not verify signal authenticity or the independence of external evidence detectors."
+    },
+    {
+      "id": "AUDIT-P003-009",
+      "statement": "The canonical repository self panel has 1,000 rows and 40 distinct base contents, ten in each of four categories.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Canonical sealed self panel corpus in pfp/domain/immune/self_panel.json.",
+        "SelfPanel domain parsing and base_content normalizer in pfp/domain/immune/thymus.py."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "pfp/domain/immune/self_panel.json",
+        "pfp/domain/immune/thymus.py",
+        "pfp/tests/test_immune_defect_regressions.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py"
+      ],
+      "limits": "Applies to the frozen baseline self panel regression corpus; does not estimate false suppression rates for open-ended generation."
+    },
+    {
+      "id": "AUDIT-P003-010",
+      "statement": "The four package phrase detectors flag their constructed fixture sentences and not three clean controls, including a true attractive-U statement.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Candidate canary phrase detector definitions in atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/canaries.py.",
+        "Constructed fixture sentences and clean control sentences in atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py and test_danger_gate.py."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/canaries.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_danger_gate.py"
+      ],
+      "limits": "Confirms phrase detector matching behavior on declared fixtures and clean controls; does not demonstrate general detector precision, recall, or robustness to negation."
+    },
+    {
+      "id": "AUDIT-P004-001",
+      "statement": "Default host, runtime dispatcher, and foundation library are distinct interfaces with segregated dispatch paths.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Crate interface boundaries partitioned across main.rs, lib.rs, invoke.rs, and foundation.rs in code/rust/pfp/src/.",
+        "Process dispatch separation between default stdin host evaluation and invoke runtime dispatcher.",
+        "Additive isolation of the foundation library from consequential host execution protocols."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper.md",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper_claim_ledger.md",
+        "code/rust/pfp/src/main.rs",
+        "code/rust/pfp/src/lib.rs",
+        "code/rust/pfp/src/invoke.rs",
+        "code/rust/pfp/src/foundation.rs",
+        "code/rust/tests/pfp/host_contract.rs",
+        "code/rust/tests/pfp/invoke_contract.rs",
+        "code/rust/tests/pfp/foundation_contract.rs"
+      ],
+      "limits": "Applies to crate architectural structure and executable dispatch routing; does not assert cross-language behavioral identity without empirical test evidence."
+    }
+  ]
+}

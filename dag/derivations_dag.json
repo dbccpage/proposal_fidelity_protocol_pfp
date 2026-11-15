@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-11-15T01:26:13.914963+00:00",
+  "generated_at_utc": "2026-11-15T05:44:19.654295+00:00",
   "repository": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp",
   "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
   "status": "in_progress",
@@ -175,6 +175,7 @@
     "dag/reviews/additional_note002_wave3.json",
     "dag/reviews/additional_note002_wave4.json",
     "dag/reviews/additional_note003_wave4.json",
+    "dag/reviews/additional_note004_wave1.json",
     "dag/reviews/additional_note_001_review.json",
     "dag/reviews/additional_operad_patterns_remaining.json",
     "dag/reviews/additional_operad_patterns_supporting_sources.json",
@@ -237,6 +238,9 @@
     "dag/reviews/additional_rust_quantum_probability_remaining.json",
     "dag/reviews/additional_shared_runtime_reading.json",
     "dag/reviews/additional_structured_evidence.json",
+    "dag/reviews/additional_w2_shard_a.json",
+    "dag/reviews/additional_w2_shard_b.json",
+    "dag/reviews/additional_w2_shard_c.json",
     "dag/reviews/additional_wiki_measurements.json",
     "dag/reviews/additional_wiki_remaining.json",
     "dag/reviews/additional_wiki_tests.json",
@@ -7774,6 +7778,87 @@
       ],
       "limits": "Establishes non-invertibility from magnitude and squared aggregates alone; does not restrict models with preserved orientation data.",
       "atlas_ledger_id": "ATL-D-AUDIT-N003-005"
+    },
+    {
+      "id": "AUDIT-N004-006",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For any finite poset with linear restrictions on additive fibers, the coboundary composition satisfies (d1 d0 s)(a,b,c) = K_{c,b,a}(s(c)) identically for every section s.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite poset with comparable triples a <= b <= c.",
+        "Additive fiber spaces F(x) and linear restriction maps preserving subtraction.",
+        "Definitions of coboundary operators d0 and d1.",
+        "Definition of composition curvature operator K_{c,b,a} = r_{b,a} r_{c,b} - r_{c,a}."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/001_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects.md",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/curvature_cochain.py",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_curvature_cochain.py",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/lean4/CurvatureCochain.lean",
+        "pfp/domain/ddc/coboundary.py"
+      ],
+      "limits": "Applies to linear restriction systems on finite posets; does not assert an infinity-categorical model structure or physical gauge curvature.",
+      "atlas_ledger_id": "ATL-D-AUDIT-N004-006"
+    },
+    {
+      "id": "AUDIT-N004-007",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "On any finite poset with linear restrictions, curvature K = 0 everywhere is equivalent to nilpotency d1 d0 = 0 on all sections and to chain composability r_{c,a} = r_{b,a} r_{c,b}.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Coboundary-curvature identity AUDIT-N004-006: (d1 d0 s)(a,b,c) = K_{c,b,a}(s(c)).",
+        "Fiber inhabitation: for every v in F(c), existence of a section with s(c) = v.",
+        "Definition of Flat system and chain composability."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/001_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects.md",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/curvature_cochain.py",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_curvature_cochain.py",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/lean4/CurvatureCochain.lean"
+      ],
+      "limits": "Established for linear restriction systems on finite posets with inhabited fibers.",
+      "atlas_ledger_id": "ATL-D-AUDIT-N004-007"
+    },
+    {
+      "id": "AUDIT-N004-008",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "On an elementary diamond with one-dimensional scalar fibers, restriction maps alpha, beta, and composite mu yield curvature K(v) = (beta * alpha - mu) * v.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Elementary diamond poset a < b < c with 1D vector fibers.",
+        "Scalar representation of linear maps between 1D vector spaces.",
+        "Definition of curvature defect K = r_{b,a} r_{c,b} - r_{c,a}."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/001_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects.md",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/curvature_cochain.py",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_curvature_cochain.py",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/lean4/CurvatureCochain.lean"
+      ],
+      "limits": "Specific to one-dimensional scalar fibers where multiplication is commutative and associative.",
+      "atlas_ledger_id": "ATL-D-AUDIT-N004-008"
+    },
+    {
+      "id": "AUDIT-N004-025",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Exact rational squaring encloses the algebraic number 2(sqrt(2)-1) strictly between 828/1000 and 829/1000 with certified width 1/1000.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Definition of the algebraic number q = 2(sqrt(2)-1).",
+        "Exact rational field arithmetic in Q.",
+        "Monotonicity of the squaring mapping t -> (1 + t/2)^2 on positive reals.",
+        "Exact inequalities (1 + 828/2000)^2 = 499849/250000 < 2 < 8003241/4000000 = (1 + 829/2000)^2."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/001_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects.md",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
+        "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_review_boundaries.py"
+      ],
+      "limits": "Algebraic rational enclosure for 2(sqrt(2)-1); does not certify arbitrary transcendental numbers or replace metric deficit procedures.",
+      "atlas_ledger_id": "ATL-D-AUDIT-N004-025"
     },
     {
       "id": "AUDIT-N001-001",
@@ -33493,6 +33578,240 @@
       "atlas_ledger_id": "ATL-D-ASE-C05"
     },
     {
+      "id": "AUDIT-P003-008",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "In the two-signal table, Signal 1 alone is diagnostic, low/medium Signal 2 alone is diagnostic, high/critical Signal 2 alone refuses, and both signals refuse.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "TwoSignalDangerGate evaluation logic in pfp/domain/immune/danger_gate.py and evaluate_two_signal_gate in atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/danger_gate.py.",
+        "Strict two-signal categorical mapping over {absent, present} x {absent, LOW, MEDIUM, HIGH, CRITICAL} inputs."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "pfp/domain/immune/danger_gate.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/danger_gate.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_danger_gate.py"
+      ],
+      "limits": "Applies strictly to the two-signal evaluation decision tables; does not verify signal authenticity or the independence of external evidence detectors.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P003-008"
+    },
+    {
+      "id": "AUDIT-P003-009",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The canonical repository self panel has 1,000 rows and 40 distinct base contents, ten in each of four categories.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Canonical sealed self panel corpus in pfp/domain/immune/self_panel.json.",
+        "SelfPanel domain parsing and base_content normalizer in pfp/domain/immune/thymus.py."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "pfp/domain/immune/self_panel.json",
+        "pfp/domain/immune/thymus.py",
+        "pfp/tests/test_immune_defect_regressions.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py"
+      ],
+      "limits": "Applies to the frozen baseline self panel regression corpus; does not estimate false suppression rates for open-ended generation.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P003-009"
+    },
+    {
+      "id": "AUDIT-P003-010",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The four package phrase detectors flag their constructed fixture sentences and not three clean controls, including a true attractive-U statement.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Candidate canary phrase detector definitions in atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/canaries.py.",
+        "Constructed fixture sentences and clean control sentences in atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py and test_danger_gate.py."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/canaries.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_danger_gate.py"
+      ],
+      "limits": "Confirms phrase detector matching behavior on declared fixtures and clean controls; does not demonstrate general detector precision, recall, or robustness to negation.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P003-010"
+    },
+    {
+      "id": "AUDIT-P004-001",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Default host, runtime dispatcher, and foundation library are distinct interfaces with segregated dispatch paths.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Crate interface boundaries partitioned across main.rs, lib.rs, invoke.rs, and foundation.rs in code/rust/pfp/src/.",
+        "Process dispatch separation between default stdin host evaluation and invoke runtime dispatcher.",
+        "Additive isolation of the foundation library from consequential host execution protocols."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper.md",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper_claim_ledger.md",
+        "code/rust/pfp/src/main.rs",
+        "code/rust/pfp/src/lib.rs",
+        "code/rust/pfp/src/invoke.rs",
+        "code/rust/pfp/src/foundation.rs",
+        "code/rust/tests/pfp/host_contract.rs",
+        "code/rust/tests/pfp/invoke_contract.rs",
+        "code/rust/tests/pfp/foundation_contract.rs"
+      ],
+      "limits": "Applies to crate architectural structure and executable dispatch routing; does not assert cross-language behavioral identity without empirical test evidence.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P004-001"
+    },
+    {
+      "id": "AUDIT-N001-014",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "As p -> 1+, the trajectory of unique p-Laplacian minimizers converges to the unique weighted entropy minimizer on the compact convex set M_1 of L1 quotient minimizers for finite connected graphs with positive weights.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite connected graph with positive edge weights.",
+        "Gauge-fixed potential subspace F with f(v0) = 0.",
+        "Taylor expansion of (1/p)|x|^p around p = 1 and strict convexity of t log t on [0, inf)."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/code/tests/test_l1_cohomology.py"
+      ],
+      "limits": "Applies to the one-sided limit p -> 1+ on finite connected graphs with positive weights; does not assert thermodynamic dissipation or selection at p = infinity.",
+      "atlas_ledger_id": "ATL-D-AUDIT-N001-014"
+    },
+    {
+      "id": "AUDIT-N001-016",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For any finite directed graph with integer cochains and positive integer weights, the reduced incidence matrix and augmented LP constraints are totally unimodular, ensuring the existence of an integral optimal potential and integral optimal residual.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite directed graph topology and root gauge fixing f(v0) = 0.",
+        "Poincaré / Hoffman-Kruskal total unimodularity of directed graph incidence matrices.",
+        "Extreme-point integrality of totally unimodular polyhedra with integer right-hand side."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/code/tests/test_l1_cohomology.py"
+      ],
+      "limits": "Applies to 1-dimensional directed graph complexes with integer data; does not generalize to higher-dimensional cell complexes or non-integral data.",
+      "atlas_ledger_id": "ATL-D-AUDIT-N001-016"
+    },
+    {
+      "id": "AUDIT-N001-017",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "On the triangle 2-simplicial complex, the 4-vertex square plaquette, and the 5-cycle loop complex, the coboundary composite vanishes identically (d1 d0 = 0), ensuring pure gauge connections have zero field curvature and are orthogonal to 1-cycles.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Oriented cell complex definitions for triangle, square plaquette, and 5-cycle.",
+        "Discrete coboundary operators d0 and d1 as adjoints of boundary operators D1 and D2.",
+        "Boundary cancellation D1 D2 = 0."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t07_bianchi_nilpotency.lean",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/code/tests/test_l1_cohomology.py"
+      ],
+      "limits": "Requires coherent orientation conventions on face boundaries; does not establish continuum Maxwell/Yang-Mills dynamics.",
+      "atlas_ledger_id": "ATL-D-AUDIT-N001-017"
+    },
+    {
+      "id": "AUDIT-N001-018",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For operator-valued cochains taking values in Schatten-p classes on a finite graph, the quotient defect satisfies non-commutative weak Hölder duality against divergence-free operator circulations, and off-diagonal coherence bounds hold across p in [1, inf].",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite-dimensional Hilbert space H and Schatten-p norm definitions.",
+        "Non-commutative Hölder inequality |Tr(A^dagger B)| <= ||A||_{S_p} ||B||_{S_q} with 1/p + 1/q = 1.",
+        "Divergence-free circulation constraint d0* Y = 0 on dual operator cochains."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/code/l1_cohomology.py",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/code/tests/test_l1_cohomology.py"
+      ],
+      "limits": "Formulated for finite-dimensional Hilbert spaces and static graph cochains; does not assert continuous Hamiltonian or open-system master equation dynamics.",
+      "atlas_ledger_id": "ATL-D-AUDIT-N001-018"
+    },
+    {
+      "id": "AUDIT-N002-002",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Seminorms on operator-valued 1-cochains satisfying edge additivity (P1), faithfulness (P2), maximal bounded-linear functoriality (P3), and presheaf automorphism invariance (P4) are weighted Schatten-1 norms with orbit-constant weights.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Presheaf on a finite complex with finite-dimensional Hilbert operator stalks B_1(H).",
+        "Axioms P1 (edge additivity), P2 (faithfulness), P3 (maximal bounded-linear functoriality), and P4 (automorphism invariance).",
+        "Banach space duality B_1(H)^* = B(H) and operator polar decomposition."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py"
+      ],
+      "limits": "Applies to bounded linear maps on trace-class stalks; restricting functoriality to CPTP maps does not force the trace norm; automorphism invariance alone does not ensure uniform weights across distinct edge orbits.",
+      "atlas_ledger_id": "ATL-D-AUDIT-N002-002"
+    },
+    {
+      "id": "AUDIT-N002-014",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Surjective trace-norm-preserving completely positive compositional automorphisms of B_1(C^n) preserving the positive state cone are unitary conjugations A -> U A U^*, yielding a conditional U(n)/PU(n) local frame symmetry.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite-dimensional operator stalks B_1(C^n) equipped with trace norm.",
+        "Kadison-Sourour surjective linear isometry classification theorem.",
+        "Complete positivity excluding the matrix transpose branch for n >= 2.",
+        "State-cone positivity preservation forcing V = U^*."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py"
+      ],
+      "limits": "Characterizes symmetries of admissible local frame changes on operator stalks; does not derive a physical gauge field, Yang-Mills dynamics, or spacetime geometry.",
+      "atlas_ledger_id": "ATL-D-AUDIT-N002-014"
+    },
+    {
+      "id": "AUDIT-N002-016",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For operator-valued sections along a path with Schatten-p contractive restriction maps, the endpoint distinguishability is bounded by accumulated edge defects: ||rho_a - R_{b,a}(rho_b)||_{S_p} <= sum_{e in path} ||delta_e||_{S_p}.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Path graph connecting nodes a and b with uniform local Hilbert space H.",
+        "Schatten-p contractivity of restriction operators along the path.",
+        "Triangle inequality in Schatten-p Banach space."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py"
+      ],
+      "limits": "Requires contractive restriction channels; if restriction maps are expansive, the bound fails; operational quantum trace distance interpretation requires states to be preserved as normalized density operators.",
+      "atlas_ledger_id": "ATL-D-AUDIT-N002-016"
+    },
+    {
+      "id": "AUDIT-N002-021",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For n >= 2, v_i >= 0, alpha > 0, and d_i = alpha + v_i, the secular equation F(t) = (alpha/n) sum_{i=1}^n (d_i - t)^(-1) = 1 has a unique root tau in [0, d_min) equal to lambda_min(alpha(I - P) + diag(v)), which lower-bounds lambda_min(L_0 + diag(v)) under L_0 >= alpha(I - P).",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite graph with n >= 2 vertices and spectral gap premise L_0 >= alpha(I - P) for alpha > 0.",
+        "Nonnegative vertex defect loads v_i >= 0.",
+        "Weighted Cauchy-Schwarz inequality on the comparison operator secular form.",
+        "Loewner ordering of self-adjoint operators."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py"
+      ],
+      "limits": "Requires positive connectivity parameter alpha > 0 and nonnegative loads; does not identify the l^2 spectral defect lambda_0 with the l^1 quotient norm Phi_1; bound transfers via Loewner ordering but is generally strict for non-flat loads.",
+      "atlas_ledger_id": "ATL-D-AUDIT-N002-021"
+    },
+    {
       "id": "WIKI-C01",
       "kind": "mathematical_or_implementation_claim",
       "statement": "Typed syntax, lossless representation, query preservation, operation preservation and permission to act are different obligations. A decoder round trip establishes injectivity on its stated domain; preserving a query F across a lift u additionally requires F_prime composed with u equals F. Neither constructor names nor a receipt supply that equation.",
@@ -36447,6 +36766,90 @@
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
+      "id": "ASSUMPTION-05ed54e53fbb7883",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Finite poset with comparable triples a <= b <= c.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-9a9639d150c15c6f",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Additive fiber spaces F(x) and linear restriction maps preserving subtraction.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-db22e1ef732f187d",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Definitions of coboundary operators d0 and d1.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-5fe43141a3bdb365",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Definition of composition curvature operator K_{c,b,a} = r_{b,a} r_{c,b} - r_{c,a}.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-47e8fe8339505dec",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Coboundary-curvature identity AUDIT-N004-006: (d1 d0 s)(a,b,c) = K_{c,b,a}(s(c)).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-e406b2f5f3cee0d7",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Fiber inhabitation: for every v in F(c), existence of a section with s(c) = v.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-57e297bfa7cb41c2",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Definition of Flat system and chain composability.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-fd7c1ad084edd260",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Elementary diamond poset a < b < c with 1D vector fibers.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-20566badd72f656a",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Scalar representation of linear maps between 1D vector spaces.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-09724d90d01e5fe4",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Definition of curvature defect K = r_{b,a} r_{c,b} - r_{c,a}.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-a062ea90a2a5d300",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Definition of the algebraic number q = 2(sqrt(2)-1).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-acac264badb1340a",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Exact rational field arithmetic in Q.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-c562ab55aa651596",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Monotonicity of the squaring mapping t -> (1 + t/2)^2 on positive reals.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-ae63d481bffcf210",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Exact inequalities (1 + 828/2000)^2 = 499849/250000 < 2 < 8003241/4000000 = (1 + 829/2000)^2.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
       "id": "ASSUMPTION-aaf8dac8c78af92e",
       "kind": "explicit_assumption_or_obligation",
       "statement": "Finite connected graph with positive edge weights.",
@@ -39138,6 +39541,210 @@
       "id": "ASSUMPTION-198a8683e0c6d038",
       "kind": "explicit_assumption_or_obligation",
       "statement": "Pinned 32,261-file inventory at 8050c66900899771766f33e8f5fdd200b7dd9120",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-29067511bfc790d5",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "TwoSignalDangerGate evaluation logic in pfp/domain/immune/danger_gate.py and evaluate_two_signal_gate in atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/danger_gate.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-1e641ed55be5156d",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Strict two-signal categorical mapping over {absent, present} x {absent, LOW, MEDIUM, HIGH, CRITICAL} inputs.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-e77ed6829eb6716a",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Canonical sealed self panel corpus in pfp/domain/immune/self_panel.json.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-d30611b2c267be3d",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "SelfPanel domain parsing and base_content normalizer in pfp/domain/immune/thymus.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-67a520c52fc9f96a",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Candidate canary phrase detector definitions in atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/canaries.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-368d09acc1151ff0",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Constructed fixture sentences and clean control sentences in atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py and test_danger_gate.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-fdf9f77fbdf043d8",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Crate interface boundaries partitioned across main.rs, lib.rs, invoke.rs, and foundation.rs in code/rust/pfp/src/.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-78ca8a40d732947a",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Process dispatch separation between default stdin host evaluation and invoke runtime dispatcher.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-59c8c43493b2aa20",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Additive isolation of the foundation library from consequential host execution protocols.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-cf649398ee40c290",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Gauge-fixed potential subspace F with f(v0) = 0.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-371640ac419c34f3",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Taylor expansion of (1/p)|x|^p around p = 1 and strict convexity of t log t on [0, inf).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-90ece256a3ab1317",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Finite directed graph topology and root gauge fixing f(v0) = 0.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-4f54ea453561ef59",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Poincaré / Hoffman-Kruskal total unimodularity of directed graph incidence matrices.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-39b1fd4382608b43",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Extreme-point integrality of totally unimodular polyhedra with integer right-hand side.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-ddd16b509ddf7df6",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Oriented cell complex definitions for triangle, square plaquette, and 5-cycle.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-18f8685cce5aeafd",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Discrete coboundary operators d0 and d1 as adjoints of boundary operators D1 and D2.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-5f598c6529d39d83",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Boundary cancellation D1 D2 = 0.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-cc9d67e61dbc0f8a",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Finite-dimensional Hilbert space H and Schatten-p norm definitions.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-7878b85af52373fb",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Non-commutative Hölder inequality |Tr(A^dagger B)| <= ||A||_{S_p} ||B||_{S_q} with 1/p + 1/q = 1.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-728fc6df44b9527c",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Divergence-free circulation constraint d0* Y = 0 on dual operator cochains.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-f003c7db17a1c55c",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Presheaf on a finite complex with finite-dimensional Hilbert operator stalks B_1(H).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-d4485957d1069d77",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Axioms P1 (edge additivity), P2 (faithfulness), P3 (maximal bounded-linear functoriality), and P4 (automorphism invariance).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-4492648d8fb05934",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Banach space duality B_1(H)^* = B(H) and operator polar decomposition.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-ba58b51f3e779d9d",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Finite-dimensional operator stalks B_1(C^n) equipped with trace norm.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-41225081305d5d95",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Kadison-Sourour surjective linear isometry classification theorem.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-1ebf31172e7f8f40",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Complete positivity excluding the matrix transpose branch for n >= 2.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-7556dce610032021",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "State-cone positivity preservation forcing V = U^*.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-d8f3dc46107f507c",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Path graph connecting nodes a and b with uniform local Hilbert space H.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-2bf025b78a0fa975",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Schatten-p contractivity of restriction operators along the path.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-d58026dda5ac3f72",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Triangle inequality in Schatten-p Banach space.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-21d86c6b1ea77315",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Finite graph with n >= 2 vertices and spectral gap premise L_0 >= alpha(I - P) for alpha > 0.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-fffd8dca4f0a3d88",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Nonnegative vertex defect loads v_i >= 0.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-7d7c1c8e2ce7ed28",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Weighted Cauchy-Schwarz inequality on the comparison operator secular form.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-f139801693c9345a",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Loewner ordering of self-adjoint operators.",
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
@@ -43638,6 +44245,55 @@
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
+      "id": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/001_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/001_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects.md",
+      "sha256": "f09fa0581d745cedff7e35ec5b0822efa6bc18d966709c63be5f725713a7d88d",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
+      "sha256": "88606bd2d50c26d266421a28876a66a57bbd606a80bb16beb730007940aca5ce",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/curvature_cochain.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/curvature_cochain.py",
+      "sha256": "d99297102ff45630e8f016a2dd60252684d5045e7050b2c75d545527841b736c",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_curvature_cochain.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_curvature_cochain.py",
+      "sha256": "abb55b7e7891b8743eecf717ba233b99ca2dfe0ba0dd979a4321e3aa58c62b65",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/lean4/CurvatureCochain.lean",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/lean4/CurvatureCochain.lean",
+      "sha256": "15b846108b96d3345dad5d90ed046c468121e36839a29a57f944080101c04b46",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:pfp/domain/ddc/coboundary.py",
+      "kind": "pinned_source_file",
+      "path": "pfp/domain/ddc/coboundary.py",
+      "sha256": "e0e94b330ec8796fcbbd9d03542ca282e1f7d82d3335a62574a7a669a05e1659",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_review_boundaries.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_review_boundaries.py",
+      "sha256": "afc1037bff308d8489afda2b409bd2649b07481850e2785f174c2f7a2041bec0",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
       "id": "SOURCE:operads/patterns/helpful/rust/hp_rs_007_explicit_boundary_completion.md",
       "kind": "pinned_source_file",
       "path": "operads/patterns/helpful/rust/hp_rs_007_explicit_boundary_completion.md",
@@ -46444,13 +47100,6 @@
       "kind": "pinned_source_file",
       "path": "pfp/domain/decoding/polygraph.py",
       "sha256": "e49fe82d6da5b3152bb7ef06398c4a5779c809f97a1d786c528c0af32ac89a40",
-      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
-    },
-    {
-      "id": "SOURCE:pfp/domain/ddc/coboundary.py",
-      "kind": "pinned_source_file",
-      "path": "pfp/domain/ddc/coboundary.py",
-      "sha256": "e0e94b330ec8796fcbbd9d03542ca282e1f7d82d3335a62574a7a669a05e1659",
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
@@ -51767,6 +52416,111 @@
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
+      "id": "SOURCE:pfp/domain/immune/danger_gate.py",
+      "kind": "pinned_source_file",
+      "path": "pfp/domain/immune/danger_gate.py",
+      "sha256": "946bb772a8542b886ddcd0c4ab27ad3fee90bedea10aa673f09fe7c192748d97",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/danger_gate.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/danger_gate.py",
+      "sha256": "bec5440fddb5a36b753b939af35a16321b2b4fc8e35af93d2d9e9f51cc1f5311",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_danger_gate.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_danger_gate.py",
+      "sha256": "dcaccb11a8b48e43531fc660c5c50622c6269953e1a8f96fa6a103202d3496dd",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:pfp/domain/immune/self_panel.json",
+      "kind": "pinned_source_file",
+      "path": "pfp/domain/immune/self_panel.json",
+      "sha256": "d405f3acd3d0d16ad9e6b0df9d59e8069fe1c10a939d51b1a410e21adb6c10af",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:pfp/domain/immune/thymus.py",
+      "kind": "pinned_source_file",
+      "path": "pfp/domain/immune/thymus.py",
+      "sha256": "3e31c4893979725e24e2b9ae666c946fc662b316514becfa3db13b662f5dfc54",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:pfp/tests/test_immune_defect_regressions.py",
+      "kind": "pinned_source_file",
+      "path": "pfp/tests/test_immune_defect_regressions.py",
+      "sha256": "d38f94e1e6fc3ed22083ce96633c407117ae2dca5fdcd32d00074df80ee1bde0",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/canaries.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/canaries.py",
+      "sha256": "4ff3771a14b44bb5b4dde754afdb344a29257fd43248d56fdf5d6fd57749a2cd",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:code/rust/pfp/src/main.rs",
+      "kind": "pinned_source_file",
+      "path": "code/rust/pfp/src/main.rs",
+      "sha256": "d57f717c18d3e9ec6877a00a92b0d8fd0d4fa35cb2ca7c2f50191d6286129455",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:code/rust/pfp/src/lib.rs",
+      "kind": "pinned_source_file",
+      "path": "code/rust/pfp/src/lib.rs",
+      "sha256": "67daeaf130462d4392f9978bd949a2b4ca51d2324af36a36d28e5c0e39313e66",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:code/rust/pfp/src/invoke.rs",
+      "kind": "pinned_source_file",
+      "path": "code/rust/pfp/src/invoke.rs",
+      "sha256": "f770e5e70cb903a59e4cd7c29e539cee2c982fa05a077849d6e422252b92776a",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:code/rust/tests/pfp/invoke_contract.rs",
+      "kind": "pinned_source_file",
+      "path": "code/rust/tests/pfp/invoke_contract.rs",
+      "sha256": "805815e81885a9e2f4321c629c916d100d1e84ec4d74e4b30e5047e7e8f0b179",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:code/rust/tests/pfp/foundation_contract.rs",
+      "kind": "pinned_source_file",
+      "path": "code/rust/tests/pfp/foundation_contract.rs",
+      "sha256": "d3392e8496897c65bbc2d06fde3c0866062025612793a500d196dc81ea432282",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/code/tests/test_l1_cohomology.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/code/tests/test_l1_cohomology.py",
+      "sha256": "265418b90f65b8169bfb7dd0b62ec92613c24bd1b3d7c69520e0f739e4123db4",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t07_bianchi_nilpotency.lean",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t07_bianchi_nilpotency.lean",
+      "sha256": "059529559655bf78fc299a6ea3758028e4b28a16e19985871d356b14108e6a04",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/code/l1_cohomology.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/code/l1_cohomology.py",
+      "sha256": "b34cdf0cd283be69a560a62e8f827f1fe04926496eb92c2471764fff33afe321",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
       "id": "SOURCE:pfp/workflows/wf0001/workflow.py",
       "kind": "pinned_source_file",
       "path": "pfp/workflows/wf0001/workflow.py",
@@ -53060,11 +53814,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the two-signal danger-gate decision table.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_008.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P003-008"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P003-008: TwoSignalDangerGate and evaluate_two_signal_gate map Signal 1 alone to diagnostic, low/medium Signal 2 alone to diagnostic, high/critical Signal 2 alone to refuse, and both signals to refuse."
       }
     },
     {
@@ -53088,11 +53843,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the baseline self-panel size and distinct-content count.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_009.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P003-009"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P003-009: SelfPanel.load_canonical parses self_panel.json with 1,000 entries and 40 distinct base contents, ten in each of four categories."
       }
     },
     {
@@ -53116,11 +53872,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the phrase-detector fixture and clean-control results.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_010.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P003-010"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P003-010: scan_for_canaries exhibits diagonal 1-to-1 matching across the 4 constructed fixture sentences and yields zero detections on the 3 clean controls, including the true attractive-U statement."
       }
     },
     {
@@ -53718,11 +54475,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the interface separation.",
-        "proposed_derivation_file": "dag/derivations/atl_p004_001.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P004-001"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P004-001: native Rust implementation partitions default host evaluation, runtime action dispatch, and additive foundation into distinct interfaces with segregated CLI dispatch branches."
       }
     },
     {
@@ -61425,11 +62183,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node on $p\\to1^+$ selection.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_014.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N001-014"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Establishes secondary selection in the p -> 1+ limit via weighted entropy minimization on M_1, showing that limits of unique p-Laplacian minimizers converge to the unique weighted entropy minimizer; certified by AUDIT-N001-014."
       }
     },
     {
@@ -61484,11 +62243,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node on total unimodularity integrality.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_016.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N001-016"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Establishes cut-lattice integer attainment by total unimodularity, showing that directed graph incidence matrices yield totally unimodular LP constraints and integral optimal potentials and residuals under integer data; certified by AUDIT-N001-016."
       }
     },
     {
@@ -61512,13 +62272,13 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "P011LEDGER-CL08"
+          "P011LEDGER-CL08",
+          "AUDIT-N001-017"
         ],
-        "relation": "supports",
-        "note": "P011LEDGER-CL08 covers simplicial boundary-squared cancellation, not the plaquette and 5-cycle cases.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_017.md"
+        "relation": "states_same_claim_as",
+        "note": "P011LEDGER-CL08 covers simplicial boundary-squared cancellation; AUDIT-N001-017 establishes discrete Bianchi identity d1 d0 = 0 and coboundary nilpotency across triangle, 4-vertex square plaquette, and 5-cycle loop complexes, with pure gauge curvature vanishing and cycle orthogonality."
       }
     },
     {
@@ -61542,11 +62302,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node on Schatten-$p$ extension.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_018.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N001-018"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Establishes Schatten-p quantum quotient defect weak duality against divergence-free operator circulations and non-commutative Hölder off-diagonal coherence bounds across p in [1, inf]; certified by AUDIT-N001-018."
       }
     },
     {
@@ -61655,11 +62416,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No derivation node addresses the Schatten-p classification of operator-valued defect norms.",
-        "proposed_derivation_file": "dag/derivations/atl_n002_002.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N002-002"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-N002-002: operator-valued Schatten-1 classification under axioms P1-P4."
       }
     },
     {
@@ -62001,11 +62763,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No derivation node addresses the conditional unitary gauge structure; it rests on the imported isometry classification.",
-        "proposed_derivation_file": "dag/derivations/atl_n002_014.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N002-014"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-N002-014: conditional unitary frame symmetry under complete positivity and state-cone preservation."
       }
     },
     {
@@ -62059,11 +62822,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No derivation node proves the telescoping Schatten-p distinguishability bound along a path.",
-        "proposed_derivation_file": "dag/derivations/atl_n002_016.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N002-016"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-N002-016: telescoping Schatten-p path distinguishability bound under contractive restriction maps."
       }
     },
     {
@@ -62200,11 +62964,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No derivation node covers the secular-equation spectral comparison.",
-        "proposed_derivation_file": "dag/derivations/atl_n002_021.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N002-021"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-N002-021: exact secular-root characterization of rank-one comparison operator and Loewner bound transfer."
       }
     },
     {
@@ -63219,13 +63984,13 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PFPDOMAIN-CL11"
+          "PFPDOMAIN-CL11",
+          "AUDIT-N004-006"
         ],
-        "relation": "narrows",
-        "note": "PFPDOMAIN-CL11 proves $d_1d_0=0$ only for identity (flat) restrictions on triangular carriers, the $K=0$ case of the identity.",
-        "proposed_derivation_file": "dag/derivations/atl_n004_006.md"
+        "relation": "states_same_claim_as",
+        "note": "Coboundary-curvature identity (d1 d0 s)(a,b,c) = K_{c,b,a}(s(c)) holds identically for any finite poset with linear restrictions on additive fibers, generalizing the flat trivial restriction case in PFPDOMAIN-CL11; certified by AUDIT-N004-006."
       }
     },
     {
@@ -63249,11 +64014,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node proves the flat-locus equivalence for general restrictions.",
-        "proposed_derivation_file": "dag/derivations/atl_n004_007.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N004-007"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "On any finite poset with linear restrictions and inhabited fibers, curvature operator K = 0 everywhere is equivalent to nilpotency d1 d0 = 0 on all sections and to chain composability r_{c,a} = r_{b,a} r_{c,b}; certified by AUDIT-N004-007."
       }
     },
     {
@@ -63277,11 +64043,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the scalar diamond curvature witness.",
-        "proposed_derivation_file": "dag/derivations/atl_n004_008.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N004-008"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "On an elementary diamond with 1D scalar fibers, restriction maps alpha, beta, and composite mu evaluate to curvature K(v) = (beta * alpha - mu) * v, vanishing if and only if beta * alpha = mu; certified by AUDIT-N004-008."
       }
     },
     {
@@ -63762,11 +64529,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the algebraic enclosure example.",
-        "proposed_derivation_file": "dag/derivations/atl_n004_025.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N004-025"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Exact rational squaring encloses the algebraic number 2(sqrt(2)-1) strictly between 828/1000 and 829/1000 with width 1/1000, verified by monotonicity of (1 + t/2)^2 on positive rationals; certified by AUDIT-N004-025."
       }
     },
     {
@@ -71179,6 +71947,76 @@
       "kind": "requires"
     },
     {
+      "from": "ASSUMPTION-05ed54e53fbb7883",
+      "to": "AUDIT-N004-006",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-9a9639d150c15c6f",
+      "to": "AUDIT-N004-006",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-db22e1ef732f187d",
+      "to": "AUDIT-N004-006",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-5fe43141a3bdb365",
+      "to": "AUDIT-N004-006",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-47e8fe8339505dec",
+      "to": "AUDIT-N004-007",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-e406b2f5f3cee0d7",
+      "to": "AUDIT-N004-007",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-57e297bfa7cb41c2",
+      "to": "AUDIT-N004-007",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-fd7c1ad084edd260",
+      "to": "AUDIT-N004-008",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-20566badd72f656a",
+      "to": "AUDIT-N004-008",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-09724d90d01e5fe4",
+      "to": "AUDIT-N004-008",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-a062ea90a2a5d300",
+      "to": "AUDIT-N004-025",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-acac264badb1340a",
+      "to": "AUDIT-N004-025",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-c562ab55aa651596",
+      "to": "AUDIT-N004-025",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-ae63d481bffcf210",
+      "to": "AUDIT-N004-025",
+      "kind": "requires"
+    },
+    {
       "from": "ASSUMPTION-aaf8dac8c78af92e",
       "to": "AUDIT-N001-001",
       "kind": "requires"
@@ -73456,6 +74294,181 @@
     {
       "from": "ASSUMPTION-198a8683e0c6d038",
       "to": "ASE-C05",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-29067511bfc790d5",
+      "to": "AUDIT-P003-008",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-1e641ed55be5156d",
+      "to": "AUDIT-P003-008",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-e77ed6829eb6716a",
+      "to": "AUDIT-P003-009",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-d30611b2c267be3d",
+      "to": "AUDIT-P003-009",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-67a520c52fc9f96a",
+      "to": "AUDIT-P003-010",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-368d09acc1151ff0",
+      "to": "AUDIT-P003-010",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-fdf9f77fbdf043d8",
+      "to": "AUDIT-P004-001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-78ca8a40d732947a",
+      "to": "AUDIT-P004-001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-59c8c43493b2aa20",
+      "to": "AUDIT-P004-001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-aaf8dac8c78af92e",
+      "to": "AUDIT-N001-014",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-cf649398ee40c290",
+      "to": "AUDIT-N001-014",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-371640ac419c34f3",
+      "to": "AUDIT-N001-014",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-90ece256a3ab1317",
+      "to": "AUDIT-N001-016",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-4f54ea453561ef59",
+      "to": "AUDIT-N001-016",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-39b1fd4382608b43",
+      "to": "AUDIT-N001-016",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-ddd16b509ddf7df6",
+      "to": "AUDIT-N001-017",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-18f8685cce5aeafd",
+      "to": "AUDIT-N001-017",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-5f598c6529d39d83",
+      "to": "AUDIT-N001-017",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-cc9d67e61dbc0f8a",
+      "to": "AUDIT-N001-018",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-7878b85af52373fb",
+      "to": "AUDIT-N001-018",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-728fc6df44b9527c",
+      "to": "AUDIT-N001-018",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-f003c7db17a1c55c",
+      "to": "AUDIT-N002-002",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-d4485957d1069d77",
+      "to": "AUDIT-N002-002",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-4492648d8fb05934",
+      "to": "AUDIT-N002-002",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-ba58b51f3e779d9d",
+      "to": "AUDIT-N002-014",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-41225081305d5d95",
+      "to": "AUDIT-N002-014",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-1ebf31172e7f8f40",
+      "to": "AUDIT-N002-014",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-7556dce610032021",
+      "to": "AUDIT-N002-014",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-d8f3dc46107f507c",
+      "to": "AUDIT-N002-016",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-2bf025b78a0fa975",
+      "to": "AUDIT-N002-016",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-d58026dda5ac3f72",
+      "to": "AUDIT-N002-016",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-21d86c6b1ea77315",
+      "to": "AUDIT-N002-021",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-fffd8dca4f0a3d88",
+      "to": "AUDIT-N002-021",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-7d7c1c8e2ce7ed28",
+      "to": "AUDIT-N002-021",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-f139801693c9345a",
+      "to": "AUDIT-N002-021",
       "kind": "requires"
     },
     {
@@ -78964,6 +79977,120 @@
       "to": "AUDIT-N003-005",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/003_degree_wise_dsl/lean4/DegreeSeparation.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/001_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects.md",
+      "to": "AUDIT-N004-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/001_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
+      "to": "AUDIT-N004-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/curvature_cochain.py",
+      "to": "AUDIT-N004-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/curvature_cochain.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_curvature_cochain.py",
+      "to": "AUDIT-N004-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_curvature_cochain.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/lean4/CurvatureCochain.lean",
+      "to": "AUDIT-N004-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/lean4/CurvatureCochain.lean"
+    },
+    {
+      "from": "SOURCE:pfp/domain/ddc/coboundary.py",
+      "to": "AUDIT-N004-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/domain/ddc/coboundary.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/001_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects.md",
+      "to": "AUDIT-N004-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/001_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
+      "to": "AUDIT-N004-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/curvature_cochain.py",
+      "to": "AUDIT-N004-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/curvature_cochain.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_curvature_cochain.py",
+      "to": "AUDIT-N004-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_curvature_cochain.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/lean4/CurvatureCochain.lean",
+      "to": "AUDIT-N004-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/lean4/CurvatureCochain.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/001_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects.md",
+      "to": "AUDIT-N004-008",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/001_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
+      "to": "AUDIT-N004-008",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/curvature_cochain.py",
+      "to": "AUDIT-N004-008",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/curvature_cochain.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_curvature_cochain.py",
+      "to": "AUDIT-N004-008",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_curvature_cochain.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/lean4/CurvatureCochain.lean",
+      "to": "AUDIT-N004-008",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/lean4/CurvatureCochain.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/001_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects.md",
+      "to": "AUDIT-N004-025",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/001_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
+      "to": "AUDIT-N004-025",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_review_boundaries.py",
+      "to": "AUDIT-N004-025",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/code/tests/test_review_boundaries.py"
     },
     {
       "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
@@ -100253,6 +101380,336 @@
       "citation": "pfp/infrastructure/tower_research/level_engine/outward/bundles.py"
     },
     {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+      "to": "AUDIT-P003-008",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+      "to": "AUDIT-P003-008",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:pfp/domain/immune/danger_gate.py",
+      "to": "AUDIT-P003-008",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/domain/immune/danger_gate.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/danger_gate.py",
+      "to": "AUDIT-P003-008",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/danger_gate.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_danger_gate.py",
+      "to": "AUDIT-P003-008",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_danger_gate.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+      "to": "AUDIT-P003-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+      "to": "AUDIT-P003-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:pfp/domain/immune/self_panel.json",
+      "to": "AUDIT-P003-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/domain/immune/self_panel.json"
+    },
+    {
+      "from": "SOURCE:pfp/domain/immune/thymus.py",
+      "to": "AUDIT-P003-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/domain/immune/thymus.py"
+    },
+    {
+      "from": "SOURCE:pfp/tests/test_immune_defect_regressions.py",
+      "to": "AUDIT-P003-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/tests/test_immune_defect_regressions.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py",
+      "to": "AUDIT-P003-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+      "to": "AUDIT-P003-010",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+      "to": "AUDIT-P003-010",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/canaries.py",
+      "to": "AUDIT-P003-010",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/canaries.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py",
+      "to": "AUDIT-P003-010",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_danger_gate.py",
+      "to": "AUDIT-P003-010",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_danger_gate.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper.md",
+      "to": "AUDIT-P004-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper_claim_ledger.md",
+      "to": "AUDIT-P004-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:code/rust/pfp/src/main.rs",
+      "to": "AUDIT-P004-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "code/rust/pfp/src/main.rs"
+    },
+    {
+      "from": "SOURCE:code/rust/pfp/src/lib.rs",
+      "to": "AUDIT-P004-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "code/rust/pfp/src/lib.rs"
+    },
+    {
+      "from": "SOURCE:code/rust/pfp/src/invoke.rs",
+      "to": "AUDIT-P004-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "code/rust/pfp/src/invoke.rs"
+    },
+    {
+      "from": "SOURCE:code/rust/pfp/src/foundation.rs",
+      "to": "AUDIT-P004-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "code/rust/pfp/src/foundation.rs"
+    },
+    {
+      "from": "SOURCE:code/rust/tests/pfp/host_contract.rs",
+      "to": "AUDIT-P004-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "code/rust/tests/pfp/host_contract.rs"
+    },
+    {
+      "from": "SOURCE:code/rust/tests/pfp/invoke_contract.rs",
+      "to": "AUDIT-P004-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "code/rust/tests/pfp/invoke_contract.rs"
+    },
+    {
+      "from": "SOURCE:code/rust/tests/pfp/foundation_contract.rs",
+      "to": "AUDIT-P004-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "code/rust/tests/pfp/foundation_contract.rs"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+      "to": "AUDIT-N001-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+      "to": "AUDIT-N001-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/code/tests/test_l1_cohomology.py",
+      "to": "AUDIT-N001-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/code/tests/test_l1_cohomology.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+      "to": "AUDIT-N001-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+      "to": "AUDIT-N001-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/code/tests/test_l1_cohomology.py",
+      "to": "AUDIT-N001-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/code/tests/test_l1_cohomology.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+      "to": "AUDIT-N001-017",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+      "to": "AUDIT-N001-017",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t07_bianchi_nilpotency.lean",
+      "to": "AUDIT-N001-017",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t07_bianchi_nilpotency.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/code/tests/test_l1_cohomology.py",
+      "to": "AUDIT-N001-017",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/code/tests/test_l1_cohomology.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+      "to": "AUDIT-N001-018",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+      "to": "AUDIT-N001-018",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/code/l1_cohomology.py",
+      "to": "AUDIT-N001-018",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/code/l1_cohomology.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/code/tests/test_l1_cohomology.py",
+      "to": "AUDIT-N001-018",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/code/tests/test_l1_cohomology.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+      "to": "AUDIT-N002-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+      "to": "AUDIT-N002-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+      "to": "AUDIT-N002-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py",
+      "to": "AUDIT-N002-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+      "to": "AUDIT-N002-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+      "to": "AUDIT-N002-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+      "to": "AUDIT-N002-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py",
+      "to": "AUDIT-N002-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+      "to": "AUDIT-N002-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+      "to": "AUDIT-N002-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+      "to": "AUDIT-N002-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py",
+      "to": "AUDIT-N002-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+      "to": "AUDIT-N002-021",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+      "to": "AUDIT-N002-021",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+      "to": "AUDIT-N002-021",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py",
+      "to": "AUDIT-N002-021",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py"
+    },
+    {
       "from": "SOURCE:pfp/workflows/wf0001/workflow.py",
       "to": "WLR-C01",
       "kind": "source_evidence_not_automatic_proof",
@@ -101060,16 +102517,34 @@
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:23"
     },
     {
+      "from": "AUDIT-P003-008",
+      "to": "ATL-P003-008",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-009",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:24"
     },
     {
+      "from": "AUDIT-P003-009",
+      "to": "ATL-P003-009",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-010",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:25"
+    },
+    {
+      "from": "AUDIT-P003-010",
+      "to": "ATL-P003-010",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
@@ -101268,6 +102743,12 @@
       "to": "ATL-P004-001",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper_claim_ledger.md:16"
+    },
+    {
+      "from": "AUDIT-P004-001",
+      "to": "ATL-P004-001",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper_claim_ledger.md",
@@ -103862,6 +105343,12 @@
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:26"
     },
     {
+      "from": "AUDIT-N001-014",
+      "to": "ATL-N001-014",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-015",
       "kind": "source_evidence_not_automatic_proof",
@@ -103892,6 +105379,12 @@
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:28"
     },
     {
+      "from": "AUDIT-N001-016",
+      "to": "ATL-N001-016",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
       "to": "ATL-N001-017",
       "kind": "source_evidence_not_automatic_proof",
@@ -103900,7 +105393,13 @@
     {
       "from": "P011LEDGER-CL08",
       "to": "ATL-N001-017",
-      "kind": "partially_supports",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "AUDIT-N001-017",
+      "to": "ATL-N001-017",
+      "kind": "states_same_claim_as",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
@@ -103908,6 +105407,12 @@
       "to": "ATL-N001-018",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md:30"
+    },
+    {
+      "from": "AUDIT-N001-018",
+      "to": "ATL-N001-018",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "SOURCE:atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
@@ -103938,6 +105443,12 @@
       "to": "ATL-N002-002",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md:38"
+    },
+    {
+      "from": "AUDIT-N002-002",
+      "to": "ATL-N002-002",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "SOURCE:atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
@@ -104072,6 +105583,12 @@
       "citation": "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md:50"
     },
     {
+      "from": "AUDIT-N002-014",
+      "to": "ATL-N002-014",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
       "to": "ATL-N002-015",
       "kind": "source_evidence_not_automatic_proof",
@@ -104094,6 +105611,12 @@
       "to": "ATL-N002-016",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md:52"
+    },
+    {
+      "from": "AUDIT-N002-016",
+      "to": "ATL-N002-016",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "SOURCE:atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
@@ -104130,6 +105653,12 @@
       "to": "ATL-N002-021",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md:57"
+    },
+    {
+      "from": "AUDIT-N002-021",
+      "to": "ATL-N002-021",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "SOURCE:atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
@@ -104366,37 +105895,37 @@
       "citation": "atlas/archive/non_pfp/003_degree_wise_dsl/degree_wise_dsl_claim_ledger.md:138"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-001",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:11"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-002",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:12"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-003",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:13"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-004",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:14"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-005",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:15"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-006",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:16"
@@ -104404,29 +105933,47 @@
     {
       "from": "PFPDOMAIN-CL11",
       "to": "ATL-N004-006",
-      "kind": "narrows",
+      "kind": "states_same_claim_as",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "AUDIT-N004-006",
+      "to": "ATL-N004-006",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-007",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:17"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "AUDIT-N004-007",
+      "to": "ATL-N004-007",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-008",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:18"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "AUDIT-N004-008",
+      "to": "ATL-N004-008",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-009",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:19"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-010",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:20"
@@ -104444,49 +105991,49 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-011",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:21"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-012",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:22"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-013",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:23"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-014",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:24"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-015",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:25"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-016",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:26"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-017",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:27"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-018",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:28"
@@ -104510,37 +106057,37 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-019",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:29"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-020",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:30"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-021",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:31"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-022",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:32"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-023",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:33"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-024",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:34"
@@ -104552,13 +106099,19 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-025",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:35"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "AUDIT-N004-025",
+      "to": "ATL-N004-025",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-026",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:36"
@@ -104576,7 +106129,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "from": "SOURCE:atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md",
       "to": "ATL-N004-027",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects/covering_edge_descent_claim_ledger.md:37"
@@ -156752,8 +158305,8 @@
     "Audit native implementations and claimed Lean correspondence at pinned source."
   ],
   "graph_validation": {
-    "unique_nodes": 3782,
-    "edges": 4083,
+    "unique_nodes": 3867,
+    "edges": 4222,
     "acyclic": true
   }
 }
