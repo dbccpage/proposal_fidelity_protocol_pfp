@@ -34367,18 +34367,17 @@
     {
       "id": "AUDIT-P006-007",
       "kind": "mathematical_or_implementation_claim",
-      "statement": "Scope or editorial statement.",
-      "status": "bounded_source_and_local_execution_support",
+      "statement": "The historical sink uses sorted JSON without establishing RFC 8785 conformance. The publication receipt separately identifies a later encoder revision.",
+      "status": "bounded_historical_source_and_receipt_support",
       "dependencies": [
-        "Internal sorted-key compact JSON profile in pfp/infrastructure/persistence/cemetery_sink.py.",
-        "Float rejection fence in _refuse_floats and hex-tagged sanitization."
+        "Paper 006 Section 4 and its first-publication source bindings."
       ],
       "evidence": [
         "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper.md",
         "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md",
-        "pfp/infrastructure/persistence/cemetery_sink.py"
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/docs/first_publication_validation_2026_10_02.json"
       ],
-      "limits": "Scope boundary confirming internal profile characteristics; does not claim full RFC 8785 compliance.",
+      "limits": "The retained receipt supports provenance. Tests of the present encoder exercise a different revision and do not replay the historical serializer.",
       "atlas_ledger_id": "ATL-D-AUDIT-P006-007"
     },
     {
@@ -34409,10 +34408,9 @@
       "evidence": [
         "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper.md",
         "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md",
-        "pfp/domain/immune/clonal_selection.py",
-        "code/rust/core_epistemic_immune_system/src/thymus.rs"
+        "pfp/domain/immune/clonal_selection.py"
       ],
-      "limits": "Central tolerance screening validates against the supplied finite self-panel; preserves lineage NATIVE-EIS-001.",
+      "limits": "The added tests exercise Python clonal selection. NATIVE-EIS-001 supplies separate partial evidence for the native screening path.",
       "atlas_ledger_id": "ATL-D-AUDIT-P006-009"
     },
     {
@@ -41142,15 +41140,9 @@
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
-      "id": "ASSUMPTION-cec6f1cef347f18d",
+      "id": "ASSUMPTION-8dc1297d07dc6b6a",
       "kind": "explicit_assumption_or_obligation",
-      "statement": "Internal sorted-key compact JSON profile in pfp/infrastructure/persistence/cemetery_sink.py.",
-      "status": "requires_evidence_not_discharged_by_this_edge"
-    },
-    {
-      "id": "ASSUMPTION-43203c1b0c17b262",
-      "kind": "explicit_assumption_or_obligation",
-      "statement": "Float rejection fence in _refuse_floats and hex-tagged sanitization.",
+      "statement": "Paper 006 Section 4 and its first-publication source bindings.",
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
@@ -54345,6 +54337,13 @@
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
+      "id": "SOURCE:atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/docs/first_publication_validation_2026_10_02.json",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/docs/first_publication_validation_2026_10_02.json",
+      "sha256": "0a1e501efceda29c79ad801588a9cf32eacdc330c447407fa9577aaf3eef75c9",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
       "id": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/demos/demo_3/experiment_manifest.yaml",
       "kind": "pinned_source_file",
       "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/demos/demo_3/experiment_manifest.yaml",
@@ -55946,12 +55945,18 @@
       "atlas_match": {
         "verdict": "matched",
         "nodes": [
-          "EPC02",
-          "NATIVE03-FIXTURES-011",
           "AUDIT-P003-013"
         ],
         "relation": "states_same_claim_as",
-        "note": "Derived in AUDIT-P003-013, with EPC02 and NATIVE03-FIXTURES-011: The Rust port of the gate table and detectors returns the Python reference output on each tested case across all canonical two-signal combinations, four phrase canaries, and clean/negated controls."
+        "note": "Derived in AUDIT-P003-013, with EPC02 and NATIVE03-FIXTURES-011: The Rust port of the gate table and detectors returns the Python reference output on each tested case across all canonical two-signal combinations, four phrase canaries, and clean/negated controls.",
+        "partial_evidence": {
+          "nodes": [
+            "EPC02",
+            "NATIVE03-FIXTURES-011"
+          ],
+          "relation": "narrows",
+          "note": "EPC02 and NATIVE03-FIXTURES-011 cover finite Python-oracle parity fixture generation and inspected frozen corpora (including python_independence_v1.json); exhaustive parity across the Paper 003 danger-gate table and all package detectors remains partial."
+        }
       }
     },
     {
@@ -55977,12 +55982,18 @@
       "atlas_match": {
         "verdict": "matched",
         "nodes": [
-          "PAPER006-CONTROLLED-REUSE-UTILITY",
-          "NATIVE-EIS-004",
           "AUDIT-P003-014"
         ],
         "relation": "states_same_claim_as",
-        "note": "Derived in AUDIT-P003-014, with PAPER006-CONTROLLED-REUSE-UTILITY and NATIVE-EIS-004: Admission requires a reproduced defect, valid near misses, a declared scope and frozen identities, refusing unbounded scope, missing witnesses, and tampered digests."
+        "note": "Derived in AUDIT-P003-014, with PAPER006-CONTROLLED-REUSE-UTILITY and NATIVE-EIS-004: Admission requires a reproduced defect, valid near misses, a declared scope and frozen identities, refusing unbounded scope, missing witnesses, and tampered digests.",
+        "partial_evidence": {
+          "nodes": [
+            "PAPER006-CONTROLLED-REUSE-UTILITY",
+            "NATIVE-EIS-004"
+          ],
+          "relation": "supports",
+          "note": "PAPER006-CONTROLLED-REUSE-UTILITY specifies separation of reproduced failure, valid near-miss control, and scoped admission, and NATIVE-EIS-004 enforces signed spec_id/scope/rule/source/subject/context bindings in authenticated.rs; Paper 003 package-specific wording remains a declared scope boundary."
+        }
       }
     },
     {
@@ -57090,11 +57101,17 @@
       "atlas_match": {
         "verdict": "matched",
         "nodes": [
-          "PUB-C06",
           "AUDIT-P005-004"
         ],
         "relation": "states_same_claim_as",
-        "note": "Derived in AUDIT-P005-004, with PUB-C06: The enumeration-path session refuses (5,0,0), admits (-2,1,1) and restores the prior snapshot, preserving state consistency across steps."
+        "note": "Derived in AUDIT-P005-004, with PUB-C06: The enumeration-path session refuses (5,0,0), admits (-2,1,1) and restores the prior snapshot, preserving state consistency across steps.",
+        "partial_evidence": {
+          "nodes": [
+            "PUB-C06"
+          ],
+          "relation": "supports",
+          "note": "The node notes refusal retention and actual snapshot restoration but not the specific session outcomes."
+        }
       }
     },
     {
@@ -57149,11 +57166,17 @@
       "atlas_match": {
         "verdict": "matched",
         "nodes": [
-          "PUB-C06",
           "AUDIT-P005-006"
         ],
         "relation": "states_same_claim_as",
-        "note": "Derived in AUDIT-P005-006, with PUB-C06: step_cut admits a proposal iff the new value is <= the old, so stationary moves are allowed while strict increases are refused under exact rational comparisons."
+        "note": "Derived in AUDIT-P005-006, with PUB-C06: step_cut admits a proposal iff the new value is <= the old, so stationary moves are allowed while strict increases are refused under exact rational comparisons.",
+        "partial_evidence": {
+          "nodes": [
+            "PUB-C06"
+          ],
+          "relation": "supports",
+          "note": "The node notes nonincrease does not prove termination, consistent with CUT allowing stationary outcomes."
+        }
       }
     },
     {
@@ -57702,7 +57725,7 @@
           "AUDIT-P006-006"
         ],
         "relation": "states_same_claim_as",
-        "note": "Derived in AUDIT-P006-006: CemeterySink._write_file writes the serialized file to a temporary path and replaces the target, ensuring atomicity and leaving no temporary files on failure."
+        "note": "AUDIT-P006-006 confirms full-file staging and replacement on success. An injected replacement failure preserves the prior file in the tested case but can leave the temporary file and advance in-memory state."
       }
     },
     {
@@ -57731,7 +57754,7 @@
           "AUDIT-P006-007"
         ],
         "relation": "states_same_claim_as",
-        "note": "Derived in AUDIT-P006-007: RFC 8785 canonical JSON serializer rejects floating point values and NaN/Infinity; pure scope and boundary fence governing exact integer/string serialization."
+        "note": "AUDIT-P006-007 traces the historical sorted-JSON limits to Paper 006 and its publication receipt. The receipt binds later encoder observations separately."
       }
     },
     {
@@ -57786,11 +57809,17 @@
       "atlas_match": {
         "verdict": "matched",
         "nodes": [
-          "NATIVE-EIS-001",
           "AUDIT-P006-009"
         ],
         "relation": "states_same_claim_as",
-        "note": "Derived in AUDIT-P006-009, with NATIVE-EIS-001: An invalid detector regex yields a typed refusal; a benign-panel match yields a kill-condition record, matching native ThymusGate behavior."
+        "note": "AUDIT-P006-009 checks the Python clonal-selection path for typed regex refusal and the benign-panel kill condition. The earlier native ThymusGate evidence remains narrower.",
+        "partial_evidence": {
+          "nodes": [
+            "NATIVE-EIS-001"
+          ],
+          "relation": "narrows",
+          "note": "NATIVE-EIS-001 covers native ThymusGate::screen regex refusal (InvalidPattern) and benign self-panel match retirement (SelfReactive) in thymus.rs; direct replay of the Paper 006 Python clonal_selection kill-condition path remains partial."
+        }
       }
     },
     {
@@ -76921,12 +76950,7 @@
       "kind": "requires"
     },
     {
-      "from": "ASSUMPTION-cec6f1cef347f18d",
-      "to": "AUDIT-P006-007",
-      "kind": "requires"
-    },
-    {
-      "from": "ASSUMPTION-43203c1b0c17b262",
+      "from": "ASSUMPTION-8dc1297d07dc6b6a",
       "to": "AUDIT-P006-007",
       "kind": "requires"
     },
@@ -105061,10 +105085,10 @@
       "citation": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md"
     },
     {
-      "from": "SOURCE:pfp/infrastructure/persistence/cemetery_sink.py",
+      "from": "SOURCE:atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/docs/first_publication_validation_2026_10_02.json",
       "to": "AUDIT-P006-007",
       "kind": "source_evidence_not_automatic_proof",
-      "citation": "pfp/infrastructure/persistence/cemetery_sink.py"
+      "citation": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/docs/first_publication_validation_2026_10_02.json"
     },
     {
       "from": "SOURCE:atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper.md",
@@ -105101,12 +105125,6 @@
       "to": "AUDIT-P006-009",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "pfp/domain/immune/clonal_selection.py"
-    },
-    {
-      "from": "SOURCE:code/rust/core_epistemic_immune_system/src/thymus.rs",
-      "to": "AUDIT-P006-009",
-      "kind": "source_evidence_not_automatic_proof",
-      "citation": "code/rust/core_epistemic_immune_system/src/thymus.rs"
     },
     {
       "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
@@ -106366,21 +106384,21 @@
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:28"
     },
     {
-      "from": "EPC02",
+      "from": "AUDIT-P003-013",
       "to": "ATL-P003-013",
       "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "EPC02",
+      "to": "ATL-P003-013",
+      "kind": "narrows",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "NATIVE03-FIXTURES-011",
       "to": "ATL-P003-013",
-      "kind": "states_same_claim_as",
-      "citation": "atlas/atlas_claim_matches.json"
-    },
-    {
-      "from": "AUDIT-P003-013",
-      "to": "ATL-P003-013",
-      "kind": "states_same_claim_as",
+      "kind": "narrows",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
@@ -106390,21 +106408,21 @@
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:29"
     },
     {
-      "from": "PAPER006-CONTROLLED-REUSE-UTILITY",
+      "from": "AUDIT-P003-014",
       "to": "ATL-P003-014",
       "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "PAPER006-CONTROLLED-REUSE-UTILITY",
+      "to": "ATL-P003-014",
+      "kind": "partially_supports",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "NATIVE-EIS-004",
       "to": "ATL-P003-014",
-      "kind": "states_same_claim_as",
-      "citation": "atlas/atlas_claim_matches.json"
-    },
-    {
-      "from": "AUDIT-P003-014",
-      "to": "ATL-P003-014",
-      "kind": "states_same_claim_as",
+      "kind": "partially_supports",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
@@ -106894,15 +106912,15 @@
       "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md:17"
     },
     {
-      "from": "PUB-C06",
+      "from": "AUDIT-P005-004",
       "to": "ATL-P005-004",
       "kind": "states_same_claim_as",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "AUDIT-P005-004",
+      "from": "PUB-C06",
       "to": "ATL-P005-004",
-      "kind": "states_same_claim_as",
+      "kind": "partially_supports",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
@@ -106924,15 +106942,15 @@
       "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md:19"
     },
     {
-      "from": "PUB-C06",
+      "from": "AUDIT-P005-006",
       "to": "ATL-P005-006",
       "kind": "states_same_claim_as",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "AUDIT-P005-006",
+      "from": "PUB-C06",
       "to": "ATL-P005-006",
-      "kind": "states_same_claim_as",
+      "kind": "partially_supports",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
@@ -107170,15 +107188,15 @@
       "citation": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md:25"
     },
     {
-      "from": "NATIVE-EIS-001",
+      "from": "AUDIT-P006-009",
       "to": "ATL-P006-009",
       "kind": "states_same_claim_as",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "AUDIT-P006-009",
+      "from": "NATIVE-EIS-001",
       "to": "ATL-P006-009",
-      "kind": "states_same_claim_as",
+      "kind": "narrows",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
@@ -162413,7 +162431,7 @@
   ],
   "graph_validation": {
     "unique_nodes": 4088,
-    "edges": 4589,
+    "edges": 4587,
     "acyclic": true
   }
 }

@@ -156,6 +156,7 @@ class TestFullFileReplacementViaTemporaryPath:
             refusal_reason="INITIAL_COMMITTED_REFUSAL",
         )
         prior_content = ledger_path.read_bytes()
+        prior_head = sink.tail_digest()
 
         def failing_replace(src: str | Path, dst: str | Path) -> None:
             raise OSError("Injected filesystem replacement failure")
@@ -170,6 +171,9 @@ class TestFullFileReplacementViaTemporaryPath:
 
         # Prior file remains intact on disk
         assert ledger_path.read_bytes() == prior_content
+        assert ledger_path.with_suffix(".tmp").is_file()
+        assert len(sink.get_entries()) == 2
+        assert sink.tail_digest() != prior_head
 
         # Reloading sink from disk recovers valid 1-entry state
         monkeypatch.undo()

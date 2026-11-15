@@ -58,8 +58,13 @@ _PILOT_RECEIPT_PATH = (
     / "live_openrouter_trial_receipt.json"
 )
 
-_EXPECTED_MANIFEST_SHA256 = "7a1ea18f81a9294b6ec4782d3e319bbba3f446ec6440fb2b6c9e89e851dc3506"
-_EXPECTED_PILOT_RECEIPT_SHA256 = "7d664aeac4c65d731281d3e480719047783cc81c89aab946acfd842c5d8821f3"
+_EXPECTED_MANIFEST_SHA256 = "2181ccacf790da8c33932f92c4774aa71377b920cb60f06271178e31ff2ae9a1"
+_EXPECTED_PILOT_RECEIPT_SHA256 = "052184db172bfc8d1fb255fc9bc68a45fb780a41c2a6f45d1b8ae022b2c0f71e"
+
+
+def _archive_text_digest(path: Path) -> str:
+    """Hash the UTF-8 text with the LF line endings stored in Git."""
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
 
 
 # ============================================================================
@@ -97,9 +102,6 @@ class TestZeroFailureUpperBound:
         # At p = 32/100, P(0 failures) < 0.05 (outside the confidence interval)
         assert prob_32 < self.ALPHA
         assert prob_32 == Fraction(6975757441, 152587890625)
-
-        # Therefore, the exact upper bound p* satisfies 31/100 < p* < 32/100
-        assert p_31 < Fraction(1) - Fraction(31234, 100000) or True  # Rational framing
 
     def test_sample_size_299_brings_bound_below_one_percent(self) -> None:
         """n=299 is the minimal integer sample size bringing the 95% bound strictly below 1%."""
@@ -164,7 +166,7 @@ class TestLiveExperimentDisabled:
     def test_manifest_file_exists_and_hashes(self) -> None:
         """Confirm presence and cryptographic integrity of experiment_manifest.yaml."""
         assert _MANIFEST_PATH.is_file(), f"Manifest file missing at {_MANIFEST_PATH}"
-        digest = hashlib.sha256(_MANIFEST_PATH.read_bytes()).hexdigest()
+        digest = _archive_text_digest(_MANIFEST_PATH)
         assert digest == _EXPECTED_MANIFEST_SHA256
 
     def test_manifest_lifecycle_status_is_proposed_not_executed(self) -> None:
@@ -249,7 +251,7 @@ class TestPilotInsufficiency:
     def test_receipt_file_exists_and_hashes(self) -> None:
         """Confirm presence and cryptographic integrity of the historical pilot receipt."""
         assert _PILOT_RECEIPT_PATH.is_file(), f"Receipt missing at {_PILOT_RECEIPT_PATH}"
-        digest = hashlib.sha256(_PILOT_RECEIPT_PATH.read_bytes()).hexdigest()
+        digest = _archive_text_digest(_PILOT_RECEIPT_PATH)
         assert digest == _EXPECTED_PILOT_RECEIPT_SHA256
 
     def test_receipt_missing_experimental_arms(self) -> None:

@@ -4865,25 +4865,37 @@
       "atlas_id": "ATL-P003-013",
       "verdict": "matched",
       "nodes": [
-        "EPC02",
-        "NATIVE03-FIXTURES-011",
         "AUDIT-P003-013"
       ],
       "relation": "states_same_claim_as",
       "note": "Derived in AUDIT-P003-013, with EPC02 and NATIVE03-FIXTURES-011: The Rust port of the gate table and detectors returns the Python reference output on each tested case across all canonical two-signal combinations, four phrase canaries, and clean/negated controls.",
-      "proposed_derivation": null
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "EPC02",
+          "NATIVE03-FIXTURES-011"
+        ],
+        "relation": "narrows",
+        "note": "EPC02 and NATIVE03-FIXTURES-011 cover finite Python-oracle parity fixture generation and inspected frozen corpora (including python_independence_v1.json); exhaustive parity across the Paper 003 danger-gate table and all package detectors remains partial."
+      }
     },
     {
       "atlas_id": "ATL-P003-014",
       "verdict": "matched",
       "nodes": [
-        "PAPER006-CONTROLLED-REUSE-UTILITY",
-        "NATIVE-EIS-004",
         "AUDIT-P003-014"
       ],
       "relation": "states_same_claim_as",
       "note": "Derived in AUDIT-P003-014, with PAPER006-CONTROLLED-REUSE-UTILITY and NATIVE-EIS-004: Admission requires a reproduced defect, valid near misses, a declared scope and frozen identities, refusing unbounded scope, missing witnesses, and tampered digests.",
-      "proposed_derivation": null
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PAPER006-CONTROLLED-REUSE-UTILITY",
+          "NATIVE-EIS-004"
+        ],
+        "relation": "supports",
+        "note": "PAPER006-CONTROLLED-REUSE-UTILITY specifies separation of reproduced failure, valid near-miss control, and scoped admission, and NATIVE-EIS-004 enforces signed spec_id/scope/rule/source/subject/context bindings in authenticated.rs; Paper 003 package-specific wording remains a declared scope boundary."
+      }
     },
     {
       "atlas_id": "ATL-P003-015",
@@ -5312,12 +5324,18 @@
       "atlas_id": "ATL-P005-004",
       "verdict": "matched",
       "nodes": [
-        "PUB-C06",
         "AUDIT-P005-004"
       ],
       "relation": "states_same_claim_as",
       "note": "Derived in AUDIT-P005-004, with PUB-C06: The enumeration-path session refuses (5,0,0), admits (-2,1,1) and restores the prior snapshot, preserving state consistency across steps.",
-      "proposed_derivation": null
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PUB-C06"
+        ],
+        "relation": "supports",
+        "note": "The node notes refusal retention and actual snapshot restoration but not the specific session outcomes."
+      }
     },
     {
       "atlas_id": "ATL-P005-005",
@@ -5333,12 +5351,18 @@
       "atlas_id": "ATL-P005-006",
       "verdict": "matched",
       "nodes": [
-        "PUB-C06",
         "AUDIT-P005-006"
       ],
       "relation": "states_same_claim_as",
       "note": "Derived in AUDIT-P005-006, with PUB-C06: step_cut admits a proposal iff the new value is <= the old, so stationary moves are allowed while strict increases are refused under exact rational comparisons.",
-      "proposed_derivation": null
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PUB-C06"
+        ],
+        "relation": "supports",
+        "note": "The node notes nonincrease does not prove termination, consistent with CUT allowing stationary outcomes."
+      }
     },
     {
       "atlas_id": "ATL-P005-007",
@@ -5574,7 +5598,7 @@
         "AUDIT-P006-006"
       ],
       "relation": "states_same_claim_as",
-      "note": "Derived in AUDIT-P006-006: CemeterySink._write_file writes the serialized file to a temporary path and replaces the target, ensuring atomicity and leaving no temporary files on failure.",
+      "note": "AUDIT-P006-006 confirms full-file staging and replacement on success. An injected replacement failure preserves the prior file in the tested case but can leave the temporary file and advance in-memory state.",
       "proposed_derivation": null
     },
     {
@@ -5584,7 +5608,7 @@
         "AUDIT-P006-007"
       ],
       "relation": "states_same_claim_as",
-      "note": "Derived in AUDIT-P006-007: RFC 8785 canonical JSON serializer rejects floating point values and NaN/Infinity; pure scope and boundary fence governing exact integer/string serialization.",
+      "note": "AUDIT-P006-007 traces the historical sorted-JSON limits to Paper 006 and its publication receipt. The receipt binds later encoder observations separately.",
       "proposed_derivation": null
     },
     {
@@ -5601,12 +5625,18 @@
       "atlas_id": "ATL-P006-009",
       "verdict": "matched",
       "nodes": [
-        "NATIVE-EIS-001",
         "AUDIT-P006-009"
       ],
       "relation": "states_same_claim_as",
-      "note": "Derived in AUDIT-P006-009, with NATIVE-EIS-001: An invalid detector regex yields a typed refusal; a benign-panel match yields a kill-condition record, matching native ThymusGate behavior.",
-      "proposed_derivation": null
+      "note": "AUDIT-P006-009 checks the Python clonal-selection path for typed regex refusal and the benign-panel kill condition. The earlier native ThymusGate evidence remains narrower.",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "NATIVE-EIS-001"
+        ],
+        "relation": "narrows",
+        "note": "NATIVE-EIS-001 covers native ThymusGate::screen regex refusal (InvalidPattern) and benign self-panel match retirement (SelfReactive) in thymus.rs; direct replay of the Paper 006 Python clonal_selection kill-condition path remains partial."
+      }
     },
     {
       "atlas_id": "ATL-P006-010",
