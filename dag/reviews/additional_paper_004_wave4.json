@@ -1,0 +1,137 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "a9b80a2dd26154b73fb47f9a212351bb2bce0453",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper.md",
+      "sha256": "28da923b18974568e0ec8b744c4537ecc28c74456572f565970f8df44d2bbd03",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 493]
+      ],
+      "assessment": "Audited Paper 004 Section 4 (serialization distinctions and PacketCodec scope), Section 5 (restricted host execution, input bindings, and admission refusals), and Section 7 (governor native dispatch and CUT completeness)."
+    },
+    {
+      "path": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper_claim_ledger.md",
+      "sha256": "4e77f91aa98981a6d728a14ece7ce6dbcd4fdf33487c249cde728a2613bf034c",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 50]
+      ],
+      "assessment": "Audited claim rows P4-04 (admission refusals on four-vertex fixture), P4-09 (PacketCodec NFC normalization and verify scope), P4-15 (governor native dispatch and float/bool refusal), and P4-17 (CUT completeness refusal and atomic non-mutation)."
+    },
+    {
+      "path": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/code/l1_symbol_game_governor.py",
+      "sha256": "18eac1ee883a5052d9d67f8f77d751d7d34200232ece6b21375d06ee87ef5dc9",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 849]
+      ],
+      "assessment": "Audited compute_phi1 exact rational enumeration, absence of native fallback, float/bool weight refusals, and step_cut IncompleteProposal guards with atomic state preservation."
+    },
+    {
+      "path": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/code/tests/test_native_refusal_propagation.py",
+      "sha256": "74ae7659515f36222a7c673dc7d04b0ee0835c191eae19b9dae90df146f1be6f",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 58]
+      ],
+      "assessment": "Audited test_enumeration_path_without_native_configuration, test_configured_native_failure_is_not_replaced, test_float_or_bool_weight_is_refused, and test_exact_fraction_weight_is_accepted."
+    },
+    {
+      "path": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/code/tests/test_cut_completeness.py",
+      "sha256": "1bf49a054ed02a3368edd55ce4871daa1576bc886f68061d4a9a7edfe1a5e416",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 72]
+      ],
+      "assessment": "Audited test_cut_omitting_a_declared_edge_is_refused, test_cut_with_a_non_exact_value_is_refused, and test_complete_explicit_proposal_is_still_scored with state equality checks."
+    },
+    {
+      "path": "pfp/domain/packet_codec.py",
+      "sha256": "3ea6661c9ce87d57ec7a43dd854c336bc113e3eb3992066e14a7dd89a6896204",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 139]
+      ],
+      "assessment": "Audited PacketCodec NFC normalization, canonical tagged JSON bytes generation, payload SHA-256 matching, authority_effect 'None' check, and scope limitation to local envelope verification."
+    },
+    {
+      "path": "code/rust/tests/pfp/host_contract.rs",
+      "sha256": "b2b945341c2746611bb6e614b675044c088fb8dda580621ac3b2951d1e1c4040",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 682]
+      ],
+      "assessment": "Audited face_aware_coda_crosses_exact_host_but_global_admission_stays_refused emitting exactly PRIME000_CONFORMANCE_PARTIAL and UNSIGNED_LAB_ATTESTATION codes."
+    }
+  ],
+  "claims": [
+    {
+      "id": "AUDIT-P004-015",
+      "statement": "Without a native executable the governor uses exact Python enumeration; with one, native refusals and errors propagate; float/bool weights are refused on both paths.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "ConstraintGraph and Cochain1 exact discrete rational representation in l1_symbol_game_governor.py.",
+        "Strict propagation of native execution failures without Python fallback masking.",
+        "Refusal of non-exact numeric types (float, bool) on all evaluation paths."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper.md",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper_claim_ledger.md",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/code/l1_symbol_game_governor.py",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/code/tests/test_native_refusal_propagation.py"
+      ],
+      "limits": "Applies to the discrete l1 graph governor; exact enumeration results are evaluated over finite discrete potential spaces and do not constitute native binary attestation."
+    },
+    {
+      "id": "AUDIT-P004-017",
+      "statement": "step_cut refuses a CUT omitting a declared edge or with a non-exact value (IncompleteProposal, state unchanged).",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Domain completeness requirement verifying that proposed_claims covers every edge in ConstraintGraph.edges.",
+        "Exact type checking refusing float and bool proposed claim values.",
+        "Atomic rollback ensuring governor internal state remains unmodified upon refusal."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper.md",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper_claim_ledger.md",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/code/l1_symbol_game_governor.py",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/code/tests/test_cut_completeness.py"
+      ],
+      "limits": "Applies to relational CUT proposal validation; acceptance of an exact complete proposal indicates formal graph defect satisfaction, not external factual truth."
+    },
+    {
+      "id": "AUDIT-P004-009",
+      "statement": "PacketCodec applies NFC and tagged encoding; verify checks only payload digest and authority.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Unicode NFC normalization in _normalize_unicode preventing key collisions.",
+        "Tagged canonical byte encoding preserving exact type distinctions.",
+        "Verification scope bounded to payload SHA-256 match and authority_effect == 'None'."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper.md",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper_claim_ledger.md",
+        "pfp/domain/packet_codec.py"
+      ],
+      "limits": "Applies to PacketCodec transport envelope integrity; does not perform cryptographic producer signing or full-protocol lifecycle gating."
+    },
+    {
+      "id": "AUDIT-P004-004",
+      "statement": "With the fixture outcome, admission is refused with exactly the partial-conformance and unsigned-attestation codes.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Restricted host execution evaluating four-vertex fixture to exact lab evidence status.",
+        "Global admission gating refusing entry into production state on partial conformance and unsigned attestation."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper.md",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper_claim_ledger.md",
+        "code/rust/tests/pfp/host_contract.rs"
+      ],
+      "limits": "Applies to the audited four-vertex test fixture; admission refusal establishes fail-closed boundary enforcement, not global non-admissibility across all possible requests."
+    }
+  ]
+}
