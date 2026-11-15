@@ -1,9 +1,9 @@
 //! Exact keyed-sensor Hill consensus. A decision grants no authority.
 use crate::Refusal;
+use core_types::python_unicode::casefold;
 use num_bigint::BigInt;
 use num_rational::BigRational;
 use num_traits::{One, Zero};
-use core_types::python_unicode::casefold;
 use serde_json::{json, Map, Value};
 use std::collections::BTreeSet;
 use std::str::FromStr;
@@ -323,7 +323,13 @@ mod l4_boundary_tests_fe140cb4 {
         assert!(zero_items.is_err());
         let zero_cap = BoundaryRecordfe140cb4::try_admit(1, 0);
         assert!(zero_cap.is_err());
-        assert_eq!(BoundaryErrorfe140cb4::EmptyAdmission.violated_invariant(), "admitted_items >= 1");
-        assert_eq!(BoundaryErrorfe140cb4::CapacityZero.violated_invariant(), "capacity_bound >= 1");
+        assert_eq!(
+            BoundaryErrorfe140cb4::EmptyAdmission.violated_invariant(),
+            "admitted_items >= 1"
+        );
+        assert_eq!(
+            BoundaryErrorfe140cb4::CapacityZero.violated_invariant(),
+            "capacity_bound >= 1"
+        );
     }
 }

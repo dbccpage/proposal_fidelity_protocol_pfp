@@ -1,0 +1,117 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "workflows/wf52_finite_qm_benchmark/qm_host_charpoly.py",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "workflows/wf52_finite_qm_benchmark/qm_host_charpoly.py",
+      "language": "Python",
+      "sha256": "965dd7b6e61dad6f3f8d5508fc9a19f43727b46dae295604a5a978b5b1af5fc4"
+    },
+    "contract_urn": "urn:pfp-wf52:qm-host-charpoly:v1",
+    "symbols": [
+      "HostCharpolyError",
+      "HostCharpolyRefusalError",
+      "admit_public_matrices",
+      "build_certified_context",
+      "build_characteristic_matrix",
+      "build_compact_certificate",
+      "build_compact_solver_context",
+      "check_degree_bounds",
+      "check_prompt_injection",
+      "check_provenance_pins",
+      "derive_charpoly_polynomial",
+      "derive_host_charpoly",
+      "det_laplace",
+      "det_leibniz",
+      "eval_scalar_det_4x4",
+      "format_charpoly_standard_form",
+      "get_expected_charpoly_standard_form",
+      "get_expected_public_hamiltonian_matrix",
+      "interpolate_charpoly_from_grid",
+      "interpolate_trivariate_charpoly",
+      "lagrange_basis_1d",
+      "native_candidate_sha256",
+      "poly_add",
+      "poly_mul",
+      "poly_scale",
+      "poly_sub",
+      "polynomial_to_wire_coefficients",
+      "receipt_digest",
+      "validate_certified_context",
+      "verify_candidate_charpoly",
+      "verify_via_native_sidecar"
+    ],
+    "owned_invariants": [
+      "Derives det(lambda*I - H(J,Delta,K)) solely over Q via fractions.Fraction with monic degree 4 in lambda and total parameter degree <= 4.",
+      "validate_certified_context checks compact_certificate presence before optional full-context fields and re-executes native verification when reexecute_native=True."
+    ],
+    "boundaries": [
+      "Certifies intermediate characteristic polynomial identity over {-2,-1,0,1,2}^3 only; final_answer_certified stays False."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "workflows/wf52_finite_qm_benchmark/qm_host_charpoly.py",
+      "language": "Python",
+      "sha256": "965dd7b6e61dad6f3f8d5508fc9a19f43727b46dae295604a5a978b5b1af5fc4"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Exact Fraction multivariate interpolation, wire normalization, injection screening, provenance pinning, and mandatory native receipt re-verification.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "D"
+    },
+    "basis": {
+      "G1": "Module docstring declares AuthorityEffect: None and Contract: urn:pfp-wf52:qm-host-charpoly:v1 listing carrier bounds and limitations.",
+      "G2": "Admits external certificates via strict typed checks, checks compact certificate receipt presence before shape metadata, and pins runtime source hashes.",
+      "G3": "Raises HostCharpolyRefusalError with explicit codes (MISSING_NATIVE_EVIDENCE, FORGED_CERTIFICATE, SHAPE_OR_TYPE_VIOLATION, PUBLIC_INPUT_MISMATCH) on all failure paths.",
+      "G4": "Exercised across test_qm_host_charpoly.py, test_challenger_qm_host_charpoly.py, test_host_charpoly_workflows.py, and 73/73 in-scope attack fixtures; full zero-unrun AST mutation campaign m-wf52-qm-host-charpoly killed 470/629 (159 survived, 0 unrun, R = 470/629 = 0.7472 >= 0.70, Grade C).",
+      "G5": "Measured via governance.tools.metrics: worst function CCN 21, cognitive 37, nesting depth 4; metrics ceiling D."
+    },
+    "composite_grade": "D",
+    "score_token": "L4D",
+    "is_complete": true,
+    "grade_ceiling": "D",
+    "evaluation_timestamp": "2026-11-15T03:50:04Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/wf52-sidecar-pytest.run.json",
+        "sha256": "c8af06a3d23937268621e480d6bf852fedb530b97ac704ae552f2e131ee59ed3",
+        "note": "528 passed, 19 skipped, 68 subtests passed after deleting native_sidecar_host/target"
+      },
+      {
+        "path": "governance/evidence/wf52-sidecar-metrics.run.json",
+        "sha256": "70439b02a14250c6473a86ccb66f5d9586a0dfb1885675668e7444dc94ba6f72",
+        "note": "Gate 5 lizard/complexipy/AST nesting capture"
+      },
+      {
+        "path": "governance/evidence/wf52-sidecar-metrics.json",
+        "sha256": "3b751bd79f1282f374c54f2d926baf8d7a8cdf9f74855c3ea378f2010d8d4e2c",
+        "note": "Per-file complexity metrics report"
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 470,
+      "survived": 159,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 0.7472178060413355,
+      "report": {
+        "path": "governance/evidence/m-wf52-qm-host-charpoly.mutation.json",
+        "sha256": "331021e0b2fb893857cafcbfc4f1715c63cb0ad696f29be0c4ec5305dbdb197a",
+        "note": "campaign m-wf52-qm-host-charpoly"
+      }
+    }
+  },
+  "history": []
+}

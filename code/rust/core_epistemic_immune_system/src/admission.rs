@@ -1,7 +1,7 @@
 //! External-review eligibility and independent observation support. AuthorityEffect: None.
 use crate::Refusal;
-use num_bigint::BigInt;
 use core_types::python_unicode::repr_string;
+use num_bigint::BigInt;
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
@@ -361,9 +361,11 @@ fn execute_human_admit(payload: &Value) -> Result<Value, Refusal> {
             json!({"status":"REFUSED","reason":reason,"message":"Refuse missing issuer, scope, and authenticated external decision"}),
         );
     }
-    let bytes = hex::decode(payload["target_rule_bytes_hex"].as_str().ok_or_else(|| {
-        Refusal::new("EIS_TYPE_ERROR", "rule bytes must be hex text")
-    })?)
+    let bytes = hex::decode(
+        payload["target_rule_bytes_hex"]
+            .as_str()
+            .ok_or_else(|| Refusal::new("EIS_TYPE_ERROR", "rule bytes must be hex text"))?,
+    )
     .map_err(|e| Refusal::new("EIS_VALUE_ERROR", e.to_string()))?;
     let actual = format!("sha256:{}", hex::encode(Sha256::digest(bytes)));
     if decision["rule_bytes_sha256"] != actual {
@@ -535,7 +537,6 @@ pub fn execute(payload: &Value) -> Result<Value, Refusal> {
 // Scope Fence: Does not claim authority promotion outside declared finite bounds.
 // Mutation Accounting: killed=6, survived=0, demonstrably_equivalent=0, invalid=0, inconclusive=0, unrun=0 (rejects invalid/error mutant states)
 
-
 /// Bounded admission record for module-level L4 production boundary verification.
 #[allow(dead_code, missing_docs)]
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -655,7 +656,13 @@ mod l4_boundary_tests_a9c5a60f {
         assert!(zero_items.is_err());
         let zero_cap = BoundaryRecorda9c5a60f::try_admit(1, 0);
         assert!(zero_cap.is_err());
-        assert_eq!(BoundaryErrora9c5a60f::EmptyAdmission.violated_invariant(), "admitted_items >= 1");
-        assert_eq!(BoundaryErrora9c5a60f::CapacityZero.violated_invariant(), "capacity_bound >= 1");
+        assert_eq!(
+            BoundaryErrora9c5a60f::EmptyAdmission.violated_invariant(),
+            "admitted_items >= 1"
+        );
+        assert_eq!(
+            BoundaryErrora9c5a60f::CapacityZero.violated_invariant(),
+            "capacity_bound >= 1"
+        );
     }
 }

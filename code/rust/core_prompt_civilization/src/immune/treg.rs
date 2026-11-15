@@ -8,6 +8,9 @@
 
 use serde::{Deserialize, Serialize};
 
+// Re-export core EIS regulation / false-discovery Treg primitives
+pub use core_epistemic_immune_system::regulation::{DetectorTelemetry, TregSupervisor};
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum TregStatus {
     Suppressive,

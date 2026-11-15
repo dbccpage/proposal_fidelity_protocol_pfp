@@ -1,0 +1,84 @@
+{
+  "schema_version": "pfp.hosted-validation.v1",
+  "AuthorityEffect": "None",
+  "head_commit": "10b3647bbfa1f2b9f2bcb95ea63accb655a4301b",
+  "sources": [
+    {
+      "path": "code/rust/core_prompt_civilization/src/lib.rs",
+      "sha256": "1051518940cd16bb7bab34ff9679fc9b79b67fe699ba2f7a010ed49ac9a02150"
+    },
+    {
+      "path": "code/rust/core_prompt_civilization/src/immune/clonal.rs",
+      "sha256": "460a4bb4ef968844f1380c3f3d87994d3f8f3d1744f075047686417f4f694c44"
+    }
+  ],
+  "workflows": [
+    {
+      "name": "pfp-cli",
+      "url": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp/actions/runs/43679835043",
+      "conclusion": "success"
+    },
+    {
+      "name": "pfp-operads",
+      "url": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp/actions/runs/43679835089",
+      "conclusion": "success"
+    },
+    {
+      "name": "eis-pciv-rust",
+      "url": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp/actions/runs/43679835013",
+      "conclusion": "success"
+    },
+    {
+      "name": "pfp-immune",
+      "url": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp/actions/runs/43679835020",
+      "conclusion": "success"
+    }
+  ],
+  "core_steps": [
+    "cargo fmt -p core_epistemic_immune_system -p core_prompt_civilization --check",
+    "cargo clippy --locked -p core_epistemic_immune_system -p core_prompt_civilization --all-targets --no-deps -- -D warnings",
+    "cargo test --locked -p core_epistemic_immune_system",
+    "cargo test --locked -p core_prompt_civilization --lib",
+    "cargo test --locked -p core_prompt_civilization --test rational_solvers_falsification test_challenger1_empirical_adversarial_topologies_and_stochastic_closure -- --exact",
+    "cargo test --locked -p core_prompt_civilization --test oeeis_kernel"
+  ],
+  "cli_jobs": [
+    [
+      "test (windows-latest)",
+      "success"
+    ],
+    [
+      "wasm",
+      "success"
+    ],
+    [
+      "test (ubuntu-latest)",
+      "success"
+    ],
+    [
+      "test (macos-latest)",
+      "success"
+    ]
+  ],
+  "observed": [
+    "test result: ok. 38 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s",
+    "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s",
+    "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s",
+    "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s",
+    "test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s",
+    "test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test immune::clonal::bridge_tests::detector_bridge_preserves_matcher_and_refuses_bad_affinity ... ok",
+    "test result: ok. 117 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s",
+    "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 37 filtered out; finished in 8.41s",
+    "test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+  ],
+  "limits": "The CI runs do not reproduce the earlier lexical mutation campaign for the changed clonal bridge or exercise the release publishing workflow."
+}

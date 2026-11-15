@@ -20,7 +20,11 @@ fn frozen_python_ordered_loci_and_character_spans() -> Result<(), Box<dyn std::e
     let rows = fixture["vectors"].as_array().ok_or("vectors required")?;
     assert_eq!(rows.len(), 46);
     for (index, row) in rows.iter().enumerate() {
-        assert_eq!(evaluate_host_check_row(row)?, row["expected"], "host-check vector {index}");
+        assert_eq!(
+            evaluate_host_check_row(row)?,
+            row["expected"],
+            "host-check vector {index}"
+        );
     }
     let spans = fixture["spans_only"].as_array().ok_or("spans required")?;
     assert_eq!(spans.len(), 13);

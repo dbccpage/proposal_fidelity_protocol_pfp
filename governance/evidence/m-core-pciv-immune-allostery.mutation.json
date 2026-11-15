@@ -1,0 +1,53 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/core_prompt_civilization/src/immune/allostery.rs",
+  "target_sha256": "657335e355ca70d660b28af5910fc4d3c95424a9f08923c7a3b68e1c35934a83",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p core_prompt_civilization",
+  "counts": {
+    "killed": 6,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "admitted_items zero check inverted",
+      "old": "if admitted_items == 0",
+      "new": "if admitted_items != 0",
+      "outcome": "killed"
+    },
+    {
+      "name": "capacity_bound zero check inverted",
+      "old": "if capacity_bound == 0",
+      "new": "if capacity_bound != 0",
+      "outcome": "killed"
+    },
+    {
+      "name": "capacity overflow check inverted",
+      "old": "if admitted_items > capacity_bound",
+      "new": "if admitted_items < capacity_bound",
+      "outcome": "killed"
+    },
+    {
+      "name": "quiescent bound comparison inverted",
+      "old": "if resp <= quiescent_bound",
+      "new": "if resp > quiescent_bound",
+      "outcome": "killed"
+    },
+    {
+      "name": "active bound comparison inverted",
+      "old": "} else if resp >= active_bound {",
+      "new": "} else if resp < active_bound {",
+      "outcome": "killed"
+    },
+    {
+      "name": "theta zero check inverted",
+      "old": "if theta == 0",
+      "new": "if theta != 0",
+      "outcome": "killed"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/core_prompt_civilization/src/genealogy.rs",
+  "target_sha256": "e5878537c7dcbb548ed2bd1833bdf7af414cfa19f7f92f94d6dd7e011649a60c",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p core_prompt_civilization --lib",
+  "counts": {
+    "killed": 6,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "unverified witness accepted",
+      "old": "if digest.is_empty() || digest == \"unverified\" || digest == PLACEHOLDER {",
+      "new": "if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "hex length check disabled",
+      "old": "if hex_body.len() != 64",
+      "new": "if false",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness equality check inverted",
+      "old": "digest == inheritance_witness_digest(parent_id, child_id, relationship)",
+      "new": "digest != inheritance_witness_digest(parent_id, child_id, relationship)",
+      "outcome": "killed"
+    },
+    {
+      "name": "self-loop path check inverted",
+      "old": "if from == to {",
+      "new": "if from != to {",
+      "outcome": "killed"
+    },
+    {
+      "name": "max depth bound inverted",
+      "old": "if max_depth > 5 {",
+      "new": "if max_depth < 5 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "cycle detection inverted",
+      "old": "if self.has_path(child_id, parent_id) {",
+      "new": "if !self.has_path(child_id, parent_id) {",
+      "outcome": "killed"
+    }
+  ]
+}

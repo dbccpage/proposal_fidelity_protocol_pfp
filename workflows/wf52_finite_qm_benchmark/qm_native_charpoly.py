@@ -1,5 +1,8 @@
 """Registered-public-seed Pauli input -> exact native characteristic polynomial.
 
+AuthorityEffect: None.
+Contract: urn:pfp-wf52:qm-native-charpoly:v1
+
 Only the one declared seed digest is admitted. The caller separately verifies
 the actual prompt bytes. This module reads the two pinned public owner source
 files, never seed files, provider outputs, evaluators or private/reference data.
@@ -16,7 +19,7 @@ import native_sidecar as sidecar
 HERE = Path(__file__).resolve().parent
 REGISTERED_SEED_SHA256 = "9941ab91f8e6b6637e49bb364cc0e6451788dd96442afcdb7f7024de042500a7"
 PAULI_SOURCE_SHA256 = "bf28b8371f11d2ac34256d3699a1653a2e44562e9d7b4a60e12221c750938925"
-SIDECAR_SOURCE_SHA256 = "67feada49e7e73a45897c81b1353aed7251964ed43bb463767cc2434b9c0fc3c"
+SIDECAR_SOURCE_SHA256 = "ea40934b8250e251758811dc70d997510b18673dc9b782a22b0ec3fb4db7f0a7"
 BASIS = ["00", "01", "10", "11"]
 SEMANTICS = "H = J*(X tensor X + Y tensor Y) + Delta*(Z tensor I - I tensor Z) + K*(Z tensor Z)."
 

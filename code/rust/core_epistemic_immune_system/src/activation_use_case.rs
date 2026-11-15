@@ -181,7 +181,13 @@ mod l4_boundary_tests_29c5f29c {
         assert!(zero_items.is_err());
         let zero_cap = BoundaryRecord29c5f29c::try_admit(1, 0);
         assert!(zero_cap.is_err());
-        assert_eq!(BoundaryError29c5f29c::EmptyAdmission.violated_invariant(), "admitted_items >= 1");
-        assert_eq!(BoundaryError29c5f29c::CapacityZero.violated_invariant(), "capacity_bound >= 1");
+        assert_eq!(
+            BoundaryError29c5f29c::EmptyAdmission.violated_invariant(),
+            "admitted_items >= 1"
+        );
+        assert_eq!(
+            BoundaryError29c5f29c::CapacityZero.violated_invariant(),
+            "capacity_bound >= 1"
+        );
     }
 }

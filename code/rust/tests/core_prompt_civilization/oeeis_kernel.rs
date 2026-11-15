@@ -12,9 +12,9 @@
 //!
 //! AuthorityEffect: None.
 
+use core_prompt_civilization::immune::*;
 use num_bigint::BigInt;
 use num_rational::BigRational;
-use core_prompt_civilization::immune::*;
 
 #[test]
 fn test_allosteric_exact_hill_responses() {
