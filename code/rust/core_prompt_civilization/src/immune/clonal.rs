@@ -12,6 +12,11 @@ use num_rational::BigRational;
 use num_traits::One;
 use serde::{Deserialize, Serialize};
 
+// Re-export core EIS clonal selection and anergy primitives
+pub use core_epistemic_immune_system::clonal_selection::{
+    execute as execute_clonal, AnergyMonitor, DetectorRule,
+};
+
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct DetectorClone {
     pub clone_id: String,
@@ -54,6 +59,28 @@ impl DetectorClone {
             BigInt::from(1) << (halving_steps.min(60) as usize),
         );
         base * decay_factor
+    }
+
+    /// Converts this clone using the detector fields supplied by its caller.
+    pub fn to_detector_rule(
+        &self,
+        target_epitope: &str,
+        match_pattern: &str,
+    ) -> Result<DetectorRule, core_epistemic_immune_system::Refusal> {
+        if self.base_affinity_den <= 0 {
+            return Err(core_epistemic_immune_system::Refusal::new(
+                "INVALID_CLONE_AFFINITY",
+                "clone affinity denominator must be positive",
+            ));
+        }
+        let wire = serde_json::json!({
+            "rule_id": self.clone_id,
+            "target_epitope": target_epitope,
+            "match_pattern": match_pattern,
+            "affinity_score": format!("{}/{}", self.base_affinity_num, self.base_affinity_den),
+            "generation": self.created_generation.max(1),
+        });
+        DetectorRule::from_json(&wire)
     }
 }
 
@@ -223,5 +250,25 @@ mod l4_boundary_tests_44bdf492 {
             BoundaryError44bdf492::CapacityZero.violated_invariant(),
             "capacity_bound >= 1"
         );
+    }
+}
+
+#[cfg(test)]
+mod bridge_tests {
+    use super::*;
+
+    #[test]
+    fn detector_bridge_preserves_matcher_and_refuses_bad_affinity() {
+        let mut clone = DetectorClone::new("clone-1".to_string(), 6, 8, 1);
+        let rule = clone.to_detector_rule("scope", "^sample$").unwrap();
+        assert_eq!(rule.to_dict()["match_pattern"], "^sample$");
+        assert_eq!(rule.to_dict()["target_epitope"], "scope");
+        assert_eq!(
+            rule.affinity_score().unwrap(),
+            BigRational::new(BigInt::from(3), BigInt::from(4))
+        );
+        assert!(clone.to_detector_rule("scope", "").is_err());
+        clone.base_affinity_den = 0;
+        assert!(clone.to_detector_rule("scope", "^sample$").is_err());
     }
 }

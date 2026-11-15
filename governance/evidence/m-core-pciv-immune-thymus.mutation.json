@@ -1,0 +1,53 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/core_prompt_civilization/src/immune/thymus.rs",
+  "target_sha256": "e6e82fda119a9a4e05918ef62b82ead1f890377a315f12073ff8f1b7c43cb2d9",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p core_prompt_civilization",
+  "counts": {
+    "killed": 6,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "admitted_items zero check inverted",
+      "old": "if admitted_items == 0",
+      "new": "if admitted_items != 0",
+      "outcome": "killed"
+    },
+    {
+      "name": "capacity_bound zero check inverted",
+      "old": "if capacity_bound == 0",
+      "new": "if capacity_bound != 0",
+      "outcome": "killed"
+    },
+    {
+      "name": "capacity overflow check inverted",
+      "old": "if admitted_items > capacity_bound",
+      "new": "if admitted_items < capacity_bound",
+      "outcome": "killed"
+    },
+    {
+      "name": "negative selection apoptosis logic inverted",
+      "old": "let is_clean = reactive.is_empty();",
+      "new": "let is_clean = !reactive.is_empty();",
+      "outcome": "killed"
+    },
+    {
+      "name": "candidate detector condition check inverted",
+      "old": "if detector_fn(fixture)",
+      "new": "if !detector_fn(fixture)",
+      "outcome": "killed"
+    },
+    {
+      "name": "apoptosis triggered on clean detector",
+      "old": "apoptosis_triggered: !is_clean,",
+      "new": "apoptosis_triggered: is_clean,",
+      "outcome": "killed"
+    }
+  ]
+}

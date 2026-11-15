@@ -14,6 +14,7 @@ pub mod evidence;
 pub mod fitness;
 pub mod forge;
 pub mod genealogy;
+#[cfg(feature = "eis")]
 pub mod immune;
 pub mod immunity;
 pub mod lamarckian;
