@@ -4991,43 +4991,37 @@
     },
     {
       "atlas_id": "ATL-P003-024",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "SYS-EIS-002",
-        "PAPER003-HILL-SUM-THRESHOLD"
+        "AUDIT-P003-024"
       ],
-      "relation": "narrows",
-      "note": "SYS-EIS-002 describes the current exact allostery gate, not the historical floating-point version with single-sensor activation at sum 2 and empty-list activation at $t=0$.",
-      "proposed_derivation": {
-        "title": "Historical allostery gate",
-        "claim": "At 30609de2c the gate is the floating-point sum threshold; at defaults it activates at positive sum 2 with one sensor; the two-signal comment is unenforced; $t=0$ activates on an empty list.",
-        "hypotheses": [
-          "Pinned allostery.py and value_objects.py"
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P003-024, with SYS-EIS-002 and PAPER003-HILL-SUM-THRESHOLD: At historical commit 30609de2c, the floating-point Hill gate (n=2.5, K=2.0, t=0.5) activates on single-sensor input [2.0] with sum 2, lacks per-sensor caps or sensor keying despite its line-68 two-signal comment, and activates on [] at t=0.",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "SYS-EIS-002",
+          "PAPER003-HILL-SUM-THRESHOLD"
         ],
-        "derivation": "Evaluate the gate at defaults on [2.0] and on []; with $t=0$ the threshold is $0$ so $0\\ge 0$ activates.",
-        "obligations": [
-          "Historical revision only"
-        ]
+        "relation": "narrows",
+        "note": "SYS-EIS-002 describes the current exact allostery gate, not the historical floating-point version with single-sensor activation at sum 2 and empty-list activation at $t=0$."
       }
     },
     {
       "atlas_id": "ATL-P003-025",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "SYS-EIS-001"
+        "AUDIT-P003-025"
       ],
-      "relation": "narrows",
-      "note": "SYS-EIS-001 says the current thymus tests the executing matcher; the historical screened-versus-executed mismatch is not recorded.",
-      "proposed_derivation": {
-        "title": "Historical screen/execution mismatch",
-        "claim": "At 30609de2c the thymus screens each rule's regex while three of four matchers behind the port never execute it; for pharmacy rules the screened expression is the failure-class name.",
-        "hypotheses": [
-          "Pinned thymus.py and mssn_ports.py"
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P003-025, with SYS-EIS-001: At historical commit 30609de2c, AST inspection of eis/infrastructure/mssn_ports.py shows three of four AntigenMatcher classes (PharmacyMatcher, FarmMatcher, ProtocolMatcher) dispatch on structural codes rather than executing match_pattern as a content regex, while pharmacy rules screened escaped failure-class names that pass self panels on which structural checks fire.",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "SYS-EIS-001"
         ],
-        "derivation": "Source-inspect the four matchers; build a rule whose pattern is self-safe but whose executed matcher fires on a self fixture (cf. PAPER003-PREDICATE-SCREEN-SOUNDNESS).",
-        "obligations": [
-          "Historical revision only"
-        ]
+        "relation": "narrows",
+        "note": "SYS-EIS-001 says the current thymus tests the executing matcher; the historical screened-versus-executed mismatch is not recorded."
       }
     },
     {
@@ -5063,37 +5057,23 @@
     },
     {
       "atlas_id": "ATL-P003-029",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the input-boundary refusals of the exact helpers.",
-      "proposed_derivation": {
-        "title": "Exact helper input boundaries",
-        "claim": "Threshold and panel helpers refuse bool or inexact coefficients/masks and predicate bits outside the declared universe.",
-        "hypotheses": [
-          "code/detector_lemmas.py"
-        ],
-        "derivation": "Replay the input-boundary tests: pass True, 0.5 float, and a bit index >= universe size; each must raise.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P003-029"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P003-029: Exact threshold, count, and bitmask helpers in Paper 003 code/detector_lemmas.py enforce exact int/Fraction type identity via _count and _exact (rejecting bool, float, fractional Hill exponents, non-positive scales/bounds, and negative masks with LemmaInputError) and reject predicate masks >= (1 << universe_bits) in sound_for_every_panel and rejects_no_harmless_rule.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P003-030",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the companion's contents.",
-      "proposed_derivation": {
-        "title": "Examiner companion census",
-        "claim": "The companion contains 24 scoped problems, a study guide and a separate instructor key.",
-        "hypotheses": [
-          "Companion folder"
-        ],
-        "derivation": "Count problems in the quiz file and confirm key and study files exist; replay the worksheet.",
-        "obligations": [
-          "No learning measurement"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P003-030"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P003-030: Census and local replay of _lev_examiner_theoretical_minimum_quiz/ confirm 24 scoped problems (Q01-Q24 across Level 0-Level 7) in quiz.md, eight worked sections without leaked answers in study_guide.md, and a separate instructor_key.md containing 24 keyed solutions plus an eight-assertion exact Fraction/detector_lemmas worksheet that executes with exit code 0.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P004-001",
@@ -5248,23 +5228,19 @@
     },
     {
       "atlas_id": "ATL-P004-016",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER004-CONDITIONAL-LEAN-SLICE"
+        "AUDIT-P004-016"
       ],
-      "relation": "narrows",
-      "note": "Node reviewed sources and historical axiom counts without compiling; the claimed build under the pinned toolchain and the 86-theorem census are not established by it.",
-      "proposed_derivation": {
-        "title": "Lean package build and census",
-        "claim": "The six Lean modules build under the pinned toolchain and the census lists axioms for all 86 theorems.",
-        "hypotheses": [
-          "lean-toolchain pin",
-          "lakefile.lean"
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P004-016, with PAPER004-CONDITIONAL-LEAN-SLICE: All six package Lean modules compile cleanly (exit 0) under leanprover/lean4:v4.35.0, and Census.lean and axiom_report.txt enumerate all 86 theorems (47 axiom-free, 39 within {propext, Quot.sound, Classical.choice}), matching --replay identically at v4.34.0-rc1 with a three-theorem Classical.choice shift in SparseLandingGeneral.lean at v4.35.0.",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PAPER004-CONDITIONAL-LEAN-SLICE"
         ],
-        "derivation": "Run lake build under the pinned toolchain, then tools/replay_lean_axiom_census.py --replay and compare to axiom_report.txt.",
-        "obligations": [
-          "Fresh kernel build"
-        ]
+        "relation": "narrows",
+        "note": "Node reviewed sources and historical axiom counts without compiling; the claimed build under the pinned toolchain and the 86-theorem census are not established by it."
       }
     },
     {
@@ -5441,90 +5417,66 @@
     },
     {
       "atlas_id": "ATL-P005-014",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers offline scoring refusals.",
-      "proposed_derivation": {
-        "title": "Offline scoring refusals",
-        "claim": "Offline scoring refuses undeclared edges and duplicate carrier entries, and normalizes Edge keys before scoring.",
-        "hypotheses": [
-          "Patched compute_phi1"
-        ],
-        "derivation": "Finite tests for each case.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P005-014"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P005-014: compute_phi1 rejects undeclared claim edges, duplicate carrier vertices or directed edges, malformed keys, and colliding normalized keys with ValueError, while normalizing Edge object keys to (u, v) tuples before offline or native scoring.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P005-015",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers ASSERT and section CUT input refusals.",
-      "proposed_derivation": {
-        "title": "ASSERT and section CUT guards",
-        "claim": "ASSERT and section CUT refuse non-exact values, section CUT refuses unknown vertices, and a CUT with two payloads is refused.",
-        "hypotheses": [
-          "Governor copy"
-        ],
-        "derivation": "Finite tests with state comparison.",
-        "obligations": [
-          "Attempt counter may advance"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P005-015"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P005-015: step_assert and section step_cut reject bool, float, and other non-exact inputs with IncompleteProposal, section step_cut rejects undeclared vertices with CarrierViolation, and dual-payload step_cut calls fail with MoveViolation, preserving edge_claims, section, and history while advancing _step_counter.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P005-016",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER005-INSTANCE-REPLACEMENT"
+        "AUDIT-P005-016"
       ],
-      "relation": "supports",
-      "note": "The node gives that a section gauge change cannot remove a nonzero cycle obstruction, the mathematics behind local equality not discharging it; the governor refusals are not covered.",
-      "proposed_derivation": {
-        "title": "EDGE_MATCH scope",
-        "claim": "EDGE_MATCH requires a declared edge, and matching one edge leaves a nonzero cycle sum unchanged.",
-        "hypotheses": [
-          "Declared graph"
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P005-016, with PAPER005-INSTANCE-REPLACEMENT: step_verify rejects undeclared or malformed EDGE_MATCH obligations with VerificationFailed, local EDGE_MATCH satisfaction on declared edges leaves nonzero cycle ZERO_OBSTRUCTION unrefuted, and ZERO_OBSTRUCTION (quotient minimum zero) is distinguished from ZERO_DEFECT (stored section residual zero).",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PAPER005-INSTANCE-REPLACEMENT"
         ],
-        "derivation": "The cycle sum $\\sum_e c_e$ is unchanged by any potential, so one matched edge cannot zero it; finite test for undeclared edge refusal.",
-        "obligations": []
+        "relation": "supports",
+        "note": "The node gives that a section gauge change cannot remove a nonzero cycle obstruction, the mathematics behind local equality not discharging it; the governor refusals are not covered."
       }
     },
     {
       "atlas_id": "ATL-P005-017",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers rollback on projection error.",
-      "proposed_derivation": {
-        "title": "Projection error rollback",
-        "claim": "A projection error after scoring restores pre-CUT claims and propagates.",
-        "hypotheses": [
-          "Mocked adapter failure"
-        ],
-        "derivation": "Finite test comparing state before and after an injected failure.",
-        "obligations": [
-          "Not a native execution"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P005-017"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P005-017: L1SymbolGameGovernor.step_cut wraps gauge projection in a try...finally block that restores pre-CUT edge_claims and propagates the exception (verified via mocked configured adapter failure on the third compute_graph_phi1 call; not a compiled Rust execution).",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P005-018",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PUB-C06"
+        "AUDIT-P005-018"
       ],
-      "relation": "supports",
-      "note": "The node notes snapshot restoration and that replacement creates a new instance; the capstone sequence 3,2,0 and restore to 3 is not recorded.",
-      "proposed_derivation": {
-        "title": "Capstone session",
-        "claim": "The capstone refuses invalid replacements, descends 3 to 2 to 0, and restores the saved minimum 3; equal scores can accompany changed claims.",
-        "hypotheses": [
-          "Exact Python path"
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P005-018, with PUB-C06: Replacing (1, 1, 1) with (2, 1, 0) on weights (1, 2, 3) preserves quotient minimum 3 with status IdempotentStationary while mutating edge_claims, and study_capstone.py refuses {} and (5, 0, 0), descends 3 to 2 to 0, verifies ZERO_OBSTRUCTION, and retracts step_003 back to minimum 3 on the python-enumeration path.",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PUB-C06"
         ],
-        "derivation": "Run study_capstone.py and record each state value and claim vector.",
-        "obligations": []
+        "relation": "supports",
+        "note": "The node notes snapshot restoration and that replacement creates a new instance; the capstone sequence 3,2,0 and restore to 3 is not recorded."
       }
     },
     {
@@ -5681,19 +5633,13 @@
     },
     {
       "atlas_id": "ATL-P006-014",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node states that paper-local toy classes do not verify production integration.",
-      "proposed_derivation": {
-        "title": "Toy classes are not production",
-        "claim": "Paper-local test classes do not exercise production modules.",
-        "hypotheses": [
-          "test module source"
-        ],
-        "derivation": "Source inspection: the module defines its own classes and imports no production owner.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P006-014"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P006-014: test_006_epistemic_immune.py imports only Python standard-library modules, defines standalone module-local toy classes (DangerSignal, ThymicCheckResult, CemeteryDAGSink), and diverges from production AllostericConsensusGate, ClonalSelectionEngine, and CemeterySink contracts.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P006-015",
@@ -5727,20 +5673,19 @@
     },
     {
       "atlas_id": "ATL-P006-018",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER006-CATALOG-IS-NONEXECUTING-DATA"
+        "AUDIT-P006-018"
       ],
-      "relation": "narrows",
-      "note": "Node leaves the baseline negative-search claim historical, not re-verified.",
-      "proposed_derivation": {
-        "title": "No catalog consumer",
-        "claim": "No baseline code matches proposals against catalog fixtures or derives repairs.",
-        "hypotheses": [
-          "baseline commit"
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P006-018, with PAPER006-CATALOG-IS-NONEXECUTING-DATA: Re-verified against baseline validation bindings and repository immune modules that negative_fixture and positive_fixture are stored and hashed into rule digests without proposal matching or positive-fixture repair synthesis, while cemetery_regression._screen_antibodies checks target_pattern via literal substring containment (historical repair_service.py blob 6e0e3e50 remains hash-bound outside this checkout).",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PAPER006-CATALOG-IS-NONEXECUTING-DATA"
         ],
-        "derivation": "Exhaustive source search at the baseline for readers of the fixture fields, with the nearest consumer inspected.",
-        "obligations": []
+        "relation": "narrows",
+        "note": "Node leaves the baseline negative-search claim historical, not re-verified."
       }
     },
     {
@@ -5849,19 +5794,13 @@
     },
     {
       "atlas_id": "ATL-P007-011",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the legacy test module's content.",
-      "proposed_derivation": {
-        "title": "Legacy test scope",
-        "claim": "The legacy module compares supplied values with chosen thresholds and counts supplied status fields.",
-        "hypotheses": [
-          "test_007_pedagogical_transmission.py"
-        ],
-        "derivation": "Source-inspect both tests.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P007-011"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P007-011: test_007_pedagogical_transmission.py compares hardcoded Fraction fixtures against chosen thresholds and counts supplied status strings without executing notebooks or measuring learners.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P007-012",
@@ -5875,21 +5814,13 @@
     },
     {
       "atlas_id": "ATL-P007-013",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the worksheet and quiz contents.",
-      "proposed_derivation": {
-        "title": "Worksheet and quiz census",
-        "claim": "The guide contains an executable worksheet and the quiz has 24 four-point problems across eight levels.",
-        "hypotheses": [
-          "Companion files"
-        ],
-        "derivation": "Run the worksheet as printed; count problems, points and levels.",
-        "obligations": [
-          "No calibrated cutoff"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P007-013"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P007-013: study_guide.md contains a runnable Fraction worksheet, and quiz.md with instructor_key.md defines 24 four-point problems (96 points) across eight levels.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P007-014",
@@ -5923,43 +5854,30 @@
     },
     {
       "atlas_id": "ATL-P008-003",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER008-SINGLETON-LEFT-INVERSE"
+        "AUDIT-P008-003"
       ],
-      "relation": "supports",
-      "note": "Node applies the distinction to this instance; the general proposition and counterexample are not derived.",
-      "proposed_derivation": {
-        "title": "Left inverse vs conservativity",
-        "claim": "If $d\\circ u=\\mathrm{id}$ then $u$ is injective, but $u$ need not be a conservative extension.",
-        "hypotheses": [
-          "Maps $u:A\\to B$, $d:B\\to A$",
-          "Theories with declared meanings and inference rules"
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P008-003, with PAPER008-SINGLETON-LEFT-INVERSE: Left invertibility d o u = id implies injectivity of u, while finite deductive and valuation counterexamples fail old-language conservativity.",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PAPER008-SINGLETON-LEFT-INVERSE"
         ],
-        "derivation": "$u(a)=u(a')\\Rightarrow a=d(u(a))=d(u(a'))=a'$. Counterexample: let $B$ add an inference rule deriving a new old-language proposition $\\varphi$ not derivable in $A$; $u,d$ on terms are unchanged so $d\\circ u=\\mathrm{id}$ still holds, yet $B\\vdash\\varphi$ and $A\\nvdash\\varphi$.",
-        "obligations": [
-          "Semantic version requires specified interpretations"
-        ]
+        "relation": "supports",
+        "note": "Node applies the distinction to this instance; the general proposition and counterexample are not derived."
       }
     },
     {
       "atlas_id": "ATL-P008-004",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node derives opcode block disjointness.",
-      "proposed_derivation": {
-        "title": "Opcode block disjointness",
-        "claim": "Blocks $[b(N),b(N)+8)$ with $b(N)=128+8(N-22)$ for $N\\ge 22$ are pairwise disjoint and lie above the source opcodes ($<128$).",
-        "hypotheses": [
-          "Integer $N\\ge22$",
-          "Source opcodes $<128$"
-        ],
-        "derivation": "For $N<M$, $b(M)-b(N)=8(M-N)\\ge 8$, so $b(N)+7<b(M)$. Also $b(N)\\ge128$. Finite check over the loaded catalog $22\\le N\\le100$.",
-        "obligations": [
-          "Fixed-width encoding needs an upper bound $b(N)+7<2^w$"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P008-004"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P008-004: Blocks [b(N), b(N)+8) with b(N)=128+8(N-22) for N>=22 satisfy b(N)>=128 and b(M)-(b(N)+7)>=1 for N<M, verified over stages 22..100 with w-bit wire ceiling N<=5+2^(w-3).",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P008-005",
