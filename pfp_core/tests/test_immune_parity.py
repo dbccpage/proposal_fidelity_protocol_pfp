@@ -234,10 +234,14 @@ def test_as_rational_exact_integers_and_validation():
         immune_host._as_rational((1, 0))
     with pytest.raises(ZeroDivisionError, match="cannot be zero"):
         immune_host._as_rational({"num": 1, "den": 0})
+    for invalid in (("1", 2), {"num": 1, "den": "2"}):
+        with pytest.raises(TypeError, match="exact integers"):
+            immune_host._as_rational(invalid)
+
 
 
 def test_civilization_select_governed_by_host_binary(require_host, monkeypatch):
-    """Verify civilization.select delegates reserve allocation to immune_host.select."""
+    """Native ranking and the fallback preserve workflow candidate roles."""
     candidates = [
         Candidate(
             f"c{i}",
@@ -265,12 +269,14 @@ def test_civilization_select_governed_by_host_binary(require_host, monkeypatch):
     assert len(host_called) == 1
     assert len(host_called[0]) == 10
 
-    # 2. Host returned partitions genuinely govern Front, Unmeasured, Baseline
+    # Native ordering must not relabel measured candidates as controls.
     assert out["slots"] == {"Front": 6, "Unmeasured": 3, "Baseline": 1}
     assert out["Front"] == ["c0", "c1", "c2", "c3", "c4", "c5"]
-    assert out["Unmeasured"] == ["c6", "c7", "c8"]
-    assert out["Baseline"] == ["c9"]
+    assert out["Unmeasured"] == []
+    assert out["Baseline"] == []
     assert out["demoted"] == {}
+    monkeypatch.setattr(immune_host, "is_available", lambda: False)
+    assert out == py_select(candidates, cap=10)
 
 
 def test_host_exceptions_propagate_without_silent_swallowing(require_host, monkeypatch):

@@ -125,55 +125,33 @@ def select(candidates: list[Candidate], cap: int = 10, tainted: set[str] = froze
             demoted[c.genome_id] = 'Pareto-dominated'
     order = lambda c: (-c.pass_rate, c.spent_microusd, c.total_tokens, c.wall_ms, c.genome_id)  # noqa: E731
 
-    if immune_host.is_available():
-        eligible = [c for c in candidates if c.genome_id not in demoted]
-        if eligible:
-            pop = [
-                {
-                    "id": c.genome_id,
-                    "fitness": (c.passed, max(1, c.attempted)),
-                    "lineage_depth": c.wall_ms,
-                }
-                for c in eligible
-            ]
-            host_res = immune_host.select(pop)
-            has_explicit_roles = any(c.is_baseline for c in candidates) or any(not c.measured for c in candidates)
-            if has_explicit_roles:
-                front_eligible = set(host_res.get("core_60", []))
-                front_sorted = sorted((c for c in measured if c.genome_id not in demoted), key=order)
-                front_ids = [c.genome_id for c in front_sorted if c.genome_id in front_eligible][:slots['Front']]
-                if len(front_ids) < slots['Front']:
-                    remaining = [c.genome_id for c in front_sorted if c.genome_id not in front_ids]
-                    front_ids.extend(remaining[:slots['Front'] - len(front_ids)])
-                unmeasured_list = sorted((c for c in candidates if not c.measured and c.genome_id not in tainted),
-                                         key=lambda c: (c.total_tokens, c.genome_id))
-                return {
-                    'slots': slots,
-                    'Front': front_ids,
-                    'Unmeasured': [c.genome_id for c in unmeasured_list[:slots['Unmeasured']]],
-                    'Baseline': [c.genome_id for c in sorted(baseline, key=order)[:slots['Baseline']]],
-                    'demoted': dict(sorted(demoted.items()))
-                }
-            return {
-                'slots': slots,
-                'Front': host_res.get("core_60", [])[:slots['Front']],
-                'Unmeasured': host_res.get("exploratory_30", [])[:slots['Unmeasured']],
-                'Baseline': host_res.get("novel_10", [])[:slots['Baseline']],
-                'demoted': dict(sorted(demoted.items()))
-            }
-        return {
-            'slots': slots,
-            'Front': [],
-            'Unmeasured': [],
-            'Baseline': [],
-            'demoted': dict(sorted(demoted.items()))
-        }
+    front = [c for c in measured if c.genome_id not in demoted]
+    if front and immune_host.is_available():
+        # The host ranks exact fitness first. Encode the workflow's existing
+        # cost tie-break as a dense ordinal instead of treating wall time
+        # as a lineage depth.
+        tie_order = sorted(front, key=lambda c: (c.spent_microusd, c.total_tokens, c.wall_ms, c.genome_id))
+        result = immune_host.select([
+            {"id": c.genome_id, "fitness": (c.passed, c.attempted), "lineage_depth": rank}
+            for rank, c in enumerate(tie_order)
+        ])
+        groups = [result.get(name) for name in ("core_60", "exploratory_30", "novel_10")]
+        if any(not isinstance(group, list) for group in groups):
+            raise immune_host.ImmuneHostError("IMMUNE_HOST_BAD_SELECTION: missing reserve group")
+        ranked = [genome_id for group in groups for genome_id in group]
+        if any(not isinstance(genome_id, str) for genome_id in ranked):
+            raise immune_host.ImmuneHostError("IMMUNE_HOST_BAD_SELECTION: invalid genome ID")
+        expected = {c.genome_id for c in front}
+        if len(ranked) != len(front) or len(expected) != len(front) or set(ranked) != expected:
+            raise immune_host.ImmuneHostError("IMMUNE_HOST_BAD_SELECTION: inconsistent genome IDs")
+        front_ids = ranked[:slots['Front']]
+    else:
+        front_ids = [c.genome_id for c in sorted(front, key=order)[:slots['Front']]]
 
-    front = sorted((c for c in measured if c.genome_id not in demoted), key=order)
     unmeasured_list = sorted((c for c in candidates if not c.measured and c.genome_id not in tainted),
                              key=lambda c: (c.total_tokens, c.genome_id))
     return {'slots': slots,
-            'Front': [c.genome_id for c in front[:slots['Front']]],
+            'Front': front_ids,
             'Unmeasured': [c.genome_id for c in unmeasured_list[:slots['Unmeasured']]],
             'Baseline': [c.genome_id for c in sorted(baseline, key=order)[:slots['Baseline']]],
             'demoted': dict(sorted(demoted.items()))}

@@ -114,6 +114,8 @@ def call(
             f"IMMUNE_HOST_NO_OUTCOME: stdout={proc.stdout!r}, stderr={err!r}"
         ) from exc
 
+    if not isinstance(outcome, dict):
+        raise ImmuneHostError("IMMUNE_HOST_NO_OUTCOME: expected a JSON object")
     return proc.returncode, outcome
 
 
@@ -130,24 +132,20 @@ def _as_rational(
     if isinstance(val, Fraction):
         return {"num": val.numerator, "den": val.denominator}
     if isinstance(val, (tuple, list)) and len(val) == 2:
-        if isinstance(val[0], bool) or isinstance(val[1], bool):
-            raise TypeError(f"boolean values prohibited in check paths: {val!r}")
-        if isinstance(val[0], float) or isinstance(val[1], float):
-            raise TypeError(f"floating point values prohibited in check paths: {val!r}")
-        den = int(val[1])
-        if den == 0:
-            raise ZeroDivisionError(f"rational denominator cannot be zero: {val!r}")
-        return {"num": int(val[0]), "den": den}
-    if isinstance(val, Mapping) and "num" in val and "den" in val:
-        if isinstance(val["num"], bool) or isinstance(val["den"], bool):
-            raise TypeError(f"boolean values prohibited in check paths: {val!r}")
-        if isinstance(val["num"], float) or isinstance(val["den"], float):
-            raise TypeError(f"floating point values prohibited in check paths: {val!r}")
-        den = int(val["den"])
-        if den == 0:
-            raise ZeroDivisionError(f"rational denominator cannot be zero: {val!r}")
-        return {"num": int(val["num"]), "den": den}
-    raise ValueError(f"cannot convert {val!r} to wire rational")
+        num, den = val
+    elif isinstance(val, Mapping) and set(val) == {"num", "den"}:
+        num, den = val["num"], val["den"]
+    else:
+        raise ValueError(f"cannot convert {val!r} to wire rational")
+    if isinstance(num, bool) or isinstance(den, bool):
+        raise TypeError(f"boolean values prohibited in check paths: {val!r}")
+    if isinstance(num, float) or isinstance(den, float):
+        raise TypeError(f"floating point values prohibited in check paths: {val!r}")
+    if type(num) is not int or type(den) is not int:
+        raise TypeError(f"rational components must be exact integers: {val!r}")
+    if den == 0:
+        raise ZeroDivisionError("rational denominator cannot be zero")
+    return {"num": num, "den": den}
 
 
 def screen(self_panel: Sequence[str], candidates: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
