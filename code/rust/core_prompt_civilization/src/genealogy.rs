@@ -152,8 +152,7 @@ impl LineageGraphV1 {
         }
         if !sealed_witness_digest(parent_id, child_id, &relationship, witness_receipt_digest) {
             return Err(
-                "WITNESS_RECEIPT_REQUIRED: digest does not bind this parent and child"
-                    .to_string(),
+                "WITNESS_RECEIPT_REQUIRED: digest does not bind this parent and child".to_string(),
             );
         }
         // Acyclicity check: if child_id can already reach parent_id, adding parent_id -> child_id creates a cycle!
@@ -387,30 +386,17 @@ mod tests {
     fn test_constant_digest_is_not_a_causal_edge() {
         let mut g = LineageGraphV1::new();
         let constant = format!("sha256:{}", "0".repeat(64));
-        let res = g.add_inheritance_edge(
-            "A",
-            "B",
-            InheritanceRelationship::DirectMutation,
-            &constant,
-        );
+        let res =
+            g.add_inheritance_edge("A", "B", InheritanceRelationship::DirectMutation, &constant);
         assert!(res.is_err());
         assert!(res.unwrap_err().contains("WITNESS_RECEIPT_REQUIRED"));
         assert!(g.get_children("A").is_empty());
 
         let bound = witness("A", "B");
-        g.add_inheritance_edge(
-            "A",
-            "B",
-            InheritanceRelationship::DirectMutation,
-            &bound,
-        )
-        .unwrap();
-        let reused = g.add_inheritance_edge(
-            "C",
-            "D",
-            InheritanceRelationship::DirectMutation,
-            &bound,
-        );
+        g.add_inheritance_edge("A", "B", InheritanceRelationship::DirectMutation, &bound)
+            .unwrap();
+        let reused =
+            g.add_inheritance_edge("C", "D", InheritanceRelationship::DirectMutation, &bound);
         assert!(reused.is_err());
         assert!(reused.unwrap_err().contains("WITNESS_RECEIPT_REQUIRED"));
     }

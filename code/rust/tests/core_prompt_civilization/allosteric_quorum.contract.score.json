@@ -1,0 +1,83 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/tests/core_prompt_civilization/allosteric_quorum.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/tests/core_prompt_civilization/allosteric_quorum.rs",
+      "language": "Rust",
+      "sha256": "19d90ff5b9672eadd8f3069f2d44c1cb2aded39ce407ed479e820c9f2d0387d6"
+    },
+    "contract_urn": "urn:code-rust:tests:core-prompt-civilization:allosteric-quorum:v1",
+    "symbols": [
+      "test_exact_allosteric_quorum_witness_table",
+      "test_exact_host_check_overrules_quorum",
+      "test_exact_monotonicity_of_hill_cooperative_response",
+      "test_mutation_kill_gate_premature_activation"
+    ],
+    "owned_invariants": [
+      "Verification harness exercising allosteric_quorum behaviors and contract boundaries.",
+      "Deterministic evaluation with no live network or external service dependencies.",
+      "AuthorityEffect: None."
+    ],
+    "boundaries": [
+      "Test support harness; does not export production runtime symbols."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/tests/core_prompt_civilization/allosteric_quorum.rs",
+      "language": "Rust",
+      "sha256": "19d90ff5b9672eadd8f3069f2d44c1cb2aded39ce407ed479e820c9f2d0387d6"
+    },
+    "profile": "Non-Numeric",
+    "level": "L2",
+    "level_basis": "Integration and unit test suite for allosteric_quorum.rs.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and contract URN; public symbols match contract.",
+      "G2": "Deterministic operations without unhandled lossy float calculations.",
+      "G3": "Typed error handling and refusal boundaries without unhandled panics.",
+      "G4": "Crate test suites pass; clippy -D warnings and cargo fmt check pass cleanly.",
+      "G5": "Structured Rust module within complexity limits."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T10:48:28Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/eis-pciv-m2-fmt.run.json",
+        "sha256": "8e9de6d83fb4df9baaa159ec1fc27cfd7ec7faf31c09b3909878ce4c9aca54a0",
+        "note": "cargo fmt --check on core_epistemic_immune_system and core_prompt_civilization"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m2-clippy.run.json",
+        "sha256": "360df1d68bad550438691750b3ffd452b72782ad639328c4e979c597682fe6f9",
+        "note": "clippy with -D warnings on both crates, all targets"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m2-eis-test.run.json",
+        "sha256": "85590c13449f950e8a64a22160af941191c4599a9110cd64d77d63a1b00afc7f",
+        "note": "cargo test for core_epistemic_immune_system"
+      },
+      {
+        "path": "governance/evidence/eis-pciv-m2-pciv-test.run.json",
+        "sha256": "0eb683c931b3e1c2601c7b27a712c734c4ec594210e346d76f3e931bd264cb8f",
+        "note": "cargo test for core_prompt_civilization --lib"
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

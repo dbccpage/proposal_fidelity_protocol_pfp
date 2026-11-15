@@ -2,9 +2,9 @@
 //!
 //! AuthorityEffect: None.
 
+use core_prompt_civilization::immune::allostery::{AllostericGate, QuorumState};
 use num_rational::BigRational;
 use num_traits::Zero;
-use core_prompt_civilization::immune::allostery::{AllostericGate, QuorumState};
 
 #[test]
 fn test_exact_allosteric_quorum_witness_table() {
