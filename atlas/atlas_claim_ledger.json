@@ -1397,13 +1397,12 @@
       "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
       "dag_node": "ATL-P003-008",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "NATIVE-EIS-006"
+          "AUDIT-P003-008"
         ],
-        "relation": "narrows",
-        "note": "NATIVE-EIS-006 covers the native two-signal independence and disposition paths (signal_gate.rs maps S1 only -> DiagnosticOnly, S2 only -> DiagnosticOnly, S1 + S2 Low/Medium -> DefensiveLockdown, S1 + S2 High/Critical -> Quarantined); exhaustive matrix parity against the Paper 003 Python table remains partial.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_008.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P003-008: TwoSignalDangerGate and evaluate_two_signal_gate map Signal 1 alone to diagnostic, low/medium Signal 2 alone to diagnostic, high/critical Signal 2 alone to refuse, and both signals to refuse."
       }
     },
     {
@@ -1425,11 +1424,12 @@
       "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
       "dag_node": "ATL-P003-009",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the baseline self-panel size and distinct-content count.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_009.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P003-009"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P003-009: SelfPanel.load_canonical parses self_panel.json with 1,000 entries and 40 distinct base contents, ten in each of four categories."
       }
     },
     {
@@ -1451,11 +1451,12 @@
       "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
       "dag_node": "ATL-P003-010",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the phrase-detector fixture and clean-control results.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_010.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P003-010"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P003-010: scan_for_canaries exhibits diagonal 1-to-1 matching across the 4 constructed fixture sentences and yields zero detections on the 3 clean controls, including the true attractive-U statement."
       }
     },
     {
@@ -1477,11 +1478,12 @@
       "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
       "dag_node": "ATL-P003-011",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the negation blindness of phrase matching.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_011.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P003-011"
+        ],
+        "relation": "identity",
+        "note": "Derived in AUDIT-P003-011: Contiguous substring phrase matching in canaries.py is monotone under string embedding; prefixing negation tokens outside the pattern preserves the match identically to affirmative assertions."
       }
     },
     {
@@ -1503,11 +1505,12 @@
       "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
       "dag_node": "ATL-P003-012",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the 112-row harvest composition and labelling procedure.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_012.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P003-012"
+        ],
+        "relation": "identity",
+        "note": "Derived in AUDIT-P003-012: The historical harvest corpus contains 112 rows (102 author-scripted responses across 6 probe specifications in mssn_domains.py and 10 model responses from qwen/qwen-2.5-7b-instruct), labelled via prompt-specific regular expressions in mssn_classifier.py without an independent checker."
       }
     },
     {
@@ -2017,11 +2020,12 @@
       "paper": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody",
       "dag_node": "ATL-P004-001",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the interface separation.",
-        "proposed_derivation_file": "dag/derivations/atl_p004_001.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P004-001"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P004-001: native Rust implementation partitions default host evaluation, runtime action dispatch, and additive foundation into distinct interfaces with segregated CLI dispatch branches."
       }
     },
     {
@@ -2043,11 +2047,12 @@
       "paper": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody",
       "dag_node": "ATL-P004-002",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the restricted host's carrier and i128 wire binding.",
-        "proposed_derivation_file": "dag/derivations/atl_p004_002.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P004-002"
+        ],
+        "relation": "identity",
+        "note": "Derived in AUDIT-P004-002: Restricted prime host binds a finite carrier complex under dimension bounds (V, E, F <= 4096) and verifies minimally encoded signed i128 decimal inputs and Q/BigRational semantics before solver invocation."
       }
     },
     {
@@ -2123,11 +2128,12 @@
       "paper": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody",
       "dag_node": "ATL-P004-005",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the hostile-mutation results.",
-        "proposed_derivation_file": "dag/derivations/atl_p004_005.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P004-005"
+        ],
+        "relation": "identity",
+        "note": "Derived in AUDIT-P004-005: Rehashed carrier mutations produce CARRIER_MANIFEST_MISMATCH, rehashed candidate mutations produce CANDIDATE_NOT_REPLAYED_NORMAL_FORM, and tampered outcome records fail cryptographic outcome root verification while retaining unsigned_lab attestation."
       }
     },
     {
@@ -9164,11 +9170,12 @@
       "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
       "dag_node": "ATL-N001-013",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node on Chebyshev approximation on graphs.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_013.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N001-013"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Establishes discrete Chebyshev quotient approximation on graphs, showing that Phi_inf minimizers are characterized by active-edge subgradient circulation pairings with zero duality gap, while the discrete Aronsson equation remains withdrawn; certified by AUDIT-N001-013."
       }
     },
     {
@@ -9190,11 +9197,12 @@
       "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
       "dag_node": "ATL-N001-014",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node on $p\\to1^+$ selection.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_014.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N001-014"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Establishes secondary selection in the p -> 1+ limit via weighted entropy minimization on M_1, showing that limits of unique p-Laplacian minimizers converge to the unique weighted entropy minimizer; certified by AUDIT-N001-014."
       }
     },
     {
@@ -9245,11 +9253,12 @@
       "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
       "dag_node": "ATL-N001-016",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node on total unimodularity integrality.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_016.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N001-016"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Establishes cut-lattice integer attainment by total unimodularity, showing that directed graph incidence matrices yield totally unimodular LP constraints and integral optimal potentials and residuals under integer data; certified by AUDIT-N001-016."
       }
     },
     {
@@ -9271,13 +9280,13 @@
       "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
       "dag_node": "ATL-N001-017",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "P011LEDGER-CL08"
+          "P011LEDGER-CL08",
+          "AUDIT-N001-017"
         ],
-        "relation": "supports",
-        "note": "P011LEDGER-CL08 covers simplicial boundary-squared cancellation, not the plaquette and 5-cycle cases.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_017.md"
+        "relation": "states_same_claim_as",
+        "note": "P011LEDGER-CL08 covers simplicial boundary-squared cancellation; AUDIT-N001-017 establishes discrete Bianchi identity d1 d0 = 0 and coboundary nilpotency across triangle, 4-vertex square plaquette, and 5-cycle loop complexes, with pure gauge curvature vanishing and cycle orthogonality."
       }
     },
     {
@@ -9299,11 +9308,12 @@
       "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
       "dag_node": "ATL-N001-018",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node on Schatten-$p$ extension.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_018.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N001-018"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Establishes Schatten-p quantum quotient defect weak duality against divergence-free operator circulations and non-commutative Hölder off-diagonal coherence bounds across p in [1, inf]; certified by AUDIT-N001-018."
       }
     },
     {
@@ -9325,11 +9335,12 @@
       "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
       "dag_node": "ATL-N001-019",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node on quantum phase cocycle defect bound.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_019.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N001-019"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Establishes quantum cocycle defect bound and trace-norm coherence, showing off-diagonal trace distance bounded by C_l1(rho)/2, dual circulation lower bounds, and separating real lift quotient norms from gauge-invariant U(1) cycle holonomy; certified by AUDIT-N001-019."
       }
     },
     {
@@ -9351,11 +9362,12 @@
       "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
       "dag_node": "ATL-N001-020",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "Scope definition.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_020.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N001-020"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Establishes cohomological classification on 1-graphs, showing that under C^2 = {0} all 1-cochains are cocycles and Q^1 = C^1 / im(d0) is canonically isomorphic to H^1(G; R), identifying nonzero quotient classes with non-trivial cohomology classes; certified by AUDIT-N001-020."
       }
     },
     {
@@ -9404,11 +9416,12 @@
       "paper": "atlas/archive/non_pfp/002_l1_obstruction_framework",
       "dag_node": "ATL-N002-002",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No derivation node addresses the Schatten-p classification of operator-valued defect norms.",
-        "proposed_derivation_file": "dag/derivations/atl_n002_002.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N002-002"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-N002-002: operator-valued Schatten-1 classification under axioms P1-P4."
       }
     },
     {
@@ -9726,11 +9739,12 @@
       "paper": "atlas/archive/non_pfp/002_l1_obstruction_framework",
       "dag_node": "ATL-N002-014",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No derivation node addresses the conditional unitary gauge structure; it rests on the imported isometry classification.",
-        "proposed_derivation_file": "dag/derivations/atl_n002_014.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N002-014"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-N002-014: conditional unitary frame symmetry under complete positivity and state-cone preservation."
       }
     },
     {
@@ -9780,11 +9794,12 @@
       "paper": "atlas/archive/non_pfp/002_l1_obstruction_framework",
       "dag_node": "ATL-N002-016",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No derivation node proves the telescoping Schatten-p distinguishability bound along a path.",
-        "proposed_derivation_file": "dag/derivations/atl_n002_016.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N002-016"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-N002-016: telescoping Schatten-p path distinguishability bound under contractive restriction maps."
       }
     },
     {
@@ -9885,11 +9900,12 @@
       "paper": "atlas/archive/non_pfp/002_l1_obstruction_framework",
       "dag_node": "ATL-N002-020",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "Declared axiom, not proved in the package; nodes that check d1 d0 = 0 do so on other carriers and do not establish this presheaf assumption.",
-        "proposed_derivation_file": "dag/derivations/atl_n002_020.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N002-020"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Establishes admission check for nilpotency d1 d0 = 0 before degree-2 inference, verifying exact matrix product nilpotency over Q, holding vacuously under graph truncation C^2 = {0}, and refusing invalid complexes; certified by AUDIT-N002-020."
       }
     },
     {
@@ -9911,11 +9927,12 @@
       "paper": "atlas/archive/non_pfp/002_l1_obstruction_framework",
       "dag_node": "ATL-N002-021",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No derivation node covers the secular-equation spectral comparison.",
-        "proposed_derivation_file": "dag/derivations/atl_n002_021.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N002-021"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-N002-021: exact secular-root characterization of rank-one comparison operator and Loewner bound transfer."
       }
     },
     {
@@ -10308,11 +10325,12 @@
       "paper": "atlas/archive/non_pfp/003_degree_wise_dsl",
       "dag_node": "ATL-N003-008",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N003-008"
+        ],
         "relation": null,
-        "note": "No node replays the C3 worked example.",
-        "proposed_derivation_file": "dag/derivations/atl_n003_008.md"
+        "note": "Derived in AUDIT-N003-008: C3 worked replay showing Phi_1 = 1 invariant to 2-cell presence, and Gamma_2 = 1 upon 2-cell attachment."
       }
     },
     {
@@ -10360,11 +10378,12 @@
       "paper": "atlas/archive/non_pfp/003_degree_wise_dsl",
       "dag_node": "ATL-N003-010",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N003-010"
+        ],
         "relation": null,
-        "note": "No node covers the diagnostic-local versus acceptance-authority non-factorization witness.",
-        "proposed_derivation_file": "dag/derivations/atl_n003_010.md"
+        "note": "Derived in AUDIT-N003-010: diagnostic-local constructibility does not determine acceptance authority under eval gating."
       }
     },
     {
@@ -10386,11 +10405,12 @@
       "paper": "atlas/archive/non_pfp/003_degree_wise_dsl",
       "dag_node": "ATL-N003-011",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N003-011"
+        ],
         "relation": null,
-        "note": "No node covers the context-replacement invariance lemmas.",
-        "proposed_derivation_file": "dag/derivations/atl_n003_011.md"
+        "note": "Derived in AUDIT-N003-011: local fingerprint and gated readout are invariant under replacement of opaque context metadata."
       }
     },
     {
@@ -10490,13 +10510,13 @@
       "paper": "atlas/archive/non_pfp/003_degree_wise_dsl",
       "dag_node": "ATL-N003-015",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "RHT-C05"
+          "RHT-C05",
+          "AUDIT-N003-015"
         ],
-        "relation": "supports",
-        "note": "RHT-C05 establishes that descent of an observable requires constancy on quotient fibers and records a local-green/global-red case, the mechanism this theorem instantiates; the context-coordinate statement itself is not derived.",
-        "proposed_derivation_file": "dag/derivations/atl_n003_015.md"
+        "relation": null,
+        "note": "Derived in AUDIT-N003-015: shared context coordinate preserves quotient non-factorization under fiber constancy, extending RHT-C05."
       }
     },
     {
@@ -10728,11 +10748,12 @@
       "paper": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
       "dag_node": "ATL-N004-001",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No derivation node treats functorial Banach presheaves on finite posets.",
-        "proposed_derivation_file": "dag/derivations/atl_n004_001.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N004-001"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Contravariant Banach presheaf F: P^op -> Ban on a finite poset with contractive linear restriction maps satisfying identity and chain composition laws; certified by AUDIT-N004-001."
       }
     },
     {
@@ -10754,11 +10775,12 @@
       "paper": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
       "dag_node": "ATL-N004-002",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node proves strict completion from covering-edge maps.",
-        "proposed_derivation_file": "dag/derivations/atl_n004_002.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N004-002"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Contractive covering-edge maps with path-independent saturated-chain composites extend uniquely to a functorial Banach presheaf on all comparable pairs; certified by AUDIT-N004-002."
       }
     },
     {
@@ -10780,11 +10802,12 @@
       "paper": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
       "dag_node": "ATL-N004-003",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node states diamond path-independence for strict presheaves.",
-        "proposed_derivation_file": "dag/derivations/atl_n004_003.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N004-003"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "In a strict presheaf, composites around an elementary diamond agree identically (r_{b,a} r_{c,b} = r_{d,a} r_{c,d} = r_{c,a}); certified by AUDIT-N004-003."
       }
     },
     {
@@ -10858,13 +10881,13 @@
       "paper": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
       "dag_node": "ATL-N004-006",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PFPDOMAIN-CL11"
+          "PFPDOMAIN-CL11",
+          "AUDIT-N004-006"
         ],
-        "relation": "narrows",
-        "note": "PFPDOMAIN-CL11 proves $d_1d_0=0$ only for identity (flat) restrictions on triangular carriers, the $K=0$ case of the identity.",
-        "proposed_derivation_file": "dag/derivations/atl_n004_006.md"
+        "relation": "states_same_claim_as",
+        "note": "Coboundary-curvature identity (d1 d0 s)(a,b,c) = K_{c,b,a}(s(c)) holds identically for any finite poset with linear restrictions on additive fibers, generalizing the flat trivial restriction case in PFPDOMAIN-CL11; certified by AUDIT-N004-006."
       }
     },
     {
@@ -10886,11 +10909,12 @@
       "paper": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
       "dag_node": "ATL-N004-007",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node proves the flat-locus equivalence for general restrictions.",
-        "proposed_derivation_file": "dag/derivations/atl_n004_007.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N004-007"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "On any finite poset with linear restrictions and inhabited fibers, curvature operator K = 0 everywhere is equivalent to nilpotency d1 d0 = 0 on all sections and to chain composability r_{c,a} = r_{b,a} r_{c,b}; certified by AUDIT-N004-007."
       }
     },
     {
@@ -10912,11 +10936,12 @@
       "paper": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
       "dag_node": "ATL-N004-008",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the scalar diamond curvature witness.",
-        "proposed_derivation_file": "dag/derivations/atl_n004_008.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N004-008"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "On an elementary diamond with 1D scalar fibers, restriction maps alpha, beta, and composite mu evaluate to curvature K(v) = (beta * alpha - mu) * v, vanishing if and only if beta * alpha = mu; certified by AUDIT-N004-008."
       }
     },
     {
@@ -10964,14 +10989,14 @@
       "paper": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
       "dag_node": "ATL-N004-010",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
           "PAPER011-HISTORY-FINITE-FACTORIZATION",
-          "P011LEDGER-CL04"
+          "P011LEDGER-CL04",
+          "AUDIT-N004-010"
         ],
-        "relation": "supports",
-        "note": "These nodes prove the general criterion (factorization iff fibre-constancy) of which the payload/curvature boundary is an instance; the specific packets are not checked.",
-        "proposed_derivation_file": "dag/derivations/atl_n004_010.md"
+        "relation": "states_same_claim_as",
+        "note": "Local payload observation factors through the payload-only quotient while global curvature fails to factor when two payload-identical packets have distinct curvatures; certified by AUDIT-N004-010 while preserving general finite factorization lineages."
       }
     },
     {
@@ -11363,11 +11388,12 @@
       "paper": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
       "dag_node": "ATL-N004-025",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the algebraic enclosure example.",
-        "proposed_derivation_file": "dag/derivations/atl_n004_025.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N004-025"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Exact rational squaring encloses the algebraic number 2(sqrt(2)-1) strictly between 828/1000 and 829/1000 with width 1/1000, verified by monotonicity of (1 + t/2)^2 on positive rationals; certified by AUDIT-N004-025."
       }
     },
     {
@@ -18385,6 +18411,42 @@
       "area": "Archived papers"
     },
     {
+      "atlas_id": "ATL-D-AUDIT-N004-006",
+      "dag_node": "AUDIT-N004-006",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For any finite poset with linear restrictions on additive fibers, the coboundary composition satisfies (d1 d0 s)(a,b,c) = K_{c,b,a}(s(c)) identically for every section s.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "area": "PFP runtime, Lab, contracts and formal sources"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N004-007",
+      "dag_node": "AUDIT-N004-007",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "On any finite poset with linear restrictions, curvature K = 0 everywhere is equivalent to nilpotency d1 d0 = 0 on all sections and to chain composability r_{c,a} = r_{b,a} r_{c,b}.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N004-008",
+      "dag_node": "AUDIT-N004-008",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "On an elementary diamond with one-dimensional scalar fibers, restriction maps alpha, beta, and composite mu yield curvature K(v) = (beta * alpha - mu) * v.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N004-025",
+      "dag_node": "AUDIT-N004-025",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Exact rational squaring encloses the algebraic number 2(sqrt(2)-1) strictly between 828/1000 and 829/1000 with certified width 1/1000.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "area": "Archived papers"
+    },
+    {
       "atlas_id": "ATL-D-AUDIT-N001-001",
       "dag_node": "AUDIT-N001-001",
       "kind": "mathematical_or_implementation_claim",
@@ -23371,6 +23433,258 @@
       "area": "Workflows, challenges and benchmarks"
     },
     {
+      "atlas_id": "ATL-D-AUDIT-P003-008",
+      "dag_node": "AUDIT-P003-008",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "In the two-signal table, Signal 1 alone is diagnostic, low/medium Signal 2 alone is diagnostic, high/critical Signal 2 alone refuses, and both signals refuse.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "area": "PFP runtime, Lab, contracts and formal sources"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P003-009",
+      "dag_node": "AUDIT-P003-009",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The canonical repository self panel has 1,000 rows and 40 distinct base contents, ten in each of four categories.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "area": "PFP runtime, Lab, contracts and formal sources"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P003-010",
+      "dag_node": "AUDIT-P003-010",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The four package phrase detectors flag their constructed fixture sentences and not three clean controls, including a true attractive-U statement.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P004-001",
+      "dag_node": "AUDIT-P004-001",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Default host, runtime dispatcher, and foundation library are distinct interfaces with segregated dispatch paths.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody",
+      "area": "PFP runtime, Lab, contracts and formal sources"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N001-014",
+      "dag_node": "AUDIT-N001-014",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "As p -> 1+, the trajectory of unique p-Laplacian minimizers converges to the unique weighted entropy minimizer on the compact convex set M_1 of L1 quotient minimizers for finite connected graphs with positive weights.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N001-016",
+      "dag_node": "AUDIT-N001-016",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For any finite directed graph with integer cochains and positive integer weights, the reduced incidence matrix and augmented LP constraints are totally unimodular, ensuring the existence of an integral optimal potential and integral optimal residual.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N001-017",
+      "dag_node": "AUDIT-N001-017",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "On the triangle 2-simplicial complex, the 4-vertex square plaquette, and the 5-cycle loop complex, the coboundary composite vanishes identically (d1 d0 = 0), ensuring pure gauge connections have zero field curvature and are orthogonal to 1-cycles.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N001-018",
+      "dag_node": "AUDIT-N001-018",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For operator-valued cochains taking values in Schatten-p classes on a finite graph, the quotient defect satisfies non-commutative weak Hölder duality against divergence-free operator circulations, and off-diagonal coherence bounds hold across p in [1, inf].",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N002-002",
+      "dag_node": "AUDIT-N002-002",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Seminorms on operator-valued 1-cochains satisfying edge additivity (P1), faithfulness (P2), maximal bounded-linear functoriality (P3), and presheaf automorphism invariance (P4) are weighted Schatten-1 norms with orbit-constant weights.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/002_l1_obstruction_framework",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N002-014",
+      "dag_node": "AUDIT-N002-014",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Surjective trace-norm-preserving completely positive compositional automorphisms of B_1(C^n) preserving the positive state cone are unitary conjugations A -> U A U^*, yielding a conditional U(n)/PU(n) local frame symmetry.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/002_l1_obstruction_framework",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N002-016",
+      "dag_node": "AUDIT-N002-016",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For operator-valued sections along a path with Schatten-p contractive restriction maps, the endpoint distinguishability is bounded by accumulated edge defects: ||rho_a - R_{b,a}(rho_b)||_{S_p} <= sum_{e in path} ||delta_e||_{S_p}.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/002_l1_obstruction_framework",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N002-021",
+      "dag_node": "AUDIT-N002-021",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For n >= 2, v_i >= 0, alpha > 0, and d_i = alpha + v_i, the secular equation F(t) = (alpha/n) sum_{i=1}^n (d_i - t)^(-1) = 1 has a unique root tau in [0, d_min) equal to lambda_min(alpha(I - P) + diag(v)), which lower-bounds lambda_min(L_0 + diag(v)) under L_0 >= alpha(I - P).",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/002_l1_obstruction_framework",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P003-011",
+      "dag_node": "AUDIT-P003-011",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For a phrase detector P and sentence s containing phrase p, the negated sentence containing 'not' + p also matches.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P003-012",
+      "dag_node": "AUDIT-P003-012",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The harvest has 112 rows: 102 scripted author responses and 10 from qwen/qwen-2.5-7b-instruct, labelled by a prompt-specific rule set with no independent checker.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P004-002",
+      "dag_node": "AUDIT-P004-002",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The restricted host binds a finite carrier and minimally encoded i128 wire inputs before exact rational solve and replay.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody",
+      "area": "PFP runtime, Lab, contracts and formal sources"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P004-005",
+      "dag_node": "AUDIT-P004-005",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Rehashed carrier and candidate mutations fail manifest or replay checks in named tests; an edited outcome fails its root check.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody",
+      "area": "PFP runtime, Lab, contracts and formal sources"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N001-013",
+      "dag_node": "AUDIT-N001-013",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "On finite directed graphs, discrete Chebyshev quotient minimizers are characterized by active-edge subgradient circulation pairings with zero duality gap, while the discrete Aronsson equation remains withdrawn.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N001-019",
+      "dag_node": "AUDIT-N001-019",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For finite-dimensional density operators on support graphs of non-vanishing coherences, the phase cocycle defect lower-bounds trace-norm coherence, while real quotient norms exhibit branch-cut winding under diagonal unitaries.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N001-020",
+      "dag_node": "AUDIT-N001-020",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "On 1-dimensional finite cell complexes where C^2 = {0}, all 1-cochains are cocycles and the quotient space Q^1 = C^1 / im(d0) is isomorphic to the cohomology group H^1(G; R), identifying nonzero quotient classes with non-trivial cohomology classes.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N002-020",
+      "dag_node": "AUDIT-N002-020",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For any supplied finite complex with declared degree-2 cells, exact nilpotency of the matrix product d1 d0 = 0 over Q must be verified by an admission check before degree-2 curvature inferences are admitted, holding vacuously under graph truncation C^2 = {0}.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/002_l1_obstruction_framework",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N003-008",
+      "dag_node": "AUDIT-N003-008",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "On the oriented C3 triangle cell complex with integer data, the primal quotient norm satisfies Phi_1 = 1 regardless of 2-cell attachment, while the degree-2 curvature defect Gamma_2 is undefined without a 2-cell and evaluates to 1 when a 2-cell is attached.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/003_degree_wise_dsl",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N003-010",
+      "dag_node": "AUDIT-N003-010",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "In the degree-wise cochain model, two states sharing identical diagnostic-local data can differ in acceptance authority, demonstrating that acceptance authority does not factor through diagnostic-local constructibility.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/003_degree_wise_dsl",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N003-011",
+      "dag_node": "AUDIT-N003-011",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "In the declared degree-wise state record, local fingerprint and gated readout are invariant under replacement of opaque context metadata, and metadata cannot create a degree-2 curvature readout on a complex lacking a 2-cell.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/003_degree_wise_dsl",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N003-015",
+      "dag_node": "AUDIT-N003-015",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "If a finite local-green/global-red state pair satisfies the local equivalence relation while differing in global gated readout, appending an arbitrary shared context coordinate preserves fiber non-constancy and leaves the readout non-factoring.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/003_degree_wise_dsl",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N004-001",
+      "dag_node": "AUDIT-N004-001",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "A contravariant functor F: P^op -> Ban on a finite poset P assigns Banach stalk spaces F(x) and contractive linear restriction operators r_{y,x}: F(y) -> F(x) satisfying identity r_{x,x} = id and chain composition r_{z,x} = r_{y,x} r_{z,y} for all x <= y <= z.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N004-002",
+      "dag_node": "AUDIT-N004-002",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Contractive covering-edge maps whose saturated-chain composites are path-independent extend uniquely to a functorial Banach presheaf on all comparable pairs in a finite poset.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N004-003",
+      "dag_node": "AUDIT-N004-003",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "In a strict contravariant functorial presheaf on a finite poset, the two restriction composites around an elementary diamond a < b, d < c agree: r_{b,a} r_{c,b} = r_{d,a} r_{c,d} = r_{c,a}.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N004-010",
+      "dag_node": "AUDIT-N004-010",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Local payload observation factors through the payload-only quotient, whereas global curvature fails to factor when two payload-identical packets have different curvature values.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/004_from_covering_edge_descent_complexes_to_functorial_presheaves_and_coherence_defects",
+      "area": "Archived papers"
+    },
+    {
       "atlas_id": "ATL-D-WIKI-C01",
       "dag_node": "WIKI-C01",
       "kind": "mathematical_or_implementation_claim",
@@ -23872,22 +24186,22 @@
   ],
   "correspondence": {
     "rule": "Every derivation node in dag/derivations_dag.json (kinds other than explicit_assumption_or_obligation, paper_assessment, pinned_source_file) carries exactly one atlas_ledger_id, and every ledger row names exactly one such node.",
-    "ledger_rows": 1392,
-    "derivation_nodes": 1392,
+    "ledger_rows": 1424,
+    "derivation_nodes": 1424,
     "archive_claims": 607,
     "archive_claims_without_earlier_dag_node": 607,
-    "dag_claims": 785,
-    "dag_claims_citing_an_archive_paper": 56,
+    "dag_claims": 817,
+    "dag_claims_citing_an_archive_paper": 88,
     "dag_claims_without_archive_source": 729,
     "archive_claim_review": {
-      "matched": 118,
-      "partial": 102,
-      "gap": 387
+      "matched": 150,
+      "partial": 97,
+      "gap": 360
     },
     "non_derivation_nodes_excluded": {
-      "explicit_assumption_or_obligation": 757,
+      "explicit_assumption_or_obligation": 856,
       "paper_assessment": 38,
-      "pinned_source_file": 1595
+      "pinned_source_file": 1628
     },
     "atlas_md_rows_cited_in_prose": 342
   }

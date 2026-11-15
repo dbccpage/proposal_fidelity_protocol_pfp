@@ -1,0 +1,163 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "ef32b193c",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+      "sha256": "db9ce2c20408e6b8267ebab33e94cc172bf01762b6c32600108ae57967f7c00b",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 954]
+      ],
+      "assessment": "Audited Section 3 failure detector definitions, negation insensitivity discussion, and 112-row historical harvest provenance."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+      "sha256": "b93d68bf1e5092a8d6f9f054d2a5c487e0037715501632f03e1a525c87841626",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 79]
+      ],
+      "assessment": "Audited rows P3-11 (phrase match negation blindness) and P3-12 (112-row harvest census and labelling procedure)."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/canaries.py",
+      "sha256": "4ff3771a14b44bb5b4dde754afdb344a29257fd43248d56fdf5d6fd57749a2cd",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 148]
+      ],
+      "assessment": "Audited scan_for_canaries substring containment scan and candidate pattern definitions for AM-FSP-8, AM-FSP-2, AM-FSP-7, and AM-FSP-4."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/rust/src/canaries.rs",
+      "sha256": "5b0b05f5e142b1f4ab1b5b7d2ea6e56cbeadcebc960d396caac6182e6c04045a",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 215]
+      ],
+      "assessment": "Audited Rust native phrase matcher implementation and string slice pattern scanning."
+    },
+    {
+      "path": "eis/infrastructure/mssn_domains.py",
+      "sha256": "c5657ddf5c3a51f454fd149be78ffdf3a021bbf91cbb7491d2a671839af6c116",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 359]
+      ],
+      "assessment": "Audited 3 physics domain specifications and 6 probes containing author-scripted hallucination and grounded response texts."
+    },
+    {
+      "path": "eis/infrastructure/mssn_classifier.py",
+      "sha256": "29fa984e24d8da052748076661f569a28d2431287fcf47352829df4ec2811e5b",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 264]
+      ],
+      "assessment": "Audited classify_response prompt-specific regular expression rule sets and absence of AM-FSP-6."
+    },
+    {
+      "path": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper.md",
+      "sha256": "28da923b18974568e0ec8b744c4537ecc28c74456572f565970f8df44d2bbd03",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 494]
+      ],
+      "assessment": "Audited Section 3 restricted host intake specifications, carrier resource fences, and Section 4 hostile mutation refusal cases."
+    },
+    {
+      "path": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper_claim_ledger.md",
+      "sha256": "4e77f91aa98981a6d728a14ece7ce6dbcd4fdf33487c249cde728a2613bf034c",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 51]
+      ],
+      "assessment": "Audited rows P4-02 (carrier and minimal i128 wire binding) and P4-05 (hostile mutation refusals and outcome root check)."
+    },
+    {
+      "path": "code/rust/pfp/src/host.rs",
+      "sha256": "d14d26fad3074720bf27aea73452bc4d377a19a780e967f499977d350e1a9a41",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 504]
+      ],
+      "assessment": "Audited evaluate_candidate intake, manifest verification, replay checks, refusal outcomes, and outcome root hashing."
+    },
+    {
+      "path": "code/rust/pfp/src/protocol.rs",
+      "sha256": "89559793a9098bef096b98d484c0919ce5395c2dfdc1304697a69c3186036d8d",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 999]
+      ],
+      "assessment": "Audited parse_i128 minimal signed encoding verification, validate_carrier_resource_fence dimension bounds, and Q/BigRational semantics."
+    }
+  ],
+  "claims": [
+    {
+      "id": "AUDIT-P003-011",
+      "statement": "For a phrase detector P and sentence s containing phrase p, the negated sentence containing 'not' + p also matches.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Candidate canary phrase detector definitions in atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/canaries.py.",
+        "Monotonicity of substring containment under string embedding and sentence negation."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/canaries.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/rust/src/canaries.rs"
+      ],
+      "limits": "Confirms that phrase matching depends solely on substring containment and does not distinguish assertions from negations, quotations, or questions."
+    },
+    {
+      "id": "AUDIT-P003-012",
+      "statement": "The harvest has 112 rows: 102 scripted author responses and 10 from qwen/qwen-2.5-7b-instruct, labelled by a prompt-specific rule set with no independent checker.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Author-scripted hallucination and grounded text in probe specifications in eis/infrastructure/mssn_domains.py.",
+        "Prompt-specific regular expression rule sets in eis/infrastructure/mssn_classifier.py without independent review."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "eis/infrastructure/mssn_domains.py",
+        "eis/infrastructure/mssn_classifier.py"
+      ],
+      "limits": "Documents the provenance, row composition, and labelling procedure of the historical harvest; does not measure model error rates or general detector accuracy."
+    },
+    {
+      "id": "AUDIT-P004-002",
+      "statement": "The restricted host binds a finite carrier and minimally encoded i128 wire inputs before exact rational solve and replay.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Carrier dimension fences and rational coefficient checks in code/rust/pfp/src/protocol.rs.",
+        "Minimal signed i128 wire decoding fences in code/rust/pfp/src/protocol.rs and host intake in code/rust/pfp/src/host.rs."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper.md",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper_claim_ledger.md",
+        "code/rust/pfp/src/host.rs",
+        "code/rust/pfp/src/protocol.rs"
+      ],
+      "limits": "Applies to restricted prime host intake decoding and finite carrier fences; does not verify solver correctness for unbounded inputs."
+    },
+    {
+      "id": "AUDIT-P004-005",
+      "statement": "Rehashed carrier and candidate mutations fail manifest or replay checks in named tests; an edited outcome fails its root check.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Host carrier manifest verification and normal-form candidate replay checks in code/rust/pfp/src/host.rs.",
+        "Outcome root hashing and non-promotable unsigned lab attestation in code/rust/pfp/src/host.rs."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper.md",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper_claim_ledger.md",
+        "code/rust/pfp/src/host.rs",
+        "code/rust/pfp/src/protocol.rs"
+      ],
+      "limits": "Confirms refusal of named hostile carrier and candidate mutations and outcome tampering; unkeyed local root does not authenticate producer identity."
+    }
+  ]
+}

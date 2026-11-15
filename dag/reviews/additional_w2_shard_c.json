@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "ef32b193c497822486b0c635917ef6dfe5d98aba",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+      "sha256": "5d2babd3621f85fdeed0995e6d42bf15e3ec1de69b7c07e7870bffcde6356d38",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          1451
+        ]
+      ],
+      "assessment": "Full manuscript inspected. Section 3.5 establishes the operator-valued Schatten-1 classification under axioms P1-P4 (Theorem 3.1). Section 4.7 establishes the conditional unitary frame symmetry U(n)/PU(n) under complete positivity and state-cone preservation (Lemma 4.9 and Theorem 4.10). Section 5.1 derives the telescoping Schatten-p distinguishability bound across contractive path transport (Theorem 5.1). Section 5.4 derives the exact secular root comparison floor for the rank-one comparison operator and its Loewner bound transfer to the graph Laplacian (Proposition E.7e)."
+    },
+    {
+      "path": "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+      "sha256": "62ebd48ce2c8236f13019832657334120262c9be7eec16971db05693f38a7b24",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          113
+        ]
+      ],
+      "assessment": "Claim ledger inspected. C2 (Theorem 3.1 Schatten-p classification under P1-P4), C12 (Theorem 4.10 and Lemma 4.9 unitary frame symmetry), C14 (Theorem 5.1 distinguishability path bound across Schatten-p), and C19 (Proposition E.7e exact comparison operator secular root characterization) verified."
+    },
+    {
+      "path": "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+      "sha256": "4530a48fbd10295f21a2207fa18c15df6c2aaeeaacb809714a5bc88da330480d",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          1232
+        ]
+      ],
+      "assessment": "Core implementation module inspected. Contains OperatorSchattenPModule with schatten_norm, verify_kadison_unitary_invariance, and operator coboundary methods."
+    },
+    {
+      "path": "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py",
+      "sha256": "03bd104253aef49a2dc8e70054079bb0a03cb20373478199ed92bab30bce4c6b",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          792
+        ]
+      ],
+      "assessment": "Test suite inspected. Contains test_isomorphism_invariance_orbit_weights_3edge_path, test_schatten_kadison_unitary_invariance, and test_operator_total_schatten_p_norm."
+    }
+  ],
+  "remaining_scope": [],
+  "claims": [
+    {
+      "id": "AUDIT-N002-002",
+      "statement": "Seminorms on operator-valued 1-cochains satisfying edge additivity (P1), faithfulness (P2), maximal bounded-linear functoriality (P3), and presheaf automorphism invariance (P4) are weighted Schatten-1 norms with orbit-constant weights.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Presheaf on a finite complex with finite-dimensional Hilbert operator stalks B_1(H).",
+        "Axioms P1 (edge additivity), P2 (faithfulness), P3 (maximal bounded-linear functoriality), and P4 (automorphism invariance).",
+        "Banach space duality B_1(H)^* = B(H) and operator polar decomposition."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py"
+      ],
+      "limits": "Applies to bounded linear maps on trace-class stalks; restricting functoriality to CPTP maps does not force the trace norm; automorphism invariance alone does not ensure uniform weights across distinct edge orbits."
+    },
+    {
+      "id": "AUDIT-N002-014",
+      "statement": "Surjective trace-norm-preserving completely positive compositional automorphisms of B_1(C^n) preserving the positive state cone are unitary conjugations A -> U A U^*, yielding a conditional U(n)/PU(n) local frame symmetry.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite-dimensional operator stalks B_1(C^n) equipped with trace norm.",
+        "Kadison-Sourour surjective linear isometry classification theorem.",
+        "Complete positivity excluding the matrix transpose branch for n >= 2.",
+        "State-cone positivity preservation forcing V = U^*."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py"
+      ],
+      "limits": "Characterizes symmetries of admissible local frame changes on operator stalks; does not derive a physical gauge field, Yang-Mills dynamics, or spacetime geometry."
+    },
+    {
+      "id": "AUDIT-N002-016",
+      "statement": "For operator-valued sections along a path with Schatten-p contractive restriction maps, the endpoint distinguishability is bounded by accumulated edge defects: ||rho_a - R_{b,a}(rho_b)||_{S_p} <= sum_{e in path} ||delta_e||_{S_p}.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Path graph connecting nodes a and b with uniform local Hilbert space H.",
+        "Schatten-p contractivity of restriction operators along the path.",
+        "Triangle inequality in Schatten-p Banach space."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py"
+      ],
+      "limits": "Requires contractive restriction channels; if restriction maps are expansive, the bound fails; operational quantum trace distance interpretation requires states to be preserved as normalized density operators."
+    },
+    {
+      "id": "AUDIT-N002-021",
+      "statement": "For n >= 2, v_i >= 0, alpha > 0, and d_i = alpha + v_i, the secular equation F(t) = (alpha/n) sum_{i=1}^n (d_i - t)^(-1) = 1 has a unique root tau in [0, d_min) equal to lambda_min(alpha(I - P) + diag(v)), which lower-bounds lambda_min(L_0 + diag(v)) under L_0 >= alpha(I - P).",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite graph with n >= 2 vertices and spectral gap premise L_0 >= alpha(I - P) for alpha > 0.",
+        "Nonnegative vertex defect loads v_i >= 0.",
+        "Weighted Cauchy-Schwarz inequality on the comparison operator secular form.",
+        "Loewner ordering of self-adjoint operators."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py"
+      ],
+      "limits": "Requires positive connectivity parameter alpha > 0 and nonnegative loads; does not identify the l^2 spectral defect lambda_0 with the l^1 quotient norm Phi_1; bound transfers via Loewner ordering but is generally strict for non-flat loads."
+    }
+  ]
+}
