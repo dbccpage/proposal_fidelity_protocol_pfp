@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md",
+      "sha256": "b8e22dcd0506a6a5707bcc706b924df043e363ae1b024430cd3db4a999196734",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          446
+        ]
+      ],
+      "assessment": "Reviewed Sections 1, 2, 4, and 5 covering the worked frontier trace, pairwise cancellation necessity, and single snapshot hashing."
+    },
+    {
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md",
+      "sha256": "e147c06f6168a563e6af12357da9fe5b44f641ee518974c2deaf7c9612f7b1ad",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          67
+        ]
+      ],
+      "assessment": "Reviewed claim rows PFP002-07, PFP002-08, and PFP002-10."
+    },
+    {
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/frontier_search.py",
+      "sha256": "d3529c2150f6b5d43be46a34c46bcde07ee2c082dc9f18ad522114977c417bc9",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          423
+        ]
+      ],
+      "assessment": "Reviewed exact_matrix_digest and search_exact_matrix immutable row snapshotting, bounded frontier search, and receipt verification."
+    },
+    {
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/sign_graph.py",
+      "sha256": "9488ed63c65089af3086dafa3e01a9af948fb5d3c88505103e376f0590f0b3e1",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          201
+        ]
+      ],
+      "assessment": "Reviewed binary sign graph extraction, parity check, and gauge verification."
+    },
+    {
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_manuscript_examples.py",
+      "sha256": "2eaad2a76d1369cd862807d31a6ea985be13a9d2caec94d4eeaec2459a0584a2",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          87
+        ]
+      ],
+      "assessment": "Reviewed test_running_matrix_gauge_and_sign_change and test_frontier_worked_trace_of_section_4."
+    },
+    {
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_frontier_search.py",
+      "sha256": "c6d174036a0d531ee8d98c917637a84ac2674dfb7b11cd3d5a5e50356b6680f3",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          261
+        ]
+      ],
+      "assessment": "Reviewed test_one_shot_matrix_is_digested_and_checked_from_one_snapshot."
+    },
+    {
+      "path": "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/PROVENANCE.md",
+      "sha256": "a3e0c35a121f9f7cd76db6270d9d703db477d388779acb58295de75fd683cd68",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          82
+        ]
+      ],
+      "assessment": "Reviewed 2026-09-24 source repair and regression test documentation."
+    }
+  ],
+  "claims": [
+    {
+      "id": "PAPER002-WORKED-FRONTIER-TRACE",
+      "statement": "For the introductory 3-state matrix, candidates 000 and 001 fail off-diagonal nonpositivity; an initial search with node budget 2 returns status UNKNOWN on frontier interval [2, 8), and resumption with node budget 1 from that frontier verifies gauge 010 at candidate index 2.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Finite 3-state real matrix RUNNING in declared basis with lexicographic gauge order.",
+        "Resumable frontier candidate evaluation and contiguous receipt chaining protocol in frontier_search.py."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_manuscript_examples.py",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/frontier_search.py",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md"
+      ],
+      "limits": "Applies to the fixed 3-state introductory matrix and lexicographic candidate enumeration; does not establish polynomial-time search on general graphs or eliminate sign problems for arbitrary quantum Hamiltonians."
+    },
+    {
+      "id": "PAPER002-PAIRWISE-CANCELLATION-NECESSITY",
+      "statement": "Exact pairwise cancellation of a signed multiset into equal-weight zero-sum pairs requires a fixed-point-free involution pairing opposite signs with equal magnitudes; a nonnegative total sum alone does not suffice, as demonstrated by the counterexample multiset {+2, -1, -1}.",
+      "status": "mathematical_derivation_and_counterexample_support",
+      "dependencies": [
+        "Finite signed multiset with positive magnitudes and signs in {-1, +1}.",
+        "Pairwise cancellation defined as partition into disjoint zero-sum pairs."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper.md",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md"
+      ],
+      "limits": "Applies to equal-weight pairwise (2-term) involutive cancellation certificates; does not exclude multi-term regroupings or higher-order cluster cancellations."
+    },
+    {
+      "id": "PAPER002-SINGLE-SNAPSHOT-HASHING",
+      "statement": "The matrix checker and presentation digest generator consume the same immutable in-memory snapshot of a one-shot matrix input, ensuring that single-pass streams and iterators cannot produce divergent digests or empty-matrix evaluations.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Eager tuple-of-tuples snapshotting in exact_matrix_digest and search_exact_matrix after 2026-09-24 repair.",
+        "Single traversal consumption of one-shot iterators."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha/frontier_search.py",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/tests/test_frontier_search.py",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/code/PROVENANCE.md",
+        "atlas/archive/pfp/002_pfp_signed_presentations_and_search_frontier/paper_claim_ledger.md"
+      ],
+      "limits": "Ensures consistency under the declared Python memory model for matrices fitting in memory; does not address out-of-core streaming or external memory corruption."
+    }
+  ]
+}

@@ -1056,6 +1056,23 @@
         "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/native_functional.py"
       ],
       "limits": "No dual circulation in return struct; worst-case exponential complexity; Python adapter does not pin binary hash."
+    },
+    {
+      "id": "PAPER001-PYTHON-REFERENCE-SOLVER-GOVERNOR-REVIEW",
+      "statement": "The paper-local Python reference returns a primal potential and dual circulation only after independent verification, caps tree enumeration at 100,000 per component, and its governor admits only strictly decreasing potential updates.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Pinned Python reference in papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py with exact rational arithmetic.",
+        "Independent primal-dual certificate verification via verify_phi_1_certificate.",
+        "Strictly descending section defect requirement for CUT updates under SymbolGameGovernor."
+      ],
+      "evidence": [
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_zenodo_regression_suite.py",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_review_regressions.py",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_governor.py"
+      ],
+      "limits": "Exponential in graph size; the per-component cap is established by source inspection, not by a test."
     }
   ],
   "findings": [

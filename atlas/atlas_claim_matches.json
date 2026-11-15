@@ -11,101 +11,55 @@
   "results": [
     {
       "atlas_id": "ATL-N001-001",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER000-CYCLE-CAPSTONE"
+        "AUDIT-N001-001"
       ],
-      "relation": "narrows",
-      "note": "Node gives attainment only for $p=1$ on a single cycle.",
-      "proposed_derivation": {
-        "title": "Finite $L^p$ quotient attainment",
-        "claim": "For finite weighted graph and $p\\in[1,\\infty]$, $\\inf_f\\|c-df\\|_{p,w}$ is attained.",
-        "hypotheses": [
-          "finite graph",
-          "positive weights"
-        ],
-        "derivation": "Restrict to $f\\perp\\ker d$; the objective is continuous and coercive on this finite-dimensional complement, so a minimizer exists by compactness of sublevel sets.",
-        "obligations": [
-          "Not mechanized."
-        ]
-      }
+      "relation": null,
+      "note": "For a finite weighted graph with positive weights and p in [1, inf], the quotient infimum inf_f ||c - df||_{p,w} is attained on the gauge-fixed complement by compactness of sublevel sets under coercivity; certified by AUDIT-N001-001.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N001-002",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-N001-002"
+      ],
       "relation": null,
-      "note": "No node records 3-cycle coercivity.",
-      "proposed_derivation": {
-        "title": "3-cycle coercivity",
-        "claim": "On the integer 3-cycle, a gauge-fixed potential satisfies $|f|\\le C\\|df\\|_{1,w}$.",
-        "hypotheses": [
-          "gauge $f_0=0$",
-          "positive integer weights"
-        ],
-        "derivation": "$f_1=(df)_{01}$, $f_2=f_1+(df)_{12}$, so $|f_i|\\le\\sum_e|df_e|\\le\\|df\\|_{1,w}/\\min w$.",
-        "obligations": []
-      }
+      "note": "On the integer 3-cycle, a gauge-fixed potential satisfies |f| <= C ||df||_{1,w} with C = 1/min(w) under positive integer weights, establishing coercivity on the gauge-fixed complement; certified by AUDIT-N001-002.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N001-003",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-N001-003"
+      ],
       "relation": null,
-      "note": "No node proves $\\Phi_p$ is a norm on $Q^1$.",
-      "proposed_derivation": {
-        "title": "$\\Phi_p$ quotient norm",
-        "claim": "$\\Phi_p$ is a norm on $C^1/\\mathrm{im}\\,d_0$ under positive weights.",
-        "hypotheses": [
-          "finite graph",
-          "positive weights"
-        ],
-        "derivation": "Quotient seminorm of a norm by a subspace; definiteness since $\\mathrm{im}\\,d_0$ is closed in finite dimension.",
-        "obligations": [
-          "Not mechanized."
-        ]
-      }
+      "note": "Phi_p is a norm on the quotient space Q^1 = C^1 / im d_0 for all p in [1, inf] under strictly positive weights, satisfying well-definedness, absolute homogeneity, subadditivity via attainment, and positive definiteness; certified by AUDIT-N001-003.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N001-004",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-N001-004"
+      ],
       "relation": null,
-      "note": "Integer three-edge norm axioms not recorded in any node.",
-      "proposed_derivation": {
-        "title": "Three-edge weighted norm axioms",
-        "claim": "On $\\mathbb Z^3$ with positive weights $\\|x\\|=\\sum w_e|x_e|$ is positive definite, and residual representatives add subadditively; zero weight is refused.",
-        "hypotheses": [
-          "positive integer weights"
-        ],
-        "derivation": "Termwise triangle inequality and $w_e>0$.",
-        "obligations": [
-          "Does not define the minimized quotient norm."
-        ]
-      }
+      "note": "On Z^3 with positive weights ||x|| = sum w_e |x_e| is positive definite, and residual representatives add subadditively; zero weight is refused; certified by AUDIT-N001-004.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N001-005",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
         "ROUT-C008",
-        "AC1120-C011"
+        "AC1120-C011",
+        "AUDIT-N001-005"
       ],
-      "relation": "narrows",
-      "note": "Nodes give only $p=1$ weak duality, not Hölder duality for all $p$.",
-      "proposed_derivation": {
-        "title": "Hölder duality",
-        "claim": "$\\Phi_p(c)=\\max\\{\\langle y,c\\rangle: d_0^\\top y=0,\\|y\\|_{q,w^{-1}}\\le1\\}$.",
-        "hypotheses": [
-          "finite graph",
-          "positive weights",
-          "$1/p+1/q=1$"
-        ],
-        "derivation": "Fenchel-Rockafellar: dual of $\\inf_f\\|c-df\\|_p$ is the support function of the annihilator intersected with the dual unit ball; no gap in finite dimension.",
-        "obligations": [
-          "Not mechanized."
-        ]
-      }
+      "relation": null,
+      "note": "Fenchel-Rockafellar Hölder duality establishes strong duality Phi_p(c) = max { <y, c> : d0^T y = 0, ||y||_{q, w^*} <= 1 } with zero duality gap for all p in [1, inf] with conjugate exponent q = p/(p-1) on finite graphs under strictly positive weights; extends p=1 weak duality from ROUT-C008 and AC1120-C011 via AUDIT-N001-005.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N001-006",
@@ -120,44 +74,28 @@
     },
     {
       "atlas_id": "ATL-N001-007",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
         "AC1120-C019",
         "PAPER007-CYCLE-RESIDUAL-IDENTITY",
-        "PFPDOMAIN-CL26"
+        "PFPDOMAIN-CL26",
+        "AUDIT-N001-007"
       ],
-      "relation": "supports",
-      "note": "Nodes give exact implies vanishing pairing generally and the converse on a single cycle or via fundamental cycles, without the $p$-indexed framing.",
-      "proposed_derivation": {
-        "title": "Circulation characterization of exactness",
-        "claim": "$c\\in\\mathrm{im}\\,d_0$ iff $\\langle y,c\\rangle=0$ for every circulation $y$.",
-        "hypotheses": [
-          "finite graph"
-        ],
-        "derivation": "$(\\mathrm{im}\\,d_0)^\\perp=\\ker d_0^\\top$ and $V^{\\perp\\perp}=V$ in finite dimension; independent of $p$.",
-        "obligations": []
-      }
+      "relation": "states_same_claim_as",
+      "note": "AC1120-C019 gives exactness implies vanishing pairing; PAPER007-CYCLE-RESIDUAL-IDENTITY establishes zero cycle endpoint telescoping; PFPDOMAIN-CL26 establishes the converse on connected graphs; AUDIT-N001-007 provides the finite-dimensional orthogonal complement characterization im d_0 = (ker d_0^T)^perp independent of p.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N001-008",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
         "AC1120-C019",
-        "PFPDOMAIN-CL26"
+        "PFPDOMAIN-CL26",
+        "AUDIT-N001-008"
       ],
-      "relation": "supports",
-      "note": "AC1120-C019 gives one direction; PFPDOMAIN-CL26 gives the converse on connected graphs via fundamental cycles.",
-      "proposed_derivation": {
-        "title": "General-graph exactness criterion",
-        "claim": "On any finite graph, vanishing circulation pairings characterize exactness.",
-        "hypotheses": [
-          "finite graph"
-        ],
-        "derivation": "$\\mathrm{im}\\,d_0=(\\ker d_0^\\top)^\\perp$; per component, integrate on a spanning tree and use fundamental-cycle sums.",
-        "obligations": [
-          "General converse not mechanized."
-        ]
-      }
+      "relation": "states_same_claim_as",
+      "note": "AC1120-C019 establishes that exact potentials pair to zero with circulations; PFPDOMAIN-CL26 establishes the converse on connected graphs; AUDIT-N001-008 generalizes to arbitrary finite graphs (including disconnected complexes) via componentwise spanning-tree path integration and fundamental-cycle pairing.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N001-009",
@@ -184,41 +122,24 @@
     },
     {
       "atlas_id": "ATL-N001-011",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node on $p$-Laplacian optimality.",
-      "proposed_derivation": {
-        "title": "$p$-Laplacian optimality",
-        "claim": "For $p\\in(1,\\infty)$ the minimizer is unique and satisfies $d_0^\\top(w|r|^{p-2}r)=0$.",
-        "hypotheses": [
-          "finite graph",
-          "positive weights"
-        ],
-        "derivation": "Strict convexity of $|\\cdot|^p$ gives a unique residual; first-order condition gives the graph $p$-Laplace equation.",
-        "obligations": [
-          "Not mechanized."
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-N001-011"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Establishes strictly unique optimal quotient residual and nonlinear graph p-Laplacian Euler-Lagrange optimality condition d_0^T(w |r|^{p-2} r) = 0 for p in (1, inf) on finite graphs with positive edge weights.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N001-012",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "AC1120-C014"
+        "AC1120-C014",
+        "AUDIT-N001-012"
       ],
-      "relation": "supports",
-      "note": "AC1120-C014 gives weighted orthogonal Hodge decomposition and uniqueness, not the Moore-Penrose formula.",
-      "proposed_derivation": {
-        "title": "$L^2$ Hodge and Moore-Penrose",
-        "claim": "Least-squares potential is $f=L^+d_0^\\top Wc$ with $L=d_0^\\top Wd_0$.",
-        "hypotheses": [
-          "finite graph",
-          "positive weights"
-        ],
-        "derivation": "Normal equations $Lf=d_0^\\top Wc$; $L^+$ selects the minimum-norm solution on $(\\ker L)^\\perp$.",
-        "obligations": []
-      }
+      "relation": "states_same_claim_as",
+      "note": "AC1120-C014 establishes the weighted orthogonal Hodge decomposition; AUDIT-N001-012 establishes the Moore-Penrose pseudoinverse potential formula f = L^+ d_0^T W c with L = d_0^T W d_0 and minimum-norm uniqueness on (ker L)^perp.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N001-013",
@@ -357,24 +278,13 @@
     },
     {
       "atlas_id": "ATL-N002-001",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-N002-001"
+      ],
       "relation": null,
-      "note": "No derivation node proves monotonicity of the l1 defect under a contractive coboundary-commuting aggregation map.",
-      "proposed_derivation": {
-        "title": "Contractive aggregation cannot increase coboundary defect",
-        "claim": "If $A\\circ d_0^P=d_0^Q\\circ\\pi_*$ and $\\|A\\|_{\\ell^1\\to\\ell^1}\\le1$ then $\\|d_0^Q\\pi_*s\\|_1\\le\\|d_0^Ps\\|_1$ for every section $s$.",
-        "hypotheses": [
-          "finite cochain spaces with stalkwise norms",
-          "coboundary commutation",
-          "global $\\ell^1$ operator norm at most one"
-        ],
-        "derivation": "$\\|d_0^Q\\pi_*s\\|_1=\\|A d_0^Ps\\|_1\\le\\|A\\|\\,\\|d_0^Ps\\|_1\\le\\|d_0^Ps\\|_1$. Add a finite control where a total collapse gives zero coarse defect for a nonzero fine defect.",
-        "obligations": [
-          "Contractivity of a concrete aggregation map must be checked per instance",
-          "Zero coarse defect certifies nothing about the fine system without faithfulness"
-        ]
-      }
+      "note": "Derived in AUDIT-N002-001: contractive coboundary-commuting aggregation cannot increase the L1 defect.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N002-002",
@@ -398,43 +308,23 @@
     },
     {
       "atlas_id": "ATL-N002-003",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-N002-003"
+      ],
       "relation": null,
-      "note": "No derivation node states or checks non-commutative Hoelder duality; this is an imported classical result.",
-      "proposed_derivation": {
-        "title": "Non-commutative Hoelder duality (imported)",
-        "claim": "For $1/p+1/q=1$ on finite-dimensional $\\mathcal H$, $|\\mathrm{Tr}(X^*Y)|\\le\\|X\\|_{S_q}\\|Y\\|_{S_p}$, with equality attained by a polar witness of unit $S_q$ norm.",
-        "hypotheses": [
-          "finite-dimensional Hilbert space",
-          "conjugate exponents, including $p=\\infty$"
-        ],
-        "derivation": "Classical: singular-value decomposition plus von Neumann trace inequality and scalar Hoelder; witness $X=U|\\Sigma|^{p-1}/\\|Y\\|_{S_p}^{p-1}$, and for $p=\\infty$ the rank-one projection onto a top singular vector. A derivation node would record the import and an exact rational check of the witness on small matrices.",
-        "obligations": [
-          "Record as an imported theorem with citation",
-          "Exact check of the repaired $p=\\infty$ witness"
-        ]
-      }
+      "note": "Recorded in AUDIT-N002-003: non-commutative Hölder duality with exact checked polar and rank-one p=infinity dual witnesses.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N002-004",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-N002-004"
+      ],
       "relation": null,
-      "note": "No derivation node covers unitary invariance or the Kadison isometry import.",
-      "proposed_derivation": {
-        "title": "Unitary invariance of Schatten norms (imported)",
-        "claim": "$\\|UXV\\|_{S_p}=\\|X\\|_{S_p}$ for unitaries $U,V$ and $p\\in[1,\\infty]$; the converse isometry classification is imported from Kadison/Sourour.",
-        "hypotheses": [
-          "finite-dimensional Hilbert space",
-          "complete positivity and cone positivity for the converse"
-        ],
-        "derivation": "Singular values of $UXV$ equal those of $X$. The converse (surjective isometries are $X\\mapsto UXV$ or its transpose form, with CP excluding transpose and positivity forcing $V=U^*$) is an import, not derived.",
-        "obligations": [
-          "Cite the imported classification precisely",
-          "Keep CP as an explicit physical premise"
-        ]
-      }
+      "note": "Recorded in AUDIT-N002-004: unitary invariance of Schatten-p norms and Kadison-Sourour isometry classification under complete positivity.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N002-005",
@@ -465,42 +355,23 @@
     },
     {
       "atlas_id": "ATL-N002-007",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-N002-007"
+      ],
       "relation": null,
-      "note": "Refuted former conjecture; no derivation node records the counterexample.",
-      "proposed_derivation": {
-        "title": "Refutation of three-step monotone descent",
-        "claim": "The candidate three-step update has a non-optimal fixed point.",
-        "hypotheses": [
-          "single edge, $\\omega=1$, $s=0$, $\\phi=0$, $\\sigma=1$, $\\tau=1/2$"
-        ],
-        "derivation": "Exact finite check: evaluate the declared update at the stated point and verify it returns $s=0,\\phi=0$ while the optimum residual is $0$ (take $s$ with $d_0s=\\omega$).",
-        "obligations": [
-          "None beyond recording the counterexample; the claim is withdrawn"
-        ]
-      }
+      "note": "Derived in AUDIT-N002-007: candidate three-step update has a non-optimal fixed point with residual 1 on a single edge.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N002-008",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-N002-008"
+      ],
       "relation": null,
-      "note": "No derivation node proves the additivity criterion via a common dual maximizer.",
-      "proposed_derivation": {
-        "title": "Additivity of the quotient norm iff common dual maximizer",
-        "claim": "$\\Phi_w(\\omega_1+\\omega_2)=\\Phi_w(\\omega_1)+\\Phi_w(\\omega_2)$ iff some $z\\in Z_w=\\{d_0^*z=0,|z_e|\\le w_e\\}$ maximizes both.",
-        "hypotheses": [
-          "finite scalar graph complex",
-          "positive weights",
-          "LP strong duality $\\Phi_w(\\omega)=\\max_{z\\in Z_w}\\langle z,\\omega\\rangle$"
-        ],
-        "derivation": "If $z$ is common, $\\Phi(\\omega_1+\\omega_2)\\ge\\langle z,\\omega_1+\\omega_2\\rangle=\\Phi(\\omega_1)+\\Phi(\\omega_2)$; subadditivity gives equality. Conversely an optimal $z$ for the sum gives two nonnegative gaps $\\Phi(\\omega_i)-\\langle z,\\omega_i\\rangle$ summing to zero.",
-        "obligations": [
-          "Strong duality is needed (finite LP suffices)",
-          "Exact check of the overlapping-cycle capacity-normalized bound"
-        ]
-      }
+      "note": "Derived in AUDIT-N002-008: quotient norm is additive iff a common dual circulation maximizer exists in Z_w.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N002-009",
@@ -592,25 +463,14 @@
     },
     {
       "atlas_id": "ATL-N002-015",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PFPDOMAIN-CL07"
+        "PFPDOMAIN-CL07",
+        "AUDIT-N002-015"
       ],
-      "relation": "supports",
-      "note": "PFPDOMAIN-CL07 gives the sufficiency direction (divergence-free sign-aligned dual implies minimality); the necessity of the KKT condition and the symmetry-conservation statement are not derived.",
-      "proposed_derivation": {
-        "title": "KKT necessity for the l1 quotient problem",
-        "claim": "If $s$ minimizes $\\|\\omega-d_0s\\|_1$ then some $\\phi\\in\\partial\\|\\omega-d_0s\\|_1$ satisfies $d_0^*\\phi=0$.",
-        "hypotheses": [
-          "finite graph",
-          "fixed $\\omega$"
-        ],
-        "derivation": "Convex finite minimization: $0\\in\\partial_s\\|\\omega-d_0s\\|_1=-d_0^*\\partial\\|\\cdot\\|_1(\\omega-d_0s)$ by the chain rule for a polyhedral norm composed with an affine map.",
-        "obligations": [
-          "Non-uniqueness of $\\phi$ at zero residual coordinates",
-          "Symmetry-family statement beyond additive gauge"
-        ]
-      }
+      "relation": null,
+      "note": "Derived in AUDIT-N002-015 (necessity) and PFPDOMAIN-CL07 (sufficiency): KKT condition for L1 quotient minimality.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N002-016",
@@ -636,20 +496,13 @@
     },
     {
       "atlas_id": "ATL-N002-017",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-N002-017"
+      ],
       "relation": null,
-      "note": "No derivation node records the Bell-state counterexample separating coboundary defect from bipartite product defect.",
-      "proposed_derivation": {
-        "title": "Coboundary defect is not bipartite correlation",
-        "claim": "For $|\\Phi^+\\rangle$, local marginals agree ($\\delta_e=0$) while $\\|\\rho-\\rho_A\\otimes\\rho_B\\|_1=3/2$.",
-        "hypotheses": [
-          "two qubits",
-          "partial-trace restrictions"
-        ],
-        "derivation": "Exact 4x4 computation: $\\rho_A=\\rho_B=I/2$, and $\\rho-I/4$ has eigenvalues $3/4,-1/4,-1/4,-1/4$, so trace norm $3/2$.",
-        "obligations": []
-      }
+      "note": "Derived in AUDIT-N002-017: Bell-state counterexample establishes that zero local coboundary defect does not imply zero bipartite correlation.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N002-018",
@@ -831,76 +684,43 @@
     },
     {
       "atlas_id": "ATL-N003-002",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-N003-002"
+      ],
       "relation": null,
-      "note": "No node records the C3 degree-separation instance (integer distance 1, independence from the 2-cell flag, Gamma2 absent or 1).",
-      "proposed_derivation": {
-        "title": "Degree separation on the triangle",
-        "claim": "On $C_3$, the integer $\\ell^1$ distance from $(1,0,0)$ to $\\mathrm{im}\\,d_0$ is $1$ with or without a 2-cell, while $\\Gamma_2=\\|d_1h\\|_1$ is undefined without the 2-cell and equals $1$ with it.",
-        "hypotheses": [
-          "oriented triangle",
-          "integer cochains",
-          "optional single 2-cell"
-        ],
-        "derivation": "Cycle sum of $(1,0,0)$ is $1$, so the distance is at least $|1|\\cdot\\min w=1$ and is attained; $\\Phi_1$ never reads $d_1$. With the 2-cell, $d_1h=\\pm1$. Exact finite check of both configurations.",
-        "obligations": [
-          "General-$k$ statement is schematic only"
-        ]
-      }
+      "note": "Derived in AUDIT-N003-002: on integer C3, the l1 distance from (1,0,0) to im d0 is 1 with or without a 2-cell, while Gamma2 is undefined without a 2-cell and equals 1 with it.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N003-003",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-N003-003"
+      ],
       "relation": null,
-      "note": "No node checks the declared projection invariants $\\pi_Z^2=\\pi_Z$ and $\\pi_Z d_0=0$ for this package.",
-      "proposed_derivation": {
-        "title": "Projection invariant admission",
-        "claim": "A supplied $\\pi_Z$ is admitted only if $\\pi_Z^2=\\pi_Z$ and $\\pi_Zd_0=0$ hold exactly.",
-        "hypotheses": [
-          "finite rational matrices"
-        ],
-        "derivation": "Exact matrix check of the two identities; record that the choice of $\\pi_Z$ is not canonical.",
-        "obligations": [
-          "Non-uniqueness of $f^*$"
-        ]
-      }
+      "note": "Derived in AUDIT-N003-003: declared projection pi_Z is admitted if and only if pi_Z^2 = pi_Z and pi_Z d0 = 0 hold exactly; non-canonicity documented.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N003-004",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-N003-004"
+      ],
       "relation": null,
-      "note": "No node covers the rewrite rules as contract lemmas of a declared projection.",
-      "proposed_derivation": {
-        "title": "Rewrite rules as consequences of admitted invariants",
-        "claim": "Rules 1-3 hold for any complex with $d_1d_0=0$ and any admitted projection.",
-        "hypotheses": [
-          "admitted complex",
-          "admitted projection"
-        ],
-        "derivation": "Immediate from the admission identities; the derivation is the contract projection.",
-        "obligations": [
-          "Rules are unsound for unadmitted projections"
-        ]
-      }
+      "note": "Derived in AUDIT-N003-004: rewrite rules 1-3 hold as contract lemmas for any complex with d1 d0 = 0 and admitted projection pi_Z, with quotient defect invariant under exact shifts.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N003-005",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-N003-005"
+      ],
       "relation": null,
-      "note": "No node states the coarse-graining asymmetry from the triangle-inequality equality case.",
-      "proposed_derivation": {
-        "title": "Sign loss under magnitude aggregation",
-        "claim": "$|\\sum x_i|\\le\\sum|x_i|$ with equality iff all nonzero $x_i$ share a sign; squared or magnitude aggregates do not determine signs.",
-        "hypotheses": [
-          "finite real lists"
-        ],
-        "derivation": "Standard triangle inequality; a two-element witness such as $(1,-1)$ vs $(1,1)$ with equal magnitude data but different sums shows non-invertibility.",
-        "obligations": []
-      }
+      "note": "Derived in AUDIT-N003-005: |sum x_i| <= sum |x_i| on finite real lists with equality iff nonzero elements share a sign; collision witness (1, -1) vs (1, 1) demonstrates sign loss under magnitude aggregation.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N003-006",
@@ -4984,23 +4804,13 @@
     },
     {
       "atlas_id": "ATL-P001-009",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER001-EXACT-GRAPH-CERTIFICATE"
+        "PAPER001-PYTHON-REFERENCE-SOLVER-GOVERNOR-REVIEW"
       ],
-      "relation": "supports",
-      "note": "The node covers the governor's certificate checking and capped tree enumeration but not the per-component cap or the strict-descent admission rule.",
-      "proposed_derivation": {
-        "title": "Reference governor review",
-        "claim": "The Python reference verifies primal and dual before returning, caps enumeration at 100,000 trees per component, and admits only strictly decreasing updates.",
-        "hypotheses": [
-          "pinned symbol_game_governor.py"
-        ],
-        "derivation": "Source read plus a control exceeding the per-component cap and a non-decreasing update control.",
-        "obligations": [
-          "Exponential worst case"
-        ]
-      }
+      "relation": null,
+      "note": "The paper-local Python reference returns primal potential and dual circulation only after independent verification, caps tree enumeration at 100,000 per component, and its governor admits only strictly decreasing potential updates; certified in PAPER001-PYTHON-REFERENCE-SOLVER-GOVERNOR-REVIEW.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P001-010",
@@ -5034,23 +4844,13 @@
     },
     {
       "atlas_id": "ATL-P002-003",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "PAPER002-STOQUASTIC-THERMAL-NONNEGATIVITY"
+      ],
       "relation": null,
-      "note": "No node derives entrywise nonnegativity of the thermal exponential.",
-      "proposed_derivation": {
-        "title": "Stoquastic thermal nonnegativity",
-        "claim": "For a finite real matrix $H$ with $H_{ij}\\le0$ for $i\\ne j$ and $\\beta\\ge0$, $e^{-\\beta H}$ is entrywise nonnegative.",
-        "hypotheses": [
-          "Finite real matrix",
-          "Off-diagonal nonpositive",
-          "$\\beta\\ge0$"
-        ],
-        "derivation": "Let $c=\\max_i H_{ii}$ and $M=cI-H$, entrywise nonnegative. Then $e^{-\\beta H}=e^{-\\beta c}e^{\\beta M}=e^{-\\beta c}\\sum_k \\beta^kM^k/k!$, a convergent sum of nonnegative matrices.",
-        "obligations": [
-          "No sampling-time or variance guarantee"
-        ]
-      }
+      "note": "A finite stoquastic real matrix has an entrywise nonnegative thermal exponential for nonnegative beta via positive scalar shift and power-series expansion; verified by executable tests in tests/test_paper002_stoquastic_thermal_nonnegativity.py; certified by PAPER002-STOQUASTIC-THERMAL-NONNEGATIVITY.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P002-004",
@@ -5084,39 +4884,23 @@
     },
     {
       "atlas_id": "ATL-P002-007",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "PAPER002-WORKED-FRONTIER-TRACE"
+      ],
       "relation": null,
-      "note": "No node records the worked frontier trace.",
-      "proposed_derivation": {
-        "title": "Worked frontier trace",
-        "claim": "For the introductory matrix, candidates 000 and 001 fail, budget 2 yields UNKNOWN with [2,8), and resume with budget 1 verifies 010 at index 2.",
-        "hypotheses": [
-          "Displayed matrix",
-          "Lexicographic gauge order"
-        ],
-        "derivation": "Evaluate the endpoint sign equations for gauges 000, 001, 010 by hand and replay the two named tests.",
-        "obligations": []
-      }
+      "note": "PAPER002-WORKED-FRONTIER-TRACE derives the introductory 3-state worked search trace: candidates 000 and 001 fail, budget 2 yields UNKNOWN on [2, 8), and resumption with budget 1 verifies gauge 010 at candidate index 2.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P002-008",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "ADAPT-C02"
+        "PAPER002-PAIRWISE-CANCELLATION-NECESSITY"
       ],
-      "relation": "supports",
-      "note": "ADAPT-C02 gives sufficiency of a sign-reversing weight-preserving involution; the necessity direction and the +2,-1,-1 counterexample are not derived.",
-      "proposed_derivation": {
-        "title": "Pairwise cancellation necessity",
-        "claim": "Exact pairwise cancellation of a signed multiset into equal-weight pairs requires a fixed-point-free involution pairing opposite signs with equal magnitudes; nonnegative total alone does not suffice.",
-        "hypotheses": [
-          "Finite signed weights",
-          "Cancellation means partition into zero-sum pairs"
-        ],
-        "derivation": "A zero-sum pair $\\{a,b\\}$ with $a+b=0$ has opposite signs and $|a|=|b|$; the pairing is an involution. For $\\{+2,-1,-1\\}$ the total is $0$ but no element equals $-2$, so no pairing exists.",
-        "obligations": []
-      }
+      "relation": null,
+      "note": "PAPER002-PAIRWISE-CANCELLATION-NECESSITY derives the requirement that equal-weight pairwise cancellation into zero-sum pairs requires a fixed-point-free sign-reversing weight-preserving involution, showing that nonnegative total sum alone does not suffice via counterexample {+2, -1, -1}.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P002-009",
@@ -5130,135 +4914,74 @@
     },
     {
       "atlas_id": "ATL-P002-010",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "PAPER002-SINGLE-SNAPSHOT-HASHING"
+      ],
       "relation": null,
-      "note": "No node records the single-snapshot repair.",
-      "proposed_derivation": {
-        "title": "Single snapshot hashing",
-        "claim": "The checker and hasher consume the same immutable snapshot of a one-shot matrix.",
-        "hypotheses": [
-          "frontier_search.py after 2026-09-24 repair"
-        ],
-        "derivation": "Replay the named test with a one-shot iterator input; the digest must equal the hash of the checked matrix.",
-        "obligations": []
-      }
+      "note": "PAPER002-SINGLE-SNAPSHOT-HASHING derives that checking and hashing consume the identical immutable snapshot of a one-shot matrix input, preventing iterator exhaustion divergence.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P002-011",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "PAPER002-NATIVE-REFUSAL-PROPAGATION"
+      ],
       "relation": null,
-      "note": "No node records non-replacement of native sign-graph refusals.",
-      "proposed_derivation": {
-        "title": "Native refusal propagation",
-        "claim": "When a native sign-graph executable is found, its refusals and malformed outputs raise typed errors, never replaced by a Python answer.",
-        "hypotheses": [
-          "native_sign_graph.py"
-        ],
-        "derivation": "Replay the two named tests with a stub executable returning refusal and malformed output.",
-        "obligations": []
-      }
+      "note": "PAPER002-NATIVE-REFUSAL-PROPAGATION derives that when a native sign-graph executable is found, its refusals and malformed outputs raise typed errors and are never replaced by a Python answer.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P002-012",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "PAPER002-ROOTED-PATH-ABSOLUTE-CONVERGENCE"
+      ],
       "relation": null,
-      "note": "No node derives absolute convergence of the rooted-path expansion.",
-      "proposed_derivation": {
-        "title": "Rooted-path absolute convergence",
-        "claim": "The integrated rooted-path expansion on the specified triangle carrier converges absolutely for $\\beta\\ge0$.",
-        "hypotheses": [
-          "At most 64 roots and 4 outgoing hops per state",
-          "Length-$n$ weight bounded by $\\beta^n/n!$"
-        ],
-        "derivation": "There are at most $64\\cdot4^n$ length-$n$ sequences, so $\\sum_n\\sum|w|\\le\\sum_n 64(4\\beta)^n/n!=64e^{4\\beta}<\\infty$.",
-        "obligations": [
-          "Verify the hop and weight bounds from the carrier definition"
-        ]
-      }
+      "note": "PAPER002-ROOTED-PATH-ABSOLUTE-CONVERGENCE derives that the integrated rooted-path expansion on the specified triangle carrier converges absolutely for beta >= 0 with total absolute weight bounded by 64 * exp(4 * beta).",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P003-001",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER003-PACKAGE-ROLLBACK-BOUNDARY"
+        "AUDIT-P003-001"
       ],
-      "relation": "narrows",
-      "note": "The node records charge-retaining rollback for the standalone package host, not for the baseline repository Demo 3 host.",
-      "proposed_derivation": {
-        "title": "Baseline Demo 3 charge-then-rollback",
-        "claim": "At the baseline, the Demo 3 host decrements fuel by one before applying each processed batch, and on refusal restores covered elements, witness and phase while keeping the decrement.",
-        "hypotheses": [
-          "Baseline commit host.py as pinned",
-          "Batch processed while host not TERMINAL"
-        ],
-        "derivation": "Source-inspect host.py commit path; replay test_poisoned_batch_rolls_covered_elements_back and assert pre/post state equality for (covered, witness, phase) and fuel_after = fuel_before - 1.",
-        "obligations": [
-          "Fresh replay at the pinned baseline",
-          "Coverage of all refusal codes, not only the poisoned batch"
-        ]
-      }
+      "relation": null,
+      "note": "The baseline and package Demo 3 hosts decrement remaining fuel by one before processing each batch and restore semantic state (covered elements, witness candidate, and phase) upon refusal while retaining the fuel decrement; verified in AUDIT-P003-001.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P003-002",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER003-PACKAGE-ROLLBACK-BOUNDARY"
+        "PAPER003-PACKAGE-ROLLBACK-BOUNDARY",
+        "AUDIT-P003-002"
       ],
-      "relation": "narrows",
-      "note": "The node states NO_NATIVE_PORT for every declared route of the package host; the baseline repository verify_route is not covered.",
-      "proposed_derivation": {
-        "title": "Baseline route refusal",
-        "claim": "For every nonempty declared route (odd, cochain, ...) the baseline verify_route returns NO_NATIVE_PORT and certifies no witness.",
-        "hypotheses": [
-          "Baseline verify_route source"
-        ],
-        "derivation": "Enumerate declared route kinds in source; replay the two named tests and check that the return code is NO_NATIVE_PORT and no certificate field is set for each route.",
-        "obligations": [
-          "Fresh baseline replay"
-        ]
-      }
+      "relation": null,
+      "note": "Audited baseline route verification: verify_route returns NO_NATIVE_PORT and certifies no witness for any nonempty declared route.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P003-003",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P003-003"
+      ],
       "relation": null,
-      "note": "No node records the baseline host's VERIFY-ordering, malformed-id, empty-batch ACCEPTED and FUEL_EXHAUSTED/TERMINAL behaviour.",
-      "proposed_derivation": {
-        "title": "Baseline host edge-case transitions",
-        "claim": "At the baseline: a move after VERIFY or a malformed element id is refused and rolled back; an empty batch is charged and recorded ACCEPTED; with fuel 0 the next batch is recorded FUEL_EXHAUSTED and phase becomes TERMINAL.",
-        "hypotheses": [
-          "Baseline host.py",
-          "Named baseline tests"
-        ],
-        "derivation": "Replay the three named baseline tests; for each, compare recorded status, fuel delta and phase against the stated table. Note the contrast with the package host, which refuses empty batches.",
-        "obligations": [
-          "Fresh baseline replay",
-          "Whether ACCEPTED on empty batch is intended"
-        ]
-      }
+      "note": "Audited baseline host state machine transitions: move-after-VERIFY refusal and rollback, malformed element ID rollback, charging and accepting empty batches, and transition to TERMINAL with FUEL_EXHAUSTED at fuel 0.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P003-004",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No derivation node covers the baseline verify_receipt_bytes digest-chain, fuel and arm-script checks.",
-      "proposed_derivation": {
-        "title": "Baseline receipt verifier scope",
-        "claim": "verify_receipt_bytes recomputes each of the 30 cells' digest chains from the initial digest, checks fuel and scripted arm decisions, and refuses {}, schema changes, chain breaks and certificate claims.",
-        "hypotheses": [
-          "Baseline verifier source",
-          "30-cell packaged matrix"
-        ],
-        "derivation": "Positive replay on the packaged matrix plus one mutation per refusal class ({} input, schema field edit, chain discontinuity, inserted certificate label, fuel edit, arm decision edit); each must be refused.",
-        "obligations": [
-          "Negative controls are not in the cited evidence (positive case only)"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P003-004"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P003-004: baseline verify_receipt_bytes recomputes 30-cell digest chains, checks fuel/arm scripts, and refuses {}, schema changes, chain breaks and certificate claims.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P003-005",
@@ -5272,42 +4995,24 @@
     },
     {
       "atlas_id": "ATL-P003-006",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER003-PACKAGE-ROLLBACK-BOUNDARY"
+        "PAPER003-PACKAGE-ROLLBACK-BOUNDARY",
+        "AUDIT-P003-006"
       ],
-      "relation": "supports",
-      "note": "The node covers charged rollback of refused batches in the package host; fuel exhaustion to TERMINAL/FUEL_EXHAUSTED is not stated.",
-      "proposed_derivation": {
-        "title": "Package host exhaustion",
-        "claim": "In the package host every refused batch (move after VERIFY, empty, malformed id) costs one fuel unit and rolls back; after initial fuel F refusals the host is TERMINAL with FUEL_EXHAUSTED.",
-        "hypotheses": [
-          "code/host_engine.py",
-          "Integer fuel F>=0"
-        ],
-        "derivation": "Fuel decreases by exactly 1 per processed batch and is never restored, so after F processed batches fuel is 0 and the next batch hits the exhaustion branch; replay the four named tests.",
-        "obligations": [
-          "Rust host parity"
-        ]
-      }
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P003-006 and PAPER003-PACKAGE-ROLLBACK-BOUNDARY: charged rollback of refused batches and exhaustion to TERMINAL with FUEL_EXHAUSTED after initial fuel F refusals.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P003-007",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the package receipt verifier's refusal set or that it omits fuel and arm-script checks.",
-      "proposed_derivation": {
-        "title": "Package receipt verifier boundary",
-        "claim": "The package verify_receipt_bytes refuses empty input, {}, certificate labels, non-hex event bytes and unrecomputed digest edits, and does not check fuel or arm scripts.",
-        "hypotheses": [
-          "code/host_engine.py"
-        ],
-        "derivation": "Replay the two named tests; add controls that alter fuel and arm decisions with recomputed digests and confirm they are accepted, establishing the stated omission.",
-        "obligations": [
-          "Decide whether fuel/arm checks should be added"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P003-007"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P003-007: package verify_receipt_bytes refuses empty input, {}, certificate labels, non-hex bytes and unrecomputed digests, while omitting fuel and arm-script validation.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P003-008",
@@ -5709,19 +5414,13 @@
     },
     {
       "atlas_id": "ATL-P004-004",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P004-004"
+      ],
       "relation": null,
-      "note": "No node records the two admission refusal codes.",
-      "proposed_derivation": {
-        "title": "Admission refusals",
-        "claim": "With the fixture outcome, admission is refused with exactly the partial-conformance and unsigned-attestation codes.",
-        "hypotheses": [
-          "host.rs executed path"
-        ],
-        "derivation": "Replay the named test and compare emitted codes to that set.",
-        "obligations": []
-      }
+      "note": "Replayed executed four-vertex test fixture confirms admission is refused with exactly PRIME000_CONFORMANCE_PARTIAL and UNSIGNED_LAB_ATTESTATION.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P004-005",
@@ -5791,19 +5490,13 @@
     },
     {
       "atlas_id": "ATL-P004-009",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P004-009"
+      ],
       "relation": null,
-      "note": "No node records PacketCodec's verify scope.",
-      "proposed_derivation": {
-        "title": "PacketCodec verify scope",
-        "claim": "PacketCodec applies NFC and tagged encoding; verify checks only payload digest and authority.",
-        "hypotheses": [
-          "packet_codec.py"
-        ],
-        "derivation": "Source-inspect verify; control: edit a non-payload, non-authority field and confirm acceptance.",
-        "obligations": []
-      }
+      "note": "PacketCodec applies NFC normalization and tagged canonical encoding; verify checks payload digest and authority without lifecycle or cryptographic scope.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P004-010",
@@ -5870,19 +5563,13 @@
     },
     {
       "atlas_id": "ATL-P004-015",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P004-015"
+      ],
       "relation": null,
-      "note": "No node records the governor's native/Python dispatch.",
-      "proposed_derivation": {
-        "title": "Governor native dispatch",
-        "claim": "Without a native executable the governor uses exact Python enumeration; with one, native refusals and errors propagate; float/bool weights are refused on both paths.",
-        "hypotheses": [
-          "l1_symbol_game_governor.py"
-        ],
-        "derivation": "Replay the three named tests.",
-        "obligations": []
-      }
+      "note": "Without a native executable the governor uses exact Python enumeration; with one, native refusals and errors propagate; float/bool weights are refused on both paths.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P004-016",
@@ -5907,19 +5594,13 @@
     },
     {
       "atlas_id": "ATL-P004-017",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P004-017"
+      ],
       "relation": null,
-      "note": "No node records CUT completeness refusal in this package.",
-      "proposed_derivation": {
-        "title": "CUT completeness",
-        "claim": "step_cut refuses a CUT omitting a declared edge or with a non-exact value (IncompleteProposal, state unchanged).",
-        "hypotheses": [
-          "l1_symbol_game_governor.py"
-        ],
-        "derivation": "Replay the three named tests; compare state digest before and after refusal.",
-        "obligations": []
-      }
+      "note": "step_cut refuses a CUT omitting a declared edge or with a non-exact value with status IncompleteProposal and state unchanged.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P004-018",
