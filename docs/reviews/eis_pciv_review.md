@@ -11,7 +11,7 @@
 
 This review establishes the empirical baseline, diagnoses identified defects, and maps concrete remediation milestones for the Epistemic Immune System (EIS) and Prompt Civilization (PCIV) subsystems within the repository.
 
-All findings from the initial survey (K1 through K10) were verified on disk through reproducible test and checker executions, and are backed by recorded execution receipts in `governance/evidence/`.
+The K1–K10 inventory combines observations from test and checker runs with source and documentation review. The committed receipts in `governance/evidence/` record six commands, their exit statuses, and input hashes.
 
 ### Summary of Baseline Findings (K1–K10)
 
@@ -63,7 +63,7 @@ The companion review ledger `docs/reviews/eis_pciv_review.json` catalogs **50 ty
 
 ## 3. Baseline Findings Verification Table
 
-Every baseline finding was independently verified in the newly established worktree `..\pfp_eis_pciv`. Execution artifacts were recorded using `python -m governance.tools.evidence`.
+The milestone author ran the listed commands in `..\pfp_eis_pciv`. The committed `*.run.json` files preserve run metadata, including hashes for the separate output logs. Those logs are absent from this PR, so the diagnostic text and test totals below are historical observations that cannot be verified against the committed receipts alone.
 
 | # | Finding Description | Exact Verification Command | Observed Exit Status & Result | Evidence Receipt Path |
 |---|---|---|---|---|
