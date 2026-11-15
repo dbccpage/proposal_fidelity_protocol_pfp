@@ -1,0 +1,197 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf26.rs",
+  "target_sha256": "3cd721c13eb8c5d22415b5e97d2fdb06867bb5edb514675993a4f2478bb30463",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf26",
+  "counts": {
+    "killed": 30,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "malformed antibody reworded",
+      "old": "\"Reply with one JSON object of the form {\\\"coefficients\\\": [...]} and nothing else.\",",
+      "new": "\"Reply with one JSON object.\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "notation antibody reworded",
+      "old": "\"Write integers as integers and other rationals as p/q in lowest terms.\",",
+      "new": "\"Write rationals as p/q.\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "nonmonic antibody reworded",
+      "old": "\"The leading coefficient must be 1.\",",
+      "new": "\"The leading coefficient is wrong.\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "sign antibody reworded",
+      "old": "\"Some coefficient signs are wrong; the sign of each coefficient follows Vieta.\",",
+      "new": "\"Some coefficient signs are wrong.\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "value antibody reworded",
+      "old": "\"The coefficients do not vanish at the stated roots.\",",
+      "new": "\"The coefficients are wrong.\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "malformed antibody filed under another kind",
+      "old": "        \"MALFORMED_JSON\",",
+      "new": "        \"MALFORMED\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "notation antibody filed under another kind",
+      "old": "        \"RATIONAL_NONCANONICAL\",",
+      "new": "        \"NONCANONICAL\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "nonmonic antibody filed under another kind",
+      "old": "        \"NONMONIC_LEADING_COEFFICIENT\",",
+      "new": "        \"NONMONIC\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "sign antibody filed under another kind",
+      "old": "        \"SIGN_MISMATCH\",",
+      "new": "        \"SIGNS\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "value antibody filed under another kind",
+      "old": "        \"WRONG_VALUE\",",
+      "new": "        \"WRONG\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF26\",",
+      "new": "    workflow: \"WF2\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Multi-round antibody dialogue\",",
+      "new": "    name: \"Antibody dialogue\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"epitope_antibody_exact_oracle\",",
+      "new": "    host_check: \"oracle\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation skips the roots",
+      "old": "    roots(task)?;\n    limit(task, DEFAULT_ATTEMPTS, MAX_ATTEMPTS).map(|_| ())",
+      "new": "    limit(task, DEFAULT_ATTEMPTS, MAX_ATTEMPTS).map(|_| ())",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation skips the limit",
+      "old": "    roots(task)?;\n    limit(task, DEFAULT_ATTEMPTS, MAX_ATTEMPTS).map(|_| ())",
+      "new": "    roots(task).map(|_| ())",
+      "outcome": "killed"
+    },
+    {
+      "name": "antibody chosen for another kind",
+      "old": ".find(|(kind, _)| *kind == epitope)?;",
+      "new": ".find(|(kind, _)| *kind != epitope)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "constraint key renamed",
+      "old": "        (\"constraint\", Datum::from(*constraint)),",
+      "new": "        (\"rule\", Datum::from(*constraint)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "epitope key renamed",
+      "old": "        (\"epitope\", Datum::from(epitope)),",
+      "new": "        (\"kind\", Datum::from(epitope)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "constraint holds the epitope",
+      "old": "        (\"constraint\", Datum::from(*constraint)),",
+      "new": "        (\"constraint\", Datum::from(epitope)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "text message changed",
+      "old": "let text = reply.as_text().ok_or(\"reply must be text\")?;",
+      "new": "let text = reply.as_text().ok_or(\"text\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeated mistake adds its antibody again",
+      "old": "if let Some(new) = antibody(epitope).filter(|new| !antibodies.contains(new)) {",
+      "new": "if let Some(new) = antibody(epitope) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only repeated mistakes add an antibody",
+      "old": "if let Some(new) = antibody(epitope).filter(|new| !antibodies.contains(new)) {",
+      "new": "if let Some(new) = antibody(epitope).filter(|new| antibodies.contains(new)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a mistake is accepted",
+      "old": "            accepted: epitope == CLEAN,",
+      "new": "            accepted: epitope != CLEAN,",
+      "outcome": "killed"
+    },
+    {
+      "name": "everything is accepted",
+      "old": "            accepted: epitope == CLEAN,",
+      "new": "            accepted: true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "measure dropped",
+      "old": "            measure: Datum::from(epitope),",
+      "new": "            measure: Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual key renamed",
+      "old": "residual: Datum::map([(\"antibodies\", Datum::List(antibodies.clone()))]),",
+      "new": "residual: Datum::map([(\"constraints\", Datum::List(antibodies.clone()))]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual carries no antibody",
+      "old": "residual: Datum::map([(\"antibodies\", Datum::List(antibodies.clone()))]),",
+      "new": "residual: Datum::map([(\"antibodies\", Datum::List(Vec::new()))]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the walk allows one round more",
+      "old": "let mut verdict = bounded(run, checks, limit, &mut assess)?;",
+      "new": "let mut verdict = bounded(run, checks, limit + 1, &mut assess)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "antibody count key renamed",
+      "old": "detail.insert(\"antibodies\".to_owned(), Datum::from(antibodies.len()));",
+      "new": "detail.insert(\"count\".to_owned(), Datum::from(antibodies.len()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "antibody count one over",
+      "old": "detail.insert(\"antibodies\".to_owned(), Datum::from(antibodies.len()));",
+      "new": "detail.insert(\"antibodies\".to_owned(), Datum::from(antibodies.len() + 1));",
+      "outcome": "killed"
+    }
+  ]
+}

@@ -64,7 +64,7 @@ mining stage before solving (WF3), five isolated solvers with a global check
 (WF4), and a deterministic rewrite before WF4 (WF5). The
 [workflow DAG](workflow_dag.md) uses that shape for everything else: one base
 workflow, a few procedure extensions, experiment designs that wrap any
-workflow, and more families. WF6–WF49, WF51, WF55 and WF56 each have an offline runner on
+workflow, and more families. WF6–WF49, WF51 and WF55–WF57 each have an offline runner on
 one shared runtime ([Workflow families](workflow_families.md)): their fixtures
 are checked with no model call, and no live or local model run of them is
 recorded yet. WF6–WF23 were designed from the retained pilot experiments;
@@ -97,7 +97,7 @@ workflows solve arbitrary research problems or eliminate hallucinations.
 ## Find the next thing
 
 - [Workflow DAG](workflow_dag.md): WF1–WF49, their dependencies, teams and boost steps.
-- [Workflow families](workflow_families.md): WF6–WF49, WF51, WF55 and WF56, each runnable offline.
+- [Workflow families](workflow_families.md): WF6–WF49, WF51 and WF55–WF57, each runnable offline.
 - [WF50: repo hygiene](workflow_wf50.md): the maintenance workflow that keeps names and docs in order.
 - [WF52: frozen QM benchmark](workflow_qm_benchmark.md): controls, rational panels, budgets and evidence limits.
 - [WF53: industry replacement benchmark](workflow_wf53.md): six ways to run a coding model on four engineering tasks.

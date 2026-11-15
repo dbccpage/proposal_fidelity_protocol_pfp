@@ -1,0 +1,239 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf09.rs",
+  "target_sha256": "b3816fa173272e99631e6ed63023fde0980f6ea1cda9348b9d1222db17e80015",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf09 --test wf26",
+  "counts": {
+    "killed": 37,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "default attempts raised",
+      "old": "pub const DEFAULT_ATTEMPTS: usize = 3;",
+      "new": "pub const DEFAULT_ATTEMPTS: usize = 4;",
+      "outcome": "killed"
+    },
+    {
+      "name": "default attempts lowered",
+      "old": "pub const DEFAULT_ATTEMPTS: usize = 3;",
+      "new": "pub const DEFAULT_ATTEMPTS: usize = 2;",
+      "outcome": "killed"
+    },
+    {
+      "name": "attempt ceiling raised",
+      "old": "pub const MAX_ATTEMPTS: usize = 8;",
+      "new": "pub const MAX_ATTEMPTS: usize = 9;",
+      "outcome": "killed"
+    },
+    {
+      "name": "attempt ceiling lowered",
+      "old": "pub const MAX_ATTEMPTS: usize = 8;",
+      "new": "pub const MAX_ATTEMPTS: usize = 7;",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF9\",",
+      "new": "    workflow: \"WF90\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Bounded check-and-repair\",",
+      "new": "    name: \"Repair\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"xor_cycle_minimal_repair\",",
+      "new": "    host_check: \"repair\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation skips the graph",
+      "old": "    xor::read(task)?;\n    limit(task, DEFAULT_ATTEMPTS, MAX_ATTEMPTS).map(|_| ())",
+      "new": "    limit(task, DEFAULT_ATTEMPTS, MAX_ATTEMPTS).map(|_| ())",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation skips the limit",
+      "old": "    xor::read(task)?;\n    limit(task, DEFAULT_ATTEMPTS, MAX_ATTEMPTS).map(|_| ())",
+      "new": "    xor::read(task).map(|_| ())",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage renamed",
+      "old": "run.ask(&format!(\"attempt:{attempt}\"), prompt)?",
+      "new": "run.ask(&format!(\"try:{attempt}\"), prompt)?",
+      "outcome": "killed"
+    },
+    {
+      "name": "stages count from one",
+      "old": "run.ask(&format!(\"attempt:{attempt}\"), prompt)?",
+      "new": "run.ask(&format!(\"attempt:{}\", attempt + 1), prompt)?",
+      "outcome": "killed"
+    },
+    {
+      "name": "one attempt too many",
+      "old": "    for attempt in 0..limit {",
+      "new": "    for attempt in 0..=limit {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing reply ends the run without a predicate",
+      "old": " else {\n            break;\n        };",
+      "new": " else {\n            return Ok(refused(\"NO_REPLY\", Datum::Null));\n        };",
+      "outcome": "killed"
+    },
+    {
+      "name": "a rejected attempt is certified",
+      "old": "        if finding.accepted {",
+      "new": "        if !finding.accepted {",
+      "outcome": "killed"
+    },
+    {
+      "name": "acceptance predicate renamed",
+      "old": "checks.record(\"accepted_within_limit\", true, &Datum::List(trail.clone()));",
+      "new": "checks.record(\"accepted\", true, &Datum::List(trail.clone()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "acceptance recorded as failed",
+      "old": "checks.record(\"accepted_within_limit\", true, &Datum::List(trail.clone()));",
+      "new": "checks.record(\"accepted_within_limit\", false, &Datum::List(trail.clone()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "acceptance evidence dropped",
+      "old": "checks.record(\"accepted_within_limit\", true, &Datum::List(trail.clone()));",
+      "new": "checks.record(\"accepted_within_limit\", true, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "first try is any but the first",
+      "old": "            let code = if attempt == 0 {",
+      "new": "            let code = if attempt != 0 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "first try includes the second",
+      "old": "            let code = if attempt == 0 {",
+      "new": "            let code = if attempt <= 1 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "first-try code renamed",
+      "old": "                \"ACCEPTED_FIRST_TRY\"",
+      "new": "                \"ACCEPTED\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "repaired code renamed",
+      "old": "                \"REPAIRED\"\n            };",
+      "new": "                \"REPAIR\"\n            };",
+      "outcome": "killed"
+    },
+    {
+      "name": "attempts counted from zero",
+      "old": "                (\"attempts\", Datum::from(attempt + 1)),",
+      "new": "                (\"attempts\", Datum::from(attempt)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "accepted attempts key renamed",
+      "old": "                (\"attempts\", Datum::from(attempt + 1)),",
+      "new": "                (\"tries\", Datum::from(attempt + 1)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "accepted trail key renamed",
+      "old": "                (\"trail\", Datum::List(trail)),\n            ]);\n            return Ok(certified(code, detail));",
+      "new": "                (\"rows\", Datum::List(trail)),\n            ]);\n            return Ok(certified(code, detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "an accepted attempt is refused",
+      "old": "            return Ok(certified(code, detail));",
+      "new": "            return Ok(refused(code, detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the residual is left out of the next prompt",
+      "old": "        prompt = with_residual(&run.prompt(), &finding.residual);",
+      "new": "        prompt = run.prompt();",
+      "outcome": "killed"
+    },
+    {
+      "name": "the residual is written twice",
+      "old": "        prompt = with_residual(&run.prompt(), &finding.residual);",
+      "new": "        prompt = with_residual(&with_residual(&run.prompt(), &finding.residual), &finding.residual);",
+      "outcome": "killed"
+    },
+    {
+      "name": "exhaustion recorded as passed",
+      "old": "checks.record(\"accepted_within_limit\", false, &Datum::List(trail.clone()));",
+      "new": "checks.record(\"accepted_within_limit\", true, &Datum::List(trail.clone()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "exhaustion predicate renamed",
+      "old": "checks.record(\"accepted_within_limit\", false, &Datum::List(trail.clone()));",
+      "new": "checks.record(\"accepted\", false, &Datum::List(trail.clone()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "exhaustion evidence dropped",
+      "old": "checks.record(\"accepted_within_limit\", false, &Datum::List(trail.clone()));",
+      "new": "checks.record(\"accepted_within_limit\", false, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "exhausted attempts are the limit",
+      "old": "        (\"attempts\", Datum::from(trail.len())),",
+      "new": "        (\"attempts\", Datum::from(limit)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "exhausted attempts key renamed",
+      "old": "        (\"attempts\", Datum::from(trail.len())),",
+      "new": "        (\"tries\", Datum::from(trail.len())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "exhausted trail key renamed",
+      "old": "        (\"trail\", Datum::List(trail)),\n    ]);\n    Ok(refused(",
+      "new": "        (\"rows\", Datum::List(trail)),\n    ]);\n    Ok(refused(",
+      "outcome": "killed"
+    },
+    {
+      "name": "exhaustion code renamed",
+      "old": "Ok(refused(\"REPAIR_LIMIT_EXHAUSTED\", detail))",
+      "new": "Ok(refused(\"EXHAUSTED\", detail))",
+      "outcome": "killed"
+    },
+    {
+      "name": "exhaustion is certified",
+      "old": "Ok(refused(\"REPAIR_LIMIT_EXHAUSTED\", detail))",
+      "new": "Ok(certified(\"REPAIR_LIMIT_EXHAUSTED\", detail))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the walk allows one attempt more",
+      "old": "bounded(run, checks, limit, &mut |reply| labelled.assess(reply))",
+      "new": "bounded(run, checks, limit + 1, &mut |reply| labelled.assess(reply))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the walk accepts every readable reply",
+      "old": "bounded(run, checks, limit, &mut |reply| labelled.assess(reply))",
+      "new": "bounded(run, checks, limit, &mut |reply| labelled.assess(reply).map(|found| Assessment { accepted: true, ..found }))",
+      "outcome": "killed"
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf33.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf33.rs",
+      "language": "Rust",
+      "sha256": "935735d1221e87fd191b477fe43dc7d0c44d0f7bfb1e5b2a6e44ad699586ed39"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf33-tests:v1",
+    "symbols": [
+      "sha",
+      "task",
+      "rest",
+      "prompt",
+      "part",
+      "task_digest",
+      "root_receipt",
+      "child_receipt",
+      "plan",
+      "header",
+      "flip",
+      "good",
+      "with_reply",
+      "request",
+      "all",
+      "run",
+      "ask",
+      "bad_task",
+      "malformed",
+      "predicate",
+      "names",
+      "the_family_is_registered_under_its_names",
+      "the_plan_is_asked_for_with_the_fuel_left_after_asking",
+      "a_child_is_entered_with_its_edges_the_parent_receipt_and_the_fuel_left",
+      "a_bound_child_is_put_its_own_edges_and_labels_as_a_task",
+      "the_second_child_is_entered_under_the_receipt_of_the_first",
+      "two_children_that_share_the_fuel_are_certified",
+      "a_plan_is_read_as_sets_of_edges_and_listed_in_ascending_order",
+      "the_children_of_a_plan_may_come_in_any_order",
+      "a_plan_that_is_not_a_partition_of_the_edges_is_refused",
+      "a_plan_the_host_cannot_read_is_malformed_by_its_reason",
+      "a_plan_that_never_comes_ends_the_run_with_no_reply",
+      "a_child_under_another_receipt_is_refused_as_stale",
+      "a_child_that_states_another_task_is_refused",
+      "a_child_that_states_more_fuel_than_is_left_is_refused_as_a_reset",
+      "a_child_that_states_less_fuel_than_is_left_is_refused_as_a_mismatch",
+      "a_header_the_host_cannot_read_is_malformed_by_its_reason",
+      "every_question_draws_on_the_one_counter",
+      "a_child_cannot_be_asked_more_often_than_the_fuel_allows",
+      "a_child_that_uses_its_attempts_or_loses_a_reply_halts_the_run",
+      "a_child_repairs_under_the_residual_of_its_own_part",
+      "children_that_each_pass_alone_can_still_fail_the_task",
+      "a_union_of_the_least_size_that_leaves_a_cycle_odd_fails_the_task",
+      "a_task_the_host_cannot_read_is_refused_before_anything_is_asked"
+    ],
+    "owned_invariants": [
+      "Every receipt is rebuilt in the test from the canonical text written out, so a change to what a receipt covers fails here.",
+      "The fuel trace is asserted across the plan, each header and each attempt, and a run that runs out is asserted at the question it could not ask.",
+      "Each binding is asserted failing alone with its code, and the union of the children is asserted against the whole task on plans that split a cycle."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf33.rs",
+      "language": "Rust",
+      "sha256": "935735d1221e87fd191b477fe43dc7d0c44d0f7bfb1e5b2a6e44ad699586ed39"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 23 pass in the recorded run; the suite they belong to killed 103 of 103 eligible WF33 mutants.",
+      "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T15:01:56Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v10-test.run.json",
+        "sha256": "2ac3c78c0d43c1d8afccff41082ba5766a3c997b4958118d8411ec48197bb9e4",
+        "note": "597 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-clippy.run.json",
+        "sha256": "bca267d7753f15b816eccc1004bdc6ce881b1819f40ee74e5c1c57e840c95cdb",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-fmt.run.json",
+        "sha256": "f6d1c8480e66c3f0cfb6f83e0bb819d7a7d861989fc9164bee66d15943552e9b",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-metrics.run.json",
+        "sha256": "896842a84d07003d020cd4e1e29115b2a6a075310f83be82779b4ac28bfdc7f3",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-metrics.json",
+        "sha256": "f0123515ac77c4cf93d96d509948e04b751df51b9f0d39da5f53a058f3164656",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

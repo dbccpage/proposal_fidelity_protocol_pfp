@@ -1,0 +1,111 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/perm.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/perm.rs",
+      "language": "Rust",
+      "sha256": "07eaeba48bead051a4835c36c70b56743dce1511e22f1fd71e5476d7cfe3a3b7"
+    },
+    "contract_urn": "urn:pfp-operads:perm:v1",
+    "symbols": [
+      "Perm",
+      "Matrix",
+      "is_permutation",
+      "read",
+      "identity",
+      "compose",
+      "inverse",
+      "matrix",
+      "product",
+      "of_matrix"
+    ],
+    "owned_invariants": [
+      "A permutation of n points is a list of n exact integers that has each of 0..n once. read refuses a list of another length, a repeated or missing point, a point outside the range, and any entry that is not an exact integer.",
+      "compose(p, q) applies p and then q, so entry i of the result is q[p[i]]. inverse(p) undoes p.",
+      "matrix(p) has its 1 of row i in column p[i], so the matrix of compose(p, q) is the product of the matrix of p and the matrix of q.",
+      "of_matrix reads a matrix back only when it is square, every row has one 1 and zeros elsewhere, and no column is used twice.",
+      "No function indexes out of range on any input: an image the other side lacks is left in place by compose and skipped by inverse, and product reads a missing row or column as zeros.",
+      "product never wraps: a sum too large for 64 bits stays at the largest value."
+    ],
+    "boundaries": [
+      "compose, inverse, matrix and product take any lists. Only read and of_matrix establish that a value is a permutation; callers read first.",
+      "Sizes are bounded by the caller. A matrix of a permutation of n points has n squared entries."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/perm.rs",
+      "language": "Rust",
+      "sha256": "07eaeba48bead051a4835c36c70b56743dce1511e22f1fd71e5476d7cfe3a3b7"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: indices in usize and matrix entries in u64 with saturating sums and products; permutation matrices keep every entry at 0 or 1, so nothing saturates on them. Composition order, inverses and the matrix correspondence are asserted against values worked by hand. Not B: tested, not proven.",
+      "G3": "Total on every input: read and of_matrix return None for what they cannot read, and every access is by get, get_mut or zip. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
+      "G4": "16 permutation tests assert what is and is not read, the order of composition on permutations that do not commute, inverses, the matrix of a permutation and of a product, ragged and oversized matrix products, and each way a matrix fails to be a permutation matrix. Two mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 31/31. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 7, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T13:51:27Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v9-test.run.json",
+        "sha256": "75c065d96b64633778adc9bbc5a54eb150b58536223e4c3443f62215ad84017e",
+        "note": "427 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-clippy.run.json",
+        "sha256": "b095a186f720f679235b2f243d030a0c7412ecd11d687d13c61ad6cac778d72e",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-fmt.run.json",
+        "sha256": "17a3ba5175b2bb9bccc425d89628829ccaadff38dc36f614734ea800455c7625",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.run.json",
+        "sha256": "785da0a0586cbf62c7a8439e2a626fa5ba0df80942665c0838e344cc4f460f41",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.json",
+        "sha256": "e9c47748ca0777f0a16723ed4f2e9ddb5b44c2f4480bd78d2102e6cf92daa227",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 31,
+      "survived": 0,
+      "demonstrably_equivalent": 2,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-perm.mutation.json",
+        "sha256": "e77e424e47738232fb37d7fefdacea66698a2593971ed262a2ec32eadc5ca893",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 33 mutants"
+      }
+    }
+  },
+  "history": []
+}

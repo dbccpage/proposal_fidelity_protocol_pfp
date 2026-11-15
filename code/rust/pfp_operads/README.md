@@ -1,9 +1,10 @@
 # pfp_operads
 
 The operad host for PFP workflows, in Rust. A workflow hands it typed JSON; it
-answers with one typed outcome. Nothing here calls a model. WF1 to WF5 call it
-through `pfp/infrastructure/operad_host.py`, which carries the request and the
-outcome and decides nothing. AuthorityEffect: None.
+answers with one typed outcome. Nothing here calls a model. WF1 to WF5 and
+the workflow families call it through `pfp/infrastructure/operad_host.py`,
+which carries the request and the outcome and decides nothing.
+AuthorityEffect: None.
 
 ## What it checks
 
@@ -20,6 +21,10 @@ outcome and decides nothing. AuthorityEffect: None.
 | `pfp_operad witness REQUEST.json` | Is this answer a failure? The host judges it itself and, if it is wrong, writes the failure record for the ledger. |
 | `pfp_operad trial REQUEST.json` | How did a rule do on held-out cases? The host judges each baseline and treated answer and writes the trial record. |
 | `pfp_operad witness-turn REQUEST.json` | Did this stored turn of a WF1 to WF5 run fail? The host reads the turn's `task.json` and `receipt.json` itself, judges the task result and writes the failure record, named after its case. |
+| `pfp_operad repair SOURCE_DIR RUN_DIR REQUEST.json` | Does a supplied patch make the failing checks pass without breaking a passing one? The host copies the declared sources to a new run folder, runs the request's check commands before and after the patch, and keeps a record. The sources are never written. |
+| `pfp_operad family list` | Which workflow families does this host check? |
+| `pfp_operad family next REQUEST.json` | What must be asked next in this family run, word for word? Nothing, once the replies sent so far are enough for a verdict. |
+| `pfp_operad family judge REQUEST.json` | What is the verdict of this family run, and which predicates did the host record on the way? |
 | `pfp_operad version` | Which host and which canon is this? Workflows record it in every run. |
 | `pfp_operad laws REQUEST.json` | Do these operations obey the operad laws on this panel of inputs? |
 | `pfp_operad ledger append LEDGER.jsonl RECORD.json` | Is this record lawful? If so, add it to the failure ledger. |
@@ -32,6 +37,9 @@ outcome and decides nothing. AuthorityEffect: None.
 Each command prints one JSON object with `"status"`: `PASS`, `FAIL` (the check
 ran and did not hold) or `REFUSED` (the input was not acceptable). Exit code 0
 is `PASS`, 1 is `FAIL` or `REFUSED`, 2 is a bad command line or unreadable file.
+Two commands write: `ledger append` adds one line to a ledger, and `repair`
+fills a run folder that must not exist yet. `repair` is also the only command
+that starts other programs: the checks its request names.
 
 ## Try it
 
@@ -50,9 +58,22 @@ cargo run -p pfp_operads -- run pfp_operads/examples/run.json
 cargo run -p pfp_operads -- witness-turn pfp_operads/examples/witness_turn.json
 cargo run -p pfp_operads -- ledger load ../../workflows/wf55_failure_ledger_with_trial_gated_rules/examples/ledger_after_first_run.jsonl pfp_operads/examples/load.json
 cargo run -p pfp_operads -- ledger loaded ../../workflows/wf55_failure_ledger_with_trial_gated_rules/examples/ledger_after_first_run.jsonl pfp_operads/examples/loaded.json
+cargo run -p pfp_operads -- family next pfp_operads/examples/family_next.json
+cargo run -p pfp_operads -- family judge pfp_operads/examples/family_judge.json
 cargo run -p pfp_operads -- ledger append my_ledger.jsonl pfp_operads/examples/failure.json
 cargo run -p pfp_operads -- ledger verify my_ledger.jsonl
 ```
+
+The repair example's two checks are the host itself (`pfp_operad judge` on a
+stored answer), so it needs no other program:
+
+```
+cargo run -p pfp_operads -- repair pfp_operads/examples/repair/source my_run pfp_operads/examples/repair/request.json
+```
+
+It prints `PASS` with `"outcome":"REPAIRED"`, check exits `[1, 0]` before the
+patch and `[0, 0]` after it, and leaves `request.json`, `candidate.patch`,
+`record.json` and the patched `workspace/` in `my_run`.
 
 ## The pieces
 
@@ -115,6 +136,116 @@ cargo run -p pfp_operads -- ledger verify my_ledger.jsonl
   candidate is verified and none is refused.
   [WF56](../../../workflows/wf56_host_run_operad_candidates/README.md) uses it.
 
+- **Bounded repair**: `repair` takes one supplied patch through six stages.
+  `C` capture reads the declared sources, compares each SHA-256 and makes a
+  working copy. `R` observe runs every check for a baseline. `E` evaluate
+  applies the patch to the working copy and runs the checks again. `I`
+  incorporate decides whether the candidate is at fault. `M` disposition
+  compares the failing checks before and after. `T` terminal confirms the
+  sources still have their declared hashes. The outcome is `REPAIRED`,
+  `PARTIAL`, `INEFFECTIVE`, `REGRESSION`, `NO_REPAIR_NEEDED` or `REFUSED`; only
+  `REPAIRED` is a `PASS`. The record's `trace` lists the stages that took
+  effect, `CREIMT` for a full run.
+  [WF57](../../../workflows/wf57_host_tested_patch_repair/README.md) uses it.
+- **A repair request** is closed JSON: `run_key`, `objective`, `sources` (path
+  to SHA-256), `write_paths`, `checks` (`check_id`, `argv`, optional
+  `timeout_seconds` up to 60, default 20), `candidate_patch` and an optional
+  `workflow` name. The candidate id is the SHA-256 of the patch; the request
+  digest covers the whole request; the case name covers the sources and the
+  checks, so two patches for one task share a case.
+- **Patches** are unified diffs of existing text files with `a/` and `b/`
+  paths. A hunk applies at the line it names, with no offset or fuzz, and only
+  to a file in the write set. Creating, deleting, renaming or re-moding a
+  file, and binary data, are refused.
+- **Checks** are commands the operator trusts. Each runs in the working copy,
+  without a shell, with closed input, a deadline, and Git and Python cache
+  variables removed. Exit 0 passes. A check that cannot start, overruns or
+  rewrites a declared file refuses the run. Each output stream is hashed whole
+  and its first 4096 bytes are kept. A check whose program is `pfp_operad`
+  runs the host that is running the repair, wherever its binary is, so such a
+  request reads the same on every machine.
+- **A failed candidate is a ledger failure**: the record carries a `failure`
+  for `ledger append` when the patch left a failing check failing
+  (`CounterfeitExactness`), broke a passing one (`BoundaryLeakage`) or did
+  not fit the sources or the write set (`StructuralNonFit`). A missing tool,
+  a changed source or a full disk blames no candidate.
+- **Family runs**: a workflow family (WF7, WF9, WF10, WF11, WF13, WF20, WF24,
+  WF25, WF26, WF27, WF30, WF31, WF32, WF33, WF38, WF40, WF45, WF46 and WF47
+  so far) is a walk the host owns. The request is the family's id, the
+  public `task`, the `sealed` part and the `replies` received so far, each `null` or
+  `{"content": ...}`. `family next` returns the stage and the exact prompt to
+  send, and `family judge` returns `HOST_CERTIFIED`, `TYPED_REFUSAL` or
+  `REFUSED` with a code, a detail and every predicate the host recorded. Both
+  are functions of the request alone, so a stored run can be judged again
+  from its replies. The host refuses a malformed task (`BAD_TASK`), a run
+  that is still waiting for a reply (`REPLIES_INCOMPLETE`), replies beyond
+  the end of the run, and any prompt that carries a sealed value
+  (`SEALED_LEAK`). Whatever a family's own code concludes, a certified
+  verdict or a typed refusal stands only when at least one predicate was
+  recorded and every one passed. The caller sends each prompt to a model and
+  appends the reply; it checks nothing.
+- **Open obligations**: a verdict lists under `uncertified_obligations` what
+  the reply asserts and no predicate covers, such as a prose claim in WF32.
+  A certified run with an open obligation is certified for the listed
+  predicates only.
+- **Exact domains**: `stabilizer_commutation`, `u1_anomaly`,
+  `group_commutator` and `linear_refusal` each have one checker
+  (`src/families/domains.rs`). WF13 refuses a battery that names any other
+  domain before it asks anything, and WF32 runs a claim only under the
+  checker the task chose for the claim's input. Permutations are lists of
+  images and compose in reading order (`src/perm.rs`).
+- **Repair loops**: WF9 asks up to a fixed number of times and puts the
+  host's residual under the next prompt (`src/families/wf09.rs`). The
+  residual says what is still wrong, never the answer: the cycles still odd,
+  the edges that are off, the kind of mistake. WF27 adds the vertices of each
+  odd cycle and stops when a residual comes back three attempts later. WF20
+  adds a grant when an attempt does not improve on the last one: the
+  fundamental cycles or the chords, built from the graph alone
+  (`src/families/wf20.rs`). WF26 carries one fixed sentence per kind of
+  mistake seen. A reply the host cannot read uses up an attempt.
+- **Re-entry and restart**: WF33 splits a repair among children that draw on
+  one fuel counter, one unit per question, and binds each child to a receipt
+  of everything before it. WF40 shows the receipts of a failed repair and
+  admits one boundary action, fixed by the measured values alone: a refusal
+  naming a face that does not close, a lift with a closed witness, or a
+  restart seeded with the unchanged task and receipts the host showed.
+- **Graphs**: vertices are named by exact integers and numbered in the order
+  the edges first name them. The spanning forest is breadth first, roots in
+  vertex order and neighbours in edge order, so the fundamental cycles of a
+  task are the same on every machine (`src/graph.rs`). An XOR task has at
+  most 20 edges; the least repair is found by trying every set of flips.
+- **Edge cochains**: WF10, WF25, WF38 and WF46 read a rational value on
+  every edge of a graph whose vertices are named `0..n-1`
+  (`src/families/cochain.rs`). A reply shows its work as data the host can
+  check: a potential by vertex name, a chain of `[edge, sign]` steps, or
+  corrections by edge index. WF10 certifies a potential whose coboundary is
+  the values, or lets a closed chain with a nonzero sum stand as the
+  obstruction. WF25 certifies a smaller graph whose edges are walks in the
+  task's graph, when the walks, their sums, the cycle count and the span of
+  the lifted cycles all check; a loop counts twice toward a degree. WF38
+  ranks corrections by the defect the host recomputes and reads nothing a
+  candidate says of itself. WF46 glues two patch potentials on a packet of
+  shared vertices over 1 to 64 runs and reports how often the glued result
+  fails.
+- **Dual certificates**: WF11 certifies the optimum of a linear programme
+  from a primal point and a dual point with no gap, and its infeasibility
+  from a Farkas vector. A feasible pair with a gap is a bound and is
+  refused.
+- **Resumable search**: WF47 recomputes every batch of a sign-gauge search
+  on at most 16 vertices and at most 64 sessions. A resumed session replays
+  the sealed chain from its first record; ten custody rules are applied in a
+  fixed order and the first one broken names the refusal. Numbers in a
+  record are compared as exact values, so `2.0` is not `2`.
+- **Exact numbers** in a family run: an integer is read from its digits and
+  has no size limit. A number written with a fraction or an exponent is never
+  an integer. A rational is an integer or the text `p/q`: an optional minus,
+  ASCII digits and a nonzero denominator, with no plus sign, space, point or
+  exponent. An object with the same key twice is refused.
+- **Sealed-value guard**: a sealed number or text of four or more characters
+  is a leak anywhere in a prompt. A value under an answer-like key (`answer`,
+  `expected`, `solution`, `key` and their variants) is a leak at any length
+  when it is a whole word, with or without closing `.`, `!` or `?` marks.
+
 ## Limits
 
 - A law pass covers the supplied operations on the supplied panel. It is not a
@@ -134,5 +265,20 @@ cargo run -p pfp_operads -- ledger verify my_ledger.jsonl
   catch a number written in words.
 - `run` verifies a candidate on the cases it is given, not on every input. It
   evaluates on 64-bit integers and refuses a case with a larger value.
+- `repair` separates a working copy from the sources. It is not a sandbox:
+  a check can do whatever the account running the host can. `REPAIRED` is a
+  statement about the supplied checks; weak checks admit a wrong patch. The
+  stage letters are spelled like DDC letters and are not the calculus; no
+  descent law is claimed for the word. Nothing is applied to the sources,
+  admitted or activated.
+- `repair` notices a check that rewrites a declared file. It does not notice
+  other files a check leaves in the working copy.
+- When no check fails before the patch, the patch is not read or applied.
 
 Plan and status: [`docs/plans/operads_redesign.md`](../../../docs/plans/operads_redesign.md).
+- A family verdict covers the replies in the request. The host does not see
+  that a reply came from a model, or from the prompt it wrote; the workflow's
+  transcript records the hash of each prompt sent. The run budget and the
+  transcript are still kept by Python.
+- The sealed-value guard reads text. A prompt that paraphrases, splits or
+  encodes a sealed value passes it.

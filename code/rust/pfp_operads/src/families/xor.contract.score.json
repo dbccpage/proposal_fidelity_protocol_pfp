@@ -1,0 +1,109 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/xor.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/xor.rs",
+      "language": "Rust",
+      "sha256": "d0cbdf75b8f2458ca2759ec7b4b519ff80a2690c3db3dd99d9c7f9fbb2137c4d"
+    },
+    "contract_urn": "urn:pfp-operads:families-xor:v1",
+    "symbols": [
+      "MAX_EDGES",
+      "Labelled",
+      "read",
+      "flips",
+      "Labelled::odd_cycles",
+      "Labelled::least_repair",
+      "Labelled::assess"
+    ],
+    "owned_invariants": [
+      "A task is edges, a list of pairs of exact integers, and labels, one exact integer 0 or 1 per edge, with at most 20 edges. Anything else is an error with the reason.",
+      "A flip list is a list of exact integers, each the index of an edge; it is read as a set. A missing list, an entry that is not an exact integer and an index out of range each have their own reason.",
+      "A fundamental cycle is odd when the labels on it, after the listed flips, sum to an odd number. An edge on no cycle never makes one odd.",
+      "least_repair is the size of the smallest set of edges whose flips leave no fundamental cycle odd, found by visiting every set of edges.",
+      "A reply is accepted exactly when its flips leave no cycle odd and their number is the least repair. Its measure is the number of odd cycles left.",
+      "The residual is the number of flips, the numbers of the cycles still odd, and whether none is odd. It never names an edge to flip, and it does not say what the least number of flips is."
+    ],
+    "boundaries": [
+      "The search visits 2 to the power of the edge count sets, about a million at the limit of 20. The limit is what keeps a task affordable.",
+      "Only the fundamental cycles of graph.rs's forest are examined; every cycle of the graph is a sum of those.",
+      "The residual key minimal_known is the old protocol's name. It reports that no cycle is odd, not that the repair is least."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/xor.rs",
+      "language": "Rust",
+      "sha256": "d0cbdf75b8f2458ca2759ec7b4b519ff80a2690c3db3dd99d9c7f9fbb2137c4d"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: cycle membership is a 32-bit set per edge, and a graph of at most 20 edges has at most 20 fundamental cycles; set sizes are usize. The edge limit is asserted as the value 20, with a task of 20 edges solved and one of 21 refused. Least repairs are asserted against sizes worked by hand. Not B: minimality is by exhaustive search, tested, not proven.",
+      "G3": "Every unreadable task and flip list has its own reason. No unwrap or expect. Where a slice is indexed, the index was produced by the same function from that slice's own length. Not B: panic-freedom is tested, not proven.",
+      "G4": "17 tests assert what a task and a flip list are and each refusal by reason, odd cycles after flips on shared and bridge edges, the least repair on graphs where it is zero, one edge, the last edge alone, and one per disjoint cycle, loops and doubled edges, the 20-edge limit, and acceptance only of a repair that is both even and least. Two mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 46/46. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 8, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T15:01:56Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v10-test.run.json",
+        "sha256": "2ac3c78c0d43c1d8afccff41082ba5766a3c997b4958118d8411ec48197bb9e4",
+        "note": "597 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-clippy.run.json",
+        "sha256": "bca267d7753f15b816eccc1004bdc6ce881b1819f40ee74e5c1c57e840c95cdb",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-fmt.run.json",
+        "sha256": "f6d1c8480e66c3f0cfb6f83e0bb819d7a7d861989fc9164bee66d15943552e9b",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-metrics.run.json",
+        "sha256": "896842a84d07003d020cd4e1e29115b2a6a075310f83be82779b4ac28bfdc7f3",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-metrics.json",
+        "sha256": "f0123515ac77c4cf93d96d509948e04b751df51b9f0d39da5f53a058f3164656",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 46,
+      "survived": 0,
+      "demonstrably_equivalent": 2,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-families-xor.mutation.json",
+        "sha256": "e95c073a1760df5527a48c5d3867eeec770e722cd47f393faba2fc4e556be6de",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 48 mutants"
+      }
+    }
+  },
+  "history": []
+}

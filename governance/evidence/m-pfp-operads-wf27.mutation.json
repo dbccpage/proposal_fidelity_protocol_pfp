@@ -1,0 +1,318 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf27.rs",
+  "target_sha256": "492045ee781bd343a1ab38a102ec01069ebf4194d4685525688dc447960b359d",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf27",
+  "counts": {
+    "killed": 49,
+    "survived": 0,
+    "demonstrably_equivalent": 1,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "period shortened",
+      "old": "pub const PERIOD: usize = 3;",
+      "new": "pub const PERIOD: usize = 2;",
+      "outcome": "killed"
+    },
+    {
+      "name": "period lengthened",
+      "old": "pub const PERIOD: usize = 3;",
+      "new": "pub const PERIOD: usize = 4;",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF27\",",
+      "new": "    workflow: \"WF2\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Hinted retraction with a stationary-loop detector\",",
+      "new": "    name: \"Hinted retraction\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"xor_residual_gate_stationary_loop\",",
+      "new": "    host_check: \"gate\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation skips the graph",
+      "old": "    xor::read(task)?;\n    limit(task, DEFAULT_ATTEMPTS, MAX_ATTEMPTS).map(|_| ())",
+      "new": "    limit(task, DEFAULT_ATTEMPTS, MAX_ATTEMPTS).map(|_| ())",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation skips the limit",
+      "old": "    xor::read(task)?;\n    limit(task, DEFAULT_ATTEMPTS, MAX_ATTEMPTS).map(|_| ())",
+      "new": "    xor::read(task).map(|_| ())",
+      "outcome": "killed"
+    },
+    {
+      "name": "hint reads another residual key",
+      "old": "        .get(\"odd_cycles\")\n        .and_then(Datum::as_list)",
+      "new": "        .get(\"odd\")\n        .and_then(Datum::as_list)",
+      "outcome": "killed"
+    },
+    {
+      "name": "hint range filter dropped",
+      "old": "        .filter(|&cycle| cycle < cycles.len())\n",
+      "new": "",
+      "equivalent": "The residual passed to hint is the one the host has just built from the same graph, so every cycle number in it is below the number of fundamental cycles and the filter removes nothing.",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "hint lists tails only",
+      "old": "            .flat_map(|&(from, to)| [from, to])",
+      "new": "            .flat_map(|&(from, _)| [from, from])",
+      "outcome": "killed"
+    },
+    {
+      "name": "hint lists heads only",
+      "old": "            .flat_map(|&(from, to)| [from, to])",
+      "new": "            .flat_map(|&(_, to)| [to, to])",
+      "outcome": "killed"
+    },
+    {
+      "name": "hint vertices key renamed",
+      "old": "            \"cycle_vertices\",",
+      "new": "            \"vertices\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "hint cycles key renamed",
+      "old": "        (\"odd_cycles\", Datum::from(odd)),",
+      "new": "        (\"cycles\", Datum::from(odd)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "hint names every cycle",
+      "old": "        .filter_map(Datum::as_count)\n",
+      "new": "        .filter_map(Datum::as_count)\n        .flat_map(|_| 0..cycles.len())\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage renamed",
+      "old": "run.ask(&format!(\"attempt:{attempt}\"), prompt)?",
+      "new": "run.ask(&format!(\"turn:{attempt}\"), prompt)?",
+      "outcome": "killed"
+    },
+    {
+      "name": "one attempt too many",
+      "old": "    for attempt in 0..limit {",
+      "new": "    for attempt in 0..=limit {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing reply ends the run without a predicate",
+      "old": " else {\n            break;\n        };",
+      "new": " else {\n            return Ok(refused(\"NO_REPLY\", Datum::Null));\n        };",
+      "outcome": "killed"
+    },
+    {
+      "name": "a rejected attempt is certified",
+      "old": "        if finding.accepted {",
+      "new": "        if !finding.accepted {",
+      "outcome": "killed"
+    },
+    {
+      "name": "acceptance predicate renamed",
+      "old": "checks.record(\"accepted_within_limit\", true, &Datum::List(trail.clone()));",
+      "new": "checks.record(\"accepted\", true, &Datum::List(trail.clone()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "acceptance evidence dropped",
+      "old": "checks.record(\"accepted_within_limit\", true, &Datum::List(trail.clone()));",
+      "new": "checks.record(\"accepted_within_limit\", true, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "first try is any but the first",
+      "old": "            let code = if attempt == 0 {",
+      "new": "            let code = if attempt != 0 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "first-try code renamed",
+      "old": "                \"ACCEPTED_FIRST_TRY\"",
+      "new": "                \"ACCEPTED\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "repaired code renamed",
+      "old": "                \"REPAIRED\"\n            };",
+      "new": "                \"REPAIR\"\n            };",
+      "outcome": "killed"
+    },
+    {
+      "name": "attempts counted from zero",
+      "old": "                (\"attempts\", Datum::from(attempt + 1)),",
+      "new": "                (\"attempts\", Datum::from(attempt)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "accepted trail key renamed",
+      "old": "                (\"trail\", Datum::List(trail)),\n            ]);\n            return Ok(certified(code, detail));",
+      "new": "                (\"rows\", Datum::List(trail)),\n            ]);\n            return Ok(certified(code, detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "an accepted attempt is refused",
+      "old": "            return Ok(certified(code, detail));",
+      "new": "            return Ok(refused(code, detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "an unreadable reply can be a loop",
+      "old": "let read = finding.residual.get(\"malformed\").is_none();",
+      "new": "let read = true;",
+      "outcome": "killed"
+    },
+    {
+      "name": "only unreadable replies can be a loop",
+      "old": "let read = finding.residual.get(\"malformed\").is_none();",
+      "new": "let read = finding.residual.get(\"malformed\").is_some();",
+      "outcome": "killed"
+    },
+    {
+      "name": "loop test looks one attempt nearer",
+      "old": "attempt.checked_sub(PERIOD).and_then(|at| residuals.get(at));",
+      "new": "attempt.checked_sub(PERIOD - 1).and_then(|at| residuals.get(at));",
+      "outcome": "killed"
+    },
+    {
+      "name": "loop test fires on either condition",
+      "old": "        if read && earlier == Some(&finding.residual) {",
+      "new": "        if read || earlier == Some(&finding.residual) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "loop test fires on a different residual",
+      "old": "        if read && earlier == Some(&finding.residual) {",
+      "new": "        if read && earlier.is_some() && earlier != Some(&finding.residual) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "loop test fires on any earlier residual",
+      "old": "        if read && earlier == Some(&finding.residual) {",
+      "new": "        if read && earlier.is_some() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "stationary predicate renamed",
+      "old": "checks.record(\"residual_not_stationary\", false, &Datum::List(trail));",
+      "new": "checks.record(\"stationary\", false, &Datum::List(trail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "stationary recorded as passed",
+      "old": "checks.record(\"residual_not_stationary\", false, &Datum::List(trail));",
+      "new": "checks.record(\"residual_not_stationary\", true, &Datum::List(trail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "stationary evidence dropped",
+      "old": "checks.record(\"residual_not_stationary\", false, &Datum::List(trail));",
+      "new": "checks.record(\"residual_not_stationary\", false, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "turn counted from one",
+      "old": "                (\"turn\", Datum::from(attempt)),",
+      "new": "                (\"turn\", Datum::from(attempt + 1)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "turn key renamed",
+      "old": "                (\"turn\", Datum::from(attempt)),",
+      "new": "                (\"at\", Datum::from(attempt)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "repeated turn is the turn itself",
+      "old": "                (\"repeats_turn\", Datum::from(attempt - PERIOD)),",
+      "new": "                (\"repeats_turn\", Datum::from(attempt)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "repeated turn key renamed",
+      "old": "                (\"repeats_turn\", Datum::from(attempt - PERIOD)),",
+      "new": "                (\"repeats\", Datum::from(attempt - PERIOD)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "loop hint key renamed",
+      "old": "                (\"hint\", hint(&labelled, &finding.residual)),",
+      "new": "                (\"structure\", hint(&labelled, &finding.residual)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "loop residual key renamed",
+      "old": "                (\"residual\", finding.residual),",
+      "new": "                (\"left\", finding.residual),",
+      "outcome": "killed"
+    },
+    {
+      "name": "loop code renamed",
+      "old": "return Ok(refused(\"STATIONARY_LOOP\", detail));",
+      "new": "return Ok(refused(\"LOOP\", detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "hint line reworded",
+      "old": "            \"{}\\nStructural hint: {}\",",
+      "new": "            \"{}\\nHint: {}\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "the residual is left out of the next prompt",
+      "old": "            with_residual(&run.prompt(), &finding.residual),",
+      "new": "            run.prompt(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "earlier residuals are forgotten",
+      "old": "        residuals.push(finding.residual);",
+      "new": "        residuals.push(Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "exhaustion recorded as passed",
+      "old": "checks.record(\"accepted_within_limit\", false, &Datum::List(trail.clone()));",
+      "new": "checks.record(\"accepted_within_limit\", true, &Datum::List(trail.clone()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "exhaustion predicate renamed",
+      "old": "checks.record(\"accepted_within_limit\", false, &Datum::List(trail.clone()));",
+      "new": "checks.record(\"accepted\", false, &Datum::List(trail.clone()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "exhausted attempts are the limit",
+      "old": "        (\"attempts\", Datum::from(trail.len())),",
+      "new": "        (\"attempts\", Datum::from(limit)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "exhausted trail key renamed",
+      "old": "        (\"trail\", Datum::List(trail)),\n    ]);\n    Ok(refused(",
+      "new": "        (\"rows\", Datum::List(trail)),\n    ]);\n    Ok(refused(",
+      "outcome": "killed"
+    },
+    {
+      "name": "exhaustion code renamed",
+      "old": "Ok(refused(\"TURN_CAP_EXHAUSTED\", detail))",
+      "new": "Ok(refused(\"EXHAUSTED\", detail))",
+      "outcome": "killed"
+    }
+  ]
+}

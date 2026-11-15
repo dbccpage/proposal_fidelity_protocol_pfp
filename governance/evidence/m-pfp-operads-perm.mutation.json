@@ -1,0 +1,218 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/perm.rs",
+  "target_sha256": "07eaeba48bead051a4835c36c70b56743dce1511e22f1fd71e5476d7cfe3a3b7",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test datum --test exact --test families --test sealed --test wf07 --test wf30 --test wf31 --test perm --test domains --test wf13 --test wf24 --test wf32 --test wf45",
+  "counts": {
+    "killed": 31,
+    "survived": 0,
+    "demonstrably_equivalent": 2,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "a repeated image is accepted",
+      "old": "            .is_some_and(|slot| !std::mem::replace(slot, true))",
+      "new": "            .is_some_and(|slot| !std::mem::replace(slot, false))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeated image is the only kind accepted",
+      "old": "            .is_some_and(|slot| !std::mem::replace(slot, true))",
+      "new": "            .is_some_and(|slot| std::mem::replace(slot, true))",
+      "outcome": "killed"
+    },
+    {
+      "name": "an image out of range is accepted",
+      "old": "        seen.get_mut(image)\n            .is_some_and(|slot| !std::mem::replace(slot, true))",
+      "new": "        seen.get_mut(image)\n            .is_none_or(|slot| !std::mem::replace(slot, true))",
+      "outcome": "killed"
+    },
+    {
+      "name": "any image passes",
+      "old": "    images.iter().all(|&image| {",
+      "new": "    images.iter().any(|&image| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "length not checked on read",
+      "old": "    (images.len() == n && is_permutation(&images)).then_some(images)",
+      "new": "    is_permutation(&images).then_some(images)",
+      "outcome": "killed"
+    },
+    {
+      "name": "permutation not checked on read",
+      "old": "    (images.len() == n && is_permutation(&images)).then_some(images)",
+      "new": "    (images.len() == n).then_some(images)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a longer list is read",
+      "old": "    (images.len() == n && is_permutation(&images)).then_some(images)",
+      "new": "    (images.len() >= n && is_permutation(&images)).then_some(images)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a shorter list is read",
+      "old": "    (images.len() == n && is_permutation(&images)).then_some(images)",
+      "new": "    (images.len() <= n && is_permutation(&images)).then_some(images)",
+      "outcome": "killed"
+    },
+    {
+      "name": "unreadable images are skipped",
+      "old": "        .map(Datum::as_count)\n        .collect::<Option<_>>()?;",
+      "new": "        .filter_map(Datum::as_count)\n        .map(Some)\n        .collect::<Option<_>>()?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "identity starts at one",
+      "old": "    (0..n).collect()",
+      "new": "    (1..=n).collect()",
+      "outcome": "killed"
+    },
+    {
+      "name": "identity is one short",
+      "old": "    (0..n).collect()",
+      "new": "    (0..n.saturating_sub(1)).collect()",
+      "outcome": "killed"
+    },
+    {
+      "name": "identity is reversed",
+      "old": "    (0..n).collect()",
+      "new": "    (0..n).rev().collect()",
+      "outcome": "killed"
+    },
+    {
+      "name": "compose applies q first",
+      "old": "    p.iter()\n        .map(|&middle| q.get(middle).copied().unwrap_or(middle))\n        .collect()",
+      "new": "    q.iter()\n        .map(|&middle| p.get(middle).copied().unwrap_or(middle))\n        .collect()",
+      "outcome": "killed"
+    },
+    {
+      "name": "compose ignores q",
+      "old": "        .map(|&middle| q.get(middle).copied().unwrap_or(middle))",
+      "new": "        .map(|&middle| middle)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing image goes to zero",
+      "old": "        .map(|&middle| q.get(middle).copied().unwrap_or(middle))",
+      "new": "        .map(|&middle| q.get(middle).copied().unwrap_or(0))",
+      "outcome": "killed"
+    },
+    {
+      "name": "inverse is the permutation itself",
+      "old": "            *slot = from;",
+      "new": "            *slot = to;",
+      "outcome": "killed"
+    },
+    {
+      "name": "inverse is the identity",
+      "old": "        if let Some(slot) = back.get_mut(to) {",
+      "new": "        if let Some(slot) = back.get_mut(from) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "matrix is all zeros",
+      "old": "                .map(|column| u64::from(column == image))",
+      "new": "                .map(|_column| 0u64)",
+      "outcome": "killed"
+    },
+    {
+      "name": "matrix marks the other entries",
+      "old": "                .map(|column| u64::from(column == image))",
+      "new": "                .map(|column| u64::from(column != image))",
+      "outcome": "killed"
+    },
+    {
+      "name": "matrix is one column short",
+      "old": "            (0..p.len())\n                .map(|column| u64::from(column == image))",
+      "new": "            (1..p.len())\n                .map(|column| u64::from(column == image))",
+      "outcome": "killed"
+    },
+    {
+      "name": "product width is the narrowest row",
+      "old": "    let width = b.iter().map(Vec::len).max().unwrap_or(0);",
+      "new": "    let width = b.iter().map(Vec::len).min().unwrap_or(0);",
+      "outcome": "killed"
+    },
+    {
+      "name": "product adds instead of multiplying",
+      "old": "                        sum.saturating_add(left.saturating_mul(entry))",
+      "new": "                        sum.saturating_add(left.saturating_add(entry))",
+      "outcome": "killed"
+    },
+    {
+      "name": "product keeps the last term only",
+      "old": "                        sum.saturating_add(left.saturating_mul(entry))",
+      "new": "                        left.saturating_mul(entry)",
+      "outcome": "killed"
+    },
+    {
+      "name": "product wraps on overflow",
+      "old": "                        sum.saturating_add(left.saturating_mul(entry))",
+      "new": "                        sum.wrapping_add(left.wrapping_mul(entry))",
+      "outcome": "killed"
+    },
+    {
+      "name": "product sum wraps on overflow",
+      "old": "                        sum.saturating_add(left.saturating_mul(entry))",
+      "new": "                        sum.wrapping_add(left.saturating_mul(entry))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing entry reads as one",
+      "old": "                        let entry = right.get(column).copied().unwrap_or(0);",
+      "new": "                        let entry = right.get(column).copied().unwrap_or(1);",
+      "outcome": "killed"
+    },
+    {
+      "name": "product reads the row not the column",
+      "old": "                        let entry = right.get(column).copied().unwrap_or(0);",
+      "new": "                        let entry = right.first().copied().unwrap_or(0);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a row with two ones is read",
+      "old": "            if row.len() == n && ones == 1 && zeros + 1 == n {",
+      "new": "            if row.len() == n && ones >= 1 && zeros + ones == n {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a row with another entry is read",
+      "old": "            if row.len() == n && ones == 1 && zeros + 1 == n {",
+      "new": "            if row.len() == n && ones == 1 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a row of the wrong length is read",
+      "old": "            if row.len() == n && ones == 1 && zeros + 1 == n {",
+      "new": "            if ones == 1 && zeros + 1 == row.len() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a matrix with a repeated column is read",
+      "old": "    is_permutation(&images).then_some(images)\n}\n",
+      "new": "    Some(images)\n}\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "the last one of a row is read",
+      "old": "                row.iter().position(|&entry| entry == 1)",
+      "new": "                row.iter().rposition(|&entry| entry == 1)",
+      "equivalent": "the row has exactly one entry equal to 1 when this line is reached, so the first and the last such position are the same",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "ones counted as entries above zero",
+      "old": "            let ones = row.iter().filter(|&&entry| entry == 1).count();",
+      "new": "            let ones = row.iter().filter(|&&entry| entry >= 1).count();",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "with one entry above zero and every other entry zero, the row is read only if that entry is 1: position looks for an entry equal to 1 and finds none otherwise, so the row is refused either way"
+    }
+  ],
+  "rerun_test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test perm --test wf24 --test domains"
+}

@@ -1,0 +1,1085 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf40.rs",
+  "target_sha256": "33ebc83d285cf95ef9fbebfac745fa068b002162a406102a327f2347167588d4",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf40",
+  "counts": {
+    "killed": 178,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "actions looked for in another order",
+      "old": "pub const ACTIONS: [&str; 3] = [\"refusal\", \"lift\", \"restart\"];",
+      "new": "pub const ACTIONS: [&str; 3] = [\"restart\", \"lift\", \"refusal\"];",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF40\",",
+      "new": "    workflow: \"WF4\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Restart boundary after exhausted repair\",",
+      "new": "    name: \"Restart boundary\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"cochain_trichotomy_boundary\",",
+      "new": "    host_check: \"boundary\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "a longer list is a step",
+      "old": "    let [edge, sign] = entry.as_list()? else {",
+      "new": "    let [edge, sign, ..] = entry.as_list()? else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a step may name the edge count",
+      "old": "    let edge = edge.as_count().filter(|&edge| edge < edges)?;",
+      "new": "    let edge = edge.as_count().filter(|&edge| edge <= edges)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a forward step is read backwards",
+      "old": "        sign if *sign == BigInt::from(1) => 1,",
+      "new": "        sign if *sign == BigInt::from(1) => -1,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a backward step is read forwards",
+      "old": "        sign if *sign == BigInt::from(-1) => -1,",
+      "new": "        sign if *sign == BigInt::from(-1) => 1,",
+      "outcome": "killed"
+    },
+    {
+      "name": "any other sign is forwards",
+      "old": "        _ => return None,",
+      "new": "        _ => 1,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a step enters both its ends",
+      "old": "            balance[from] -= i64::from(sign);",
+      "new": "            balance[from] += i64::from(sign);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a step leaves both its ends",
+      "old": "            balance[to] += i64::from(sign);",
+      "new": "            balance[to] -= i64::from(sign);",
+      "outcome": "killed"
+    },
+    {
+      "name": "closure ignores direction",
+      "old": "            balance[to] += i64::from(sign);",
+      "new": "            balance[to] += 1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "one balanced vertex closes a walk",
+      "old": "    balance.iter().all(|&net| net == 0)",
+      "new": "    balance.iter().any(|&net| net == 0)",
+      "outcome": "killed"
+    },
+    {
+      "name": "every walk is closed",
+      "old": "    balance.iter().all(|&net| net == 0)",
+      "new": "    balance.iter().all(|_| true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "edges read from another key",
+      "old": "        .get(\"edges\")\n        .and_then(Graph::read)",
+      "new": "        .get(\"edge\")\n        .and_then(Graph::read)",
+      "outcome": "killed"
+    },
+    {
+      "name": "edges message changed",
+      "old": "        .ok_or(\"edges must be a list of pairs of exact integers\")?;",
+      "new": "        .ok_or(\"edges\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "vertices may have any names",
+      "old": "    if !graph.is_numbered() {",
+      "new": "    if false && !graph.is_numbered() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "vertex message changed",
+      "old": "        return Err(\"vertices must be 0..n-1\".to_owned());",
+      "new": "        return Err(\"vertices\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "vertex names are taken as graph numbers",
+      "old": "        .filter_map(|name| graph.vertex(&BigInt::from(name)))",
+      "new": "        .map(|name| name)",
+      "outcome": "killed"
+    },
+    {
+      "name": "values read from another key",
+      "old": "        .get(\"c\")\n        .and_then(rationals)",
+      "new": "        .get(\"values\")\n        .and_then(rationals)",
+      "outcome": "killed"
+    },
+    {
+      "name": "values may be any length",
+      "old": "        .filter(|values| values.len() == graph.edges().len())\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "values may be too many",
+      "old": "        .filter(|values| values.len() == graph.edges().len())\n",
+      "new": "        .filter(|values| values.len() >= graph.edges().len())\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "values may be too few",
+      "old": "        .filter(|values| values.len() == graph.edges().len())\n",
+      "new": "        .filter(|values| values.len() <= graph.edges().len())\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "values message changed",
+      "old": "        .ok_or(\"c must be one exact rational per edge\")?;",
+      "new": "        .ok_or(\"c\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "faces read from another key",
+      "old": "        .get(\"faces\")\n        .and_then(Datum::as_list)\n        .ok_or(\"faces must be a list\")?",
+      "new": "        .get(\"face\")\n        .and_then(Datum::as_list)\n        .ok_or(\"faces must be a list\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "faces message changed",
+      "old": "        .ok_or(\"faces must be a list\")?",
+      "new": "        .ok_or(\"faces\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "a face step may name the edge count",
+      "old": "            steps.map(|entry| step(entry, values.len())).collect()",
+      "new": "            steps.map(|entry| step(entry, values.len() + 1)).collect()",
+      "outcome": "killed"
+    },
+    {
+      "name": "face message changed",
+      "old": ".ok_or(\"each face is a list of [edge, sign] with the edge in range and sign 1 or -1\")?;",
+      "new": ".ok_or(\"face\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "one closed face is enough",
+      "old": "    if !faces.iter().all(|face| closed(&graph, face)) {",
+      "new": "    if !faces.iter().any(|face| closed(&graph, face)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "faces need not close",
+      "old": "    if !faces.iter().all(|face| closed(&graph, face)) {",
+      "new": "    if false && !faces.iter().all(|face| closed(&graph, face)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "closure message changed",
+      "old": "        return Err(\"every face must be a closed cycle\".to_owned());",
+      "new": "        return Err(\"face not closed\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation skips the complex",
+      "old": "    complex(task)?;\n    limit(task, LOOP_LIMIT, LOOP_LIMIT).map(|_| ())",
+      "new": "    limit(task, LOOP_LIMIT, LOOP_LIMIT).map(|_| ())",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation skips the limit",
+      "old": "    complex(task)?;\n    limit(task, LOOP_LIMIT, LOOP_LIMIT).map(|_| ())",
+      "new": "    complex(task).map(|_| ())",
+      "outcome": "killed"
+    },
+    {
+      "name": "whole numbers are written as fractions",
+      "old": "    if value.is_integer() {\n        value.numer().to_string()",
+      "new": "    if !value.is_integer() {\n        value.numer().to_string()",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential list message changed",
+      "old": "            .ok_or_else(|| format!(\"{name} list required\"))?;",
+      "new": "            .ok_or_else(|| format!(\"{name} required\"))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a potential list may be long",
+      "old": "        if listed.len() != self.numbered.len() {",
+      "new": "        if listed.len() < self.numbered.len() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a potential list may be short",
+      "old": "        if listed.len() != self.numbered.len() {",
+      "new": "        if listed.len() > self.numbered.len() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential count message changed",
+      "old": "            return Err(\"one potential per vertex\".to_owned());",
+      "new": "            return Err(\"potentials\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential type message changed",
+      "old": "            .ok_or_else(|| format!(\"{name} must be an int or a p/q string\"))?;",
+      "new": "            .ok_or_else(|| format!(\"{name} must be a number\"))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "potentials are placed in list order",
+      "old": "            potential[vertex] = value;",
+      "new": "            potential[vertex.min(0)] = value;",
+      "outcome": "killed"
+    },
+    {
+      "name": "repair potentials read from another key",
+      "old": "let potential = self.potential(reply.get(\"phi\"), \"phi\")?;",
+      "new": "let potential = self.potential(reply.get(\"potential\"), \"phi\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "repair potentials named otherwise in messages",
+      "old": "let potential = self.potential(reply.get(\"phi\"), \"phi\")?;",
+      "new": "let potential = self.potential(reply.get(\"phi\"), \"potential\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "misfit sums signed residuals",
+      "old": "let misfit: Rational = left.iter().map(Signed::abs).sum();",
+      "new": "let misfit: Rational = left.iter().cloned().sum();",
+      "outcome": "killed"
+    },
+    {
+      "name": "off edges are the fitting ones",
+      "old": "            .filter(|&edge| !left[edge].is_zero())",
+      "new": "            .filter(|&edge| left[edge].is_zero())",
+      "outcome": "killed"
+    },
+    {
+      "name": "a misfit is accepted",
+      "old": "            accepted: misfit.is_zero(),",
+      "new": "            accepted: !misfit.is_zero(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "everything readable is accepted",
+      "old": "            accepted: misfit.is_zero(),",
+      "new": "            accepted: true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "repair attempts have no measure",
+      "old": "            measure: Datum::text(show(&misfit)),",
+      "new": "            measure: Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "misfit key renamed",
+      "old": "                (\"defect_l1\", Datum::text(plain(&misfit))),",
+      "new": "                (\"defect\", Datum::text(plain(&misfit))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "misfit written with its denominator",
+      "old": "                (\"defect_l1\", Datum::text(plain(&misfit))),",
+      "new": "                (\"defect_l1\", Datum::text(show(&misfit))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "off edges key renamed",
+      "old": "                (\"off_edges\", Datum::from(off)),",
+      "new": "                (\"off\", Datum::from(off)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "one vanishing face sum is enough",
+      "old": "        self.faces\n            .iter()\n            .all(|face| walk_sum(face, values).is_zero())",
+      "new": "        self.faces\n            .iter()\n            .any(|face| walk_sum(face, values).is_zero())",
+      "outcome": "killed"
+    },
+    {
+      "name": "face sums must not vanish",
+      "old": "            .all(|face| walk_sum(face, values).is_zero())",
+      "new": "            .all(|face| !walk_sum(face, values).is_zero())",
+      "outcome": "killed"
+    },
+    {
+      "name": "closed values are classed as unclosed",
+      "old": "        if !self.face_sums_vanish(&self.values) {",
+      "new": "        if self.face_sums_vanish(&self.values) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "exact and non-exact swapped",
+      "old": "        } else if self.graph.defect(&self.values).is_zero() {",
+      "new": "        } else if !self.graph.defect(&self.values).is_zero() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "unclosed class renamed",
+      "old": "            (\"unclosed\", \"refusal\")",
+      "new": "            (\"open\", \"refusal\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "unclosed admits a lift",
+      "old": "            (\"unclosed\", \"refusal\")",
+      "new": "            (\"unclosed\", \"lift\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "exact class renamed",
+      "old": "            (\"exact\", \"restart\")",
+      "new": "            (\"coboundary\", \"restart\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "exact admits a lift",
+      "old": "            (\"exact\", \"restart\")",
+      "new": "            (\"exact\", \"lift\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-exact class renamed",
+      "old": "            (\"closed_non_exact\", \"lift\")",
+      "new": "            (\"closed\", \"lift\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-exact admits a restart",
+      "old": "            (\"closed_non_exact\", \"lift\")",
+      "new": "            (\"closed_non_exact\", \"restart\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "spec leaves out the edges",
+      "old": "        (\"edges\", part(\"edges\")),",
+      "new": "        (\"edges\", Datum::Null),",
+      "outcome": "killed"
+    },
+    {
+      "name": "spec leaves out the faces",
+      "old": "        (\"faces\", part(\"faces\")),",
+      "new": "        (\"faces\", Datum::Null),",
+      "outcome": "killed"
+    },
+    {
+      "name": "spec leaves out the values",
+      "old": "        (\"c\", part(\"c\")),",
+      "new": "        (\"c\", Datum::Null),",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipt spec key renamed",
+      "old": "                (\"spec\", Datum::text(spec.clone())),",
+      "new": "                (\"task\", Datum::text(spec.clone())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipt ignores the spec",
+      "old": "                (\"spec\", Datum::text(spec.clone())),",
+      "new": "                (\"spec\", Datum::Null),",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipt attempt key renamed",
+      "old": "                (\"attempt\", part(row, \"attempt\")),",
+      "new": "                (\"turn\", part(row, \"attempt\")),",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipt ignores the attempt",
+      "old": "                (\"attempt\", part(row, \"attempt\")),",
+      "new": "                (\"attempt\", Datum::Null),",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipt residual key renamed",
+      "old": "                (\"residual\", part(row, \"residual\")),",
+      "new": "                (\"left\", part(row, \"residual\")),",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipt covers the measure",
+      "old": "                (\"residual\", part(row, \"residual\")),",
+      "new": "                (\"residual\", part(row, \"measure\")),",
+      "outcome": "killed"
+    },
+    {
+      "name": "face read from another key",
+      "old": "let named = body.get(\"face\").ok_or(\"face must be an exact int\")?;",
+      "new": "let named = body.get(\"faces\").ok_or(\"face must be an exact int\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing face message changed",
+      "old": "let named = body.get(\"face\").ok_or(\"face must be an exact int\")?;",
+      "new": "let named = body.get(\"face\").ok_or(\"face\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "face type test skipped",
+      "old": "    if named.as_int().is_none() {\n",
+      "new": "    if false && named.as_int().is_none() {\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "face type message changed",
+      "old": "        return Err(\"face must be an exact int\".to_owned());",
+      "new": "        return Err(\"face\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "face range message changed",
+      "old": "        .ok_or(\"face index out of range\")?;",
+      "new": "        .ok_or(\"face index\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness predicate renamed",
+      "old": "        \"face_witness_nonzero\",",
+      "new": "        \"face_witness\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "a vanishing face is a witness",
+      "old": "        !sum.is_zero(),",
+      "new": "        sum.is_zero(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness evidence dropped",
+      "old": "        &Datum::text(show(&sum)),",
+      "new": "        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a failed refusal still stands",
+      "old": "    if checks.certified() {\n        let detail = with(&detail, vec![(\"face\"",
+      "new": "    if true || checks.certified() {\n        let detail = with(&detail, vec![(\"face\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal face key renamed",
+      "old": "let detail = with(&detail, vec![(\"face\", Datum::from(face))]);",
+      "new": "let detail = with(&detail, vec![(\"witness\", Datum::from(face))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal face counted from one",
+      "old": "let detail = with(&detail, vec![(\"face\", Datum::from(face))]);",
+      "new": "let detail = with(&detail, vec![(\"face\", Datum::from(face + 1))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal code renamed",
+      "old": "return Ok(typed_refusal(\"UNCLOSED_COCHAIN\", detail));",
+      "new": "return Ok(typed_refusal(\"UNCLOSED\", detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a typed refusal is a plain refusal",
+      "old": "return Ok(typed_refusal(\"UNCLOSED_COCHAIN\", detail));",
+      "new": "return Ok(refused(\"UNCLOSED_COCHAIN\", detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness read from another key",
+      "old": "        .get(\"h\")",
+      "new": "        .get(\"witness\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "a witness may be any length",
+      "old": "        .filter(|witness| witness.len() == edges)\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness message changed",
+      "old": "        .ok_or(\"h is an edge cochain\")?",
+      "new": "        .ok_or(\"h\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness type message changed",
+      "old": "        .ok_or(\"h must be an int or a p/q string\")?;",
+      "new": "        .ok_or(\"h must be a number\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "lift potentials read from another key",
+      "old": "let potential = complex.potential(body.get(\"phi\"), \"phi\")?;",
+      "new": "let potential = complex.potential(body.get(\"potential\"), \"phi\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "scale read from another key",
+      "old": "        .get(\"k\")",
+      "new": "        .get(\"scale\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "scale message changed",
+      "old": "        .ok_or(\"k must be an int or a p/q string\")?;",
+      "new": "        .ok_or(\"k must be a number\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "delta predicate renamed",
+      "old": "        \"lift_authorised_by_positive_delta\",",
+      "new": "        \"positive_delta\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "a zero delta authorises a lift",
+      "old": "        delta.is_positive(),",
+      "new": "        !delta.is_negative(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "delta evidence dropped",
+      "old": "        &Datum::text(show(&delta)),",
+      "new": "        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "rationals in evidence written plainly",
+      "old": "|values: &[Rational]| Datum::List(values.iter().map(|v| Datum::text(show(v))).collect());",
+      "new": "|values: &[Rational]| Datum::List(values.iter().map(|v| Datum::text(plain(v))).collect());",
+      "outcome": "killed"
+    },
+    {
+      "name": "preservation predicate renamed",
+      "old": "        \"preservation_witness_closed\",",
+      "new": "        \"preservation\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "an unclosed witness preserves",
+      "old": "        complex.face_sums_vanish(&witness),",
+      "new": "        !complex.face_sums_vanish(&witness),",
+      "outcome": "killed"
+    },
+    {
+      "name": "any witness preserves",
+      "old": "        complex.face_sums_vanish(&witness),",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "preservation evidence is the fit",
+      "old": "        &written(&witness),",
+      "new": "        &written(&complex.values),",
+      "outcome": "killed"
+    },
+    {
+      "name": "fit subtracts the witness",
+      "old": "        .map(|(explained, held)| explained + &scale * held)",
+      "new": "        .map(|(explained, held)| explained - &scale * held)",
+      "outcome": "killed"
+    },
+    {
+      "name": "fit ignores the scale",
+      "old": "        .map(|(explained, held)| explained + &scale * held)",
+      "new": "        .map(|(explained, held)| explained + held)",
+      "outcome": "killed"
+    },
+    {
+      "name": "fit ignores the potentials",
+      "old": "        .map(|(explained, held)| explained + &scale * held)",
+      "new": "        .map(|(_, held)| &scale * held)",
+      "outcome": "killed"
+    },
+    {
+      "name": "reproduction predicate renamed",
+      "old": "        \"lift_reproduces_claims\",",
+      "new": "        \"reproduces\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "a different fit reproduces",
+      "old": "        fit == complex.values,",
+      "new": "        fit != complex.values,",
+      "outcome": "killed"
+    },
+    {
+      "name": "any fit reproduces",
+      "old": "        fit == complex.values,",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "reproduction evidence dropped",
+      "old": "        &written(&fit),",
+      "new": "        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "lift code renamed",
+      "old": "Ok(checks.judge(\"LIFT_AUTHORISED\", detail))",
+      "new": "Ok(checks.judge(\"LIFT\", detail))",
+      "outcome": "killed"
+    },
+    {
+      "name": "seed read from another key",
+      "old": "let Some(Datum::Map(seed)) = body.get(\"seed\") else {",
+      "new": "let Some(Datum::Map(seed)) = body.get(\"start\") else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "seed message changed",
+      "old": "        return Err(\"restart needs a seed\".to_owned());",
+      "new": "        return Err(\"seed\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "seed keys predicate renamed",
+      "old": "        \"seed_only_spec_and_receipts\",",
+      "new": "        \"seed_keys\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "a seed may carry more",
+      "old": "        keys == [\"receipts\", \"spec\"],",
+      "new": "        keys.contains(&\"receipts\") && keys.contains(&\"spec\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a seed may carry less",
+      "old": "        keys == [\"receipts\", \"spec\"],",
+      "new": "        keys.iter().all(|key| [\"receipts\", \"spec\"].contains(key)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "seed keys evidence dropped",
+      "old": "        &Datum::from(keys),",
+      "new": "        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "seed spec read from another key",
+      "old": "let carried = seed.get(\"spec\").unwrap_or(&Datum::Null);",
+      "new": "let carried = seed.get(\"task\").unwrap_or(&Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "new values on another graph are a new problem",
+      "old": "    if same(\"edges\") && same(\"faces\") && !same(\"c\") {",
+      "new": "    if same(\"faces\") && !same(\"c\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "new values with other faces are a new problem",
+      "old": "    if same(\"edges\") && same(\"faces\") && !same(\"c\") {",
+      "new": "    if same(\"edges\") && !same(\"c\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the same values are a new problem",
+      "old": "    if same(\"edges\") && same(\"faces\") && !same(\"c\") {",
+      "new": "    if same(\"edges\") && same(\"faces\") && same(\"c\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "new values are never a new problem",
+      "old": "    if same(\"edges\") && same(\"faces\") && !same(\"c\") {",
+      "new": "    if false && same(\"edges\") && same(\"faces\") && !same(\"c\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "claim predicate renamed",
+      "old": "        checks.record(\"claim_set_unchanged\", false, carried);",
+      "new": "        checks.record(\"claims\", false, carried);",
+      "outcome": "killed"
+    },
+    {
+      "name": "claim predicate recorded as passed",
+      "old": "        checks.record(\"claim_set_unchanged\", false, carried);",
+      "new": "        checks.record(\"claim_set_unchanged\", true, carried);",
+      "outcome": "killed"
+    },
+    {
+      "name": "claim evidence dropped",
+      "old": "        checks.record(\"claim_set_unchanged\", false, carried);",
+      "new": "        checks.record(\"claim_set_unchanged\", false, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "new-problem code renamed",
+      "old": "        return Ok(Err(\"NEW_PROBLEM_NOT_REPAIR\"));",
+      "new": "        return Ok(Err(\"NEW_PROBLEM\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "spec predicate renamed",
+      "old": "        \"seed_spec_immutable\",",
+      "new": "        \"seed_spec\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "a changed spec is immutable",
+      "old": "        *carried == spec,",
+      "new": "        *carried != spec,",
+      "outcome": "killed"
+    },
+    {
+      "name": "any spec is immutable",
+      "old": "        *carried == spec,",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "spec evidence dropped",
+      "old": "        &Datum::text(digest(&spec)),",
+      "new": "        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "seed receipts read from another key",
+      "old": "let kept = seed.get(\"receipts\").unwrap_or(&Datum::Null);",
+      "new": "let kept = seed.get(\"kept\").unwrap_or(&Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a seed may keep no receipt",
+      "old": ".is_some_and(|kept| !kept.is_empty() && kept.iter().all(|receipt| shown.contains(receipt)));",
+      "new": ".is_some_and(|kept| kept.iter().all(|receipt| shown.contains(receipt)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "one shown receipt verifies the rest",
+      "old": ".is_some_and(|kept| !kept.is_empty() && kept.iter().all(|receipt| shown.contains(receipt)));",
+      "new": ".is_some_and(|kept| !kept.is_empty() && kept.iter().any(|receipt| shown.contains(receipt)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "any receipt list verifies",
+      "old": ".is_some_and(|kept| !kept.is_empty() && kept.iter().all(|receipt| shown.contains(receipt)));",
+      "new": ".is_some_and(|kept| !kept.is_empty());",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipts predicate renamed",
+      "old": "checks.record(\"receipts_verified\", verified, &Datum::List(shown.to_vec()));",
+      "new": "checks.record(\"receipts\", verified, &Datum::List(shown.to_vec()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipts evidence dropped",
+      "old": "checks.record(\"receipts_verified\", verified, &Datum::List(shown.to_vec()));",
+      "new": "checks.record(\"receipts_verified\", verified, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a boundary reply may be any value",
+      "old": "    if !reply.is_map() {\n",
+      "new": "    if false && !reply.is_map() {\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "boundary message changed",
+      "old": "        return Err(\"boundary reply must be an object\".to_owned());",
+      "new": "        return Err(\"boundary\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "the actions not taken are listed",
+      "old": "        .filter(|action| reply.get(action).is_some())",
+      "new": "        .filter(|action| reply.get(action).is_none())",
+      "outcome": "killed"
+    },
+    {
+      "name": "one-action predicate renamed",
+      "old": "        \"exactly_one_action\",",
+      "new": "        \"one_action\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "several actions are one",
+      "old": "        taken.len() == 1,",
+      "new": "        taken.len() >= 1,",
+      "outcome": "killed"
+    },
+    {
+      "name": "no action is one",
+      "old": "        taken.len() == 1,",
+      "new": "        taken.len() <= 1,",
+      "outcome": "killed"
+    },
+    {
+      "name": "one-action evidence dropped",
+      "old": "        &Datum::from(taken.clone()),",
+      "new": "        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "actions detail key renamed",
+      "old": "let detail = Datum::map([(\"actions\", Datum::from(taken))]);",
+      "new": "let detail = Datum::map([(\"taken\", Datum::from(taken))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "one-action code renamed",
+      "old": "return Ok(Err(refused(\"NOT_EXACTLY_ONE_ACTION\", detail)));",
+      "new": "return Ok(Err(refused(\"ACTIONS\", detail)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "an action body may be any value",
+      "old": "        .filter(|body| body.is_map())\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "body message changed",
+      "old": "        .ok_or_else(|| format!(\"{action} must be an object\"))?;",
+      "new": "        .ok_or_else(|| format!(\"{action} body\"))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "restart statement read from another key",
+      "old": "let statement = task.get(\"statement\").cloned().unwrap_or(Datum::text(\"\"));",
+      "new": "let statement = task.get(\"title\").cloned().unwrap_or(Datum::text(\"\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "restart receipts key renamed",
+      "old": "let mut entries = vec![(\"refusal_receipts\", kept.clone()), (\"statement\", statement)];",
+      "new": "let mut entries = vec![(\"receipts\", kept.clone()), (\"statement\", statement)];",
+      "outcome": "killed"
+    },
+    {
+      "name": "restart statement key renamed",
+      "old": "let mut entries = vec![(\"refusal_receipts\", kept.clone()), (\"statement\", statement)];",
+      "new": "let mut entries = vec![(\"refusal_receipts\", kept.clone()), (\"text\", statement)];",
+      "outcome": "killed"
+    },
+    {
+      "name": "restart limit read from another key",
+      "old": "    if let Some(stated) = task.get(\"max_attempts\") {",
+      "new": "    if let Some(stated) = task.get(\"attempts\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "restart limit key renamed",
+      "old": "        entries.push((\"max_attempts\", stated.clone()));",
+      "new": "        entries.push((\"attempts\", stated.clone()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a new problem is checked as a restart",
+      "old": "            Err(code) => return Ok(refused(code, detail)),",
+      "new": "            Err(code) => return Ok(refused(code, Datum::Null)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a failed seed still restarts",
+      "old": "            Ok(_) if !checks.certified() => return Ok(failed(checks, detail)),",
+      "new": "            Ok(_) if false => return Ok(failed(checks, detail)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "restart stages renamed",
+      "old": "let turn = self.complex.turn(&fresh, \"restart:\", self.limit);",
+      "new": "let turn = self.complex.turn(&fresh, \"again:\", self.limit);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a restart gets one attempt more",
+      "old": "let turn = self.complex.turn(&fresh, \"restart:\", self.limit);",
+      "new": "let turn = self.complex.turn(&fresh, \"restart:\", self.limit + 1);",
+      "outcome": "killed"
+    },
+    {
+      "name": "restart predicate renamed",
+      "old": "            \"restart_certified\",",
+      "new": "            \"restart\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "restart test inverted",
+      "old": "            restart.halt == Halt::Certificate,\n            &Datum::from(restart.halt.name()),",
+      "new": "            restart.halt != Halt::Certificate,\n            &Datum::from(restart.halt.name()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "restart evidence dropped",
+      "old": "            restart.halt == Halt::Certificate,\n            &Datum::from(restart.halt.name()),",
+      "new": "            restart.halt == Halt::Certificate,\n            &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "restart attempts key renamed",
+      "old": "let attempts = vec![(\"restart_attempts\", Datum::from(restart.trail.len()))];",
+      "new": "let attempts = vec![(\"attempts\", Datum::from(restart.trail.len()))];",
+      "outcome": "killed"
+    },
+    {
+      "name": "restart attempts one over",
+      "old": "let attempts = vec![(\"restart_attempts\", Datum::from(restart.trail.len()))];",
+      "new": "let attempts = vec![(\"restart_attempts\", Datum::from(restart.trail.len() + 1))];",
+      "outcome": "killed"
+    },
+    {
+      "name": "restart code renamed",
+      "old": "Ok(checks.judge(\"RESTART_REPAIRED\", with(&detail, attempts)))",
+      "new": "Ok(checks.judge(\"RESTARTED\", with(&detail, attempts)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "repair stages carry a prefix",
+      "old": "let repair = derive(run, &complex.turn(task, \"\", limit), None, &assess)?;",
+      "new": "let repair = derive(run, &complex.turn(task, \"repair:\", limit), None, &assess)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a scope violation goes to the boundary",
+      "old": "    if matches!(repair.halt, Halt::Certificate | Halt::Scope) {",
+      "new": "    if matches!(repair.halt, Halt::Certificate) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a used-up limit ends the run",
+      "old": "    if matches!(repair.halt, Halt::Certificate | Halt::Scope) {",
+      "new": "    if matches!(repair.halt, Halt::Certificate | Halt::Scope | Halt::Limit) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing reply ends the run",
+      "old": "    if matches!(repair.halt, Halt::Certificate | Halt::Scope) {",
+      "new": "    if matches!(repair.halt, Halt::Certificate | Halt::Scope | Halt::Budget) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "repair predicate renamed",
+      "old": "            \"repaired_within_limit\",",
+      "new": "            \"repaired\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "repair test inverted",
+      "old": "            repair.halt == Halt::Certificate,\n            &Datum::from(repair.halt.name()),",
+      "new": "            repair.halt != Halt::Certificate,\n            &Datum::from(repair.halt.name()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "repair evidence dropped",
+      "old": "            repair.halt == Halt::Certificate,\n            &Datum::from(repair.halt.name()),",
+      "new": "            repair.halt == Halt::Certificate,\n            &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "repair attempts key renamed",
+      "old": "let detail = Datum::map([(\"attempts\", Datum::from(repair.trail.len()))]);",
+      "new": "let detail = Datum::map([(\"tries\", Datum::from(repair.trail.len()))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "repair attempts one over",
+      "old": "let detail = Datum::map([(\"attempts\", Datum::from(repair.trail.len()))]);",
+      "new": "let detail = Datum::map([(\"attempts\", Datum::from(repair.trail.len() + 1))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "repair code renamed",
+      "old": "        return Ok(checks.judge(\"REPAIRED\", detail));",
+      "new": "        return Ok(checks.judge(\"FIXED\", detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipts line reworded",
+      "old": "        \"{}\\nRefusal receipts: {}\",",
+      "new": "        \"{}\\nReceipts: {}\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "boundary stage renamed",
+      "old": "let Some(reply) = run.ask(\"boundary\", prompt)? else {",
+      "new": "let Some(reply) = run.ask(\"action\", prompt)? else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "delta written with its denominator",
+      "old": "let delta = plain(&complex.graph.defect(&complex.values));",
+      "new": "let delta = show(&complex.graph.defect(&complex.values));",
+      "outcome": "killed"
+    },
+    {
+      "name": "class key renamed",
+      "old": "        (\"cochain_class\", Datum::from(class)),",
+      "new": "        (\"class\", Datum::from(class)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "delta key renamed",
+      "old": "        (\"delta\", Datum::text(delta)),",
+      "new": "        (\"defect\", Datum::text(delta)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "action key renamed",
+      "old": "        (\"action\", Datum::from(action)),",
+      "new": "        (\"taken\", Datum::from(action)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "trichotomy predicate renamed",
+      "old": "checks.record(\"action_matches_trichotomy\", action == admitted, &detail);",
+      "new": "checks.record(\"trichotomy\", action == admitted, &detail);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the wrong action matches",
+      "old": "checks.record(\"action_matches_trichotomy\", action == admitted, &detail);",
+      "new": "checks.record(\"action_matches_trichotomy\", action != admitted, &detail);",
+      "outcome": "killed"
+    },
+    {
+      "name": "any action matches",
+      "old": "checks.record(\"action_matches_trichotomy\", action == admitted, &detail);",
+      "new": "checks.record(\"action_matches_trichotomy\", true, &detail);",
+      "outcome": "killed"
+    },
+    {
+      "name": "trichotomy evidence dropped",
+      "old": "checks.record(\"action_matches_trichotomy\", action == admitted, &detail);",
+      "new": "checks.record(\"action_matches_trichotomy\", action == admitted, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a refusal is handled as a restart",
+      "old": "        \"refusal\" => refusal(&complex, body, checks, detail).map_err(Stop::Malformed),",
+      "new": "        \"refuse\" => refusal(&complex, body, checks, detail).map_err(Stop::Malformed),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a lift is handled as a restart",
+      "old": "        \"lift\" => lift(&complex, body, checks, detail).map_err(Stop::Malformed),",
+      "new": "        \"lifts\" => lift(&complex, body, checks, detail).map_err(Stop::Malformed),",
+      "outcome": "killed"
+    }
+  ]
+}

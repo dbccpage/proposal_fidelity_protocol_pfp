@@ -1,0 +1,577 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf45.rs",
+  "target_sha256": "0ff7e0284633cf8b4bca6654b6e3b2575467a5fe2cc6b77dc931bce3aa796d0d",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf45",
+  "counts": {
+    "killed": 91,
+    "survived": 0,
+    "demonstrably_equivalent": 2,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "accepted terminal renamed",
+      "old": "pub const ACCEPTED: &str = \"Accepted\";",
+      "new": "pub const ACCEPTED: &str = \"Accept\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "underdetermined terminal renamed",
+      "old": "pub const UNDERDETERMINED_TERMINAL: &str = \"Underdetermined\";",
+      "new": "pub const UNDERDETERMINED_TERMINAL: &str = \"Under\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "refuted terminal renamed",
+      "old": "pub const REFUTED: &str = \"Refuted\";",
+      "new": "pub const REFUTED: &str = \"Refute\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "refused terminal renamed",
+      "old": "pub const REFUSED_TERMINAL: &str = \"Refused\";",
+      "new": "pub const REFUSED_TERMINAL: &str = \"Refuse\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "refused is not a terminal",
+      "old": "    REFUTED,\n    REFUSED_TERMINAL,\n];",
+      "new": "    REFUTED,\n];",
+      "outcome": "killed"
+    },
+    {
+      "name": "accepted is not a terminal",
+      "old": "    ACCEPTED,\n    UNDERDETERMINED_TERMINAL,",
+      "new": "    UNDERDETERMINED_TERMINAL,",
+      "outcome": "killed"
+    },
+    {
+      "name": "twin name changed",
+      "old": "pub const TWIN: &str = \"~twin\";",
+      "new": "pub const TWIN: &str = \"twin\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF45\",",
+      "new": "    workflow: \"WF4\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Finite terminal selector and plenitude test\",",
+      "new": "    name: \"Selector\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"finite_survivor_set_verifier\",",
+      "new": "    host_check: \"verifier\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "tolerance read from another key",
+      "old": "    let tolerance = match datum.get(\"tol\") {",
+      "new": "    let tolerance = match datum.get(\"tolerance\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "default tolerance is one",
+      "old": "        None => Rational::zero(),\n        Some(tolerance)",
+      "new": "        None => Rational::one(),\n        Some(tolerance)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a negative tolerance is read",
+      "old": "        Some(tolerance) => rational(tolerance).filter(|tolerance| !tolerance.is_negative())?,",
+      "new": "        Some(tolerance) => rational(tolerance)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a zero tolerance is refused",
+      "old": "        Some(tolerance) => rational(tolerance).filter(|tolerance| !tolerance.is_negative())?,",
+      "new": "        Some(tolerance) => rational(tolerance).filter(|tolerance| tolerance.is_positive())?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "x read from y",
+      "old": "        x: rational(datum.get(\"x\")?)?,",
+      "new": "        x: rational(datum.get(\"y\")?)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "y read from x",
+      "old": "        y: rational(datum.get(\"y\")?)?,",
+      "new": "        y: rational(datum.get(\"x\")?)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "family read from another key",
+      "old": "    let Some(Datum::Map(declared)) = public.get(\"family\") else {",
+      "new": "    let Some(Datum::Map(declared)) = public.get(\"candidates\") else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "family message changed",
+      "old": "        return Err(\"family must be an object\".to_owned());",
+      "new": "        return Err(\"family\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "unreadable candidates are skipped",
+      "old": "        .map(|(name, coefficients)| Some((name.clone(), rationals(coefficients)?)))\n        .collect::<Option<_>>()",
+      "new": "        .filter_map(|(name, coefficients)| Some((name.clone(), rationals(coefficients)?)))\n        .map(Some)\n        .collect::<Option<_>>()",
+      "outcome": "killed"
+    },
+    {
+      "name": "candidate message changed",
+      "old": "        .ok_or(\"every candidate must be a list of exact rationals\")?;",
+      "new": "        .ok_or(\"candidate\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the twin name may be declared",
+      "old": "    if family.contains_key(TWIN) {",
+      "new": "    if false && family.contains_key(TWIN) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "twin message changed",
+      "old": "        return Err(format!(\"the candidate name {TWIN} is kept for the host\"));",
+      "new": "        return Err(format!(\"{TWIN} is kept\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "evidence read from another key",
+      "old": "        .get(\"evidence\")",
+      "new": "        .get(\"observations\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "evidence message changed",
+      "old": "        .ok_or(\"evidence must be a list\")?",
+      "new": "        .ok_or(\"evidence\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "unreadable observations are skipped",
+      "old": "        .map(observation)\n        .collect::<Option<_>>()",
+      "new": "        .filter_map(observation)\n        .map(Some)\n        .collect::<Option<_>>()",
+      "outcome": "killed"
+    },
+    {
+      "name": "observation message changed",
+      "old": "        .ok_or(\"every observation needs exact rational x and y, and tol zero or more\")?;",
+      "new": "        .ok_or(\"observation\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation accepts everything",
+      "old": "    task(public).map(|_| ())",
+      "new": "    task(public).map(|_| ()).or(Ok(()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "one kept observation is enough",
+      "old": "            evidence\n                .iter()\n                .all(|seen|",
+      "new": "            evidence\n                .iter()\n                .any(|seen|",
+      "outcome": "killed"
+    },
+    {
+      "name": "tolerance is exclusive",
+      "old": "(polynomial(coefficients, &seen.x) - &seen.y).abs() <= seen.tolerance)",
+      "new": "(polynomial(coefficients, &seen.x) - &seen.y).abs() < seen.tolerance)",
+      "outcome": "killed"
+    },
+    {
+      "name": "only overshoot is bounded",
+      "old": "(polynomial(coefficients, &seen.x) - &seen.y).abs() <= seen.tolerance)",
+      "new": "(polynomial(coefficients, &seen.x) - &seen.y) <= seen.tolerance)",
+      "outcome": "killed"
+    },
+    {
+      "name": "candidate evaluated at y",
+      "old": "(polynomial(coefficients, &seen.x) - &seen.y).abs() <= seen.tolerance)",
+      "new": "(polynomial(coefficients, &seen.y) - &seen.y).abs() <= seen.tolerance)",
+      "outcome": "killed"
+    },
+    {
+      "name": "the dropped candidates survive",
+      "old": "                .all(|seen| (polynomial(coefficients, &seen.x) - &seen.y).abs() <= seen.tolerance)\n        })",
+      "new": "                .all(|seen| (polynomial(coefficients, &seen.x) - &seen.y).abs() <= seen.tolerance)\n                == false\n        })",
+      "outcome": "killed"
+    },
+    {
+      "name": "vanishing polynomial starts at zero",
+      "old": "    let mut vanishing = vec![Rational::one()];",
+      "new": "    let mut vanishing = vec![Rational::zero()];",
+      "outcome": "killed"
+    },
+    {
+      "name": "vanishing factor is X plus x",
+      "old": "                shifted - scaled",
+      "new": "                shifted + scaled",
+      "outcome": "killed"
+    },
+    {
+      "name": "vanishing factor drops the shift",
+      "old": "                shifted - scaled\n",
+      "new": "                -scaled\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "vanishing factor drops the scale",
+      "old": "                shifted - scaled\n",
+      "new": "                shifted\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "vanishing polynomial keeps its degree",
+      "old": "        vanishing = (0..=vanishing.len())",
+      "new": "        vanishing = (0..vanishing.len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "shift reads the same power",
+      "old": "                    .checked_sub(1)\n                    .and_then(|below| vanishing.get(below))",
+      "new": "                    .checked_sub(0)\n                    .and_then(|below| vanishing.get(below))",
+      "outcome": "killed"
+    },
+    {
+      "name": "twin is as wide as the shorter",
+      "old": "    let width = base.len().max(vanishing.len());",
+      "new": "    let width = base.len().min(vanishing.len());",
+      "outcome": "killed"
+    },
+    {
+      "name": "twin is the base",
+      "old": "            base.get(power).cloned().unwrap_or_else(Rational::zero)\n                + vanishing.get(power).cloned().unwrap_or_else(Rational::zero)",
+      "new": "            base.get(power).cloned().unwrap_or_else(Rational::zero)",
+      "outcome": "killed"
+    },
+    {
+      "name": "twin is the vanishing polynomial",
+      "old": "            base.get(power).cloned().unwrap_or_else(Rational::zero)\n                + vanishing.get(power).cloned().unwrap_or_else(Rational::zero)",
+      "new": "            vanishing.get(power).cloned().unwrap_or_else(Rational::zero)",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage renamed",
+      "old": "    let Some(reply) = run.ask(\"solve\", run.prompt())? else {",
+      "new": "    let Some(reply) = run.ask(\"select\", run.prompt())? else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty family is judged by its survivors",
+      "old": "        _ if task.family.is_empty() || task.evidence.is_empty() => REFUSED_TERMINAL,",
+      "new": "        _ if task.evidence.is_empty() => REFUSED_TERMINAL,",
+      "outcome": "killed"
+    },
+    {
+      "name": "no evidence is judged by the survivors",
+      "old": "        _ if task.family.is_empty() || task.evidence.is_empty() => REFUSED_TERMINAL,",
+      "new": "        _ if task.family.is_empty() => REFUSED_TERMINAL,",
+      "outcome": "killed"
+    },
+    {
+      "name": "no survivor is accepted",
+      "old": "        0 => REFUTED,\n        1 => ACCEPTED,",
+      "new": "        0 => ACCEPTED,\n        1 => REFUTED,",
+      "outcome": "killed"
+    },
+    {
+      "name": "one survivor is underdetermined",
+      "old": "        1 => ACCEPTED,\n        _ => UNDERDETERMINED_TERMINAL,",
+      "new": "        _ => UNDERDETERMINED_TERMINAL,",
+      "outcome": "killed"
+    },
+    {
+      "name": "two survivors are accepted",
+      "old": "        1 => ACCEPTED,\n        _ => UNDERDETERMINED_TERMINAL,",
+      "new": "        1 | 2 => ACCEPTED,\n        _ => UNDERDETERMINED_TERMINAL,",
+      "outcome": "killed"
+    },
+    {
+      "name": "terminal read from another key",
+      "old": "        .get(\"terminal\")\n        .and_then(Datum::as_text)",
+      "new": "        .get(\"verdict\")\n        .and_then(Datum::as_text)",
+      "outcome": "killed"
+    },
+    {
+      "name": "any terminal text is read",
+      "old": "        .filter(|terminal| TERMINALS.contains(terminal))\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "terminal message changed",
+      "old": "Stop::Malformed(format!(\"terminal must be one of {}\", TERMINALS.join(\", \")))",
+      "new": "Stop::Malformed(format!(\"terminal: {}\", TERMINALS.join(\", \")))",
+      "outcome": "killed"
+    },
+    {
+      "name": "terminal message joined differently",
+      "old": "TERMINALS.join(\", \")))",
+      "new": "TERMINALS.join(\"|\")))",
+      "outcome": "killed"
+    },
+    {
+      "name": "considered read from another key",
+      "old": "        .get(\"family_considered\")",
+      "new": "        .get(\"considered\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-text ids are skipped",
+      "old": "        .and_then(|ids| ids.iter().map(Datum::as_text).collect())",
+      "new": "        .map(|ids| ids.iter().filter_map(Datum::as_text).collect())",
+      "outcome": "killed"
+    },
+    {
+      "name": "considered message changed",
+      "old": "        .ok_or_else(|| Stop::Malformed(\"family_considered must list candidate ids\".to_owned()))?;",
+      "new": "        .ok_or_else(|| Stop::Malformed(\"family_considered\".to_owned()))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "considered compared in the order written",
+      "old": "    considered.sort_unstable();\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "repeated ids are merged",
+      "old": "    considered.sort_unstable();\n",
+      "new": "    considered.sort_unstable();\n    considered.dedup();\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "family predicate renamed",
+      "old": "        \"declared_family_kept\",",
+      "new": "        \"family_kept\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "family always kept",
+      "old": "        considered == task.family.keys().map(String::as_str).collect::<Vec<_>>(),",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a prefix of the family is enough",
+      "old": "        considered == task.family.keys().map(String::as_str).collect::<Vec<_>>(),",
+      "new": "        task.family.keys().map(String::as_str).collect::<Vec<_>>().starts_with(&considered),",
+      "outcome": "killed"
+    },
+    {
+      "name": "family evidence dropped",
+      "old": "        &Datum::from(considered),",
+      "new": "        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "terminal predicate renamed",
+      "old": "        \"terminal_matches_survivor_set\",",
+      "new": "        \"terminal_matches\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "terminal always matches",
+      "old": "        terminal == truth,",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "terminal evidence is the claim",
+      "old": "            (\"terminal\", Datum::from(truth)),\n            (\"survivors\", survivors_listed.clone()),",
+      "new": "            (\"terminal\", Datum::from(terminal)),\n            (\"survivors\", survivors_listed.clone()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "terminal evidence drops the survivors",
+      "old": "            (\"terminal\", Datum::from(truth)),\n            (\"survivors\", survivors_listed.clone()),",
+      "new": "            (\"terminal\", Datum::from(truth)),\n            (\"survivors\", Datum::Null),",
+      "outcome": "killed"
+    },
+    {
+      "name": "selection checked on the claimed terminal",
+      "old": "    if let (ACCEPTED, Some(survivor)) = (truth, alive.first()) {",
+      "new": "    if let (ACCEPTED, Some(survivor)) = (terminal, alive.first()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "selection never checked",
+      "old": "    if let (ACCEPTED, Some(survivor)) = (truth, alive.first()) {",
+      "new": "    if let (REFUTED, Some(survivor)) = (truth, alive.first()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "selection predicate renamed",
+      "old": "            \"selection_is_the_survivor\",",
+      "new": "            \"selection\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "selection read from another key",
+      "old": "            reply.get(\"selected\").and_then(Datum::as_text) == Some(survivor),",
+      "new": "            reply.get(\"choice\").and_then(Datum::as_text) == Some(survivor),",
+      "outcome": "killed"
+    },
+    {
+      "name": "any text selection passes",
+      "old": "            reply.get(\"selected\").and_then(Datum::as_text) == Some(survivor),",
+      "new": "            reply.get(\"selected\").and_then(Datum::as_text).is_some(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "selection evidence dropped",
+      "old": "            &Datum::from(*survivor),",
+      "new": "            &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "twin built on the last survivor",
+      "old": "    if let Some(first) = alive.first() {\n        let mut grown",
+      "new": "    if let Some(first) = alive.last() {\n        let mut grown",
+      "outcome": "killed"
+    },
+    {
+      "name": "twin has no coefficients of its own",
+      "old": "        let base = task.family.get(*first).map_or(&[][..], Vec::as_slice);",
+      "new": "        let base: &[Rational] = &[];",
+      "outcome": "killed"
+    },
+    {
+      "name": "twin replaces its base",
+      "old": "        grown.insert(TWIN.to_owned(), twin);",
+      "new": "        grown.insert((*first).to_owned(), twin);",
+      "outcome": "killed"
+    },
+    {
+      "name": "twin not added",
+      "old": "        grown.insert(TWIN.to_owned(), twin);",
+      "new": "        drop(twin);",
+      "outcome": "killed"
+    },
+    {
+      "name": "plenitude predicate renamed",
+      "old": "            \"plenitude_raises_survivor_count\",",
+      "new": "            \"plenitude\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "plenitude always passes",
+      "old": "            after == alive.len() + 1,",
+      "new": "            true,",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "the twin agrees with a survivor at every observed point and its name is kept out of the declared family, so it always survives and the count always rises by exactly one; the predicate records a construction and cannot fail on any task"
+    },
+    {
+      "name": "plenitude passes on any rise",
+      "old": "            after == alive.len() + 1,",
+      "new": "            after > alive.len(),",
+      "equivalent": "adding one candidate to the family adds at most one survivor, so a rise is a rise by exactly one",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "plenitude before and after swapped",
+      "old": "                (\"before\", Datum::from(alive.len())),\n                (\"after\", Datum::from(after)),",
+      "new": "                (\"after\", Datum::from(alive.len())),\n                (\"before\", Datum::from(after)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "twin not recorded",
+      "old": "                (\"twin\", written),",
+      "new": "                (\"twin\", Datum::Null),",
+      "outcome": "killed"
+    },
+    {
+      "name": "twin recorded under another key",
+      "old": "                (\"twin\", written),",
+      "new": "                (\"candidate\", written),",
+      "outcome": "killed"
+    },
+    {
+      "name": "twin recorded as its base",
+      "old": "        let written = twin\n            .iter()",
+      "new": "        let written = base\n            .iter()",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeated point is a double root",
+      "old": "    let points: BTreeSet<&Rational> = evidence.iter().map(|seen| &seen.x).collect();",
+      "new": "    let points: Vec<&Rational> = evidence.iter().map(|seen| &seen.x).collect();",
+      "outcome": "killed"
+    },
+    {
+      "name": "roots taken at the observed values",
+      "old": "    let points: BTreeSet<&Rational> = evidence.iter().map(|seen| &seen.x).collect();",
+      "new": "    let points: BTreeSet<&Rational> = evidence.iter().map(|seen| &seen.y).collect();",
+      "outcome": "killed"
+    },
+    {
+      "name": "detail survivors key changed",
+      "old": "        (\"survivors\", survivors_listed),\n        (\"terminal\", Datum::from(truth)),\n    ]);",
+      "new": "        (\"alive\", survivors_listed),\n        (\"terminal\", Datum::from(truth)),\n    ]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "detail terminal key changed",
+      "old": "        (\"survivors\", survivors_listed),\n        (\"terminal\", Datum::from(truth)),\n    ]);",
+      "new": "        (\"survivors\", survivors_listed),\n        (\"truth\", Datum::from(truth)),\n    ]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "detail terminal is the claim",
+      "old": "        (\"survivors\", survivors_listed),\n        (\"terminal\", Datum::from(truth)),\n    ]);",
+      "new": "        (\"survivors\", survivors_listed),\n        (\"terminal\", Datum::from(terminal)),\n    ]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a failed run is a typed refusal",
+      "old": "    if !checks.certified() || truth == ACCEPTED {",
+      "new": "    if truth == ACCEPTED {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an accepted run is a typed refusal",
+      "old": "    if !checks.certified() || truth == ACCEPTED {",
+      "new": "    if !checks.certified() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "accepted code changed",
+      "old": "        return Ok(checks.judge(\"ACCEPTED_WITHIN_FAMILY\", detail));",
+      "new": "        return Ok(checks.judge(\"ACCEPTED\", detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "underdetermined coded as inconsistent",
+      "old": "        UNDERDETERMINED_TERMINAL => UNDERDETERMINED,\n        REFUTED => INCONSISTENT,",
+      "new": "        UNDERDETERMINED_TERMINAL => INCONSISTENT,\n        REFUTED => UNDERDETERMINED,",
+      "outcome": "killed"
+    },
+    {
+      "name": "refuted coded as undeclared",
+      "old": "        REFUTED => INCONSISTENT,\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "undeclared code changed",
+      "old": "        _ => \"REFUSED_UNDECLARED_FAMILY\",",
+      "new": "        _ => \"UNDECLARED_FAMILY\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "a typed refusal is certified",
+      "old": "    Ok(typed_refusal(code, detail))",
+      "new": "    Ok(super::certified(code, detail))",
+      "outcome": "killed"
+    }
+  ]
+}

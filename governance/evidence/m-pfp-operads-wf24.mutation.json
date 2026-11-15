@@ -1,0 +1,487 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf24.rs",
+  "target_sha256": "0e65a41e75bea7898b88c30f42d752938d003c9ae3ab2d35a9c7b4972f668527",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test datum --test exact --test families --test sealed --test wf07 --test wf30 --test wf31 --test perm --test domains --test wf13 --test wf24 --test wf32 --test wf45",
+  "counts": {
+    "killed": 76,
+    "survived": 0,
+    "demonstrably_equivalent": 2,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "point limit is 63",
+      "old": "pub const MAX_POINTS: usize = 64;",
+      "new": "pub const MAX_POINTS: usize = 63;",
+      "outcome": "killed"
+    },
+    {
+      "name": "point limit is 65",
+      "old": "pub const MAX_POINTS: usize = 64;",
+      "new": "pub const MAX_POINTS: usize = 65;",
+      "outcome": "killed"
+    },
+    {
+      "name": "loop limit is 4095",
+      "old": "pub const MAX_LOOP: usize = 4096;",
+      "new": "pub const MAX_LOOP: usize = 4095;",
+      "outcome": "killed"
+    },
+    {
+      "name": "loop limit is 4097",
+      "old": "pub const MAX_LOOP: usize = 4096;",
+      "new": "pub const MAX_LOOP: usize = 4097;",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF24\",",
+      "new": "    workflow: \"WF2\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Pinned-token operational scratchpad\",",
+      "new": "    name: \"Scratchpad\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"dual_holonomy_checkers\",",
+      "new": "    host_check: \"holonomy\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "plus and minus swapped",
+      "old": "        (Some(name), _) => (name, true),\n        (_, Some(name)) => (name, false),",
+      "new": "        (Some(name), _) => (name, false),\n        (_, Some(name)) => (name, true),",
+      "outcome": "killed"
+    },
+    {
+      "name": "minus read as forward",
+      "old": "        (_, Some(name)) => (name, false),",
+      "new": "        (_, Some(name)) => (name, true),",
+      "outcome": "killed"
+    },
+    {
+      "name": "plus read as backward",
+      "old": "        (Some(name), _) => (name, true),",
+      "new": "        (Some(name), _) => (name, false),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a bare link name is a forward token",
+      "old": "        _ => return None,\n    };\n    let number",
+      "new": "        _ => (token, true),\n    };\n    let number",
+      "outcome": "killed"
+    },
+    {
+      "name": "link prefix not required",
+      "old": "    let number = name.strip_prefix('e')?;",
+      "new": "    let number = name.strip_prefix('e').unwrap_or(name);",
+      "outcome": "killed"
+    },
+    {
+      "name": "link prefix is f",
+      "old": "    let number = name.strip_prefix('e')?;",
+      "new": "    let number = name.strip_prefix('f')?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty link number accepted",
+      "old": "    if number.is_empty() || !number.bytes().all(|byte| byte.is_ascii_digit()) {",
+      "new": "    if !number.bytes().all(|byte| byte.is_ascii_digit()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "any link number accepted",
+      "old": "    if number.is_empty() || !number.bytes().all(|byte| byte.is_ascii_digit()) {",
+      "new": "    if number.is_empty() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "any unicode digit accepted",
+      "old": "    if number.is_empty() || !number.bytes().all(|byte| byte.is_ascii_digit()) {",
+      "new": "    if number.is_empty() || !number.chars().all(char::is_numeric) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an undeclared link is the first link",
+      "old": "    let link = links.get(name)?;",
+      "new": "    let link = links.get(name).or(links.values().next())?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a backward token is not inverted",
+      "old": "    Some(if forward {\n        link.clone()\n    } else {\n        perm::inverse(link)\n    })",
+      "new": "    Some(if forward {\n        link.clone()\n    } else {\n        link.clone()\n    })",
+      "outcome": "killed"
+    },
+    {
+      "name": "a forward token is inverted",
+      "old": "    Some(if forward {\n        link.clone()\n    } else {\n        perm::inverse(link)\n    })",
+      "new": "    Some(if forward {\n        perm::inverse(link)\n    } else {\n        perm::inverse(link)\n    })",
+      "outcome": "killed"
+    },
+    {
+      "name": "points read from another key",
+      "old": "        .get(\"n\")\n        .and_then(Datum::as_count)\n        .filter(|points| (1..=MAX_POINTS).contains(points))",
+      "new": "        .get(\"points\")\n        .and_then(Datum::as_count)\n        .filter(|points| (1..=MAX_POINTS).contains(points))",
+      "outcome": "killed"
+    },
+    {
+      "name": "zero points accepted",
+      "old": "        .filter(|points| (1..=MAX_POINTS).contains(points))",
+      "new": "        .filter(|points| (0..=MAX_POINTS).contains(points))",
+      "outcome": "killed"
+    },
+    {
+      "name": "point limit not applied",
+      "old": "        .filter(|points| (1..=MAX_POINTS).contains(points))",
+      "new": "        .filter(|points| *points >= 1)",
+      "outcome": "killed"
+    },
+    {
+      "name": "point message changed",
+      "old": "        .ok_or(format!(\"n must be an exact integer from 1 to {MAX_POINTS}\"))?;",
+      "new": "        .ok_or(format!(\"n must be from 1 to {MAX_POINTS}\"))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "links read from another key",
+      "old": "    let Some(Datum::Map(declared)) = task.get(\"links\") else {",
+      "new": "    let Some(Datum::Map(declared)) = task.get(\"edges\") else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "links message changed",
+      "old": "        return Err(\"links must be an object\".to_owned());",
+      "new": "        return Err(\"links\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "links read over one more point",
+      "old": "        .map(|(name, link)| Some((name.clone(), perm::read(link, points)?)))",
+      "new": "        .map(|(name, link)| Some((name.clone(), perm::read(link, points + 1)?)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "unreadable links are skipped",
+      "old": "        .map(|(name, link)| Some((name.clone(), perm::read(link, points)?)))\n        .collect::<Option<_>>()",
+      "new": "        .filter_map(|(name, link)| Some((name.clone(), perm::read(link, points)?)))\n        .map(Some)\n        .collect::<Option<_>>()",
+      "outcome": "killed"
+    },
+    {
+      "name": "link message changed",
+      "old": "            \"every link must be a permutation of {points} points\"",
+      "new": "            \"links must permute {points} points\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "loop read from another key",
+      "old": "        .get(\"loop\")\n        .and_then(Datum::as_list)\n        .filter",
+      "new": "        .get(\"tokens\")\n        .and_then(Datum::as_list)\n        .filter",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty loop is accepted",
+      "old": "        .filter(|tokens| (1..=MAX_LOOP).contains(&tokens.len()))",
+      "new": "        .filter(|tokens| (0..=MAX_LOOP).contains(&tokens.len()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "loop limit not applied",
+      "old": "        .filter(|tokens| (1..=MAX_LOOP).contains(&tokens.len()))",
+      "new": "        .filter(|tokens| !tokens.is_empty())",
+      "outcome": "killed"
+    },
+    {
+      "name": "loop message changed",
+      "old": "        .ok_or(format!(\"loop must be a list of 1 to {MAX_LOOP} tokens\"))?",
+      "new": "        .ok_or(format!(\"loop must have 1 to {MAX_LOOP} tokens\"))?",
+      "outcome": "killed"
+    },
+    {
+      "name": "unreadable tokens are skipped",
+      "old": "        .map(|token| step(token, &links))\n        .collect::<Option<_>>()",
+      "new": "        .filter_map(|token| step(token, &links))\n        .map(Some)\n        .collect::<Option<_>>()",
+      "outcome": "killed"
+    },
+    {
+      "name": "token message changed",
+      "old": "        .ok_or(\"loop tokens must be pinned eK+ / eK- on declared links\")?;",
+      "new": "        .ok_or(\"tokens\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation accepts everything",
+      "old": "    task(public).map(|_| ())",
+      "new": "    task(public).map(|_| ()).or(Ok(()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a differing step is not found",
+      "old": "        .position(|(given, truth)| given != truth)",
+      "new": "        .position(|(given, truth)| given == truth)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a length difference is not found",
+      "old": "        .or_else(|| (written.len() != chain.len()).then(|| written.len().min(chain.len())))",
+      "new": "        .or_else(|| (written.len() > chain.len()).then(|| written.len().min(chain.len())))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a longer scratchpad is not found",
+      "old": "        .or_else(|| (written.len() != chain.len()).then(|| written.len().min(chain.len())))",
+      "new": "        .or_else(|| (written.len() < chain.len()).then(|| written.len().min(chain.len())))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a length difference is located at the longer end",
+      "old": "        .or_else(|| (written.len() != chain.len()).then(|| written.len().min(chain.len())))",
+      "new": "        .or_else(|| (written.len() != chain.len()).then(|| written.len().max(chain.len())))",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage renamed",
+      "old": "    let Some(reply) = run.ask(\"solve\", run.prompt())? else {",
+      "new": "    let Some(reply) = run.ask(\"fold\", run.prompt())? else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "tokens read from another key",
+      "old": "            .get(\"tokens\")\n            .filter(|tokens| tokens.as_list().is_some()),",
+      "new": "            .get(\"loop\")\n            .filter(|tokens| tokens.as_list().is_some()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "tokens may be any value",
+      "old": "            .get(\"tokens\")\n            .filter(|tokens| tokens.as_list().is_some()),",
+      "new": "            .get(\"tokens\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "scratchpad read from another key",
+      "old": "        reply.get(\"scratchpad\").and_then(Datum::as_list),",
+      "new": "        reply.get(\"steps\").and_then(Datum::as_list),",
+      "outcome": "killed"
+    },
+    {
+      "name": "parts message changed",
+      "old": "        return Err(Stop::Malformed(\"tokens and scratchpad required\".to_owned()));",
+      "new": "        return Err(Stop::Malformed(\"parts\".to_owned()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "flat read from another key",
+      "old": "    let Some(Datum::Bool(flat)) = reply.get(\"flat\") else {",
+      "new": "    let Some(Datum::Bool(flat)) = reply.get(\"is_flat\") else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "flat message changed",
+      "old": "        return Err(Stop::Malformed(\"flat must be a bool\".to_owned()));",
+      "new": "        return Err(Stop::Malformed(\"flat\".to_owned()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "scratchpad read over one more point",
+      "old": "        .map(|entry| perm::read(entry, task.points))",
+      "new": "        .map(|entry| perm::read(entry, task.points + 1))",
+      "outcome": "killed"
+    },
+    {
+      "name": "unreadable scratchpad entries are skipped",
+      "old": "        .map(|entry| perm::read(entry, task.points))\n        .collect::<Option<_>>()",
+      "new": "        .filter_map(|entry| perm::read(entry, task.points))\n        .map(Some)\n        .collect::<Option<_>>()",
+      "outcome": "killed"
+    },
+    {
+      "name": "scratchpad message changed",
+      "old": "                \"every scratchpad entry must be a permutation of {} points\",",
+      "new": "                \"scratchpad entries must permute {} points\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "holonomy read from another key",
+      "old": "    let claimed = permutation(reply, \"holonomy\", task.points).map_err(Stop::Malformed)?;",
+      "new": "    let claimed = permutation(reply, \"result\", task.points).map_err(Stop::Malformed)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "steps composed on the other side",
+      "old": "        holonomy = perm::compose(&holonomy, step);",
+      "new": "        holonomy = perm::compose(step, &holonomy);",
+      "outcome": "killed"
+    },
+    {
+      "name": "holonomy is the last step",
+      "old": "        holonomy = perm::compose(&holonomy, step);",
+      "new": "        holonomy = step.clone();",
+      "outcome": "killed"
+    },
+    {
+      "name": "chain records the step",
+      "old": "        chain.push(holonomy.clone());",
+      "new": "        chain.push(step.clone());",
+      "outcome": "killed"
+    },
+    {
+      "name": "matrices multiplied on the other side",
+      "old": "        matrices = perm::product(&matrices, &perm::matrix(step));",
+      "new": "        matrices = perm::product(&perm::matrix(step), &matrices);",
+      "outcome": "killed"
+    },
+    {
+      "name": "matrices not folded",
+      "old": "        matrices = perm::product(&matrices, &perm::matrix(step));",
+      "new": "        matrices = perm::matrix(step);",
+      "outcome": "killed"
+    },
+    {
+      "name": "second checker is the first",
+      "old": "    let second = perm::of_matrix(&matrices);",
+      "new": "    let second = Some(holonomy.clone());",
+      "equivalent": "the matrix of a composition is the product of the matrices and every entry stays 0 or 1, so the matrix fold gives the composed permutation on every input; the predicate guards against a fault in either fold",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "flat when not the identity",
+      "old": "    let is_flat = holonomy == identity;",
+      "new": "    let is_flat = holonomy != identity;",
+      "outcome": "killed"
+    },
+    {
+      "name": "never flat",
+      "old": "    let is_flat = holonomy == identity;",
+      "new": "    let is_flat = false;",
+      "outcome": "killed"
+    },
+    {
+      "name": "tokens predicate renamed",
+      "old": "        \"tokens_pinned\",\n        Some(tokens) == run.task.get(\"loop\"),",
+      "new": "        \"tokens\",\n        Some(tokens) == run.task.get(\"loop\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "tokens always pinned",
+      "old": "        Some(tokens) == run.task.get(\"loop\"),",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "tokens compared with the links",
+      "old": "        Some(tokens) == run.task.get(\"loop\"),",
+      "new": "        Some(tokens) == run.task.get(\"links\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "tokens evidence dropped",
+      "old": "        Some(tokens) == run.task.get(\"loop\"),\n        tokens,",
+      "new": "        Some(tokens) == run.task.get(\"loop\"),\n        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "scratchpad predicate renamed",
+      "old": "        \"scratchpad_steps_exact\",",
+      "new": "        \"scratchpad\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "scratchpad always exact",
+      "old": "        bad.is_none(),\n        &bad.map_or(Datum::Null, Datum::from),",
+      "new": "        true,\n        &bad.map_or(Datum::Null, Datum::from),",
+      "outcome": "killed"
+    },
+    {
+      "name": "scratchpad evidence dropped",
+      "old": "        bad.is_none(),\n        &bad.map_or(Datum::Null, Datum::from),",
+      "new": "        bad.is_none(),\n        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "dual predicate renamed",
+      "old": "        \"dual_checkers_agree\",",
+      "new": "        \"dual\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "dual predicate never passes",
+      "old": "        second.as_ref() == Some(&holonomy),",
+      "new": "        second.as_ref() != Some(&holonomy),",
+      "outcome": "killed"
+    },
+    {
+      "name": "dual evidence keys swapped",
+      "old": "            (\"composed\", truth.clone()),\n            (\"matrices\", second.map_or(Datum::Null, Datum::from)),",
+      "new": "            (\"matrices\", truth.clone()),\n            (\"composed\", second.map_or(Datum::Null, Datum::from)),",
+      "equivalent": "the two folds give the same permutation on every input, so both entries always hold the same value and swapping the keys changes no byte of the evidence",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "holonomy predicate renamed",
+      "old": "    checks.record(\"holonomy_matches\", claimed == holonomy, &truth);",
+      "new": "    checks.record(\"holonomy\", claimed == holonomy, &truth);",
+      "outcome": "killed"
+    },
+    {
+      "name": "holonomy always matches",
+      "old": "    checks.record(\"holonomy_matches\", claimed == holonomy, &truth);",
+      "new": "    checks.record(\"holonomy_matches\", true, &truth);",
+      "outcome": "killed"
+    },
+    {
+      "name": "holonomy evidence is the claim",
+      "old": "    checks.record(\"holonomy_matches\", claimed == holonomy, &truth);",
+      "new": "    checks.record(\"holonomy_matches\", claimed == holonomy, &Datum::from(claimed.clone()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "flatness predicate renamed",
+      "old": "    checks.record(\"flatness_matches\", *flat == is_flat, &Datum::Bool(is_flat));",
+      "new": "    checks.record(\"flatness\", *flat == is_flat, &Datum::Bool(is_flat));",
+      "outcome": "killed"
+    },
+    {
+      "name": "flatness always matches",
+      "old": "    checks.record(\"flatness_matches\", *flat == is_flat, &Datum::Bool(is_flat));",
+      "new": "    checks.record(\"flatness_matches\", true, &Datum::Bool(is_flat));",
+      "outcome": "killed"
+    },
+    {
+      "name": "flatness evidence is the claim",
+      "old": "    checks.record(\"flatness_matches\", *flat == is_flat, &Datum::Bool(is_flat));",
+      "new": "    checks.record(\"flatness_matches\", *flat == is_flat, &Datum::Bool(*flat));",
+      "outcome": "killed"
+    },
+    {
+      "name": "detail holonomy key changed",
+      "old": "            (\"holonomy\", truth),",
+      "new": "            (\"result\", truth),",
+      "outcome": "killed"
+    },
+    {
+      "name": "detail flat key changed",
+      "old": "            (\"flat\", Datum::Bool(is_flat)),",
+      "new": "            (\"is_flat\", Datum::Bool(is_flat)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "detail first bad step key changed",
+      "old": "            (\"first_bad_step\", bad.map_or(Datum::Null, Datum::from)),",
+      "new": "            (\"bad\", bad.map_or(Datum::Null, Datum::from)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "detail first bad step dropped",
+      "old": "            (\"first_bad_step\", bad.map_or(Datum::Null, Datum::from)),",
+      "new": "            (\"first_bad_step\", Datum::Null),",
+      "outcome": "killed"
+    }
+  ]
+}

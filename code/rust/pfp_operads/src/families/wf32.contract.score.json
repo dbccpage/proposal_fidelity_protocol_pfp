@@ -1,0 +1,105 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf32.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf32.rs",
+      "language": "Rust",
+      "sha256": "c3e8fa6759fd6a701ff03128d0f11f8d0266066eb813a2b300f37bd1c82fe5c9"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf32:v1",
+    "symbols": [
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task may declare sources, an object of texts, and inputs, an object in which each value names a registered domain checker and gives an input object. Anything else under those keys is refused before a prompt is written.",
+      "The reply is a nonempty list of claims, each an object with a text id, no id twice, and optionally a list of the ids it says are admitted.",
+      "An exact claim is checked only against an input the task declares, by the checker the task chose for that input, on the claim's witness. A claim that names no declared input, or that brings an input or a checker of its own, fails and is not run.",
+      "A quote claim on a declared source with a span list is checked by bytes: it holds when start < end, the span lies inside the source, and the bytes of the span are the bytes of the quoted text. The witness is the SHA-256 of the source's canonical JSON text and the span.",
+      "A claim of any other kind, a quote with no declared source or no span list, and the free text on a claim that is not a quote have no check. They are never admitted and are named as open obligations, on a certified run and on a refused one.",
+      "Each checked claim is bound to the SHA-256 of the canonical JSON of the claim and the host's witness, where the claim leaves out its stated digest and, unless it is a quote, its free text. A claim that states a digest must state that one.",
+      "The run is refused when a checked claim fails, when a stated digest is not the host's, when the reply lists as admitted an id the host did not admit, or when nothing is admitted. Otherwise it is certified with the admitted ids and their digests: ALL_CLAIMS_ADMITTED when nothing is open, CLAIM_SCOPED when something is."
+    ],
+    "boundaries": [
+      "Admission means the claim passed its own check on its own evidence. An admitted exact claim says nothing about the claim's free text, which stays open.",
+      "A quote check shows the text is in the source at that span. It does not show the source supports what the reply says about it.",
+      "Spans are byte offsets into the source as UTF-8.",
+      "A digest covers the claim as written: a number with a fraction or an exponent is hashed as its own text."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf32.rs",
+      "language": "Rust",
+      "sha256": "c3e8fa6759fd6a701ff03128d0f11f8d0266066eb813a2b300f37bd1c82fe5c9"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Non-numeric: byte offsets in usize, read with get so a span outside the source is not a quote; a span beyond the machine's range is an exact integer that quotes nothing. Digests are asserted against digests the tests rebuild. Not B: the hash library is trusted.",
+      "G3": "Each malformed task and reply has its reason, and each failed claim its own predicate. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
+      "G4": "18 WF32 tests assert a full and a scoped receipt with every digest rebuilt in the test, what a digest covers and leaves out, open claims named as obligations, a stated digest right and wrong, each form of undeclared or self-supplied input, quotes by byte span including multi-byte text and each span that must not hold, overreach by an open, failed, unknown or non-text id, a reply that admits nothing, and each malformed reply and task by its reason. Mutation campaign R = 107/107. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 14, cognitive complexity is not measured for Rust, nesting 1; ceiling B, recorded B."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T13:51:27Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v9-test.run.json",
+        "sha256": "75c065d96b64633778adc9bbc5a54eb150b58536223e4c3443f62215ad84017e",
+        "note": "427 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-clippy.run.json",
+        "sha256": "b095a186f720f679235b2f243d030a0c7412ecd11d687d13c61ad6cac778d72e",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-fmt.run.json",
+        "sha256": "17a3ba5175b2bb9bccc425d89628829ccaadff38dc36f614734ea800455c7625",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.run.json",
+        "sha256": "785da0a0586cbf62c7a8439e2a626fa5ba0df80942665c0838e344cc4f460f41",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.json",
+        "sha256": "e9c47748ca0777f0a16723ed4f2e9ddb5b44c2f4480bd78d2102e6cf92daa227",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 107,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf32.mutation.json",
+        "sha256": "0867eb38867d0d56aaf59c66c0f7b732de8e22e826b6eb69f18d9ba50054b1c8",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 107 mutants"
+      }
+    }
+  },
+  "history": []
+}

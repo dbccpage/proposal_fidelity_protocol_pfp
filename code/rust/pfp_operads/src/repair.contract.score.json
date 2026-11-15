@@ -1,0 +1,142 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/repair.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/repair.rs",
+      "language": "Rust",
+      "sha256": "2f07a802c15b5e5271db5eaaefccf636b01958ec584323aaeeaecd59afe11ce2"
+    },
+    "contract_urn": "urn:pfp-operads:repair:v1",
+    "symbols": [
+      "STAGES",
+      "REQUEST_FILE",
+      "PATCH_FILE",
+      "RECORD_FILE",
+      "COUNTERFEIT",
+      "LEAK",
+      "MISFIT",
+      "MAX_SOURCES",
+      "MAX_WRITE_PATHS",
+      "MAX_CHECKS",
+      "MAX_ARGUMENTS",
+      "MAX_TIMEOUT_SECONDS",
+      "MAX_PATCH_BYTES",
+      "MAX_OBJECTIVE_CHARS",
+      "Check",
+      "Request",
+      "relative_file",
+      "Request::read",
+      "Request::candidate_id",
+      "Request::digest",
+      "Request::case",
+      "Stream",
+      "Exit",
+      "Observation",
+      "Bench",
+      "Disposition",
+      "StageStatus",
+      "StageReport",
+      "StageRefusal",
+      "Terminal",
+      "assess",
+      "repair",
+      "respond"
+    ],
+    "owned_invariants": [
+      "A request is closed and bounded: a run key, an objective, 1 to 64 sources each with a 64-digit lowercase SHA-256, 1 to 32 write paths that are all sources, 1 to 16 checks with distinct ids, 1 to 32 non-empty arguments and a deadline of 1 to 60 seconds, and a patch of 1 to 65536 bytes. Anything else is refused before the bench is touched.",
+      "A source path is a plain relative path: no backslash, colon or control character, no empty, dot or dot-dot part, no .git part, no part ending in a dot or a space, and no Windows device name. Two sources may not differ only in letter case.",
+      "The candidate id is the SHA-256 of the patch bytes. The request digest covers the whole request under a domain tag. The case name covers the sources and the checks only, so two patches for one task share a case.",
+      "The run goes through six stages in a fixed order: capture, observe, evaluate, incorporate, disposition, terminal. After a refusal, capture, observe and evaluate are skipped; incorporate, disposition and terminal always run.",
+      "Capture reads every declared source and refuses the run as SOURCE_CHANGED unless each has its declared hash. The working copy holds exactly those bytes, and the request and the patch are kept beside it.",
+      "Every check runs on the working copy before the patch. When none fails the patch is not applied and the outcome is NO_REPAIR_NEEDED.",
+      "The patch is parsed, checked against the write set and applied to every file in memory before any file of the working copy is written. A patch that is malformed, out of scope, not text or changes no byte writes nothing.",
+      "A check that leaves a declared file of the working copy different from what it was refuses the run as WORKING_COPY_CHANGED. The sources are re-read before the patch is applied and at the end; a source that no longer has its hash refuses the run, clears any fault and reports the source as not intact.",
+      "The outcome compares the checks with a nonzero exit before and after: REGRESSION when a check fails that did not fail before, else REPAIRED when none fails, PARTIAL when fewer fail, INEFFECTIVE otherwise, and REFUSED after any refusal.",
+      "A failure record is written only when the candidate is at fault: StructuralNonFit for a patch refused as malformed or out of scope, BoundaryLeakage for a regression, CounterfeitExactness for a partial or ineffective patch. Its id is the case name, an @ and the run key, and its evidence hash covers the request digest, the refusal code and the exit codes before and after.",
+      "The record always says the source was not applied, nothing was admitted, activation is on hold and nothing mathematical was measured. respond answers PASS only for REPAIRED, FAIL with the record for any other finished run, and REFUSED when the request could not be read or the record could not be kept."
+    ],
+    "boundaries": [
+      "The module does no file or process work. Everything it reads, writes or runs goes through the Bench it is given.",
+      "REPAIRED means the request's own check commands exit 0 on the patched copy. It says nothing about inputs the checks do not exercise.",
+      "The stage letters C, R, E, I, M, T are a trace of this run. They are not checked as a word of the DDC calculus.",
+      "The incorporate stage classifies a fault for the failure ledger. It calls no immune or genealogy service.",
+      "Appending the failure record to a ledger is the caller's step (pfp_operad ledger append)."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/repair.rs",
+      "language": "Rust",
+      "sha256": "2f07a802c15b5e5271db5eaaefccf636b01958ec584323aaeeaecd59afe11ce2"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, vocabularies from the canon, exact integers, no unwrap or direct indexing.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Non-numeric: set comparison of check ids and equality of SHA-256 digests; exit codes are compared with zero only. Hashes are asserted against hashes the tests compute themselves. Not B: the hash library is trusted.",
+      "G3": "Typed refusal codes for the request (BAD_REQUEST, RUN_KEY_REFUSED, OBJECTIVE_REFUSED, PATCH_REFUSED, SOURCE_PATH_REFUSED, SOURCE_DIGEST_REFUSED, REPAIR_SCOPE_REFUSED, CHECK_REFUSED) and for the run (SOURCE_CHANGED, WORKING_COPY_CHANGED, PATCH_SCOPE_REFUSED, and whatever code the bench gives). A refusal inside a stage is recorded with its stage and the later stages still close the record. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
+      "G4": "30 repair tests drive the six stages on an in-memory bench that records every effect in order: the worked example, each outcome, each refusal with its stage, drift of a source at three points, a check that rewrites the copy, the three identities against hashes the test computes, and every bound of the request one inside and one outside. Six mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 234/234. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 13, cognitive complexity is not measured for Rust, nesting 4; ceiling B, recorded B."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T12:02:21Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v7-test.run.json",
+        "sha256": "9b7778a188f186ec10f4e986bf1a4e4b3e3458c9f51b257b6a11602be9610931",
+        "note": "207 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v7-clippy.run.json",
+        "sha256": "057448407c0033d3fda7a7cd83d4d797bc94e8b3357614105306a6fc87721e96",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v7-fmt.run.json",
+        "sha256": "2cd5a739ad1076b1545ad6c1b8d6457d3b2a762894a68ed2a22fc6054b9226a6",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v7-metrics.run.json",
+        "sha256": "ba5ee46c693f69310d6324c43ea86730991805ba640c610e4b72939092c1e590",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v7-metrics.json",
+        "sha256": "c413c3096f439bebae18fa810948a064789b07da627848f3289df544344be4c3",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 234,
+      "survived": 0,
+      "demonstrably_equivalent": 6,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-repair.mutation.json",
+        "sha256": "364e364980cf3915d35b31262025fd1ad1c9cbb307eb38bf0da21165782e9c3d",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 240 mutants"
+      }
+    }
+  },
+  "history": []
+}

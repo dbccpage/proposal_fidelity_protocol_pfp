@@ -11,7 +11,7 @@
 
 This review establishes the empirical baseline, diagnoses identified defects, and maps concrete remediation milestones for the Epistemic Immune System (EIS) and Prompt Civilization (PCIV) subsystems within the repository.
 
-All findings from the initial survey (K1 through K10) were verified on disk through reproducible test and checker executions, and are backed by recorded execution receipts in `governance/evidence/`.
+The K1–K10 inventory combines observations from test and checker runs with source and documentation review. The committed receipts in `governance/evidence/` record six commands, their exit statuses, and input hashes.
 
 ### Summary of Baseline Findings (K1–K10)
 
@@ -63,7 +63,7 @@ The companion review ledger `docs/reviews/eis_pciv_review.json` catalogs **50 ty
 
 ## 3. Baseline Findings Verification Table
 
-Every baseline finding was independently verified in the newly established worktree `..\pfp_eis_pciv`. Execution artifacts were recorded using `python -m governance.tools.evidence`.
+The milestone author ran the listed commands in `..\pfp_eis_pciv`. The committed `*.run.json` files preserve run metadata, including hashes for the separate output logs. Those logs are absent from this PR, so the diagnostic text and test totals below are historical observations that cannot be verified against the committed receipts alone.
 
 | # | Finding Description | Exact Verification Command | Observed Exit Status & Result | Evidence Receipt Path |
 |---|---|---|---|---|
@@ -190,6 +190,7 @@ The following decisions involve external authority boundaries, operational crede
     3. **Thymus**: PCIV's `Thymus` runs arbitrary closure predicates `FnMut(&SelfFixture) -> bool` over rich `SelfFixture` structs; EIS's `ThymusGate` executes compiled regex patterns against raw string samples with SHA-256 panel hashing and lifecycle state promotion (`Proposed` -> `Candidate` / `Retired`). In M4, PCIV re-exports `ThymusGate` and provides sample conversions.
     4. **Treg**: PCIV's `TregRegulator` models suppression based on the global topological obstruction defect $\Phi_1 = 0$ (ground-state suppression); EIS's `TregSupervisor` models suppression as a false-discovery proportion threshold $FP / (TP + FP) > \tau$ evaluated over empirical detector telemetry. In M4, PCIV re-exports `TregSupervisor` while retaining `TregRegulator`.
     5. **Clonal Selection**: PCIV's `ClonalPool` models a population of detector clones undergoing generational half-life decay $(1/2)^k$ and pruning below an exact rational threshold; EIS's `clonal_selection` manages individual `DetectorRule` JSON wire representations with idle-run counters, anergy monitoring, and exact rational affinity stimulation. In M4, PCIV re-exports EIS clonal selection primitives.
+- **Standalone CLI:** The EIS bridge is part of the default PCIV build. The standalone pharmacy CLI disables that feature to preserve its bounded checkout and WASM build.
 - **Recommendation:** Re-export and adapt shared gates (`ThymusGate`, `DangerGate`, `AllostericConsensusGate`, `TregSupervisor`, `DetectorRule`) from EIS into PCIV where interfaces align. Preserve PCIV-specific gate extensions (`mhc`, `proofreading`, `complement`) and backwards-compatible APIs where forced alignment would alter existing unit test semantics, and document the seam as an intentional architectural abstraction layer.
 
 ### Open Decision 3: External Monorepo Engine Dependencies vs. Standalone Native Host

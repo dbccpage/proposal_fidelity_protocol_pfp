@@ -1,0 +1,31 @@
+{
+  "run_key": "wf57-example-1",
+  "objective": "The host must verify the operation in operation.json on every case; answer.json must stay accepted.",
+  "sources": {
+    "answer.json": "8fa416ec9a84880e14fbd2a7b553b4f0f28e770ef1e7fe89c8c39496e9624324",
+    "operation.json": "290d1d4c511e51d106f56ff2b78d248b7c4de385aaa50ccb1ecd42a2cd923f67"
+  },
+  "write_paths": [
+    "operation.json"
+  ],
+  "checks": [
+    {
+      "check_id": "operation",
+      "argv": [
+        "pfp_operad",
+        "run",
+        "operation.json"
+      ]
+    },
+    {
+      "check_id": "answer",
+      "argv": [
+        "pfp_operad",
+        "judge",
+        "answer.json"
+      ]
+    }
+  ],
+  "candidate_patch": "--- a/operation.json\n+++ b/operation.json\n@@ -9 +9 @@\n-    {\"id\": \"combine\", \"sources\": [\"Integer\", \"Integer\", \"Integer\"], \"target\": \"Integer\", \"body\": \"product\"}\n+    {\"id\": \"combine\", \"sources\": [\"Integer\", \"Integer\", \"Integer\"], \"target\": \"Integer\", \"body\": \"sum\"}\n",
+  "workflow": "WF57"
+}

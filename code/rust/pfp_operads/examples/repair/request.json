@@ -1,0 +1,30 @@
+{
+  "run_key": "example-1",
+  "objective": "The stored total in answer.json must be the exact sum of its values; control.json must stay correct.",
+  "sources": {
+    "answer.json": "ff1d6d05919a3816a80230e829ff7d66b917c3ddb4273b499a3d8fe17c10c2d8",
+    "control.json": "0d9e3b11672e11a67d16e1d65f2956327b7594be68b4c87dd2910b1fa5febfe3"
+  },
+  "write_paths": [
+    "answer.json"
+  ],
+  "checks": [
+    {
+      "check_id": "positive",
+      "argv": [
+        "pfp_operad",
+        "judge",
+        "answer.json"
+      ]
+    },
+    {
+      "check_id": "control",
+      "argv": [
+        "pfp_operad",
+        "judge",
+        "control.json"
+      ]
+    }
+  ],
+  "candidate_patch": "--- a/answer.json\n+++ b/answer.json\n@@ -4 +4 @@\n-  \"answer\": {\"total\": 5}\n+  \"answer\": {\"total\": 6}\n"
+}

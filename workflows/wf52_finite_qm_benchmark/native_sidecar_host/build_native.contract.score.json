@@ -1,0 +1,89 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "workflows/wf52_finite_qm_benchmark/native_sidecar_host/build_native.py",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "workflows/wf52_finite_qm_benchmark/native_sidecar_host/build_native.py",
+      "language": "Python",
+      "sha256": "96e1e8ecc31431fb307266bf66eddbe8413f7db8e08370b64608fc24cc954657"
+    },
+    "contract_urn": "urn:pfp-wf52:build-native:v1",
+    "symbols": [
+      "deterministic_cargo_env",
+      "main",
+      "sha"
+    ],
+    "owned_invariants": [
+      "Extracts verbatim lines 291..353 of code/rust/pfp_runtime/src/rational.rs only when SHA-256 matches OWNER_SHA and writes only when bytes differ.",
+      "Builds offline with Cargo.lock pinned, CARGO_INCREMENTAL=0, path prefix remaps, and platform-isolated PE (/Brepro, /DEBUG:NONE on win32) or ELF (-Wl,--build-id=none on linux) flags without writing attempt files unless --archive-attempt is passed."
+    ],
+    "boundaries": [
+      "Isolated native sidecar crate only; does not modify Rust runtime sources or claim end-to-end QM certification."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "workflows/wf52_finite_qm_benchmark/native_sidecar_host/build_native.py",
+      "language": "Python",
+      "sha256": "96e1e8ecc31431fb307266bf66eddbe8413f7db8e08370b64608fc24cc954657"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Isolated offline deterministic Cargo build with exact owner SHA-256 verification, source binding emission, platform-isolated link flags, and clean-worktree byte identity checks.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "C"
+    },
+    "basis": {
+      "G1": "Module docstring declares AuthorityEffect: None and Contract: urn:pfp-wf52:build-native:v1 matching contract symbols.",
+      "G2": "Deterministic build flags, POSIX relative receipt paths, and read-before-write binding keep tracked source files unchanged during materialization.",
+      "G3": "Checked subprocess status codes raise RuntimeError on toolchain, sysroot, or extraction failures with zero silent fallbacks.",
+      "G4": "Exercised by test_native_sidecar.py and test_charpoly_workflows.py; zero-unrun AST mutation campaign m-wf52-build-native killed 59/59 (R = 1/1).",
+      "G5": "Measured via governance.tools.metrics: worst function CCN 20, cognitive 22, nesting depth 3; metrics ceiling C."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "C",
+    "evaluation_timestamp": "2026-11-15T03:50:04Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/wf52-sidecar-pytest.run.json",
+        "sha256": "c8af06a3d23937268621e480d6bf852fedb530b97ac704ae552f2e131ee59ed3",
+        "note": "528 passed, 19 skipped, 68 subtests passed after deleting native_sidecar_host/target"
+      },
+      {
+        "path": "governance/evidence/wf52-sidecar-metrics.run.json",
+        "sha256": "70439b02a14250c6473a86ccb66f5d9586a0dfb1885675668e7444dc94ba6f72",
+        "note": "Gate 5 lizard/complexipy/AST nesting capture"
+      },
+      {
+        "path": "governance/evidence/wf52-sidecar-metrics.json",
+        "sha256": "3b751bd79f1282f374c54f2d926baf8d7a8cdf9f74855c3ea378f2010d8d4e2c",
+        "note": "Per-file complexity metrics report"
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 59,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-wf52-build-native.mutation.json",
+        "sha256": "902101534bf9e8f2392eee2e7c6de80b65c719e20742556e6e946f13f0ee9fe6",
+        "note": "campaign m-wf52-build-native"
+      }
+    }
+  },
+  "history": []
+}

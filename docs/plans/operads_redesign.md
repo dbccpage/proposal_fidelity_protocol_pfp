@@ -74,7 +74,7 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
 | 2. (cont.) candidates in WF2-WF5 stay unverified | Their meaning is free text. In WF56 a candidate carries a body from the closed list, and `pfp_operad run` executes it on the task's input and on sealed probe cases and compares with its own judge | 2d | **built** (offline) |
 | 3. Laws are signature-level only | Law battery on values, cost and tree | 1 | **built** |
 | 3. (cont.) no Lean statement | Lean 4 theorems for the term model: associativity, unit, composition is evaluation | 6 | planned |
-| 4. PFP 018 repair slice has no workflow | Workflow over the Rust DDC tape verifier (`code/rust/pfp/src/ddc.rs`), writing to the ledger | 3 | planned |
+| 4. PFP 018 repair slice has no workflow | `pfp_operad repair` tests a supplied patch on a working copy with the task's own check commands, and WF57 puts a model's patch through it. A patch that was tested and did not repair goes to the ledger. The first plan, to run it over the DDC tape verifier (`code/rust/pfp/src/ddc.rs`), was dropped: the slice's six stage letters are not a word that verifier accepts, so they are recorded as a trace of this run and nothing more | 3 | **built** (offline) |
 | 5. Operad tests cannot pass here | Retire Python `operads/` from pfp; engine-only tests go back to the engine | 5 | planned |
 | 6. Canonical IDs drifted | Rust is the only source; re-pin the fixture as a regression file; fix the two stale test-domain expectations in `core_operad_theory` | 5 | planned |
 | 7. Untouched families | Capability kinds, failure classes and statuses are used by the ledger; the rest are typed as workflows are ported | 1, 4 | partly built |
@@ -120,11 +120,53 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
      WF5 does not run a loaded seed (its rewrite accepts one seed language),
      and WF52 waits for slice 4. Next: one cheap live run to see whether an
      admitted rule changes a model's result.
-3. **Bounded DDC repair** as a workflow, from PFP 018's worked example and
-   negative cases.
-4. **Port the workflow hosts.** The family runtime behind WF6-WF51, then
-   WF1-WF5 and WF52-WF54. After this slice Python only calls the model and
-   moves files.
+3. **Bounded repair of a supplied patch (built, offline).** The host command
+   `pfp_operad repair SOURCE_DIR RUN_DIR REQUEST.json` verifies the declared
+   files against their hashes, copies them to a new run folder, runs the
+   request's check commands, applies the patch to the copy (strictly: inside
+   the write set, each hunk at the line it names) and runs the checks again.
+   The outcome compares the failing checks before and after; the declared
+   files are never written. [WF57](../../workflows/wf57_host_tested_patch_repair/README.md)
+   asks a model for the patch and reports the host's outcome, and a failed
+   patch is appended to the failure ledger. PFP 018's worked example and its
+   negative cases (ineffective, regressive, out of scope, missing tool,
+   changed source) run as tests. A check is a command and may be in any
+   language; the host reads only its exit code. In the shipped fixtures the
+   checks are the host's own commands.
+4. **Port the workflow hosts**, in steps. After this slice Python only calls
+   the model and moves files.
+   - **4a (built, offline).** The family protocol, and layer 1 (WF7, WF30,
+     WF31). `pfp_operad family next` reads the task and the replies so far
+     and returns the next prompt, word for word; `family judge` returns the
+     verdict and the predicates behind it. The host validates the task,
+     writes and guards every prompt, does the exact arithmetic (unbounded
+     rationals) and decides. The Python class of a ported family is a
+     registry entry and fixtures; its base class, `HostedFamily`, sends
+     prompts and carries replies. Prompts are byte for byte the old ones.
+   - **4b (built, offline).** Layer 2 without WF9: WF13, WF24, WF32 and
+     WF45. The host now has permutations (`perm.rs`) and one checker per
+     exact domain (`families/domains.rs`: stabilizer commutation, U(1)
+     anomaly sums, commutators, and WF7's rank test as a capsule). WF13 asks
+     one capsule per stage and counts a missing or unreadable reply as a
+     failure. WF32 binds each admitted claim to a digest of the claim and the
+     host's witness, and a verdict now lists what no predicate covers
+     (`uncertified_obligations`).
+   - **4c (built, offline).** The WF9 inheritance group: WF9, WF20, WF26,
+     WF27, WF33 and WF40. The host now has graphs (`graph.rs`: spanning
+     forest, fundamental cycles, coboundaries over the rationals), the XOR
+     repair and monic-polynomial domains, and the loops built on them: WF9's
+     bounded repair, WF27's hint and stationary-loop stop, WF20's structural
+     grants, WF26's antibodies, WF33's children on one fuel counter bound by
+     receipts, and WF40's boundary action after a failed repair.
+   - **4d (built, offline).** The rest of layer 3: WF10, WF11, WF25, WF38,
+     WF46 and WF47. The host now has edge cochains on a task graph
+     (`families/cochain.rs`: potentials by vertex name, signed chains, their
+     boundary, walks) and on them WF10's gluing or obstruction cycle, WF25's
+     decimation, WF38's recomputed ranking and WF46's glued patches. WF11
+     checks a dual pair or a Farkas vector over the rationals. WF47
+     recomputes every batch of a sealed, resumable search.
+   - **Next.** The remaining families of layers 4 to 8. Then the WF1-WF5 and
+     WF52-WF54 host checks, the run budget and run custody.
 5. **Retire Python `operads/`** (682 files) once nothing imports it, re-pin
    the canonical ID fixture, and score the Rust files that change.
 6. **Lean.** State and prove the laws for the term model, and link each
@@ -151,8 +193,92 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
   workflow's own replay ties those to the reply bytes.
 - A loaded rule travels as text after the seed. The prompt template's own
   `antibody_injections` slot stays empty until the workflow hosts are ported.
+- `pfp_operad repair` shows that the listed check commands exit 0 on the
+  patched copy. Weak checks pass a wrong patch. The copy is not a sandbox,
+  and nothing installs the repaired files. No model has written a patch
+  through WF57 yet.
+- The stage letters in a repair record are a trace of that run. They are not
+  verified as a DDC word, and the archived paper's claims about the repair
+  slice (ATL-P018-002 to 005) stay as they are in the claim ledger until a
+  derivation is written for them.
 - Python still validates reply schemas, routes statuses and keeps run
   custody (manifests, replay). Those move in slice 4.
+- After 4d the host checks WF7, WF9, WF10, WF11, WF13, WF20, WF24, WF25,
+  WF26, WF27, WF30, WF31, WF32, WF33, WF38, WF40, WF45, WF46 and WF47.
+  Every other family still runs its check and its sealed-value guard in
+  Python. WF6 and WF22 grade with WF7's check and so reach the host for that
+  part.
+- For a ported family Python still keeps the run budget and the transcript,
+  and sets the run's `final_output_certified` flag from the host's verdict.
+  The host does not see that a reply came from the prompt it wrote.
+- The host reads a rational more strictly than the Python it replaces: text
+  with a plus sign or a space is refused. WF31 takes at most 64 proposers.
+  Old and new agree on 3,400 random runs apart from those readings and one
+  reply (`{"answer": null}`) on which the old check crashed. That compares
+  checkers; no model has run through a ported family.
+- The layer 2 host is stricter than the Python it replaces in these ways. A
+  task it cannot read is refused before anything is asked (WF45 used to ask
+  first). WF13 capsule ids and domains must be text. WF24 takes at most 64
+  points and 4,096 tokens, and a token's link number is ASCII digits. WF32
+  sources must be texts. WF45 keeps the candidate name `~twin` for itself.
+  WF13 no longer records the `denominator_preserved` predicate, which could
+  not fail. A refused WF32 run now lists its open claims as obligations too.
+  Old and new agree on 6,000 random runs apart from those readings, reworded
+  reasons, and tasks on which the old check crashed.
+- The WF9 group's host is stricter than the Python it replaces in these
+  ways. A task it cannot read is refused before anything is asked: more than
+  20 edges, a vertex that is not an exact integer, WF26 roots that are not
+  rationals, and for WF40 vertices other than `0..n-1`, values that are not
+  one rational per edge, or a face that is not a closed walk of `[edge, sign]`
+  steps. A WF40 restart seed must carry the task's spec exactly as written
+  (`1` is not `1.0`). The loose-number notation WF26 sorts as non-canonical
+  is ASCII only. A `lift_request` that is not text is named by its JSON.
+  An unreadable rational has one wording, which changes the residual and the
+  receipt after such a reply.
+- Five predicates of the Python are not recorded, because in the Rust design
+  nothing can make them fail: `lift_grants_structural` (the grant builder is
+  given only the graph), `fuel_strictly_decreasing` and `ops_within_fuel`
+  (the counter has no other operation), `prior_spend_locked` (Python keeps
+  the budget) and `antibodies_answer_free` (antibodies are fixed sentences).
+  They were guards on the host's own code, not checks of a reply.
+- Old and new agree on 12,000 random runs of the six families apart from
+  those readings: 10,899 identical, 709 tasks both refuse, 156 tasks now
+  refused before asking, 229 runs that differ only in the wording of a
+  reason, and 7 tasks on which the old check crashed.
+- The 4d host differs from the Python it replaces in these ways. One changes
+  a verdict the other way: WF25 counts a loop twice toward the degree of its
+  vertex, so a cycle reduced to one loop is certified where Python refused
+  it as a leaf. The rest are stricter. A WF25 path that is not a walk
+  between its edge's ends fails the predicate `paths_are_walks`; Python
+  called the reply malformed. WF11 needs at least one variable. WF46 takes
+  1 to 64 runs and packet vertices that lie on both patches. WF47 takes at
+  most 16 vertices and 64 sessions, needs `representation`, compares the
+  numbers in a record as exact values (`2.0` is not `2`), and refuses a
+  record after the batch that tries the last candidate.
+- Old and new agree on 12,000 random runs of those six families apart from
+  those readings: 8,964 identical, 1,005 replies both call malformed in
+  other words, 923 tasks both refuse, 269 tasks now refused before asking,
+  292 runs on which the old check crashed, 491 WF25 runs under the two
+  WF25 readings (188 of them now certified) and 56 WF47 runs under the two
+  WF47 readings.
+- WF47's code `EXHAUSTED_WITHOUT_OBSTRUCTION` is kept as a guard. A signed
+  graph with no gauge always has a fundamental cycle with an odd number of
+  -1 edges, so no reply reaches it.
+- WF25 takes the span of the reduced cycles over the rationals, as the
+  Python did. A reduced loop that goes twice round a cycle of the task
+  passes all five checks with twice that cycle's sum. Requiring an integer
+  basis of the cycles would close this; it is not built.
+- WF9's least repair is found by trying every set of flips, so its cost
+  doubles with each edge up to the limit of 20. WF20's grant shows the
+  structure of the graph; it has not been shown to help a model.
+- A WF33 or WF40 receipt is a digest the host recomputes from the replies it
+  is handed. It is not a signature: it shows that a reply quotes what the
+  host showed in this run, not who wrote the reply.
+- In WF32 a digest covers a claim as written. A claim that contains a number
+  with a fraction or an exponent is hashed with that number's own text,
+  where the Python hashed its re-rendered value.
+- A WF32 quote is a byte span of the source. A WF13 or WF32 linear capsule
+  is judged by WF7's rank test and inherits its limits.
 - WF4's own local contract (public binding, native integer result, agreement
   of the five totals) is still Python. It is a workflow host check and moves
   in slice 4.

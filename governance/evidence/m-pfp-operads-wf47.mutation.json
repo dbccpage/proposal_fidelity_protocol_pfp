@@ -1,0 +1,816 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf47.rs",
+  "target_sha256": "45d1ab3e4e28248d718ebac2b4828fd3a3d85359506b4d34172e7bfb09c86d2d",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf47",
+  "counts": {
+    "killed": 132,
+    "survived": 0,
+    "demonstrably_equivalent": 1,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "vertex ceiling raised",
+      "old": "pub const MAX_VERTICES: usize = 16;",
+      "new": "pub const MAX_VERTICES: usize = 17;",
+      "outcome": "killed"
+    },
+    {
+      "name": "vertex ceiling lowered",
+      "old": "pub const MAX_VERTICES: usize = 16;",
+      "new": "pub const MAX_VERTICES: usize = 15;",
+      "outcome": "killed"
+    },
+    {
+      "name": "session ceiling raised",
+      "old": "pub const MAX_SESSIONS: usize = 64;",
+      "new": "pub const MAX_SESSIONS: usize = 65;",
+      "outcome": "killed"
+    },
+    {
+      "name": "session ceiling lowered",
+      "old": "pub const MAX_SESSIONS: usize = 64;",
+      "new": "pub const MAX_SESSIONS: usize = 63;",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF47\",",
+      "new": "    workflow: \"WF470\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Resumable bounded frontier search\",",
+      "new": "    name: \"Search\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"sign_gauge_checkpoint_chain\",",
+      "new": "    host_check: \"chain\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "zero is a positive bound",
+      "old": "        .filter(|stated| stated.is_positive())",
+      "new": "        .filter(|stated| !stated.is_negative())",
+      "outcome": "killed"
+    },
+    {
+      "name": "bound error reworded",
+      "old": "format!(\"{key} must be a positive exact int\")",
+      "new": "format!(\"{key} must be positive\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "bound error names no bound",
+      "old": "format!(\"{key} must be a positive exact int\")",
+      "new": "format!(\"a bound must be a positive exact int\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "the vertex ceiling is excluded",
+      "old": "    if vertices > MAX_VERTICES {",
+      "new": "    if vertices >= MAX_VERTICES {",
+      "outcome": "killed"
+    },
+    {
+      "name": "vertex error reworded",
+      "old": "return Err(format!(\"at most {MAX_VERTICES} vertices\"));",
+      "new": "return Err(format!(\"{MAX_VERTICES} vertices\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "plus one is read as minus",
+      "old": "        sign if sign.is_one() => Some(false),",
+      "new": "        sign if sign.is_one() => Some(true),",
+      "outcome": "killed"
+    },
+    {
+      "name": "minus one is read as plus",
+      "old": "        sign if *sign == BigInt::from(-1) => Some(true),",
+      "new": "        sign if *sign == BigInt::from(-1) => Some(false),",
+      "outcome": "killed"
+    },
+    {
+      "name": "any other sign is plus",
+      "old": "        _ => None,\n    };\n    let negative",
+      "new": "        _ => Some(false),\n    };\n    let negative",
+      "outcome": "killed"
+    },
+    {
+      "name": "sign count not checked",
+      "old": "        .filter(|signs| signs.len() == named.graph.edges().len())\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "signs read from another key",
+      "old": "        .get(\"signs\")",
+      "new": "        .get(\"sign\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "signs error reworded",
+      "old": ".ok_or(\"signs must be 1 or -1, one per edge\")?;",
+      "new": ".ok_or(\"signs\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "basis read from another key",
+      "old": "        .get(\"basis\")",
+      "new": "        .get(\"order\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "basis error reworded for a name",
+      "old": ".ok_or(\"basis must list every vertex once\")?;",
+      "new": ".ok_or(\"basis\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "basis vertices are compared unsorted",
+      "old": "    listed.sort_unstable();\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "a basis may miss or repeat a vertex",
+      "old": "    if listed != (0..vertices).collect::<Vec<_>>() {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "basis error reworded for a count",
+      "old": "return Err(\"basis must list every vertex once\".to_owned());",
+      "new": "return Err(\"basis\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "the key leaves out the edges",
+      "old": "        (\"edges\", part(\"edges\").unwrap_or(Datum::Null)),",
+      "new": "        (\"edges\", Datum::Null),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the key leaves out the signs",
+      "old": "        (\"signs\", part(\"signs\").unwrap_or(Datum::Null)),",
+      "new": "        (\"signs\", Datum::Null),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the key leaves out the basis",
+      "old": "        (\"basis\", part(\"basis\").unwrap_or(Datum::Null)),",
+      "new": "        (\"basis\", Datum::Null),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the key leaves out the representation",
+      "old": "            part(\"representation\").ok_or(\"representation required\")?,",
+      "new": "            part(\"representation\")\n                .ok_or(\"representation required\")\n                .map(|_| Datum::Null)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "representation error reworded",
+      "old": "            part(\"representation\").ok_or(\"representation required\")?,",
+      "new": "            part(\"representation\").ok_or(\"representation\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a huge batch is one candidate",
+      "old": "batch: usize::try_from(batch).map_or(total, |batch| batch.min(total)),",
+      "new": "batch: usize::try_from(batch).map_or(1, |batch| batch.min(total)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the session ceiling is excluded",
+      "old": "            .filter(|&sessions| sessions <= MAX_SESSIONS)",
+      "new": "            .filter(|&sessions| sessions < MAX_SESSIONS)",
+      "outcome": "killed"
+    },
+    {
+      "name": "session error reworded",
+      "old": ".ok_or(format!(\"max_sessions must be at most {MAX_SESSIONS}\"))?,",
+      "new": ".ok_or(format!(\"at most {MAX_SESSIONS} sessions\"))?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "the session budget is read from the batch",
+      "old": "session_evals: positive(task, \"session_evals\")?.clone(),",
+      "new": "session_evals: positive(task, \"session_evals\").and(positive(task, \"batch\"))?.clone(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the key is the digest of nothing",
+      "old": "        key: sha256_hex(&presentation.canonical()),",
+      "new": "        key: sha256_hex(\"\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "twice as many candidates",
+      "old": "        1 << (self.basis.len() - 1)",
+      "new": "        1 << self.basis.len()",
+      "outcome": "killed"
+    },
+    {
+      "name": "candidate bits are read lowest first",
+      "old": "                *sign = (number >> (bits - 1 - place)) & 1 == 1;",
+      "new": "                *sign = (number >> place) & 1 == 1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a set bit is plus",
+      "old": "                *sign = (number >> (bits - 1 - place)) & 1 == 1;",
+      "new": "                *sign = (number >> (bits - 1 - place)) & 1 == 0;",
+      "outcome": "killed"
+    },
+    {
+      "name": "one balanced edge is enough",
+      "old": "            .all(|(&(from, to), &negative)| (at(from) != at(to)) == negative)",
+      "new": "            .any(|(&(from, to), &negative)| (at(from) != at(to)) == negative)",
+      "outcome": "killed"
+    },
+    {
+      "name": "an edge is balanced when its ends agree on a minus",
+      "old": "            .all(|(&(from, to), &negative)| (at(from) != at(to)) == negative)",
+      "new": "            .all(|(&(from, to), &negative)| (at(from) == at(to)) == negative)",
+      "outcome": "killed"
+    },
+    {
+      "name": "the last batch runs past the last candidate",
+      "old": "let end = start.saturating_add(self.batch).min(self.total());",
+      "new": "let end = start.saturating_add(self.batch);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a batch may end one past the last candidate",
+      "old": "let end = start.saturating_add(self.batch).min(self.total());",
+      "new": "let end = start.saturating_add(self.batch).min(self.total() + 1);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the last gauge of a batch is recorded",
+      "old": "            gauge: (start..end).find(|&number| self.is_gauge(number)),",
+      "new": "            gauge: (start..end).rev().find(|&number| self.is_gauge(number)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the first candidate of a batch is not tried",
+      "old": "            gauge: (start..end).find(|&number| self.is_gauge(number)),",
+      "new": "            gauge: (start + 1..end).find(|&number| self.is_gauge(number)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the first batch starts at one",
+      "old": "let start = batches.last().map_or(0, |before| before.end);",
+      "new": "let start = batches.last().map_or(1, |before| before.end);",
+      "outcome": "killed"
+    },
+    {
+      "name": "every batch starts where the one before started",
+      "old": "let start = batches.last().map_or(0, |before| before.end);",
+      "new": "let start = batches.last().map_or(0, |before| before.start);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the chain opens from the key itself",
+      "old": "let mut seal = sha256_hex(&Datum::text(self.key.as_str()).canonical());",
+      "new": "let mut seal = self.key.clone();",
+      "outcome": "killed"
+    },
+    {
+      "name": "a seal covers the seal field",
+      "old": "                    .filter(|(field, _)| field.as_str() != \"seal\")\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "a seal is the record then the seal before",
+      "old": "seal = sha256_hex(&format!(\"{seal}{}\", Datum::Map(body).canonical()));",
+      "new": "seal = sha256_hex(&format!(\"{}{seal}\", Datum::Map(body).canonical()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "seals are not chained",
+      "old": "seal = sha256_hex(&format!(\"{seal}{}\", Datum::Map(body).canonical()));",
+      "new": "let _ = &seal;\n            seal = sha256_hex(&Datum::Map(body).canonical());",
+      "outcome": "killed"
+    },
+    {
+      "name": "one right record is enough",
+      "old": "                .all(|(index, (record, want))| field(record, key) == value(index, want))",
+      "new": "                .any(|(index, (record, want))| field(record, key) == value(index, want))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a found gauge is status unknown",
+      "old": "            Some(_) => \"verified\",",
+      "new": "            Some(_) => \"unknown\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "no gauge is status verified",
+      "old": "            None => \"unknown\",\n        };",
+      "new": "            None => \"verified\",\n        };",
+      "outcome": "killed"
+    },
+    {
+      "name": "a found gauge is written null",
+      "old": "let gauge = |want: &Batch| want.gauge.map_or(Datum::Null, Datum::from);",
+      "new": "let gauge = |want: &Batch| want.gauge.map_or(Datum::Null, |_| Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the last batch may not find a gauge",
+      "old": "let before = wants.len().saturating_sub(1);",
+      "new": "let before = wants.len();",
+      "outcome": "killed"
+    },
+    {
+      "name": "one batch may follow a gauge",
+      "old": "let before = wants.len().saturating_sub(1);",
+      "new": "let before = wants.len().saturating_sub(2);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the checkpoint is read one batch late",
+      "old": "prior.len().checked_sub(1).and_then(|at| wants.get(at));",
+      "new": "prior.len().checked_sub(1).and_then(|at| wants.get(at + 1));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a resumed session pays again for the last batch",
+      "old": "let done = resumed.map_or(0, |batch| batch.end);",
+      "new": "let done = resumed.map_or(0, |batch| batch.start);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a resumed session pays for the whole chain",
+      "old": "let done = resumed.map_or(0, |batch| batch.end);",
+      "new": "let done = resumed.map_or(0, |_| 0);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the last batch of a session is free",
+      "old": "let new = wants.last().map_or(0, |last| last.end).saturating_sub(done);",
+      "new": "let new = wants.last().map_or(0, |last| last.start).saturating_sub(done);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a chain may start at any index but one",
+      "old": ".is_some_and(|first| field(first, \"index\") == Datum::from(0usize))",
+      "new": ".is_some_and(|first| field(first, \"index\") != Datum::from(1usize))",
+      "outcome": "killed"
+    },
+    {
+      "name": "indices count from one",
+      "old": "every(\"index\", &|index, _| Datum::from(index))",
+      "new": "every(\"index\", &|index, _| Datum::from(index + 1))",
+      "outcome": "killed"
+    },
+    {
+      "name": "indices are not checked",
+      "old": "every(\"index\", &|index, _| Datum::from(index))",
+      "new": "true",
+      "outcome": "killed"
+    },
+    {
+      "name": "a resume may add nothing",
+      "old": "prior.is_empty() || (chain.len() > prior.len() && chain.starts_with(prior))",
+      "new": "prior.is_empty() || (chain.len() >= prior.len() && chain.starts_with(prior))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a resume may rewrite the chain before it",
+      "old": "prior.is_empty() || (chain.len() > prior.len() && chain.starts_with(prior))",
+      "new": "prior.is_empty() || chain.len() > prior.len()",
+      "outcome": "killed"
+    },
+    {
+      "name": "a resume need not be longer",
+      "old": "prior.is_empty() || (chain.len() > prior.len() && chain.starts_with(prior))",
+      "new": "prior.is_empty() || chain.starts_with(prior)",
+      "outcome": "killed"
+    },
+    {
+      "name": "keys are not checked",
+      "old": "every(\"key\", &|_, _| Datum::text(self.key.as_str()))",
+      "new": "true",
+      "outcome": "killed"
+    },
+    {
+      "name": "seals are not checked",
+      "old": "every(\"seal\", &|index, _| {\n                    seals.get(index).cloned().unwrap_or(Datum::Null)\n                })",
+      "new": "seals.len() == chain.len()",
+      "outcome": "killed"
+    },
+    {
+      "name": "every seal is compared with the first",
+      "old": "                    seals.get(index).cloned().unwrap_or(Datum::Null)",
+      "new": "                    seals.get(index.min(0)).cloned().unwrap_or(Datum::Null)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a record past the last candidate is a batch",
+      "old": "                wants.iter().all(|want| want.start < want.end)\n                    && every(\"start\"",
+      "new": "                every(\"start\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "batch starts are not checked",
+      "old": "every(\"start\", &|_, want| Datum::from(want.start))",
+      "new": "true",
+      "outcome": "killed"
+    },
+    {
+      "name": "batch ends are not checked",
+      "old": "every(\"end\", &|_, want| Datum::from(want.end))",
+      "new": "true",
+      "outcome": "killed"
+    },
+    {
+      "name": "the spend is counted per batch",
+      "old": "every(\"spent\", &|_, want| Datum::from(want.end))",
+      "new": "every(\"spent\", &|_, want| Datum::from(want.end - want.start))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the spend is not checked",
+      "old": "every(\"spent\", &|_, want| Datum::from(want.end))",
+      "new": "true",
+      "outcome": "killed"
+    },
+    {
+      "name": "status is not checked",
+      "old": "every(\"status\", &|_, want| Datum::from(status(want)))",
+      "new": "true",
+      "outcome": "killed"
+    },
+    {
+      "name": "gauge is not checked",
+      "old": "&& every(\"gauge\", &|_, want| gauge(want))",
+      "new": "&& true",
+      "outcome": "killed"
+    },
+    {
+      "name": "a chain needs a gauge before its last batch",
+      "old": "wants.iter().take(before).all(|want| want.gauge.is_none())",
+      "new": "wants.iter().take(before).any(|want| want.gauge.is_none())",
+      "outcome": "killed"
+    },
+    {
+      "name": "a budget spent exactly is exceeded",
+      "old": "                BigInt::from(new) <= self.session_evals",
+      "new": "                BigInt::from(new) < self.session_evals",
+      "outcome": "killed"
+    },
+    {
+      "name": "the session budget is not checked",
+      "old": "                BigInt::from(new) <= self.session_evals",
+      "new": "                true",
+      "outcome": "killed"
+    },
+    {
+      "name": "the last rule broken names the refusal",
+      "old": "        rules\n            .iter()\n            .find(|(_, holds)| !holds())",
+      "new": "        rules\n            .iter()\n            .rev()\n            .find(|(_, holds)| !holds())",
+      "outcome": "killed"
+    },
+    {
+      "name": "code RESUME_NOT_REPLAYED_FROM_ZERO misspelt",
+      "old": "            (\"RESUME_NOT_REPLAYED_FROM_ZERO\", &|| {",
+      "new": "            (\"RESUME_NOT_REPLAYED_FROM_ZERO_\", &|| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "code CHAIN_NOT_CONTIGUOUS misspelt",
+      "old": "            (\"CHAIN_NOT_CONTIGUOUS\", &|| {",
+      "new": "            (\"CHAIN_NOT_CONTIGUOUS_\", &|| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "code RESUME_DIVERGES_FROM_CHECKPOINT misspelt",
+      "old": "            (\"RESUME_DIVERGES_FROM_CHECKPOINT\", &|| {",
+      "new": "            (\"RESUME_DIVERGES_FROM_CHECKPOINT_\", &|| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "code PRESENTATION_KEY_CHANGED misspelt",
+      "old": "            (\"PRESENTATION_KEY_CHANGED\", &|| {",
+      "new": "            (\"PRESENTATION_KEY_CHANGED_\", &|| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "code SEAL_MISMATCH misspelt",
+      "old": "            (\"SEAL_MISMATCH\", &|| {",
+      "new": "            (\"SEAL_MISMATCH_\", &|| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "code BATCH_NOT_LEXICOGRAPHIC misspelt",
+      "old": "            (\"BATCH_NOT_LEXICOGRAPHIC\", &|| {",
+      "new": "            (\"BATCH_NOT_LEXICOGRAPHIC_\", &|| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "code BUDGET_RESET misspelt",
+      "old": "            (\"BUDGET_RESET\", &|| {",
+      "new": "            (\"BUDGET_RESET_\", &|| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "code STATUS_NOT_RECOMPUTED misspelt",
+      "old": "            (\"STATUS_NOT_RECOMPUTED\", &|| {",
+      "new": "            (\"STATUS_NOT_RECOMPUTED_\", &|| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "code SEARCH_CONTINUED_AFTER_VERIFIED misspelt",
+      "old": "            (\"SEARCH_CONTINUED_AFTER_VERIFIED\", &|| {",
+      "new": "            (\"SEARCH_CONTINUED_AFTER_VERIFIED_\", &|| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "code SESSION_BUDGET_EXCEEDED misspelt",
+      "old": "            (\"SESSION_BUDGET_EXCEEDED\", &|| {",
+      "new": "            (\"SESSION_BUDGET_EXCEEDED_\", &|| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a cycle is odd by its plus edges",
+      "old": "                .filter(|step| self.negative.get(step.0) == Some(&true));",
+      "new": "                .filter(|step| self.negative.get(step.0) == Some(&false));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a cycle with an even count is frustrated",
+      "old": "            minus.count() % 2 == 1",
+      "new": "            minus.count() % 2 == 0",
+      "outcome": "killed"
+    },
+    {
+      "name": "checkpoints read from another key",
+      "old": "        .get(\"checkpoints\")",
+      "new": "        .get(\"chain\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty chain is read",
+      "old": ".filter(|chain| !chain.is_empty() && chain.iter().all(Datum::is_map))",
+      "new": ".filter(|chain| chain.iter().all(Datum::is_map))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a chain of anything is read",
+      "old": ".filter(|chain| !chain.is_empty() && chain.iter().all(Datum::is_map))",
+      "new": ".filter(|chain| !chain.is_empty())",
+      "outcome": "killed"
+    },
+    {
+      "name": "chain error reworded",
+      "old": "\"checkpoints must be a nonempty list of records\".to_owned()",
+      "new": "\"checkpoints\".to_owned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "first stage renamed",
+      "old": "            None => (\"search\".to_owned(), String::new()),",
+      "new": "            None => (\"start\".to_owned(), String::new()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the note names the key",
+      "old": "let seal = record.get(\"seal\").and_then(Datum::as_text).unwrap_or(\"\");\n                let note",
+      "new": "let seal = record.get(\"key\").and_then(Datum::as_text).unwrap_or(\"\");\n                let note",
+      "outcome": "killed"
+    },
+    {
+      "name": "the note counts from zero",
+      "old": "format!(\"\\nResume after seal {seal} at index {}.\", prior.len());",
+      "new": "format!(\"\\nResume after seal {seal} at index {}.\", prior.len() - 1);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the note is reworded",
+      "old": "format!(\"\\nResume after seal {seal} at index {}.\", prior.len());",
+      "new": "format!(\"\\nResume at index {} after seal {seal}.\", prior.len());",
+      "outcome": "killed"
+    },
+    {
+      "name": "resume stages count from two",
+      "old": "                (format!(\"resume:{session}\"), note)",
+      "new": "                (format!(\"resume:{}\", session + 1), note)",
+      "outcome": "killed"
+    },
+    {
+      "name": "the note is left out of the prompt",
+      "old": "run.ask(&stage, run.prompt() + &note)?",
+      "new": "run.ask(&stage, run.prompt())?",
+      "outcome": "killed"
+    },
+    {
+      "name": "a session with no reply is skipped",
+      "old": " else {\n            break;\n        };\n        let chain = chain(reply)",
+      "new": " else {\n            continue;\n        };\n        let chain = chain(reply)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a broken rule is recorded as passed",
+      "old": "checks.record(&code.to_lowercase(), false, &Datum::List(chain.to_vec()));",
+      "new": "checks.record(&code.to_lowercase(), true, &Datum::List(chain.to_vec()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a broken rule is recorded in capitals",
+      "old": "checks.record(&code.to_lowercase(), false, &Datum::List(chain.to_vec()));",
+      "new": "checks.record(code, false, &Datum::List(chain.to_vec()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "broken rule evidence dropped",
+      "old": "checks.record(&code.to_lowercase(), false, &Datum::List(chain.to_vec()));",
+      "new": "checks.record(&code.to_lowercase(), false, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "sessions count from one in a refusal",
+      "old": "let detail = Datum::map([(\"session\", Datum::from(session))]);",
+      "new": "let detail = Datum::map([(\"session\", Datum::from(session + 1))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "session key renamed",
+      "old": "let detail = Datum::map([(\"session\", Datum::from(session))]);",
+      "new": "let detail = Datum::map([(\"at\", Datum::from(session))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the checkpoint is not kept",
+      "old": "        prior = chain;\n",
+      "new": "        let _ = chain;\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "the search goes on after a gauge",
+      "old": ".is_some_and(|last| last.gauge.is_some() || last.end == search.total())",
+      "new": ".is_some_and(|last| last.end == search.total())",
+      "outcome": "killed"
+    },
+    {
+      "name": "the search goes on after the last candidate",
+      "old": ".is_some_and(|last| last.gauge.is_some() || last.end == search.total())",
+      "new": ".is_some_and(|last| last.gauge.is_some())",
+      "outcome": "killed"
+    },
+    {
+      "name": "no reply is an incomplete search",
+      "old": "        return Ok(no_reply());",
+      "new": "        return Ok(refused(\"SEARCH_INCOMPLETE\", Datum::map([])));",
+      "outcome": "killed"
+    },
+    {
+      "name": "chain predicate renamed",
+      "old": "checks.record(\"checkpoint_chain_valid\", true, &seal);",
+      "new": "checks.record(\"chain_valid\", true, &seal);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a valid chain is recorded as failed",
+      "old": "checks.record(\"checkpoint_chain_valid\", true, &seal);",
+      "new": "checks.record(\"checkpoint_chain_valid\", false, &seal);",
+      "outcome": "killed"
+    },
+    {
+      "name": "chain evidence dropped",
+      "old": "checks.record(\"checkpoint_chain_valid\", true, &seal);",
+      "new": "checks.record(\"checkpoint_chain_valid\", true, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "one checkpoint too many is counted",
+      "old": "let checkpoints = (\"checkpoints\", Datum::from(prior.len()));",
+      "new": "let checkpoints = (\"checkpoints\", Datum::from(prior.len() + 1));",
+      "outcome": "killed"
+    },
+    {
+      "name": "checkpoints key renamed",
+      "old": "let checkpoints = (\"checkpoints\", Datum::from(prior.len()));",
+      "new": "let checkpoints = (\"records\", Datum::from(prior.len()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "gauge predicate renamed",
+      "old": "checks.record(\"gauge_balances_every_edge\", search.is_gauge(gauge), &found);",
+      "new": "checks.record(\"gauge_balances\", search.is_gauge(gauge), &found);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a found gauge is recorded as failing",
+      "old": "checks.record(\"gauge_balances_every_edge\", search.is_gauge(gauge), &found);",
+      "new": "checks.record(\"gauge_balances_every_edge\", !search.is_gauge(gauge), &found);",
+      "outcome": "killed"
+    },
+    {
+      "name": "gauge evidence dropped",
+      "old": "checks.record(\"gauge_balances_every_edge\", search.is_gauge(gauge), &found);",
+      "new": "checks.record(\"gauge_balances_every_edge\", search.is_gauge(gauge), &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "verified code renamed",
+      "old": "            \"GAUGE_VERIFIED\",",
+      "new": "            \"VERIFIED\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "gauge key renamed",
+      "old": "            Datum::map([(\"gauge\", found), checkpoints]),",
+      "new": "            Datum::map([(\"candidate\", found), checkpoints]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "an exhausted search is incomplete",
+      "old": "    if last.end < search.total() {",
+      "new": "    if last.end <= search.total() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an unfinished search is an obstruction",
+      "old": "    if last.end < search.total() {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the suffix is the start of the last batch",
+      "old": "[(\"suffix\", Datum::from(last.end)), checkpoints]",
+      "new": "[(\"suffix\", Datum::from(last.start)), checkpoints]",
+      "outcome": "killed"
+    },
+    {
+      "name": "suffix key renamed",
+      "old": "[(\"suffix\", Datum::from(last.end)), checkpoints]",
+      "new": "[(\"rest\", Datum::from(last.end)), checkpoints]",
+      "outcome": "killed"
+    },
+    {
+      "name": "incomplete code renamed",
+      "old": "return Ok(refused(\"SEARCH_INCOMPLETE\", detail));",
+      "new": "return Ok(refused(\"INCOMPLETE\", detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "an incomplete search is a typed refusal",
+      "old": "return Ok(refused(\"SEARCH_INCOMPLETE\", detail));",
+      "new": "return Ok(typed_refusal(\"SEARCH_INCOMPLETE\", detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a frustrated cycle is no witness",
+      "old": "if !checks.record(\"frustrated_cycle_witness\", !odd.is_empty(), &listed) {",
+      "new": "if !checks.record(\"frustrated_cycle_witness\", odd.is_empty(), &listed) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness predicate renamed",
+      "old": "if !checks.record(\"frustrated_cycle_witness\", !odd.is_empty(), &listed) {",
+      "new": "if !checks.record(\"witness\", !odd.is_empty(), &listed) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness evidence dropped",
+      "old": "if !checks.record(\"frustrated_cycle_witness\", !odd.is_empty(), &listed) {",
+      "new": "if !checks.record(\"frustrated_cycle_witness\", !odd.is_empty(), &Datum::Null) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "exhausted code renamed",
+      "old": "return Ok(refused(\"EXHAUSTED_WITHOUT_OBSTRUCTION\", Datum::map([])));",
+      "new": "return Ok(refused(\"EXHAUSTED\", Datum::map([])));",
+      "equivalent": "the branch is a guard no reply reaches: a signed graph with no gauge has a fundamental cycle with an odd number of minus edges, so the witness list is not empty when every candidate has been tried and none is a gauge",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "frustrated key renamed",
+      "old": "let detail = Datum::map([(\"frustrated_cycles\", listed), checkpoints]);",
+      "new": "let detail = Datum::map([(\"cycles\", listed), checkpoints]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "obstruction code renamed",
+      "old": "Ok(typed_refusal(\"RESTRICTED_OBSTRUCTION\", detail))",
+      "new": "Ok(typed_refusal(\"OBSTRUCTION\", detail))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a sound obstruction is refused",
+      "old": "Ok(typed_refusal(\"RESTRICTED_OBSTRUCTION\", detail))",
+      "new": "Ok(refused(\"RESTRICTED_OBSTRUCTION\", detail))",
+      "outcome": "killed"
+    }
+  ]
+}

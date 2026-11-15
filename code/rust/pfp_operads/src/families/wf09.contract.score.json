@@ -1,0 +1,107 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf09.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf09.rs",
+      "language": "Rust",
+      "sha256": "b3816fa173272e99631e6ed63023fde0980f6ea1cda9348b9d1222db17e80015"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf09:v1",
+    "symbols": [
+      "DEFAULT_ATTEMPTS",
+      "MAX_ATTEMPTS",
+      "FAMILY",
+      "bounded"
+    ],
+    "owned_invariants": [
+      "The task is the XOR task of xor.rs and optionally max_attempts, an exact integer from 1 to 8; without it the limit is 3. A task the host cannot read is refused before anything is asked.",
+      "The first prompt is the task as written. After a rejected attempt the next prompt is the task as written with that attempt's residual under it, and only that attempt's.",
+      "The run is certified on the first accepted attempt, as ACCEPTED_FIRST_TRY on attempt 0 and REPAIRED later, and nothing more is asked.",
+      "A reply the host cannot read uses up an attempt; its reason is the residual of that attempt.",
+      "When the attempts run out or a reply is missing the run is refused as REPAIR_LIMIT_EXHAUSTED.",
+      "Every verdict rests on the one predicate accepted_within_limit, whose evidence is the trail: one row per attempt with its measure and residual.",
+      "bounded is the loop for any domain: it asks under the stages attempt:0, attempt:1 and so on, and what counts as accepted is the caller's assessment."
+    ],
+    "boundaries": [
+      "Acceptance is xor.rs's: even on every cycle and least. A repair that is even and not least is never accepted.",
+      "The residual is shown to the model. What it may reveal is the domain's decision, in xor.rs.",
+      "The host does not see that successive replies came from one conversation."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf09.rs",
+      "language": "Rust",
+      "sha256": "b3816fa173272e99631e6ed63023fde0980f6ea1cda9348b9d1222db17e80015"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Non-numeric: attempt counts in usize. The limits are asserted as the values 3 and 8, one inside and one outside.",
+      "G3": "A missing reply and an exhausted limit share one refusal code with the trail of attempts made. An unreadable reply is an attempt with its reason, not a crash. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
+      "G4": "14 WF9 tests assert the registry entry, each prompt byte for byte, certification on the first and on a later attempt with the trail, a repair that is not least never accepted, the stated and default limits, an unreadable and a missing reply, a reply past the end of the run, and each malformed task by its reason. Mutation campaign R = 37/37. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 6, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T15:01:56Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v10-test.run.json",
+        "sha256": "2ac3c78c0d43c1d8afccff41082ba5766a3c997b4958118d8411ec48197bb9e4",
+        "note": "597 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-clippy.run.json",
+        "sha256": "bca267d7753f15b816eccc1004bdc6ce881b1819f40ee74e5c1c57e840c95cdb",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-fmt.run.json",
+        "sha256": "f6d1c8480e66c3f0cfb6f83e0bb819d7a7d861989fc9164bee66d15943552e9b",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-metrics.run.json",
+        "sha256": "896842a84d07003d020cd4e1e29115b2a6a075310f83be82779b4ac28bfdc7f3",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-metrics.json",
+        "sha256": "f0123515ac77c4cf93d96d509948e04b751df51b9f0d39da5f53a058f3164656",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 37,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf09.mutation.json",
+        "sha256": "3aac35859ce0fd962e4bc1ae40d0ff2a7284998debc17ee2b10d6397763d7e0b",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 37 mutants"
+      }
+    }
+  },
+  "history": []
+}

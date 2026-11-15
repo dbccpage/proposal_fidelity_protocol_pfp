@@ -79,6 +79,36 @@ checks with weak ones and an inappropriate patch could pass, which is why the
 negative control matters. Re-running with a new run id is another local replay,
 not another independent trial.
 
+## Run it in this repository
+
+The Rust operad host has the repair slice as one command. It verifies the
+source hashes, makes the working copy, applies the patch strictly, runs the
+checks before and after, and writes the record. The source folder is only read.
+
+```powershell
+cd code/rust
+cargo run -p pfp_operads -- repair ../../workflows/wf57_host_tested_patch_repair/examples/refused_operation/source my_run ../../workflows/wf57_host_tested_patch_repair/examples/refused_operation/request.json
+```
+
+That request repairs a small JSON file with the host's own commands as its two
+checks, so it needs no other program. The host prints `"outcome":"REPAIRED"`
+with check exits `[1, 0]` before the patch and `[0, 0]` after it, and `my_run`
+holds the request, the patch, the record and the patched copy.
+
+The example above, `adjust` with its two asserts, runs the same way as a test
+(`pfp_core/workflow_families/tests/test_repair.py`) and gives the same exits.
+
+[WF57](workflow_wf57.md) is the workflow around the command: a model writes the
+patch, the host tests it, and a patch that was tested and did not repair is
+added to the failure ledger. Its fixtures cover the negative cases: a patch
+that leaves the check failing, one that breaks the control, one outside the
+write set, one that does not fit the file, a changed source and a missing
+check program.
+
+In the Rust host the **I** step classifies a failed patch for the failure
+ledger. It calls no immune or genealogy service, and every record says
+`NOT_MEASURED` and `HOLD`.
+
 ## Engineering details that matter
 
 - **Stale bytecode.** The check profile disables Python bytecode writes and

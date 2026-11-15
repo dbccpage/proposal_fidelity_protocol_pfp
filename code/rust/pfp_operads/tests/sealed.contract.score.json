@@ -1,0 +1,196 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/sealed.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/sealed.rs",
+      "language": "Rust",
+      "sha256": "a353adffdcec942e79b0875a1662fd1b92f4c7c657683c41be468663a3068635"
+    },
+    "contract_urn": "urn:pfp-operads:families-sealed-tests:v1",
+    "symbols": [
+      "guard",
+      "leaks",
+      "a_sealed_value_of_four_or_more_characters_is_a_leak_anywhere",
+      "a_shorter_sealed_value_outside_an_answer_key_is_not_guarded",
+      "length_is_counted_in_characters",
+      "a_value_under_an_answer_key_is_a_leak_as_a_whole_word_at_any_length",
+      "every_break_character_and_white_space_ends_a_word",
+      "each_answer_key_is_recognised_in_any_case",
+      "everything_inside_an_answer_key_is_an_answer",
+      "a_long_value_is_guarded_both_ways_under_an_answer_key",
+      "booleans_null_and_empty_text_are_not_guarded",
+      "text_is_guarded_as_written_in_json_without_its_outer_quotes",
+      "a_decimal_is_guarded_as_written",
+      "an_empty_sealed_part_guards_nothing",
+      "a_mark_that_closes_a_sentence_is_not_part_of_the_word"
+    ],
+    "owned_invariants": [
+      "Each leak rule is asserted with a prompt that leaks and a near prompt that does not.",
+      "The threshold is written as the value 4 and the answer keys as their names, so a change to either fails here.",
+      "Closing marks are asserted one, several, and on an answer that itself ends in one."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/sealed.rs",
+      "language": "Rust",
+      "sha256": "a353adffdcec942e79b0875a1662fd1b92f4c7c657683c41be468663a3068635"
+    },
+    "profile": "Non-Numeric",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 13 pass in the recorded run; the suite they belong to killed 56 of 56 eligible guard mutants.",
+      "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T12:56:03Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v8-test.run.json",
+        "sha256": "39e3d54df0f53e66efe9e7c79ccb58d2c64b227e5ae057ba2db430c2248a81ef",
+        "note": "329 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-clippy.run.json",
+        "sha256": "36f330c8dd7d904983f941e99b4eaed4ea0a5926c65e1506bee3a976a63b199f",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-fmt.run.json",
+        "sha256": "304f9442ff6202fbcc60ee643fa68b521ca2229ef90cb498605391f139d1c684",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-metrics.run.json",
+        "sha256": "5c9ed7ff128e413a3a694a13976441d3ab914d3ac77dcd1a8d1645c9805ec339",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-metrics.json",
+        "sha256": "132913181d26af963eec9d6f7ed2a20ca7531a5b5347a857a7562e352ef2ee4d",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-14T12:56:07.059627Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/sealed.rs",
+          "language": "Rust",
+          "sha256": "a353adffdcec942e79b0875a1662fd1b92f4c7c657683c41be468663a3068635"
+        },
+        "contract_urn": "urn:pfp-operads:families-sealed-tests:v1",
+        "symbols": [
+          "guard",
+          "leaks",
+          "a_sealed_value_of_four_or_more_characters_is_a_leak_anywhere",
+          "a_shorter_sealed_value_outside_an_answer_key_is_not_guarded",
+          "length_is_counted_in_characters",
+          "a_value_under_an_answer_key_is_a_leak_as_a_whole_word_at_any_length",
+          "every_break_character_and_white_space_ends_a_word",
+          "each_answer_key_is_recognised_in_any_case",
+          "everything_inside_an_answer_key_is_an_answer",
+          "a_long_value_is_guarded_both_ways_under_an_answer_key",
+          "booleans_null_and_empty_text_are_not_guarded",
+          "text_is_guarded_as_written_in_json_without_its_outer_quotes",
+          "a_decimal_is_guarded_as_written",
+          "an_empty_sealed_part_guards_nothing",
+          "a_mark_that_closes_a_sentence_is_not_part_of_the_word"
+        ],
+        "owned_invariants": [
+          "Each leak rule is asserted with a prompt that leaks and a near prompt that does not.",
+          "The threshold is written as the value 4 and the answer keys as their names, so a change to either fails here.",
+          "Closing marks are asserted one, several, and on an answer that itself ends in one."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/sealed.rs",
+          "language": "Rust",
+          "sha256": "a353adffdcec942e79b0875a1662fd1b92f4c7c657683c41be468663a3068635"
+        },
+        "profile": "Non-Numeric",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected values follow by hand from the request written in the test.",
+          "G3": "Refusals are asserted by code.",
+          "G4": "All 13 pass in the recorded run; the suite they belong to killed 56 of 56 eligible guard mutants.",
+          "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T12:55:53Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v8-test.run.json",
+            "sha256": "39e3d54df0f53e66efe9e7c79ccb58d2c64b227e5ae057ba2db430c2248a81ef",
+            "note": "329 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v8-clippy.run.json",
+            "sha256": "36f330c8dd7d904983f941e99b4eaed4ea0a5926c65e1506bee3a976a63b199f",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v8-fmt.run.json",
+            "sha256": "304f9442ff6202fbcc60ee643fa68b521ca2229ef90cb498605391f139d1c684",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v8-metrics.run.json",
+            "sha256": "5c9ed7ff128e413a3a694a13976441d3ab914d3ac77dcd1a8d1645c9805ec339",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v8-metrics.json",
+            "sha256": "132913181d26af963eec9d6f7ed2a20ca7531a5b5347a857a7562e352ef2ee4d",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    }
+  ]
+}

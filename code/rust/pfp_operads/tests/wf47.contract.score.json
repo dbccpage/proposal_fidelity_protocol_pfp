@@ -1,0 +1,286 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf47.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf47.rs",
+      "language": "Rust",
+      "sha256": "53fd769f2398fc5f3691af9187438756ab72172bd7d6ba6c6802f698d9b2d16e"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf47-tests:v1",
+    "symbols": [
+      "sha",
+      "parsed",
+      "task",
+      "prompt",
+      "key_of",
+      "key",
+      "written",
+      "sealed_from",
+      "sealed",
+      "record",
+      "bodies",
+      "reply",
+      "honest",
+      "forged",
+      "request",
+      "all",
+      "run",
+      "ask",
+      "bad_task",
+      "malformed",
+      "outcomes",
+      "evidence",
+      "broken",
+      "enlarged",
+      "stages",
+      "the_family_is_registered_under_its_names",
+      "the_search_opens_with_the_task_as_written",
+      "a_resumed_session_is_told_the_last_seal_and_how_many_records_it_follows",
+      "a_seal_is_the_hash_of_the_seal_before_it_and_the_record",
+      "a_search_that_finds_a_gauge_is_certified",
+      "a_search_resumed_from_its_checkpoint_is_certified_the_same",
+      "the_basis_order_numbers_the_candidates",
+      "the_first_gauge_of_a_batch_is_the_one_recorded",
+      "all_plus_signs_are_balanced_by_the_first_candidate",
+      "an_exhausted_search_on_a_frustrated_graph_ends_as_the_typed_obstruction",
+      "the_obstruction_names_the_fundamental_cycles_with_an_odd_number_of_minus_edges",
+      "a_search_that_runs_out_of_sessions_is_incomplete",
+      "a_session_with_no_reply_ends_the_search_where_it_stood",
+      "a_chain_starts_at_index_zero",
+      "the_indices_of_a_chain_are_contiguous",
+      "a_resumed_chain_extends_the_chain_before_it_unchanged",
+      "every_record_carries_the_key_of_the_presentation",
+      "every_seal_is_recomputed",
+      "the_batches_are_the_hosts",
+      "no_record_follows_the_batch_that_tries_the_last_candidate",
+      "the_last_batch_stops_at_the_last_candidate",
+      "the_spend_is_every_candidate_tried_so_far",
+      "status_and_gauge_are_the_hosts",
+      "nothing_follows_the_batch_that_found_a_gauge",
+      "a_session_tries_no_more_candidates_than_its_budget",
+      "the_first_rule_broken_names_the_refusal",
+      "a_reply_without_a_chain_of_records_is_malformed",
+      "path",
+      "a_task_has_at_most_sixteen_vertices",
+      "a_task_allows_at_most_sixty_four_sessions",
+      "the_signs_are_one_or_minus_one_on_every_edge",
+      "the_basis_lists_every_vertex_once",
+      "the_three_bounds_are_positive_exact_integers",
+      "a_task_is_read_in_order"
+    ],
+    "owned_invariants": [
+      "Keys and seals are rebuilt in the test from the canonical text written out, so a change to what a seal covers fails here.",
+      "Each of the ten custody rules is asserted broken alone with its code and session, and the first rule broken when two are.",
+      "The limits are written as the values 16 and 64 and asserted one inside and one outside; budgets are asserted on amounts above 64 bits.",
+      "The candidate numbering is asserted under two basis orders, and the obstruction against cycles counted by hand."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf47.rs",
+      "language": "Rust",
+      "sha256": "53fd769f2398fc5f3691af9187438756ab72172bd7d6ba6c6802f698d9b2d16e"
+    },
+    "profile": "Non-Numeric",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 33 pass in the recorded run; the suite they belong to killed 132 of 132 eligible WF47 mutants.",
+      "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T16:06:43Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v11-test.run.json",
+        "sha256": "6a9776b5ca88d37e3536a8f5db9bb1aea115c9f46cb37d2ee2a0437bdbf0991c",
+        "note": "734 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-clippy.run.json",
+        "sha256": "66b4e1d2379f1226a13d70b7fdcf1604634a31f09ade75d548bde957fb8b19de",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-fmt.run.json",
+        "sha256": "705ef43242290a5139c6c50b71d63900d8c7797ae6e591d9628f350fe9711098",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-metrics.run.json",
+        "sha256": "8c1f359efe9677bde150f7df47cb3ac9bc5ce638c0eb2aeaa78ba72934759149",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-metrics.json",
+        "sha256": "3c2c402f16644cedb0b99b0c98ec5749f047f586797bc892503fdb54c4b93cd0",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-14T16:06:46.967051Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf47.rs",
+          "language": "Rust",
+          "sha256": "53fd769f2398fc5f3691af9187438756ab72172bd7d6ba6c6802f698d9b2d16e"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf47-tests:v1",
+        "symbols": [
+          "sha",
+          "parsed",
+          "task",
+          "prompt",
+          "key_of",
+          "key",
+          "written",
+          "sealed_from",
+          "sealed",
+          "record",
+          "bodies",
+          "reply",
+          "honest",
+          "forged",
+          "request",
+          "all",
+          "run",
+          "ask",
+          "bad_task",
+          "malformed",
+          "outcomes",
+          "evidence",
+          "broken",
+          "enlarged",
+          "stages",
+          "the_family_is_registered_under_its_names",
+          "the_search_opens_with_the_task_as_written",
+          "a_resumed_session_is_told_the_last_seal_and_how_many_records_it_follows",
+          "a_seal_is_the_hash_of_the_seal_before_it_and_the_record",
+          "a_search_that_finds_a_gauge_is_certified",
+          "a_search_resumed_from_its_checkpoint_is_certified_the_same",
+          "the_basis_order_numbers_the_candidates",
+          "the_first_gauge_of_a_batch_is_the_one_recorded",
+          "all_plus_signs_are_balanced_by_the_first_candidate",
+          "an_exhausted_search_on_a_frustrated_graph_ends_as_the_typed_obstruction",
+          "the_obstruction_names_the_fundamental_cycles_with_an_odd_number_of_minus_edges",
+          "a_search_that_runs_out_of_sessions_is_incomplete",
+          "a_session_with_no_reply_ends_the_search_where_it_stood",
+          "a_chain_starts_at_index_zero",
+          "the_indices_of_a_chain_are_contiguous",
+          "a_resumed_chain_extends_the_chain_before_it_unchanged",
+          "every_record_carries_the_key_of_the_presentation",
+          "every_seal_is_recomputed",
+          "the_batches_are_the_hosts",
+          "no_record_follows_the_batch_that_tries_the_last_candidate",
+          "the_last_batch_stops_at_the_last_candidate",
+          "the_spend_is_every_candidate_tried_so_far",
+          "status_and_gauge_are_the_hosts",
+          "nothing_follows_the_batch_that_found_a_gauge",
+          "a_session_tries_no_more_candidates_than_its_budget",
+          "the_first_rule_broken_names_the_refusal",
+          "a_reply_without_a_chain_of_records_is_malformed",
+          "path",
+          "a_task_has_at_most_sixteen_vertices",
+          "a_task_allows_at_most_sixty_four_sessions",
+          "the_signs_are_one_or_minus_one_on_every_edge",
+          "the_basis_lists_every_vertex_once",
+          "the_three_bounds_are_positive_exact_integers",
+          "a_task_is_read_in_order"
+        ],
+        "owned_invariants": [
+          "Keys and seals are rebuilt in the test from the canonical text written out, so a change to what a seal covers fails here.",
+          "Each of the ten custody rules is asserted broken alone with its code and session, and the first rule broken when two are.",
+          "The limits are written as the values 16 and 64 and asserted one inside and one outside; budgets are asserted on amounts above 64 bits.",
+          "The candidate numbering is asserted under two basis orders, and the obstruction against cycles counted by hand."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf47.rs",
+          "language": "Rust",
+          "sha256": "53fd769f2398fc5f3691af9187438756ab72172bd7d6ba6c6802f698d9b2d16e"
+        },
+        "profile": "Non-Numeric",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected values follow by hand from the request written in the test.",
+          "G3": "Refusals are asserted by code.",
+          "G4": "All 33 pass in the recorded run; the suite they belong to killed 132 of 132 eligible WF47 mutants.",
+          "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T16:04:44Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v11-test.run.json",
+            "sha256": "6a9776b5ca88d37e3536a8f5db9bb1aea115c9f46cb37d2ee2a0437bdbf0991c",
+            "note": "734 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-clippy.run.json",
+            "sha256": "66b4e1d2379f1226a13d70b7fdcf1604634a31f09ade75d548bde957fb8b19de",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-fmt.run.json",
+            "sha256": "705ef43242290a5139c6c50b71d63900d8c7797ae6e591d9628f350fe9711098",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-metrics.run.json",
+            "sha256": "8c1f359efe9677bde150f7df47cb3ac9bc5ce638c0eb2aeaa78ba72934759149",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-metrics.json",
+            "sha256": "3c2c402f16644cedb0b99b0c98ec5749f047f586797bc892503fdb54c4b93cd0",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    }
+  ]
+}

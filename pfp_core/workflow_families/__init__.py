@@ -1,9 +1,10 @@
-"""Executable workflow families WF6-WF49, WF51, WF55 and WF56.
+"""Executable workflow families WF6-WF49, WF51 and WF55-WF57.
 
 ``base`` holds the shared runtime (spec, session, budget, verdicts), ``exact``
 the shared exact arithmetic, ``layer1`` .. ``layer9`` the families in DAG
-layer order, and ``learning`` and ``candidates`` the families whose checks are
-all made by the Rust operad host. ``registry.load()`` returns every family by WF id.
+layer order, and ``learning``, ``candidates`` and ``repair`` the families whose
+checks are all made by the Rust operad host. ``registry.load()`` returns every
+family by WF id.
 
 What this supports: each family's host check accepts its positive fixtures and
 refuses its adversarial fixtures, offline, with zero spend. What it does not

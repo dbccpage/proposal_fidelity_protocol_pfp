@@ -1,0 +1,116 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/workshop.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/workshop.rs",
+      "language": "Rust",
+      "sha256": "3f65566c295e2222f943fa1cdb390a68b37b3d4f84ed71b95af0480a2365a7e2"
+    },
+    "contract_urn": "urn:pfp-operads:workshop:v1",
+    "symbols": [
+      "WORKSPACE",
+      "HOST",
+      "MAX_SOURCE_BYTES",
+      "HEAD_BYTES",
+      "SCRUBBED",
+      "PINNED",
+      "stream",
+      "Workshop",
+      "Workshop::new",
+      "Workshop::hosted",
+      "repair_in"
+    ],
+    "owned_invariants": [
+      "The source tree is only read. Every write goes under the run folder, which must not exist when the run starts and must lie outside the source tree, with neither inside the other.",
+      "Binding a source tree and a run folder creates nothing. The run folder is made with a create that fails if it exists, and every kept file is opened for exclusive creation.",
+      "A declared file is read only when every part of its path is a real entry, none is a link, and the last is a regular file of at most 2 MiB. Anything else is refused as SOURCE_LINK_REFUSED or SOURCE_FILE_REFUSED.",
+      "A write to the working copy goes only to a file that is already there as a regular file.",
+      "A check runs as its program and arguments, without a shell, in the working copy, with closed input, with the Git and Python cache variables in SCRUBBED removed and the variables in PINNED set, and with the global Git configuration pointed at the null device.",
+      "A check that cannot start, does not exit by its deadline or ends without an exit code refuses the run as CHECK_UNAVAILABLE; an overrunning child is killed and reaped before the refusal is returned.",
+      "Each output stream is read to its end on its own thread. Its SHA-256 covers every byte, its head keeps the first 4096 bytes as text, and truncated says whether there were more.",
+      "A check whose program is exactly pfp_operad runs the host binary the workshop was given; without one the name is looked up like any other. The request keeps the name, so it carries no path of the machine."
+    ],
+    "boundaries": [
+      "This separates a working copy from the sources. It is not a sandbox: a check is a trusted command and can do whatever the operator's account can.",
+      "Only declared files are compared before and after a check. A check that writes another file is not noticed.",
+      "The deadline bounds the wait for the check's own process. A process it started and left running is not tracked.",
+      "The link checks and the write-after-check comparison are made at separate moments; a concurrent writer on the same machine is outside the model."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/workshop.rs",
+      "language": "Rust",
+      "sha256": "3f65566c295e2222f943fa1cdb390a68b37b3d4f84ed71b95af0480a2365a7e2"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, vocabularies from the canon, exact integers, no unwrap or direct indexing.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Non-numeric: byte counts and a deadline. The stream hash is asserted against a hash the tests compute; the 4096-byte and 2 MiB limits are asserted one byte inside and one byte outside. Not B: the hash library is trusted.",
+      "G3": "Typed refusals: SOURCE_ROOT_REFUSED, OUTPUT_SCOPE_REFUSED, OUTPUT_CONFLICT, SOURCE_PATH_REFUSED, SOURCE_LINK_REFUSED, SOURCE_FILE_REFUSED, IO_UNAVAILABLE, CHECK_UNAVAILABLE. Every file and process error becomes one of them with the path or the check named. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
+      "G4": "22 workshop tests run on real temporary folders with the built host binary as the check program: a repair and each failed outcome on disk, the run folder's contents, links and oversize files, an existing or nested run folder, the deadline with the child no longer running, the environment a check sees by value, closed input, stream limits with a slow reader, the host name, and the binary's argument order and exit codes. Mutation campaign R = 104/104. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 10, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T12:02:21Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v7-test.run.json",
+        "sha256": "9b7778a188f186ec10f4e986bf1a4e4b3e3458c9f51b257b6a11602be9610931",
+        "note": "207 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v7-clippy.run.json",
+        "sha256": "057448407c0033d3fda7a7cd83d4d797bc94e8b3357614105306a6fc87721e96",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v7-fmt.run.json",
+        "sha256": "2cd5a739ad1076b1545ad6c1b8d6457d3b2a762894a68ed2a22fc6054b9226a6",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v7-metrics.run.json",
+        "sha256": "ba5ee46c693f69310d6324c43ea86730991805ba640c610e4b72939092c1e590",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v7-metrics.json",
+        "sha256": "c413c3096f439bebae18fa810948a064789b07da627848f3289df544344be4c3",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 104,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-workshop.mutation.json",
+        "sha256": "84779d7dbdfe52a5b66822dad8f14145402f4cea3aa458681d3529780e656450",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 104 mutants"
+      }
+    }
+  },
+  "history": []
+}

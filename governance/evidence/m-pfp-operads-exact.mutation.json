@@ -1,0 +1,335 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/exact.rs",
+  "target_sha256": "7f85ea9b6fb4dda8bf66d50ceea60a3e634a960fa20a4d653bcc6bde3d068abf",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test datum --test exact --test families --test sealed --test wf07 --test wf30 --test wf31",
+  "counts": {
+    "killed": 49,
+    "survived": 0,
+    "demonstrably_equivalent": 3,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "digits accepts any text",
+      "old": "    if !text.bytes().all(|byte| byte.is_ascii_digit()) {\n        return None;\n    }\n    text.parse().ok()",
+      "new": "    text.parse().ok()",
+      "outcome": "killed"
+    },
+    {
+      "name": "digits accepts unicode digits",
+      "old": "    if !text.bytes().all(|byte| byte.is_ascii_digit()) {",
+      "new": "    if !text.chars().all(char::is_numeric) {",
+      "equivalent": "BigInt::from_str reads ASCII digits only, so a non-ASCII digit that passes this guard is still refused by the parse on the next line",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "minus sign ignored",
+      "old": "        Some(rest) => (true, rest),",
+      "new": "        Some(rest) => (false, rest),",
+      "outcome": "killed"
+    },
+    {
+      "name": "every rational negated",
+      "old": "        None => (false, text),",
+      "new": "        None => (true, text),",
+      "outcome": "killed"
+    },
+    {
+      "name": "denominator read from the numerator",
+      "old": "        Some((top, bottom)) => (digits(top)?, digits(bottom)?),",
+      "new": "        Some((top, bottom)) => (digits(top)?, digits(top).and(digits(bottom)).and(digits(top))?),",
+      "outcome": "killed"
+    },
+    {
+      "name": "fraction split at the last slash",
+      "old": "    let (top, bottom) = match body.split_once('/') {",
+      "new": "    let (top, bottom) = match body.rsplit_once('/') {",
+      "equivalent": "with two slashes one side still holds a slash and is refused by digits either way; with one slash both splits are the same",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "whole number has denominator two",
+      "old": "        None => (digits(body)?, BigInt::one()),",
+      "new": "        None => (digits(body)?, BigInt::from(2)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "zero denominator accepted",
+      "old": "    if bottom.is_zero() {\n        return None;\n    }",
+      "new": "    if false {\n        return None;\n    }",
+      "note": "Rational::new panics on a zero denominator",
+      "outcome": "killed"
+    },
+    {
+      "name": "zero numerator refused",
+      "old": "    if bottom.is_zero() {",
+      "new": "    if bottom.is_zero() || top.is_zero() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "sign applied twice",
+      "old": "    Some(if negative { -value } else { value })",
+      "new": "    Some(if negative { value } else { -value })",
+      "outcome": "killed"
+    },
+    {
+      "name": "integer datum is not a rational",
+      "old": "        Datum::Int(number) => Some(Rational::from_integer(number.clone())),",
+      "new": "        Datum::Int(_) => None,",
+      "outcome": "killed"
+    },
+    {
+      "name": "integer datum negated",
+      "old": "        Datum::Int(number) => Some(Rational::from_integer(number.clone())),",
+      "new": "        Datum::Int(number) => Some(Rational::from_integer(-number.clone())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "text datum is not a rational",
+      "old": "        Datum::Text(text) => ratio(text),",
+      "new": "        Datum::Text(_) => None,",
+      "outcome": "killed"
+    },
+    {
+      "name": "decimal datum read as zero",
+      "old": "        Datum::Text(text) => ratio(text),\n        _ => None,",
+      "new": "        Datum::Text(text) => ratio(text),\n        Datum::Decimal(_) => Some(Rational::zero()),\n        _ => None,",
+      "outcome": "killed"
+    },
+    {
+      "name": "bad items skipped in a list",
+      "old": "    datum.as_list()?.iter().map(rational).collect()",
+      "new": "    Some(datum.as_list()?.iter().filter_map(rational).collect())",
+      "outcome": "killed"
+    },
+    {
+      "name": "show swaps the parts",
+      "old": "    format!(\"{}/{}\", value.numer(), value.denom())",
+      "new": "    format!(\"{}/{}\", value.denom(), value.numer())",
+      "outcome": "killed"
+    },
+    {
+      "name": "show drops the denominator",
+      "old": "    format!(\"{}/{}\", value.numer(), value.denom())",
+      "new": "    format!(\"{}\", value.numer())",
+      "outcome": "killed"
+    },
+    {
+      "name": "width taken from the first row",
+      "old": "    let width = matrix.iter().map(Vec::len).max().unwrap_or(0);",
+      "new": "    let width = matrix.first().map_or(0, Vec::len);",
+      "note": "a longer later row is then never padded and a shorter one is indexed past its end",
+      "outcome": "killed"
+    },
+    {
+      "name": "width is the narrowest row",
+      "old": "    let width = matrix.iter().map(Vec::len).max().unwrap_or(0);",
+      "new": "    let width = matrix.iter().map(Vec::len).min().unwrap_or(0);",
+      "outcome": "killed"
+    },
+    {
+      "name": "rows padded with ones",
+      "old": "        row.resize(width, Rational::zero());",
+      "new": "        row.resize(width, Rational::one());",
+      "outcome": "killed"
+    },
+    {
+      "name": "pivot search starts at the top",
+      "old": "        let Some(pivot) = (next..matrix.len()).find(|&row| !matrix[row][column].is_zero()) else {",
+      "new": "        let Some(pivot) = (0..matrix.len()).find(|&row| !matrix[row][column].is_zero()) else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "pivot search skips the current row",
+      "old": "        let Some(pivot) = (next..matrix.len()).find(|&row| !matrix[row][column].is_zero()) else {",
+      "new": "        let Some(pivot) = (next + 1..matrix.len()).find(|&row| !matrix[row][column].is_zero()) else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "pivot may be zero",
+      "old": "        let Some(pivot) = (next..matrix.len()).find(|&row| !matrix[row][column].is_zero()) else {",
+      "new": "        let Some(pivot) = (next..matrix.len()).find(|&row| matrix[row][column].is_zero()) else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "no row swap",
+      "old": "        matrix.swap(next, pivot);\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "pivot row not scaled",
+      "old": "            *entry = &*entry / &lead;",
+      "new": "            *entry = entry.clone();",
+      "outcome": "killed"
+    },
+    {
+      "name": "pivot row multiplied by its lead",
+      "old": "            *entry = &*entry / &lead;",
+      "new": "            *entry = &*entry * &lead;",
+      "outcome": "killed"
+    },
+    {
+      "name": "pivot row eliminates itself",
+      "old": "            if row == next {\n                continue;\n            }",
+      "new": "            if false {\n                continue;\n            }",
+      "outcome": "killed"
+    },
+    {
+      "name": "rows above the pivot not cleared",
+      "old": "            if row == next {",
+      "new": "            if row <= next {",
+      "outcome": "killed"
+    },
+    {
+      "name": "rows below the pivot not cleared",
+      "old": "            if row == next {",
+      "new": "            if row >= next {",
+      "outcome": "killed"
+    },
+    {
+      "name": "elimination adds instead of subtracting",
+      "old": "                *entry = &*entry - &factor * above;",
+      "new": "                *entry = &*entry + &factor * above;",
+      "outcome": "killed"
+    },
+    {
+      "name": "elimination ignores the factor",
+      "old": "                *entry = &*entry - &factor * above;",
+      "new": "                *entry = &*entry - above;",
+      "outcome": "killed"
+    },
+    {
+      "name": "pivot column recorded one late",
+      "old": "        pivots.push(column);",
+      "new": "        pivots.push(column + 1);",
+      "outcome": "killed"
+    },
+    {
+      "name": "pivot row does not advance",
+      "old": "        pivots.push(column);\n        next += 1;",
+      "new": "        pivots.push(column);",
+      "outcome": "killed"
+    },
+    {
+      "name": "rank is the number of rows",
+      "old": "    rref(rows).1.len()",
+      "new": "    rref(rows).0.len()",
+      "outcome": "killed"
+    },
+    {
+      "name": "unique named inconsistent",
+      "old": "            Solvability::Unique(_) => \"unique\",",
+      "new": "            Solvability::Unique(_) => \"inconsistent\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "inconsistent named unique",
+      "old": "            Solvability::Inconsistent => \"inconsistent\",",
+      "new": "            Solvability::Inconsistent => \"unique\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "underdetermined named inconsistent",
+      "old": "            Solvability::Underdetermined => \"underdetermined\",",
+      "new": "            Solvability::Underdetermined => \"inconsistent\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "unknowns counted from the rows",
+      "old": "    let unknowns = a.first().map_or(0, Vec::len);",
+      "new": "    let unknowns = a.len();",
+      "outcome": "killed"
+    },
+    {
+      "name": "right side left out of the augmented matrix",
+      "old": "        .map(|(row, right)| row.iter().cloned().chain([right.clone()]).collect())",
+      "new": "        .map(|(row, _)| row.iter().cloned().collect())",
+      "outcome": "killed"
+    },
+    {
+      "name": "right side negated",
+      "old": "        .map(|(row, right)| row.iter().cloned().chain([right.clone()]).collect())",
+      "new": "        .map(|(row, right)| row.iter().cloned().chain([-right.clone()]).collect())",
+      "outcome": "killed"
+    },
+    {
+      "name": "rank of A taken from the augmented matrix",
+      "old": "    let rank_a = rank(a);",
+      "new": "    let rank_a = rank(&augmented);",
+      "outcome": "killed"
+    },
+    {
+      "name": "rank of the augmented matrix taken from A",
+      "old": "    let rank_ab = pivots.len();",
+      "new": "    let rank_ab = rank(a);",
+      "outcome": "killed"
+    },
+    {
+      "name": "inconsistency never detected",
+      "old": "    let solvability = if rank_a != rank_ab {",
+      "new": "    let solvability = if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "underdetermined test off by one",
+      "old": "    } else if rank_a < unknowns {",
+      "new": "    } else if rank_a + 1 < unknowns {",
+      "note": "a rank one below the unknowns then indexes past the solution or reports a wrong unique answer",
+      "outcome": "killed"
+    },
+    {
+      "name": "full rank called underdetermined",
+      "old": "    } else if rank_a < unknowns {",
+      "new": "    } else if rank_a <= unknowns {",
+      "outcome": "killed"
+    },
+    {
+      "name": "solution read from the first column",
+      "old": "            solution[column] = row[unknowns].clone();",
+      "new": "            solution[column] = row[0].clone();",
+      "outcome": "killed"
+    },
+    {
+      "name": "solution written in row order",
+      "old": "        for (row, &column) in reduced.iter().zip(&pivots) {\n            solution[column] = row[unknowns].clone();",
+      "new": "        for (index, (row, _)) in reduced.iter().zip(&pivots).enumerate() {\n            solution[index] = row[unknowns].clone();",
+      "equivalent": "in the unique branch the rank equals the number of unknowns, so the pivots are the columns 0 to n-1 in order and the pivot of row i is column i",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "reported ranks swapped",
+      "old": "        solvability,\n        rank_a,\n        rank_ab,",
+      "new": "        solvability,\n        rank_a: rank_ab,\n        rank_ab: rank_a,",
+      "outcome": "killed"
+    },
+    {
+      "name": "polynomial read with the leading term first",
+      "old": "        .iter()\n        .rev()\n        .fold(Rational::zero(), |sum, coefficient| sum * x + coefficient)",
+      "new": "        .iter()\n        .fold(Rational::zero(), |sum, coefficient| sum * x + coefficient)",
+      "outcome": "killed"
+    },
+    {
+      "name": "polynomial starts from one",
+      "old": "        .fold(Rational::zero(), |sum, coefficient| sum * x + coefficient)",
+      "new": "        .fold(Rational::one(), |sum, coefficient| sum * x + coefficient)",
+      "outcome": "killed"
+    },
+    {
+      "name": "polynomial adds x instead of multiplying",
+      "old": "        .fold(Rational::zero(), |sum, coefficient| sum * x + coefficient)",
+      "new": "        .fold(Rational::zero(), |sum, coefficient| sum + x + coefficient)",
+      "outcome": "killed"
+    },
+    {
+      "name": "polynomial subtracts the coefficient",
+      "old": "        .fold(Rational::zero(), |sum, coefficient| sum * x + coefficient)",
+      "new": "        .fold(Rational::zero(), |sum, coefficient| sum * x - coefficient)",
+      "outcome": "killed"
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf26.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf26.rs",
+      "language": "Rust",
+      "sha256": "3cd721c13eb8c5d22415b5e97d2fdb06867bb5edb514675993a4f2478bb30463"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf26:v1",
+    "symbols": [
+      "ANTIBODIES",
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task is roots, a nonempty list of exact rationals, and optionally max_attempts, an exact integer from 1 to 8; without it the limit is 3.",
+      "Each reply is sorted by monic.rs. A kind of mistake not yet seen in this run adds that kind's antibody to the set; a kind seen before adds nothing. The set keeps the order in which the kinds were first seen.",
+      "After a rejected round the next prompt is the task as written with the whole set of antibodies under it as the residual.",
+      "An antibody is one of five fixed sentences, chosen by the kind of mistake alone. No coefficient, root or part of a reply is ever written into one.",
+      "A reply that is not text uses up a round and adds no antibody.",
+      "The loop and its verdict are WF9's: certified when a reply is the expected polynomial written canonically, refused as REPAIR_LIMIT_EXHAUSTED otherwise. The verdict also gives the number of antibodies."
+    ],
+    "boundaries": [
+      "The antibody sentences are advice in the prompt. Nothing checks that a later reply follows them; only the final polynomial is checked.",
+      "The sentence for a wrong value says the coefficients do not vanish at the roots. It does not say which coefficient is wrong."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf26.rs",
+      "language": "Rust",
+      "sha256": "3cd721c13eb8c5d22415b5e97d2fdb06867bb5edb514675993a4f2478bb30463"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Non-numeric here: the exact arithmetic is monic.rs's. Counts of rounds and antibodies in usize, asserted by value.",
+      "G3": "A reply that is not text is an attempt with its reason. A kind of mistake with no antibody adds none. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
+      "G4": "14 WF26 tests assert the registry entry, the five antibodies by text, each prompt byte for byte, each kind of mistake adding its own sentence, the order of the set, a repeated mistake adding nothing, the count in the verdict, a reply that is not text, the limits, rational roots, a missing reply and each malformed task. Mutation campaign R = 30/30. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 7, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T15:01:56Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v10-test.run.json",
+        "sha256": "2ac3c78c0d43c1d8afccff41082ba5766a3c997b4958118d8411ec48197bb9e4",
+        "note": "597 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-clippy.run.json",
+        "sha256": "bca267d7753f15b816eccc1004bdc6ce881b1819f40ee74e5c1c57e840c95cdb",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-fmt.run.json",
+        "sha256": "f6d1c8480e66c3f0cfb6f83e0bb819d7a7d861989fc9164bee66d15943552e9b",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-metrics.run.json",
+        "sha256": "896842a84d07003d020cd4e1e29115b2a6a075310f83be82779b4ac28bfdc7f3",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-metrics.json",
+        "sha256": "f0123515ac77c4cf93d96d509948e04b751df51b9f0d39da5f53a058f3164656",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 30,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf26.mutation.json",
+        "sha256": "43a339cb3f339835c99ba863e1df6d4beee074cf3303a3ab848a9e59728873fa",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 30 mutants"
+      }
+    }
+  },
+  "history": []
+}

@@ -1,0 +1,410 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf30.rs",
+  "target_sha256": "1e5fef4194f342cdc809a155f8a27a4e1a6942fe30e46aa97a4bdfba108529b4",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test datum --test exact --test families --test sealed --test wf07 --test wf30 --test wf31",
+  "counts": {
+    "killed": 62,
+    "survived": 0,
+    "demonstrably_equivalent": 3,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "fewest wires is 1",
+      "old": "pub const MIN_WIRES: usize = 2;",
+      "new": "pub const MIN_WIRES: usize = 1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "fewest wires is 3",
+      "old": "pub const MIN_WIRES: usize = 2;",
+      "new": "pub const MIN_WIRES: usize = 3;",
+      "outcome": "killed"
+    },
+    {
+      "name": "most wires is 9",
+      "old": "pub const MAX_WIRES: usize = 10;",
+      "new": "pub const MAX_WIRES: usize = 9;",
+      "outcome": "killed"
+    },
+    {
+      "name": "most wires is 11",
+      "old": "pub const MAX_WIRES: usize = 10;",
+      "new": "pub const MAX_WIRES: usize = 11;",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF30\",",
+      "new": "    workflow: \"WF3\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Constraint-forcing anti-recitation\",",
+      "new": "    name: \"Anti-recitation\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"comparator_network_zero_one_principle\",",
+      "new": "    host_check: \"zero_one_principle\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "pair shape message changed",
+      "old": "return Err(\"a comparator is a pair [i, j]\".to_owned());",
+      "new": "return Err(\"pair\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "comparator ends swapped",
+      "old": "        (Some(low), Some(high)) if low < high && high < wires => Ok((low, high)),",
+      "new": "        (Some(low), Some(high)) if low < high && high < wires => Ok((high, low)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "equal ends accepted",
+      "old": "        (Some(low), Some(high)) if low < high && high < wires => Ok((low, high)),",
+      "new": "        (Some(low), Some(high)) if low <= high && high < wires => Ok((low, high)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "descending pair accepted",
+      "old": "        (Some(low), Some(high)) if low < high && high < wires => Ok((low, high)),",
+      "new": "        (Some(low), Some(high)) if low != high && high < wires => Ok((low, high)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "wire n accepted",
+      "old": "        (Some(low), Some(high)) if low < high && high < wires => Ok((low, high)),",
+      "new": "        (Some(low), Some(high)) if low < high && high <= wires => Ok((low, high)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "top wire refused",
+      "old": "        (Some(low), Some(high)) if low < high && high < wires => Ok((low, high)),",
+      "new": "        (Some(low), Some(high)) if low < high && high + 1 < wires => Ok((low, high)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "order message changed",
+      "old": "        _ => Err(\"a comparator must satisfy 0 <= i < j < n\".to_owned()),",
+      "new": "        _ => Err(\"order\".to_owned()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-list comparators read as none",
+      "old": "            .as_list()\n            .ok_or(format!(\"{key} must be a list of comparators\"))?\n            .iter()",
+      "new": "            .as_list()\n            .unwrap_or_default()\n            .iter()",
+      "outcome": "killed"
+    },
+    {
+      "name": "list message names no key",
+      "old": "            .ok_or(format!(\"{key} must be a list of comparators\"))?",
+      "new": "            .ok_or(format!(\"must be a list of comparators\"))?",
+      "outcome": "killed"
+    },
+    {
+      "name": "bad comparators skipped",
+      "old": "            .map(|pair| comparator(pair, wires))\n            .collect(),",
+      "new": "            .filter_map(|pair| comparator(pair, wires).ok())\n            .map(Ok)\n            .collect(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "wires read from another key",
+      "old": "        .get(\"n\")",
+      "new": "        .get(\"wires\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "any wire count accepted",
+      "old": "        .filter(|wires| (MIN_WIRES..=MAX_WIRES).contains(wires))\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "wire message changed",
+      "old": "            \"n must be an exact integer from {MIN_WIRES} to {MAX_WIRES}\"",
+      "new": "            \"n must be from {MIN_WIRES} to {MAX_WIRES}\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "bound read from another key",
+      "old": "    let bound = match task.get(\"max_comparators\") {",
+      "new": "    let bound = match task.get(\"max\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "unreadable bound read as none",
+      "old": "        Some(bound) => Some(\n            bound\n                .as_count()\n                .ok_or(\"max_comparators must be an exact integer, zero or more\")?,\n        ),",
+      "new": "        Some(bound) => bound.as_count(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "bound message changed",
+      "old": "                .ok_or(\"max_comparators must be an exact integer, zero or more\")?,",
+      "new": "                .ok_or(\"max_comparators\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "prefix read from forbidden",
+      "old": "        prefix: comparators(task, \"forced_prefix\", wires)?,",
+      "new": "        prefix: comparators(task, \"forbidden\", wires)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "forbidden read from prefix",
+      "old": "        forbidden: comparators(task, \"forbidden\", wires)?.into_iter().collect(),",
+      "new": "        forbidden: comparators(task, \"forced_prefix\", wires)?.into_iter().collect(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "bound dropped",
+      "old": "        forbidden: comparators(task, \"forbidden\", wires)?.into_iter().collect(),\n        bound,",
+      "new": "        forbidden: comparators(task, \"forbidden\", wires)?.into_iter().collect(),\n        bound: None,",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation accepts everything",
+      "old": "    task(public).map(|_| ())",
+      "new": "    task(public).map(|_| ()).or(Ok(()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "comparator swaps when ordered",
+      "old": "            if first > second {",
+      "new": "            if first < second {",
+      "outcome": "killed"
+    },
+    {
+      "name": "comparator swaps equal wires too",
+      "old": "            if first > second {",
+      "new": "            if first >= second {",
+      "equivalent": "swapping two equal values leaves the wires as they were",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "comparator never swaps",
+      "old": "            if first > second {",
+      "new": "            if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "comparator reads the low wire twice",
+      "old": "        if let (Some(&first), Some(&second)) = (wires.get(low), wires.get(high)) {",
+      "new": "        if let (Some(&first), Some(&second)) = (wires.get(low), wires.get(low)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "last wire is the most significant",
+      "old": "        .map(|wire| u8::from(index >> (wires - 1 - wire) & 1 == 1))",
+      "new": "        .map(|wire| u8::from(index >> wire & 1 == 1))",
+      "outcome": "killed"
+    },
+    {
+      "name": "bits inverted",
+      "old": "        .map(|wire| u8::from(index >> (wires - 1 - wire) & 1 == 1))",
+      "new": "        .map(|wire| u8::from(index >> (wires - 1 - wire) & 1 == 0))",
+      "outcome": "killed"
+    },
+    {
+      "name": "half the inputs are run",
+      "old": "    (0..1usize << wires)",
+      "new": "    (0..1usize << (wires - 1))",
+      "outcome": "killed"
+    },
+    {
+      "name": "last input not run",
+      "old": "    (0..1usize << wires)",
+      "new": "    (0..(1usize << wires) - 1)",
+      "equivalent": "the last input is all ones, which is already sorted and which no comparator changes, so it is never among the unsorted inputs",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "first input not run",
+      "old": "    (0..1usize << wires)",
+      "new": "    (1..1usize << wires)",
+      "equivalent": "the first input is all zeros, which is already sorted and which no comparator changes, so it is never among the unsorted inputs",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "sorted inputs are the failures",
+      "old": "            apply(network, input) != sorted",
+      "new": "            apply(network, input) == sorted",
+      "outcome": "killed"
+    },
+    {
+      "name": "output compared with the input",
+      "old": "            let mut sorted = input.clone();\n            sorted.sort_unstable();",
+      "new": "            let sorted = input.clone();",
+      "outcome": "killed"
+    },
+    {
+      "name": "network run in reverse",
+      "old": "            apply(network, input) != sorted",
+      "new": "            apply(&network.iter().rev().copied().collect::<Vec<_>>(), input) != sorted",
+      "outcome": "killed"
+    },
+    {
+      "name": "evidence writes the pair swapped",
+      "old": "            .map(|&(low, high)| Datum::from(vec![low, high]))",
+      "new": "            .map(|&(low, high)| Datum::from(vec![high, low]))",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage renamed",
+      "old": "    let Some(reply) = run.ask(\"solve\", run.prompt())? else {",
+      "new": "    let Some(reply) = run.ask(\"network\", run.prompt())? else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing reply reported as malformed",
+      "old": "        return Ok(no_reply());",
+      "new": "        return Err(Stop::Malformed(String::new()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing network read as empty",
+      "old": "    if reply.get(\"network\").and_then(Datum::as_list).is_none() {",
+      "new": "    if reply.get(\"network\").is_some_and(|list| list.as_list().is_none()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "network of any kind passes the first test",
+      "old": "    if reply.get(\"network\").and_then(Datum::as_list).is_none() {",
+      "new": "    if reply.get(\"network\").is_none() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "network message changed",
+      "old": "            \"the reply must be an object with a network list\".to_owned(),",
+      "new": "            \"network\".to_owned(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "network read with one wire more",
+      "old": "    let network = comparators(reply, \"network\", task.wires).map_err(Stop::Malformed)?;",
+      "new": "    let network = comparators(reply, \"network\", task.wires + 1).map_err(Stop::Malformed)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "prefix predicate renamed",
+      "old": "        \"forced_prefix_kept\",",
+      "new": "        \"prefix_kept\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "prefix may be anywhere",
+      "old": "        network.starts_with(&task.prefix),",
+      "new": "        task.prefix.iter().all(|pair| network.contains(pair)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "prefix compared the other way round",
+      "old": "        network.starts_with(&task.prefix),",
+      "new": "        task.prefix.starts_with(&network),",
+      "outcome": "killed"
+    },
+    {
+      "name": "prefix never checked",
+      "old": "        network.starts_with(&task.prefix),",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "forbidden predicate renamed",
+      "old": "        \"no_forbidden_comparator\",",
+      "new": "        \"no_forbidden\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "forbidden only checked at the start",
+      "old": "        !network.iter().any(|pair| task.forbidden.contains(pair)),",
+      "new": "        !network.first().is_some_and(|pair| task.forbidden.contains(pair)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "forbidden never checked",
+      "old": "        !network.iter().any(|pair| task.forbidden.contains(pair)),",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "forbidden required",
+      "old": "        !network.iter().any(|pair| task.forbidden.contains(pair)),",
+      "new": "        network.iter().any(|pair| task.forbidden.contains(pair)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "bound predicate renamed",
+      "old": "        \"within_size_bound\",",
+      "new": "        \"size_bound\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "bound is exclusive",
+      "old": "        task.bound.is_none_or(|bound| network.len() <= bound),",
+      "new": "        task.bound.is_none_or(|bound| network.len() < bound),",
+      "outcome": "killed"
+    },
+    {
+      "name": "bound allows one more",
+      "old": "        task.bound.is_none_or(|bound| network.len() <= bound),",
+      "new": "        task.bound.is_none_or(|bound| network.len() <= bound + 1),",
+      "outcome": "killed"
+    },
+    {
+      "name": "no bound fails",
+      "old": "        task.bound.is_none_or(|bound| network.len() <= bound),",
+      "new": "        task.bound.is_some_and(|bound| network.len() <= bound),",
+      "outcome": "killed"
+    },
+    {
+      "name": "bound evidence dropped",
+      "old": "        &Datum::from(network.len()),\n    );\n    let failures",
+      "new": "        &Datum::Null,\n    );\n    let failures",
+      "outcome": "killed"
+    },
+    {
+      "name": "sorting predicate renamed",
+      "old": "        \"sorts_all_binary_inputs\",",
+      "new": "        \"sorts\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "sorting never checked",
+      "old": "        failures.is_empty(),",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "sorting evidence is the last failure",
+      "old": "    let first: Vec<Datum> = failures\n        .first()",
+      "new": "    let first: Vec<Datum> = failures\n        .last()",
+      "outcome": "killed"
+    },
+    {
+      "name": "sorting evidence dropped",
+      "old": "        &Datum::List(first),",
+      "new": "        &Datum::List(Vec::new()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "certified under another code",
+      "old": "    Ok(checks.judge(\n        super::CERTIFIED_CODE,",
+      "new": "    Ok(checks.judge(\n        \"OK\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "detail swaps its counts",
+      "old": "            (\"comparators\", Datum::from(network.len())),\n            (\"binary_failures\", Datum::from(failures.len())),",
+      "new": "            (\"comparators\", Datum::from(failures.len())),\n            (\"binary_failures\", Datum::from(network.len())),",
+      "outcome": "killed"
+    }
+  ]
+}

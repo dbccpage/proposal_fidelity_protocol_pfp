@@ -1,0 +1,65 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_immune/src/main.rs",
+  "target_sha256": "d13b59038bb49ebf7ee875445b59cb9f7a24efc564dc20cc13b11cb0dc5149c9",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_immune",
+  "counts": {
+    "killed": 8,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "exit code inverted",
+      "old": "ExitCode::from(u8::from(!matches!(outcome, Outcome::Pass { .. })))",
+      "new": "ExitCode::from(u8::from(matches!(outcome, Outcome::Pass { .. })))",
+      "outcome": "killed"
+    },
+    {
+      "name": "usage errors exit one instead of two",
+      "old": "ExitCode::from(2)",
+      "new": "ExitCode::from(1)",
+      "outcome": "killed"
+    },
+    {
+      "name": "screen command routing altered",
+      "old": "\"screen\" => handle_screen(",
+      "new": "\"screen\" => handle_decide(",
+      "outcome": "killed"
+    },
+    {
+      "name": "decide command routing altered",
+      "old": "\"decide\" => handle_decide(",
+      "new": "\"decide\" => handle_screen(",
+      "outcome": "killed"
+    },
+    {
+      "name": "danger score comparison inverted",
+      "old": "danger_score > threshold",
+      "new": "danger_score < threshold",
+      "outcome": "killed"
+    },
+    {
+      "name": "taint propagation threshold altered",
+      "old": "tainted_parent_count >= 1",
+      "new": "tainted_parent_count < 1",
+      "outcome": "killed"
+    },
+    {
+      "name": "reserve 60/30/10 allocation collapsed",
+      "old": "PopulationPolicyV1::allocate_reserves(population.len())",
+      "new": "(population.len(), 0, 0)",
+      "outcome": "killed"
+    },
+    {
+      "name": "exclusion consensus min_families altered",
+      "old": "agreeing_families.len() >= 2",
+      "new": "agreeing_families.len() >= 999",
+      "outcome": "killed"
+    }
+  ]
+}
