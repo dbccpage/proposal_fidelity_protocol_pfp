@@ -1,0 +1,53 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/core_prompt_civilization/src/immune/treg.rs",
+  "target_sha256": "e4dceb4ff781d866fcdb4c0199e748b3ad2c014ed8023d76b67191bb5ddef401",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p core_prompt_civilization",
+  "counts": {
+    "killed": 6,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "admitted_items zero check inverted",
+      "old": "if admitted_items == 0",
+      "new": "if admitted_items != 0",
+      "outcome": "killed"
+    },
+    {
+      "name": "capacity_bound zero check inverted",
+      "old": "if capacity_bound == 0",
+      "new": "if capacity_bound != 0",
+      "outcome": "killed"
+    },
+    {
+      "name": "capacity overflow check inverted",
+      "old": "if admitted_items > capacity_bound",
+      "new": "if admitted_items < capacity_bound",
+      "outcome": "killed"
+    },
+    {
+      "name": "treg suppression on zero defect inverted",
+      "old": "if global_obstruction_phi1 == 0",
+      "new": "if global_obstruction_phi1 != 0",
+      "outcome": "killed"
+    },
+    {
+      "name": "alarm suppressed status boolean inverted",
+      "old": "alarm_suppressed: alarm_present,",
+      "new": "alarm_suppressed: !alarm_present,",
+      "outcome": "killed"
+    },
+    {
+      "name": "permissive state alarm suppression inverted",
+      "old": "alarm_suppressed: false,",
+      "new": "alarm_suppressed: true,",
+      "outcome": "killed"
+    }
+  ]
+}

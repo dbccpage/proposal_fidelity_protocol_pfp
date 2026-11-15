@@ -116,7 +116,7 @@ pub fn bytes_digest(raw: &[u8]) -> String {
 }
 fn hex_bytes(value: &str, maximum: usize) -> Result<Vec<u8>, Refusal> {
     if value.len() > maximum * 2
-        || value.len() % 2 != 0
+        || !value.len().is_multiple_of(2)
         || !value
             .bytes()
             .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
@@ -390,6 +390,7 @@ fn next_admission_state(
     }
 }
 
+#[allow(clippy::too_many_arguments)]
 fn step_admission_history<'a>(
     event: &'a SignedEvidence,
     policy: &TrustPolicy,
@@ -714,7 +715,13 @@ mod l4_boundary_tests_e577743e {
         assert!(zero_items.is_err());
         let zero_cap = BoundaryRecorde577743e::try_admit(1, 0);
         assert!(zero_cap.is_err());
-        assert_eq!(BoundaryErrore577743e::EmptyAdmission.violated_invariant(), "admitted_items >= 1");
-        assert_eq!(BoundaryErrore577743e::CapacityZero.violated_invariant(), "capacity_bound >= 1");
+        assert_eq!(
+            BoundaryErrore577743e::EmptyAdmission.violated_invariant(),
+            "admitted_items >= 1"
+        );
+        assert_eq!(
+            BoundaryErrore577743e::CapacityZero.violated_invariant(),
+            "capacity_bound >= 1"
+        );
     }
 }

@@ -55,7 +55,7 @@ fn text<'a>(input: &'a Value, key: &str) -> Result<&'a str, Box<dyn std::error::
 }
 
 fn build_activation_request<'a>(
-    input: &Value,
+    input: &'a Value,
     hit: Option<&'a DetectorHitRefV1>,
 ) -> Result<ActivationRequest<'a>, Box<dyn std::error::Error>> {
     Ok(ActivationRequest {
@@ -87,7 +87,8 @@ fn run_guard_use_case_row(input: &Value) -> Result<(Value, Value), Box<dyn std::
         Ok(receipt) => json!({"ok":receipt}),
         Err(error) => json!({"error":error}),
     };
-    Ok((actual, json!(*trace.borrow())))
+    let calls = json!(*trace.borrow());
+    Ok((actual, calls))
 }
 
 #[test]

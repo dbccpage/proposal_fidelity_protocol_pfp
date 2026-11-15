@@ -388,9 +388,7 @@ mod tests {
     fn test_bounded_migration_law() {
         let policy = MigrationPolicyV1::new(5, vec!["core.math.*".into(), "core.physics".into()]);
         // Admissible domain, count within quota and population cap
-        assert!(policy
-            .is_migration_allowed("core.physics", 3, 100)
-            .unwrap());
+        assert!(policy.is_migration_allowed("core.physics", 3, 100).unwrap());
         assert!(policy
             .is_migration_allowed("core.math.integral", 4, 100)
             .unwrap());
@@ -400,17 +398,11 @@ mod tests {
         assert!(!policy
             .is_migration_allowed("core.physics.quantum", 1, 100)
             .unwrap());
-        assert!(!policy
-            .is_migration_allowed("core.physics", 0, 100)
-            .unwrap());
+        assert!(!policy.is_migration_allowed("core.physics", 0, 100).unwrap());
         // Inadmissible domain
-        assert!(!policy
-            .is_migration_allowed("core.biology", 1, 100)
-            .unwrap());
+        assert!(!policy.is_migration_allowed("core.biology", 1, 100).unwrap());
         // Exceeds quota (6 > 5)
-        assert!(!policy
-            .is_migration_allowed("core.physics", 6, 100)
-            .unwrap());
+        assert!(!policy.is_migration_allowed("core.physics", 6, 100).unwrap());
     }
 
     #[test]

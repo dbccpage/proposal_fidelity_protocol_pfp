@@ -15,14 +15,14 @@ evidence_grades:
 authority_effect: "None"
 source_paths:
   - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - engine/crates_rs/core_prompt_civilization/src/genealogy.rs
+  - code/rust/core_prompt_civilization/src/genealogy.rs
 ---
 
 # Prompt Civ Level 01: Lineage DAG & Causal Descent: Two-Graph Separation
 
 **AuthorityEffect:** None.  
 **Level:** Level 01 (Causal Lineage & Reference Topologies)  
-**Rust Genealogy Seam:** [`core_prompt_civilization::genealogy`](../../../engine/crates_rs/core_prompt_civilization/src/genealogy.rs)  
+**Rust Genealogy Seam:** [`core_prompt_civilization::genealogy`](..\..\..\code\rust\core_prompt_civilization\src\genealogy.rs)  
 **Primary Graphs:** `InheritanceDAG` (Causal), `ReferenceGraph` (Associational)  
 **Core Falsifiers:** `F-LINEAGE-01`, `F-RANK-01`
 

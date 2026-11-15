@@ -122,3 +122,8 @@ Level 10 records planned work, with no operational authority yet:
 The intelligence metabolism in `pciv/use_cases/intelligence_metabolism/` is
 already partly built: it segments obstruction episodes, mines recurring motifs
 read-only, and writes a claim-disciplined daily digest.
+
+## Native host and ledger integration
+
+- Causal taint checks run natively via `code/rust/pfp_immune taint` (Draft PR `#113`) and `code/rust/core_prompt_civilization/src/immunity.rs` (backed by `code/rust/core_epistemic_immune_system` in Draft PR `#108`).
+- `pfp_core/operad_ledger.py` (Draft PR `#118`) and `pfp_core/immune_host.py` (Draft PR `#121`) connect PCIV cemetery failures and exclusion hypotheses (`pfp_core/exclusions.py`) across `WF14`, `WF19`, `WF41`, and `WF51`.

@@ -1,12 +1,61 @@
 //! Detector idle counters, mutations and anergy proposals. No autonomous admission.
 use crate::Refusal;
 use num_bigint::BigInt;
+use num_rational::BigRational;
 use num_traits::{One, Zero};
 use serde_json::{json, Value};
 use std::collections::BTreeMap;
 use std::str::FromStr;
 fn invalid(message: &str) -> Refusal {
     Refusal::new("EIS_VALUE_ERROR", message)
+}
+fn refusal(code: &str, detail: &str) -> Refusal {
+    Refusal::new(code, detail)
+}
+pub fn canonical_rational(value: &BigRational) -> String {
+    if value.denom().is_one() {
+        value.numer().to_string()
+    } else {
+        format!("{}/{}", value.numer(), value.denom())
+    }
+}
+pub fn parse_exact_rational(value: &Value, label: &str) -> Result<BigRational, Refusal> {
+    let text = match value {
+        Value::String(s) => s.trim().to_string(),
+        Value::Number(n) => {
+            let s = n.to_string();
+            if s.contains(['.', 'e', 'E']) {
+                return Err(refusal(
+                    "EXACT_RATIONAL_REQUIRED",
+                    &format!("{label} must be an exact rational, not a float"),
+                ));
+            }
+            s
+        }
+        _ => {
+            return Err(invalid(&format!(
+                "{label} must be an exact rational string or integer"
+            )))
+        }
+    };
+    if text.contains(['.', 'e', 'E']) {
+        return Err(refusal(
+            "EXACT_RATIONAL_REQUIRED",
+            &format!("{label} must be an exact rational, not a float"),
+        ));
+    }
+    let (numerator, denominator) = text.split_once('/').unwrap_or((&text, "1"));
+    let num = BigInt::from_str(numerator.trim()).map_err(|_| invalid(label))?;
+    let den = BigInt::from_str(denominator.trim()).map_err(|_| invalid(label))?;
+    if den <= BigInt::zero() {
+        return Err(invalid(&format!(
+            "{label} denominator must be strictly positive"
+        )));
+    }
+    if num < BigInt::zero() {
+        return Err(invalid(&format!("{label} must be non-negative")));
+    }
+    Ok(BigRational::new(num, den))
 }
 fn count(
     value: Option<&Value>,
@@ -60,17 +109,17 @@ impl DetectorRule {
         }
         let mut wire = wire.clone();
         Self::normalize_rule_counts(&mut wire)?;
-        let affinity = wire.get("affinity_score").cloned().unwrap_or(json!(1.0));
-        if !affinity
-            .as_number()
-            .and_then(|v| v.as_f64())
-            .is_some_and(|v| v.is_finite() && v >= 0.0)
-        {
-            return Err(invalid(
-                "affinity_score must be a finite nonnegative int or float",
-            ));
-        }
-        wire["affinity_score"] = affinity;
+        let affinity = match wire.get("affinity_score") {
+            Some(v) => parse_exact_rational(v, "affinity_score")?,
+            None => BigRational::one(),
+        };
+        wire["affinity_score"] = if affinity.denom().is_one() {
+            serde_json::Number::from_str(&affinity.numer().to_string())
+                .map(Value::Number)
+                .unwrap_or_else(|_| Value::String(canonical_rational(&affinity)))
+        } else {
+            Value::String(canonical_rational(&affinity))
+        };
         let active = wire.get("is_active").cloned().unwrap_or(json!(true));
         if !active.is_boolean() {
             return Err(invalid("is_active must be a boolean"));
@@ -85,6 +134,9 @@ impl DetectorRule {
     }
     pub fn to_dict(&self) -> Value {
         self.wire.clone()
+    }
+    pub fn affinity_score(&self) -> Result<BigRational, Refusal> {
+        parse_exact_rational(&self.wire["affinity_score"], "affinity_score")
     }
     pub fn apply_decay(&self) -> Result<Self, Refusal> {
         let mut wire = self.wire.clone();
@@ -108,36 +160,17 @@ impl DetectorRule {
         wire["is_active"] = json!(true);
         Self::from_json(&wire)
     }
-    pub fn stimulate(&self, boost: &Value, exact: bool) -> Result<Self, Refusal> {
+    pub fn stimulate(&self, boost: &Value, _exact: bool) -> Result<Self, Refusal> {
         let mut wire = self.wire.clone();
-        if exact {
-            if boost
-                .as_number()
-                .is_some_and(|n| n.to_string().contains(['.', 'e', 'E']))
-            {
-                return Err(Refusal::new(
-                    "EXACT_RATIONAL_REQUIRED",
-                    "Float affinity boost is prohibited",
-                ));
-            }
-            return Ok(self.clone());
-        }
-        let current = &self.wire["affinity_score"];
-        let integer = |value: &Value| {
-            value
-                .as_number()
-                .and_then(|number| BigInt::from_str(&number.to_string()).ok())
-        };
-        wire["affinity_score"] = match (integer(current), integer(boost)) {
-            (Some(current), Some(boost)) => {
-                serde_json::Number::from_str(&(current + boost).to_string())
-                    .map(Value::Number)
-                    .map_err(|e| invalid(&e.to_string()))?
-            }
-            _ => json!(
-                current.as_f64().ok_or_else(|| invalid("affinity_score"))?
-                    + boost.as_f64().ok_or_else(|| invalid("affinity_boost"))?
-            ),
+        let boost_rat = parse_exact_rational(boost, "affinity_boost")?;
+        let current_rat = parse_exact_rational(&self.wire["affinity_score"], "affinity_score")?;
+        let new_affinity: BigRational = current_rat + boost_rat;
+        wire["affinity_score"] = if new_affinity.denom().is_one() {
+            serde_json::Number::from_str(&new_affinity.numer().to_string())
+                .map(Value::Number)
+                .unwrap_or_else(|_| Value::String(canonical_rational(&new_affinity)))
+        } else {
+            Value::String(canonical_rational(&new_affinity))
         };
         wire["runs_idle"] = json!(0);
         wire["is_active"] = json!(true);
@@ -320,7 +353,122 @@ mod l4_boundary_tests_6ecc3c19 {
         assert!(zero_items.is_err());
         let zero_cap = BoundaryRecord6ecc3c19::try_admit(1, 0);
         assert!(zero_cap.is_err());
-        assert_eq!(BoundaryError6ecc3c19::EmptyAdmission.violated_invariant(), "admitted_items >= 1");
-        assert_eq!(BoundaryError6ecc3c19::CapacityZero.violated_invariant(), "capacity_bound >= 1");
+        assert_eq!(
+            BoundaryError6ecc3c19::EmptyAdmission.violated_invariant(),
+            "admitted_items >= 1"
+        );
+        assert_eq!(
+            BoundaryError6ecc3c19::CapacityZero.violated_invariant(),
+            "capacity_bound >= 1"
+        );
+    }
+}
+
+#[cfg(test)]
+mod clonal_exactness_tests {
+    use super::*;
+
+    #[test]
+    fn test_detector_rule_exact_rational_affinity() {
+        let rule_json = json!({
+            "rule_id": "r1",
+            "target_epitope": "e1",
+            "match_pattern": "bad",
+            "affinity_score": "3/2"
+        });
+        let rule = DetectorRule::from_json(&rule_json).expect("valid rule");
+        assert_eq!(
+            rule.affinity_score().unwrap(),
+            BigRational::new(BigInt::from(3), BigInt::from(2))
+        );
+        assert_eq!(rule.to_dict()["affinity_score"], "3/2");
+
+        let rule_int = json!({
+            "rule_id": "r2",
+            "target_epitope": "e2",
+            "match_pattern": "bad2",
+            "affinity_score": 5
+        });
+        let rule2 = DetectorRule::from_json(&rule_int).expect("valid rule");
+        assert_eq!(
+            rule2.affinity_score().unwrap(),
+            BigRational::from_integer(BigInt::from(5))
+        );
+
+        let rule_frac = json!({
+            "rule_id": "r3",
+            "target_epitope": "e3",
+            "match_pattern": "bad3",
+            "affinity_score": "1/1"
+        });
+        let rule3 = DetectorRule::from_json(&rule_frac).expect("valid rule");
+        assert_eq!(rule3.affinity_score().unwrap(), BigRational::one());
+    }
+
+    #[test]
+    fn test_detector_rule_refuses_float_and_invalid_affinity() {
+        let rule_float = json!({
+            "rule_id": "r1",
+            "target_epitope": "e1",
+            "match_pattern": "bad",
+            "affinity_score": 1.5
+        });
+        assert!(DetectorRule::from_json(&rule_float).is_err());
+
+        let rule_float_str = json!({
+            "rule_id": "r1",
+            "target_epitope": "e1",
+            "match_pattern": "bad",
+            "affinity_score": "1.5"
+        });
+        assert!(DetectorRule::from_json(&rule_float_str).is_err());
+
+        let rule_zero_den = json!({
+            "rule_id": "r1",
+            "target_epitope": "e1",
+            "match_pattern": "bad",
+            "affinity_score": "1/0"
+        });
+        assert!(DetectorRule::from_json(&rule_zero_den).is_err());
+
+        let rule_neg = json!({
+            "rule_id": "r1",
+            "target_epitope": "e1",
+            "match_pattern": "bad",
+            "affinity_score": "-1/2"
+        });
+        assert!(DetectorRule::from_json(&rule_neg).is_err());
+    }
+
+    #[test]
+    fn test_stimulate_exact_rational_addition() {
+        let rule_json = json!({
+            "rule_id": "r1",
+            "target_epitope": "e1",
+            "match_pattern": "bad",
+            "affinity_score": "1/2"
+        });
+        let rule = DetectorRule::from_json(&rule_json).expect("valid rule");
+
+        // stimulate with exact rational string "3/4"
+        let stimulated = rule.stimulate(&json!("3/4"), true).expect("stimulated");
+        // 1/2 + 3/4 = 5/4
+        assert_eq!(
+            stimulated.affinity_score().unwrap(),
+            BigRational::new(BigInt::from(5), BigInt::from(4))
+        );
+        assert_eq!(stimulated.to_dict()["affinity_score"], "5/4");
+
+        // stimulate with integer 1
+        let stimulated2 = stimulated.stimulate(&json!(1), false).expect("stimulated2");
+        // 5/4 + 1 = 9/4
+        assert_eq!(
+            stimulated2.affinity_score().unwrap(),
+            BigRational::new(BigInt::from(9), BigInt::from(4))
+        );
+
+        // float stimulation is prohibited
+        assert!(stimulated2.stimulate(&json!(1.5), true).is_err());
+        assert!(stimulated2.stimulate(&json!("0.5"), false).is_err());
     }
 }

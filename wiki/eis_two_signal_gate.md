@@ -102,3 +102,8 @@ cap the gate is a plain sum threshold and makes no quorum claim.
 
 Paper 003, version 1.2.0, proves exact lemmas on two-signal gates, quorum
 thresholds and negative selection, each with an exhaustive test.
+
+## Native host and ledger integration
+
+- `code/rust/core_epistemic_immune_system` implements `TwoSignalDangerGate` (`src/signal_gate.rs`), payload host checks (`src/host_checks.rs`), independence checks (`src/danger_signals.rs`), and exact-rational quorum checks (`src/allostery.rs`).
+- Draft PRs `#104`, `#113`, `#118`, and `#121` add normalized charpoly wire checks, the `code/rust/pfp_immune decide` subcommand, `pfp_core/operad_ledger.py`, and thin host delegation in `pfp_core/immune_host.py` for `WF14`, `WF19`, `WF41`, and `WF51`.

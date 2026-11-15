@@ -1,8 +1,8 @@
 //! Independence checks over the fields consumed from typed signal records.
 //! These immutable projections do not replace the complete Python value objects.
 use crate::{activation::DANGER_KINDS, Refusal};
-use num_bigint::{BigInt, BigUint};
 use core_types::python_unicode::{casefold, repr_string};
+use num_bigint::{BigInt, BigUint};
 use serde::{ser::SerializeTuple, Deserialize, Deserializer, Serialize, Serializer};
 use serde_json::value::RawValue;
 use serde_json::{Number, Value};
@@ -427,7 +427,13 @@ mod l4_boundary_tests_f5bcf2bf {
         assert!(zero_items.is_err());
         let zero_cap = BoundaryRecordf5bcf2bf::try_admit(1, 0);
         assert!(zero_cap.is_err());
-        assert_eq!(BoundaryErrorf5bcf2bf::EmptyAdmission.violated_invariant(), "admitted_items >= 1");
-        assert_eq!(BoundaryErrorf5bcf2bf::CapacityZero.violated_invariant(), "capacity_bound >= 1");
+        assert_eq!(
+            BoundaryErrorf5bcf2bf::EmptyAdmission.violated_invariant(),
+            "admitted_items >= 1"
+        );
+        assert_eq!(
+            BoundaryErrorf5bcf2bf::CapacityZero.violated_invariant(),
+            "capacity_bound >= 1"
+        );
     }
 }

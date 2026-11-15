@@ -35,7 +35,10 @@ fn evaluate_signal_gate_row(row: &Value) -> Result<Value, Box<dyn std::error::Er
     Ok(match result {
         Ok(value) => {
             assert_eq!(json!(value.decision()), row["expected"]["ok"]["decision"]);
-            assert_eq!(json!(value.is_suppressed()), row["expected"]["ok"]["is_suppressed"]);
+            assert_eq!(
+                json!(value.is_suppressed()),
+                row["expected"]["ok"]["is_suppressed"]
+            );
             json!({"ok": value})
         }
         Err(error) => json!({"error": error}),

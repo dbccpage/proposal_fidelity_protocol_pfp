@@ -53,3 +53,8 @@ retested. A model seat with no known family is refused rather than guessed.
 `headstone_exclusion`), tests in `pfp_core/tests/test_exclusions.py`. No model
 campaign has measured the effect yet; [WF51](workflow_wf51.md) states the
 prediction.
+
+## Native host and ledger integration
+
+- `code/rust/pfp_immune exclusion` (Draft PR `#113`) evaluates exclusion hypotheses in Rust (`#[serde(deny_unknown_fields)]` JSON contract).
+- `pfp_core/immune_host.py` (Draft PR `#121`) and `pfp_core/operad_ledger.py` (Draft PR `#118`) connect `WF51` (`pfp_core/exclusions.py`) and `WF14`/`WF19`/`WF41` to host checks and the append-only failure ledger.

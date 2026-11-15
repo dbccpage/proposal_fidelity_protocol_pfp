@@ -200,7 +200,13 @@ mod l4_boundary_tests_b92abae4 {
         assert!(zero_items.is_err());
         let zero_cap = BoundaryRecordb92abae4::try_admit(1, 0);
         assert!(zero_cap.is_err());
-        assert_eq!(BoundaryErrorb92abae4::EmptyAdmission.violated_invariant(), "admitted_items >= 1");
-        assert_eq!(BoundaryErrorb92abae4::CapacityZero.violated_invariant(), "capacity_bound >= 1");
+        assert_eq!(
+            BoundaryErrorb92abae4::EmptyAdmission.violated_invariant(),
+            "admitted_items >= 1"
+        );
+        assert_eq!(
+            BoundaryErrorb92abae4::CapacityZero.violated_invariant(),
+            "capacity_bound >= 1"
+        );
     }
 }

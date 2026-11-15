@@ -10,6 +10,9 @@
 
 use serde::{Deserialize, Serialize};
 
+// Re-export core EIS thymus negative selection gate primitives
+pub use core_epistemic_immune_system::thymus::{ThymusGate, ThymusVerdict};
+
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct SelfFixture {
     pub fixture_id: String,
@@ -65,6 +68,26 @@ impl Thymus {
             apoptosis_triggered: !is_clean,
             authority_effect: "None".to_string(),
         }
+    }
+
+    /// Converts this thymus self-panel into a `core_epistemic_immune_system::thymus::ThymusGate`.
+    pub fn into_thymus_gate(&self) -> ThymusGate {
+        let samples = self.self_panel.iter().map(|f| f.content.clone()).collect();
+        ThymusGate::new(samples)
+    }
+
+    /// Constructs a `Thymus` instance from raw sample strings.
+    pub fn from_samples(samples: Vec<String>) -> Self {
+        let fixtures = samples
+            .into_iter()
+            .enumerate()
+            .map(|(i, s)| SelfFixture {
+                fixture_id: format!("sample_{i}"),
+                content: s,
+                description: "Imported from ThymusGate".to_string(),
+            })
+            .collect();
+        Self::new(fixtures)
     }
 }
 

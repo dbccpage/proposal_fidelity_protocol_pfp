@@ -11,9 +11,24 @@ from collections.abc import Mapping, Sequence
 from fractions import Fraction
 from typing import Any
 
-from ..exclusions import REFUTED, ExclusionError, ExclusionHypothesisV1, ExclusionVoteV1, plan_retests, run_plan
-from ..fidelity import HostOracleContext
+from ..exclusions import (
+    REFUTED,
+    ExclusionError,
+    ExclusionHypothesisV1,
+    ExclusionVoteV1,
+    HeadstoneExclusionPolicyV1,
+    plan_retests,
+    run_plan,
+)
+from ..fidelity import HostOracleContext, sha256_hex
 from ..immunity import HOLD, HOST_OBSERVERS, decide, host_danger, screen_rules, signal1
+from ..operad_ledger import (
+    headstone_to_exclusion_hypothesis,
+    propose_candidate,
+    record_admission,
+    record_failure,
+    record_trial,
+)
 from .base import (
     CERTIFIED,
     POSITIVE,
@@ -219,6 +234,52 @@ class FailureDerivedRuleTransfer(WorkflowFamily):
         acc_rules = sum(predict(rules, x['text']) == classify_reply(x['text'], x['roots']) for x in held)
         acc_base = sum(classify_reply(x['text'], x['roots']) == CLEAN for x in held)
         host.record('transfer_gain_positive', acc_rules > acc_base, f'{acc_rules}-{acc_base}')
+        ledger_path = session.task.get('ledger_path')
+        if ledger_path and rules:
+            run_id = session.task.get('run_id', 'run')
+            train_failures = [x.get('id', str(i)) for i, x in enumerate(task['train'])]
+            for f_id in train_failures:
+                record_failure(
+                    ledger_path,
+                    failure_id=f"wf19_train:{f_id}",
+                    workflow="WF19",
+                    run=run_id,
+                    failure_class="BoundaryLeakage",
+                    ddc_trace="CRM",
+                    evidence_sha256=sha256_hex(str(f_id)),
+                )
+            for rule in rules:
+                propose_candidate(
+                    ledger_path,
+                    candidate_id=rule.rule_id,
+                    capability_kind="rule",
+                    constraint=rule.match_pattern,
+                    derived_from=[f"wf19_train:{f_id}" for f_id in train_failures],
+                )
+                t_res = record_trial(
+                    ledger_path,
+                    candidate_id=rule.rule_id,
+                    held_out=[str(x.get('id', i)) for i, x in enumerate(held)],
+                    baseline_correct=acc_base,
+                    treated_correct=acc_rules,
+                    clean_panel_hits=report['killed'],
+                )
+                if acc_rules > acc_base and t_res.get('status') == 'PASS':
+                    record_admission(
+                        ledger_path,
+                        candidate_id=rule.rule_id,
+                        trial_seq=t_res['result']['seq'],
+                    )
+                elif acc_rules <= acc_base:
+                    record_failure(
+                        ledger_path,
+                        failure_id=f"overfit:{rule.rule_id}",
+                        workflow="WF19",
+                        run=run_id,
+                        failure_class="ToyPromotion",
+                        ddc_trace="CRM",
+                        evidence_sha256=sha256_hex(f"{acc_rules}-{acc_base}"),
+                    )
         return judge(host, 'RULES_TRANSFER', rules=report['status'], gain=acc_rules - acc_base, held_out=len(held))
 
     def fixtures(self):
@@ -435,6 +496,40 @@ class DetectorAdequacyTwoSignal(WorkflowFamily):
                        HOST_OBSERVERS) for t in fired]
         host.record('two_independent_signals', all(d.disposition == HOLD and d.refusal_code is None for d in held),
                     str([d.disposition for d in held]))
+        ledger_path = task.get('ledger_path')
+        if ledger_path:
+            run_id = task.get('run_id', 'run')
+            f_seed = f"wf41_seed:{rule.rule_id}"
+            record_failure(
+                ledger_path,
+                failure_id=f_seed,
+                workflow="WF41",
+                run=run_id,
+                failure_class="BoundaryLeakage",
+                ddc_trace="CRM",
+                evidence_sha256=sha256_hex(rule.rule_id),
+            )
+            propose_candidate(
+                ledger_path,
+                candidate_id=rule.rule_id,
+                capability_kind="rule",
+                constraint=rule.match_pattern,
+                derived_from=[f_seed],
+            )
+            t_res = record_trial(
+                ledger_path,
+                candidate_id=rule.rule_id,
+                held_out=[str(i) for i in range(len(pos) + len(neg))],
+                baseline_correct=len(neg),
+                treated_correct=len(pos) + len(neg),
+                clean_panel_hits=0,
+            )
+            if t_res.get('status') == 'PASS':
+                record_admission(
+                    ledger_path,
+                    candidate_id=rule.rule_id,
+                    trial_seq=t_res['result']['seq'],
+                )
         degrees = {len(_parse_coefficients(t) or []) - 1 for t in panel}
         return judge(host, 'DETECTOR_ADMITTED', rule=rule.rule_id,
                      self_panel={'size': len(panel), 'distinct_degrees': len(degrees)})
@@ -538,6 +633,21 @@ class ExclusionHypothesisRetest(WorkflowFamily):
             hyps, points = self.hypotheses(task, reply.content)
         except ExclusionError as exc:
             return refused(str(exc).split(':', 1)[0], reason=str(exc))
+        if task.get('cemetery_headstones'):
+            policy = HeadstoneExclusionPolicyV1()
+            for hs in task['cemetery_headstones']:
+                branch = hs.get('branch') if isinstance(hs, Mapping) else getattr(hs, 'branch', None)
+                if branch and branch in task['branches']:
+                    pts = hs.get('falsifier', []) if isinstance(hs, Mapping) else getattr(hs, 'falsifier', [])
+                    pts = [as_int(x, 'falsifier point') for x in pts]
+                    adapted_h = headstone_to_exclusion_hypothesis(
+                        hs, policy,
+                        falsifier=canonical(pts).decode('utf-8') if pts else f"scan:{branch}",
+                        falsifier_cost=len(pts) if pts else 1,
+                    )
+                    if adapted_h is not None:
+                        hyps.append(adapted_h)
+                        points[adapted_h.exclusion_id] = pts
         for h in hyps:
             lo, hi = task['branches'][h.branch]
             inside = all(lo <= x <= hi for x in points[h.exclusion_id])
@@ -563,6 +673,17 @@ class ExclusionHypothesisRetest(WorkflowFamily):
         root = reply.content['root']
         if root is None:
             scan = [x for b in open_ for x in range(task['branches'][b][0], task['branches'][b][1] + 1)]
+            ledger_path = session.task.get('ledger_path')
+            if ledger_path:
+                record_failure(
+                    ledger_path,
+                    failure_id=f"branch_drop:{session.task.get('run_id', 'wf51')}",
+                    workflow="WF51",
+                    run=session.task.get('run_id', 'run'),
+                    failure_class="BRANCH_DROP_EXHAUSTION",
+                    ddc_trace="CRM",
+                    evidence_sha256=sha256_hex(canonical(open_).decode('utf-8')),
+                )
             if not host.record('no_root_in_open_branches', all(_poly(coefficients, x) != 0 for x in scan),
                                canonical(open_).decode('utf-8')):
                 return refused('MISSED_ROOT_IN_OPEN_BRANCH', **detail)
@@ -570,6 +691,17 @@ class ExclusionHypothesisRetest(WorkflowFamily):
         root = as_int(root, 'root')
         in_open = any(task['branches'][b][0] <= root <= task['branches'][b][1] for b in open_)
         if not host.record('root_in_open_branch', in_open, str(root)):
+            ledger_path = session.task.get('ledger_path')
+            if ledger_path:
+                record_failure(
+                    ledger_path,
+                    failure_id=f"branch_drop_closed:{session.task.get('run_id', 'wf51')}",
+                    workflow="WF51",
+                    run=session.task.get('run_id', 'run'),
+                    failure_class="BRANCH_DROP_EXHAUSTION",
+                    ddc_trace="CRM",
+                    evidence_sha256=sha256_hex(canonical(open_).decode('utf-8')),
+                )
             return refused('ANSWER_IN_CLOSED_BRANCH', root=root, **detail)
         host.record('root_verified', _poly(coefficients, root) == 0, str(root))
         return judge(host, 'ROOT_CERTIFIED', root=root, **detail)

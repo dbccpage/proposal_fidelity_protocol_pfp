@@ -62,7 +62,7 @@ def admission_check_d1_d0(
 ) -> AdmissionReceipt:
     """
     Perform exact rational admission check d1 d0 = 0.
-    
+
     Returns AdmissionReceipt with status:
     - ADMITTED_VACUOUS_GRAPH_TRUNCATION if face_count == 0
     - ADMITTED if d1 d0 == 0 identically over Fraction

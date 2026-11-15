@@ -4863,10 +4863,13 @@
     },
     {
       "atlas_id": "ATL-P003-013",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records Rust/Python parity for the danger table and detectors in this package.",
+      "verdict": "partial",
+      "nodes": [
+        "EPC02",
+        "NATIVE03-FIXTURES-011"
+      ],
+      "relation": "narrows",
+      "note": "EPC02 and NATIVE03-FIXTURES-011 cover finite Python-oracle parity fixture generation and inspected frozen corpora (including python_independence_v1.json); exhaustive parity across the Paper 003 danger-gate table and all package detectors remains partial.",
       "proposed_derivation": {
         "title": "Native port parity",
         "claim": "The Rust port of the gate table and detectors returns the Python reference output on each tested case.",
@@ -4882,10 +4885,13 @@
     },
     {
       "atlas_id": "ATL-P003-014",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "Admission requirements are a policy definition; no derivation covers them.",
+      "verdict": "partial",
+      "nodes": [
+        "PAPER006-CONTROLLED-REUSE-UTILITY",
+        "NATIVE-EIS-004"
+      ],
+      "relation": "supports",
+      "note": "PAPER006-CONTROLLED-REUSE-UTILITY specifies separation of reproduced failure, valid near-miss control, and scoped admission, and NATIVE-EIS-004 enforces signed spec_id/scope/rule/source/subject/context bindings in authenticated.rs; Paper 003 package-specific wording remains a declared scope boundary.",
       "proposed_derivation": {
         "title": "Detector admission record",
         "claim": "Admission requires a reproduced defect, valid near misses, a declared scope and frozen identities.",
@@ -5761,10 +5767,12 @@
     },
     {
       "atlas_id": "ATL-P006-009",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers the pfp immune regex refusal and kill-condition path.",
+      "verdict": "partial",
+      "nodes": [
+        "NATIVE-EIS-001"
+      ],
+      "relation": "narrows",
+      "note": "NATIVE-EIS-001 covers native ThymusGate::screen regex refusal (InvalidPattern) and benign self-panel match retirement (SelfReactive) in thymus.rs; direct replay of the Paper 006 Python clonal_selection kill-condition path remains partial.",
       "proposed_derivation": {
         "title": "Detector regex refusal",
         "claim": "An invalid detector regex yields a typed refusal; a benign-panel match yields a kill-condition record.",

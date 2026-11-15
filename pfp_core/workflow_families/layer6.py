@@ -16,8 +16,9 @@ from typing import Any
 
 from eis.domain.value_objects import DetectorRule
 
-from ..fidelity import HostOracleContext
+from ..fidelity import HostOracleContext, sha256_hex
 from ..immunity import HOLD, HOST_OBSERVERS, AntibodyRegistry, decide, host_danger, screen_rules, signal1
+from ..operad_ledger import record_failure
 from .base import (
     CERTIFIED,
     REFUSED,
@@ -210,6 +211,29 @@ class ImmuneFailureClassification(WorkflowFamily):
         status = report['status']
         host.record('no_autoimmune_rule', report['killed'] == 0, str(status))
         host.record('every_rule_two_signal_admitted', all(v == 'ADMITTED' for v in status.values()), str(status))
+        ledger_path = task.get('ledger_path')
+        if ledger_path:
+            for rule_id, rule_status in status.items():
+                if rule_status == 'KILLED_BY_THYMUS':
+                    record_failure(
+                        ledger_path,
+                        failure_id=f"thymus_kill:{rule_id}",
+                        workflow="WF14",
+                        run=task.get('run_id', 'run'),
+                        failure_class="BoundaryLeakage",
+                        ddc_trace="CRM",
+                        evidence_sha256=sha256_hex(f"KILLED_BY_THYMUS:{rule_id}"),
+                    )
+                elif rule_status != 'ADMITTED':
+                    record_failure(
+                        ledger_path,
+                        failure_id=f"rule_rejected:{rule_id}",
+                        workflow="WF14",
+                        run=task.get('run_id', 'run'),
+                        failure_class="StructuralNonFit",
+                        ddc_trace="CRM",
+                        evidence_sha256=sha256_hex(f"{rule_status}:{rule_id}"),
+                    )
         return judge(host, 'RULES_ADMITTED', rules=status, epitopes=classify_failures(task['failures']),
                      antibodies=antibody_support(task['failures']))
 

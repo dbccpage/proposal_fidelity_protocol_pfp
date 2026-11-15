@@ -15,14 +15,14 @@ evidence_grades:
 authority_effect: "None"
 source_paths:
   - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - engine/crates_rs/core_prompt_civilization/src/rank.rs
+  - code/rust/core_prompt_civilization/src/rank.rs
 ---
 
 # Prompt Civ Level 05: Inverse Lineage PageRank: Certified Ancestral Utility
 
 **AuthorityEffect:** None.  
 **Level:** Level 05 (Markov Lineage Diffusion & Fixed-Point Certification)  
-**Rust Rank Seam:** [`core_prompt_civilization::rank`](../../../engine/crates_rs/core_prompt_civilization/src/rank.rs)  
+**Rust Rank Seam:** [`core_prompt_civilization::rank`](..\..\..\code\rust\core_prompt_civilization\src\rank.rs)  
 **Primary Contract:** `core.spectral.pagerank.v2`  
 **Core Falsifiers:** `F-RANK-01`, `F-RANK-02`, `F-RANK-03`, `F-RES-03`, `F-RES-04`
 

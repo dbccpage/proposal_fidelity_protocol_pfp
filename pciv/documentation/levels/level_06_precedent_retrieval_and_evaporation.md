@@ -15,14 +15,14 @@ evidence_grades:
 authority_effect: "None"
 source_paths:
   - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - engine/crates_rs/core_prompt_civilization/src/matching.rs
+  - code/rust/core_prompt_civilization/src/matching.rs
 ---
 
 # Prompt Civ Level 06: Precedent Retrieval & Evaporation: Lexicographic Matching
 
 **AuthorityEffect:** None.  
 **Level:** Level 06 (Precedent Retrieval, Lexicographic Sorting & Usage Decay)  
-**Rust Matching Seam:** [`core_prompt_civilization::matching`](../../../engine/crates_rs/core_prompt_civilization/src/matching.rs)  
+**Rust Matching Seam:** [`core_prompt_civilization::matching`](..\..\..\code\rust\core_prompt_civilization\src\matching.rs)  
 **Primary Types:** `PrecedentMatchReceiptV1`, `ReferencePolicyV1`  
 **Core Falsifiers:** `F-BIO-04`, `F-DOMAIN-01`
 
