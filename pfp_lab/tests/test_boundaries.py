@@ -110,6 +110,12 @@ def _load_json_object(text: str) -> dict[str, Any] | None:
     return loaded if isinstance(loaded, dict) else None
 
 
+def _is_archive_reference(value: object, prefixes: tuple[str, ...]) -> bool:
+    if not isinstance(value, str) or not value.startswith(prefixes):
+        return False
+    return "\\" not in value and not {"", ".", ".."}.intersection(value.split("/"))
+
+
 def _scannable_text(relative_path: str, text: str) -> str:
     """Mask resolving archive path references in provenance and baseline JSON records.
 
@@ -123,7 +129,8 @@ def _scannable_text(relative_path: str, text: str) -> str:
         if body is None or not isinstance(body.get("entries"), dict):
             return text
         entries = [
-            ("" if str(key).startswith("atlas/archive/") else key, value) for key, value in body["entries"].items()
+            ("" if _is_archive_reference(key, ("atlas/archive/",)) else key, value)
+            for key, value in body["entries"].items()
         ]
         return json.dumps({**body, "entries": entries})
     if relative_path.startswith("governance/evidence/") and relative_path.endswith(".run.json"):
@@ -132,7 +139,7 @@ def _scannable_text(relative_path: str, text: str) -> str:
             return text
         inputs = [
             {**item, "path": ""}
-            if isinstance(item, dict) and str(item.get("path", "")).startswith(ARCHIVE_INPUT_PREFIXES)
+            if isinstance(item, dict) and _is_archive_reference(item.get("path"), ARCHIVE_INPUT_PREFIXES)
             else item
             for item in body["inputs"]
         ]
@@ -147,7 +154,9 @@ def _iter_new_tree_files(repo: Path) -> list[Path]:
         if not base.exists():
             continue
         files.extend(
-            path for path in sorted(base.rglob("*")) if path.is_file() and not SKIP_PARTS.intersection(path.parts)
+            path
+            for path in sorted(base.rglob("*"))
+            if path.is_file() and not SKIP_PARTS.intersection(path.relative_to(repo).parts)
         )
     return files
 
@@ -157,7 +166,7 @@ def upstream_name_hits(repo: Path) -> list[str]:
     for path in _iter_new_tree_files(repo):
         relative = path.relative_to(repo).as_posix()
         text = _scannable_text(relative, path.read_text(encoding="utf-8", errors="replace"))
-        if FORBIDDEN.search(text) or FORBIDDEN.search(path.name):
+        if FORBIDDEN.search(text) or FORBIDDEN.search(relative):
             hits.append(relative)
     return hits
 
@@ -174,6 +183,8 @@ def test_upstream_name_check_catches_active_violations(tmp_path: Path) -> None:
     (tmp_path / "pfp_lab" / "bad_source.py").write_text(f"{banned_engine}_value = 1\n", encoding="utf-8")
     (tmp_path / "contracts").mkdir()
     (tmp_path / "contracts" / f"{banned_project}.json").write_text("{}\n", encoding="utf-8")
+    (tmp_path / "contracts" / banned_engine).mkdir()
+    (tmp_path / "contracts" / banned_engine / "clean.json").write_text("{}\n", encoding="utf-8")
     evidence = tmp_path / "governance" / "evidence"
     evidence.mkdir(parents=True)
     archive_only_baseline = {
@@ -191,14 +202,18 @@ def test_upstream_name_check_catches_active_violations(tmp_path: Path) -> None:
     (evidence / "clean.run.json").write_text(json.dumps(archive_only_run), encoding="utf-8")
     active_leak_run = {"name": "leak", "inputs": [{"path": f"pfp_lab/{banned_engine}.py", "sha256": "00"}]}
     (evidence / "leak.run.json").write_text(json.dumps(active_leak_run), encoding="utf-8")
+    escaped_input = {"inputs": [{"path": f"papers/../pfp_lab/{banned_engine}.py", "sha256": "00"}]}
+    (evidence / "escape.run.json").write_text(json.dumps(escaped_input), encoding="utf-8")
     assert upstream_name_hits(tmp_path) == [
         "pfp_lab/bad_source.py",
+        "governance/evidence/escape.run.json",
         "governance/evidence/leak.run.json",
         f"contracts/{banned_project}.json",
+        f"contracts/{banned_engine}/clean.json",
     ]
     active_baseline_leak = {
         "rule": "clean",
-        "entries": {f"pfp/{banned_engine}.py": {"sha256": "00", "reason": "ok"}},
+        "entries": {f"atlas/archive/../../pfp/{banned_engine}.py": {"sha256": "00", "reason": "ok"}},
     }
     (tmp_path / "governance" / "baseline.json").write_text(json.dumps(active_baseline_leak), encoding="utf-8")
     assert "governance/baseline.json" in upstream_name_hits(tmp_path)
