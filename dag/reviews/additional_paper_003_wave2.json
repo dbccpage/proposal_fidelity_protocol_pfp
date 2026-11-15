@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "bdd02ccf314594cd6717d35d3e66f4250cb38b79",
+  "scope_manifest": "dag/reviews/additional_paper_003_support_scope.json",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/host_engine.py",
+      "sha256": "76df55eaefe09f8d3ac0ce99c6735badec5c3fb7c2c2f5dd4e1717b2ed963a25",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 501]
+      ],
+      "assessment": "Source inspection of package Demo 3 host engine and route verifier. Assesses verify_route refusal with NO_NATIVE_PORT across declared fixtures, pre-decrement fuel accounting, snapshot rollback, and contrast with baseline empty batch handling."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py",
+      "sha256": "29a35f2ba916f3acfec7373bb4fd1e2ee15f9b19c9e3151e9f5e90e35e4d01a6",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 404]
+      ],
+      "assessment": "Source inspection of Demo 3 host test suite. Confirms test_verify_route_returns_missing_port_without_judging_a_witness, test_odd_and_cochain_routes_use_the_same_refusal, test_move_after_verify_rolls_the_whole_batch_back, test_malformed_element_ids_do_not_commit, and test_fuel_exhaustion_and_bool_fuel_are_refused."
+    },
+    {
+      "path": "pfp/infrastructure/adapters/mssn_scenarios/protocol.py",
+      "sha256": "62a4078c8ef4ddfcc5457f8d27d7b8079c90c97b5fc6f1afdb071114ce3a3c33",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [244, 435]
+      ],
+      "assessment": "Source inspection of baseline repository Demo3HostEngine adapter. Confirms move-after-VERIFY refusal and rollback, malformed element ID rollback, empty batch charged and recorded ACCEPTED, and transition to TERMINAL with FUEL_EXHAUSTED at fuel 0."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+      "sha256": "db9ce2c20408e6b8267ebab33e94cc172bf01762b6c32600108ae57967f7c00b",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [340, 420]
+      ],
+      "assessment": "Source inspection of Paper 003 Section 4 and 4.1, documenting baseline route verification refusal and baseline host transaction semantics."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+      "sha256": "b93d68bf1e5092a8d6f9f054d2a5c487e0037715501632f03e1a525c87841626",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 50]
+      ],
+      "assessment": "Claim ledger rows P3-02 (every nonempty declared route yields NO_NATIVE_PORT at the baseline) and P3-03 (baseline move after VERIFY, malformed ID rollback, empty batch ACCEPTED, and fuel 0 FUEL_EXHAUSTED/TERMINAL)."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/danger_gate.py",
+      "sha256": "bec5440fddb5a36b753b939af35a16321b2b4fc8e35af93d2d9e9f51cc1f5311",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 190]
+      ],
+      "assessment": "Source inspection of danger_gate.py, implementing deterministic two-signal gate decision logic over supplied pattern matches and structural defect indicators."
+    }
+  ],
+  "claims": [
+    {
+      "id": "AUDIT-P003-002",
+      "statement": "For every nonempty declared route (odd, cochain, ...) the baseline verify_route returns NO_NATIVE_PORT and certifies no witness.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Repository verify_route implementation refusing non-empty routes with NO_NATIVE_PORT.",
+        "Host execution environment where uncertified routes fail to populate certificate or terminal exit."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/host_engine.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py",
+        "pfp/infrastructure/adapters/mssn_scenarios/protocol.py"
+      ],
+      "limits": "Applies strictly to declared routes within the repository and package host fixtures; does not establish native verifier availability or absence of external verification ports."
+    },
+    {
+      "id": "AUDIT-P003-003",
+      "statement": "At the baseline: a move after VERIFY or a malformed element id is refused and rolled back; an empty batch is charged and recorded ACCEPTED; with fuel 0 the next batch is recorded FUEL_EXHAUSTED and phase becomes TERMINAL.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Baseline Demo3HostEngine state machine executing batch transactions under pre-decrement fuel accounting.",
+        "Baseline transaction loop where empty moves list bypasses validation failures and commits as ACCEPTED."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/host_engine.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py",
+        "pfp/infrastructure/adapters/mssn_scenarios/protocol.py"
+      ],
+      "limits": "Specific to the baseline repository host adapter; package re-implementation intentionally contrasts by refusing empty batches with REJECT_EMPTY_BATCH."
+    }
+  ]
+}
