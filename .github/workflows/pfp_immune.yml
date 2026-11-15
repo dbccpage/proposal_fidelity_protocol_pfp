@@ -1,0 +1,39 @@
+name: pfp-immune
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "code/rust/pfp_immune/**"
+      - "code/rust/core_epistemic_immune_system/**"
+      - "code/rust/core_prompt_civilization/**"
+      - "code/rust/Cargo.toml"
+      - "code/rust/Cargo.lock"
+      - ".github/workflows/pfp_immune.yml"
+  pull_request:
+    paths:
+      - "code/rust/pfp_immune/**"
+      - "code/rust/core_epistemic_immune_system/**"
+      - "code/rust/core_prompt_civilization/**"
+      - "code/rust/Cargo.toml"
+      - "code/rust/Cargo.lock"
+      - ".github/workflows/pfp_immune.yml"
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: code/rust
+
+jobs:
+  immune-cli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+      - run: cargo fmt -p pfp_immune --check
+      - run: cargo clippy --locked -p pfp_immune --all-targets --no-deps -- -D warnings
+      - run: cargo test --locked -p pfp_immune
