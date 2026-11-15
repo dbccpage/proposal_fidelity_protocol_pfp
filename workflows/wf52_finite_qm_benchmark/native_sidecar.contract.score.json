@@ -1,0 +1,101 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "workflows/wf52_finite_qm_benchmark/native_sidecar.py",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "workflows/wf52_finite_qm_benchmark/native_sidecar.py",
+      "language": "Python",
+      "sha256": "40265ff75cb136fe992033f2c4b68634e648d582f77a08370603686353fd24ef"
+    },
+    "contract_urn": "urn:pfp-wf52:native-sidecar:v1",
+    "symbols": [
+      "Infrastructure",
+      "Invalid",
+      "NativeHost",
+      "admit_candidate",
+      "admit_coefficients",
+      "admit_public",
+      "assertion_text",
+      "canonical",
+      "digest",
+      "file_sha",
+      "keys",
+      "product_power",
+      "rational",
+      "strict_json",
+      "verify"
+    ],
+    "owned_invariants": [
+      "Strict JSON parser rejects duplicate keys, floats, booleans as ints, and oversized integers before invoking native arithmetic.",
+      "NativeHost.custody materializes a missing gitignored target binary via offline deterministic build only after every source hash and verbatim owner fragment check succeeds."
+    ],
+    "boundaries": [
+      "Certifies only det(lambda*I - A(J,Delta,K)) over exact rationals for admitted public matrices; eigenvectors, projectors, and dynamics remain unresolved."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "workflows/wf52_finite_qm_benchmark/native_sidecar.py",
+      "language": "Python",
+      "sha256": "40265ff75cb136fe992033f2c4b68634e648d582f77a08370603686353fd24ef"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Exact Fraction arithmetic and subprocess JSON protocol against a source-pinned offline Rust binary with cryptographic custody checks.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "D",
+      "G5": "C"
+    },
+    "basis": {
+      "G1": "Module docstring declares AuthorityEffect: None and Contract: urn:pfp-wf52:native-sidecar:v1 covering all public entrypoints and errors.",
+      "G2": "Admits public inputs, coefficients, and assertion byte spans using exact Fraction parsing (type(val) is not bool, Rule PY-002).",
+      "G3": "Refuses missing toolchain, timeout, stderr, bad exit code, and hash mismatches via typed Invalid and Infrastructure exceptions with zero Python fallback.",
+      "G4": "Verified across 15 tests in test_native_sidecar.py and clean-worktree materialization; AST mutation campaign m-wf52-native-sidecar killed 154/247 (R = 154/247 = 0.6235, Grade D).",
+      "G5": "Measured via governance.tools.metrics: worst function CCN 19, cognitive 20, nesting depth 4; metrics ceiling C."
+    },
+    "composite_grade": "D",
+    "score_token": "L4D",
+    "is_complete": true,
+    "grade_ceiling": "C",
+    "evaluation_timestamp": "2026-11-15T00:27:10Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/wf52-sidecar-pytest.run.json",
+        "sha256": "eff6d3c72633474349cf72d3778850a68f7079c7fb5d7e762b281575d86a1dee",
+        "note": "526 passed, 19 skipped, 68 subtests passed after deleting native_sidecar_host/target"
+      },
+      {
+        "path": "governance/evidence/wf52-sidecar-metrics.run.json",
+        "sha256": "43f564467c91bae5d2e0e2019ce313f2d1f74ae56e9be5aa052880a29ccb51ed",
+        "note": "Gate 5 lizard/complexipy/AST nesting capture"
+      },
+      {
+        "path": "governance/evidence/wf52-sidecar-metrics.json",
+        "sha256": "802ec909378549fdc138035bb43e9b1c5af3624ae93f0bad2a5e5fa95a30012b",
+        "note": "Per-file complexity metrics report"
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 154,
+      "survived": 93,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 0.6234817813765182,
+      "report": {
+        "path": "governance/evidence/m-wf52-native-sidecar.mutation.json",
+        "sha256": "a2e701bc7a64fba75eef4b9ca2179935efe1fcb9e0c20d61927fd5e5bb6f2618",
+        "note": "campaign m-wf52-native-sidecar"
+      }
+    }
+  },
+  "history": []
+}

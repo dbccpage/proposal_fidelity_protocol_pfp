@@ -1,0 +1,78 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "workflows/wf52_finite_qm_benchmark/test_challenger_m4_semantic_composition.py",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "workflows/wf52_finite_qm_benchmark/test_challenger_m4_semantic_composition.py",
+      "language": "Python",
+      "sha256": "e243cc8fa0022b63a9a13db69d74a278ff977e857c37c8e6dbdf3465db202d6f"
+    },
+    "contract_urn": "urn:pfp-wf52:tests:challenger-m4-semantic-composition:v1",
+    "symbols": [
+      "TestChallengerEISAllostericGate",
+      "TestChallengerEndToEndSemanticComposition",
+      "TestChallengerManifestAndResourceIntegrity",
+      "TestChallengerOPERADSAssociativity",
+      "TestChallengerPCIVTaskSetEvaluator"
+    ],
+    "owned_invariants": [
+      "Tests EIS AllostericConsensusGate quorum rules with 2 independent sources (sensor_native_receipt + sensor_matrix_identity) and mandatory native verification.",
+      "Verifies PCIV Pareto front partitioning, operad associative composition, manifest budget caps, and end-to-end semantic composition artifacts."
+    ],
+    "boundaries": [
+      "Test module under support category test (L2D floor); adversarial challenger harness only."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "workflows/wf52_finite_qm_benchmark/test_challenger_m4_semantic_composition.py",
+      "language": "Python",
+      "sha256": "e243cc8fa0022b63a9a13db69d74a278ff977e857c37c8e6dbdf3465db202d6f"
+    },
+    "profile": "Non-Numeric",
+    "level": "L2",
+    "level_basis": "Adversarial stress tests aligned with 2-independent-source EIS allosteric gate hardening from commit fadb0eddb.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Header declares AuthorityEffect: None and Contract: urn:pfp-wf52:tests:challenger-m4-semantic-composition:v1.",
+      "G2": "Checks exact rational Hill thresholds and asserts individual sensor booleans alongside aggregate independent source quorum count.",
+      "G3": "Adversarial tests isolate filesystem state under TemporaryDirectory() and run completely offline.",
+      "G4": "All 35 tests pass within wf52-sidecar-pytest.run.json (526 passed, 19 skipped).",
+      "G5": "Measured via governance.tools.metrics: worst function CCN 3, cognitive 2, nesting depth 2; metrics ceiling A+."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-15T00:27:10Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/wf52-sidecar-pytest.run.json",
+        "sha256": "eff6d3c72633474349cf72d3778850a68f7079c7fb5d7e762b281575d86a1dee",
+        "note": "526 passed, 19 skipped, 68 subtests passed after deleting native_sidecar_host/target"
+      },
+      {
+        "path": "governance/evidence/wf52-sidecar-metrics.run.json",
+        "sha256": "43f564467c91bae5d2e0e2019ce313f2d1f74ae56e9be5aa052880a29ccb51ed",
+        "note": "Gate 5 lizard/complexipy/AST nesting capture"
+      },
+      {
+        "path": "governance/evidence/wf52-sidecar-metrics.json",
+        "sha256": "802ec909378549fdc138035bb43e9b1c5af3624ae93f0bad2a5e5fa95a30012b",
+        "note": "Per-file complexity metrics report"
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

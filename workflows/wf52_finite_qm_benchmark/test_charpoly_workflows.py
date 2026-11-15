@@ -1,12 +1,17 @@
 """Bounded helper/plan controls using the independently derived PUBLIC fixture.
 
+AuthorityEffect: None.
+Contract: urn:pfp-wf52:tests:charpoly-workflows:v1
+
 No provider invocation, runtime edits, evaluator/reference material or output
-artifacts. The two actual native calls check the public fixture and one mutation.
+artifacts. The actual native calls check the public fixture, mutation, and clean-worktree rebuild.
 """
 from copy import deepcopy
 import hashlib
 import json
 from pathlib import Path
+import shutil
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -24,7 +29,7 @@ class CharpolyWorkflowControls(unittest.TestCase):
         cls.seed = qm.REGISTERED_SEED_SHA256
         path = Path(__file__).resolve().parent / "qm_native_charpoly_public_fixture.json"
         raw = path.read_bytes()
-        if hashlib.sha256(raw).hexdigest() != "b64692ceb7217f3e7a2de69e7259d79622d0addac5afeeabe799a312c4085d04":
+        if hashlib.sha256(raw).hexdigest() != "1e75a47320d8ad327b90f787ce1353ae79e311c734f71f8dfe39af58683490e9":
             raise RuntimeError("PUBLIC_FIXTURE_CHANGED")
         fixture = json.loads(raw)
         cls.coefficients = fixture["candidate"]["coefficients"]
@@ -221,6 +226,24 @@ class CharpolyWorkflowControls(unittest.TestCase):
         with self.assertRaises(workflows.WorkflowError):
             workflows.stage_request(UNGATED, "solve", "Synthetic task", self.seed,
                 {"charpoly_context": sidecar.canonical(bad_context).decode()})
+
+    def test_clean_worktree_materializes_missing_sidecar_binary(self):
+        tracked = ("build_receipt.json", "source_binding.json", "src/production_charpoly.rs")
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_root = Path(tmp)
+            owner_rel = Path("code/rust/pfp_runtime/src/rational.rs")
+            (tmp_root / owner_rel.parent).mkdir(parents=True, exist_ok=True)
+            shutil.copy2(sidecar.ROOT / owner_rel, tmp_root / owner_rel)
+            host_dir = tmp_root / "workflows/wf52_finite_qm_benchmark/native_sidecar_host"
+            host_dir.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copytree(sidecar.HOST, host_dir, ignore=shutil.ignore_patterns("target"))
+            before = {rel: (host_dir / rel).read_bytes() for rel in tracked}
+            with patch.object(sidecar, "ROOT", tmp_root):
+                binary, custody = sidecar.NativeHost(host_dir).custody()
+            after = {rel: (host_dir / rel).read_bytes() for rel in tracked}
+            self.assertEqual(custody["binary_sha256"], "718052d6d149466f8661ba759475d0edc3f7f792973a24014ebcfa57431dee2f")
+            self.assertTrue(binary.is_file())
+            self.assertEqual(before, after)
 
 
 if __name__ == "__main__":

@@ -1,5 +1,8 @@
 """Public affine-matrix sidecar; native exact arithmetic, no provider/evaluator access.
 
+AuthorityEffect: None.
+Contract: urn:pfp-wf52:native-sidecar:v1
+
 Certifies only det(lambda I - A(J,Delta,K)). The independently supplied affine
 matrix interpretation, surrounding prose, projectors and dynamics are unresolved.
 The native process is the isolated source-bound wrapper, not the full PFP host.
@@ -12,6 +15,7 @@ from itertools import product
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 
 HERE = Path(__file__).resolve().parent
@@ -21,6 +25,14 @@ PARAMETERS = ["J", "Delta", "K"]
 OWNER_SHA = "9d78981a19c942a70d4d4262f1df9538024754b2b87c0e0288a46d377cd3916c"
 UNRESOLVED = ["public-prose-to-affine-matrix interpretation", "surrounding prose",
               "spectrum projectors", "eigenvectors", "dynamics", "other obligations"]
+ALLOW_BUILD_ENV = {
+    "PATH", "SYSTEMROOT", "WINDIR", "COMSPEC", "PATHEXT", "TEMP", "TMP",
+    "USERPROFILE", "HOMEDRIVE", "HOMEPATH", "CARGO_HOME", "RUSTUP_HOME",
+}
+MSVC_LINKER = Path(
+    "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/link.exe"
+)
+WIN_SDK = Path("C:/Program Files (x86)/Windows Kits/10/Lib/10.0.26100.0")
 
 
 class Invalid(ValueError):
@@ -164,6 +176,60 @@ def admit_candidate(public, candidate, answer, n):
     return admit_coefficients(candidate["coefficients"], n)
 
 
+def _deterministic_cargo_env(folder: Path, sysroot: str) -> dict[str, str]:
+    env = {k: v for k, v in os.environ.items() if k.upper() in ALLOW_BUILD_ENV}
+    env.update(
+        CARGO_NET_OFFLINE="true",
+        CARGO_TARGET_DIR=str(folder / "target"),
+        CARGO_BUILD_JOBS="1",
+        CARGO_INCREMENTAL="0",
+    )
+    if MSVC_LINKER.is_file():
+        env["PATH"] = str(MSVC_LINKER.parent) + os.pathsep + env.get("PATH", "")
+        env["LIB"] = os.pathsep.join(
+            str(p) for p in [MSVC_LINKER.parents[3] / "lib/x64", WIN_SDK / "ucrt/x64", WIN_SDK / "um/x64"]
+        )
+    folder_resolved = folder.resolve()
+    cargo_home = Path(os.environ.get("CARGO_HOME") or (Path.home() / ".cargo")).resolve()
+    remaps = [
+        f"--remap-path-prefix={folder_resolved / 'target'}=/pfp_target",
+        f"--remap-path-prefix={folder_resolved}=/pfp_sidecar",
+        f"--remap-path-prefix={cargo_home}=/cargo_home",
+        f"--remap-path-prefix={Path(sysroot.strip()).resolve()}=/rust_sysroot",
+        "-C",
+        "link-arg=/Brepro",
+        "-C",
+        "link-arg=/DEBUG:NONE",
+    ]
+    env["CARGO_ENCODED_RUSTFLAGS"] = "\x1f".join(remaps)
+    return env
+
+
+def _materialize_missing_binary(folder: Path) -> None:
+    """Offline deterministic build into gitignored target/ after source hashes pass."""
+    cargo = shutil.which("cargo")
+    rustc = shutil.which("rustc")
+    if not cargo or not rustc:
+        raise Infrastructure("NATIVE_TOOLCHAIN_UNAVAILABLE")
+    base_env = {k: v for k, v in os.environ.items() if k.upper() in ALLOW_BUILD_ENV}
+    try:
+        sysroot_proc = subprocess.run(
+            [rustc, "--print", "sysroot"], cwd=folder, env=base_env,
+            capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30,
+        )
+        if sysroot_proc.returncode:
+            raise Infrastructure("NATIVE_BINARY_REBUILD_FAILED")
+        env = _deterministic_cargo_env(folder, sysroot_proc.stdout)
+        build_proc = subprocess.run(
+            [cargo, "build", "--offline", "--locked", "--jobs", "1"], cwd=folder, env=env,
+            capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=180,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise Infrastructure("NATIVE_BINARY_REBUILD_FAILED:" + type(exc).__name__) from None
+    if build_proc.returncode:
+        raise Infrastructure("NATIVE_BINARY_REBUILD_FAILED")
+
+
 class NativeHost:
     """Only the locally built, source-bound standalone wrapper may execute."""
     def __init__(self, folder=HOST):
@@ -192,12 +258,16 @@ class NativeHost:
                 raise Infrastructure("PRODUCTION_EXTRACTION_CHANGED")
             binary = (ROOT / receipt["binary"]["path"]).resolve()
             expected_binary = (self.folder / "target/debug/pfp-native-sidecar-host.exe").resolve()
+            if binary == expected_binary and not binary.is_file():
+                _materialize_missing_binary(self.folder)
             if binary != expected_binary or file_sha(binary) != receipt["binary"]["sha256"]:
                 raise Infrastructure("NATIVE_BINARY_CHANGED")
             return binary, {"binary_sha256": receipt["binary"]["sha256"],
                             "build_receipt_sha256": file_sha(receipt_path),
                             "owner_sha256": OWNER_SHA, "fragment_sha256": binding["fragment_sha256"],
                             "lock_sha256": receipt["files"]["Cargo.lock"]}
+        except Infrastructure:
+            raise
         except (OSError, KeyError, TypeError, ValueError) as exc:
             raise Infrastructure("NATIVE_CUSTODY_UNAVAILABLE:" + type(exc).__name__) from None
 
