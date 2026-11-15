@@ -76,7 +76,10 @@ jobs:
       - name: Build runner-native sidecar offline and check clean materialization
         shell: bash
         run: |
-          python -X utf8 workflows/wf52_finite_qm_benchmark/native_sidecar_host/build_native.py
+          python -X utf8 workflows/wf52_finite_qm_benchmark/native_sidecar_host/build_native.py || {
+            cat workflows/wf52_finite_qm_benchmark/native_sidecar_host/build_receipt.json
+            exit 2
+          }
           python -X utf8 - <<'PY'
           import json
           import shutil

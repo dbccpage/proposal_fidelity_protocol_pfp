@@ -10,6 +10,7 @@ from copy import deepcopy
 import hashlib
 import importlib.util
 import json
+import os
 from pathlib import Path
 import shutil
 import sys
@@ -31,7 +32,7 @@ class CharpolyWorkflowControls(unittest.TestCase):
         cls.seed = qm.REGISTERED_SEED_SHA256
         path = Path(__file__).resolve().parent / "qm_native_charpoly_public_fixture.json"
         raw = path.read_bytes()
-        if hashlib.sha256(raw).hexdigest() != "9ece7e89029df7fb65f8dc21b171f35762a4658573ea60fe4093e12592a0fa39":
+        if hashlib.sha256(raw).hexdigest() != "383f2e3e2b00582baca8727a38c16f5768926d8b1a3ff05c34520aaa5e0fc141":
             raise RuntimeError("PUBLIC_FIXTURE_CHANGED")
         fixture = json.loads(raw)
         cls.coefficients = fixture["candidate"]["coefficients"]
@@ -242,7 +243,10 @@ class CharpolyWorkflowControls(unittest.TestCase):
             shutil.copytree(sidecar.HOST, host_dir, ignore=shutil.ignore_patterns("target"))
             before = {rel: (host_dir / rel).read_bytes() for rel in tracked}
             expected_sha = sidecar.strict_json((host_dir / "build_receipt.json").read_bytes())["binary"]["sha256"]
-            with patch.object(sidecar, "ROOT", tmp_root):
+            with (
+                patch.object(sidecar, "ROOT", tmp_root),
+                patch.object(sidecar, "MSVC_LINKER", tmp_root / "absent_link.exe"),
+            ):
                 binary, custody = sidecar.NativeHost(host_dir).custody()
             after = {rel: (host_dir / rel).read_bytes() for rel in tracked}
             self.assertEqual(custody["binary_sha256"], expected_sha)
@@ -254,25 +258,34 @@ class CharpolyWorkflowControls(unittest.TestCase):
         spec = importlib.util.spec_from_file_location("wf52_build_native", sidecar.HOST / "build_native.py")
         build_native = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(build_native)
-        for plat in ("win32", "linux", "darwin"):
-            env_build, _ = build_native.deterministic_cargo_env(sidecar.HOST, str(sidecar.HOST), platform=plat)
-            env_sidecar = sidecar._deterministic_cargo_env(sidecar.HOST, str(sidecar.HOST), platform=plat)
-            self.assertEqual(env_build["CARGO_ENCODED_RUSTFLAGS"], env_sidecar["CARGO_ENCODED_RUSTFLAGS"])
-            flags = env_build["CARGO_ENCODED_RUSTFLAGS"].split("\x1f")
-            if plat == "win32":
-                self.assertIn("link-arg=/Brepro", flags)
-                self.assertIn("link-arg=/DEBUG:NONE", flags)
-                self.assertNotIn("link-arg=-Wl,--build-id=none", flags)
-            elif plat == "linux":
-                self.assertIn("link-arg=-Wl,--build-id=none", flags)
-                self.assertIn("strip=debuginfo", flags)
-                self.assertNotIn("link-arg=/Brepro", flags)
-                self.assertNotIn("link-arg=/DEBUG:NONE", flags)
-            else:
-                self.assertIn("strip=debuginfo", flags)
-                self.assertNotIn("link-arg=/Brepro", flags)
-                self.assertNotIn("link-arg=/DEBUG:NONE", flags)
-                self.assertNotIn("link-arg=-Wl,--build-id=none", flags)
+        with (
+            patch.dict(os.environ, {"SYSTEMDRIVE": "C:", "PROGRAMDATA": "C:/ProgramData"}),
+            patch.object(build_native, "MSVC_LINKER", sidecar.HOST / "absent_link.exe"),
+            patch.object(sidecar, "MSVC_LINKER", sidecar.HOST / "absent_link.exe"),
+        ):
+            for plat in ("win32", "linux", "darwin"):
+                env_build, _ = build_native.deterministic_cargo_env(sidecar.HOST, str(sidecar.HOST), platform=plat)
+                env_sidecar = sidecar._deterministic_cargo_env(sidecar.HOST, str(sidecar.HOST), platform=plat)
+                self.assertEqual(env_build["SYSTEMDRIVE"], "C:")
+                self.assertEqual(env_build["PROGRAMDATA"], "C:/ProgramData")
+                self.assertEqual(env_sidecar["SYSTEMDRIVE"], "C:")
+                self.assertEqual(env_sidecar["PROGRAMDATA"], "C:/ProgramData")
+                self.assertEqual(env_build["CARGO_ENCODED_RUSTFLAGS"], env_sidecar["CARGO_ENCODED_RUSTFLAGS"])
+                flags = env_build["CARGO_ENCODED_RUSTFLAGS"].split("\x1f")
+                if plat == "win32":
+                    self.assertIn("link-arg=/Brepro", flags)
+                    self.assertIn("link-arg=/DEBUG:NONE", flags)
+                    self.assertNotIn("link-arg=-Wl,--build-id=none", flags)
+                elif plat == "linux":
+                    self.assertIn("link-arg=-Wl,--build-id=none", flags)
+                    self.assertIn("strip=debuginfo", flags)
+                    self.assertNotIn("link-arg=/Brepro", flags)
+                    self.assertNotIn("link-arg=/DEBUG:NONE", flags)
+                else:
+                    self.assertIn("strip=debuginfo", flags)
+                    self.assertNotIn("link-arg=/Brepro", flags)
+                    self.assertNotIn("link-arg=/DEBUG:NONE", flags)
+                    self.assertNotIn("link-arg=-Wl,--build-id=none", flags)
 
     def test_cross_os_receipt_refuses_without_materializing(self):
         other_platform = "linux" if sys.platform == "win32" else "win32"

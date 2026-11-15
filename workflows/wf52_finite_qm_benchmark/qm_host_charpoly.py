@@ -90,8 +90,8 @@ COMPACT_LIMITATION_NOTICE = "Intermediate det(lambda*I - H) only; not a full QM 
 PINNED_SOURCES = {
     "hamiltonian_artifact.py": "bf28b8371f11d2ac34256d3699a1653a2e44562e9d7b4a60e12221c750938925",
     "charpoly_wire.py": "c6e2733092d8224d1e2303b4a988c1d8735829d10bbb790a97423d451f6c5b50",
-    "native_sidecar.py": "e76f277e3271ed27fe3d759b359abb0d335b14d3ab399882d547b109bf448ded",
-    "qm_native_charpoly.py": "301e85a848c444a6c4a1d244e60b2c68cbdab7416a6ee1d54edd51c1905bcb44",
+    "native_sidecar.py": "ea40934b8250e251758811dc70d997510b18673dc9b782a22b0ec3fb4db7f0a7",
+    "qm_native_charpoly.py": "72a1b1f0f3691deda02e1b16b8005fdaa578ff8a567aec7f96c6e27f1fca6434",
 }
 
 # Catalog of standardized failure states

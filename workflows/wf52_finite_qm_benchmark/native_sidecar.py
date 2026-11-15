@@ -29,6 +29,7 @@ UNRESOLVED = ["public-prose-to-affine-matrix interpretation", "surrounding prose
 ALLOW_BUILD_ENV = {
     "PATH", "SYSTEMROOT", "WINDIR", "COMSPEC", "PATHEXT", "TEMP", "TMP",
     "TMPDIR", "HOME", "USERPROFILE", "HOMEDRIVE", "HOMEPATH",
+    "SYSTEMDRIVE", "PROGRAMDATA",
     "PROGRAMFILES", "PROGRAMFILES(X86)", "PROGRAMW6432",
     "CARGO_HOME", "RUSTUP_HOME",
 }
