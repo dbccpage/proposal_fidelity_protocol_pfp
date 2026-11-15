@@ -19,7 +19,15 @@ import pytest
 from hypothesis import HealthCheck, settings
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-ORACLE_PATH = REPO_ROOT / "papers" / "005_pfp_practitioners_field_manual" / "code" / "l1_symbol_game_governor.py"
+ORACLE_PATH = (
+    REPO_ROOT
+    / "atlas"
+    / "archive"
+    / "pfp"
+    / "005_pfp_practitioners_field_manual"
+    / "code"
+    / "l1_symbol_game_governor.py"
+)
 
 settings.register_profile("default", max_examples=200, deadline=None)
 settings.register_profile(
