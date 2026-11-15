@@ -1,0 +1,71 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/core_prompt_civilization/src/lib.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/core_prompt_civilization/src/lib.rs",
+      "language": "Rust",
+      "sha256": "1051518940cd16bb7bab34ff9679fc9b79b67fe699ba2f7a010ed49ac9a02150"
+    },
+    "contract_urn": "urn:core:crates_rs:core-prompt-civilization:lib:l4-production-boundary:v1",
+    "symbols": [
+      "immune",
+      "pharmacy",
+      "authority_effect",
+      "RationalSpend",
+      "SpendError"
+    ],
+    "owned_invariants": [
+      "The default build exposes the EIS integration module.",
+      "A pharmacy-only consumer can disable EIS without changing the detector pharmacy interface.",
+      "Spend conversion and arithmetic preserve the exact rational contract.",
+      "AuthorityEffect: None."
+    ],
+    "boundaries": [
+      "The optional module is absent when the EIS feature is disabled.",
+      "This build boundary does not certify physical, statistical, or operational claims."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/core_prompt_civilization/src/lib.rs",
+      "language": "Rust",
+      "sha256": "1051518940cd16bb7bab34ff9679fc9b79b67fe699ba2f7a010ed49ac9a02150"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Production crate entry point with an explicit build boundary and validated native and WASM consumers.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "D",
+      "G5": "C"
+    },
+    "basis": {
+      "G1": "An explicit default feature controls the existing typed immune module; the pharmacy stays exposed.",
+      "G2": "This feature gate changes no arithmetic; the existing spend boundary uses checked integer operations.",
+      "G3": "Feature selection happens at compile time; the existing detector and spend result types are unchanged.",
+      "G4": "Hosted default EIS/PCIV tests and the isolated CLI matrix passed; no fresh mutation campaign for this entry point.",
+      "G5": "The added boundary is one module attribute and introduces no runtime branching."
+    },
+    "composite_grade": "D",
+    "score_token": "L4D",
+    "is_complete": true,
+    "grade_ceiling": "D",
+    "evaluation_timestamp": "2026-11-15T05:12:13.807Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/eis-pciv-m4-hosted-integration.json",
+        "sha256": "a244190690c2a69caebb7191fb49f74794b9298dc3cf92306fe2d8239d7cc208",
+        "note": "Hosted validation of the default EIS bridge and pharmacy-only CLI across their configured targets"
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}
