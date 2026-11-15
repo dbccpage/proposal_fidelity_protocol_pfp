@@ -1,0 +1,110 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf45.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf45.rs",
+      "language": "Rust",
+      "sha256": "0ff7e0284633cf8b4bca6654b6e3b2575467a5fe2cc6b77dc931bce3aa796d0d"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf45:v1",
+    "symbols": [
+      "ACCEPTED",
+      "UNDERDETERMINED_TERMINAL",
+      "REFUTED",
+      "REFUSED_TERMINAL",
+      "TERMINALS",
+      "TWIN",
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task declares a family, an object of polynomials given as lists of exact rational coefficients with the constant term first, none named ~twin; and evidence, a list of observations with exact rational x and y and a tolerance that is an exact rational zero or more (default zero). Anything else is refused before a prompt is written.",
+      "A candidate survives when at every observation the absolute difference between its value at x and y is at most the tolerance, compared as exact rationals.",
+      "The survivors fix the terminal: Refused when the family or the evidence is empty, otherwise Refuted for no survivor, Accepted for one and Underdetermined for several.",
+      "The reply must name a terminal from the four, and the family it considered as a list of ids. The host records that the considered ids are exactly the declared ones, each once, in any order; that the terminal is the one the survivors give; and, when one candidate survives, that the reply selected it.",
+      "When any candidate survives, the host adds a twin of the first survivor, that survivor plus the product of (X - x) over the distinct observed points, and records the twin's coefficients with the number of survivors before and after, which must rise by exactly one.",
+      "A run whose predicates all pass is certified as ACCEPTED_WITHIN_FAMILY when the terminal is Accepted, and otherwise is a typed refusal: UNRESOLVED_UNDERDETERMINED, UNRESOLVED_INCONSISTENT or REFUSED_UNDECLARED_FAMILY."
+    ],
+    "boundaries": [
+      "Acceptance is relative to the declared family. The twin shows that a larger family would not single the survivor out.",
+      "The size of the family, the degree of a candidate and the number of observations are not bounded here; the caller supplies the task.",
+      "The twin predicate records a construction, not a test of the reply: the twin agrees with its survivor at every observed point, so the count always rises by one.",
+      "The check does not say the evidence is true, only which candidates it keeps."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf45.rs",
+      "language": "Rust",
+      "sha256": "0ff7e0284633cf8b4bca6654b6e3b2575467a5fe2cc6b77dc931bce3aa796d0d"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "C"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: polynomial values and tolerances are exact rationals from exact.rs, so a difference equal to the tolerance is kept and one above it by any amount is not; both sides of that boundary are asserted. Not B: tested against hand-worked families, not proven.",
+      "G3": "Each malformed task and reply has its reason. Coefficients are read with get, so candidates of different lengths cannot index out of range. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
+      "G4": "16 WF45 tests assert each of the four terminals with its code and predicate rows, each wrong terminal failing alone, a family with a candidate dropped, added or repeated, a wrong or missing selection, coefficient order and rational points, the tolerance at and just past its edge, the twin's coefficients worked by hand for survivors shorter and longer than the vanishing polynomial, for a repeated point and for rational points, and each malformed reply and task by its reason. Two mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 91/91. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 19, cognitive complexity is not measured for Rust, nesting 1; ceiling C, recorded C."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T13:51:27Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v9-test.run.json",
+        "sha256": "75c065d96b64633778adc9bbc5a54eb150b58536223e4c3443f62215ad84017e",
+        "note": "427 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-clippy.run.json",
+        "sha256": "b095a186f720f679235b2f243d030a0c7412ecd11d687d13c61ad6cac778d72e",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-fmt.run.json",
+        "sha256": "17a3ba5175b2bb9bccc425d89628829ccaadff38dc36f614734ea800455c7625",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.run.json",
+        "sha256": "785da0a0586cbf62c7a8439e2a626fa5ba0df80942665c0838e344cc4f460f41",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.json",
+        "sha256": "e9c47748ca0777f0a16723ed4f2e9ddb5b44c2f4480bd78d2102e6cf92daa227",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 91,
+      "survived": 0,
+      "demonstrably_equivalent": 2,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf45.mutation.json",
+        "sha256": "f8bdc3087abcc3376b5051c099a0b6f540194e6425a892270ec154b9604536bd",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 93 mutants"
+      }
+    }
+  },
+  "history": []
+}

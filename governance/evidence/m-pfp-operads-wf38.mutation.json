@@ -1,0 +1,323 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf38.rs",
+  "target_sha256": "bb81984c71f6950ea7e79153f5ff7eaa1d5a8685bc2dc34ac8c4bc17eb9f984d",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf38",
+  "counts": {
+    "killed": 51,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF38\",",
+      "new": "    workflow: \"WF380\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Diagnostic-trace proposal selection\",",
+      "new": "    name: \"Selection\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"host_recomputed_defect_ranking\",",
+      "new": "    host_check: \"ranking\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation skips the labels",
+      "old": "    cochain::read(task).map(|_| ())",
+      "new": "    cochain::graph(task).map(|_| ())",
+      "outcome": "killed"
+    },
+    {
+      "name": "a longer list is a correction",
+      "old": "    let Some([edge, value]) = entry.as_list() else {",
+      "new": "    let Some([edge, value, ..]) = entry.as_list() else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "entry error reworded",
+      "old": "return Err(\"delta entries are [edge, value]\".to_owned());",
+      "new": "return Err(\"entries\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "value error reworded",
+      "old": ".ok_or(\"delta value must be an exact rational\")?;",
+      "new": ".ok_or(\"value\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "edge error reworded",
+      "old": ".ok_or(\"delta edge must be an exact int\")?;",
+      "new": ".ok_or(\"edge\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the edge is read before the value",
+      "old": "    let value = rational(value).ok_or(\"delta value must be an exact rational\")?;\n    let edge = edge.as_int().ok_or(\"delta edge must be an exact int\")?;",
+      "new": "    let edge = edge.as_int().ok_or(\"delta edge must be an exact int\")?;\n    let value = rational(value).ok_or(\"delta value must be an exact rational\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "an edge equal to the edge count is in range",
+      "old": "usize::try_from(edge).ok().filter(|&edge| edge < edges);",
+      "new": "usize::try_from(edge).ok().filter(|&edge| edge <= edges);",
+      "outcome": "killed"
+    },
+    {
+      "name": "range error reworded",
+      "old": "Ok((edge.ok_or(\"edge index out of range\")?, value))",
+      "new": "Ok((edge.ok_or(\"range\")?, value))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the size of a correction is signed",
+      "old": "        size += change.abs();",
+      "new": "        size += &change;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the size of a correction is its last entry",
+      "old": "        size += change.abs();",
+      "new": "        size = change.abs();",
+      "outcome": "killed"
+    },
+    {
+      "name": "a correction replaces the value",
+      "old": "            *value += change;",
+      "new": "            *value = change;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a correction is subtracted",
+      "old": "            *value += change;",
+      "new": "            *value -= change;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a candidate is scored on the task as it stands",
+      "old": "    Ok((cochain.named.graph.defect(&values), size))",
+      "new": "    Ok((cochain.named.graph.defect(&cochain.values), size))",
+      "outcome": "killed"
+    },
+    {
+      "name": "candidates read from another key",
+      "old": "        .get(\"candidates\")",
+      "new": "        .get(\"proposals\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "candidates error reworded",
+      "old": ".ok_or(\"candidates must be a list\")?;",
+      "new": ".ok_or(\"candidates\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "name read from another key",
+      "old": "            .get(\"name\")",
+      "new": "            .get(\"id\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "name error reworded",
+      "old": ".ok_or(\"every candidate needs a text name\")?;",
+      "new": ".ok_or(\"name\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "delta read from another key",
+      "old": "            .get(\"delta\")",
+      "new": "            .get(\"patch\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "delta error reworded",
+      "old": ".ok_or(\"every candidate needs a delta list\")?;",
+      "new": ".ok_or(\"delta\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeated name replaces the earlier candidate",
+      "old": "            .is_some()\n        {",
+      "new": "            .is_some_and(|_| false)\n        {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only repeated names are accepted",
+      "old": "            .is_some()\n        {",
+      "new": "            .is_none()\n        {",
+      "outcome": "killed"
+    },
+    {
+      "name": "distinct error reworded",
+      "old": "return Err(\"candidate names must be distinct\".to_owned());",
+      "new": "return Err(\"names\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage renamed",
+      "old": "run.ask(\"solve\", run.prompt())?",
+      "new": "run.ask(\"propose\", run.prompt())?",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing reply is malformed",
+      "old": "        return Ok(no_reply());",
+      "new": "        return Err(Stop::Malformed(\"no reply\".to_owned()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "an equal defect is admissible",
+      "old": "        .filter(|(_, (defect, _))| *defect < before)",
+      "new": "        .filter(|(_, (defect, _))| *defect <= before)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a larger defect is admissible",
+      "old": "        .filter(|(_, (defect, _))| *defect < before)",
+      "new": "        .filter(|(_, (defect, _))| *defect > before)",
+      "outcome": "killed"
+    },
+    {
+      "name": "every candidate is admissible",
+      "old": "        .filter(|(_, (defect, _))| *defect < before)\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "candidates are ranked by size before defect",
+      "old": "        .map(|(name, (defect, size))| (defect, size, name))",
+      "new": "        .map(|(name, (defect, size))| (size, defect, name))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the ranking is left in name order",
+      "old": "    admissible.sort();\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "the ranking is reversed",
+      "old": "    admissible.sort();\n",
+      "new": "    admissible.sort();\n    admissible.reverse();\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "a score is written size first",
+      "old": "(name.clone(), Datum::List(vec![shown(defect), shown(size)]))",
+      "new": "(name.clone(), Datum::List(vec![shown(size), shown(defect)]))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the defect before is that of an empty cochain",
+      "old": "    let before = cochain.named.graph.defect(&cochain.values);",
+      "new": "    let before = cochain.named.graph.defect(&[]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "evidence swapped",
+      "old": "let evidence = Datum::List(vec![phi0.clone(), scores.clone()]);",
+      "new": "let evidence = Datum::List(vec![scores.clone(), phi0.clone()]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a decrease is always found",
+      "old": "        !admissible.is_empty(),",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a decrease is never found",
+      "old": "        !admissible.is_empty(),",
+      "new": "        false,",
+      "outcome": "killed"
+    },
+    {
+      "name": "decrease predicate renamed",
+      "old": "        \"strict_defect_decrease_exists\",",
+      "new": "        \"decrease\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal phi0 key renamed",
+      "old": "        let detail = Datum::map([(\"phi0\", phi0), (\"scores\", scores)]);",
+      "new": "        let detail = Datum::map([(\"before\", phi0), (\"scores\", scores)]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal scores key renamed",
+      "old": "        let detail = Datum::map([(\"phi0\", phi0), (\"scores\", scores)]);",
+      "new": "        let detail = Datum::map([(\"phi0\", phi0), (\"table\", scores)]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "no decrease code renamed",
+      "old": "return Ok(refused(\"NO_STRICT_DECREASE\", detail));",
+      "new": "return Ok(refused(\"NO_DECREASE\", detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the last of the ranking wins",
+      "old": "(admissible.first(), found)",
+      "new": "(admissible.last(), found)",
+      "outcome": "killed"
+    },
+    {
+      "name": "the ranking lists the winner only",
+      "old": "admissible.iter().map(|entry| entry.2.as_str()).collect();",
+      "new": "admissible.iter().take(1).map(|entry| entry.2.as_str()).collect();",
+      "outcome": "killed"
+    },
+    {
+      "name": "winner key renamed",
+      "old": "        (\"winner\", Datum::text(winner.as_str())),",
+      "new": "        (\"best\", Datum::text(winner.as_str())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "selected phi0 key renamed",
+      "old": "        (\"phi0\", phi0),\n        (\"phi\", shown(defect)),",
+      "new": "        (\"before\", phi0),\n        (\"phi\", shown(defect)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "phi is the defect before",
+      "old": "        (\"phi\", shown(defect)),",
+      "new": "        (\"phi\", shown(&before)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "phi key renamed",
+      "old": "        (\"phi\", shown(defect)),",
+      "new": "        (\"after\", shown(defect)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "selected scores key renamed",
+      "old": "        (\"scores\", scores),\n        (\"ranking\", Datum::from(ranking)),",
+      "new": "        (\"table\", scores),\n        (\"ranking\", Datum::from(ranking)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "ranking key renamed",
+      "old": "        (\"ranking\", Datum::from(ranking)),",
+      "new": "        (\"order\", Datum::from(ranking)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "selected code renamed",
+      "old": "Ok(checks.judge(\"SELECTED\", detail))",
+      "new": "Ok(checks.judge(\"SELECT\", detail))",
+      "outcome": "killed"
+    }
+  ]
+}

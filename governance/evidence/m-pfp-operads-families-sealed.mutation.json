@@ -1,0 +1,353 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/sealed.rs",
+  "target_sha256": "543b5cdbea5508a63e58f19907fbd0712a2241b55f16c0dcf90ef726af95a871",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test datum --test exact --test families --test sealed --test wf07 --test wf30 --test wf31",
+  "counts": {
+    "killed": 56,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "answer key answer dropped",
+      "old": "    \"answer\",\n",
+      "new": "    \"answer_\",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer key answers dropped",
+      "old": "    \"answers\",\n",
+      "new": "    \"answers_\",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer key expected dropped",
+      "old": "    \"expected\",\n",
+      "new": "    \"expected_\",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer key expected_answer dropped",
+      "old": "    \"expected_answer\",\n",
+      "new": "    \"expected_answer_\",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer key solution dropped",
+      "old": "    \"solution\",\n",
+      "new": "    \"solution_\",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer key key dropped",
+      "old": "    \"key\",\n",
+      "new": "    \"key_\",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer key answer_key dropped",
+      "old": "    \"answer_key\",\n",
+      "new": "    \"answer_key_\",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "substring length is 3",
+      "old": "pub const SUBSTRING_LENGTH: usize = 4;",
+      "new": "pub const SUBSTRING_LENGTH: usize = 3;",
+      "outcome": "killed"
+    },
+    {
+      "name": "substring length is 5",
+      "old": "pub const SUBSTRING_LENGTH: usize = 4;",
+      "new": "pub const SUBSTRING_LENGTH: usize = 5;",
+      "outcome": "killed"
+    },
+    {
+      "name": "break character , dropped",
+      "old": "const BREAKS: &[char] = &[',', ':', ';', '[', ']', '{', '}', '(', ')', '\"', '\\''];",
+      "new": "const BREAKS: &[char] = &[':', ';', '[', ']', '{', '}', '(', ')', '\"', '\\''];",
+      "outcome": "killed"
+    },
+    {
+      "name": "break character : dropped",
+      "old": "const BREAKS: &[char] = &[',', ':', ';', '[', ']', '{', '}', '(', ')', '\"', '\\''];",
+      "new": "const BREAKS: &[char] = &[',', ';', '[', ']', '{', '}', '(', ')', '\"', '\\''];",
+      "outcome": "killed"
+    },
+    {
+      "name": "break character ; dropped",
+      "old": "const BREAKS: &[char] = &[',', ':', ';', '[', ']', '{', '}', '(', ')', '\"', '\\''];",
+      "new": "const BREAKS: &[char] = &[',', ':', '[', ']', '{', '}', '(', ')', '\"', '\\''];",
+      "outcome": "killed"
+    },
+    {
+      "name": "break character [ dropped",
+      "old": "const BREAKS: &[char] = &[',', ':', ';', '[', ']', '{', '}', '(', ')', '\"', '\\''];",
+      "new": "const BREAKS: &[char] = &[',', ':', ';', ']', '{', '}', '(', ')', '\"', '\\''];",
+      "outcome": "killed"
+    },
+    {
+      "name": "break character ] dropped",
+      "old": "const BREAKS: &[char] = &[',', ':', ';', '[', ']', '{', '}', '(', ')', '\"', '\\''];",
+      "new": "const BREAKS: &[char] = &[',', ':', ';', '[', '{', '}', '(', ')', '\"', '\\''];",
+      "outcome": "killed"
+    },
+    {
+      "name": "break character { dropped",
+      "old": "const BREAKS: &[char] = &[',', ':', ';', '[', ']', '{', '}', '(', ')', '\"', '\\''];",
+      "new": "const BREAKS: &[char] = &[',', ':', ';', '[', ']', '}', '(', ')', '\"', '\\''];",
+      "outcome": "killed"
+    },
+    {
+      "name": "break character } dropped",
+      "old": "const BREAKS: &[char] = &[',', ':', ';', '[', ']', '{', '}', '(', ')', '\"', '\\''];",
+      "new": "const BREAKS: &[char] = &[',', ':', ';', '[', ']', '{', '(', ')', '\"', '\\''];",
+      "outcome": "killed"
+    },
+    {
+      "name": "break character ( dropped",
+      "old": "const BREAKS: &[char] = &[',', ':', ';', '[', ']', '{', '}', '(', ')', '\"', '\\''];",
+      "new": "const BREAKS: &[char] = &[',', ':', ';', '[', ']', '{', '}', ')', '\"', '\\''];",
+      "outcome": "killed"
+    },
+    {
+      "name": "break character ) dropped",
+      "old": "const BREAKS: &[char] = &[',', ':', ';', '[', ']', '{', '}', '(', ')', '\"', '\\''];",
+      "new": "const BREAKS: &[char] = &[',', ':', ';', '[', ']', '{', '}', '(', '\"', '\\''];",
+      "outcome": "killed"
+    },
+    {
+      "name": "break character \" dropped",
+      "old": "const BREAKS: &[char] = &[',', ':', ';', '[', ']', '{', '}', '(', ')', '\"', '\\''];",
+      "new": "const BREAKS: &[char] = &[',', ':', ';', '[', ']', '{', '}', '(', ')', '\\''];",
+      "outcome": "killed"
+    },
+    {
+      "name": "break character ' dropped",
+      "old": "const BREAKS: &[char] = &[',', ':', ';', '[', ']', '{', '}', '(', ')', '\"', '\\''];",
+      "new": "const BREAKS: &[char] = &[',', ':', ';', '[', ']', '{', '}', '(', ')', '\"'];",
+      "outcome": "killed"
+    },
+    {
+      "name": "dot ends a word",
+      "old": "const BREAKS: &[char] = &[',', ':', ';', '[', ']', '{', '}', '(', ')', '\"', '\\''];",
+      "new": "const BREAKS: &[char] = &[',', ':', ';', '[', ']', '{', '}', '(', ')', '\"', '\\'', '.'];",
+      "outcome": "killed"
+    },
+    {
+      "name": "sealed part not walked",
+      "old": "        guard.collect(sealed, false);",
+      "new": "        let _ = sealed;",
+      "outcome": "killed"
+    },
+    {
+      "name": "everything sealed is an answer",
+      "old": "        guard.collect(sealed, false);",
+      "new": "        guard.collect(sealed, true);",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer keys matched with their case",
+      "old": "ANSWER_KEYS.contains(&key.to_lowercase().as_str());",
+      "new": "ANSWER_KEYS.contains(&key.as_str());",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer flag not inherited by a map",
+      "old": "                    self.collect(inner, answer || named);",
+      "new": "                    self.collect(inner, named);",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer flag ignores the key",
+      "old": "                    self.collect(inner, answer || named);",
+      "new": "                    self.collect(inner, answer);",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer flag lost in a list",
+      "old": "                for inner in items {\n                    self.collect(inner, answer);",
+      "new": "                for inner in items {\n                    self.collect(inner, false);",
+      "outcome": "killed"
+    },
+    {
+      "name": "lists not walked",
+      "old": "                for inner in items {\n                    self.collect(inner, answer);\n                }",
+      "new": "                let _ = items;",
+      "outcome": "killed"
+    },
+    {
+      "name": "booleans guarded",
+      "old": "            Datum::Null | Datum::Bool(_) => {}",
+      "new": "            Datum::Null => {}",
+      "outcome": "killed"
+    },
+    {
+      "name": "null guarded",
+      "old": "            Datum::Null | Datum::Bool(_) => {}",
+      "new": "            Datum::Bool(_) => {}",
+      "outcome": "killed"
+    },
+    {
+      "name": "text keeps its quotes",
+      "old": "                let literal = written.trim_matches('\"');",
+      "new": "                let literal = written.as_str();",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty answer is a word",
+      "old": "                if answer && !literal.is_empty() {",
+      "new": "                if answer {",
+      "outcome": "killed"
+    },
+    {
+      "name": "every value is a word",
+      "old": "                if answer && !literal.is_empty() {",
+      "new": "                if !literal.is_empty() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "no value is a word",
+      "old": "                if answer && !literal.is_empty() {",
+      "new": "                if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "substring length counted in bytes",
+      "old": "                if literal.chars().count() >= SUBSTRING_LENGTH {",
+      "new": "                if literal.len() >= SUBSTRING_LENGTH {",
+      "outcome": "killed"
+    },
+    {
+      "name": "substring needs one more character",
+      "old": "                if literal.chars().count() >= SUBSTRING_LENGTH {",
+      "new": "                if literal.chars().count() > SUBSTRING_LENGTH {",
+      "outcome": "killed"
+    },
+    {
+      "name": "no substring guarded",
+      "old": "                if literal.chars().count() >= SUBSTRING_LENGTH {",
+      "new": "                if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "answers are not substrings",
+      "old": "                if literal.chars().count() >= SUBSTRING_LENGTH {",
+      "new": "                if !answer && literal.chars().count() >= SUBSTRING_LENGTH {",
+      "outcome": "killed"
+    },
+    {
+      "name": "substring must be a whole prompt",
+      "old": "            .any(|literal| prompt.contains(literal.as_str()))",
+      "new": "            .any(|literal| prompt == literal.as_str())",
+      "outcome": "killed"
+    },
+    {
+      "name": "substring leak ignored",
+      "old": "            .any(|literal| prompt.contains(literal.as_str()))\n            || prompt",
+      "new": "            .any(|_| false)\n            || prompt",
+      "outcome": "killed"
+    },
+    {
+      "name": "words split on white space only",
+      "old": "                .split(|letter: char| letter.is_whitespace() || BREAKS.contains(&letter))",
+      "new": "                .split(|letter: char| letter.is_whitespace())",
+      "outcome": "killed"
+    },
+    {
+      "name": "words split on breaks only",
+      "old": "                .split(|letter: char| letter.is_whitespace() || BREAKS.contains(&letter))",
+      "new": "                .split(|letter: char| BREAKS.contains(&letter))",
+      "outcome": "killed"
+    },
+    {
+      "name": "word leak ignored",
+      "old": "                .any(|word| self.names(word))",
+      "new": "                .any(|_| false)",
+      "outcome": "killed"
+    },
+    {
+      "name": "word matched as a prefix",
+      "old": "                .any(|word| self.names(word))",
+      "new": "                .any(|word| self.words.iter().any(|sealed| word.starts_with(sealed.as_str())))",
+      "outcome": "killed"
+    },
+    {
+      "name": "closing marks kept on the word",
+      "old": "                .any(|word| self.names(word))",
+      "new": "                .any(|word| self.words.contains(word))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the word as it stands is not looked up",
+      "old": "        let mut rest = word;\n        loop {",
+      "new": "        let mut rest = word.strip_suffix(CLOSERS).unwrap_or(word);\n        loop {",
+      "outcome": "killed"
+    },
+    {
+      "name": "every word names a sealed answer",
+      "old": "            if self.words.contains(rest) {\n                return true;\n            }\n",
+      "new": "            if !rest.is_empty() {\n                return true;\n            }\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "a found word is not a leak",
+      "old": "            if self.words.contains(rest) {\n                return true;\n            }\n",
+      "new": "            if self.words.contains(rest) {\n                return false;\n            }\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "marks taken from the front",
+      "old": "            match rest.strip_suffix(CLOSERS) {",
+      "new": "            match rest.strip_prefix(CLOSERS) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "all closing marks taken at once",
+      "old": "            match rest.strip_suffix(CLOSERS) {",
+      "new": "            match Some(rest.trim_end_matches(CLOSERS)).filter(|shorter| shorter.len() < rest.len()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only one closing mark taken",
+      "old": "                Some(shorter) => rest = shorter,",
+      "new": "                Some(shorter) => return self.words.contains(shorter),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a word without a closing mark is a leak",
+      "old": "                None => return false,",
+      "new": "                None => return true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "full stop does not close",
+      "old": "const CLOSERS: &[char] = &['.', '!', '?'];",
+      "new": "const CLOSERS: &[char] = &['!', '?'];",
+      "outcome": "killed"
+    },
+    {
+      "name": "exclamation mark does not close",
+      "old": "const CLOSERS: &[char] = &['.', '!', '?'];",
+      "new": "const CLOSERS: &[char] = &['.', '?'];",
+      "outcome": "killed"
+    },
+    {
+      "name": "question mark does not close",
+      "old": "const CLOSERS: &[char] = &['.', '!', '?'];",
+      "new": "const CLOSERS: &[char] = &['.', '!'];",
+      "outcome": "killed"
+    },
+    {
+      "name": "a dash closes a word",
+      "old": "const CLOSERS: &[char] = &['.', '!', '?'];",
+      "new": "const CLOSERS: &[char] = &['.', '!', '?', '-'];",
+      "outcome": "killed"
+    }
+  ]
+}

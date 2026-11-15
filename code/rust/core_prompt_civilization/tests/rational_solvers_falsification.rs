@@ -1999,17 +1999,11 @@ fn check_topology4_bipartite(
     // By symmetry: all nodes in A have equal rank r_A, all nodes in B have equal rank r_B
     let r_a = cert_k_pq.ranks[0].clone();
     let r_b = cert_k_pq.ranks[p].clone();
-    for u in 1..p {
-        assert_eq!(
-            cert_k_pq.ranks[u], r_a,
-            "All nodes in partition A must have equal rank"
-        );
+    for rank in &cert_k_pq.ranks[1..p] {
+        assert_eq!(rank, &r_a, "All nodes in partition A must have equal rank");
     }
-    for v in (p + 1)..n_bip {
-        assert_eq!(
-            cert_k_pq.ranks[v], r_b,
-            "All nodes in partition B must have equal rank"
-        );
+    for rank in &cert_k_pq.ranks[(p + 1)..n_bip] {
+        assert_eq!(rank, &r_b, "All nodes in partition B must have equal rank");
     }
     // Theoretical tie-out: p * r_A + q * r_B == 1/1
     let partition_sum =

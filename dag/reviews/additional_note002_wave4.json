@@ -1,0 +1,126 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "a9b80a2dd221e0530d629fcfcaec73887c7080b5",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+      "sha256": "5d2babd3621f85fdeed0995e6d42bf15e3ec1de69b7c07e7870bffcde6356d38",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          1451
+        ]
+      ],
+      "assessment": "Full manuscript inspected. Section 3.2 formulates non-commutative Hölder duality and polar dual witnesses (Theorem 3.0). Section 3.3 formulates Kadison unitary invariance and CP isometry filtering (Proposition 3.1). Section 3.6 demonstrates the separation between local coboundary defect and bipartite entanglement via the Bell state counterexample. Section 4.2 documents the refutation of the three-step primal-dual candidate update via the single-edge stationary counterexample (Definition 4.1 / Conjecture 4.3)."
+    },
+    {
+      "path": "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+      "sha256": "62ebd48ce2c8236f13019832657334120262c9be7eec16971db05693f38a7b24",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          113
+        ]
+      ],
+      "assessment": "Claim ledger inspected. C2a (Theorem 3.0 non-commutative Hölder duality), C2b (Proposition 3.1 Kadison unitary invariance), C3/C5 (Definition 4.1 / Conjecture 4.3 refutation of three-step descent), and C14 (Section 3.6 Bell state counterexample) verified."
+    },
+    {
+      "path": "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+      "sha256": "4530a48fbd10295f21a2207fa18c15df6c2aaeeaacb809714a5bc88da330480d",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          1232
+        ]
+      ],
+      "assessment": "Core module inspected. Contains OperatorSchattenPModule with schatten_norm, polar_dual_maximizer, and verify_kadison_unitary_invariance."
+    },
+    {
+      "path": "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py",
+      "sha256": "03bd104253aef49a2dc8e70054079bb0a03cb20373478199ed92bab30bce4c6b",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          792
+        ]
+      ],
+      "assessment": "Test suite inspected. Contains test_review_three_step_update_has_nonoptimal_fixed_point_on_one_edge, test_schatten_holder_duality_and_polar_attainment, test_schatten_polar_dual_p1_and_pinf, test_schatten_kadison_unitary_invariance, and test_bell_state_marginal_compatibility_vs_correlation."
+    }
+  ],
+  "remaining_scope": [],
+  "claims": [
+    {
+      "id": "AUDIT-N002-007",
+      "statement": "The candidate three-step primal-dual update has a non-optimal fixed point with residual 1 on a single edge with omega=1, s=0, phi=0, sigma=1, tau=1/2.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Single-edge discrete complex with coboundary (d0 s)(e) = s(v) - s(u).",
+        "Candidate three-step update definition (historical Definition 4.1).",
+        "Declared step sizes sigma=1, tau=1/2."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py"
+      ],
+      "limits": "Refutation applies to the declared three-step primal-dual iteration and does not preclude other convergent primal-dual algorithms."
+    },
+    {
+      "id": "AUDIT-N002-003",
+      "statement": "For 1/p + 1/q = 1 on finite-dimensional H, |Tr(X* Y)| <= ||X||_{S_q} ||Y||_{S_p}, with equality attained by polar and rank-one singular vector projection witnesses.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite-dimensional Hilbert space.",
+        "Conjugate Hölder exponents 1/p + 1/q = 1.",
+        "Schatten-p norm and trace pairing definitions."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py"
+      ],
+      "limits": "Imported classical theorem; computational verification is exact on finite rational matrix instances."
+    },
+    {
+      "id": "AUDIT-N002-004",
+      "statement": "||U X V||_{S_p} = ||X||_{S_p} for unitaries U, V and p in [1, inf]; surjective linear isometries under complete positivity and state-cone positivity are unitary conjugations.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite-dimensional Hilbert space.",
+        "Unitary invariance of singular values.",
+        "Kadison-Sourour isometry classification with CP and cone positivity."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py"
+      ],
+      "limits": "Imported classification; complete positivity and state-cone positivity are explicit physical premises."
+    },
+    {
+      "id": "AUDIT-N002-017",
+      "statement": "For the two-qubit Bell state |Phi+>, local single-qubit marginals agree (delta_e = 0) while the bipartite product defect ||rho - rho_A (x) rho_B||_1 equals 3/2.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Two-qubit Hilbert space H_A (x) H_B.",
+        "Maximally entangled Bell state |Phi+>.",
+        "Partial-trace restriction maps."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py"
+      ],
+      "limits": "Counterexample establishes separation between 1-site cochain defect and bipartite correlation; higher-order nerve obstructions or composite stalks are required to measure pair entanglement."
+    }
+  ]
+}

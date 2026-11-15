@@ -1,0 +1,115 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf45.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf45.rs",
+      "language": "Rust",
+      "sha256": "7f5a3a131101557f6ed89b390f832e669e1d680758abbd9a89bf870cc482ffbc"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf45-tests:v1",
+    "symbols": [
+      "sha",
+      "family",
+      "under",
+      "unique",
+      "refuted",
+      "reply",
+      "run",
+      "turn",
+      "bad_task",
+      "accepted",
+      "malformed",
+      "names",
+      "failed",
+      "evidence_of",
+      "survivors",
+      "the_family_is_registered_under_its_names_and_terminals",
+      "the_one_survivor_is_accepted_within_the_declared_family",
+      "several_survivors_are_a_typed_refusal_not_a_selection",
+      "no_survivor_is_a_typed_refusal_with_no_plenitude_test",
+      "an_empty_family_or_no_evidence_is_refused_as_undeclared",
+      "a_terminal_the_survivors_do_not_give_fails_alone",
+      "a_family_other_than_the_declared_one_fails_alone",
+      "deleting_a_competitor_to_force_acceptance_fails_twice",
+      "a_selection_that_is_not_the_survivor_fails_alone",
+      "a_candidate_is_a_polynomial_with_its_constant_term_first",
+      "an_observation_keeps_a_candidate_up_to_its_tolerance_and_no_further",
+      "every_observation_must_keep_a_survivor",
+      "the_twin_is_the_first_survivor_plus_the_polynomial_that_vanishes_at_the_observed_points",
+      "the_reply_names_a_terminal_and_the_family_it_considered",
+      "the_family_is_an_object_of_exact_coefficient_lists",
+      "the_evidence_is_a_list_of_exact_observations"
+    ],
+    "owned_invariants": [
+      "Survivor sets are worked by hand from the candidates' values at the observed points, including the tolerance at and just past its edge.",
+      "Each terminal is asserted with its code, and each wrong terminal, family or selection failing alone.",
+      "The terminals and the twin's name are written out as text, so a renamed one fails here."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf45.rs",
+      "language": "Rust",
+      "sha256": "7f5a3a131101557f6ed89b390f832e669e1d680758abbd9a89bf870cc482ffbc"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 16 pass in the recorded run; the suite they belong to killed 91 of 91 eligible WF45 mutants.",
+      "G5": "Measured worst cyclomatic 4, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T13:51:27Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v9-test.run.json",
+        "sha256": "75c065d96b64633778adc9bbc5a54eb150b58536223e4c3443f62215ad84017e",
+        "note": "427 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-clippy.run.json",
+        "sha256": "b095a186f720f679235b2f243d030a0c7412ecd11d687d13c61ad6cac778d72e",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-fmt.run.json",
+        "sha256": "17a3ba5175b2bb9bccc425d89628829ccaadff38dc36f614734ea800455c7625",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.run.json",
+        "sha256": "785da0a0586cbf62c7a8439e2a626fa5ba0df80942665c0838e344cc4f460f41",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.json",
+        "sha256": "e9c47748ca0777f0a16723ed4f2e9ddb5b44c2f4480bd78d2102e6cf92daa227",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

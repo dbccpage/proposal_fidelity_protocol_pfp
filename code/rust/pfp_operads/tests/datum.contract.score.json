@@ -1,0 +1,103 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/datum.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/datum.rs",
+      "language": "Rust",
+      "sha256": "8e9bef2f6391cfd7f9cd7b3787b0b9ad4693760ecb499f7428e1f7478a399ec1"
+    },
+    "contract_urn": "urn:pfp-operads:datum-tests:v1",
+    "symbols": [
+      "parse",
+      "refusal",
+      "int",
+      "nested",
+      "scalars_are_read_as_what_they_are",
+      "an_integer_is_read_from_its_digits_at_any_size",
+      "a_number_with_a_fraction_or_an_exponent_is_kept_as_written_and_is_no_integer",
+      "lists_and_objects_are_read_in_full",
+      "a_key_that_appears_twice_is_refused_by_name",
+      "nesting_is_read_to_the_limit_and_refused_one_past_it",
+      "text_that_is_not_one_json_value_is_refused",
+      "the_canonical_text_sorts_keys_by_code_point_and_has_no_spaces",
+      "the_canonical_text_escapes_only_what_json_requires",
+      "the_canonical_text_reads_back_as_the_same_value",
+      "accessors_answer_only_for_their_own_kind",
+      "a_count_is_an_integer_from_zero_to_the_machine_limit",
+      "an_outcome_value_keeps_every_integer_exact",
+      "values_are_built_from_plain_rust_values",
+      "a_later_entry_replaces_an_earlier_one_when_a_map_is_built"
+    ],
+    "owned_invariants": [
+      "Integers beyond 64 bits, decimals and exponents are asserted as read and as written back, digit for digit.",
+      "Duplicate keys and the depth limit are asserted refused by code and message, with the limit written as the value 64.",
+      "Canonical text is asserted whole, including key order and every escape."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/datum.rs",
+      "language": "Rust",
+      "sha256": "8e9bef2f6391cfd7f9cd7b3787b0b9ad4693760ecb499f7428e1f7478a399ec1"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 15 pass in the recorded run; the suite they belong to killed 60 of 60 eligible datum mutants.",
+      "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 0; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T12:56:03Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v8-test.run.json",
+        "sha256": "39e3d54df0f53e66efe9e7c79ccb58d2c64b227e5ae057ba2db430c2248a81ef",
+        "note": "329 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-clippy.run.json",
+        "sha256": "36f330c8dd7d904983f941e99b4eaed4ea0a5926c65e1506bee3a976a63b199f",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-fmt.run.json",
+        "sha256": "304f9442ff6202fbcc60ee643fa68b521ca2229ef90cb498605391f139d1c684",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-metrics.run.json",
+        "sha256": "5c9ed7ff128e413a3a694a13976441d3ab914d3ac77dcd1a8d1645c9805ec339",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-metrics.json",
+        "sha256": "132913181d26af963eec9d6f7ed2a20ca7531a5b5347a857a7562e352ef2ee4d",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

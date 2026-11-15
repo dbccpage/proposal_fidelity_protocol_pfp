@@ -1,5 +1,8 @@
 """Independent Empirical Challenger & Adversarial Stress Harness for Milestone 4.
 
+AuthorityEffect: None.
+Contract: urn:pfp-wf52:tests:challenger-m4-semantic-composition:v1
+
 Authored by Independent Challenger to rigorously stress-test:
 1. EIS Allosteric Consensus Gate:
    - Single-sensor attack: 1 positive sensor (S=1) fails threshold H(1) = 1/5 < 1/2.
@@ -94,14 +97,17 @@ class TestChallengerEISAllostericGate(unittest.TestCase):
         self.assertIn("needs at least 2 positive sensor(s)", decision["rationale"])
 
     def test_all_three_sensors_activate_gate(self):
-        """Standard valid case: 3 positive sensors yield S=3, H(3)=9/13 >= 1/2."""
+        """Standard valid case: all 3 sensors pass; 2 independent sources yield S=2, H(2)=1/2 == t."""
         decision = EISVerificationBridge.evaluate_charpoly_evidence(
             self.charpoly_art, self.matrix_art
         )
+        sensors = decision["sensor_evidence"]["sensors"]
+        for name in ("sensor_native_receipt", "sensor_symbolic_identity", "sensor_structural_constraints"):
+            self.assertTrue(sensors[name]["ok"])
         self.assertTrue(decision["is_activated"])
-        self.assertEqual(decision["positive_sensors"], 3)
-        self.assertEqual(decision["aggregate_signal_str"], "3")
-        self.assertEqual(decision["hill_value_str"], "9/13")
+        self.assertEqual(decision["positive_sensors"], 2)
+        self.assertEqual(decision["aggregate_signal_str"], "2")
+        self.assertEqual(decision["hill_value_str"], "1/2")
         self.assertEqual(decision["threshold_str"], "1/2")
         self.assertEqual(decision["quorum_size"], 2)
         self.assertIn("ACTIVATED", decision["rationale"])
@@ -235,14 +241,16 @@ class TestChallengerEISAllostericGate(unittest.TestCase):
         self.assertEqual(decision_corrupted["positive_sensors"], 0)
 
     def test_corrupted_grid_points_count_deactivates_sensor(self):
-        """A declared grid count is never itself a signal: editing it only breaks the native sensor."""
+        """A declared grid count breaks the native sensor; native is mandatory so the gate shuts."""
         corrupted_cp = json.loads(json.dumps(self.charpoly_art))
         corrupted_cp["native_verification"]["grid_points_verified"] = 124
         decision = EISVerificationBridge.evaluate_charpoly_evidence(corrupted_cp, self.matrix_art)
         sensors = decision["sensor_evidence"]["sensors"]
         self.assertFalse(sensors["sensor_native_receipt"]["ok"])
-        self.assertEqual(decision["positive_sensors"], 2)  # symbolic and structural recompute from the matrix
-        self.assertTrue(decision["is_activated"])
+        self.assertTrue(sensors["sensor_symbolic_identity"]["ok"])
+        self.assertTrue(sensors["sensor_structural_constraints"]["ok"])
+        self.assertEqual(decision["positive_sensors"], 1)  # symbolic and structural form one correlated matrix source
+        self.assertFalse(decision["is_activated"])
 
         corrupted_mat = json.loads(json.dumps(self.matrix_art))
         corrupted_mat["coefficient_matrices"]["K"][1][1] = 5
@@ -522,7 +530,7 @@ class TestChallengerEndToEndSemanticComposition(unittest.TestCase):
         eis = art["eis_allosteric_consensus"]
         self.assertTrue(eis["is_activated"])
         self.assertEqual(eis["quorum_size"], 2)
-        self.assertEqual(eis["positive_sensors"], 3)
+        self.assertEqual(eis["positive_sensors"], 2)
 
         # PCIV portfolio selection sub-receipt
         pciv = art["pciv_portfolio_selection"]

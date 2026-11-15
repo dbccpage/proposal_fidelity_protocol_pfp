@@ -1,0 +1,509 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf46.rs",
+  "target_sha256": "a52c7f8304595528431834f42e67b69aa1cbff07fb30550f2da4fc8967dafb84",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf46",
+  "counts": {
+    "killed": 82,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "run ceiling raised",
+      "old": "pub const MAX_RUNS: usize = 64;",
+      "new": "pub const MAX_RUNS: usize = 65;",
+      "outcome": "killed"
+    },
+    {
+      "name": "run ceiling lowered",
+      "old": "pub const MAX_RUNS: usize = 64;",
+      "new": "pub const MAX_RUNS: usize = 63;",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF46\",",
+      "new": "    workflow: \"WF460\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Boundary sufficiency and gluing diagnostic\",",
+      "new": "    name: \"Gluing\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"glued_trace_global_evaluator\",",
+      "new": "    host_check: \"glue\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "the ends of an edge are swapped",
+      "old": "Some((graph.names().get(from)?, graph.names().get(to)?))",
+      "new": "Some((graph.names().get(to)?, graph.names().get(from)?))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a patch touches only the tails of its edges",
+      "old": "ends.flat_map(|(from, to)| [from, to]).collect()",
+      "new": "ends.flat_map(|(from, _)| [from, from]).collect()",
+      "outcome": "killed"
+    },
+    {
+      "name": "a patch touches only the heads of its edges",
+      "old": "ends.flat_map(|(from, to)| [from, to]).collect()",
+      "new": "ends.flat_map(|(_, to)| [to, to]).collect()",
+      "outcome": "killed"
+    },
+    {
+      "name": "one explained edge is enough",
+      "old": "        edges.iter().all(|&edge| {",
+      "new": "        edges.iter().any(|&edge| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a step is tail less head",
+      "old": "let step = potential.get(to)? - potential.get(from)?;",
+      "new": "let step = potential.get(from)? - potential.get(to)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "an edge is explained by any other value",
+      "old": "Some(step == *self.cochain.values.get(edge)?)",
+      "new": "Some(step != *self.cochain.values.get(edge)?)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a potential may cover other vertices",
+      "old": "covered == self.vertices(patch) && self.explains(potential, patch)",
+      "new": "self.explains(potential, patch)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a potential need not explain its patch",
+      "old": "covered == self.vertices(patch) && self.explains(potential, patch)",
+      "new": "covered == self.vertices(patch)",
+      "outcome": "killed"
+    },
+    {
+      "name": "covering or explaining is enough",
+      "old": "covered == self.vertices(patch) && self.explains(potential, patch)",
+      "new": "covered == self.vertices(patch) || self.explains(potential, patch)",
+      "outcome": "killed"
+    },
+    {
+      "name": "the gap is second less first",
+      "old": "Some(first.get(vertex)? - second.get(vertex)?)",
+      "new": "Some(second.get(vertex)? - first.get(vertex)?)",
+      "outcome": "killed"
+    },
+    {
+      "name": "the shift is taken at the last packet vertex",
+      "old": "let shift = gap(self.packet.first()?)?;",
+      "new": "let shift = gap(self.packet.last()?)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "one agreeing packet vertex is enough",
+      "old": "            .all(|vertex| gap(vertex) == Some(shift.clone()));",
+      "new": "            .any(|vertex| gap(vertex) == Some(shift.clone()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the second potential is shifted the other way",
+      "old": ".map(|(vertex, value)| (vertex.clone(), value + &shift))",
+      "new": ".map(|(vertex, value)| (vertex.clone(), value - &shift))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the second potential is not shifted",
+      "old": ".map(|(vertex, value)| (vertex.clone(), value + &shift))",
+      "new": ".map(|(vertex, value)| (vertex.clone(), value.clone()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the glued trace is the second potential alone",
+      "old": "        glued.extend(\n            first\n                .iter()\n                .map(|(vertex, value)| (vertex.clone(), value.clone())),\n        );\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "packet and glued findings are swapped",
+      "old": "Some((packet, self.explains(&glued, &every)))",
+      "new": "Some((self.explains(&glued, &every), packet))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the glued finding is the packet finding",
+      "old": "Some((packet, self.explains(&glued, &every)))",
+      "new": "Some((packet, packet))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a third patch is ignored",
+      "old": "Some([first, second]) => patch(first).zip(patch(second)),",
+      "new": "Some([first, second, ..]) => patch(first).zip(patch(second)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "patches read from another key",
+      "old": "task.get(\"patches\").and_then(Datum::as_list)",
+      "new": "task.get(\"patch\").and_then(Datum::as_list)",
+      "outcome": "killed"
+    },
+    {
+      "name": "two lists error reworded",
+      "old": ".ok_or(\"patches must be two lists of edge indices\")?;",
+      "new": ".ok_or(\"patches\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "held edges are compared unsorted",
+      "old": "    held.sort_unstable();\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "patches may miss or repeat an edge",
+      "old": "    if held != (0..edges).collect::<Vec<_>>() {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "once error reworded",
+      "old": "return Err(\"patches must hold every edge exactly once\".to_owned());",
+      "new": "return Err(\"once\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "packet read from another key",
+      "old": "        .get(\"packet\")",
+      "new": "        .get(\"boundary\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty packet is read",
+      "old": "        .filter(|packet| !packet.is_empty())\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "packet error reworded",
+      "old": ".ok_or(\"packet must be a nonempty list of exact integers\")?;",
+      "new": ".ok_or(\"packet\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "runs read from another key",
+      "old": "        .get(\"runs\")",
+      "new": "        .get(\"run\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "zero runs are allowed",
+      "old": "        .filter(|runs| (1..=MAX_RUNS).contains(runs))",
+      "new": "        .filter(|runs| (0..=MAX_RUNS).contains(runs))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the run ceiling is excluded",
+      "old": "        .filter(|runs| (1..=MAX_RUNS).contains(runs))",
+      "new": "        .filter(|runs| (1..MAX_RUNS).contains(runs))",
+      "outcome": "killed"
+    },
+    {
+      "name": "runs error reworded",
+      "old": "\"runs must be an exact integer from 1 to {MAX_RUNS}\"",
+      "new": "\"runs must be at most {MAX_RUNS}\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "a packet vertex on one patch is shared",
+      "old": "        cover.patches.iter().all(|patch| on(patch))",
+      "new": "        cover.patches.iter().any(|patch| on(patch))",
+      "outcome": "killed"
+    },
+    {
+      "name": "one shared packet vertex is enough",
+      "old": "    if !cover.packet.iter().all(shared) {",
+      "new": "    if !cover.packet.iter().any(shared) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the packet need not be shared",
+      "old": "    if !cover.packet.iter().all(shared) {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "shared error reworded",
+      "old": "return Err(\"packet vertices must lie on both patches\".to_owned());",
+      "new": "return Err(\"shared\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "a longer list is a potential entry",
+      "old": "Some([vertex, value]) => Some((vertex.as_int()?.clone(), rational(value)?)),",
+      "new": "Some([vertex, value, ..]) => Some((vertex.as_int()?.clone(), rational(value)?)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "an entry that cannot be read is skipped",
+      "old": ".and_then(|entries| entries.iter().map(entry).collect())",
+      "new": ".map(|entries| entries.iter().filter_map(entry).collect())",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential error reworded",
+      "old": "\"a patch potential is a list of [vertex, value] with exact entries\".to_owned()",
+      "new": "\"potential\".to_owned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "a third potential is ignored",
+      "old": "    let Some([first, second]) = reply.as_list() else {",
+      "new": "    let Some([first, second, ..]) = reply.as_list() else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "per patch error reworded",
+      "old": "return Err(\"one potential per patch\".to_owned());",
+      "new": "return Err(\"patches\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "one local potential is enough",
+      "old": "(cover.local(&first, one) && cover.local(&second, two))",
+      "new": "(cover.local(&first, one) || cover.local(&second, two))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the second potential is not checked locally",
+      "old": "(cover.local(&first, one) && cover.local(&second, two))",
+      "new": "cover.local(&first, one)",
+      "outcome": "killed"
+    },
+    {
+      "name": "the first potential is not checked locally",
+      "old": "(cover.local(&first, one) && cover.local(&second, two))",
+      "new": "cover.local(&second, two)",
+      "outcome": "killed"
+    },
+    {
+      "name": "run key renamed",
+      "old": "        (\"run\", Datum::from(number)),",
+      "new": "        (\"number\", Datum::from(number)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "every run is reported local",
+      "old": "        (\"local\", Datum::Bool(found.is_some())),",
+      "new": "        (\"local\", Datum::Bool(true)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "local key renamed",
+      "old": "        (\"local\", Datum::Bool(found.is_some())),",
+      "new": "        (\"accepted\", Datum::Bool(found.is_some())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the row shows the glued finding as the packet",
+      "old": "        row.push((\"packet\", Datum::Bool(packet)));",
+      "new": "        row.push((\"packet\", Datum::Bool(global)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "packet key renamed",
+      "old": "        row.push((\"packet\", Datum::Bool(packet)));",
+      "new": "        row.push((\"boundary\", Datum::Bool(packet)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the row shows the packet finding as the glued",
+      "old": "        row.push((\"global\", Datum::Bool(global)));",
+      "new": "        row.push((\"global\", Datum::Bool(packet)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "global key renamed",
+      "old": "        row.push((\"global\", Datum::Bool(global)));",
+      "new": "        row.push((\"glued\", Datum::Bool(global)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "stages count from one",
+      "old": "run.ask(&format!(\"run:{number}\"), run.prompt())?",
+      "new": "run.ask(&format!(\"run:{}\", number + 1), run.prompt())?",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage renamed",
+      "old": "run.ask(&format!(\"run:{number}\"), run.prompt())?",
+      "new": "run.ask(&format!(\"pass:{number}\"), run.prompt())?",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing reply ends the runs",
+      "old": "            continue;",
+      "new": "            break;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a reply counts twice",
+      "old": "        replied += 1;",
+      "new": "        replied += 2;",
+      "outcome": "killed"
+    },
+    {
+      "name": "completed written runs first",
+      "old": "Datum::text(format!(\"{replied}/{}\", cover.runs)),",
+      "new": "Datum::text(format!(\"{}/{replied}\", cover.runs)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "completed key renamed",
+      "old": "            \"completed\",",
+      "new": "            \"done\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "the backlog is the replies",
+      "old": "        (\"backlog\", Datum::from(cover.runs - replied)),",
+      "new": "        (\"backlog\", Datum::from(replied)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "backlog key renamed",
+      "old": "        (\"backlog\", Datum::from(cover.runs - replied)),",
+      "new": "        (\"left\", Datum::from(cover.runs - replied)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "runs key renamed",
+      "old": "        (\"runs\", rows.clone()),",
+      "new": "        (\"rows\", rows.clone()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "ngd is defined with no accepted run",
+      "old": "if !checks.record(\"ngd_defined\", !accepted.is_empty(), &rows) {",
+      "new": "if !checks.record(\"ngd_defined\", true, &rows) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "ngd predicate renamed",
+      "old": "if !checks.record(\"ngd_defined\", !accepted.is_empty(), &rows) {",
+      "new": "if !checks.record(\"ngd\", !accepted.is_empty(), &rows) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "ngd evidence dropped",
+      "old": "if !checks.record(\"ngd_defined\", !accepted.is_empty(), &rows) {",
+      "new": "if !checks.record(\"ngd_defined\", !accepted.is_empty(), &Datum::Null) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "undefined ngd left out",
+      "old": "        detail.push((\"ngd\", Datum::Null));\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "undefined code renamed",
+      "old": "return Ok(refused(\"NGD_UNDEFINED\", finish(detail)));",
+      "new": "return Ok(refused(\"UNDEFINED\", finish(detail)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "ngd counts the runs that glue",
+      "old": "let failed = accepted.iter().filter(|(_, global)| !global).count();",
+      "new": "let failed = accepted.iter().filter(|(_, global)| *global).count();",
+      "outcome": "killed"
+    },
+    {
+      "name": "a hidden failure is one the packet caught",
+      "old": "        .filter(|(packet, global)| *packet && !global)",
+      "new": "        .filter(|(packet, global)| !*packet && !global)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a hidden failure is any passing packet",
+      "old": "        .filter(|(packet, global)| *packet && !global)",
+      "new": "        .filter(|(packet, _)| *packet)",
+      "outcome": "killed"
+    },
+    {
+      "name": "ngd is a share of every run",
+      "old": "let ngd = Rational::new(BigInt::from(failed), BigInt::from(accepted.len()));",
+      "new": "let ngd = Rational::new(BigInt::from(failed), BigInt::from(cover.runs));",
+      "outcome": "killed"
+    },
+    {
+      "name": "ngd key renamed",
+      "old": "    detail.push((\"ngd\", Datum::text(show(&ngd))));",
+      "new": "    detail.push((\"share\", Datum::text(show(&ngd))));",
+      "outcome": "killed"
+    },
+    {
+      "name": "one agreeing run decides",
+      "old": "let decides = accepted.iter().all(|(packet, global)| packet == global);",
+      "new": "let decides = accepted.iter().any(|(packet, global)| packet == global);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a false alarm decides",
+      "old": "let decides = accepted.iter().all(|(packet, global)| packet == global);",
+      "new": "let decides = accepted.iter().all(|(packet, global)| !*packet || *global);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the packet always decides",
+      "old": "if !checks.record(\"packet_decides_global\", decides, &Datum::from(hidden)) {",
+      "new": "if !checks.record(\"packet_decides_global\", true, &Datum::from(hidden)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "decides predicate renamed",
+      "old": "if !checks.record(\"packet_decides_global\", decides, &Datum::from(hidden)) {",
+      "new": "if !checks.record(\"decides\", decides, &Datum::from(hidden)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "decides evidence is every failure",
+      "old": "if !checks.record(\"packet_decides_global\", decides, &Datum::from(hidden)) {",
+      "new": "if !checks.record(\"packet_decides_global\", decides, &Datum::from(failed)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "hidden failures are every failure",
+      "old": "        detail.push((\"hidden_failures\", Datum::from(hidden)));",
+      "new": "        detail.push((\"hidden_failures\", Datum::from(failed)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "hidden key renamed",
+      "old": "        detail.push((\"hidden_failures\", Datum::from(hidden)));",
+      "new": "        detail.push((\"hidden\", Datum::from(hidden)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "insufficient code renamed",
+      "old": "return Ok(refused(\"BOUNDARY_INSUFFICIENT\", finish(detail)));",
+      "new": "return Ok(refused(\"INSUFFICIENT\", finish(detail)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "sufficient code renamed",
+      "old": "Ok(checks.judge(\"BOUNDARY_SUFFICIENT\", finish(detail)))",
+      "new": "Ok(checks.judge(\"SUFFICIENT\", finish(detail)))",
+      "outcome": "killed"
+    }
+  ]
+}

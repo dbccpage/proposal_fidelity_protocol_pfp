@@ -1,0 +1,100 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/patch.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/patch.rs",
+      "language": "Rust",
+      "sha256": "0b94f40d4748938f1a79e28401ffbbaa87bb8babcbb1a60d41a351c831de53b6"
+    },
+    "contract_urn": "urn:pfp-operads:tests-patch:v1",
+    "symbols": [
+      "one",
+      "code",
+      "misfit",
+      "hunk",
+      "the_worked_example_changes_one_line",
+      "hunks_and_files_are_applied_in_the_order_written",
+      "a_hunk_applies_only_at_the_line_it_names",
+      "a_changed_context_line_is_refused",
+      "hunks_must_follow_one_another",
+      "lines_can_be_added_or_removed_alone",
+      "a_missing_final_newline_is_part_of_the_line",
+      "carriage_returns_and_blank_context_lines_are_kept_as_written",
+      "only_edits_to_existing_text_files_are_supported",
+      "a_malformed_patch_is_refused",
+      "an_empty_patch_names_no_file",
+      "a_patch_does_not_change_text_it_does_not_name"
+    ],
+    "owned_invariants": [
+      "Patched text is asserted whole, for one hunk and several, insertions at the start and the end, and files with and without a final line end.",
+      "Each way a patch can be malformed or out of scope is asserted by its code and its message.",
+      "A hunk that does not fit is asserted refused with the file and line named, and nothing returned."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/patch.rs",
+      "language": "Rust",
+      "sha256": "0b94f40d4748938f1a79e28401ffbbaa87bb8babcbb1a60d41a351c831de53b6"
+    },
+    "profile": "Non-Numeric",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 12 pass in the recorded run; the suite they belong to killed 85 of 85 eligible patch mutants.",
+      "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 0; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T12:02:21Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v7-test.run.json",
+        "sha256": "9b7778a188f186ec10f4e986bf1a4e4b3e3458c9f51b257b6a11602be9610931",
+        "note": "207 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v7-clippy.run.json",
+        "sha256": "057448407c0033d3fda7a7cd83d4d797bc94e8b3357614105306a6fc87721e96",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v7-fmt.run.json",
+        "sha256": "2cd5a739ad1076b1545ad6c1b8d6457d3b2a762894a68ed2a22fc6054b9226a6",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v7-metrics.run.json",
+        "sha256": "ba5ee46c693f69310d6324c43ea86730991805ba640c610e4b72939092c1e590",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v7-metrics.json",
+        "sha256": "c413c3096f439bebae18fa810948a064789b07da627848f3289df544344be4c3",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

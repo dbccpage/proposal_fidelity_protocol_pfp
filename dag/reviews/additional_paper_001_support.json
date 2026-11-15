@@ -970,6 +970,109 @@
         "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/lean4/OddCycleObstruction.lean"
       ],
       "limits": "No fresh Lean build in this support slice; historical toolchain differs from current pin."
+    },
+    {
+      "id": "PAPER001-ZERO-OBSTRUCTION-IFF-EXACT",
+      "statement": "Positive rational penalties on a finite graph give D_c(s) >= Phi(c), with Phi(c) = 0 exactly for c in im B (zero obstruction if and only if exact).",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Finite graph with declared orientation, positive rational edge penalties, and exact rational arithmetic.",
+        "Host exact certificate gate and symbol game governor are trusted."
+      ],
+      "evidence": [
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py"
+      ],
+      "limits": "Applies only to finite graphs with strictly positive penalties; zero penalties can conceal a nonzero residual. Strict rational descent alone does not guarantee finite termination."
+    },
+    {
+      "id": "PAPER001-GAUGE-INVARIANCE-QUOTIENT-MINIMUM",
+      "statement": "Adding a coboundary to the reports leaves the quotient minimum invariant (Phi(c + Bu) = Phi(c) for all u); a section update leaves it unchanged.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Finite graph with declared orientation, positive rational edge penalties, and exact rational arithmetic.",
+        "Potential shift s -> s + u is an affine bijection on the feasible potential domain."
+      ],
+      "evidence": [
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py"
+      ],
+      "limits": "Applies to finite graphs with positive rational penalties; changing reports arbitrarily outside im B changes the quotient class and problem."
+    },
+    {
+      "id": "PAPER001-DIRECTED-CYCLE-MINIMUM-FORMULA",
+      "statement": "A directed cycle has minimum min_e w_e |sum_e c_e|; the manuscript triangle costs 6 at zero, 3 at an optimum, and has dual value 3.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Finite directed cycle carrier with positive rational edge penalties and exact rational arithmetic.",
+        "Telescoping potential sum along closed directed cycle is zero."
+      ],
+      "evidence": [
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/demo1_holonomy.py"
+      ],
+      "limits": "Applies to finite directed cycles with strictly positive penalties; does not assert residual uniqueness when multiple edges achieve minimum penalty, nor does cycle rank bound optimal residual face dimension."
+    },
+    {
+      "id": "PAPER001-SPARSE-OPTIMAL-RESIDUAL",
+      "statement": "Some optimal residual uses at most |E| - rank B edges.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Finite directed graph with incidence matrix B, positive rational edge penalties, and exact rational arithmetic.",
+        "Linear programming extreme point / basic feasible solution representation of quotient residual defect."
+      ],
+      "evidence": [
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py"
+      ],
+      "limits": "Existence only; does not bound all minimizers or the optimal-face dimension; requires strictly positive penalties."
+    },
+    {
+      "id": "PAPER001-WEIGHTED-NULL-SPACE-UNIQUENESS",
+      "statement": "A weighted null-space property on the residual support suffices for uniqueness: if r is optimal with support S and sum_{e in S} w_e |h_e| < sum_{e not in S} w_e |h_e| for all nonzero h in im B, then r is the unique optimal residual.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Finite directed graph with incidence matrix B, positive rational edge penalties, and exact rational arithmetic.",
+        "Triangle inequality decomposition on residual coset c + im B."
+      ],
+      "evidence": [
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/certificate_gate.py"
+      ],
+      "limits": "Sufficient condition only; failure of condition is not a nonuniqueness certificate; requires strictly positive penalties."
+    },
+    {
+      "id": "PAPER001-NATIVE-FOREST-SOLVER-REVIEW",
+      "statement": "The native Rust solver enumerates spanning forests exactly, caps the search at 100,000 forests, refuses with EnumerationLimit beyond the cap, and returns phi1, gauge, and forests_checked.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Pinned Rust source in code/rust/core_solvers/src/solver_graph_phi1_distance.rs with cargo test harness.",
+        "Independent exact primal-dual evaluation via Phi1Functional certification."
+      ],
+      "evidence": [
+        "code/rust/core_solvers/src/solver_graph_phi1_distance.rs",
+        "code/rust/core_solvers/src/bin/solve_graph_phi1.rs",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/native_functional.py"
+      ],
+      "limits": "No dual circulation in return struct; worst-case exponential complexity; Python adapter does not pin binary hash."
+    },
+    {
+      "id": "PAPER001-PYTHON-REFERENCE-SOLVER-GOVERNOR-REVIEW",
+      "statement": "The paper-local Python reference returns a primal potential and dual circulation only after independent verification, caps tree enumeration at 100,000 per component, and its governor admits only strictly decreasing potential updates.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Pinned Python reference in papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py with exact rational arithmetic.",
+        "Independent primal-dual certificate verification via verify_phi_1_certificate.",
+        "Strictly descending section defect requirement for CUT updates under SymbolGameGovernor."
+      ],
+      "evidence": [
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/symbol_game_governor.py",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_zenodo_regression_suite.py",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_review_regressions.py",
+        "papers/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/code/tests/test_governor.py"
+      ],
+      "limits": "Exponential in graph size; the per-component cap is established by source inspection, not by a test."
     }
   ],
   "findings": [

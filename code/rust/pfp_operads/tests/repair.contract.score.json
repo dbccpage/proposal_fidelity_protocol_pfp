@@ -1,0 +1,133 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/repair.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/repair.rs",
+      "language": "Rust",
+      "sha256": "6fb5af153a72bd8c434a01e39767d78d2f23ecdedc26d6acc83afd02a8a0565c"
+    },
+    "contract_urn": "urn:pfp-operads:tests-repair:v1",
+    "symbols": [
+      "hex",
+      "patch",
+      "check",
+      "request",
+      "with",
+      "missing",
+      "ran",
+      "exits",
+      "statuses",
+      "refusal",
+      "evidence",
+      "stated",
+      "failure",
+      "the_worked_example_is_repaired_and_the_source_is_untouched",
+      "the_run_folder_keeps_the_request_the_patch_and_the_record",
+      "effects_happen_in_stage_order",
+      "a_patch_that_leaves_the_failing_check_failing_is_a_recorded_failure",
+      "the_failure_names_the_workflow_the_request_gives",
+      "fixing_one_of_two_failing_checks_is_partial",
+      "breaking_a_check_that_passed_is_a_regression_even_when_the_target_is_fixed",
+      "a_clean_baseline_needs_no_repair_and_the_patch_is_not_applied",
+      "a_patch_outside_the_write_set_is_refused_before_anything_is_written",
+      "a_patch_that_does_not_fit_is_refused_as_a_whole",
+      "a_file_that_is_not_text_cannot_be_patched",
+      "a_source_that_differs_from_its_declared_hash_stops_the_run_at_capture",
+      "a_missing_source_is_refused_with_the_code_the_bench_gives",
+      "a_source_that_changes_during_the_run_refuses_it_even_after_a_repair",
+      "ran_on",
+      "a_regression_seen_before_the_source_drifted_is_not_recorded_as_a_failure",
+      "a_check_that_rewrites_the_working_copy_is_refused",
+      "a_check_that_cannot_run_refuses_the_run_and_blames_no_candidate",
+      "a_bench_that_cannot_open_or_write_refuses_the_run",
+      "a_run_without_a_refusal_exists_only_with_its_record_kept",
+      "the_host_passes_only_a_repair",
+      "observed",
+      "the_disposition_compares_the_failing_checks_before_and_after",
+      "read",
+      "base",
+      "a_request_has_defaults_and_no_unknown_field",
+      "names_and_text_are_bounded",
+      "a_source_path_is_a_plain_relative_path",
+      "a_source_hash_is_64_lowercase_hex_digits",
+      "many",
+      "the_scope_is_nonempty_bounded_and_distinct",
+      "a_check_is_a_named_bounded_command",
+      "the_three_identities_bind_different_things",
+      "the_identities_are_hashes_of_stated_bytes",
+      "a_record_carries_the_identities_of_its_request"
+    ],
+    "owned_invariants": [
+      "The bench is in memory and records every effect, so the order of reads, copies, checks and writes is asserted, and a source is asserted unchanged after every run.",
+      "Each outcome and each refusal is asserted with its stage, its trace and the statuses of all six stages.",
+      "A failure record is asserted field by field, with its evidence hash rebuilt in the test from the request digest, the refusal code and the exits before and after.",
+      "Every bound of a request is asserted one inside and one outside, and the three identities against hashes the test computes."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/repair.rs",
+      "language": "Rust",
+      "sha256": "6fb5af153a72bd8c434a01e39767d78d2f23ecdedc26d6acc83afd02a8a0565c"
+    },
+    "profile": "Non-Numeric",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 30 pass in the recorded run; the suite they belong to killed 234 of 234 eligible repair mutants.",
+      "G5": "Measured worst cyclomatic 5, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T12:02:21Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v7-test.run.json",
+        "sha256": "9b7778a188f186ec10f4e986bf1a4e4b3e3458c9f51b257b6a11602be9610931",
+        "note": "207 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v7-clippy.run.json",
+        "sha256": "057448407c0033d3fda7a7cd83d4d797bc94e8b3357614105306a6fc87721e96",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v7-fmt.run.json",
+        "sha256": "2cd5a739ad1076b1545ad6c1b8d6457d3b2a762894a68ed2a22fc6054b9226a6",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v7-metrics.run.json",
+        "sha256": "ba5ee46c693f69310d6324c43ea86730991805ba640c610e4b72939092c1e590",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v7-metrics.json",
+        "sha256": "c413c3096f439bebae18fa810948a064789b07da627848f3289df544344be4c3",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

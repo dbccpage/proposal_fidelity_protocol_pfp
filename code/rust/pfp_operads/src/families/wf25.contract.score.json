@@ -1,0 +1,202 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf25.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf25.rs",
+      "language": "Rust",
+      "sha256": "3461420360d2e770342697f77d04234795e3f8fad930c4b39721147b42fe0d28"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf25:v1",
+    "symbols": [
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task is the cochain task of cochain.rs: edges on vertices named 0 to n-1 and one exact rational per edge. A task the host cannot read is refused before anything is asked.",
+      "One question is asked, the task as written. The reply is an object with edges, labels and paths, three lists of one nonzero length: each reduced edge is a pair of task vertices, each label an exact rational, and each path a chain of task edges.",
+      "Five predicates are recorded, in this order. paths_are_walks: every path is a walk in the task's graph from its edge's first vertex to its second. labels_are_path_sums: every label is the sum of the task's values along its path. cycle_rank_preserved: the reduced graph has as many fundamental cycles as the task's. lifted_cycles_span_h1: the reduced graph's fundamental cycles, written as chains of task edges, have that same rank over the rationals. strictly_smaller_without_leaves: the reduced graph has fewer edges than the task's and no vertex of degree 1.",
+      "A loop counts twice toward the degree of its vertex, so a cycle of degree-2 vertices may shrink to one loop.",
+      "The run is certified as DECIMATED only when all five pass, and is otherwise refused under the first that fails. The verdict gives the reduced edge count, the cycle rank of the task and the sum of the reduced labels round each reduced fundamental cycle."
+    ],
+    "boundaries": [
+      "The span is taken over the rationals. A reduced cycle that goes twice round a cycle of the task spans it, and its residual is twice that cycle's.",
+      "Nothing here says the reduced graph is the smallest one. Fewer edges and no leaf is the whole of the size claim.",
+      "A path that is not a walk is a failed predicate, not an unreadable reply: its steps were read."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf25.rs",
+      "language": "Rust",
+      "sha256": "3461420360d2e770342697f77d04234795e3f8fad930c4b39721147b42fe0d28"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: labels and sums are exact rationals, lifted cycles are integer chains, and the rank is computed exactly. Path sums, lifted chains, degrees and residuals are asserted against values worked by hand on a graph with two cycles and a tail. Not B: tested on examples, not proven.",
+      "G3": "Each unreadable reply has its reason, and each failing decimation is refused under the name of the first predicate it fails with every failed one listed. No panicking unwrap or expect, and no index: paths and coefficients are read with get. Not B: panic-freedom is tested, not proven.",
+      "G4": "16 WF25 tests assert the registry entry, the prompt byte for byte, a certified decimation with its detail and evidence, a path taken backwards, a cycle shrunk to one loop and the loop's degree, a loop that goes twice round a cycle, a path that is not a walk, a wrong label, a reduced graph with fewer and with more cycles, reduced cycles that repeat one cycle, a graph that is no smaller, a smaller graph that keeps a leaf, and each malformed reply and task by its reason. Mutation campaign R = 70/70. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 12, cognitive complexity is not measured for Rust, nesting 3; ceiling B, recorded B."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T16:06:43Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v11-test.run.json",
+        "sha256": "6a9776b5ca88d37e3536a8f5db9bb1aea115c9f46cb37d2ee2a0437bdbf0991c",
+        "note": "734 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-clippy.run.json",
+        "sha256": "66b4e1d2379f1226a13d70b7fdcf1604634a31f09ade75d548bde957fb8b19de",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-fmt.run.json",
+        "sha256": "705ef43242290a5139c6c50b71d63900d8c7797ae6e591d9628f350fe9711098",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-metrics.run.json",
+        "sha256": "8c1f359efe9677bde150f7df47cb3ac9bc5ce638c0eb2aeaa78ba72934759149",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-metrics.json",
+        "sha256": "3c2c402f16644cedb0b99b0c98ec5749f047f586797bc892503fdb54c4b93cd0",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 70,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf25.mutation.json",
+        "sha256": "0aa78ba4d208b5b50487920d8b4d0a44783bce8b2034c5e4fbc74f0ef9040a43",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 70 mutants"
+      }
+    }
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-14T16:06:44.206013Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf25.rs",
+          "language": "Rust",
+          "sha256": "3461420360d2e770342697f77d04234795e3f8fad930c4b39721147b42fe0d28"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf25:v1",
+        "symbols": [
+          "FAMILY"
+        ],
+        "owned_invariants": [
+          "The task is the cochain task of cochain.rs: edges on vertices named 0 to n-1 and one exact rational per edge. A task the host cannot read is refused before anything is asked.",
+          "One question is asked, the task as written. The reply is an object with edges, labels and paths, three lists of one nonzero length: each reduced edge is a pair of task vertices, each label an exact rational, and each path a chain of task edges.",
+          "Five predicates are recorded, in this order. paths_are_walks: every path is a walk in the task's graph from its edge's first vertex to its second. labels_are_path_sums: every label is the sum of the task's values along its path. cycle_rank_preserved: the reduced graph has as many fundamental cycles as the task's. lifted_cycles_span_h1: the reduced graph's fundamental cycles, written as chains of task edges, have that same rank over the rationals. strictly_smaller_without_leaves: the reduced graph has fewer edges than the task's and no vertex of degree 1.",
+          "A loop counts twice toward the degree of its vertex, so a cycle of degree-2 vertices may shrink to one loop.",
+          "The run is certified as DECIMATED only when all five pass, and is otherwise refused under the first that fails. The verdict gives the reduced edge count, the cycle rank of the task and the sum of the reduced labels round each reduced fundamental cycle."
+        ],
+        "boundaries": [
+          "The span is taken over the rationals. A reduced cycle that goes twice round a cycle of the task spans it, and its residual is twice that cycle's.",
+          "Nothing here says the reduced graph is the smallest one. Fewer edges and no leaf is the whole of the size claim.",
+          "A path that is not a walk is a failed predicate, not an unreadable reply: its steps were read."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf25.rs",
+          "language": "Rust",
+          "sha256": "3461420360d2e770342697f77d04234795e3f8fad930c4b39721147b42fe0d28"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "B"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Exact: labels and sums are exact rationals, lifted cycles are integer chains, and the rank is computed exactly. Path sums, lifted chains, degrees and residuals are asserted against values worked by hand on a graph with two cycles and a tail. Not B: tested on examples, not proven.",
+          "G3": "Each unreadable reply has its reason, and each failing decimation is refused under the name of the first predicate it fails with every failed one listed. No panicking unwrap or expect, and no index: paths and coefficients are read with get. Not B: panic-freedom is tested, not proven.",
+          "G4": "16 WF25 tests assert the registry entry, the prompt byte for byte, a certified decimation with its detail and evidence, a path taken backwards, a cycle shrunk to one loop and the loop's degree, a loop that goes twice round a cycle, a path that is not a walk, a wrong label, a reduced graph with fewer and with more cycles, reduced cycles that repeat one cycle, a graph that is no smaller, a smaller graph that keeps a leaf, and each malformed reply and task by its reason. Mutation campaign R = 70/70. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 12, cognitive complexity is not measured for Rust, nesting 3; ceiling B, recorded B."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T16:04:44Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v11-test.run.json",
+            "sha256": "6a9776b5ca88d37e3536a8f5db9bb1aea115c9f46cb37d2ee2a0437bdbf0991c",
+            "note": "734 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-clippy.run.json",
+            "sha256": "66b4e1d2379f1226a13d70b7fdcf1604634a31f09ade75d548bde957fb8b19de",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-fmt.run.json",
+            "sha256": "705ef43242290a5139c6c50b71d63900d8c7797ae6e591d9628f350fe9711098",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-metrics.run.json",
+            "sha256": "8c1f359efe9677bde150f7df47cb3ac9bc5ce638c0eb2aeaa78ba72934759149",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-metrics.json",
+            "sha256": "3c2c402f16644cedb0b99b0c98ec5749f047f586797bc892503fdb54c4b93cd0",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 70,
+          "survived": 0,
+          "demonstrably_equivalent": 0,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-wf25.mutation.json",
+            "sha256": "0aa78ba4d208b5b50487920d8b4d0a44783bce8b2034c5e4fbc74f0ef9040a43",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 70 mutants"
+          }
+        }
+      }
+    }
+  ]
+}

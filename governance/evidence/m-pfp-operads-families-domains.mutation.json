@@ -1,0 +1,536 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/domains.rs",
+  "target_sha256": "d78413186c2d8710e33f3b62c2bfeade79092bc376650f54a62ae267d113e2ce",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test datum --test exact --test families --test sealed --test wf07 --test wf30 --test wf31 --test perm --test domains --test wf13 --test wf24 --test wf32 --test wf45",
+  "counts": {
+    "killed": 84,
+    "survived": 0,
+    "demonstrably_equivalent": 2,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "point limit is 7",
+      "old": "pub const MAX_POINTS: usize = 8;",
+      "new": "pub const MAX_POINTS: usize = 7;",
+      "outcome": "killed"
+    },
+    {
+      "name": "point limit is 9",
+      "old": "pub const MAX_POINTS: usize = 8;",
+      "new": "pub const MAX_POINTS: usize = 9;",
+      "outcome": "killed"
+    },
+    {
+      "name": "commutator registered under another name",
+      "old": "    (\"group_commutator\", commutator),",
+      "new": "    (\"commutator\", commutator),",
+      "outcome": "killed"
+    },
+    {
+      "name": "linear registered under another name",
+      "old": "    (\"linear_refusal\", linear_refusal),",
+      "new": "    (\"linear\", linear_refusal),",
+      "outcome": "killed"
+    },
+    {
+      "name": "stabilizer registered under another name",
+      "old": "    (\"stabilizer_commutation\", stabilizer),",
+      "new": "    (\"stabilizer\", stabilizer),",
+      "outcome": "killed"
+    },
+    {
+      "name": "anomaly registered under another name",
+      "old": "    (\"u1_anomaly\", anomaly),",
+      "new": "    (\"anomaly\", anomaly),",
+      "outcome": "killed"
+    },
+    {
+      "name": "commutator name runs the anomaly checker",
+      "old": "    (\"group_commutator\", commutator),",
+      "new": "    (\"group_commutator\", anomaly),",
+      "outcome": "killed"
+    },
+    {
+      "name": "anomaly name runs the stabilizer checker",
+      "old": "    (\"u1_anomaly\", anomaly),",
+      "new": "    (\"u1_anomaly\", stabilizer),",
+      "outcome": "killed"
+    },
+    {
+      "name": "stabilizer name runs the linear checker",
+      "old": "    (\"stabilizer_commutation\", stabilizer),",
+      "new": "    (\"stabilizer_commutation\", linear_refusal),",
+      "outcome": "killed"
+    },
+    {
+      "name": "linear name runs the commutator checker",
+      "old": "    (\"linear_refusal\", linear_refusal),",
+      "new": "    (\"linear_refusal\", commutator),",
+      "outcome": "killed"
+    },
+    {
+      "name": "any domain has a checker",
+      "old": "        .find(|(name, _)| *name == domain)",
+      "new": "        .find(|(name, _)| *name == domain || !domain.is_empty())",
+      "outcome": "killed"
+    },
+    {
+      "name": "a name is matched by prefix",
+      "old": "        .find(|(name, _)| *name == domain)",
+      "new": "        .find(|(name, _)| name.starts_with(domain))",
+      "outcome": "killed"
+    },
+    {
+      "name": "I has an x bit",
+      "old": "        'I' => Some((false, false)),",
+      "new": "        'I' => Some((true, false)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "X is Z",
+      "old": "        'X' => Some((true, false)),",
+      "new": "        'X' => Some((false, true)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "Z is X",
+      "old": "        'Z' => Some((false, true)),",
+      "new": "        'Z' => Some((true, false)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "Y is X",
+      "old": "        'Y' => Some((true, true)),",
+      "new": "        'Y' => Some((true, false)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "Y is Z",
+      "old": "        'Y' => Some((true, true)),",
+      "new": "        'Y' => Some((false, true)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "an unknown letter is I",
+      "old": "        _ => None,\n    }\n}\n\nfn pauli_string",
+      "new": "        _ => Some((false, false)),\n    }\n}\n\nfn pauli_string",
+      "outcome": "killed"
+    },
+    {
+      "name": "symplectic form is symmetric",
+      "old": "        .filter(|((ax, az), (bx, bz))| (*ax && *bz) != (*az && *bx))",
+      "new": "        .filter(|((ax, az), (bx, bz))| (*ax && *bz) || (*az && *bx))",
+      "outcome": "killed"
+    },
+    {
+      "name": "symplectic form reads x against x",
+      "old": "        .filter(|((ax, az), (bx, bz))| (*ax && *bz) != (*az && *bx))",
+      "new": "        .filter(|((ax, az), (bx, bz))| (*ax && *bx) != (*az && *bz))",
+      "outcome": "killed"
+    },
+    {
+      "name": "commuting pairs are reported",
+      "old": "        % 2\n        == 1\n}",
+      "new": "        % 2\n        == 0\n}",
+      "outcome": "killed"
+    },
+    {
+      "name": "any odd site makes a pair anticommute",
+      "old": "        .count()\n        % 2\n        == 1\n}",
+      "new": "        .count()\n        >= 1\n}",
+      "outcome": "killed"
+    },
+    {
+      "name": "pair shape message changed",
+      "old": "        return Err(\"pairs are [i, j]\".to_owned());",
+      "new": "        return Err(\"pairs\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "first index message changed",
+      "old": "        first.as_int().ok_or(\"pair must be an exact int\")?.clone(),",
+      "new": "        first.as_int().ok_or(\"first\")?.clone(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "second index message changed",
+      "old": "        second.as_int().ok_or(\"pair must be an exact int\")?.clone(),",
+      "new": "        second.as_int().ok_or(\"second\")?.clone(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a pair is read in the order written",
+      "old": "    pair.sort();\n    Ok(pair)",
+      "new": "    Ok(pair)",
+      "outcome": "killed"
+    },
+    {
+      "name": "generators read from another key",
+      "old": "        .get(\"generators\")",
+      "new": "        .get(\"strings\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty generator list is read",
+      "old": "        .filter(|list| !list.is_empty())\n        .and_then(|list| list.iter().map(pauli_string).collect())",
+      "new": "        .and_then(|list| list.iter().map(pauli_string).collect())",
+      "outcome": "killed"
+    },
+    {
+      "name": "strings of different lengths are read",
+      "old": "            strings.iter().all(|one| Some(one.len()) == length)",
+      "new": "            strings.iter().any(|one| Some(one.len()) == length)",
+      "outcome": "killed"
+    },
+    {
+      "name": "generator message changed",
+      "old": "        .ok_or(\"generators must be Pauli strings of one length\")?;",
+      "new": "        .ok_or(\"generators\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a string is paired with itself",
+      "old": "        for (j, second) in generators.iter().enumerate().skip(i + 1) {",
+      "new": "        for (j, second) in generators.iter().enumerate().skip(i) {",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "a Pauli string commutes with itself: at every site the two terms of the symplectic form are the same, so the pair (i, i) is never reported"
+    },
+    {
+      "name": "the next string is skipped",
+      "old": "        for (j, second) in generators.iter().enumerate().skip(i + 1) {",
+      "new": "        for (j, second) in generators.iter().enumerate().skip(i + 2) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "every pair is reported",
+      "old": "            if anticommute(first, second) {",
+      "new": "            if true {",
+      "outcome": "killed"
+    },
+    {
+      "name": "pair written as j i",
+      "old": "                truth.push(vec![BigInt::from(i), BigInt::from(j)]);",
+      "new": "                truth.push(vec![BigInt::from(j), BigInt::from(i)]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "anticommuting read from another key",
+      "old": "        .get(\"anticommuting\")\n        .and_then(Datum::as_list)",
+      "new": "        .get(\"pairs\")\n        .and_then(Datum::as_list)",
+      "outcome": "killed"
+    },
+    {
+      "name": "anticommuting message changed",
+      "old": "        .ok_or(\"anticommuting list required\")?",
+      "new": "        .ok_or(\"anticommuting\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "claimed pairs compared in the order written",
+      "old": "    claimed.sort();\n    let witness = Datum::map([(\"anticommuting\"",
+      "new": "    let witness = Datum::map([(\"anticommuting\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "stabilizer always passes",
+      "old": "    Ok((claimed == truth, witness))\n}\n\n/// A rational as text",
+      "new": "    Ok((true, witness))\n}\n\n/// A rational as text",
+      "outcome": "killed"
+    },
+    {
+      "name": "stabilizer witness is the claim",
+      "old": "    let witness = Datum::map([(\"anticommuting\", Datum::from(truth.clone()))]);",
+      "new": "    let witness = Datum::map([(\"anticommuting\", Datum::from(claimed.clone()))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "stabilizer witness under another key",
+      "old": "    let witness = Datum::map([(\"anticommuting\", Datum::from(truth.clone()))]);",
+      "new": "    let witness = Datum::map([(\"pairs\", Datum::from(truth.clone()))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "an integer is written with its denominator",
+      "old": "    if value.is_integer() {\n        value.numer().to_string()",
+      "new": "    if false {\n        value.numer().to_string()",
+      "outcome": "killed"
+    },
+    {
+      "name": "a fraction is written as its numerator",
+      "old": "    if value.is_integer() {\n        value.numer().to_string()",
+      "new": "    if true {\n        value.numer().to_string()",
+      "outcome": "killed"
+    },
+    {
+      "name": "fraction written upside down",
+      "old": "        format!(\"{}/{}\", value.numer(), value.denom())\n    }\n}\n\nfn anomaly",
+      "new": "        format!(\"{}/{}\", value.denom(), value.numer())\n    }\n}\n\nfn anomaly",
+      "outcome": "killed"
+    },
+    {
+      "name": "charges read from another key",
+      "old": "        .get(\"charges\")",
+      "new": "        .get(\"q\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty charge list is read",
+      "old": "        .filter(|charges| charges.as_list().is_some_and(|list| !list.is_empty()))",
+      "new": "        .filter(|charges| charges.as_list().is_some())",
+      "outcome": "killed"
+    },
+    {
+      "name": "charges message changed",
+      "old": "        .ok_or(\"charges required\")?;",
+      "new": "        .ok_or(\"charges\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "charge message changed",
+      "old": "    let charges = rationals(charges).ok_or(\"charge must be an exact rational\")?;",
+      "new": "    let charges = rationals(charges).ok_or(\"charge\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "cubic sum is the sum of squares",
+      "old": "    let cubic: Rational = charges.iter().map(|charge| charge * charge * charge).sum();",
+      "new": "    let cubic: Rational = charges.iter().map(|charge| charge * charge).sum();",
+      "outcome": "killed"
+    },
+    {
+      "name": "cubic sum is the linear sum",
+      "old": "    let cubic: Rational = charges.iter().map(|charge| charge * charge * charge).sum();",
+      "new": "    let cubic: Rational = charges.iter().sum();",
+      "outcome": "killed"
+    },
+    {
+      "name": "linear sum is a product",
+      "old": "    let linear: Rational = charges.iter().sum();",
+      "new": "    let linear: Rational = charges.iter().product();",
+      "outcome": "killed"
+    },
+    {
+      "name": "anomaly_free read from another key",
+      "old": "    let Some(Datum::Bool(free)) = answer.get(\"anomaly_free\") else {",
+      "new": "    let Some(Datum::Bool(free)) = answer.get(\"free\") else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "anomaly_free message changed",
+      "old": "        return Err(\"anomaly_free bool required\".to_owned());",
+      "new": "        return Err(\"anomaly_free\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "linear read from cubic",
+      "old": "        .get(\"linear\")\n        .and_then(rational)",
+      "new": "        .get(\"cubic\")\n        .and_then(rational)",
+      "outcome": "killed"
+    },
+    {
+      "name": "cubic read from linear",
+      "old": "        .get(\"cubic\")\n        .and_then(rational)",
+      "new": "        .get(\"linear\")\n        .and_then(rational)",
+      "outcome": "killed"
+    },
+    {
+      "name": "linear message changed",
+      "old": "        .ok_or(\"linear must be an exact rational\")?;",
+      "new": "        .ok_or(\"linear\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "cubic message changed",
+      "old": "        .ok_or(\"cubic must be an exact rational\")?;",
+      "new": "        .ok_or(\"cubic\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "linear not compared",
+      "old": "    let passed = given_linear == linear\n        && given_cubic == cubic",
+      "new": "    let passed = given_cubic == cubic",
+      "outcome": "killed"
+    },
+    {
+      "name": "cubic not compared",
+      "old": "    let passed = given_linear == linear\n        && given_cubic == cubic",
+      "new": "    let passed = given_linear == linear",
+      "outcome": "killed"
+    },
+    {
+      "name": "freedom not compared",
+      "old": "        && *free == (linear.is_zero() && cubic.is_zero());",
+      "new": "        ;",
+      "outcome": "killed"
+    },
+    {
+      "name": "free when either sum vanishes",
+      "old": "        && *free == (linear.is_zero() && cubic.is_zero());",
+      "new": "        && *free == (linear.is_zero() || cubic.is_zero());",
+      "outcome": "killed"
+    },
+    {
+      "name": "free when the linear sum vanishes",
+      "old": "        && *free == (linear.is_zero() && cubic.is_zero());",
+      "new": "        && *free == linear.is_zero();",
+      "outcome": "killed"
+    },
+    {
+      "name": "free when the cubic sum vanishes",
+      "old": "        && *free == (linear.is_zero() && cubic.is_zero());",
+      "new": "        && *free == cubic.is_zero();",
+      "outcome": "killed"
+    },
+    {
+      "name": "anomaly witness keys swapped",
+      "old": "        (\"linear\", Datum::text(plain(&linear))),\n        (\"cubic\", Datum::text(plain(&cubic))),",
+      "new": "        (\"cubic\", Datum::text(plain(&linear))),\n        (\"linear\", Datum::text(plain(&cubic))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "permutation message names no key",
+      "old": "        .ok_or(format!(\"{key} must be a permutation of {n} points\"))",
+      "new": "        .ok_or(format!(\"must be a permutation of {n} points\"))",
+      "outcome": "killed"
+    },
+    {
+      "name": "permutation read over one more point",
+      "old": "        .and_then(|value| perm::read(value, n))",
+      "new": "        .and_then(|value| perm::read(value, n + 1))",
+      "outcome": "killed"
+    },
+    {
+      "name": "point count read from another key",
+      "old": "        .get(\"n\")\n        .and_then(Datum::as_count)\n        .filter(|n| (1..=MAX_POINTS).contains(n))",
+      "new": "        .get(\"points\")\n        .and_then(Datum::as_count)\n        .filter(|n| (1..=MAX_POINTS).contains(n))",
+      "outcome": "killed"
+    },
+    {
+      "name": "zero points accepted",
+      "old": "        .filter(|n| (1..=MAX_POINTS).contains(n))",
+      "new": "        .filter(|n| (0..=MAX_POINTS).contains(n))",
+      "outcome": "killed"
+    },
+    {
+      "name": "point limit not applied",
+      "old": "        .filter(|n| (1..=MAX_POINTS).contains(n))",
+      "new": "        .filter(|n| *n >= 1)",
+      "outcome": "killed"
+    },
+    {
+      "name": "point message changed",
+      "old": "        .ok_or(format!(\"n must be an exact integer from 1 to {MAX_POINTS}\"))?;",
+      "new": "        .ok_or(format!(\"n must be from 1 to {MAX_POINTS}\"))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "g read from h",
+      "old": "    let g = permutation(data, \"g\", n)?;",
+      "new": "    let g = permutation(data, \"h\", n)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "h read from g",
+      "old": "    let h = permutation(data, \"h\", n)?;",
+      "new": "    let h = permutation(data, \"g\", n)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "commutator starts with h inverse",
+      "old": "    let inverses = perm::compose(&perm::inverse(&g), &perm::inverse(&h));",
+      "new": "    let inverses = perm::compose(&perm::inverse(&h), &perm::inverse(&g));",
+      "outcome": "killed"
+    },
+    {
+      "name": "g is not inverted",
+      "old": "    let inverses = perm::compose(&perm::inverse(&g), &perm::inverse(&h));",
+      "new": "    let inverses = perm::compose(&g, &perm::inverse(&h));",
+      "outcome": "killed"
+    },
+    {
+      "name": "h is not inverted",
+      "old": "    let inverses = perm::compose(&perm::inverse(&g), &perm::inverse(&h));",
+      "new": "    let inverses = perm::compose(&perm::inverse(&g), &h);",
+      "outcome": "killed"
+    },
+    {
+      "name": "commutator ends with g",
+      "old": "    let truth = perm::compose(&perm::compose(&inverses, &g), &h);",
+      "new": "    let truth = perm::compose(&perm::compose(&inverses, &h), &g);",
+      "outcome": "killed"
+    },
+    {
+      "name": "commutator drops the last factor",
+      "old": "    let truth = perm::compose(&perm::compose(&inverses, &g), &h);",
+      "new": "    let truth = perm::compose(&inverses, &g);",
+      "outcome": "killed"
+    },
+    {
+      "name": "commutator read from another key",
+      "old": "    let claimed = permutation(answer, \"commutator\", n)?;",
+      "new": "    let claimed = permutation(answer, \"c\", n)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "commutator always passes",
+      "old": "    Ok((claimed == truth, witness))\n}\n\nfn linear_refusal",
+      "new": "    Ok((true, witness))\n}\n\nfn linear_refusal",
+      "outcome": "killed"
+    },
+    {
+      "name": "commutator witness is the claim",
+      "old": "    let witness = Datum::map([(\"commutator\", Datum::from(truth.clone()))]);",
+      "new": "    let witness = Datum::map([(\"commutator\", Datum::from(claimed.clone()))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "linear capsule is not settled",
+      "old": "    let verdict = settle(wf07::grade(data, answer, &mut checks)?, &checks);",
+      "new": "    let verdict = wf07::grade(data, answer, &mut checks)?;",
+      "equivalent": "wf07::grade returns a certified verdict or a typed refusal only after the one predicate it recorded passed, and settle returns such a verdict unchanged",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "linear witness dropped",
+      "old": "        Some(Datum::Map(map)) => map.clone(),\n        _ => Default::default(),\n    };\n    witness.insert(\"code\"",
+      "new": "        Some(Datum::Map(_)) => std::collections::BTreeMap::new(),\n        _ => Default::default(),\n    };\n    witness.insert(\"code\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "linear witness read from another key",
+      "old": "    let mut witness = match verdict.detail.get(\"witness\") {",
+      "new": "    let mut witness = match verdict.detail.get(\"w\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "linear code under another key",
+      "old": "    witness.insert(\"code\".to_owned(), Datum::text(verdict.code));",
+      "new": "    witness.insert(\"verdict\".to_owned(), Datum::text(verdict.code));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a refused linear capsule passes",
+      "old": "    Ok((verdict.verdict != REFUSED, Datum::Map(witness)))",
+      "new": "    Ok((true, Datum::Map(witness)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "only a refused linear capsule passes",
+      "old": "    Ok((verdict.verdict != REFUSED, Datum::Map(witness)))",
+      "new": "    Ok((verdict.verdict == REFUSED, Datum::Map(witness)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a typed refusal fails the linear capsule",
+      "old": "    Ok((verdict.verdict != REFUSED, Datum::Map(witness)))",
+      "new": "    Ok((verdict.verdict == super::CERTIFIED, Datum::Map(witness)))",
+      "outcome": "killed"
+    }
+  ],
+  "rerun_test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test domains --test wf13 --test wf32"
+}

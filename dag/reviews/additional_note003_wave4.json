@@ -1,0 +1,142 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "a9b80a2dd221e0530d629fcfcaec73887c7080b5",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/non_pfp/003_degree_wise_dsl/degree_wise_dsl.tex",
+      "sha256": "a5bb2d11647e1e06be0c3fcf0edcef32db39c9762f1da9ea81e4e37ec5c372c4",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          1351
+        ]
+      ],
+      "assessment": "Full manuscript inspected. Section 1 defines the graded complex. Section 2 derives the C3 degree separation instance for Gamma2. Section 5 and 13 establish projection invariants and rewrite rules. Section 6 derives sign loss under magnitude aggregation from the triangle inequality."
+    },
+    {
+      "path": "atlas/archive/non_pfp/003_degree_wise_dsl/degree_wise_dsl_claim_ledger.md",
+      "sha256": "83c10722a902645129d95683f6c20c1fbc2cfd02536567dc06d3f67825c9ec7f",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          167
+        ]
+      ],
+      "assessment": "Claim ledger inspected. C02 (degree separation theorem C3 instance), C03 (pi_Z projection invariants), C04 (rewrite rules), C05 (coarse-graining asymmetry), and C19 (diagnostic routing rule) checked."
+    },
+    {
+      "path": "atlas/archive/non_pfp/003_degree_wise_dsl/code/mod_009_degree_wise_dsl_core.py",
+      "sha256": "2e8639b0d1e3f52e05681626abf8890f123f56cbbbde6e97572a639405a3b38a",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          300
+        ]
+      ],
+      "assessment": "Core implementation inspected. Implements create_c3_complex, DegreeWiseDSLState, compute_phi1, compute_gamma2, and invariant validation."
+    },
+    {
+      "path": "atlas/archive/non_pfp/003_degree_wise_dsl/code/tests/test_004_degree_wise_dsl.py",
+      "sha256": "6864defb5284f198b10bb36674ac238d3dcf4ddef8bc501eda03a84c822fb4d1",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          365
+        ]
+      ],
+      "assessment": "Test suite inspected. Contains test_c02_degree_separation_c3, test_c03_projection_invariants, test_c04_rewrite_rules, test_c05_coarse_graining_asymmetry, and test_c19_diagnostic_routing_rule."
+    },
+    {
+      "path": "atlas/archive/non_pfp/003_degree_wise_dsl/lean4/DegreeSeparation.lean",
+      "sha256": "b0e9523436f18aa7600213f2b3eb33facbbcf3fb135d5367b1749b7cd3564ccc",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          473
+        ]
+      ],
+      "assessment": "Lean 4 mechanization inspected. Formalizes C3 degree separation instance c3_degree_separation_instance, DeclaredProjection rewrite contracts, and squared-aggregate sign collision."
+    }
+  ],
+  "remaining_scope": [],
+  "claims": [
+    {
+      "id": "AUDIT-N003-002",
+      "statement": "On C3, the integer l1 distance from (1,0,0) to im d0 is 1 with or without a 2-cell, while Gamma2 = ||d1 h||_1 is undefined without the 2-cell and equals 1 with it.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Oriented triangle 1-skeleton graph C3 and optional single 2-cell.",
+        "Integer cochain spaces C0, C1, and C2.",
+        "Quotient l1 distance definition Phi_1 and closure defect definition Gamma_2."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/003_degree_wise_dsl/degree_wise_dsl.tex",
+        "atlas/archive/non_pfp/003_degree_wise_dsl/degree_wise_dsl_claim_ledger.md",
+        "atlas/archive/non_pfp/003_degree_wise_dsl/code/mod_009_degree_wise_dsl_core.py",
+        "atlas/archive/non_pfp/003_degree_wise_dsl/code/tests/test_004_degree_wise_dsl.py",
+        "atlas/archive/non_pfp/003_degree_wise_dsl/lean4/DegreeSeparation.lean"
+      ],
+      "limits": "Established for the integer C3 instance; general-k degree separation is schematic and unproved."
+    },
+    {
+      "id": "AUDIT-N003-003",
+      "statement": "A supplied rational projection matrix pi_Z is admitted if and only if pi_Z^2 = pi_Z and pi_Z d0 = 0 hold exactly.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite rational cochain complex with discrete coboundary d0.",
+        "Projection operator idempotence pi_Z^2 = pi_Z.",
+        "Exact-killing condition pi_Z d0 = 0."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/003_degree_wise_dsl/degree_wise_dsl.tex",
+        "atlas/archive/non_pfp/003_degree_wise_dsl/degree_wise_dsl_claim_ledger.md",
+        "atlas/archive/non_pfp/003_degree_wise_dsl/code/mod_009_degree_wise_dsl_core.py",
+        "atlas/archive/non_pfp/003_degree_wise_dsl/code/tests/test_004_degree_wise_dsl.py",
+        "atlas/archive/non_pfp/003_degree_wise_dsl/lean4/DegreeSeparation.lean"
+      ],
+      "limits": "Applies to declared rational projection matrices; projection choice is non-unique."
+    },
+    {
+      "id": "AUDIT-N003-004",
+      "statement": "For any graded complex with d1 d0 = 0 and any admitted projection pi_Z, Rules 1-3 hold: d1 d0 = 0, pi_Z^2 = pi_Z, pi_Z d0 = 0, and quotient defect is invariant under exact shifts.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Admitted cochain complex with nilpotency d1 d0 = 0.",
+        "Certified projection invariants pi_Z^2 = pi_Z and pi_Z d0 = 0.",
+        "Quotient defect norm invariance under translation by im(d0)."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/003_degree_wise_dsl/degree_wise_dsl.tex",
+        "atlas/archive/non_pfp/003_degree_wise_dsl/degree_wise_dsl_claim_ledger.md",
+        "atlas/archive/non_pfp/003_degree_wise_dsl/code/mod_009_degree_wise_dsl_core.py",
+        "atlas/archive/non_pfp/003_degree_wise_dsl/code/tests/test_004_degree_wise_dsl.py",
+        "atlas/archive/non_pfp/003_degree_wise_dsl/lean4/DegreeSeparation.lean"
+      ],
+      "limits": "Conditioned on prior certification of projection invariants; rewrite rules are unsound for unadmitted operators."
+    },
+    {
+      "id": "AUDIT-N003-005",
+      "statement": "On finite real lists, |sum x_i| <= sum |x_i| with equality if and only if all nonzero elements share a sign; magnitude and squared aggregates do not determine individual signs.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite real sequences and standard l1 triangle inequality.",
+        "Equality condition for the l1 triangle inequality.",
+        "Explicit collision witness (1, -1) versus (1, 1)."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/003_degree_wise_dsl/degree_wise_dsl.tex",
+        "atlas/archive/non_pfp/003_degree_wise_dsl/degree_wise_dsl_claim_ledger.md",
+        "atlas/archive/non_pfp/003_degree_wise_dsl/code/mod_009_degree_wise_dsl_core.py",
+        "atlas/archive/non_pfp/003_degree_wise_dsl/code/tests/test_004_degree_wise_dsl.py",
+        "atlas/archive/non_pfp/003_degree_wise_dsl/lean4/DegreeSeparation.lean"
+      ],
+      "limits": "Establishes non-invertibility from magnitude and squared aggregates alone; does not restrict models with preserved orientation data."
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf31.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf31.rs",
+      "language": "Rust",
+      "sha256": "5e37cbb08c9f9f55f4aef412f7f6be8468aa2f44b42f43de0527f3b46e915147"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf31:v1",
+    "symbols": [
+      "MAX_PROPOSERS",
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task has a nonempty training list whose points carry an exact integer id, a number of proposers from 1 to 64, and optionally the coefficients of a baseline polynomial (default: the zero polynomial). The sealed part has the held-out points, each with an integer id and exact rational x and y.",
+      "A run in which a training id is also a held-out id is refused as SPLIT_OVERLAP, with the shared ids, before any proposer is asked.",
+      "Every proposer is asked under its own stage, proposer:K, with the same prompt. A proposer's score is the number of held-out points its polynomial hits exactly; a reply whose coefficients cannot be read scores -1, and a proposer that gave no reply has no score.",
+      "The winner is the highest score, and on a tie the stage name that sorts first as text. The run is certified as WINNER_SELECTED only when the winner's score is strictly above the baseline polynomial's score on the same points.",
+      "When no proposer replied the run is refused as NO_ADMISSIBLE_REPLY.",
+      "The verdict's detail names the winner, every score, the baseline score and the number of held-out points. It carries no held-out value."
+    ],
+    "boundaries": [
+      "The held-out points reach the host in the sealed part and never appear in a prompt; the sealed-value guard of families.rs checks each prompt.",
+      "Scores count exact hits. A polynomial that is close but not equal at a point scores nothing there.",
+      "Stage names sort as text, so proposer:10 sorts before proposer:2. The tie rule is stated in those terms.",
+      "Beating the baseline on the held-out points of one task is not evidence about other tasks."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf31.rs",
+      "language": "Rust",
+      "sha256": "5e37cbb08c9f9f55f4aef412f7f6be8468aa2f44b42f43de0527f3b46e915147"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: polynomial values are exact rationals from exact.rs and are compared for equality; scores are counts. The limit of 64 proposers is asserted by value, one inside and one outside. Not B: tested against hand-worked tables, not proven.",
+      "G3": "Each refusal has its code. A count that could not fit i64 saturates instead of wrapping. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
+      "G4": "15 WF31 tests assert a winner with its whole score table, a tie on the top score and a tie with the baseline, an unreadable reply scored -1, a silent proposer left out, no reply at all, an overlap refused before any prompt, the every_predicate_passed flag on a refused run, each malformed task by its reason, and the proposer limit by value. One mutant is recorded as demonstrably equivalent with its justification in the report. Mutation campaign R = 62/62. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 9, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T12:56:03Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v8-test.run.json",
+        "sha256": "39e3d54df0f53e66efe9e7c79ccb58d2c64b227e5ae057ba2db430c2248a81ef",
+        "note": "329 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-clippy.run.json",
+        "sha256": "36f330c8dd7d904983f941e99b4eaed4ea0a5926c65e1506bee3a976a63b199f",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-fmt.run.json",
+        "sha256": "304f9442ff6202fbcc60ee643fa68b521ca2229ef90cb498605391f139d1c684",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-metrics.run.json",
+        "sha256": "5c9ed7ff128e413a3a694a13976441d3ab914d3ac77dcd1a8d1645c9805ec339",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-metrics.json",
+        "sha256": "132913181d26af963eec9d6f7ed2a20ca7531a5b5347a857a7562e352ef2ee4d",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 62,
+      "survived": 0,
+      "demonstrably_equivalent": 1,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf31.mutation.json",
+        "sha256": "3c4862f1e522b1a61ca841061ba6696d8a737c7a7a836457a093277d440cd78e",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 63 mutants"
+      }
+    }
+  },
+  "history": []
+}

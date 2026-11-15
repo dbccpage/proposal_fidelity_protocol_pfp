@@ -1,15 +1,17 @@
 [package]
 name = "pfp_operads"
-version = "0.6.0"
+version = "0.11.0"
 license.workspace = true
 edition = "2021"
-description = "The operad host for PFP workflows: typed terms over the canon, a law battery, the failure ledger and the records the host writes for it, the seed a run loads from it, stored workflow turns judged into ledger records, the reply checks of the full-slot and pre-mining workflows, and candidates the host runs itself"
+description = "The operad host for PFP workflows: typed terms over the canon, a law battery, the failure ledger and the records the host writes for it, the seed a run loads from it, stored workflow turns judged into ledger records, the reply checks of the full-slot and pre-mining workflows, candidates the host runs itself, bounded repair of a supplied patch on a working copy, and the host side of the workflow families (prompts, sealed-value guard, exact checks over rationals, permutations, graphs, edge cochains and the registered exact domains, bounded repair loops, verdict)"
 
 [dependencies]
 core_operad_canon = { path = "../core_operad_canon" }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0", features = ["raw_value"] }
 num-bigint = "0.4"
+num-rational = "0.4"
+num-traits = "0.2"
 regex = "1.10"
 sha2 = "0.10"
 hex = "0.4"
@@ -61,3 +63,135 @@ path = "tests/loading.rs"
 [[test]]
 name = "turns"
 path = "tests/turns.rs"
+
+[[test]]
+name = "patch"
+path = "tests/patch.rs"
+
+[[test]]
+name = "repair"
+path = "tests/repair.rs"
+
+[[test]]
+name = "workshop"
+path = "tests/workshop.rs"
+
+[[test]]
+name = "datum"
+path = "tests/datum.rs"
+
+[[test]]
+name = "exact"
+path = "tests/exact.rs"
+
+[[test]]
+name = "families"
+path = "tests/families.rs"
+
+[[test]]
+name = "sealed"
+path = "tests/sealed.rs"
+
+[[test]]
+name = "wf07"
+path = "tests/wf07.rs"
+
+[[test]]
+name = "wf30"
+path = "tests/wf30.rs"
+
+[[test]]
+name = "wf31"
+path = "tests/wf31.rs"
+
+[[test]]
+name = "perm"
+path = "tests/perm.rs"
+
+[[test]]
+name = "domains"
+path = "tests/domains.rs"
+
+[[test]]
+name = "wf13"
+path = "tests/wf13.rs"
+
+[[test]]
+name = "wf24"
+path = "tests/wf24.rs"
+
+[[test]]
+name = "wf32"
+path = "tests/wf32.rs"
+
+[[test]]
+name = "wf45"
+path = "tests/wf45.rs"
+
+[[test]]
+name = "graph"
+path = "tests/graph.rs"
+
+[[test]]
+name = "attempts"
+path = "tests/attempts.rs"
+
+[[test]]
+name = "xor"
+path = "tests/xor.rs"
+
+[[test]]
+name = "monic"
+path = "tests/monic.rs"
+
+[[test]]
+name = "wf09"
+path = "tests/wf09.rs"
+
+[[test]]
+name = "wf20"
+path = "tests/wf20.rs"
+
+[[test]]
+name = "wf26"
+path = "tests/wf26.rs"
+
+[[test]]
+name = "wf27"
+path = "tests/wf27.rs"
+
+[[test]]
+name = "wf33"
+path = "tests/wf33.rs"
+
+[[test]]
+name = "wf40"
+path = "tests/wf40.rs"
+
+[[test]]
+name = "cochain"
+path = "tests/cochain.rs"
+
+[[test]]
+name = "wf10"
+path = "tests/wf10.rs"
+
+[[test]]
+name = "wf11"
+path = "tests/wf11.rs"
+
+[[test]]
+name = "wf25"
+path = "tests/wf25.rs"
+
+[[test]]
+name = "wf38"
+path = "tests/wf38.rs"
+
+[[test]]
+name = "wf46"
+path = "tests/wf46.rs"
+
+[[test]]
+name = "wf47"
+path = "tests/wf47.rs"

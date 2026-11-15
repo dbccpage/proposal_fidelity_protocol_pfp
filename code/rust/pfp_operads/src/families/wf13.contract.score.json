@@ -1,0 +1,102 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf13.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf13.rs",
+      "language": "Rust",
+      "sha256": "be265fbea36d404035d35d2d842ddeee6a51d6dc05d5d7d3846511486b0c55cf"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf13:v1",
+    "symbols": [
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task is a nonempty list of capsules, each with a text id, a text domain and a data object, and no id twice. Anything else is refused before a prompt is written.",
+      "Before any capsule is asked the host records whether every capsule's domain has a checker. If one does not, the run is refused as UNREGISTERED_DOMAIN with the missing domains, and nothing is asked.",
+      "Each capsule is asked under its own stage, capsule:<id>, and is shown under the task's statement; a statement inside a capsule is not shown.",
+      "Each capsule is judged by the checker of its own domain and recorded as its own predicate with the checker's witness. A capsule with no reply and a capsule whose reply or data the checker cannot read are recorded as failed, with a witness that says which.",
+      "The verdict reports passed and total per domain and the number of capsules as the denominator. Every capsule counts in its domain's total whatever happened to its reply, and no average across domains is formed.",
+      "The battery is certified as BATTERY_PASSED only when every capsule passed."
+    ],
+    "boundaries": [
+      "A battery result is per domain on the capsules given. It is not a score for a domain in general.",
+      "The capsule's data is shown to the model as part of the prompt; nothing in a capsule is sealed."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf13.rs",
+      "language": "Rust",
+      "sha256": "be265fbea36d404035d35d2d842ddeee6a51d6dc05d5d7d3846511486b0c55cf"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Non-numeric: counts of capsules in usize, asserted by value per domain.",
+      "G3": "The unregistered-domain refusal and the malformed-task refusal each have a code and name what is missing. A failed capsule never stops the others from being judged. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
+      "G4": "10 WF13 tests assert a battery that passes with its tallies, predicate rows and stages, the exact prompt of a capsule, a missing reply, an unreadable reply and a wrong answer each failing only its own capsule, an unregistered domain refused before any prompt, several capsules of one domain sharing a tally, and each malformed task by its reason. Mutation campaign R = 52/52. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 6, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T13:51:27Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v9-test.run.json",
+        "sha256": "75c065d96b64633778adc9bbc5a54eb150b58536223e4c3443f62215ad84017e",
+        "note": "427 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-clippy.run.json",
+        "sha256": "b095a186f720f679235b2f243d030a0c7412ecd11d687d13c61ad6cac778d72e",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-fmt.run.json",
+        "sha256": "17a3ba5175b2bb9bccc425d89628829ccaadff38dc36f614734ea800455c7625",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.run.json",
+        "sha256": "785da0a0586cbf62c7a8439e2a626fa5ba0df80942665c0838e344cc4f460f41",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.json",
+        "sha256": "e9c47748ca0777f0a16723ed4f2e9ddb5b44c2f4480bd78d2102e6cf92daa227",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 52,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf13.mutation.json",
+        "sha256": "5611650b3048b24c9148313a7dd153bad6ad15decc34be946e771b633d7cb0ed",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 52 mutants"
+      }
+    }
+  },
+  "history": []
+}

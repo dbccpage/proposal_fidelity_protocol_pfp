@@ -1,0 +1,642 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf33.rs",
+  "target_sha256": "f0cb785a0ca25ef6220bfbdc2e232cde1e8ac8fa110d92c5793edc05d926f600",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf33",
+  "counts": {
+    "killed": 103,
+    "survived": 0,
+    "demonstrably_equivalent": 1,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF33\",",
+      "new": "    workflow: \"WF3\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Recursive re-entry with shared fuel\",",
+      "new": "    name: \"Recursive re-entry\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"shared_fuel_parent_bound_reentry\",",
+      "new": "    host_check: \"reentry\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "task fuel read from another key",
+      "old": "    let fuel = task\n        .get(\"fuel\")",
+      "new": "    let fuel = task\n        .get(\"units\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "task fuel type message changed",
+      "old": "        .ok_or(\"fuel must be an exact int\")?;\n    if *fuel",
+      "new": "        .ok_or(\"fuel\")?;\n    if *fuel",
+      "outcome": "killed"
+    },
+    {
+      "name": "one unit of fuel is refused",
+      "old": "    if *fuel < BigInt::one() {",
+      "new": "    if *fuel <= BigInt::one() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "no fuel is allowed",
+      "old": "    if *fuel < BigInt::one() {",
+      "new": "    if *fuel < BigInt::from(0) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "fuel sign message changed",
+      "old": "return Err(\"fuel must be positive\".to_owned());",
+      "new": "return Err(\"fuel\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation skips the graph",
+      "old": "    xor::read(task)?;\n    limit(task, LOOP_LIMIT, LOOP_LIMIT)?;",
+      "new": "    limit(task, LOOP_LIMIT, LOOP_LIMIT)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation skips the limit",
+      "old": "    xor::read(task)?;\n    limit(task, LOOP_LIMIT, LOOP_LIMIT)?;",
+      "new": "    xor::read(task)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation skips the fuel",
+      "old": "    limit(task, LOOP_LIMIT, LOOP_LIMIT)?;\n    fuel(task).map(|_| ())",
+      "new": "    limit(task, LOOP_LIMIT, LOOP_LIMIT).map(|_| ())",
+      "outcome": "killed"
+    },
+    {
+      "name": "header texts read as any value",
+      "old": "let stated = |key: &str| head.get(key).and_then(Datum::as_text);",
+      "new": "let stated = |key: &str| head.get(key).map(|_| receipt);",
+      "outcome": "killed"
+    },
+    {
+      "name": "parent predicate renamed",
+      "old": "        &format!(\"child{child}:parent_bound\"),",
+      "new": "        &format!(\"child{child}:parent\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "parent receipt read from another key",
+      "old": "        stated(\"parent_receipt\") == Some(receipt),",
+      "new": "        stated(\"receipt\") == Some(receipt),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a stale receipt binds",
+      "old": "        stated(\"parent_receipt\") == Some(receipt),",
+      "new": "        stated(\"parent_receipt\") != Some(receipt),",
+      "outcome": "killed"
+    },
+    {
+      "name": "any receipt binds",
+      "old": "        stated(\"parent_receipt\") == Some(receipt),",
+      "new": "        stated(\"parent_receipt\").is_some(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "parent evidence dropped",
+      "old": "        &Datum::from(receipt),",
+      "new": "        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "stale code renamed",
+      "old": "return Ok(Some(\"STALE_PARENT_RECEIPT\"));",
+      "new": "return Ok(Some(\"STALE\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "task predicate renamed",
+      "old": "        &format!(\"child{child}:task_unchanged\"),",
+      "new": "        &format!(\"child{child}:task\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "task digest read from another key",
+      "old": "        stated(\"task_digest\") == Some(task_digest.as_str()),",
+      "new": "        stated(\"digest\") == Some(task_digest.as_str()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a changed task binds",
+      "old": "        stated(\"task_digest\") == Some(task_digest.as_str()),",
+      "new": "        stated(\"task_digest\") != Some(task_digest.as_str()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "any task digest binds",
+      "old": "        stated(\"task_digest\") == Some(task_digest.as_str()),",
+      "new": "        stated(\"task_digest\").is_some(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "task evidence dropped",
+      "old": "        &Datum::text(task_digest.clone()),",
+      "new": "        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "changed-task code renamed",
+      "old": "return Ok(Some(\"TASK_CHANGED\"));",
+      "new": "return Ok(Some(\"CHANGED\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "header fuel read from another key",
+      "old": "    let claimed = head\n        .get(\"fuel\")",
+      "new": "    let claimed = head\n        .get(\"units\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "header fuel message changed",
+      "old": "        .ok_or(\"fuel must be an exact int\")?;\n    let evidence",
+      "new": "        .ok_or(\"fuel\")?;\n    let evidence",
+      "outcome": "killed"
+    },
+    {
+      "name": "fuel evidence claimed key renamed",
+      "old": "        (\"claimed\", Datum::Int(claimed.clone())),",
+      "new": "        (\"stated\", Datum::Int(claimed.clone())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "fuel evidence left key renamed",
+      "old": "        (\"left\", Datum::Int(fuel.left().clone())),",
+      "new": "        (\"host\", Datum::Int(fuel.left().clone())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "fuel evidence holds the claim twice",
+      "old": "        (\"left\", Datum::Int(fuel.left().clone())),",
+      "new": "        (\"left\", Datum::Int(claimed.clone())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "fuel predicate renamed",
+      "old": "        &format!(\"child{child}:fuel_not_reset\"),",
+      "new": "        &format!(\"child{child}:fuel\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a child may state less fuel",
+      "old": "        claimed == fuel.left(),",
+      "new": "        claimed <= fuel.left(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a child may state more fuel",
+      "old": "        claimed == fuel.left(),",
+      "new": "        claimed >= fuel.left(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "reset and mismatch swapped",
+      "old": "        return Ok(Some(if claimed > fuel.left() {",
+      "new": "        return Ok(Some(if claimed < fuel.left() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "reset code renamed",
+      "old": "            \"FUEL_RESET\"",
+      "new": "            \"RESET\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "mismatch code renamed",
+      "old": "            \"FUEL_MISMATCH\"",
+      "new": "            \"MISMATCH\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "plan read from another key",
+      "old": "        .get(\"children\")",
+      "new": "        .get(\"plan\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "plan message changed",
+      "old": "        .ok_or(\"children must be a list\")?",
+      "new": "        .ok_or(\"children\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "a plan may name the edge count",
+      "old": ".map(|child| flips(Some(child), edges).map(|child| child.into_iter().collect()))",
+      "new": ".map(|child| flips(Some(child), edges + 1).map(|child| child.into_iter().collect()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a child gets the first edges of the task",
+      "old": "                .filter_map(|&edge| whole.get(edge))",
+      "new": "                .enumerate()\n                .filter_map(|(at, _)| whole.get(at))",
+      "outcome": "killed"
+    },
+    {
+      "name": "part statement key renamed",
+      "old": "            \"statement\",\n            task.get(\"statement\").cloned()",
+      "new": "            \"text\",\n            task.get(\"statement\").cloned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "part statement read from another key",
+      "old": "            task.get(\"statement\").cloned().unwrap_or(Datum::text(\"\")),",
+      "new": "            task.get(\"title\").cloned().unwrap_or(Datum::text(\"\")),",
+      "outcome": "killed"
+    },
+    {
+      "name": "part edges hold the labels",
+      "old": "        (\"edges\", pick(\"edges\")),",
+      "new": "        (\"edges\", pick(\"labels\")),",
+      "outcome": "killed"
+    },
+    {
+      "name": "part labels key renamed",
+      "old": "        (\"labels\", pick(\"labels\")),",
+      "new": "        (\"label\", pick(\"labels\")),",
+      "outcome": "killed"
+    },
+    {
+      "name": "part limit key renamed",
+      "old": "        (\"max_attempts\", Datum::from(limit)),",
+      "new": "        (\"attempts\", Datum::from(limit)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "part limit one over",
+      "old": "        (\"max_attempts\", Datum::from(limit)),",
+      "new": "        (\"max_attempts\", Datum::from(limit + 1)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "halt child key renamed",
+      "old": "Datum::map([(\"child\", Datum::from(number)), (\"fuel_trace\", fuel.trace())]);",
+      "new": "Datum::map([(\"at\", Datum::from(number)), (\"fuel_trace\", fuel.trace())]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "halt child counted from one",
+      "old": "Datum::map([(\"child\", Datum::from(number)), (\"fuel_trace\", fuel.trace())]);",
+      "new": "Datum::map([(\"child\", Datum::from(number + 1)), (\"fuel_trace\", fuel.trace())]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "halt trace key renamed",
+      "old": "Datum::map([(\"child\", Datum::from(number)), (\"fuel_trace\", fuel.trace())]);",
+      "new": "Datum::map([(\"child\", Datum::from(number)), (\"trace\", fuel.trace())]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a header costs no fuel",
+      "old": "    if !fuel.draw() {\n        return halted(\"FUEL_EXHAUSTED\", fuel);",
+      "new": "    if fuel.left() < &BigInt::one() {\n        return halted(\"FUEL_EXHAUSTED\", fuel);",
+      "outcome": "killed"
+    },
+    {
+      "name": "fuel code renamed",
+      "old": "        return halted(\"FUEL_EXHAUSTED\", fuel);",
+      "new": "        return halted(\"NO_FUEL\", fuel);",
+      "outcome": "killed"
+    },
+    {
+      "name": "child line reworded",
+      "old": "        \"{}\\nChild {number} edges: [{}]\\nParent receipt: {receipt}\\nFuel: {}\",",
+      "new": "        \"{}\\nChild {number}: [{}]\\nParent receipt: {receipt}\\nFuel: {}\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipt line reworded",
+      "old": "        \"{}\\nChild {number} edges: [{}]\\nParent receipt: {receipt}\\nFuel: {}\",",
+      "new": "        \"{}\\nChild {number} edges: [{}]\\nReceipt: {receipt}\\nFuel: {}\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "header fuel line reworded",
+      "old": "        \"{}\\nChild {number} edges: [{}]\\nParent receipt: {receipt}\\nFuel: {}\",",
+      "new": "        \"{}\\nChild {number} edges: [{}]\\nParent receipt: {receipt}\\nFuel left: {}\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "edge listing has no spaces",
+      "old": "        listing.join(\", \"),",
+      "new": "        listing.join(\",\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "header stage renamed",
+      "old": "        .ask(&format!(\"enter:{number}\"), prompt)?",
+      "new": "        .ask(&format!(\"header:{number}\"), prompt)?",
+      "outcome": "killed"
+    },
+    {
+      "name": "a header may be any value",
+      "old": "        .filter(|head| head.is_map())\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "header message changed",
+      "old": "Stop::Malformed(format!(\"enter:{number} header must be an object\"))",
+      "new": "Stop::Malformed(format!(\"header {number}\"))",
+      "outcome": "killed"
+    },
+    {
+      "name": "binding refusal child key renamed",
+      "old": "let detail = Datum::map([(\"child\", Datum::from(number))]);",
+      "new": "let detail = Datum::map([(\"at\", Datum::from(number))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "binding refusal child counted from one",
+      "old": "let detail = Datum::map([(\"child\", Datum::from(number))]);",
+      "new": "let detail = Datum::map([(\"child\", Datum::from(number + 1))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "child stage prefix renamed",
+      "old": "        prefix: &format!(\"child:{number}:\"),",
+      "new": "        prefix: &format!(\"part:{number}:\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a child gets one attempt more",
+      "old": "        limit: child.limit,\n    };",
+      "new": "        limit: child.limit + 1,\n    };",
+      "outcome": "killed"
+    },
+    {
+      "name": "child attempts draw no fuel",
+      "old": "let derivation = derive(run, &turn, Some(&mut *fuel), &|reply| {",
+      "new": "let derivation = derive(run, &turn, None, &|reply| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "child predicate renamed",
+      "old": "        &format!(\"child{number}:certified\"),",
+      "new": "        &format!(\"child{number}:done\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "child certificate test inverted",
+      "old": "        derivation.halt == Halt::Certificate,\n        &Datum::from(halt),",
+      "new": "        derivation.halt != Halt::Certificate,\n        &Datum::from(halt),",
+      "outcome": "killed"
+    },
+    {
+      "name": "child certificate evidence dropped",
+      "old": "        derivation.halt == Halt::Certificate,\n        &Datum::from(halt),",
+      "new": "        derivation.halt == Halt::Certificate,\n        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "child halt code reworded",
+      "old": "return halted(&format!(\"CHILD_HALTED_ON_{}\", halt.to_uppercase()), fuel);",
+      "new": "return halted(&format!(\"CHILD_HALTED_{}\", halt.to_uppercase()), fuel);",
+      "outcome": "killed"
+    },
+    {
+      "name": "child halt code keeps its case",
+      "old": "return halted(&format!(\"CHILD_HALTED_ON_{}\", halt.to_uppercase()), fuel);",
+      "new": "return halted(&format!(\"CHILD_HALTED_ON_{}\", halt), fuel);",
+      "outcome": "killed"
+    },
+    {
+      "name": "accepted flips read from another key",
+      "old": "let accepted = derivation.accepted.and_then(|reply| reply.get(\"flip\"));",
+      "new": "let accepted = derivation.accepted.and_then(|reply| reply.get(\"flips\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "child flips are not mapped back",
+      "old": "        .filter_map(|edge| child.edges.get(edge).copied())",
+      "new": "        .map(|edge| edge)",
+      "outcome": "killed"
+    },
+    {
+      "name": "coverage is not sorted",
+      "old": "    covered.sort_unstable();",
+      "new": "    covered.dedup();",
+      "outcome": "killed"
+    },
+    {
+      "name": "repeated edges are merged",
+      "old": "    covered.sort_unstable();",
+      "new": "    covered.sort_unstable();\n    covered.dedup();",
+      "outcome": "killed"
+    },
+    {
+      "name": "coverage counts entries only",
+      "old": "    covered == (0..edges).collect::<Vec<_>>()",
+      "new": "    covered.len() == edges",
+      "outcome": "killed"
+    },
+    {
+      "name": "coverage may miss the last edge",
+      "old": "    covered == (0..edges).collect::<Vec<_>>()",
+      "new": "    covered == (0..edges).collect::<Vec<_>>() || covered == (0..edges.saturating_sub(1)).collect::<Vec<_>>()",
+      "outcome": "killed"
+    },
+    {
+      "name": "the plan costs no fuel",
+      "old": "    fuel.draw();\n    let Some(reply)",
+      "new": "    let Some(reply)",
+      "outcome": "killed"
+    },
+    {
+      "name": "plan stage renamed",
+      "old": "let Some(reply) = run.ask(\"plan\", format!(\"{}\\nFuel: {}\", run.prompt(), fuel.left()))? else {",
+      "new": "let Some(reply) = run.ask(\"split\", format!(\"{}\\nFuel: {}\", run.prompt(), fuel.left()))? else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "plan fuel line reworded",
+      "old": "let Some(reply) = run.ask(\"plan\", format!(\"{}\\nFuel: {}\", run.prompt(), fuel.left()))? else {",
+      "new": "let Some(reply) = run.ask(\"plan\", format!(\"{}\\nFuel left: {}\", run.prompt(), fuel.left()))? else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "coverage predicate renamed",
+      "old": "        \"forward_coverage_partition\",",
+      "new": "        \"coverage\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "coverage test inverted",
+      "old": "        partitions(&plan, edges),",
+      "new": "        !partitions(&plan, edges),",
+      "outcome": "killed"
+    },
+    {
+      "name": "coverage evidence dropped",
+      "old": "        partitions(&plan, edges),\n        &listed,",
+      "new": "        partitions(&plan, edges),\n        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "coverage code renamed",
+      "old": "            \"COVERAGE_NOT_A_PARTITION\",",
+      "new": "            \"COVERAGE\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "coverage detail key renamed",
+      "old": "            Datum::map([(\"plan\", listed)]),",
+      "new": "            Datum::map([(\"children\", listed)]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "root receipt root key renamed",
+      "old": "        (\"root\", Datum::text(digest(task))),",
+      "new": "        (\"task\", Datum::text(digest(task))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "root receipt ignores the task",
+      "old": "        (\"root\", Datum::text(digest(task))),",
+      "new": "        (\"root\", Datum::text(String::new())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "root receipt plan key renamed",
+      "old": "        (\"plan\", listed),\n    ]));",
+      "new": "        (\"children\", listed),\n    ]));",
+      "outcome": "killed"
+    },
+    {
+      "name": "root receipt ignores the plan",
+      "old": "        (\"plan\", listed),\n    ]));",
+      "new": "        (\"plan\", Datum::Null),\n    ]));",
+      "outcome": "killed"
+    },
+    {
+      "name": "child receipt parent key renamed",
+      "old": "            (\"parent\", Datum::text(receipt)),",
+      "new": "            (\"before\", Datum::text(receipt)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "child receipt is not chained",
+      "old": "            (\"parent\", Datum::text(receipt)),",
+      "new": "            (\"parent\", Datum::text(String::new())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "child receipt child key renamed",
+      "old": "            (\"child\", Datum::from(number)),",
+      "new": "            (\"at\", Datum::from(number)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "child receipt ignores the child number",
+      "old": "            (\"child\", Datum::from(number)),",
+      "new": "            (\"child\", Datum::from(0usize)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "child receipt flips key renamed",
+      "old": "            (\"flips\", indices(&flipped)),",
+      "new": "            (\"flip\", indices(&flipped)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "child receipt covers the edges instead of the flips",
+      "old": "            (\"flips\", indices(&flipped)),",
+      "new": "            (\"flips\", indices(edges)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "child receipt fuel key renamed",
+      "old": "            (\"fuel\", Datum::Int(fuel.left().clone())),",
+      "new": "            (\"left\", Datum::Int(fuel.left().clone())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "child receipt ignores the fuel",
+      "old": "            (\"fuel\", Datum::Int(fuel.left().clone())),",
+      "new": "            (\"fuel\", Datum::Null),",
+      "outcome": "killed"
+    },
+    {
+      "name": "child flips are forgotten",
+      "old": "        combined.extend(flipped);",
+      "new": "        combined.extend(flipped.into_iter().take(0));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the union need only have the least size",
+      "old": "let whole = root.odd_cycles(&combined).is_empty() && combined.len() == root.least_repair();",
+      "new": "let whole = root.odd_cycles(&combined).is_empty() || combined.len() == root.least_repair();",
+      "outcome": "killed"
+    },
+    {
+      "name": "the union need not leave the cycles even",
+      "old": "let whole = root.odd_cycles(&combined).is_empty() && combined.len() == root.least_repair();",
+      "new": "let whole = combined.len() == root.least_repair();",
+      "outcome": "killed"
+    },
+    {
+      "name": "the union need not have the least size",
+      "old": "let whole = root.odd_cycles(&combined).is_empty() && combined.len() == root.least_repair();",
+      "new": "let whole = root.odd_cycles(&combined).is_empty();",
+      "equivalent": "Reaching this line means every child was certified, so each child flipped a least repair of its own part. Any repair of the whole task, cut down to one part, repairs that part, because a cycle of a part is a cycle of the task; so every repair of the task is at least as large as the union. When the union leaves no cycle odd it is itself a repair, so its size is the least and the size test adds nothing.",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "backward predicate renamed",
+      "old": "checks.record(\"backward_solution_map\", whole, &flips);",
+      "new": "checks.record(\"backward\", whole, &flips);",
+      "outcome": "killed"
+    },
+    {
+      "name": "backward test inverted",
+      "old": "checks.record(\"backward_solution_map\", whole, &flips);",
+      "new": "checks.record(\"backward_solution_map\", !whole, &flips);",
+      "outcome": "killed"
+    },
+    {
+      "name": "backward evidence dropped",
+      "old": "checks.record(\"backward_solution_map\", whole, &flips);",
+      "new": "checks.record(\"backward_solution_map\", whole, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "detail flips key renamed",
+      "old": "        (\"flips\", flips),\n",
+      "new": "        (\"flip\", flips),\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "detail trace key renamed",
+      "old": "        (\"fuel_trace\", fuel.trace()),",
+      "new": "        (\"trace\", fuel.trace()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "detail receipt key renamed",
+      "old": "        (\"receipt\", Datum::text(receipt)),",
+      "new": "        (\"last\", Datum::text(receipt)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "certified code renamed",
+      "old": "Ok(checks.judge(\"REENTRY_CERTIFIED\", detail))",
+      "new": "Ok(checks.judge(\"CERTIFIED\", detail))",
+      "outcome": "killed"
+    }
+  ]
+}

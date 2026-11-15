@@ -1,0 +1,443 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf20.rs",
+  "target_sha256": "5c86158b7a3ad4afb5b72e985ec0adc2e499bfae669e05790cb87b3929208ce9",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf20 --test wf33 --test wf40",
+  "counts": {
+    "killed": 71,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "loop limit raised",
+      "old": "pub const LOOP_LIMIT: usize = 5;",
+      "new": "pub const LOOP_LIMIT: usize = 6;",
+      "outcome": "killed"
+    },
+    {
+      "name": "loop limit lowered",
+      "old": "pub const LOOP_LIMIT: usize = 5;",
+      "new": "pub const LOOP_LIMIT: usize = 4;",
+      "outcome": "killed"
+    },
+    {
+      "name": "default grant is the chords",
+      "old": "pub const LIFTS: [&str; 2] = [\"fundamental_cycles\", \"chords\"];",
+      "new": "pub const LIFTS: [&str; 2] = [\"chords\", \"fundamental_cycles\"];",
+      "outcome": "killed"
+    },
+    {
+      "name": "cycles grant renamed",
+      "old": "pub const LIFTS: [&str; 2] = [\"fundamental_cycles\", \"chords\"];",
+      "new": "pub const LIFTS: [&str; 2] = [\"cycles\", \"chords\"];",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF20\",",
+      "new": "    workflow: \"WF2\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Derivation loop with lift grants\",",
+      "new": "    name: \"Derivation loop\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"structural_lift_grant_loop\",",
+      "new": "    host_check: \"loop\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "certificate halt renamed",
+      "old": "            Halt::Certificate => \"certificate\",",
+      "new": "            Halt::Certificate => \"certified\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "budget halt renamed",
+      "old": "            Halt::Budget => \"budget\",",
+      "new": "            Halt::Budget => \"reply\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "fuel halt renamed",
+      "old": "            Halt::Fuel => \"fuel\",",
+      "new": "            Halt::Fuel => \"budget\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "limit halt renamed",
+      "old": "            Halt::Limit => \"limit\",",
+      "new": "            Halt::Limit => \"cap\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "scope halt renamed",
+      "old": "            Halt::Scope => \"scope\",",
+      "new": "            Halt::Scope => \"limit\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "chords given for the other kind",
+      "old": "    if kind == \"chords\" {",
+      "new": "    if kind != \"chords\" {",
+      "outcome": "killed"
+    },
+    {
+      "name": "chords key renamed",
+      "old": "return Datum::map([(\"chords\", Datum::from(graph.forest().chords))]);",
+      "new": "return Datum::map([(\"chord\", Datum::from(graph.forest().chords))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "cycle steps lose their sign",
+      "old": "Datum::List(vec![Datum::from(edge), Datum::from(i64::from(sign))])",
+      "new": "Datum::List(vec![Datum::from(edge), Datum::from(1i64)])",
+      "outcome": "killed"
+    },
+    {
+      "name": "cycle steps are sign then edge",
+      "old": "Datum::List(vec![Datum::from(edge), Datum::from(i64::from(sign))])",
+      "new": "Datum::List(vec![Datum::from(i64::from(sign)), Datum::from(edge)])",
+      "outcome": "killed"
+    },
+    {
+      "name": "cycles key renamed",
+      "old": "Datum::map([(\"fundamental_cycles\", Datum::List(cycles.collect()))])",
+      "new": "Datum::map([(\"cycles\", Datum::List(cycles.collect()))])",
+      "outcome": "killed"
+    },
+    {
+      "name": "request read from another key",
+      "old": "    match reply.get(\"lift_request\") {",
+      "new": "    match reply.get(\"lift\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a null request is outside the scope",
+      "old": "        None | Some(Datum::Null) => Ok(None),",
+      "new": "        None => Ok(None),",
+      "outcome": "killed"
+    },
+    {
+      "name": "any request is in scope",
+      "old": "            .find(|kind| asked.as_text() == Some(kind))",
+      "new": "            .find(|_| true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a request outside the scope is unnamed",
+      "old": "                    .map_or_else(|| asked.canonical(), str::to_owned)",
+      "new": "                    .map_or_else(String::new, |_| String::new())",
+      "outcome": "killed"
+    },
+    {
+      "name": "a non-text request is named by nothing",
+      "old": "                    .map_or_else(|| asked.canonical(), str::to_owned)",
+      "new": "                    .map_or_else(String::new, str::to_owned)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a loop that runs out halted on budget",
+      "old": "        halt: Halt::Limit,\n        trail: Vec::new(),",
+      "new": "        halt: Halt::Budget,\n        trail: Vec::new(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "one attempt too many",
+      "old": "    for attempt in 0..turn.limit {",
+      "new": "    for attempt in 0..=turn.limit {",
+      "outcome": "killed"
+    },
+    {
+      "name": "fuel test inverted",
+      "old": "        if fuel.as_mut().is_some_and(|fuel| !fuel.draw()) {",
+      "new": "        if fuel.as_mut().is_some_and(|fuel| fuel.draw()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "fuel is not drawn",
+      "old": "        if fuel.as_mut().is_some_and(|fuel| !fuel.draw()) {",
+      "new": "        if fuel.as_mut().is_some_and(|fuel| fuel.left() < &num_bigint::BigInt::from(1)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "fuel halt reported as limit",
+      "old": "            out.halt = Halt::Fuel;",
+      "new": "            out.halt = Halt::Limit;",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage loses its prefix",
+      "old": "let stage = format!(\"{}attempt:{attempt}\", turn.prefix);",
+      "new": "let stage = format!(\"attempt:{attempt}\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage renamed",
+      "old": "let stage = format!(\"{}attempt:{attempt}\", turn.prefix);",
+      "new": "let stage = format!(\"{}try:{attempt}\", turn.prefix);",
+      "outcome": "killed"
+    },
+    {
+      "name": "budget halt reported as limit",
+      "old": "            out.halt = Halt::Budget;",
+      "new": "            out.halt = Halt::Limit;",
+      "outcome": "killed"
+    },
+    {
+      "name": "scope halt reported as limit",
+      "old": "                out.halt = Halt::Scope;",
+      "new": "                out.halt = Halt::Limit;",
+      "outcome": "killed"
+    },
+    {
+      "name": "scope row attempt key renamed",
+      "old": "                    (\"attempt\", Datum::from(attempt)),\n                    (\"lift_request\", Datum::text(outside)),",
+      "new": "                    (\"turn\", Datum::from(attempt)),\n                    (\"lift_request\", Datum::text(outside)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "scope row counts from one",
+      "old": "                    (\"attempt\", Datum::from(attempt)),\n                    (\"lift_request\", Datum::text(outside)),",
+      "new": "                    (\"attempt\", Datum::from(attempt + 1)),\n                    (\"lift_request\", Datum::text(outside)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "scope row request key renamed",
+      "old": "                    (\"lift_request\", Datum::text(outside)),",
+      "new": "                    (\"request\", Datum::text(outside)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "trail rows count from one",
+      "old": "        out.trail.push(row(attempt, &finding));",
+      "new": "        out.trail.push(row(attempt + 1, &finding));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a rejected attempt ends the loop",
+      "old": "        if finding.accepted {\n            out.halt = Halt::Certificate;",
+      "new": "        if !finding.accepted {\n            out.halt = Halt::Certificate;",
+      "outcome": "killed"
+    },
+    {
+      "name": "acceptance reported as limit",
+      "old": "            out.halt = Halt::Certificate;",
+      "new": "            out.halt = Halt::Limit;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the accepted reply is not kept",
+      "old": "            out.accepted = Some(reply);",
+      "new": "            out.accepted = None;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a level attempt is not stalled",
+      "old": ".is_some_and(|before| measure.as_ref().is_none_or(|now| now >= before));",
+      "new": ".is_some_and(|before| measure.as_ref().is_none_or(|now| now > before));",
+      "outcome": "killed"
+    },
+    {
+      "name": "an improving attempt is stalled",
+      "old": ".is_some_and(|before| measure.as_ref().is_none_or(|now| now >= before));",
+      "new": ".is_some_and(|before| measure.as_ref().is_none_or(|now| now <= before));",
+      "outcome": "killed"
+    },
+    {
+      "name": "an unreadable attempt is not stalled",
+      "old": ".is_some_and(|before| measure.as_ref().is_none_or(|now| now >= before));",
+      "new": ".is_some_and(|before| measure.as_ref().is_some_and(|now| now >= before));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a first attempt is stalled",
+      "old": "        let stalled = previous\n            .as_ref()\n            .is_some_and(",
+      "new": "        let stalled = previous\n            .as_ref()\n            .is_none_or(",
+      "outcome": "killed"
+    },
+    {
+      "name": "a stalled attempt gets the chords by default",
+      "old": "            let kind = asked.unwrap_or(LIFTS[0]);",
+      "new": "            let kind = asked.unwrap_or(LIFTS[1]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the kind asked for is ignored",
+      "old": "            let kind = asked.unwrap_or(LIFTS[0]);",
+      "new": "            let kind = LIFTS[0];",
+      "outcome": "killed"
+    },
+    {
+      "name": "grant row attempt key renamed",
+      "old": "                (\"attempt\", Datum::from(attempt)),\n                (\"kind\", Datum::from(kind)),",
+      "new": "                (\"turn\", Datum::from(attempt)),\n                (\"kind\", Datum::from(kind)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "grant row counts from one",
+      "old": "                (\"attempt\", Datum::from(attempt)),\n                (\"kind\", Datum::from(kind)),",
+      "new": "                (\"attempt\", Datum::from(attempt + 1)),\n                (\"kind\", Datum::from(kind)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "grant row kind key renamed",
+      "old": "                (\"kind\", Datum::from(kind)),",
+      "new": "                (\"lift\", Datum::from(kind)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "grant line reworded",
+      "old": "            granted.push_str(\"\\nLIFT_REQUEST grant: \");",
+      "new": "            granted.push_str(\"\\nGrant: \");",
+      "outcome": "killed"
+    },
+    {
+      "name": "grant holds the other kind",
+      "old": "            granted.push_str(&grant(turn.graph, kind).canonical());",
+      "new": "            granted.push_str(&grant(turn.graph, LIFTS[0]).canonical());",
+      "outcome": "killed"
+    },
+    {
+      "name": "an unreadable attempt resets the comparison",
+      "old": "        previous = measure.or(previous);",
+      "new": "        previous = measure;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the first readable measure is kept",
+      "old": "        previous = measure.or(previous);",
+      "new": "        previous = previous.or(measure);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the residual is left out of the next prompt",
+      "old": "        prompt = with_residual(&base, &finding.residual) + &granted;",
+      "new": "        prompt = base.clone() + &granted;",
+      "outcome": "killed"
+    },
+    {
+      "name": "grants are left out of the prompt",
+      "old": "        prompt = with_residual(&base, &finding.residual) + &granted;",
+      "new": "        prompt = with_residual(&base, &finding.residual);",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation skips the graph",
+      "old": "    xor::read(task)?;\n    limit(task, LOOP_LIMIT, LOOP_LIMIT).map(|_| ())",
+      "new": "    limit(task, LOOP_LIMIT, LOOP_LIMIT).map(|_| ())",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation skips the limit",
+      "old": "    xor::read(task)?;\n    limit(task, LOOP_LIMIT, LOOP_LIMIT).map(|_| ())",
+      "new": "    xor::read(task).map(|_| ())",
+      "outcome": "killed"
+    },
+    {
+      "name": "stages carry a prefix",
+      "old": "        prefix: \"\",",
+      "new": "        prefix: \"loop:\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "scope test inverted",
+      "old": "    if derivation.halt == Halt::Scope {",
+      "new": "    if derivation.halt != Halt::Scope {",
+      "outcome": "killed"
+    },
+    {
+      "name": "scope predicate renamed",
+      "old": "checks.record(\"lift_request_structural\", false, &last);",
+      "new": "checks.record(\"lift_request\", false, &last);",
+      "outcome": "killed"
+    },
+    {
+      "name": "scope predicate recorded as passed",
+      "old": "checks.record(\"lift_request_structural\", false, &last);",
+      "new": "checks.record(\"lift_request_structural\", true, &last);",
+      "outcome": "killed"
+    },
+    {
+      "name": "scope evidence dropped",
+      "old": "checks.record(\"lift_request_structural\", false, &last);",
+      "new": "checks.record(\"lift_request_structural\", false, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "scope trail key renamed",
+      "old": "let detail = Datum::map([(\"trail\", Datum::List(derivation.trail))]);",
+      "new": "let detail = Datum::map([(\"rows\", Datum::List(derivation.trail))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "scope code renamed",
+      "old": "return Ok(refused(\"LIFT_SCOPE_VIOLATION\", detail));",
+      "new": "return Ok(refused(\"SCOPE\", detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "attempts key renamed",
+      "old": "        (\"attempts\", Datum::from(derivation.trail.len())),",
+      "new": "        (\"tries\", Datum::from(derivation.trail.len())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "attempts counted one over",
+      "old": "        (\"attempts\", Datum::from(derivation.trail.len())),",
+      "new": "        (\"attempts\", Datum::from(derivation.trail.len() + 1)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "grants key renamed",
+      "old": "        (\"grants\", Datum::List(derivation.grants)),",
+      "new": "        (\"lifts\", Datum::List(derivation.grants)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "certificate predicate renamed",
+      "old": "        \"certificate_within_loop_limit\",",
+      "new": "        \"certificate\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "certificate test inverted",
+      "old": "        derivation.halt == Halt::Certificate,\n        &Datum::from(halt),",
+      "new": "        derivation.halt != Halt::Certificate,\n        &Datum::from(halt),",
+      "outcome": "killed"
+    },
+    {
+      "name": "certificate evidence dropped",
+      "old": "        derivation.halt == Halt::Certificate,\n        &Datum::from(halt),",
+      "new": "        derivation.halt == Halt::Certificate,\n        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "halt code reworded",
+      "old": "            &format!(\"HALTED_ON_{}\", halt.to_uppercase()),",
+      "new": "            &format!(\"HALTED_{}\", halt.to_uppercase()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "halt code keeps its case",
+      "old": "            &format!(\"HALTED_ON_{}\", halt.to_uppercase()),",
+      "new": "            &format!(\"HALTED_ON_{}\", halt),",
+      "outcome": "killed"
+    },
+    {
+      "name": "derived code renamed",
+      "old": "    Ok(checks.judge(\"DERIVED\", detail))",
+      "new": "    Ok(checks.judge(\"DONE\", detail))",
+      "outcome": "killed"
+    }
+  ]
+}

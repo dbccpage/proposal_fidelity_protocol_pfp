@@ -1,0 +1,107 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf40.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf40.rs",
+      "language": "Rust",
+      "sha256": "33ebc83d285cf95ef9fbebfac745fa068b002162a406102a327f2347167588d4"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf40:v1",
+    "symbols": [
+      "ACTIONS",
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task is edges, a list of pairs whose vertices are named 0 to n-1; c, one exact rational per edge; faces, a list of closed walks, each a list of [edge, sign] with the edge in range and sign 1 or -1; and optionally max_attempts, an exact integer from 1 to 5. A face that is not closed is refused before anything is asked.",
+      "Repair proposes phi, one exact rational per vertex listed by vertex name, in the WF20 loop. An attempt is accepted exactly when c is the coboundary of phi. The residual gives the size of the misfit and the edges that are off, never a value. A run repaired within the limit is certified as REPAIRED, and a repair that asks for a grant outside the structure is refused.",
+      "If repair ends without a certificate and without a request outside the structure, the host shows one receipt per failed attempt and asks for one boundary action. A receipt is the SHA-256 digest of the canonical JSON of the spec's digest, the attempt's number and its residual.",
+      "A boundary reply must take exactly one of refusal, lift and restart, or the run is refused as NOT_EXACTLY_ONE_ACTION.",
+      "Which action is admissible is fixed by c alone: refusal when some face sum of c is not zero, restart when c is a coboundary, lift when every face sum is zero and c is no coboundary. An action other than the admissible one fails the predicate action_matches_trichotomy.",
+      "A refusal names a face; it stands as the typed refusal UNCLOSED_COCHAIN only when the sum of c round that face is not zero.",
+      "A lift gives phi, k and an edge value h. It is certified as LIFT_AUTHORISED only when the defect of c is positive, every face sum of h is zero, and c equals the coboundary of phi plus k times h on every edge.",
+      "A restart gives a seed that holds exactly spec and receipts. The spec must be the task's edges, faces and c unchanged, and the receipts a nonempty list of receipts the host showed. A seed that keeps the edges and faces and changes c is refused as NEW_PROBLEM_NOT_REPAIR. The repair loop then runs once more on the seed, under the stages restart:attempt:<k> and the task's limit, and the run is certified as RESTART_REPAIRED only when that loop ends on a certificate."
+    ],
+    "boundaries": [
+      "The three cases are told apart on the faces the task lists. A cycle the task does not list as a face is not examined for closure, so closed means closed on the listed faces.",
+      "A receipt is a digest of what the host itself computed. It shows that a seed carries what the host showed; it is not a signature.",
+      "A lift is checked as an identity between the values given. Nothing is claimed about what h means beyond its face sums.",
+      "The restart is one more bounded loop on the same values. Nothing here lets a run restart twice."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf40.rs",
+      "language": "Rust",
+      "sha256": "33ebc83d285cf95ef9fbebfac745fa068b002162a406102a327f2347167588d4"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: c, phi, k and h are exact rationals over unbounded integers; face sums, the coboundary and the defect are computed and compared exactly. Each of the three cases is asserted on values worked by hand. Receipts are rebuilt in the tests from the canonical text written out. Not B: tested on examples, not proven; the hash library is trusted.",
+      "G3": "Every unreadable task, potential, lift and seed has its own reason, and each inadmissible action is refused under the name of the predicate it fails. A step is read by a slice pattern, so an entry of any other length is not a step. No unwrap or expect; a potential is written by vertex number into a list of the vertex count. Not B: panic-freedom is tested, not proven.",
+      "G4": "28 WF40 tests assert the registry entry, the repair and boundary prompts byte for byte, potentials listed by vertex name, the misfit and off edges of a rejected attempt, receipts rebuilt by hand, exactly one action, each of the three cases with its admitted action certified and each other action refused, a face that does close, a witness that is not closed or does not reproduce c, a seed with extra keys, other values, another graph, no receipt or a receipt not shown, a restart that does not repair, and each malformed task, lift and seed by its reason. Mutation campaign R = 178/178. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 11, cognitive complexity is not measured for Rust, nesting 1; ceiling B, recorded B."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T15:01:56Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v10-test.run.json",
+        "sha256": "2ac3c78c0d43c1d8afccff41082ba5766a3c997b4958118d8411ec48197bb9e4",
+        "note": "597 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-clippy.run.json",
+        "sha256": "bca267d7753f15b816eccc1004bdc6ce881b1819f40ee74e5c1c57e840c95cdb",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-fmt.run.json",
+        "sha256": "f6d1c8480e66c3f0cfb6f83e0bb819d7a7d861989fc9164bee66d15943552e9b",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-metrics.run.json",
+        "sha256": "896842a84d07003d020cd4e1e29115b2a6a075310f83be82779b4ac28bfdc7f3",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v10-metrics.json",
+        "sha256": "f0123515ac77c4cf93d96d509948e04b751df51b9f0d39da5f53a058f3164656",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 178,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf40.mutation.json",
+        "sha256": "406d62e87a0e14b8c4eb4f7946438c02a288c912a132c85a7a93e3a47c364df0",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 178 mutants"
+      }
+    }
+  },
+  "history": []
+}

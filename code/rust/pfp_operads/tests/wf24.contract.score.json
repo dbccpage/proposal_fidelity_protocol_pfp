@@ -1,0 +1,116 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf24.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf24.rs",
+      "language": "Rust",
+      "sha256": "c3c0306f4abe686519061c550dfbe8ef41fa8f232ceaab4f05299806b0ae9ed2"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf24-tests:v1",
+    "symbols": [
+      "sha",
+      "twisted",
+      "twisted_reply",
+      "flat",
+      "flat_reply",
+      "with",
+      "run",
+      "turn",
+      "bad_task",
+      "accepted",
+      "malformed",
+      "failed",
+      "evidence",
+      "the_family_is_registered_under_its_names_and_limits",
+      "a_loop_folded_step_by_step_is_certified",
+      "a_loop_that_closes_is_certified_as_flat",
+      "a_backward_token_is_the_inverse_of_its_link_not_the_link",
+      "links_are_applied_in_loop_order",
+      "tokens_that_are_not_the_loop_s_fail_alone",
+      "a_wrong_partial_product_fails_alone_and_is_located",
+      "a_scratchpad_of_the_wrong_length_fails_at_the_first_step_one_side_lacks",
+      "a_wrong_holonomy_fails_alone",
+      "a_wrong_flatness_fails_alone",
+      "every_failure_is_reported_together",
+      "a_reply_without_its_parts_is_malformed",
+      "a_scratchpad_entry_or_holonomy_that_is_not_a_permutation_is_malformed",
+      "the_reply_s_parts_are_read_in_a_fixed_order",
+      "the_number_of_points_is_an_exact_integer_within_the_limit",
+      "every_link_is_a_permutation_of_the_task_s_points",
+      "the_loop_has_between_one_and_the_limit_of_tokens",
+      "a_loop_at_the_limit_is_folded_exactly",
+      "a_token_is_a_declared_link_with_a_direction"
+    ],
+    "owned_invariants": [
+      "Chains and holonomies are worked by hand on links that do not commute, so the order of composition and the direction of a token are fixed by the expected values.",
+      "Each predicate is asserted failing alone with its code, and the first bad step by value.",
+      "The limits are written as the values 64 and 4096 and asserted one inside and one outside."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf24.rs",
+      "language": "Rust",
+      "sha256": "c3c0306f4abe686519061c550dfbe8ef41fa8f232ceaab4f05299806b0ae9ed2"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 19 pass in the recorded run; the suite they belong to killed 76 of 76 eligible WF24 mutants.",
+      "G5": "Measured worst cyclomatic 4, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T13:51:27Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v9-test.run.json",
+        "sha256": "75c065d96b64633778adc9bbc5a54eb150b58536223e4c3443f62215ad84017e",
+        "note": "427 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-clippy.run.json",
+        "sha256": "b095a186f720f679235b2f243d030a0c7412ecd11d687d13c61ad6cac778d72e",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-fmt.run.json",
+        "sha256": "17a3ba5175b2bb9bccc425d89628829ccaadff38dc36f614734ea800455c7625",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.run.json",
+        "sha256": "785da0a0586cbf62c7a8439e2a626fa5ba0df80942665c0838e344cc4f460f41",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.json",
+        "sha256": "e9c47748ca0777f0a16723ed4f2e9ddb5b44c2f4480bd78d2102e6cf92daa227",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

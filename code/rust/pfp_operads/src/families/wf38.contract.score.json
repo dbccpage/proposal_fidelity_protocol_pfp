@@ -1,0 +1,202 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf38.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf38.rs",
+      "language": "Rust",
+      "sha256": "bb81984c71f6950ea7e79153f5ff7eaa1d5a8685bc2dc34ac8c4bc17eb9f984d"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf38:v1",
+    "symbols": [
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task is the cochain task of cochain.rs: edges on vertices named 0 to n-1 and one exact rational per edge. A task the host cannot read is refused before anything is asked.",
+      "One question is asked, the task as written. The reply carries candidates, a list; each candidate has a text name, distinct from the others, and delta, a list of [edge, value] corrections with the edge in range and the value an exact rational.",
+      "The host adds each candidate's corrections to the task's values and recomputes the defect itself. No other field of a candidate is read, so a score a candidate gives itself changes nothing.",
+      "Candidates that lower the defect strictly are ranked by the defect they leave, then by the total size of their corrections, then by name. The run is certified as SELECTED with the first of that ranking, the defect before and after, every candidate's score and the ranking.",
+      "When no candidate lowers the defect strictly the run is refused as NO_STRICT_DECREASE with the defect and every score."
+    ],
+    "boundaries": [
+      "The winner is the best of the candidates given. Nothing is claimed about repairs that were not proposed.",
+      "The defect is measured against the breadth-first forest of graph.rs. It is zero exactly for a coboundary, and its size otherwise depends on that forest.",
+      "Corrections to one edge add up. A candidate with an empty delta is scored at the defect it started with."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf38.rs",
+      "language": "Rust",
+      "sha256": "bb81984c71f6950ea7e79153f5ff7eaa1d5a8685bc2dc34ac8c4bc17eb9f984d"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: values, corrections, defects and correction sizes are exact rationals, compared exactly and ranked in a fixed total order. Defects and rankings are worked by hand in the tests, with ties on defect and on size. Not B: tested on examples, not proven.",
+      "G3": "Each unreadable candidate list, name and correction has its own reason, and a run with no admissible candidate has its own code and the scores that show it. No unwrap or expect, and no index: a correction is written with get_mut on an edge already checked to be in range. Not B: panic-freedom is tested, not proven.",
+      "G4": "14 WF38 tests assert the registry entry, the prompt byte for byte, the selected candidate with its scores, ranking and evidence, an equal defect that is not ranked, ties broken by size and then by name, a smaller defect ahead of a smaller correction, a self-reported score ignored, no strict decrease with every score, a coboundary that nothing improves, and each malformed candidate list, name and correction by its reason. Mutation campaign R = 51/51. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 7, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T16:06:43Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v11-test.run.json",
+        "sha256": "6a9776b5ca88d37e3536a8f5db9bb1aea115c9f46cb37d2ee2a0437bdbf0991c",
+        "note": "734 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-clippy.run.json",
+        "sha256": "66b4e1d2379f1226a13d70b7fdcf1604634a31f09ade75d548bde957fb8b19de",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-fmt.run.json",
+        "sha256": "705ef43242290a5139c6c50b71d63900d8c7797ae6e591d9628f350fe9711098",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-metrics.run.json",
+        "sha256": "8c1f359efe9677bde150f7df47cb3ac9bc5ce638c0eb2aeaa78ba72934759149",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v11-metrics.json",
+        "sha256": "3c2c402f16644cedb0b99b0c98ec5749f047f586797bc892503fdb54c4b93cd0",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 51,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf38.mutation.json",
+        "sha256": "b14449c1e0ed310f02832411abfe4ee4a5222c9d71227610c9fddaa031d13b17",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 51 mutants"
+      }
+    }
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-14T16:06:44.426414Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf38.rs",
+          "language": "Rust",
+          "sha256": "bb81984c71f6950ea7e79153f5ff7eaa1d5a8685bc2dc34ac8c4bc17eb9f984d"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf38:v1",
+        "symbols": [
+          "FAMILY"
+        ],
+        "owned_invariants": [
+          "The task is the cochain task of cochain.rs: edges on vertices named 0 to n-1 and one exact rational per edge. A task the host cannot read is refused before anything is asked.",
+          "One question is asked, the task as written. The reply carries candidates, a list; each candidate has a text name, distinct from the others, and delta, a list of [edge, value] corrections with the edge in range and the value an exact rational.",
+          "The host adds each candidate's corrections to the task's values and recomputes the defect itself. No other field of a candidate is read, so a score a candidate gives itself changes nothing.",
+          "Candidates that lower the defect strictly are ranked by the defect they leave, then by the total size of their corrections, then by name. The run is certified as SELECTED with the first of that ranking, the defect before and after, every candidate's score and the ranking.",
+          "When no candidate lowers the defect strictly the run is refused as NO_STRICT_DECREASE with the defect and every score."
+        ],
+        "boundaries": [
+          "The winner is the best of the candidates given. Nothing is claimed about repairs that were not proposed.",
+          "The defect is measured against the breadth-first forest of graph.rs. It is zero exactly for a coboundary, and its size otherwise depends on that forest.",
+          "Corrections to one edge add up. A candidate with an empty delta is scored at the defect it started with."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf38.rs",
+          "language": "Rust",
+          "sha256": "bb81984c71f6950ea7e79153f5ff7eaa1d5a8685bc2dc34ac8c4bc17eb9f984d"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Exact: values, corrections, defects and correction sizes are exact rationals, compared exactly and ranked in a fixed total order. Defects and rankings are worked by hand in the tests, with ties on defect and on size. Not B: tested on examples, not proven.",
+          "G3": "Each unreadable candidate list, name and correction has its own reason, and a run with no admissible candidate has its own code and the scores that show it. No unwrap or expect, and no index: a correction is written with get_mut on an edge already checked to be in range. Not B: panic-freedom is tested, not proven.",
+          "G4": "14 WF38 tests assert the registry entry, the prompt byte for byte, the selected candidate with its scores, ranking and evidence, an equal defect that is not ranked, ties broken by size and then by name, a smaller defect ahead of a smaller correction, a self-reported score ignored, no strict decrease with every score, a coboundary that nothing improves, and each malformed candidate list, name and correction by its reason. Mutation campaign R = 51/51. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 7, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T16:04:44Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v11-test.run.json",
+            "sha256": "6a9776b5ca88d37e3536a8f5db9bb1aea115c9f46cb37d2ee2a0437bdbf0991c",
+            "note": "734 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-clippy.run.json",
+            "sha256": "66b4e1d2379f1226a13d70b7fdcf1604634a31f09ade75d548bde957fb8b19de",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-fmt.run.json",
+            "sha256": "705ef43242290a5139c6c50b71d63900d8c7797ae6e591d9628f350fe9711098",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-metrics.run.json",
+            "sha256": "8c1f359efe9677bde150f7df47cb3ac9bc5ce638c0eb2aeaa78ba72934759149",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v11-metrics.json",
+            "sha256": "3c2c402f16644cedb0b99b0c98ec5749f047f586797bc892503fdb54c4b93cd0",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 51,
+          "survived": 0,
+          "demonstrably_equivalent": 0,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-wf38.mutation.json",
+            "sha256": "b14449c1e0ed310f02832411abfe4ee4a5222c9d71227610c9fddaa031d13b17",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 51 mutants"
+          }
+        }
+      }
+    }
+  ]
+}

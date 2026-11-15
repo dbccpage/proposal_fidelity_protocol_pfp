@@ -1,0 +1,146 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "7c7b627ef1ce09dcc54dbb038649fb9ae73bd01c",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+      "sha256": "9825821217cd86175d3945be81ce9c9ccae25ee657aba75eba9584d9b2d23ad2",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          600
+        ]
+      ],
+      "assessment": "Full manuscript inspected. Section 3 establishes Corollary LpC-C1 (circulation characterization of exactness) and Corollary L1C-C1 (general graph exactness criterion). Section 4.2 establishes Theorem LpC-T4P (strict convexity, unique quotient minimizer, and nonlinear graph p-Laplacian). Section 4.3 establishes Theorem LpC-T4H (weighted L2 Hodge-Helmholtz decomposition and Moore-Penrose pseudoinverse potential)."
+    },
+    {
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+      "sha256": "2a0036fe3ef27352ec9d09f81451c89aeb209bb05232673e38e2f99a553acfc1",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          42
+        ]
+      ],
+      "assessment": "Ledger entries read. Line 19 LpC-C1 (vanishing circulation pairings characterize exactness for all p), line 20 L1C-C1 (general graph exactness criterion), line 23 LpC-T4P (p-Laplacian optimality), and line 24 LpC-T4H (L2 Hodge and Moore-Penrose) verified."
+    },
+    {
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_general_certificate.lean",
+      "sha256": "525ed2de5d841e32e5e68fbeba4aa2449603b60de6c61b7c02bf99472da098fa",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          166
+        ]
+      ],
+      "assessment": "Lean 4 mechanization inspected. Formalizes exact cycle gauge annihilation condition <z, D p> = 0 across arbitrary finite dimension and discrete coboundary operator D."
+    },
+    {
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t05_cycle_invariant.lean",
+      "sha256": "7e03d5d5c6280f3e4674c3d905ae092b66ca74699dbe879ca2f7f9017aba5502",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          99
+        ]
+      ],
+      "assessment": "Lean 4 mechanization inspected. Formalizes cycle flux invariance under gauge potentials and spanning cycle lower bounds."
+    },
+    {
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_lp_strict_uniqueness.lean",
+      "sha256": "32fa7244ac1834392ee4f7db151f3eb3d4ae95d1d31ceed8bb967ad4a54eb2cc",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          152
+        ]
+      ],
+      "assessment": "Lean 4 mechanization inspected. Formalizes strict convexity of Lp norms and uniqueness of quotient minimizers on gauge-fixed potentials."
+    },
+    {
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_lp_hodge_decomposition.lean",
+      "sha256": "4ac6cafd7352e46603048dde4f76bc1f20889eb9d3beb2e68d9636452291d410",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          97
+        ]
+      ],
+      "assessment": "Lean 4 mechanization inspected. Formalizes discrete adjoint d0*, im(d0) perp ker(d0*), and Pythagorean L2 energy conservation for the Hodge-Helmholtz orthogonal decomposition."
+    }
+  ],
+  "remaining_scope": [],
+  "claims": [
+    {
+      "id": "AUDIT-N001-007",
+      "statement": "For any finite graph, a cochain c is exact if and only if <y, c> = 0 for every circulation y in ker d_0^T, establishing im d_0 = (ker d_0^T)^perp independently of p.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite graph 1-complex with finite-dimensional cochain spaces C^0 and C^1.",
+        "Standard inner product on edge cochains and adjoint coboundary operator d_0^T.",
+        "Finite-dimensional orthogonal complement involution (im d_0)^perp = ker d_0^T."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_general_certificate.lean"
+      ],
+      "limits": "Applies to finite-dimensional graphs; infinite complexes require closed range conditions."
+    },
+    {
+      "id": "AUDIT-N001-008",
+      "statement": "On any finite graph, vanishing circulation pairings characterize exactness via spanning-tree path integration and fundamental-cycle pairing across each connected component.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite graph with arbitrary connected component and cycle structure.",
+        "Spanning forest decomposition and fundamental cycle basis construction.",
+        "Telescoping potential reconstruction along spanning tree paths."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t05_cycle_invariant.lean"
+      ],
+      "limits": "Formulated on finite graphs with cycle space generated by fundamental cycles."
+    },
+    {
+      "id": "AUDIT-N001-011",
+      "statement": "For p in (1, inf) on a finite graph with positive weights, the quotient defect minimizer is unique on the gauge-fixed subspace, yields a unique residual r_p^*, and satisfies the nonlinear graph p-Laplacian equation d_0^T(w |r_p^*|^{p-2} r_p^*) = 0.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite graph with strictly positive edge weights.",
+        "Strict convexity of the power functional t -> (1/p) |t|^p for p in (1, inf).",
+        "Continuous differentiability and Euler-Lagrange stationarity on gauge-fixed potentials."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_lp_strict_uniqueness.lean"
+      ],
+      "limits": "Applies to strictly convex regime p in (1, inf); does not apply to non-strictly convex polyhedral p = 1 or non-smooth p = inf."
+    },
+    {
+      "id": "AUDIT-N001-012",
+      "statement": "For p = 2 on a finite graph with positive weights W, the least-squares potential is given by the Moore-Penrose formula f = L^+ d_0^T W c with L = d_0^T W d_0, selecting the minimum Euclidean-norm potential on (ker L)^perp and yielding orthogonal Hodge decomposition c = d_0 f + r.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite graph with positive diagonal weight matrix W.",
+        "Normal equations L f = d_0^T W c with graph Laplacian L = d_0^T W d_0.",
+        "Solvability of normal equations via im(d_0^T W) subset im(L) and Moore-Penrose pseudoinverse L^+."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_lp_hodge_decomposition.lean"
+      ],
+      "limits": "Applies to Hilbertian L2 regime; does not yield sparse cycle-concentrated residuals characteristic of L1."
+    }
+  ]
+}

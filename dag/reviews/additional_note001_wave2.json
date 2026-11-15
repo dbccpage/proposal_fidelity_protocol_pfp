@@ -1,0 +1,131 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+      "sha256": "9825821217cd86175d3945be81ce9c9ccae25ee657aba75eba9584d9b2d23ad2",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          600
+        ]
+      ],
+      "assessment": "Full manuscript inspected. Section 2 establishes 3-cycle coercivity and quotient norm axioms. Section 3 establishes Theorem LpC-T3 (Fenchel-Rockafellar Hölder duality for p in [1, inf]) and Section 4 details polyhedral, uniform, and Chebyshev regimes."
+    },
+    {
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+      "sha256": "2a0036fe3ef27352ec9d09f81451c89aeb209bb05232673e38e2f99a553acfc1",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          42
+        ]
+      ],
+      "assessment": "Ledger entries read. Line 14 L1C-T1 (3-cycle coercivity), line 16 L1C-T2 (three-edge norm axioms), and line 17 LpC-T3 (Fenchel-Rockafellar Hölder duality) verified."
+    },
+    {
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t01_attainment.lean",
+      "sha256": "510146e6686f820a5aa536497d8de080b5995744ff6798a6f1047d118442ecdc",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          100
+        ]
+      ],
+      "assessment": "Lean 4 mechanization inspected. Formalizes gauge_fixed_kernel_trivial, potential_v1_le_edge0, potential_v2_le_edge_sum, and l1c_t01_coercivity_bound on the integer 3-cycle with zero axioms."
+    },
+    {
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t02_quotient_norm.lean",
+      "sha256": "803737d35748a5e75507ae455e15fb67efa9fc6eb75685d09fa5949c12ec4b2e",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          167
+        ]
+      ],
+      "assessment": "Lean 4 mechanization inspected. Formalizes l1_norm3_nonneg, l1_norm3_triangle, residual3_add, l1_quotient_subadditive, l1_norm3_positive_definite, and zero_weight_refusal_counterexample with zero axioms."
+    },
+    {
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t03_weak_duality.lean",
+      "sha256": "e224ec2cbb86e04e5273fe4cc0c878ebc318b0f47bbaca9766db3ef79ace78db",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          136
+        ]
+      ],
+      "assessment": "Lean 4 mechanization inspected. Formalizes 3-cycle weak LP duality and circulation certificate lower bounds."
+    },
+    {
+      "path": "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_lp_duality.lean",
+      "sha256": "2345e92fc04c970d7b7ead72e381aed21c75bebe1165226f5f2d6bf6e30d208c",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          101
+        ]
+      ],
+      "assessment": "Lean 4 mechanization inspected. Formalizes divergence-free circulation condition d0* W = 0 and Hölder weak duality bound dot3 W h <= linf3 W * l13 (residual3 h p)."
+    }
+  ],
+  "remaining_scope": [],
+  "claims": [
+    {
+      "id": "AUDIT-N001-002",
+      "statement": "On the integer 3-cycle, a gauge-fixed potential satisfies |f| <= C ||df||_{1,w} with C = 1/min(w) under positive integer weights.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Integer 3-cycle graph topology with positive integer weights.",
+        "Gauge fixing condition f_0 = 0.",
+        "Path bound expressing vertex potentials via accumulated edge coboundary differences."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t01_attainment.lean"
+      ],
+      "limits": "Formulated for the discrete integer 3-cycle with positive integer weights; does not claim arbitrary infinite complexes or non-gauge-fixed potentials."
+    },
+    {
+      "id": "AUDIT-N001-004",
+      "statement": "On Z^3 with positive weights ||x|| = sum w_e |x_e| is positive definite, and residual representatives add subadditively; zero weight is refused.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Three-edge integer cochain space with positive integer weights.",
+        "Termwise triangle inequality on absolute values.",
+        "Linearity of the coboundary and residual operators under potential addition."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t02_quotient_norm.lean"
+      ],
+      "limits": "Applies to ambient cochain norm and supplied residual representatives; does not define the minimized quotient norm."
+    },
+    {
+      "id": "AUDIT-N001-005",
+      "statement": "For a finite graph with positive weights and conjugate exponents 1/p + 1/q = 1, strong Fenchel-Rockafellar duality establishes Phi_p(c) = max { <y, c> : d_0^T y = 0, ||y||_{q, w^*} <= 1 } with zero duality gap.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite graph with strictly positive edge weights.",
+        "Quotient infimum attainment on the gauge-fixed complement (AUDIT-N001-001).",
+        "Finite-dimensional Fenchel-Rockafellar convex duality theorem."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/l1_native_cohomology_claim_ledger.md",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_t03_weak_duality.lean",
+        "atlas/archive/non_pfp/001_l1_native_cohomology/lean4/l1c_lp_duality.lean"
+      ],
+      "limits": "Applies to finite graphs with positive weights; zero duality gap relies on finite dimensionality and non-empty interior of the continuous primal norm domain."
+    }
+  ]
+}

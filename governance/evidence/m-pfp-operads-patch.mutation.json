@@ -1,0 +1,529 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/patch.rs",
+  "target_sha256": "c6e55b469fe769d93f2968feb36aa1ff76fd405a00188f9aab3d0b8981c5a756",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test patch --test repair --test workshop",
+  "counts": {
+    "killed": 85,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "unsupported marker 'new file mode' no longer refused",
+      "old": "    \"new file mode \",\n",
+      "new": "    \"\\u{0}new file mode \",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "unsupported marker 'deleted file mode' no longer refused",
+      "old": "    \"deleted file mode \",\n",
+      "new": "    \"\\u{0}deleted file mode \",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "unsupported marker 'old mode' no longer refused",
+      "old": "    \"old mode \",\n",
+      "new": "    \"\\u{0}old mode \",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "unsupported marker 'new mode' no longer refused",
+      "old": "    \"new mode \",\n",
+      "new": "    \"\\u{0}new mode \",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "unsupported marker 'rename from' no longer refused",
+      "old": "    \"rename from \",\n",
+      "new": "    \"\\u{0}rename from \",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "unsupported marker 'rename to' no longer refused",
+      "old": "    \"rename to \",\n",
+      "new": "    \"\\u{0}rename to \",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "unsupported marker 'copy from' no longer refused",
+      "old": "    \"copy from \",\n",
+      "new": "    \"\\u{0}copy from \",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "unsupported marker 'copy to' no longer refused",
+      "old": "    \"copy to \",\n",
+      "new": "    \"\\u{0}copy to \",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "unsupported marker 'GIT binary patch' no longer refused",
+      "old": "    \"GIT binary patch\",\n",
+      "new": "    \"\\u{0}GIT binary patch\",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "unsupported marker 'Binary files' no longer refused",
+      "old": "    \"Binary files \",\n",
+      "new": "    \"\\u{0}Binary files \",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "diff --git line is not skipped",
+      "old": "const SKIPPED: [&str; 2] = [\"diff --git \", \"index \"];",
+      "new": "const SKIPPED: [&str; 2] = [\"\\u{0}\", \"index \"];",
+      "outcome": "killed"
+    },
+    {
+      "name": "index line is not skipped",
+      "old": "const SKIPPED: [&str; 2] = [\"diff --git \", \"index \"];",
+      "new": "const SKIPPED: [&str; 2] = [\"diff --git \", \"\\u{0}\"];",
+      "outcome": "killed"
+    },
+    {
+      "name": "/dev/null is read as a path",
+      "old": "const NO_FILE: &str = \"/dev/null\";",
+      "new": "const NO_FILE: &str = \"/dev/none\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "hunk header needs no closing @@",
+      "old": "(?:,(\\d+))? \\+\\d+(?:,(\\d+))? @@\";",
+      "new": "(?:,(\\d+))? \\+\\d+(?:,(\\d+))?\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "hunk header may start anywhere",
+      "old": "const HUNK: &str = r\"^@@ -",
+      "new": "const HUNK: &str = r\"@@ -",
+      "outcome": "killed"
+    },
+    {
+      "name": "bare keeps the newline",
+      "old": "    line.strip_suffix('\\n').unwrap_or(line)",
+      "new": "    line",
+      "outcome": "killed"
+    },
+    {
+      "name": "timestamp kept in the path",
+      "old": "named.split('\\t').next().unwrap_or_default().trim_end();",
+      "new": "named.trim_end();",
+      "outcome": "killed"
+    },
+    {
+      "name": "/dev/null is malformed, not out of scope",
+      "old": "return refuse(SCOPE_REFUSED, \"only edits to existing files are supported\");",
+      "new": "return refuse(REFUSED, \"only edits to existing files are supported\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty path accepted",
+      "old": "Some(path) if !path.is_empty() => Ok(path),",
+      "new": "Some(path) => Ok(path),",
+      "outcome": "killed"
+    },
+    {
+      "name": "header without its side prefix accepted",
+      "old": "    match named.strip_prefix(side) {",
+      "new": "    match named.strip_prefix(side).or(Some(named)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "header refusal has another code",
+      "old": "        _ => refuse(\n            REFUSED,\n            format!(\"expected {marker}{side}PATH, found {:?}\", bare(line)),",
+      "new": "        _ => refuse(\n            SCOPE_REFUSED,\n            format!(\"expected {marker}{side}PATH, found {:?}\", bare(line)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a huge count is read as the default",
+      "old": "            .map_err(|_| Refusal::new(REFUSED, format!(\"{digits} is not a line count\"))),",
+      "new": "            .or(Ok(default)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "bad hunk header has another code",
+      "old": "return refuse(REFUSED, format!(\"bad hunk header {:?}\", bare(header)));",
+      "new": "return refuse(SCOPE_REFUSED, format!(\"bad hunk header {:?}\", bare(header)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "old count defaults to zero",
+      "old": "let (old, new) = (number(part(2), 1)?, number(part(3), 1)?);",
+      "new": "let (old, new) = (number(part(2), 0)?, number(part(3), 1)?);",
+      "outcome": "killed"
+    },
+    {
+      "name": "new count defaults to zero",
+      "old": "let (old, new) = (number(part(2), 1)?, number(part(3), 1)?);",
+      "new": "let (old, new) = (number(part(2), 1)?, number(part(3), 0)?);",
+      "outcome": "killed"
+    },
+    {
+      "name": "new count read from the old count",
+      "old": "let (old, new) = (number(part(2), 1)?, number(part(3), 1)?);",
+      "new": "let (old, new) = (number(part(2), 1)?, number(part(2), 1)?);",
+      "outcome": "killed"
+    },
+    {
+      "name": "line zero accepted with old lines",
+      "old": "    if start == 0 && old > 0 {",
+      "new": "    if false {",
+      "note": "start - 1 then underflows",
+      "outcome": "killed"
+    },
+    {
+      "name": "insertion at line zero refused",
+      "old": "    if start == 0 && old > 0 {",
+      "new": "    if start == 0 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "rows read until the old side only",
+      "old": "    while old_seen < old || new_seen < new {",
+      "new": "    while old_seen < old {",
+      "outcome": "killed"
+    },
+    {
+      "name": "rows read until the new side only",
+      "old": "    while old_seen < old || new_seen < new {",
+      "new": "    while new_seen < new {",
+      "outcome": "killed"
+    },
+    {
+      "name": "rows read until both sides overrun",
+      "old": "    while old_seen < old || new_seen < new {",
+      "new": "    while old_seen <= old || new_seen <= new {",
+      "outcome": "killed"
+    },
+    {
+      "name": "end inside a hunk has another code",
+      "old": "return refuse(REFUSED, \"the patch ends inside a hunk\");",
+      "new": "return refuse(SCOPE_REFUSED, \"the patch ends inside a hunk\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "row keeps its marker character",
+      "old": "let text = line.get(1..).unwrap_or_default().to_owned();",
+      "new": "let text = line.to_owned();",
+      "outcome": "killed"
+    },
+    {
+      "name": "context row read as removal",
+      "old": "            Some(' ') => Row::Keep(text),",
+      "new": "            Some(' ') => Row::Drop(text),",
+      "outcome": "killed"
+    },
+    {
+      "name": "blank context row refused",
+      "old": "            Some('\\n') => Row::Keep(line.to_owned()),\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "blank context row loses its newline",
+      "old": "            Some('\\n') => Row::Keep(line.to_owned()),",
+      "new": "            Some('\\n') => Row::Keep(String::new()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "removal read as context",
+      "old": "            Some('-') => Row::Drop(text),",
+      "new": "            Some('-') => Row::Keep(text),",
+      "outcome": "killed"
+    },
+    {
+      "name": "addition read as context",
+      "old": "            Some('+') => Row::Add(text),",
+      "new": "            Some('+') => Row::Keep(text),",
+      "outcome": "killed"
+    },
+    {
+      "name": "marker inside a hunk ignored",
+      "old": "            Some('\\\\') => {\n                unterminate(&mut rows)?;\n                continue;",
+      "new": "            Some('\\\\') => {\n                continue;",
+      "outcome": "killed"
+    },
+    {
+      "name": "bad hunk line has another code",
+      "old": "_ => return refuse(REFUSED, format!(\"bad hunk line {:?}\", bare(line))),",
+      "new": "_ => return refuse(SCOPE_REFUSED, format!(\"bad hunk line {:?}\", bare(line))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "additions count on the old side",
+      "old": "old_seen += usize::from(!matches!(row, Row::Add(_)));",
+      "new": "old_seen += 1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "removals count on the new side",
+      "old": "new_seen += usize::from(!matches!(row, Row::Drop(_)));",
+      "new": "new_seen += 1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "overrun of the old side accepted",
+      "old": "        if old_seen > old || new_seen > new {",
+      "new": "        if new_seen > new {",
+      "outcome": "killed"
+    },
+    {
+      "name": "overrun of the new side accepted",
+      "old": "        if old_seen > old || new_seen > new {",
+      "new": "        if old_seen > old {",
+      "outcome": "killed"
+    },
+    {
+      "name": "overrun has another code",
+      "old": "return refuse(REFUSED, \"a hunk has more lines than its header declares\");",
+      "new": "return refuse(SCOPE_REFUSED, \"a hunk has more lines than its header declares\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "trailing marker not applied",
+      "old": "    if lines.next_if(|line| line.starts_with('\\\\')).is_some() {\n        unterminate(&mut rows)?;\n    }",
+      "new": "    let _ = lines.next_if(|line| line.starts_with('\\\\'));",
+      "outcome": "killed"
+    },
+    {
+      "name": "trailing marker left in the stream",
+      "old": "    if lines.next_if(|line| line.starts_with('\\\\')).is_some() {",
+      "new": "    if lines.peek().is_some_and(|line| line.starts_with('\\\\')) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "insertion placed one line early",
+      "old": "        at: if old == 0 { start } else { start - 1 },",
+      "new": "        at: start.saturating_sub(1),",
+      "outcome": "killed"
+    },
+    {
+      "name": "hunk placed one line late",
+      "old": "        at: if old == 0 { start } else { start - 1 },",
+      "new": "        at: start,",
+      "outcome": "killed"
+    },
+    {
+      "name": "marker after an unterminated line accepted",
+      "old": "if text.ends_with('\\n') => {\n            text.pop();",
+      "new": "=> {\n            text.pop();",
+      "outcome": "killed"
+    },
+    {
+      "name": "marker strips nothing",
+      "old": "            text.pop();\n            Ok(())",
+      "new": "            Ok(())",
+      "outcome": "killed"
+    },
+    {
+      "name": "stray marker has another code",
+      "old": "_ => refuse(REFUSED, \"a no-newline marker follows no line\"),",
+      "new": "_ => refuse(SCOPE_REFUSED, \"a no-newline marker follows no line\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "old header may name b/",
+      "old": "let old = header_path(old_header, \"--- \", \"a/\")?;",
+      "new": "let old = header_path(old_header, \"--- \", \"b/\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "new header may name a/",
+      "old": "header_path(line, \"+++ \", \"b/\")?,",
+      "new": "header_path(line, \"+++ \", \"a/\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "any line accepted as the +++ line",
+      "old": "Some(line) if line.starts_with(\"+++ \") => header_path",
+      "new": "Some(line) => header_path",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing +++ has another code",
+      "old": "_ => return refuse(REFUSED, format!(\"no +++ line follows --- a/{old}\")),",
+      "new": "_ => return refuse(SCOPE_REFUSED, format!(\"no +++ line follows --- a/{old}\")),",
+      "outcome": "killed"
+    },
+    {
+      "name": "rename accepted",
+      "old": "    if old != new {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "rename is malformed, not out of scope",
+      "old": "return refuse(SCOPE_REFUSED, format!(\"{old} is renamed to {new}\"));",
+      "new": "return refuse(REFUSED, format!(\"{old} is renamed to {new}\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "only the first hunk of a file is read",
+      "old": "    while let Some(header) = lines.next_if(|line| line.starts_with(\"@@\")) {",
+      "new": "    if let Some(header) = lines.next_if(|line| line.starts_with(\"@@\")) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a header without hunks accepted",
+      "old": "    if hunks.is_empty() {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "no-hunk refusal has another code",
+      "old": "return refuse(REFUSED, format!(\"no hunk follows the header of {old}\"));",
+      "new": "return refuse(SCOPE_REFUSED, format!(\"no hunk follows the header of {old}\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "file named by its new path with prefix",
+      "old": "        path: old.to_owned(),",
+      "new": "        path: format!(\"a/{old}\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "unsupported markers not scanned",
+      "old": ".find(|line| UNSUPPORTED.iter().any(|marker| line.starts_with(marker)))",
+      "new": ".find(|_| false)",
+      "outcome": "killed"
+    },
+    {
+      "name": "unsupported marker matched anywhere in a line",
+      "old": ".find(|line| UNSUPPORTED.iter().any(|marker| line.starts_with(marker)))",
+      "new": ".find(|line| UNSUPPORTED.iter().any(|marker| line.contains(marker)))",
+      "equivalent": false,
+      "outcome": "killed"
+    },
+    {
+      "name": "unsupported change is malformed, not out of scope",
+      "old": "        return refuse(\n            SCOPE_REFUSED,\n            format!(\"only edits to existing text files are supported, found {line:?}\"),",
+      "new": "        return refuse(\n            REFUSED,\n            format!(\"only edits to existing text files are supported, found {line:?}\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "unsupported line not named",
+      "old": "format!(\"only edits to existing text files are supported, found {line:?}\"),",
+      "new": "format!(\"only edits to existing text files are supported\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "skipped lines end the patch",
+      "old": "        if SKIPPED.iter().any(|marker| line.starts_with(marker)) {\n            continue;",
+      "new": "        if SKIPPED.iter().any(|marker| line.starts_with(marker)) {\n            break;",
+      "outcome": "killed"
+    },
+    {
+      "name": "stray line accepted",
+      "old": "        if !line.starts_with(\"--- \") {",
+      "new": "        if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "stray line has another code",
+      "old": "return refuse(REFUSED, format!(\"unexpected line {:?}\", bare(line)));",
+      "new": "return refuse(SCOPE_REFUSED, format!(\"unexpected line {:?}\", bare(line)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a file may be patched twice",
+      "old": "        if !seen.insert(edits.path.clone()) {",
+      "new": "        if !seen.insert(edits.path.clone()) && false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "twice-patched has another code",
+      "old": "return refuse(REFUSED, format!(\"{} is patched twice\", edits.path));",
+      "new": "return refuse(SCOPE_REFUSED, format!(\"{} is patched twice\", edits.path));",
+      "outcome": "killed"
+    },
+    {
+      "name": "files returned in reverse",
+      "old": "        files.push(edits);",
+      "new": "        files.insert(0, edits);",
+      "outcome": "killed"
+    },
+    {
+      "name": "file split without line ends",
+      "old": "let lines: Vec<&str> = text.split_inclusive('\\n').collect();",
+      "new": "let lines: Vec<&str> = text.lines().collect();",
+      "outcome": "killed"
+    },
+    {
+      "name": "overlapping hunk applied from the start",
+      "old": "            let Some(untouched) = lines.get(next..hunk.at) else {",
+      "new": "            let Some(untouched) = lines.get(next.min(hunk.at)..hunk.at) else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "lines between hunks dropped",
+      "old": "            patched.extend(untouched.iter().copied());",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "lines after the last hunk dropped",
+      "old": "        patched.extend(lines.get(next..).unwrap_or_default().iter().copied());",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "added lines not written",
+      "old": "                Row::Add(new) => {\n                    patched.push_str(new);",
+      "new": "                Row::Add(_) => {",
+      "outcome": "killed"
+    },
+    {
+      "name": "old lines not compared",
+      "old": "            if lines.get(next) != Some(&old.as_str()) {",
+      "new": "            if lines.get(next).is_none() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "old lines past the end accepted",
+      "old": "            if lines.get(next) != Some(&old.as_str()) {",
+      "new": "            if lines.get(next).is_some_and(|line| line != old) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "kept lines not written",
+      "old": "            if matches!(row, Row::Keep(_)) {\n                patched.push_str(old);\n            }",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "removed lines written",
+      "old": "            if matches!(row, Row::Keep(_)) {",
+      "new": "            if true {",
+      "outcome": "killed"
+    },
+    {
+      "name": "old lines not advanced",
+      "old": "            next += 1;\n        }\n        Ok(next)",
+      "new": "        }\n        Ok(next)",
+      "outcome": "killed"
+    },
+    {
+      "name": "misfit has another code",
+      "old": "        refuse(\n            REFUSED,\n            format!(\n                \"the hunk at old line {} of {} {why}\",",
+      "new": "        refuse(\n            SCOPE_REFUSED,\n            format!(\n                \"the hunk at old line {} of {} {why}\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "misfit names the zero-based line",
+      "old": "hunk.at + 1,",
+      "new": "hunk.at,",
+      "outcome": "killed"
+    },
+    {
+      "name": "hunk header counts not read",
+      "old": "    let (start, old, new) = counts(header)?;",
+      "new": "    let (start, old, new) = counts(header).map(|(start, _, _)| (start, 1, 1))?;",
+      "outcome": "killed"
+    }
+  ]
+}

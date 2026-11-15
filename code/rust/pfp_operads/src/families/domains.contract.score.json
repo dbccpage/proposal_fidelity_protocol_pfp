@@ -1,0 +1,107 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/domains.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/domains.rs",
+      "language": "Rust",
+      "sha256": "d78413186c2d8710e33f3b62c2bfeade79092bc376650f54a62ae267d113e2ce"
+    },
+    "contract_urn": "urn:pfp-operads:families-domains:v1",
+    "symbols": [
+      "MAX_POINTS",
+      "Checker",
+      "DOMAINS",
+      "checker",
+      "permutation"
+    ],
+    "owned_invariants": [
+      "Four domains are registered, each under one name with one checker: group_commutator, linear_refusal, stabilizer_commutation and u1_anomaly. checker returns nothing for any other name.",
+      "A checker works out the true answer from the item's data alone, says whether the reply gives it, and returns the true answer as the witness. Data or a reply it cannot read is an error with the reason, never a pass.",
+      "stabilizer_commutation: the generators are a nonempty list of strings over I, X, Y, Z of one length. Two strings anticommute when the number of sites at which their letters anticommute is odd. The reply must list exactly the anticommuting pairs; a pair may be written in either order and the pairs in any order.",
+      "u1_anomaly: the charges are a nonempty list of exact rationals. The reply must give the sum of the charges, the sum of their cubes, and anomaly_free true exactly when both sums are zero.",
+      "group_commutator: for permutations g and h of n points, n from 1 to 8, the reply must give the inverse of g, then the inverse of h, then g, then h, composed in reading order.",
+      "linear_refusal: the reply is graded by WF7's rank test and passes when that verdict is certified or a typed refusal. The witness is WF7's witness with the verdict's code."
+    ],
+    "boundaries": [
+      "A checker covers one item. It says nothing about how the reply was produced.",
+      "The witness of a failed item is the true answer. A caller that must not reveal it keeps the witness out of prompts; the families here only hash it or report it in the verdict.",
+      "linear_refusal inherits the limits of wf07.rs: the system's size is not bounded here."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/domains.rs",
+      "language": "Rust",
+      "sha256": "d78413186c2d8710e33f3b62c2bfeade79092bc376650f54a62ae267d113e2ce"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: charge sums are exact rationals, pair indices are unbounded integers, and permutations are usize lists of at most 8 points. The point limit is asserted by value, one inside and one outside. Not B: tested against hand-worked items, not proven.",
+      "G3": "Every unreadable shape has its own reason. Permutations are read by perm::read before any product, and generators are length-checked before they are zipped. No unwrap, expect or index. Not B: panic-freedom is tested, not proven.",
+      "G4": "17 domain tests assert the registry by name, each letter pair of the symplectic form, pairs in either order, anomaly sums with fractions and each wrong field alone, the commutator against a product worked by hand and against the reversed order, the linear capsule answered, refused and bluffed, and each unreadable data or reply by its reason. Two mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 84/84. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 9, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T13:51:27Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v9-test.run.json",
+        "sha256": "75c065d96b64633778adc9bbc5a54eb150b58536223e4c3443f62215ad84017e",
+        "note": "427 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-clippy.run.json",
+        "sha256": "b095a186f720f679235b2f243d030a0c7412ecd11d687d13c61ad6cac778d72e",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-fmt.run.json",
+        "sha256": "17a3ba5175b2bb9bccc425d89628829ccaadff38dc36f614734ea800455c7625",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.run.json",
+        "sha256": "785da0a0586cbf62c7a8439e2a626fa5ba0df80942665c0838e344cc4f460f41",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v9-metrics.json",
+        "sha256": "e9c47748ca0777f0a16723ed4f2e9ddb5b44c2f4480bd78d2102e6cf92daa227",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 84,
+      "survived": 0,
+      "demonstrably_equivalent": 2,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-families-domains.mutation.json",
+        "sha256": "53ae4e644f5e92bd2d3fbd77668afa621e15c37ef71f05e223b7a4ee19082e83",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 86 mutants"
+      }
+    }
+  },
+  "history": []
+}

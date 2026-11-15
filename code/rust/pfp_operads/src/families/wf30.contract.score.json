@@ -1,0 +1,210 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf30.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf30.rs",
+      "language": "Rust",
+      "sha256": "1e5fef4194f342cdc809a155f8a27a4e1a6942fe30e46aa97a4bdfba108529b4"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf30:v1",
+    "symbols": [
+      "MIN_WIRES",
+      "MAX_WIRES",
+      "FAMILY",
+      "apply",
+      "unsorted_inputs"
+    ],
+    "owned_invariants": [
+      "The task names n wires, an exact integer from 2 to 10, and optionally a forced prefix, a forbidden set and a largest number of comparators. A comparator is a pair [i, j] of exact integers with 0 <= i < j < n, in the task and in the reply alike.",
+      "Four predicates are recorded for every readable reply: the network starts with the forced prefix, it uses no forbidden comparator anywhere, it is within the size bound, and it sorts.",
+      "Sorting is decided by the 0-1 principle: the host runs the network on all 2^n inputs of zeros and ones and counts those it leaves unsorted. The network is certified only when that count is zero and the other three predicates hold.",
+      "apply runs the comparators in the order given, swapping a pair only when the lower wire holds the larger value. A comparator that names a wire the input does not have does nothing.",
+      "unsorted_inputs returns the failing inputs in counting order with the first wire most significant; the first of them is the evidence of the sorting predicate."
+    ],
+    "boundaries": [
+      "With at most 10 wires the host runs at most 1024 inputs. The bound is part of the contract, not a tuning value.",
+      "The 0-1 principle is used as a known theorem; it is not proven here.",
+      "The check does not say the network is the smallest that meets the constraints."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf30.rs",
+      "language": "Rust",
+      "sha256": "1e5fef4194f342cdc809a155f8a27a4e1a6942fe30e46aa97a4bdfba108529b4"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Non-numeric: wire indices and counts in usize, bounded by MAX_WIRES = 10, so 1 << n cannot overflow. The wire limits are asserted by value, one inside and one outside. The count of failing inputs is asserted against counts worked by hand.",
+      "G3": "Comparators are range-checked when read, and apply reads wires with get, so no index can be out of range. No unwrap or expect. Not B: panic-freedom is tested, not proven.",
+      "G4": "16 WF30 tests assert a network that meets the constraints, the textbook network that breaks them although it sorts, each predicate failing alone with its code, the size bound at and over the limit, the failing inputs of the empty and of partial networks by value and order, each malformed comparator and task, and the stage asked. Three mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 62/62. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 6, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-14T12:56:03Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v8-test.run.json",
+        "sha256": "39e3d54df0f53e66efe9e7c79ccb58d2c64b227e5ae057ba2db430c2248a81ef",
+        "note": "329 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-clippy.run.json",
+        "sha256": "36f330c8dd7d904983f941e99b4eaed4ea0a5926c65e1506bee3a976a63b199f",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-fmt.run.json",
+        "sha256": "304f9442ff6202fbcc60ee643fa68b521ca2229ef90cb498605391f139d1c684",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-metrics.run.json",
+        "sha256": "5c9ed7ff128e413a3a694a13976441d3ab914d3ac77dcd1a8d1645c9805ec339",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v8-metrics.json",
+        "sha256": "132913181d26af963eec9d6f7ed2a20ca7531a5b5347a857a7562e352ef2ee4d",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 62,
+      "survived": 0,
+      "demonstrably_equivalent": 3,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf30.mutation.json",
+        "sha256": "f1d67d07d4b42e298fcb1f5ca8b92728117e456b4d74da3c69b470878c4f8167",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 65 mutants"
+      }
+    }
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-14T12:56:05.510850Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf30.rs",
+          "language": "Rust",
+          "sha256": "1e5fef4194f342cdc809a155f8a27a4e1a6942fe30e46aa97a4bdfba108529b4"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf30:v1",
+        "symbols": [
+          "MIN_WIRES",
+          "MAX_WIRES",
+          "FAMILY",
+          "apply",
+          "unsorted_inputs"
+        ],
+        "owned_invariants": [
+          "The task names n wires, an exact integer from 2 to 10, and optionally a forced prefix, a forbidden set and a largest number of comparators. A comparator is a pair [i, j] of exact integers with 0 <= i < j < n, in the task and in the reply alike.",
+          "Four predicates are recorded for every readable reply: the network starts with the forced prefix, it uses no forbidden comparator anywhere, it is within the size bound, and it sorts.",
+          "Sorting is decided by the 0-1 principle: the host runs the network on all 2^n inputs of zeros and ones and counts those it leaves unsorted. The network is certified only when that count is zero and the other three predicates hold.",
+          "apply runs the comparators in the order given, swapping a pair only when the lower wire holds the larger value. A comparator that names a wire the input does not have does nothing.",
+          "unsorted_inputs returns the failing inputs in counting order with the first wire most significant; the first of them is the evidence of the sorting predicate."
+        ],
+        "boundaries": [
+          "With at most 10 wires the host runs at most 1024 inputs. The bound is part of the contract, not a tuning value.",
+          "The 0-1 principle is used as a known theorem; it is not proven here.",
+          "The check does not say the network is the smallest that meets the constraints."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf30.rs",
+          "language": "Rust",
+          "sha256": "1e5fef4194f342cdc809a155f8a27a4e1a6942fe30e46aa97a4bdfba108529b4"
+        },
+        "profile": "Non-Numeric",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Non-numeric: wire indices and counts in usize, bounded by MAX_WIRES = 10, so 1 << n cannot overflow. The wire limits are asserted by value, one inside and one outside. The count of failing inputs is asserted against counts worked by hand.",
+          "G3": "Comparators are range-checked when read, and apply reads wires with get, so no index can be out of range. No unwrap or expect. Not B: panic-freedom is tested, not proven.",
+          "G4": "16 WF30 tests assert a network that meets the constraints, the textbook network that breaks them although it sorts, each predicate failing alone with its code, the size bound at and over the limit, the failing inputs of the empty and of partial networks by value and order, each malformed comparator and task, and the stage asked. Three mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 62/62. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 6, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T12:55:53Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v8-test.run.json",
+            "sha256": "39e3d54df0f53e66efe9e7c79ccb58d2c64b227e5ae057ba2db430c2248a81ef",
+            "note": "329 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v8-clippy.run.json",
+            "sha256": "36f330c8dd7d904983f941e99b4eaed4ea0a5926c65e1506bee3a976a63b199f",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v8-fmt.run.json",
+            "sha256": "304f9442ff6202fbcc60ee643fa68b521ca2229ef90cb498605391f139d1c684",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v8-metrics.run.json",
+            "sha256": "5c9ed7ff128e413a3a694a13976441d3ab914d3ac77dcd1a8d1645c9805ec339",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v8-metrics.json",
+            "sha256": "132913181d26af963eec9d6f7ed2a20ca7531a5b5347a857a7562e352ef2ee4d",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 62,
+          "survived": 0,
+          "demonstrably_equivalent": 3,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-wf30.mutation.json",
+            "sha256": "f1d67d07d4b42e298fcb1f5ca8b92728117e456b4d74da3c69b470878c4f8167",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 65 mutants"
+          }
+        }
+      }
+    }
+  ]
+}
