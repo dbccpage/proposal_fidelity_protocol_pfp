@@ -1,0 +1,105 @@
+name: wf52-sidecar
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "workflows/wf52_finite_qm_benchmark/native_sidecar.py"
+      - "workflows/wf52_finite_qm_benchmark/test_native_sidecar.py"
+      - "workflows/wf52_finite_qm_benchmark/qm_native_charpoly.py"
+      - "workflows/wf52_finite_qm_benchmark/test_qm_native_charpoly.py"
+      - "workflows/wf52_finite_qm_benchmark/charpoly_workflows.py"
+      - "workflows/wf52_finite_qm_benchmark/test_charpoly_workflows.py"
+      - "workflows/wf52_finite_qm_benchmark/qm_host_charpoly.py"
+      - "workflows/wf52_finite_qm_benchmark/test_qm_host_charpoly.py"
+      - "workflows/wf52_finite_qm_benchmark/native_sidecar_host/**"
+      - "code/rust/pfp_runtime/src/rational.rs"
+      - ".github/workflows/wf52_sidecar.yml"
+  pull_request:
+    paths:
+      - "workflows/wf52_finite_qm_benchmark/native_sidecar.py"
+      - "workflows/wf52_finite_qm_benchmark/test_native_sidecar.py"
+      - "workflows/wf52_finite_qm_benchmark/qm_native_charpoly.py"
+      - "workflows/wf52_finite_qm_benchmark/test_qm_native_charpoly.py"
+      - "workflows/wf52_finite_qm_benchmark/charpoly_workflows.py"
+      - "workflows/wf52_finite_qm_benchmark/test_charpoly_workflows.py"
+      - "workflows/wf52_finite_qm_benchmark/qm_host_charpoly.py"
+      - "workflows/wf52_finite_qm_benchmark/test_qm_host_charpoly.py"
+      - "workflows/wf52_finite_qm_benchmark/native_sidecar_host/**"
+      - "code/rust/pfp_runtime/src/rational.rs"
+      - ".github/workflows/wf52_sidecar.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  sidecar-matrix:
+    name: wf52-sidecar (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            code/rust/pfp_runtime
+            workflows/wf52_finite_qm_benchmark
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: dtolnay/rust-toolchain@stable
+      - run: python -m pip install pytest==9.1.1
+      - name: Verify cross-OS receipt refuses without rebuilding on Linux
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          python -X utf8 - <<'PY'
+          import sys
+          from pathlib import Path
+
+          sys.path.insert(0, str(Path("workflows/wf52_finite_qm_benchmark").resolve()))
+          import native_sidecar as sc
+
+          sc._materialize_missing_binary = lambda _folder: (_ for _ in ()).throw(
+              AssertionError("must not rebuild across OS mismatch")
+          )
+          try:
+              sc.NativeHost().custody()
+          except sc.Infrastructure as exc:
+              assert str(exc) == "NATIVE_BINARY_CHANGED", exc
+          else:
+              raise AssertionError("expected NATIVE_BINARY_CHANGED on Linux against Windows receipt")
+          PY
+      - run: cargo fetch --locked --manifest-path workflows/wf52_finite_qm_benchmark/native_sidecar_host/Cargo.toml
+      - name: Build runner-native sidecar offline and check clean materialization
+        shell: bash
+        run: |
+          python -X utf8 workflows/wf52_finite_qm_benchmark/native_sidecar_host/build_native.py
+          python -X utf8 - <<'PY'
+          import json
+          import shutil
+          import sys
+          from pathlib import Path
+
+          wf52 = Path("workflows/wf52_finite_qm_benchmark").resolve()
+          sys.path.insert(0, str(wf52))
+          import native_sidecar as sc
+          import qm_host_charpoly as qhc
+
+          ctx = qhc.build_certified_context(compact=False)
+          (wf52 / "qm_host_charpoly_certified_context.json").write_text(
+              json.dumps(ctx, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+              newline="\n",
+          )
+          shutil.rmtree(wf52 / "native_sidecar_host/target")
+          binary, custody = sc.NativeHost().custody()
+          assert binary.is_file() and custody["binary_sha256"]
+          shutil.rmtree(wf52 / "native_sidecar_host/target")
+          PY
+      - name: Run WF52 sidecar and charpoly suites
+        shell: bash
+        run: |
+          python -m pytest -q workflows/wf52_finite_qm_benchmark/test_native_sidecar.py workflows/wf52_finite_qm_benchmark/test_qm_native_charpoly.py workflows/wf52_finite_qm_benchmark/test_charpoly_workflows.py workflows/wf52_finite_qm_benchmark/test_qm_host_charpoly.py workflows/wf52_finite_qm_benchmark/test_challenger_qm_host_charpoly.py

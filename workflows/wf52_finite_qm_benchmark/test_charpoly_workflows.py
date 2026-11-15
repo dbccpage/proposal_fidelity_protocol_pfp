@@ -8,9 +8,11 @@ artifacts. The actual native calls check the public fixture, mutation, and clean
 """
 from copy import deepcopy
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 import shutil
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -29,7 +31,7 @@ class CharpolyWorkflowControls(unittest.TestCase):
         cls.seed = qm.REGISTERED_SEED_SHA256
         path = Path(__file__).resolve().parent / "qm_native_charpoly_public_fixture.json"
         raw = path.read_bytes()
-        if hashlib.sha256(raw).hexdigest() != "1e75a47320d8ad327b90f787ce1353ae79e311c734f71f8dfe39af58683490e9":
+        if hashlib.sha256(raw).hexdigest() != "9ece7e89029df7fb65f8dc21b171f35762a4658573ea60fe4093e12592a0fa39":
             raise RuntimeError("PUBLIC_FIXTURE_CHANGED")
         fixture = json.loads(raw)
         cls.coefficients = fixture["candidate"]["coefficients"]
@@ -60,7 +62,8 @@ class CharpolyWorkflowControls(unittest.TestCase):
                          "native_sidecar_host/build_receipt.json", "native_sidecar_manifest.json"]:
                 self.assertIn(name, plan["source_pins"])
                 self.assertEqual(plan["source_pins"][name], sidecar.file_sha(workflows.HERE / name))
-            self.assertTrue(any(name.endswith("pfp-native-sidecar-host.exe") for name in plan["source_pins"]))
+            expected_bin = "pfp-native-sidecar-host.exe" if sys.platform == "win32" else "pfp-native-sidecar-host"
+            self.assertTrue(any(name.endswith(expected_bin) for name in plan["source_pins"]))
             self.assertFalse(any("test_" in name or "fixture" in name for name in plan["source_pins"]))
 
     def test_02_real_preflight_and_public_context(self):
@@ -238,12 +241,52 @@ class CharpolyWorkflowControls(unittest.TestCase):
             host_dir.parent.mkdir(parents=True, exist_ok=True)
             shutil.copytree(sidecar.HOST, host_dir, ignore=shutil.ignore_patterns("target"))
             before = {rel: (host_dir / rel).read_bytes() for rel in tracked}
+            expected_sha = sidecar.strict_json((host_dir / "build_receipt.json").read_bytes())["binary"]["sha256"]
             with patch.object(sidecar, "ROOT", tmp_root):
                 binary, custody = sidecar.NativeHost(host_dir).custody()
             after = {rel: (host_dir / rel).read_bytes() for rel in tracked}
-            self.assertEqual(custody["binary_sha256"], "718052d6d149466f8661ba759475d0edc3f7f792973a24014ebcfa57431dee2f")
+            self.assertEqual(custody["binary_sha256"], expected_sha)
+            self.assertEqual(sidecar.file_sha(binary), expected_sha)
             self.assertTrue(binary.is_file())
             self.assertEqual(before, after)
+
+    def test_platform_link_flags_isolate_pe_flags_to_win32(self):
+        spec = importlib.util.spec_from_file_location("wf52_build_native", sidecar.HOST / "build_native.py")
+        build_native = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(build_native)
+        for plat in ("win32", "linux", "darwin"):
+            env_build, _ = build_native.deterministic_cargo_env(sidecar.HOST, str(sidecar.HOST), platform=plat)
+            env_sidecar = sidecar._deterministic_cargo_env(sidecar.HOST, str(sidecar.HOST), platform=plat)
+            self.assertEqual(env_build["CARGO_ENCODED_RUSTFLAGS"], env_sidecar["CARGO_ENCODED_RUSTFLAGS"])
+            flags = env_build["CARGO_ENCODED_RUSTFLAGS"].split("\x1f")
+            if plat == "win32":
+                self.assertIn("link-arg=/Brepro", flags)
+                self.assertIn("link-arg=/DEBUG:NONE", flags)
+                self.assertNotIn("link-arg=-Wl,--build-id=none", flags)
+            elif plat == "linux":
+                self.assertIn("link-arg=-Wl,--build-id=none", flags)
+                self.assertIn("strip=debuginfo", flags)
+                self.assertNotIn("link-arg=/Brepro", flags)
+                self.assertNotIn("link-arg=/DEBUG:NONE", flags)
+            else:
+                self.assertIn("strip=debuginfo", flags)
+                self.assertNotIn("link-arg=/Brepro", flags)
+                self.assertNotIn("link-arg=/DEBUG:NONE", flags)
+                self.assertNotIn("link-arg=-Wl,--build-id=none", flags)
+
+    def test_cross_os_receipt_refuses_without_materializing(self):
+        other_platform = "linux" if sys.platform == "win32" else "win32"
+        with (
+            patch.object(sidecar.sys, "platform", other_platform),
+            patch.object(
+                sidecar,
+                "_materialize_missing_binary",
+                side_effect=AssertionError("must not rebuild across OS mismatch"),
+            ),
+        ):
+            with self.assertRaises(sidecar.Infrastructure) as ctx:
+                sidecar.NativeHost().custody()
+            self.assertEqual(str(ctx.exception), "NATIVE_BINARY_CHANGED")
 
 
 if __name__ == "__main__":

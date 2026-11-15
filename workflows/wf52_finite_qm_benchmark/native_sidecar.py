@@ -17,6 +17,7 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
@@ -27,7 +28,9 @@ UNRESOLVED = ["public-prose-to-affine-matrix interpretation", "surrounding prose
               "spectrum projectors", "eigenvectors", "dynamics", "other obligations"]
 ALLOW_BUILD_ENV = {
     "PATH", "SYSTEMROOT", "WINDIR", "COMSPEC", "PATHEXT", "TEMP", "TMP",
-    "USERPROFILE", "HOMEDRIVE", "HOMEPATH", "CARGO_HOME", "RUSTUP_HOME",
+    "TMPDIR", "HOME", "USERPROFILE", "HOMEDRIVE", "HOMEPATH",
+    "PROGRAMFILES", "PROGRAMFILES(X86)", "PROGRAMW6432",
+    "CARGO_HOME", "RUSTUP_HOME",
 }
 MSVC_LINKER = Path(
     "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/link.exe"
@@ -176,7 +179,16 @@ def admit_candidate(public, candidate, answer, n):
     return admit_coefficients(candidate["coefficients"], n)
 
 
-def _deterministic_cargo_env(folder: Path, sysroot: str) -> dict[str, str]:
+def _platform_link_flags(platform: str | None = None) -> list[str]:
+    target = sys.platform if platform is None else platform
+    if target == "win32":
+        return ["-C", "link-arg=/Brepro", "-C", "link-arg=/DEBUG:NONE"]
+    if target.startswith("linux"):
+        return ["-C", "link-arg=-Wl,--build-id=none", "-C", "strip=debuginfo"]
+    return ["-C", "strip=debuginfo"]
+
+
+def _deterministic_cargo_env(folder: Path, sysroot: str, platform: str | None = None) -> dict[str, str]:
     env = {k: v for k, v in os.environ.items() if k.upper() in ALLOW_BUILD_ENV}
     env.update(
         CARGO_NET_OFFLINE="true",
@@ -196,10 +208,7 @@ def _deterministic_cargo_env(folder: Path, sysroot: str) -> dict[str, str]:
         f"--remap-path-prefix={folder_resolved}=/pfp_sidecar",
         f"--remap-path-prefix={cargo_home}=/cargo_home",
         f"--remap-path-prefix={Path(sysroot.strip()).resolve()}=/rust_sysroot",
-        "-C",
-        "link-arg=/Brepro",
-        "-C",
-        "link-arg=/DEBUG:NONE",
+        *_platform_link_flags(platform),
     ]
     env["CARGO_ENCODED_RUSTFLAGS"] = "\x1f".join(remaps)
     return env
@@ -256,8 +265,9 @@ class NativeHost:
                 hashlib.sha256(fragment).hexdigest() != binding["fragment_sha256"] or
                 generated != prefix + fragment + b"}\n"):
                 raise Infrastructure("PRODUCTION_EXTRACTION_CHANGED")
+            exe_suffix = ".exe" if sys.platform == "win32" else ""
             binary = (ROOT / receipt["binary"]["path"]).resolve()
-            expected_binary = (self.folder / "target/debug/pfp-native-sidecar-host.exe").resolve()
+            expected_binary = (self.folder / f"target/debug/pfp-native-sidecar-host{exe_suffix}").resolve()
             if binary == expected_binary and not binary.is_file():
                 _materialize_missing_binary(self.folder)
             if binary != expected_binary or file_sha(binary) != receipt["binary"]["sha256"]:
@@ -278,7 +288,7 @@ class NativeHost:
         if len(raw) > 262_144:
             raise Infrastructure("NATIVE_REQUEST_LIMIT")
         env = {k: v for k, v in os.environ.items()
-               if k.upper() in {"SYSTEMROOT", "WINDIR", "PATH", "TEMP", "TMP"}}
+               if k.upper() in {"SYSTEMROOT", "WINDIR", "PATH", "TEMP", "TMP", "TMPDIR", "HOME"}}
         try:
             run = subprocess.run([str(binary)], input=raw, capture_output=True, cwd=self.folder,
                                  env=env, timeout=5)

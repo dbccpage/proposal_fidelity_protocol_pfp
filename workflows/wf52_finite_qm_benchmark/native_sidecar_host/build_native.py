@@ -20,7 +20,9 @@ PREFIX = b"// Verbatim production owner lines 291..353; see source_binding.json.
 SUFFIX = b"}\n"
 ALLOW_ENV = {
     "PATH", "SYSTEMROOT", "WINDIR", "COMSPEC", "PATHEXT", "TEMP", "TMP",
-    "USERPROFILE", "HOMEDRIVE", "HOMEPATH", "CARGO_HOME", "RUSTUP_HOME",
+    "TMPDIR", "HOME", "USERPROFILE", "HOMEDRIVE", "HOMEPATH",
+    "PROGRAMFILES", "PROGRAMFILES(X86)", "PROGRAMW6432",
+    "CARGO_HOME", "RUSTUP_HOME",
 }
 MSVC_LINKER = Path(
     "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/link.exe"
@@ -32,7 +34,21 @@ def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def deterministic_cargo_env(folder: Path, sysroot: str) -> tuple[dict[str, str], Path]:
+def _exe_suffix(platform: str | None = None) -> str:
+    target = sys.platform if platform is None else platform
+    return ".exe" if target == "win32" else ""
+
+
+def _platform_link_flags(platform: str | None = None) -> list[str]:
+    target = sys.platform if platform is None else platform
+    if target == "win32":
+        return ["-C", "link-arg=/Brepro", "-C", "link-arg=/DEBUG:NONE"]
+    if target.startswith("linux"):
+        return ["-C", "link-arg=-Wl,--build-id=none", "-C", "strip=debuginfo"]
+    return ["-C", "strip=debuginfo"]
+
+
+def deterministic_cargo_env(folder: Path, sysroot: str, platform: str | None = None) -> tuple[dict[str, str], Path]:
     """Build sanitized, reproducible Cargo/MSVC environment for ``folder``."""
     env = {k: v for k, v in os.environ.items() if k.upper() in ALLOW_ENV}
     env.update(
@@ -53,10 +69,7 @@ def deterministic_cargo_env(folder: Path, sysroot: str) -> tuple[dict[str, str],
         f"--remap-path-prefix={folder_resolved}=/pfp_sidecar",
         f"--remap-path-prefix={cargo_home}=/cargo_home",
         f"--remap-path-prefix={Path(sysroot.strip()).resolve()}=/rust_sysroot",
-        "-C",
-        "link-arg=/Brepro",
-        "-C",
-        "link-arg=/DEBUG:NONE",
+        *_platform_link_flags(platform),
     ]
     env["CARGO_ENCODED_RUSTFLAGS"] = "\x1f".join(remaps)
     return env, MSVC_LINKER
@@ -127,9 +140,10 @@ def main():
             if run(args, env).returncode:
                 raise RuntimeError("TOOLCHAIN_QUERY_FAILED")
         toolroot = Path(sysroot.stdout.strip()) / "bin"
+        suffix = _exe_suffix()
         receipt["toolchain"] = {
             name: {"path": str(toolroot / name), "sha256": sha(toolroot / name)}
-            for name in ("rustc.exe", "cargo.exe")
+            for name in (f"rustc{suffix}", f"cargo{suffix}")
         }
         receipt["launcher_hashes"] = {cargo: sha(cargo), rustc: sha(rustc)}
         lock_path = HERE / "Cargo.lock"
@@ -145,7 +159,7 @@ def main():
         receipt["lock_sha256_after_build"] = sha(lock_path)
         if receipt["lock_sha256_after_build"] != receipt["lock_sha256_before_build"]:
             raise RuntimeError("DEPENDENCY_LOCK_CHANGED")
-        binary = HERE / "target/debug/pfp-native-sidecar-host.exe"
+        binary = HERE / f"target/debug/pfp-native-sidecar-host{suffix}"
         receipt.update(
             status="BUILT",
             binary={"path": binary.relative_to(ROOT).as_posix(), "sha256": sha(binary), "bytes": binary.stat().st_size},
