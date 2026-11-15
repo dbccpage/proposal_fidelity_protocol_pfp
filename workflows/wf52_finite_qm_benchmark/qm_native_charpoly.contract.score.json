@@ -1,0 +1,90 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "workflows/wf52_finite_qm_benchmark/qm_native_charpoly.py",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "workflows/wf52_finite_qm_benchmark/qm_native_charpoly.py",
+      "language": "Python",
+      "sha256": "72a1b1f0f3691deda02e1b16b8005fdaa578ff8a567aec7f96c6e27f1fca6434"
+    },
+    "contract_urn": "urn:pfp-wf52:qm-native-charpoly:v1",
+    "symbols": [
+      "PublicBindingError",
+      "prepare_public",
+      "public_contract",
+      "verify"
+    ],
+    "owned_invariants": [
+      "Admits only REGISTERED_SEED_SHA256 and recomputes the two pinned public source SHA-256 digests before packet construction or verification.",
+      "Delegates exact polynomial evaluation exclusively to native_sidecar.verify without reading hidden fixtures, private benchmarks, or model keys."
+    ],
+    "boundaries": [
+      "Admits one registered task seed digest only; surrounding physics interpretation and downstream derivations remain outside this contract."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "workflows/wf52_finite_qm_benchmark/qm_native_charpoly.py",
+      "language": "Python",
+      "sha256": "72a1b1f0f3691deda02e1b16b8005fdaa578ff8a567aec7f96c6e27f1fca6434"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Registered seed digest admission and source-hash binding over exact integer/Fraction Pauli matrices feeding native_sidecar.verify.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "D",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Module docstring declares AuthorityEffect: None and Contract: urn:pfp-wf52:qm-native-charpoly:v1 matching prepare_public, public_contract, and verify.",
+      "G2": "Binds both hamiltonian_artifact.py and updated native_sidecar.py by SHA-256 and delegates polynomial verification to native_sidecar.",
+      "G3": "Rejects unregistered seed digests and public source drift with PublicBindingError.",
+      "G4": "Verified across 12 tests in test_qm_native_charpoly.py; zero-unrun AST mutation campaign m-wf52-qm-native-charpoly killed 49/75 (R = 49/75 = 0.6533, Grade D).",
+      "G5": "Measured via governance.tools.metrics: worst function CCN 8, cognitive 15, nesting depth 4; metrics ceiling B."
+    },
+    "composite_grade": "D",
+    "score_token": "L4D",
+    "is_complete": true,
+    "grade_ceiling": "B",
+    "evaluation_timestamp": "2026-11-15T03:50:04Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/wf52-sidecar-pytest.run.json",
+        "sha256": "c8af06a3d23937268621e480d6bf852fedb530b97ac704ae552f2e131ee59ed3",
+        "note": "528 passed, 19 skipped, 68 subtests passed after deleting native_sidecar_host/target"
+      },
+      {
+        "path": "governance/evidence/wf52-sidecar-metrics.run.json",
+        "sha256": "70439b02a14250c6473a86ccb66f5d9586a0dfb1885675668e7444dc94ba6f72",
+        "note": "Gate 5 lizard/complexipy/AST nesting capture"
+      },
+      {
+        "path": "governance/evidence/wf52-sidecar-metrics.json",
+        "sha256": "3b751bd79f1282f374c54f2d926baf8d7a8cdf9f74855c3ea378f2010d8d4e2c",
+        "note": "Per-file complexity metrics report"
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 49,
+      "survived": 26,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 0.6533333333333333,
+      "report": {
+        "path": "governance/evidence/m-wf52-qm-native-charpoly.mutation.json",
+        "sha256": "9573a067a51881cc2493336b7ce196e9636c59cd0504796af25fc1156078d154",
+        "note": "campaign m-wf52-qm-native-charpoly"
+      }
+    }
+  },
+  "history": []
+}

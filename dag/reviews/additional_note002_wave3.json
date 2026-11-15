@@ -1,0 +1,109 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "7c7b627ef1ce09dcc54dbb038649fb9ae73bd01c",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+      "sha256": "5d2babd3621f85fdeed0995e6d42bf15e3ec1de69b7c07e7870bffcde6356d38",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          1451
+        ]
+      ],
+      "assessment": "Full manuscript inspected. Section 2.2 establishes functorial aggregation monotonicity under coboundary commutation and operator contraction (Theorem 2.1). Section 4.4 establishes the cycle additivity criterion via a common dual circulation maximizer (Proposition 4.6), and Section 4.10 establishes KKT necessity for the l1 quotient problem (Theorem 4.14)."
+    },
+    {
+      "path": "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+      "sha256": "62ebd48ce2c8236f13019832657334120262c9be7eec16971db05693f38a7b24",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          113
+        ]
+      ],
+      "assessment": "Claim ledger inspected. C1 (Theorem 2.1 functorial aggregation monotonicity), C6 (Proposition 4.6 cycle additivity criterion), and C13 (Theorem 4.14 KKT variational principle) verified."
+    },
+    {
+      "path": "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+      "sha256": "4530a48fbd10295f21a2207fa18c15df6c2aaeeaacb809714a5bc88da330480d",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          1232
+        ]
+      ],
+      "assessment": "Core module inspected. Implements ExactTwoPhaseSimplexSolver, LocalPrimalDualIterator.is_kkt_fixed_point, and FunctorialAggregation.pushforward_cochain."
+    },
+    {
+      "path": "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py",
+      "sha256": "03bd104253aef49a2dc8e70054079bb0a03cb20373478199ed92bab30bce4c6b",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          792
+        ]
+      ],
+      "assessment": "Test suite inspected. Contains test_functorial_aggregation_monotonicity, test_overlapping_cycle_holonomy_counterexample, and test_kkt_fixed_point_verification."
+    }
+  ],
+  "remaining_scope": [],
+  "claims": [
+    {
+      "id": "AUDIT-N002-001",
+      "statement": "If A o d0^P = d0^Q o pi_* and ||A||_{l1 -> l1} <= 1 then ||d0^Q pi_* s||_1 <= ||d0^P s||_1 for every section s.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite cochain spaces with stalkwise l1 norms.",
+        "Coboundary commutation identity A o d0^P = d0^Q o pi_*.",
+        "Global l1 operator contraction bound ||A||_{l1 -> l1} <= 1."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py"
+      ],
+      "limits": "Applies to finite complexes and contractive coboundary-commuting aggregations; zero coarse defect does not certify zero fine defect without a faithfulness condition."
+    },
+    {
+      "id": "AUDIT-N002-008",
+      "statement": "Phi_w(omega_1 + omega_2) = Phi_w(omega_1) + Phi_w(omega_2) iff some z in Z_w = {d0^* z = 0, |z_e| <= w_e} maximizes both <z, omega_1> and <z, omega_2>.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite scalar graph complex with strictly positive edge weights.",
+        "Quotient defect norm definition Phi_w(omega) = min_f ||omega - d0 f||_{1, w}.",
+        "Linear programming strong duality on finite polyhedral complexes."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py"
+      ],
+      "limits": "Applies to finite graph complexes with positive weights; strict subadditivity occurs when cycles share edges with conflicting orientation requirements."
+    },
+    {
+      "id": "AUDIT-N002-015",
+      "statement": "If s minimizes ||omega - d0 s||_1 on a finite graph with positive weights, then some phi in partial ||omega - d0 s||_1 satisfies d0^* phi = 0.",
+      "status": "complete_manuscript_and_implementation_read",
+      "dependencies": [
+        "Finite graph complex with strictly positive edge weights.",
+        "Convex subdifferential chain rule for affine compositions.",
+        "First-order optimality condition 0 in partial J(s) for unconstrained convex minimization."
+      ],
+      "evidence": [
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework.tex",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/l1_obstruction_framework_claim_ledger.md",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/mod_004_l1_obstruction_framework_core.py",
+        "atlas/archive/non_pfp/002_l1_obstruction_framework/code/tests/test_004_l1_obstruction_framework.py"
+      ],
+      "limits": "Applies to finite graphs with positive weights; the certifying circulation phi is non-unique on coordinates where the residual vanishes."
+    }
+  ]
+}

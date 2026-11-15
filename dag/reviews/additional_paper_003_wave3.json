@@ -1,0 +1,115 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "7c7b627ef1ce09dcc54dbb038649fb9ae73bd01c",
+  "scope_manifest": "dag/reviews/additional_paper_003_support_scope.json",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/host_engine.py",
+      "sha256": "76df55eaefe09f8d3ac0ce99c6735badec5c3fb7c2c2f5dd4e1717b2ed963a25",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 501]
+      ],
+      "assessment": "Source inspection of package Demo 3 host engine and receipt verifiers. Assesses verify_receipt_bytes recomputing 30-cell digest chains, pre-decrement fuel accounting, rollback on empty/move-after-VERIFY/malformed element batches, exhaustion to TERMINAL/FUEL_EXHAUSTED, and omission of fuel/arm script validation in package verifier."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py",
+      "sha256": "29a35f2ba916f3acfec7373bb4fd1e2ee15f9b19c9e3151e9f5e90e35e4d01a6",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 404]
+      ],
+      "assessment": "Source inspection of Demo 3 host unit tests. Confirms test_packaged_matrix_receipt_verifies_without_a_certificate, test_verify_receipt_bytes_rejects_forgeries_and_empty, test_move_after_verify_rolls_the_whole_batch_back, test_empty_batch_consumes_fuel_and_rolls_back, test_malformed_element_ids_do_not_commit, and test_repeated_refusals_consume_fuel_and_exhaust."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/rust/src/host.rs",
+      "sha256": "3b92b07f232e953814f9796323173b85ab627e1989d245a408f00161986116c8",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 402]
+      ],
+      "assessment": "Source inspection of Rust port of Demo 3 host engine. Confirms pre-decrement fuel accounting, rollback without fuel refund across empty and invalid batches, transition to FUEL_EXHAUSTED at fuel 0, and passing unit tests."
+    },
+    {
+      "path": "pfp/infrastructure/adapters/mssn_scenarios/protocol.py",
+      "sha256": "62a4078c8ef4ddfcc5457f8d27d7b8079c90c97b5fc6f1afdb071114ce3a3c33",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [585, 626]
+      ],
+      "assessment": "Source inspection of baseline Demo3 matrix receipt generation and canonical digest chain recording over 30 cells."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+      "sha256": "db9ce2c20408e6b8267ebab33e94cc172bf01762b6c32600108ae57967f7c00b",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [340, 420]
+      ],
+      "assessment": "Source inspection of Paper 003 Section 4 and 4.1, documenting host transactions, fuel exhaustion, and receipt verification boundaries."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+      "sha256": "b93d68bf1e5092a8d6f9f054d2a5c487e0037715501632f03e1a525c87841626",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 65]
+      ],
+      "assessment": "Claim ledger rows P3-04 (baseline receipt verifier scope), P3-06 (package host exhaustion), and P3-07 (package receipt verifier boundary and omission of fuel/arm script checks)."
+    }
+  ],
+  "claims": [
+    {
+      "id": "AUDIT-P003-004",
+      "statement": "verify_receipt_bytes recomputes each of the 30 cells' digest chains from the initial digest, checks fuel and scripted arm decisions, and refuses {}, schema changes, chain breaks and certificate claims.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Repository receipt verifier checking 30-cell execution matrix digest chains and transaction constraints.",
+        "Specification refusing unpopulated receipts, schema field modifications, hash chain discontinuities, and unadmitted certificate claims."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/host_engine.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py",
+        "pfp/infrastructure/adapters/mssn_scenarios/protocol.py"
+      ],
+      "limits": "Applies to the audited baseline receipt verifier scope over the 30-cell matrix; digest-chain verification establishes state transition continuity without asymmetric signatures or producer authentication."
+    },
+    {
+      "id": "AUDIT-P003-006",
+      "statement": "In the package host every refused batch (move after VERIFY, empty, malformed id) costs one fuel unit and rolls back; after initial fuel F refusals the host is TERMINAL with FUEL_EXHAUSTED.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Package Demo3HostEngine pre-decrement fuel accounting decrements remaining fuel by 1 per batch attempt.",
+        "Atomic state rollback restoring semantic state upon validation failure while preserving the consumed fuel decrement.",
+        "Exhaustion trigger transitioning to TERMINAL with FUEL_EXHAUSTED when attempt fuel reaches zero."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/host_engine.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/rust/src/host.rs"
+      ],
+      "limits": "Applies to integer initial fuel F >= 0 in package host and verified Rust parity; bounds processed batch attempts, not wall-clock execution time or network bytes."
+    },
+    {
+      "id": "AUDIT-P003-007",
+      "statement": "The package verify_receipt_bytes refuses empty input, {}, certificate labels, non-hex event bytes and unrecomputed digest edits, and does not check fuel or arm scripts.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Package verify_receipt_bytes implementation recomputing SHA-256 digest chains from initial digests across 30 cells.",
+        "Selective validation logic omitting checks on step-level fuel counts or scripted arm decision sequences."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/host_engine.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_demo_3_host.py"
+      ],
+      "limits": "Applies to the package verify_receipt_bytes implementation; confirms that receipts with recomputed digest chains pass even when fuel values or arm decisions are altered, as long as certificate labels are omitted."
+    }
+  ]
+}

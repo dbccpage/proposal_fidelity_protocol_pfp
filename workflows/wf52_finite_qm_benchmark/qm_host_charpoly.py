@@ -1,5 +1,8 @@
 """Host-derived characteristic-polynomial verification and certified context artifact.
 
+AuthorityEffect: None.
+Contract: urn:pfp-wf52:qm-host-charpoly:v1
+
 Derives the characteristic polynomial det(lambda*I - H(J,Delta,K)) solely from the
 admitted public affine Hamiltonian matrix representation (hamiltonian_artifact.py),
 using exact rational arithmetic (fractions.Fraction) and explicit degree bounds:
@@ -87,8 +90,8 @@ COMPACT_LIMITATION_NOTICE = "Intermediate det(lambda*I - H) only; not a full QM 
 PINNED_SOURCES = {
     "hamiltonian_artifact.py": "bf28b8371f11d2ac34256d3699a1653a2e44562e9d7b4a60e12221c750938925",
     "charpoly_wire.py": "c6e2733092d8224d1e2303b4a988c1d8735829d10bbb790a97423d451f6c5b50",
-    "native_sidecar.py": "67feada49e7e73a45897c81b1353aed7251964ed43bb463767cc2434b9c0fc3c",
-    "qm_native_charpoly.py": "73af367aa213f9822fe63e4373773914172f65735b652e2376e1edfad786f394",
+    "native_sidecar.py": "ea40934b8250e251758811dc70d997510b18673dc9b782a22b0ec3fb4db7f0a7",
+    "qm_native_charpoly.py": "72a1b1f0f3691deda02e1b16b8005fdaa578ff8a567aec7f96c6e27f1fca6434",
 }
 
 # Catalog of standardized failure states
@@ -321,6 +324,43 @@ def eval_scalar_det_4x4(matrix: list[list[Fraction | int]]) -> Fraction:
     return det_leibniz_val
 
 
+def _trivariate_char_matrix(
+    matrices: dict[str, list[list[Fraction]]],
+    g1: int,
+    g2: int,
+    frac_k: Fraction,
+    lam: int,
+) -> list[list[Fraction | int]]:
+    mat: list[list[Fraction | int]] = [[Fraction(0)] * 4 for _ in range(4)]
+    for r in range(4):
+        for c in range(4):
+            entry = (
+                -matrices["constant"][r][c]
+                - Fraction(g1) * matrices["J"][r][c]
+                - Fraction(g2) * matrices["Delta"][r][c]
+                - frac_k * matrices["K"][r][c]
+            )
+            if r == c:
+                entry += Fraction(lam)
+            mat[r][c] = entry
+    return mat
+
+
+def _accumulate_trivariate_term(
+    reconstructed: dict[tuple[int, int, int], Fraction],
+    det_val: Fraction,
+    b_lam: dict[int, Fraction],
+    b_g1: dict[int, Fraction],
+    b_g2: dict[int, Fraction],
+) -> None:
+    for d_lam, c_lam in b_lam.items():
+        for d_g1, c_g1 in b_g1.items():
+            for d_g2, c_g2 in b_g2.items():
+                coeff = det_val * c_lam * c_g1 * c_g2
+                key = (d_lam, d_g1, d_g2)
+                reconstructed[key] = reconstructed.get(key, Fraction(0)) + coeff
+
+
 def interpolate_trivariate_charpoly(
     matrices: dict[str, list[list[Fraction]]],
     nodes: tuple[int, ...] | list[int] = GRID_NODES,
@@ -341,29 +381,98 @@ def interpolate_trivariate_charpoly(
     for i, g1 in enumerate(nodes):
         for j, g2 in enumerate(nodes):
             for k, lam in enumerate(nodes):
-                mat = [[Fraction(0)] * 4 for _ in range(4)]
-                for r in range(4):
-                    for c in range(4):
-                        entry = (
-                            -matrices["constant"][r][c]
-                            - Fraction(g1) * matrices["J"][r][c]
-                            - Fraction(g2) * matrices["Delta"][r][c]
-                            - frac_k * matrices["K"][r][c]
-                        )
-                        if r == c:
-                            entry += Fraction(lam)
-                        mat[r][c] = entry
+                mat = _trivariate_char_matrix(matrices, g1, g2, frac_k, lam)
                 det_val = eval_scalar_det_4x4(mat)
                 if det_val == 0:
                     continue
-                for d_lam, c_lam in basis[k].items():
-                    for d_g1, c_g1 in basis[i].items():
-                        for d_g2, c_g2 in basis[j].items():
-                            coeff = det_val * c_lam * c_g1 * c_g2
-                            key = (d_lam, d_g1, d_g2)
-                            reconstructed[key] = reconstructed.get(key, Fraction(0)) + coeff
+                _accumulate_trivariate_term(reconstructed, det_val, basis[k], basis[i], basis[j])
 
     return {k: v for k, v in reconstructed.items() if v != 0}
+
+
+def _build_native_grid_matrices(
+    matrices: dict[str, list[list[Fraction]]],
+    nodes: tuple[int, ...] | list[int],
+) -> list[list[list[str]]]:
+    grid_matrices: list[list[list[str]]] = []
+    for j in nodes:
+        for d in nodes:
+            for k in nodes:
+                mat_rows = [
+                    [
+                        str(
+                            matrices["constant"][r][c]
+                            + Fraction(j) * matrices["J"][r][c]
+                            + Fraction(d) * matrices["Delta"][r][c]
+                            + Fraction(k) * matrices["K"][r][c]
+                        )
+                        for c in range(4)
+                    ]
+                    for r in range(4)
+                ]
+                grid_matrices.append(mat_rows)
+    return grid_matrices
+
+
+def _scalar_lam_coeffs_at_node(
+    matrices: dict[str, list[list[Fraction]]],
+    j: int,
+    d: int,
+    k: int,
+    nodes: tuple[int, ...] | list[int],
+    basis: list[dict[int, Fraction]],
+) -> list[Fraction]:
+    h_mat = [
+        [
+            matrices["constant"][r][c]
+            + Fraction(j) * matrices["J"][r][c]
+            + Fraction(d) * matrices["Delta"][r][c]
+            + Fraction(k) * matrices["K"][r][c]
+            for c in range(4)
+        ]
+        for r in range(4)
+    ]
+    lam_coeffs = [Fraction(0)] * 5
+    for l_idx, lam in enumerate(nodes):
+        char_mat: list[list[Fraction | int]] = [
+            [(Fraction(lam) if r == c else Fraction(0)) - h_mat[r][c] for c in range(4)]
+            for r in range(4)
+        ]
+        det_v = eval_scalar_det_4x4(char_mat)
+        for deg, coeff in basis[l_idx].items():
+            lam_coeffs[deg] += det_v * coeff
+    return lam_coeffs
+
+
+def _evaluate_host_scalar_grid(
+    matrices: dict[str, list[list[Fraction]]],
+    nodes: tuple[int, ...] | list[int],
+    basis: list[dict[int, Fraction]],
+) -> list[list[Fraction]]:
+    return [
+        _scalar_lam_coeffs_at_node(matrices, j, d, k, nodes, basis)
+        for j in nodes
+        for d in nodes
+        for k in nodes
+    ]
+
+
+def _accumulate_4var_row(
+    reconstructed_4var: dict[tuple[int, int, int, int], Fraction],
+    row: list[Fraction],
+    b_i: dict[int, Fraction],
+    b_j: dict[int, Fraction],
+    b_k: dict[int, Fraction],
+) -> None:
+    for m, c_val in enumerate(row):
+        if c_val == 0:
+            continue
+        for dj, cj in b_i.items():
+            for dd, cd in b_j.items():
+                for dk, ck in b_k.items():
+                    coeff = c_val * cj * cd * ck
+                    exp = (m, dj, dd, dk)
+                    reconstructed_4var[exp] = reconstructed_4var.get(exp, Fraction(0)) + coeff
 
 
 def interpolate_charpoly_from_grid(
@@ -381,73 +490,18 @@ def interpolate_charpoly_from_grid(
     n_nodes = len(nodes)
     basis = [lagrange_basis_1d(nodes, idx) for idx in range(n_nodes)]
 
-    observed_coeffs: list[list[Fraction]] = []
-
     if native_host is not None:
-        grid_matrices = []
-        for j in nodes:
-            for d in nodes:
-                for k in nodes:
-                    mat_rows = []
-                    for r in range(4):
-                        row = []
-                        for c in range(4):
-                            val = (
-                                matrices["constant"][r][c]
-                                + Fraction(j) * matrices["J"][r][c]
-                                + Fraction(d) * matrices["Delta"][r][c]
-                                + Fraction(k) * matrices["K"][r][c]
-                            )
-                            row.append(str(val))
-                        mat_rows.append(row)
-                    grid_matrices.append(mat_rows)
-        observed_coeffs, _custody = native_host.compute(grid_matrices)
+        observed_coeffs, _custody = native_host.compute(_build_native_grid_matrices(matrices, nodes))
     else:
-        for j in nodes:
-            for d in nodes:
-                for k in nodes:
-                    h_mat = [
-                        [
-                            matrices["constant"][r][c]
-                            + Fraction(j) * matrices["J"][r][c]
-                            + Fraction(d) * matrices["Delta"][r][c]
-                            + Fraction(k) * matrices["K"][r][c]
-                            for c in range(4)
-                        ]
-                        for r in range(4)
-                    ]
-                    det_values = []
-                    for lam in nodes:
-                        char_mat = [
-                            [
-                                (Fraction(lam) if r == c else Fraction(0)) - h_mat[r][c]
-                                for c in range(4)
-                            ]
-                            for r in range(4)
-                        ]
-                        det_values.append(eval_scalar_det_4x4(char_mat))
-                    lam_coeffs = [Fraction(0)] * 5
-                    for l_idx, det_v in enumerate(det_values):
-                        for deg, coeff in basis[l_idx].items():
-                            lam_coeffs[deg] += det_v * coeff
-                    observed_coeffs.append(lam_coeffs)
+        observed_coeffs = _evaluate_host_scalar_grid(matrices, nodes, basis)
 
     reconstructed_4var: dict[tuple[int, int, int, int], Fraction] = {}
     idx = 0
-    for i, _j_val in enumerate(nodes):
-        for j, _d_val in enumerate(nodes):
-            for k, _k_val in enumerate(nodes):
-                row = observed_coeffs[idx]
+    for i in range(n_nodes):
+        for j in range(n_nodes):
+            for k in range(n_nodes):
+                _accumulate_4var_row(reconstructed_4var, observed_coeffs[idx], basis[i], basis[j], basis[k])
                 idx += 1
-                for m, c_val in enumerate(row):
-                    if c_val == 0:
-                        continue
-                    for dj, cj in basis[i].items():
-                        for dd, cd in basis[j].items():
-                            for dk, ck in basis[k].items():
-                                coeff = c_val * cj * cd * ck
-                                exp = (m, dj, dd, dk)
-                                reconstructed_4var[exp] = reconstructed_4var.get(exp, Fraction(0)) + coeff
 
     return {k: v for k, v in reconstructed_4var.items() if v != 0}
 
@@ -470,67 +524,55 @@ def _format_monomial_term(powers: tuple[int, ...] | list[int], coeff: Fraction, 
     return "*".join(parts)
 
 
+def _format_lambda_power_group(
+    lam_var: str,
+    param_vars: tuple[str, ...],
+    lam_p: int,
+    p_terms: list[tuple[tuple[int, ...], Fraction]],
+) -> tuple[str, str]:
+    p_terms.sort(key=lambda item: (-sum(item[0]), *(-item[0][i] for i in range(len(item[0])))))
+    if len(p_terms) == 1 and all(p == 0 for p in p_terms[0][0]):
+        c = p_terms[0][1]
+        if c == 1 and lam_p > 0:
+            return "+", (f"{lam_var}^{lam_p}" if lam_p > 1 else lam_var)
+        if c == -1 and lam_p > 0:
+            return "-", (f"{lam_var}^{lam_p}" if lam_p > 1 else lam_var)
+
+    all_negative = all(c < 0 for _, c in p_terms)
+    factor_sign = "-" if all_negative else "+"
+    factor_parts = []
+    for i, (p_pow, c) in enumerate(p_terms):
+        effective_c = -c if all_negative else c
+        sign = "-" if effective_c < 0 else "+"
+        t_str = _format_monomial_term(p_pow, abs(effective_c), param_vars)
+        factor_parts.append((("-" if sign == "-" else "") + t_str) if i == 0 else f"{sign} {t_str}")
+
+    inner = " ".join(factor_parts)
+    bracketed = f"({inner})" if len(p_terms) > 1 else inner
+    if lam_p == 0:
+        return factor_sign, bracketed
+    lam_s = f"*{lam_var}^{lam_p}" if lam_p > 1 else f"*{lam_var}"
+    return factor_sign, f"{bracketed}{lam_s}"
+
+
+def _join_signed_parts(parts: list[tuple[str, str]]) -> str:
+    return "".join((("-" if sign == "-" else "") + t) if i == 0 else f" {sign} {t}" for i, (sign, t) in enumerate(parts))
+
+
 def format_charpoly_standard_form(
     poly: dict[tuple[int, ...], Fraction],
     variables: tuple[str, ...] = ("lambda", "J", "Delta", "K"),
 ) -> str:
     """Format characteristic polynomial in standard descending degree form."""
-    lam_var = variables[0]
-    param_vars = variables[1:]
     by_lam: dict[int, list[tuple[tuple[int, ...], Fraction]]] = {}
     for exp, coeff in poly.items():
-        lam_p = exp[0]
-        p_powers = exp[1:]
-        by_lam.setdefault(lam_p, []).append((p_powers, coeff))
+        by_lam.setdefault(exp[0], []).append((exp[1:], coeff))
 
-    parts: list[tuple[str, str]] = []
-    for lam_p in sorted(by_lam.keys(), reverse=True):
-        p_terms = by_lam[lam_p]
-        p_terms.sort(key=lambda item: (-sum(item[0]), *(-item[0][i] for i in range(len(item[0])))))
-
-        if len(p_terms) == 1 and all(p == 0 for p in p_terms[0][0]):
-            c = p_terms[0][1]
-            if c == 1 and lam_p > 0:
-                t = f"{lam_var}^{lam_p}" if lam_p > 1 else lam_var
-                parts.append(("+", t))
-                continue
-            elif c == -1 and lam_p > 0:
-                t = f"{lam_var}^{lam_p}" if lam_p > 1 else lam_var
-                parts.append(("-", t))
-                continue
-
-        all_negative = all(c < 0 for _, c in p_terms)
-        factor_sign = "-" if all_negative else "+"
-
-        factor_parts = []
-        for i, (p_pow, c) in enumerate(p_terms):
-            effective_c = -c if all_negative else c
-            abs_c = abs(effective_c)
-            sign = "-" if effective_c < 0 else "+"
-            t_str = _format_monomial_term(p_pow, abs_c, param_vars)
-            if i == 0:
-                factor_parts.append(("-" if sign == "-" else "") + t_str)
-            else:
-                factor_parts.append(f"{sign} {t_str}")
-
-        inner = " ".join(factor_parts)
-        bracketed = f"({inner})" if len(p_terms) > 1 else inner
-
-        if lam_p == 0:
-            term_full = bracketed
-        else:
-            lam_s = f"*{lam_var}^{lam_p}" if lam_p > 1 else f"*{lam_var}"
-            term_full = f"{bracketed}{lam_s}"
-
-        parts.append((factor_sign, term_full))
-
-    res = ""
-    for i, (sign, t) in enumerate(parts):
-        if i == 0:
-            res += ("-" if sign == "-" else "") + t
-        else:
-            res += f" {sign} {t}"
-    return res
+    parts = [
+        _format_lambda_power_group(variables[0], variables[1:], lam_p, by_lam[lam_p])
+        for lam_p in sorted(by_lam.keys(), reverse=True)
+    ]
+    return _join_signed_parts(parts)
 
 
 # ---------------------------------------------------------------------------
@@ -821,37 +863,34 @@ def get_expected_charpoly_standard_form(seed_hash: str = SUPPORTED_SEED_SHA256) 
     return format_charpoly_standard_form(poly, ("lambda", *PARAMETERS))
 
 
+def _append_named_term(parts: list[str], coeff: Fraction, name: str) -> None:
+    if coeff == 0:
+        return
+    if not parts:
+        if coeff == 1:
+            parts.append(name)
+        elif coeff == -1:
+            parts.append(f"-{name}")
+        else:
+            parts.append(f"{coeff}*{name}")
+        return
+    term = name if abs(coeff) == 1 else f"{abs(coeff)}*{name}"
+    sign = "+" if coeff > 0 else "-"
+    parts.append(f"{sign}{term}")
+
+
+def _format_hamiltonian_cell(matrices: dict[str, list[list[Fraction]]], r: int, c: int) -> str:
+    parts: list[str] = []
+    for name in ("K", "Delta", "J"):
+        _append_named_term(parts, matrices[name][r][c], name)
+    return "".join(parts) if parts else "0"
+
+
 @functools.lru_cache(maxsize=4)
 def get_expected_public_hamiltonian_matrix(seed_hash: str = SUPPORTED_SEED_SHA256) -> list[list[str]]:
     """Format expected public Hamiltonian matrix strings from admitted public matrices."""
     matrices = admit_public_matrices(seed_hash)
-    rows: list[list[str]] = []
-    for r in range(DIMENSION):
-        row: list[str] = []
-        for c in range(DIMENSION):
-            parts: list[str] = []
-            k_val = matrices["K"][r][c]
-            d_val = matrices["Delta"][r][c]
-            j_val = matrices["J"][r][c]
-            if k_val != 0:
-                parts.append("K" if k_val == 1 else ("-K" if k_val == -1 else f"{k_val}*K"))
-            if d_val != 0:
-                term = "Delta" if abs(d_val) == 1 else f"{abs(d_val)}*Delta"
-                if parts:
-                    sign = "+" if d_val > 0 else "-"
-                    parts.append(f"{sign}{term}")
-                else:
-                    parts.append(term if d_val > 0 else f"-{term}")
-            if j_val != 0:
-                term = "J" if abs(j_val) == 1 else f"{abs(j_val)}*J"
-                if parts:
-                    sign = "+" if j_val > 0 else "-"
-                    parts.append(f"{sign}{term}")
-                else:
-                    parts.append(term if j_val > 0 else f"-{term}")
-            row.append("".join(parts) if parts else "0")
-        rows.append(row)
-    return rows
+    return [[_format_hamiltonian_cell(matrices, r, c) for c in range(DIMENSION)] for r in range(DIMENSION)]
 
 
 def build_compact_solver_context(
@@ -1051,60 +1090,53 @@ def _verify_native_evidence(context: dict[str, Any], schema: str, seed_hash: str
     return {"native_reexecuted": True, "receipt_sha256": claimed_digest}
 
 
-def validate_certified_context(context_input: str | dict[str, Any], *, reexecute_native: bool = True) -> dict[str, Any]:
-    """Strictly validate a certified context artifact, enforcing limitations and provenance.
-
-    Declared verification fields are never sufficient: see ``_verify_native_evidence``.
-    """
+def _load_context_dict(context_input: str | dict[str, Any]) -> dict[str, Any]:
     if isinstance(context_input, str):
         check_prompt_injection(context_input)
         try:
-            context = json.loads(context_input)
+            return json.loads(context_input)
         except json.JSONDecodeError as exc:
             raise HostCharpolyRefusalError("MALFORMED_JSON", f"invalid JSON: {exc}") from None
-    elif isinstance(context_input, dict):
-        context = deepcopy(context_input)
-    else:
-        raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "context must be string or dict")
+    if isinstance(context_input, dict):
+        return deepcopy(context_input)
+    raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "context must be string or dict")
 
-    schema = context.get("schema")
-    if schema not in (SCHEMA, COMPACT_SCHEMA):
-        raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", f"schema must be {SCHEMA} or {COMPACT_SCHEMA}")
 
-    if context.get("status") != "CERTIFIED_INTERMEDIATE_CHARPOLY":
-        raise HostCharpolyRefusalError("FORGED_CERTIFICATE", "invalid status field")
-
-    seed_hash = context.get("seed_sha256")
-    if seed_hash != SUPPORTED_SEED_SHA256:
-        raise HostCharpolyRefusalError("UNREGISTERED_SEED", "unsupported seed hash")
-
-    limitations = context.get("limitations")
+def _validate_limitations_envelope(limitations: Any) -> dict[str, Any]:
     if not isinstance(limitations, dict):
         raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "missing limitations section")
-
     if limitations.get("final_answer_certified") is not False:
         raise HostCharpolyRefusalError(
             "CONTRADICTION_FINAL_ANSWER_CLAIM",
             "final_answer_certified must be explicitly False",
         )
-
     if limitations.get("certified_scope") != [CLAIM_SCOPE]:
         raise HostCharpolyRefusalError(
             "CONTRADICTION_FINAL_ANSWER_CLAIM",
             f"certified_scope must contain only '{CLAIM_SCOPE}'",
         )
-
     uncertified = limitations.get("uncertified_obligations")
     if not isinstance(uncertified, list) or not set(UNCERTIFIED_OBLIGATIONS).issubset(set(uncertified)):
         raise HostCharpolyRefusalError(
             "CONTRADICTION_FINAL_ANSWER_CLAIM",
             "uncertified_obligations must declare all uncertified QM obligations",
         )
+    return limitations
 
+
+def _validate_context_envelope(context: Any) -> tuple[str, str, dict[str, Any], dict[str, Any]]:
+    schema = context.get("schema")
+    if schema not in (SCHEMA, COMPACT_SCHEMA):
+        raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", f"schema must be {SCHEMA} or {COMPACT_SCHEMA}")
+    if context.get("status") != "CERTIFIED_INTERMEDIATE_CHARPOLY":
+        raise HostCharpolyRefusalError("FORGED_CERTIFICATE", "invalid status field")
+    seed_hash = context.get("seed_sha256")
+    if seed_hash != SUPPORTED_SEED_SHA256:
+        raise HostCharpolyRefusalError("UNREGISTERED_SEED", "unsupported seed hash")
+    limitations = _validate_limitations_envelope(context.get("limitations"))
     carrier = context.get("carrier")
     if not isinstance(carrier, dict):
         raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "missing carrier section")
-
     native_verif = context.get("native_verification")
     if not isinstance(native_verif, dict):
         raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "missing native_verification section")
@@ -1118,104 +1150,120 @@ def validate_certified_context(context_input: str | dict[str, Any], *, reexecute
             "FORGED_CERTIFICATE",
             f"native_verification grid_points_verified must equal {GRID_POINTS}",
         )
+    return schema, seed_hash, carrier, limitations
 
+
+def _validate_compact_fields(
+    context: dict[str, Any],
+    carrier: dict[str, Any],
+    limitations: dict[str, Any],
+    seed_hash: str,
+) -> None:
+    if carrier.get("domain") != "Q":
+        raise HostCharpolyRefusalError("FORGED_CERTIFICATE", "carrier domain must be 'Q'")
+    if carrier.get("variables") != ["lambda", *PARAMETERS]:
+        raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", f"carrier variables must be ['lambda', *{PARAMETERS}]")
+    bounds = carrier.get("degree_bounds")
+    if not isinstance(bounds, dict):
+        raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "missing degree_bounds in carrier")
+    if bounds.get("lambda") != DEGREE_BOUND_LAMBDA:
+        raise HostCharpolyRefusalError(
+            "DEGREE_LIMIT_EXCEEDED",
+            f"carrier degree_bounds.lambda must equal {DEGREE_BOUND_LAMBDA}",
+        )
+    if bounds.get("parameters") != DEGREE_BOUND_PER_VARIABLE:
+        raise HostCharpolyRefusalError(
+            "DEGREE_LIMIT_EXCEEDED",
+            f"carrier degree_bounds.parameters must equal {DEGREE_BOUND_PER_VARIABLE}",
+        )
+
+    notice = limitations.get("notice")
+    if not isinstance(notice, str):
+        raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "missing limitations.notice")
+    check_prompt_injection(notice)
+    if notice != COMPACT_LIMITATION_NOTICE:
+        raise HostCharpolyRefusalError(
+            "CONTRADICTION_FINAL_ANSWER_CLAIM",
+            f"limitations notice must match expected disclaimer text '{COMPACT_LIMITATION_NOTICE}'",
+        )
+
+    pub_ham = context.get("public_hamiltonian")
+    if not isinstance(pub_ham, dict):
+        raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "missing public_hamiltonian section")
+    if pub_ham.get("basis") != list(BASIS):
+        raise HostCharpolyRefusalError("PUBLIC_INPUT_MISMATCH", f"public_hamiltonian basis must be {list(BASIS)}")
+    if pub_ham.get("matrix") != get_expected_public_hamiltonian_matrix(seed_hash):
+        raise HostCharpolyRefusalError(
+            "PUBLIC_INPUT_MISMATCH",
+            "public_hamiltonian matrix representation does not match admitted public matrix",
+        )
+
+    poly_info = context.get("polynomial")
+    if not isinstance(poly_info, dict):
+        raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "missing polynomial section")
+    standard_form = poly_info.get("standard_form")
+    if not isinstance(standard_form, str):
+        raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "missing polynomial standard_form string")
+    check_prompt_injection(standard_form)
+    if standard_form != get_expected_charpoly_standard_form(seed_hash):
+        raise HostCharpolyRefusalError(
+            "CONTRADICTION_FINAL_ANSWER_CLAIM",
+            f"polynomial standard_form does not match host-derived characteristic polynomial for seed {seed_hash}",
+        )
+
+
+def _validate_full_fields(
+    context: dict[str, Any],
+    carrier: dict[str, Any],
+    limitations: dict[str, Any],
+    reexecute_native: bool,
+) -> None:
+    if carrier.get("grid_point_count") != GRID_POINTS:
+        raise HostCharpolyRefusalError(
+            "FORGED_CERTIFICATE",
+            f"carrier grid_point_count must equal {GRID_POINTS}",
+        )
+    bounds = carrier.get("degree_bounds")
+    if isinstance(bounds, dict) and bounds.get("lambda") != DEGREE_BOUND_LAMBDA:
+        raise HostCharpolyRefusalError(
+            "DEGREE_LIMIT_EXCEEDED",
+            f"carrier degree_bounds.lambda must equal {DEGREE_BOUND_LAMBDA}",
+        )
+    eval_role = limitations.get("evaluation_role")
+    if isinstance(eval_role, str):
+        check_prompt_injection(eval_role)
+    solver_ctx = context.get("solver_context")
+    if not isinstance(solver_ctx, dict) or not isinstance(solver_ctx.get("compact_certificate"), dict):
+        raise HostCharpolyRefusalError("MISSING_NATIVE_EVIDENCE", "full context carries no compact certificate")
+    theorem = context.get("theorem")
+    if not isinstance(theorem, str):
+        raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "missing theorem statement")
+    check_prompt_injection(theorem)
+    if theorem != THEOREM:
+        raise HostCharpolyRefusalError("CONTRADICTION_FINAL_ANSWER_CLAIM", "theorem does not match the host statement")
+    admitted = context.get("admitted_public_matrix")
+    if not isinstance(admitted, dict):
+        raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "missing admitted_public_matrix section")
+    if isinstance(admitted.get("source_path"), str):
+        check_prompt_injection(admitted["source_path"])
+    if (admitted.get("source_path") != "dag/benchmark/hamiltonian_artifact.py"
+            or admitted.get("source_sha256") != PINNED_SOURCES.get("hamiltonian_artifact.py")
+            or admitted.get("basis") != list(BASIS) or admitted.get("parameters") != list(PARAMETERS)):
+        raise HostCharpolyRefusalError("PUBLIC_INPUT_MISMATCH", "admitted_public_matrix is not the pinned host artifact")
+    validate_certified_context(solver_ctx["compact_certificate"], reexecute_native=reexecute_native)
+
+
+def validate_certified_context(context_input: str | dict[str, Any], *, reexecute_native: bool = True) -> dict[str, Any]:
+    """Strictly validate a certified context artifact, enforcing limitations and provenance.
+
+    Declared verification fields are never sufficient: see ``_verify_native_evidence``.
+    """
+    context = _load_context_dict(context_input)
+    schema, seed_hash, carrier, limitations = _validate_context_envelope(context)
     if schema == COMPACT_SCHEMA:
-        # Carrier bounds and domain validation
-        if carrier.get("domain") != "Q":
-            raise HostCharpolyRefusalError("FORGED_CERTIFICATE", "carrier domain must be 'Q'")
-        if carrier.get("variables") != ["lambda", *PARAMETERS]:
-            raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", f"carrier variables must be ['lambda', *{PARAMETERS}]")
-        bounds = carrier.get("degree_bounds")
-        if not isinstance(bounds, dict):
-            raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "missing degree_bounds in carrier")
-        if bounds.get("lambda") != DEGREE_BOUND_LAMBDA:
-            raise HostCharpolyRefusalError(
-                "DEGREE_LIMIT_EXCEEDED",
-                f"carrier degree_bounds.lambda must equal {DEGREE_BOUND_LAMBDA}",
-            )
-        if bounds.get("parameters") != DEGREE_BOUND_PER_VARIABLE:
-            raise HostCharpolyRefusalError(
-                "DEGREE_LIMIT_EXCEEDED",
-                f"carrier degree_bounds.parameters must equal {DEGREE_BOUND_PER_VARIABLE}",
-            )
-
-        # Limitation notice validation
-        notice = limitations.get("notice")
-        if not isinstance(notice, str):
-            raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "missing limitations.notice")
-        check_prompt_injection(notice)
-        if notice != COMPACT_LIMITATION_NOTICE:
-            raise HostCharpolyRefusalError(
-                "CONTRADICTION_FINAL_ANSWER_CLAIM",
-                f"limitations notice must match expected disclaimer text '{COMPACT_LIMITATION_NOTICE}'",
-            )
-
-        # Public Hamiltonian matrix validation
-        pub_ham = context.get("public_hamiltonian")
-        if not isinstance(pub_ham, dict):
-            raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "missing public_hamiltonian section")
-        if pub_ham.get("basis") != list(BASIS):
-            raise HostCharpolyRefusalError("PUBLIC_INPUT_MISMATCH", f"public_hamiltonian basis must be {list(BASIS)}")
-        expected_matrix = get_expected_public_hamiltonian_matrix(seed_hash)
-        if pub_ham.get("matrix") != expected_matrix:
-            raise HostCharpolyRefusalError(
-                "PUBLIC_INPUT_MISMATCH",
-                "public_hamiltonian matrix representation does not match admitted public matrix",
-            )
-
-        # Characteristic polynomial standard form validation
-        poly_info = context.get("polynomial")
-        if not isinstance(poly_info, dict):
-            raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "missing polynomial section")
-        standard_form = poly_info.get("standard_form")
-        if not isinstance(standard_form, str):
-            raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "missing polynomial standard_form string")
-        check_prompt_injection(standard_form)
-        expected_standard_form = get_expected_charpoly_standard_form(seed_hash)
-        if standard_form != expected_standard_form:
-            raise HostCharpolyRefusalError(
-                "CONTRADICTION_FINAL_ANSWER_CLAIM",
-                f"polynomial standard_form does not match host-derived characteristic polynomial for seed {seed_hash}",
-            )
-
+        _validate_compact_fields(context, carrier, limitations, seed_hash)
     elif schema == SCHEMA:
-        if carrier.get("grid_point_count") != GRID_POINTS:
-            raise HostCharpolyRefusalError(
-                "FORGED_CERTIFICATE",
-                f"carrier grid_point_count must equal {GRID_POINTS}",
-            )
-        bounds = carrier.get("degree_bounds")
-        if isinstance(bounds, dict) and bounds.get("lambda") != DEGREE_BOUND_LAMBDA:
-            raise HostCharpolyRefusalError(
-                "DEGREE_LIMIT_EXCEEDED",
-                f"carrier degree_bounds.lambda must equal {DEGREE_BOUND_LAMBDA}",
-            )
-        eval_role = limitations.get("evaluation_role")
-        if isinstance(eval_role, str):
-            check_prompt_injection(eval_role)
-        # The theorem statement is free text and must be the host's own, screened for injection.
-        theorem = context.get("theorem")
-        if not isinstance(theorem, str):
-            raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "missing theorem statement")
-        check_prompt_injection(theorem)
-        if theorem != THEOREM:
-            raise HostCharpolyRefusalError("CONTRADICTION_FINAL_ANSWER_CLAIM", "theorem does not match the host statement")
-        # The admitted public matrix must name the pinned source, not an attacker-chosen path.
-        admitted = context.get("admitted_public_matrix")
-        if not isinstance(admitted, dict):
-            raise HostCharpolyRefusalError("SHAPE_OR_TYPE_VIOLATION", "missing admitted_public_matrix section")
-        if isinstance(admitted.get("source_path"), str):
-            check_prompt_injection(admitted["source_path"])
-        if (admitted.get("source_path") != "dag/benchmark/hamiltonian_artifact.py"
-                or admitted.get("source_sha256") != PINNED_SOURCES.get("hamiltonian_artifact.py")
-                or admitted.get("basis") != list(BASIS) or admitted.get("parameters") != list(PARAMETERS)):
-            raise HostCharpolyRefusalError("PUBLIC_INPUT_MISMATCH", "admitted_public_matrix is not the pinned host artifact")
-        # A full context must carry and bind its compact certificate, which validates the
-        # polynomial text itself; it is not optional.
-        solver_ctx = context.get("solver_context")
-        if not isinstance(solver_ctx, dict) or not isinstance(solver_ctx.get("compact_certificate"), dict):
-            raise HostCharpolyRefusalError("MISSING_NATIVE_EVIDENCE", "full context carries no compact certificate")
-        validate_certified_context(solver_ctx["compact_certificate"], reexecute_native=reexecute_native)
+        _validate_full_fields(context, carrier, limitations, reexecute_native)
 
     check_provenance_pins()
     evidence = _verify_native_evidence(context, schema, seed_hash, reexecute_native)

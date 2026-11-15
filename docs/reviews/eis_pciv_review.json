@@ -1,0 +1,457 @@
+{
+  "schema_version": "pfp.eis-pciv-review.v1",
+  "AuthorityEffect": "None",
+  "reviewed_on": "2026-11-14",
+  "records": [
+    {
+      "id": "REV-K01-EIS-INTEG-LIFETIME",
+      "file": "code/rust/tests/core_epistemic_immune_system/activation_use_case_parity.rs",
+      "line": 61,
+      "class": "bug",
+      "evidence_command": "cargo test --manifest-path code/rust/Cargo.toml -p core_epistemic_immune_system",
+      "proposed_fix": "Add explicit lifetime 'a to input parameter in build_activation_request signature: input: &'a Value.",
+      "milestone": "M2"
+    },
+    {
+      "id": "REV-K01-EIS-INTEG-BORROW-DROP",
+      "file": "code/rust/tests/core_epistemic_immune_system/activation_use_case_parity.rs",
+      "line": 90,
+      "class": "bug",
+      "evidence_command": "cargo test --manifest-path code/rust/Cargo.toml -p core_epistemic_immune_system",
+      "proposed_fix": "Bind serialized trace borrow to local variable before returning (let calls = json!(*trace.borrow()); Ok((actual, calls))) so temporary Ref drops before trace deallocation.",
+      "milestone": "M2"
+    },
+    {
+      "id": "REV-K02-PCIV-WITNESS-09-HOPS",
+      "file": "code/rust/core_prompt_civilization/src/immunity.rs",
+      "line": 267,
+      "class": "bug",
+      "evidence_command": "cargo test --manifest-path code/rust/Cargo.toml -p core_prompt_civilization --lib",
+      "proposed_fix": "Use inheritance_witness_digest(&parent, &child, &relationship) to compute authentic witness hashes instead of mock strings.",
+      "milestone": "M2"
+    },
+    {
+      "id": "REV-K02-PCIV-WITNESS-10-SHORTEST",
+      "file": "code/rust/core_prompt_civilization/src/immunity.rs",
+      "line": 241,
+      "class": "bug",
+      "evidence_command": "cargo test --manifest-path code/rust/Cargo.toml -p core_prompt_civilization --lib",
+      "proposed_fix": "Use inheritance_witness_digest(&parent, &child, &relationship) to compute authentic witness hashes instead of mock strings.",
+      "milestone": "M2"
+    },
+    {
+      "id": "REV-K02-PCIV-RECORD-DIGEST-PIN",
+      "file": "code/rust/core_prompt_civilization/src/record.rs",
+      "line": 308,
+      "class": "bug",
+      "evidence_command": "cargo test --manifest-path code/rust/Cargo.toml -p core_prompt_civilization --lib",
+      "proposed_fix": "Update expected hash constant in assertion from outdated pre-rename fixture 0a7c69... to canonical post-rename digest 5a60fd3bc53dc83c9953864b00297b0278e3ad62358742582cdd7ec9366f5663.",
+      "milestone": "M2"
+    },
+    {
+      "id": "REV-K03-CI-MISSING-WORKFLOW",
+      "file": ".github/workflows/eis_pciv_rust.yml",
+      "line": 1,
+      "class": "drift",
+      "evidence_command": "Get-ChildItem .github/workflows/",
+      "proposed_fix": "Author .github/workflows/eis_pciv_rust.yml executing fmt, clippy, and cargo test across core_epistemic_immune_system and core_prompt_civilization.",
+      "milestone": "M2"
+    },
+    {
+      "id": "REV-K03-CLIPPY-MANUAL-CONTAINS",
+      "file": "code/rust/core_prompt_civilization/src/pharmacy.rs",
+      "line": 522,
+      "class": "bug",
+      "evidence_command": "cargo clippy --manifest-path code/rust/Cargo.toml --locked -p core_prompt_civilization --all-targets --no-deps -- -D warnings",
+      "proposed_fix": "Replace SELF_CERTIFYING_VALUES.iter().any(|word| lower == *word) with SELF_CERTIFYING_VALUES.contains(&lower.as_str()).",
+      "milestone": "M2"
+    },
+    {
+      "id": "REV-K03-CLIPPY-MANUAL-IS-MULTIPLE",
+      "file": "code/rust/core_epistemic_immune_system/src/authenticated.rs",
+      "line": 119,
+      "class": "bug",
+      "evidence_command": "cargo clippy --manifest-path code/rust/Cargo.toml --locked -p core_epistemic_immune_system --all-targets --no-deps -- -D warnings",
+      "proposed_fix": "Replace manual modulo equality check with num_integer::Integer::is_multiple_of().",
+      "milestone": "M2"
+    },
+    {
+      "id": "REV-K03-CLIPPY-TOO-MANY-ARGS",
+      "file": "code/rust/core_epistemic_immune_system/src/authenticated.rs",
+      "line": 393,
+      "class": "bug",
+      "evidence_command": "cargo clippy --manifest-path code/rust/Cargo.toml --locked -p core_epistemic_immune_system --all-targets --no-deps -- -D warnings",
+      "proposed_fix": "Group verification parameters into structured context or annotate allow(clippy::too_many_arguments) to preserve public port interface.",
+      "milestone": "M2"
+    },
+    {
+      "id": "REV-K03-FMT-EIS-PCIV-DIFFS",
+      "file": "code/rust/core_epistemic_immune_system/src/activation.rs",
+      "line": 1,
+      "class": "drift",
+      "evidence_command": "cargo fmt --manifest-path code/rust/Cargo.toml -p core_epistemic_immune_system -p core_prompt_civilization --check",
+      "proposed_fix": "Run cargo fmt across code/rust workspace to eliminate whitespace and import ordering diffs.",
+      "milestone": "M2"
+    },
+    {
+      "id": "REV-K04-QUAD-DUPLICATE-PCIV-IMMUNE",
+      "file": "code/rust/core_prompt_civilization/src/immune/allostery.rs",
+      "line": 1,
+      "class": "duplicate",
+      "evidence_command": "cargo test --manifest-path code/rust/Cargo.toml -p core_prompt_civilization -p core_epistemic_immune_system",
+      "proposed_fix": "Add path dependency from core_prompt_civilization to core_epistemic_immune_system and re-export shared gates, noting behavioral divergence seams as open decisions.",
+      "milestone": "M4"
+    },
+    {
+      "id": "REV-K04-QUAD-DUPLICATE-EIS-DOMAIN",
+      "file": "eis/domain/thymus.py",
+      "line": 1,
+      "class": "duplicate",
+      "evidence_command": "Get-ChildItem eis/domain/",
+      "proposed_fix": "Retain Python domain for offline fallback/fixture compatibility while pointing active pipeline callers to Rust host binary.",
+      "milestone": "M4"
+    },
+    {
+      "id": "REV-K04-QUAD-DUPLICATE-PFP-IMMUNITY",
+      "file": "pfp_core/immunity.py",
+      "line": 1,
+      "class": "duplicate",
+      "evidence_command": "git grep -n 'screen_rules' pfp_core/immunity.py",
+      "proposed_fix": "Transition pfp_core/immunity.py check methods to invoke Rust host binary pfp_immune behind parity assertions.",
+      "milestone": "M7"
+    },
+    {
+      "id": "REV-K05-COLLECT-FFI-RUST-SYMBOL-GAME",
+      "file": "eis/infrastructure/native_domain.py",
+      "line": 9,
+      "class": "engine_dependency",
+      "evidence_command": "python -m pytest -q --continue-on-collection-errors eis/tests pciv/tests",
+      "proposed_fix": "Replace external monorepo FFI import operating_system.adapters.rust_host.ffi with typed CLI execution against pfp_immune.",
+      "milestone": "M5"
+    },
+    {
+      "id": "REV-K05-COLLECT-PCIV-OPERATING-SYSTEM",
+      "file": "pciv/infrastructure/genealogy_adapter.py",
+      "line": 12,
+      "class": "engine_dependency",
+      "evidence_command": "python -m pytest -q --continue-on-collection-errors pciv/tests",
+      "proposed_fix": "Provide local JSON/file adapters for genealogy and custody persistence in standalone repository.",
+      "milestone": "M5"
+    },
+    {
+      "id": "REV-K05-COLLECT-OPS-ROP-RESULT",
+      "file": "eis/use_cases/pharmacy_search.py",
+      "line": 18,
+      "class": "engine_dependency",
+      "evidence_command": "python -m pytest -q eis/tests/integration/test_native_pharmacy_search.py",
+      "proposed_fix": "Add ops/operations to PYTHONPATH or vendor minimal Result monad (Ok, Err, Refusal) in repo.",
+      "milestone": "M5"
+    },
+    {
+      "id": "REV-K05-COLLECT-PCIV-ADVERSARY",
+      "file": "pciv/tests/falsifiers/test_falsifiers_spine_and_adversary.py",
+      "line": 29,
+      "class": "engine_dependency",
+      "evidence_command": "python -m pytest -q pciv/tests/falsifiers/test_falsifiers_spine_and_adversary.py",
+      "proposed_fix": "Stub out or guard out-of-repo adversary package in standalone test harness.",
+      "milestone": "M5"
+    },
+    {
+      "id": "REV-K05-COLLECT-CHARPOLY-IMPORT-PATH",
+      "file": "eis/tests/unit/test_challenger_two_signal_regulation.py",
+      "line": 37,
+      "class": "drift",
+      "evidence_command": "python -m pytest -q eis/tests/unit/test_challenger_two_signal_regulation.py",
+      "proposed_fix": "Correct import path from dag.benchmark.charpoly_wire to workflows.wf52_finite_qm_benchmark.charpoly_wire.",
+      "milestone": "M3"
+    },
+    {
+      "id": "REV-K06-BUG-CHARPOLY-NORM-SILENT-NONE",
+      "file": "eis/use_cases/two_signal_regulation.py",
+      "line": 57,
+      "class": "bug",
+      "evidence_command": "python -m pytest -q eis/tests/unit/test_challenger_two_signal_attacks.py -k test_signal1_alone_is_diagnostic_only_never_refuses",
+      "proposed_fix": "Fix import of charpoly_wire in Python and implement exact rational normalization in Rust (reduce 2/2 to 1, drop +0 terms).",
+      "milestone": "M3"
+    },
+    {
+      "id": "REV-K06-BUG-NORMALIZED-MATCHER-CENTRAL-TOLERANCE",
+      "file": "eis/tests/unit/test_two_signal_regulation.py",
+      "line": 113,
+      "class": "bug",
+      "evidence_command": "python -m pytest -q eis/tests/unit/test_two_signal_regulation.py -k test_normalized_matcher_passes_central_tolerance",
+      "proposed_fix": "Implement central tolerance normalization in Rust so self panel rational terms (2/2, +4/2, 1/1) do not trigger autoimmune apoptosis.",
+      "milestone": "M3"
+    },
+    {
+      "id": "REV-K06-BUG-AB09-CHSH-HEADER-REGEX",
+      "file": "eis/tests/unit/test_two_signal_regulation.py",
+      "line": 601,
+      "class": "bug",
+      "evidence_command": "python -m pytest -q eis/tests/unit/test_two_signal_regulation.py -k test_ab09_fails_on_chsh_bound_range_violation",
+      "proposed_fix": "Implement CHSH/Bell bound range check in Rust and align test fixture text to include 'CHSH expectation = 4'.",
+      "milestone": "M3"
+    },
+    {
+      "id": "REV-K06-BUG-THYMUS-EVAL-ERROR-PREFIX",
+      "file": "eis/domain/thymus.py",
+      "line": 141,
+      "class": "bug",
+      "evidence_command": "python -m pytest -q eis/tests/unit/test_thymus_evaluation_error.py",
+      "proposed_fix": "Normalize evaluation_error formatting in thymus to ensure it starts with 'error:' across Python 3.12 (re.error) and Python 3.13+ (re.PatternError).",
+      "milestone": "M3"
+    },
+    {
+      "id": "REV-K06-BUG-PCIV-SUPPORT-FALSIFIER-01",
+      "file": "pciv/tests/falsifiers/test_falsifiers_support_and_admission.py",
+      "line": 58,
+      "class": "bug",
+      "evidence_command": "python -m pytest -q pciv/tests/falsifiers/test_falsifiers_support_and_admission.py -k test_f_support_01_support_is_independent_of_ingestion_order",
+      "proposed_fix": "Implement observation support policy in Rust (core_epistemic_immune_system::admission) ensuring support is order-independent.",
+      "milestone": "M3"
+    },
+    {
+      "id": "REV-K06-BUG-PCIV-SUPPORT-FALSIFIER-02",
+      "file": "pciv/tests/falsifiers/test_falsifiers_support_and_admission.py",
+      "line": 99,
+      "class": "bug",
+      "evidence_command": "python -m pytest -q pciv/tests/falsifiers/test_falsifiers_support_and_admission.py -k test_f_support_02_non_transitive_overlap_case",
+      "proposed_fix": "Implement non-transitive overlap handling in Rust support verification.",
+      "milestone": "M3"
+    },
+    {
+      "id": "REV-K06-BUG-PCIV-SUPPORT-FALSIFIER-03",
+      "file": "pciv/tests/falsifiers/test_falsifiers_support_and_admission.py",
+      "line": 134,
+      "class": "bug",
+      "evidence_command": "python -m pytest -q pciv/tests/falsifiers/test_falsifiers_support_and_admission.py -k test_f_support_03_support_is_feasible_without_relabelling",
+      "proposed_fix": "Implement support feasibility check without relabelling in Rust.",
+      "milestone": "M3"
+    },
+    {
+      "id": "REV-K06-BUG-PCIV-SUPPORT-FALSIFIER-04",
+      "file": "pciv/tests/falsifiers/test_falsifiers_support_and_admission.py",
+      "line": 149,
+      "class": "bug",
+      "evidence_command": "python -m pytest -q pciv/tests/falsifiers/test_falsifiers_support_and_admission.py -k test_f_support_04_support_is_monotone",
+      "proposed_fix": "Implement monotonicity check for observation support in Rust.",
+      "milestone": "M3"
+    },
+    {
+      "id": "REV-K06-BUG-PCIV-PHARM-FALSIFIER-01",
+      "file": "pciv/tests/falsifiers/test_falsifiers_support_and_admission.py",
+      "line": 180,
+      "class": "bug",
+      "evidence_command": "python -m pytest -q pciv/tests/falsifiers/test_falsifiers_support_and_admission.py -k test_f_pharm_01_duplicate_collapse_replays_count_as_one",
+      "proposed_fix": "Implement duplicate collapse replay deduplication in Rust pharmacy.",
+      "milestone": "M3"
+    },
+    {
+      "id": "REV-K06-BUG-PCIV-RES-FALSIFIER-05",
+      "file": "pciv/tests/falsifiers/test_falsifiers_support_and_admission.py",
+      "line": 324,
+      "class": "bug",
+      "evidence_command": "python -m pytest -q pciv/tests/falsifiers/test_falsifiers_support_and_admission.py -k test_f_res_05_propagated_references_are_never_observations",
+      "proposed_fix": "Enforce that propagated references are never treated as direct observations in Rust admission check.",
+      "milestone": "M3"
+    },
+    {
+      "id": "REV-K06-DEP-PCIV-RANK-FALSIFIERS",
+      "file": "pciv/tests/falsifiers/test_falsifiers_rank_and_events.py",
+      "line": 54,
+      "class": "engine_dependency",
+      "evidence_command": "python -m pytest -q pciv/tests/falsifiers/test_falsifiers_rank_and_events.py",
+      "proposed_fix": "Port prompt rank solver and transition matrix verification to Rust core_prompt_civilization.",
+      "milestone": "M5"
+    },
+    {
+      "id": "REV-K06-DEP-PCIV-CUSTODY-FALSIFIER",
+      "file": "pciv/tests/falsifiers/test_falsifiers_immune_and_danger.py",
+      "line": 243,
+      "class": "engine_dependency",
+      "evidence_command": "python -m pytest -q pciv/tests/falsifiers/test_falsifiers_immune_and_danger.py -k test_f_custody_01_provisional_is_diagnostic_only",
+      "proposed_fix": "Implement provisional custody diagnostics check in Rust core_prompt_civilization.",
+      "milestone": "M5"
+    },
+    {
+      "id": "REV-K06-DEP-RUST-CAPTURE-ANTIBODY-SPEC",
+      "file": "eis/tests/unit/test_rust_capture_antibody_candidate.py",
+      "line": 31,
+      "class": "engine_dependency",
+      "evidence_command": "python -m pytest -q eis/tests/unit/test_rust_capture_antibody_candidate.py",
+      "proposed_fix": "Ensure antibody specification .agents/antibodies/specs/anti_rust_capture_completion_loss.yaml is mirrored or resolved from eis/antibodies/.",
+      "milestone": "M5"
+    },
+    {
+      "id": "REV-K06-DEP-OPERAND-REGISTRY-JSON",
+      "file": "pciv/tests/intelligence_metabolism/test_operand_registry.py",
+      "line": 43,
+      "class": "engine_dependency",
+      "evidence_command": "python -m pytest -q pciv/tests/intelligence_metabolism/test_operand_registry.py",
+      "proposed_fix": "Place or link operand_registry.json under operations/skill_operad/json/ or adjust fixture search path.",
+      "milestone": "M5"
+    },
+    {
+      "id": "REV-K06-DRIFT-METABOLISM-FIXTURE-PATH",
+      "file": "pciv/tests/intelligence_metabolism/test_native_metabolism.py",
+      "line": 24,
+      "class": "drift",
+      "evidence_command": "python -m pytest -q pciv/tests/intelligence_metabolism/test_native_metabolism.py",
+      "proposed_fix": "Update fixture path from non-existent engine/crates_rs/... to active code/rust/tests/core_prompt_civilization/fixtures/metabolism.json.",
+      "milestone": "M8"
+    },
+    {
+      "id": "REV-K07-FLOAT-DETECTOR-AFFINITY-RUST",
+      "file": "code/rust/core_epistemic_immune_system/src/clonal_selection.rs",
+      "line": 64,
+      "class": "float",
+      "evidence_command": "cargo test --manifest-path code/rust/Cargo.toml -p core_epistemic_immune_system --lib",
+      "proposed_fix": "Migrate DetectorRule.affinity_score from f64 to num_rational::BigRational in Rust check paths.",
+      "milestone": "M4"
+    },
+    {
+      "id": "REV-K07-FLOAT-STIMULATE-ADDITION-RUST",
+      "file": "code/rust/core_epistemic_immune_system/src/clonal_selection.rs",
+      "line": 138,
+      "class": "float",
+      "evidence_command": "cargo test --manifest-path code/rust/Cargo.toml -p core_epistemic_immune_system --lib",
+      "proposed_fix": "Replace non-exact f64 addition in stimulate with exact BigRational addition and deprecate non-exact float path.",
+      "milestone": "M4"
+    },
+    {
+      "id": "REV-K07-FLOAT-DETECTOR-AFFINITY-PYTHON",
+      "file": "eis/domain/clonal_selection.py",
+      "line": 25,
+      "class": "float",
+      "evidence_command": "git grep -n 'affinity_score' eis/domain/clonal_selection.py",
+      "proposed_fix": "Represent affinity_score as fractions.Fraction or exact rational string 'num/den' in Python domain model.",
+      "milestone": "M4"
+    },
+    {
+      "id": "REV-K08-OPENLOOP-CEMETERY-DISCONNECTED",
+      "file": "dag/operad_coverage.md",
+      "line": 12,
+      "class": "drift",
+      "evidence_command": "Select-String 'learn from failures' dag/operad_coverage.md",
+      "proposed_fix": "Connect PCIV cemetery headstones into pfp_operads::ledger Record::Failure hash chain to establish cross-run failure learning.",
+      "milestone": "M6"
+    },
+    {
+      "id": "REV-K08-OPENLOOP-HEADSTONE-FALSIFIERS",
+      "file": "pciv/domain/models.py",
+      "line": 184,
+      "class": "untyped",
+      "evidence_command": "git grep -n 'class CemeteryHeadstoneV1' pciv/domain/models.py",
+      "proposed_fix": "Add typed falsifiers and trial references to CemeteryHeadstoneV1 aligned with core_operad_canon schemas.",
+      "milestone": "M6"
+    },
+    {
+      "id": "REV-K08-OPENLOOP-OPERAD-LEDGER-WIRING",
+      "file": "code/rust/pfp_operads/src/ledger.rs",
+      "line": 1,
+      "class": "drift",
+      "evidence_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
+      "proposed_fix": "Expose ledger append and query subcommands in pfp_operad CLI and pfp_core/operad_ledger.py for workflow integration.",
+      "milestone": "M6"
+    },
+    {
+      "id": "REV-K09-DRIFT-FIXTURE-GENERATORS",
+      "file": "eis/tests/generate_rust_activation_fixtures.py",
+      "line": 93,
+      "class": "drift",
+      "evidence_command": "git grep -n 'crates_rs' eis/tests/generate_rust_*.py",
+      "proposed_fix": "Update destination paths across all 7 eis/tests/generate_rust_*.py scripts from engine/crates_rs/ to code/rust/.",
+      "milestone": "M8"
+    },
+    {
+      "id": "REV-K09-DRIFT-ANTIBODY-SPECS",
+      "file": "eis/antibodies/anti_rust_capture_completion_loss.yaml",
+      "line": 42,
+      "class": "doc_wrong",
+      "evidence_command": "git grep -n 'crates_rs' eis/antibodies/",
+      "proposed_fix": "Update path citations in 12 antibody YAML specs from engine/crates_rs/... to code/rust/... (both eis/antibodies/ and specs/).",
+      "milestone": "M8"
+    },
+    {
+      "id": "REV-K09-DRIFT-PCIV-CURRICULUM-DOCS",
+      "file": "pciv/documentation/README.md",
+      "line": 16,
+      "class": "doc_wrong",
+      "evidence_command": "git grep -n 'crates_rs' pciv/documentation/",
+      "proposed_fix": "Update 20 PCIV documentation and curriculum files replacing crates_rs/... references with code/rust/... .",
+      "milestone": "M8"
+    },
+    {
+      "id": "REV-K09-DRIFT-OEEIS-RESIDUAL-DOC",
+      "file": "eis/documentation/oeeis_residual_obligations.md",
+      "line": 44,
+      "class": "doc_wrong",
+      "evidence_command": "git grep -n 'crates_rs' eis/documentation/oeeis_residual_obligations.md",
+      "proposed_fix": "Update file path citation in oeeis_residual_obligations.md from crates_rs/core_epistemic_immune_system to code/rust/core_epistemic_immune_system.",
+      "milestone": "M8"
+    },
+    {
+      "id": "REV-K09-DRIFT-WIKI-TYPE-INVENTORY",
+      "file": "wiki/operads_type_inventory.md",
+      "line": 145,
+      "class": "doc_wrong",
+      "evidence_command": "git grep -n 'crates_rs' wiki/",
+      "proposed_fix": "Update path citation in wiki/operads_type_inventory.md from ops/engine/crates_rs/ to code/rust/ without running publish_wiki.py.",
+      "milestone": "M8"
+    },
+    {
+      "id": "REV-K10-ATLAS-GAP-CLAIMS-P003-006-019",
+      "file": "atlas/atlas_claim_matches.json",
+      "line": 1,
+      "class": "drift",
+      "evidence_command": "python dag/build_atlas.py --check",
+      "proposed_fix": "Author derivations in dag/derivations/ for covered gap claims across Papers 003, 006, 019 and synchronize graph.",
+      "milestone": "M8"
+    },
+    {
+      "id": "REV-K10-ATLAS-STALE-CHECK-SYNC",
+      "file": "atlas/atlas.md",
+      "line": 1,
+      "class": "drift",
+      "evidence_command": "python dag/build_atlas.py --check",
+      "proposed_fix": "Execute python dag/build_dags.py followed by python dag/build_atlas.py to bring derivations DAG and claim ledger in sync.",
+      "milestone": "M8"
+    },
+    {
+      "id": "REV-WORKFLOW-CHECK-STAGE-WF14-MIGRATION",
+      "file": "pfp_core/workflow_families/layer6.py",
+      "line": 202,
+      "class": "python_check",
+      "evidence_command": "python -m pytest pfp_core/workflow_families/test_layer6.py -q",
+      "proposed_fix": "Migrate WF14 candidate detector screen and two-signal admission check from Python to Rust pfp_immune binary (subcommands screen and decide).",
+      "milestone": "M7"
+    },
+    {
+      "id": "REV-WORKFLOW-CHECK-STAGE-WF19-MIGRATION",
+      "file": "pfp_core/workflow_families/layer7.py",
+      "line": 191,
+      "class": "python_check",
+      "evidence_command": "python -m pytest pfp_core/workflow_families/test_layer7.py -q",
+      "proposed_fix": "Migrate WF19 rule screening and transfer accuracy gain check to Rust pfp_immune binary.",
+      "milestone": "M7"
+    },
+    {
+      "id": "REV-WORKFLOW-CHECK-STAGE-WF41-MIGRATION",
+      "file": "pfp_core/workflow_families/layer7.py",
+      "line": 430,
+      "class": "python_check",
+      "evidence_command": "python -m pytest pfp_core/workflow_families/test_layer7.py -q",
+      "proposed_fix": "Migrate WF41 detector calibration and two-signal independence verification to Rust pfp_immune binary.",
+      "milestone": "M7"
+    },
+    {
+      "id": "REV-WORKFLOW-CHECK-STAGE-WF51-MIGRATION",
+      "file": "pfp_core/workflow_families/layer7.py",
+      "line": 565,
+      "class": "python_check",
+      "evidence_command": "python -m pytest pfp_core/tests/test_exclusions.py -q",
+      "proposed_fix": "Migrate WF51 family vote aggregation and branch exclusion consensus to Rust pfp_immune exclusion subcommand.",
+      "milestone": "M7"
+    }
+  ]
+}

@@ -2,6 +2,8 @@
 
 AuthorityEffect: None.
 
+**Integration note:** The branch names, heads, counts, and checks below are the original milestone snapshots. The combined Atlas after the Window 1 derivations contains 118 matched, 102 partial, and 387 gap claims; these four links stay partial. The WF52 repair landed separately in #124. Its hosted jobs verified clean materialization against runner-native receipts and refusal of a mismatched OS receipt.
+
 Generated on `2026-11-14` from dedicated worktree `..\pfp_eis_pciv` (`main` checkout left clean and untouched). All tests and checks ran offline without model API calls.
 
 ## 1. Draft Pull Requests and Branch Topology
