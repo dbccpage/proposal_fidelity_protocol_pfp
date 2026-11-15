@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-11-15T09:38:43.343170+00:00",
+  "generated_at_utc": "2026-11-15T12:04:05.150738+00:00",
   "repository": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp",
   "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
   "status": "in_progress",
@@ -253,6 +253,10 @@
     "dag/reviews/additional_w3_w2_shard_b.json",
     "dag/reviews/additional_w3_w2_shard_c.json",
     "dag/reviews/additional_w3_w2_shard_d.json",
+    "dag/reviews/additional_w4_w1_shard_a.json",
+    "dag/reviews/additional_w4_w1_shard_b.json",
+    "dag/reviews/additional_w4_w1_shard_c.json",
+    "dag/reviews/additional_w4_w1_shard_d.json",
     "dag/reviews/additional_wiki_measurements.json",
     "dag/reviews/additional_wiki_remaining.json",
     "dag/reviews/additional_wiki_tests.json",
@@ -34712,6 +34716,343 @@
       "atlas_ledger_id": "ATL-D-AUDIT-P007-010"
     },
     {
+      "id": "AUDIT-P003-024",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "At commit 30609de2c, the allostery gate evaluates the Lemma B sum threshold in floating point; at its defaults (n=2.5, K=2.0, t=0.5) it activates at a positive sum of 2 including on a single sensor [2.0]; its line-68 two-signal comment is unenforced; and t=0 activates on an empty list [].",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Commit-pinned source audit of historical revision 30609de2c in Paper 003 Appendix A.3 and A.5 and regression notes in test_allostery_exact.py.",
+        "Predecessor DAG nodes PAPER003-HILL-SUM-THRESHOLD and SYS-EIS-002.",
+        "Exact Lemma B sum-threshold and contributor-bound functions in detector_lemmas.py."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/detector_lemmas.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_two_signals_one_detector.py",
+        "eis/domain/allostery.py",
+        "eis/domain/value_objects.py",
+        "eis/tests/unit/test_allostery_exact.py"
+      ],
+      "limits": "Pertains strictly to historical commit 30609de2c whose raw git object predates the local repository import; current exact allostery behavior at and after commit fdc0035a8 is separately covered by SYS-EIS-002.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P003-024"
+    },
+    {
+      "id": "AUDIT-P003-025",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "At commit 30609de2c, the thymic screen tests each rule's regular expression against the self panel while three of four AntigenMatcher implementations behind mssn_ports.py never execute match_pattern as a content regex, and pharmacy rules set the screened expression to the escaped failure-class name.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Commit-pinned source audit of historical revision 30609de2c in Paper 003 Appendix A.4 and A.5 and regression notes in test_thymus_binds_executed_matcher.py.",
+        "Predecessor DAG nodes PAPER003-PREDICATE-SCREEN-SOUNDNESS and SYS-EIS-001.",
+        "AST and source structure of PatternMatcher, PharmacyMatcher, FarmMatcher, and ProtocolMatcher in eis/infrastructure/mssn_ports.py."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/detector_lemmas.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_two_signals_one_detector.py",
+        "eis/domain/thymus.py",
+        "eis/infrastructure/mssn_ports.py",
+        "eis/tests/unit/test_thymus_binds_executed_matcher.py"
+      ],
+      "limits": "Pertains strictly to historical commit 30609de2c; current matcher-bound ThymusGate.evaluate_rule screening is covered by SYS-EIS-001, and matching screened and executed predicates remains relative to the finite self panel.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P003-025"
+    },
+    {
+      "id": "AUDIT-P003-029",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Exact threshold and panel helpers in Paper 003 code/detector_lemmas.py reject Boolean and inexact coefficients or bitmasks and reject predicate bits outside the declared universe with LemmaInputError.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Python exact type-identity checks type(value) is int and type(value) is Fraction in _count and _exact.",
+        "Declared-universe bitmask bound _count(value, name) >= 1 << size in _validate_predicates."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/detector_lemmas.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_two_signals_one_detector.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/docs/first_publication_review_2026_10_02.md"
+      ],
+      "limits": "Applies to the standalone Appendix A oracle code/detector_lemmas.py; two-argument helpers admitted and fires_on_self validate non-negative int masks without a universe_bits parameter, while universe-size checks reside in sound_for_every_panel and rejects_no_harmless_rule.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P003-029"
+    },
+    {
+      "id": "AUDIT-P003-030",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The Paper 003 Examiner companion contains 24 scoped problems across eight levels in quiz.md, worked study material in study_guide.md, and a separate instructor_key.md with 24 keyed solutions and an executable exact numerical worksheet.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Companion Markdown files under _lev_examiner_theoretical_minimum_quiz/ carrying AuthorityEffect: None.",
+        "Standard-library Fraction and code/detector_lemmas.py imports used by the instructor_key.md replay block."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/_lev_examiner_theoretical_minimum_quiz/00_preface_at_apartment_50.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/_lev_examiner_theoretical_minimum_quiz/quiz.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/_lev_examiner_theoretical_minimum_quiz/study_guide.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/_lev_examiner_theoretical_minimum_quiz/instructor_key.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/detector_lemmas.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/docs/first_publication_validation_2026_10_02.json"
+      ],
+      "limits": "Confirms artifact census, problem/key bijection, worked study sections, and deterministic worksheet execution; supplies no empirical human-learning or pedagogical outcome measurement.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P003-030"
+    },
+    {
+      "id": "AUDIT-P004-016",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The six package Lean modules build under the pinned toolchain, and the census lists the axioms of all 86 theorems.",
+      "status": "fresh_kernel_build_and_census_verified",
+      "dependencies": [
+        "Clean out-of-tree lake build under leanprover/lean4:v4.35.0 (exit 0 across all six declared Lake root modules).",
+        "Bijection between the 86 theorem declarations across the six .lean files and the 86 #print axioms entries in Census.lean and axiom_report.txt.",
+        "Exact replay_lean_axiom_census.py --replay success under leanprover/lean4:v4.34.0-rc1 and whitelisted three-theorem Classical.choice elaboration shift in SparseLandingGeneral.lean under v4.35.0."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper.md",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper_claim_ledger.md",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/lean-toolchain",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/lakefile.lean",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/Census.lean",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/axiom_report.txt",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/TotalUnimodularity.lean",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/IdentityTypes.lean",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/Topology50.lean",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/SparseLanding.lean",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/SnTower.lean",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/SparseLandingGeneral.lean",
+        "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/tools/replay_lean_axiom_census.py"
+      ],
+      "limits": "Complements PAPER004-CONDITIONAL-LEAN-SLICE; none of the 86 finite/topology theorems formalizes the native Rust host or protocol receipts, and axiom_report.txt records v4.34.0-rc1 where three SparseLandingGeneral theorems omit Classical.choice relative to v4.35.0.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P004-016"
+    },
+    {
+      "id": "AUDIT-P005-014",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Offline scoring refuses undeclared claim edges and duplicate carrier entries; supported Edge keys are normalized before scoring.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Duplicate vertex and duplicate directed-edge checks in compute_phi1 raising ValueError.",
+        "Claim-key normalization mapping Edge instances to (u, v) tuples and rejecting malformed, undeclared, or colliding keys.",
+        "Exact rational spanning-forest enumeration scoring the normalized Cochain1 when CORE_FUNCTIONAL_GRAPH_BIN is unset."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/symbol_game_toolkit.py",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_manual_contracts.py"
+      ],
+      "limits": "Applies to the patched v0.1 companion compute_phi1; declared edges omitted from direct Cochain1 construction still default to zero outside step_cut.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P005-014"
+    },
+    {
+      "id": "AUDIT-P005-015",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "ASSERT and section CUT refuse non-exact values; section CUT refuses unknown vertices and a CUT cannot silently choose one of two supplied payloads.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Exact type check type(value) not in (int, Fraction) in step_assert and section step_cut refusing bool and float values with IncompleteProposal.",
+        "Vertex-membership set difference in section step_cut refusing undeclared vertices with CarrierViolation.",
+        "Dual-payload mutual exclusion in step_cut refusing simultaneous proposed_section and proposed_claims with MoveViolation while preserving edge_claims, section, and history."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_manual_contracts.py"
+      ],
+      "limits": "Active edge_claims, section, and admitted history snapshots remain unchanged upon refusal, whereas _step_counter advances by one per invocation.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P005-015"
+    },
+    {
+      "id": "AUDIT-P005-016",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "EDGE_MATCH requires a declared edge, and local equality does not discharge a global obstruction.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Declared-edge lookup self.graph.edge_by_pair(*pair) and 2-element arity check on EDGE_MATCH obligations in step_verify.",
+        "Residual cycle obstruction invariance (with PAPER005-INSTANCE-REPLACEMENT) keeping ZERO_OBSTRUCTION false when local declared edges match.",
+        "Distinct obligation evaluators in step_verify separating ZERO_OBSTRUCTION (min_f D_c(f) == 0) from ZERO_DEFECT (D_c(s) == 0)."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_manual_contracts.py"
+      ],
+      "limits": "Covers governor obligation semantics in step_verify complementing PAPER005-INSTANCE-REPLACEMENT; does not establish whole-domain semantic validity or record VERIFY calls in governor.history.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P005-016"
+    },
+    {
+      "id": "AUDIT-P005-017",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "A projection error after candidate scoring restores pre-CUT claims and propagates instead of partially committing a replacement",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Three-call compute_phi1 evaluation sequence across primary_obstruction, candidate scoring, and project in L1SymbolGameGovernor.step_cut.",
+        "Explicit try...finally guard in step_cut restoring self.edge_claims = old_claims when self.project(self.section) raises.",
+        "Unmediated exception propagation from compute_phi1 and native_functional.compute_graph_phi1."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/native_functional.py",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_manual_contracts.py"
+      ],
+      "limits": "Evaluated under a mocked configured native adapter failure (NativeFunctionalUnavailable); not a compiled Rust binary execution, and _step_counter still increments on move entry.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P005-017"
+    },
+    {
+      "id": "AUDIT-P005-018",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Stationary score need not mean unchanged claims; the capstone refuses invalid replacements, descends 3 to 2 to 0, and restores the saved minimum 3",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Preserved PUB-C06 baseline lower-bound and instance-replacement semantics.",
+        "Non-strict inequality gate (phi_after <= phi_before) in L1SymbolGameGovernor.step_cut emitting IdempotentStationary while committing mutated edge_claims (2, 1, 0) at quotient minimum 3.",
+        "Scripted six-outcome trajectory in study_capstone.py::run_capstone refusing {} and (5, 0, 0), descending 3 -> 2 -> 0 across (0, 1, 1) and (-2, 1, 1), checking ZERO_OBSTRUCTION, and retracting step_003 back to minimum 3."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/study_capstone.py",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_manual_contracts.py"
+      ],
+      "limits": "Executed on the unconfigured python-enumeration path (disclosed in calculation_path); scripted replay is neither a native Rust execution nor a general search termination argument.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P005-018"
+    },
+    {
+      "id": "AUDIT-P006-014",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Paper-local toy classes do not verify production integration.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "AST import census of test_006_epistemic_immune.py confirming stdlib-only imports and zero imports of production pfp or eis owner modules.",
+        "Module-local definitions of DangerSignal, ThymicCheckResult, evaluate_thymic_selection, and CemeteryDAGSink.",
+        "Behavioral divergence from production AllostericConsensusGate two-sensor quorum, ClonalSelectionEngine regex/self-panel screening, and CemeterySink persistent header-bound JSONL storage."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper.md",
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md",
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/docs/first_publication_validation_2026_10_02.json",
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/code/tests/test_006_epistemic_immune.py",
+        "eis/domain/allostery.py",
+        "pfp/domain/immune/clonal_selection.py",
+        "pfp/infrastructure/persistence/cemetery_sink.py"
+      ],
+      "limits": "Establishes import and behavioral isolation between educational toy classes and production modules; separate repository-bound suites test production owners.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P006-014"
+    },
+    {
+      "id": "AUDIT-P006-018",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "No code at the baseline matches proposals against the catalog fixtures or derives a repair from a positive fixture; the nearest consumer tests target_pattern as a prompt substring.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Preserved PAPER006-CATALOG-IS-NONEXECUTING-DATA 61-entry catalog and placeholder census.",
+        "Recorded baseline commit 52cb5457f6c4 bindings in first_publication_validation_2026_10_02.json for pharmacy_catalog.json and external_application/prompt_doctor/use_cases/repair_service.py.",
+        "AST and field-access audit across eis/domain/, ops/adversary/, and core_epistemic_immune_system confirming negative_fixture and positive_fixture are stored and hashed in rule digests while cemetery_regression._screen_antibodies checks target_pattern as a literal substring."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper.md",
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md",
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/docs/first_publication_validation_2026_10_02.json",
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/code/fixtures/pharmacy_catalog_52cb5457f6c4.json",
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/code/tests/test_006_catalog_file.py",
+        "eis/domain/pharmacy_search.py",
+        "eis/domain/external_admission.py",
+        "ops/adversary/use_cases/cemetery_regression.py",
+        "ops/adversary/infrastructure/estates/oeeis_immune.py",
+        "code/rust/core_epistemic_immune_system/src/pharmacy_search.rs"
+      ],
+      "limits": "Historical external_application/prompt_doctor/use_cases/repair_service.py (blob 6e0e3e50a6e329156fa5f32a7e61f47e60e90199) is hash-bound in first_publication_validation_2026_10_02.json and absent from the present repository checkout; direct source and execution checks cover the bound catalog snapshot and current repository immune consumers.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P006-018"
+    },
+    {
+      "id": "AUDIT-P007-011",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The legacy test module checks chosen thresholds on supplied values and counts supplied status fields",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Standard-library-only AST and import surface in test_007_pedagogical_transmission.py without notebook runners or learner datasets.",
+        "Chosen rational threshold comparisons in MicroAttentionPulse.is_within_half_life (3 to 5) and LearningCheckMetrics.meets_certification_standards (9/10, 17/20, 4/5) evaluated on hardcoded Fraction fixtures.",
+        "Dictionary status-string counting in evaluate_headless_notebook_grade matching cell_type == 'code', substring 'assert' in source, and execution_status == 'ok'."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/paper.md",
+        "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/paper_claim_ledger.md",
+        "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/code/tests/test_007_pedagogical_transmission.py",
+        "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/code/tests/test_007_evidence_boundaries.py"
+      ],
+      "limits": "Artifact scope inspection and isolated execution; establishes zero measurement of learner attention or comprehension and executes zero notebooks.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P007-011"
+    },
+    {
+      "id": "AUDIT-P007-013",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The guide includes an exact executable worksheet and the quiz has 24 four-point problems across eight instructional levels",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Single fenced Python worksheet in study_guide.md importing fractions.Fraction and executing triangle coboundary, shift, negation, wrong-sign mutant, float constructor, and list mass checks.",
+        "Quiz structure in quiz.md declaring eight instructional levels (Level 0 through Level 7) with three contiguous problems per level (24 problems, 4 points each, 96 points total).",
+        "Separate rubric file instructor_key.md assigning four explicit 1-point items (1)-(4) to each of the 24 problems (12 points per level, 96 total)."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/paper.md",
+        "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/paper_claim_ledger.md",
+        "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/_lev_examiner_theoretical_minimum_quiz/study_guide.md",
+        "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/_lev_examiner_theoretical_minimum_quiz/quiz.md",
+        "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/_lev_examiner_theoretical_minimum_quiz/instructor_key.md",
+        "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/code/tests/test_007_evidence_boundaries.py"
+      ],
+      "limits": "Proposed instructional sequence and rubric; establishes neither measured human learning outcomes nor a calibrated readiness cutoff.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P007-013"
+    },
+    {
+      "id": "AUDIT-P008-003",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "A left inverse implies injectivity but not conservative extension of a theory.",
+      "status": "mathematical_proof_and_finite_counterexample_verified",
+      "dependencies": [
+        "Set-theoretic left-inverse identity d(u(a)) = a for all a in A implying u(a) = u(a') => a = d(u(a)) = d(u(a')) = a'.",
+        "Explicit deductive theories T_A = (L_A, R_A) and T_B = (L_B, R_B) with u : L_A -> L_B and d o u = id_{L_A} where R_B derives an old-language proposition phi in L_A not derivable in T_A.",
+        "Specified Boolean valuation semantics when evaluating model-theoretic conservativity alongside proof-theoretic consequence reflection."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/_lev_examiner_theoretical_minimum_quiz/study_guide.md"
+      ],
+      "limits": "Semantic conservativity claims require explicitly declared interpretations and inference rules; complements PAPER008-SINGLETON-LEFT-INVERSE without constructing MSS context maps above stage 1.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P008-003"
+    },
+    {
+      "id": "AUDIT-P008-004",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Eight-wide integer opcode blocks for stages at least 22 are disjoint.",
+      "status": "mathematical_proof_and_bounded_catalog_execution_support",
+      "dependencies": [
+        "Proposal opcode base formula b(N) = 128 + 8(N - 22) for integer stages N >= 22 with 8-wide intervals [b(N), b(N) + 8).",
+        "Source opcode namespace bound < 128 (SOURCE_OPCODE_SET subset of [0, 45] in pfp/domain/tower/registry.py).",
+        "Unbounded Python int arithmetic; fixed-width w-bit unsigned wire formats require the separate upper bound b(N) + 7 < 2^w."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/retraction_benchmark_runner.py",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/tests/test_008_mssn_tower_retraction.py",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/tests/test_008_source_bound_examples.py",
+        "pfp/domain/tower/registry.py"
+      ],
+      "limits": "Loaded catalog spans stages 0 through 100; 8-bit unsigned wire encodings overflow at stage 38 (b(38) + 7 = 263 >= 256); integer namespace disjointness does not construct stage semantics.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P008-004"
+    },
+    {
       "id": "WIKI-C01",
       "kind": "mathematical_or_implementation_claim",
       "statement": "Typed syntax, lossless representation, query preservation, operation preservation and permission to act are different obligations. A decoder round trip establishes injectivity on its stated domain; preserving a query F across a lift u additionally requires F_prime composed with u equals F. Neither constructor names nor a receipt supply that equation.",
@@ -41407,6 +41748,282 @@
       "id": "ASSUMPTION-6589cd5748c454e1",
       "kind": "explicit_assumption_or_obligation",
       "statement": "Release validation in atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/docs/release_validation_2026_10_02.json.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-32620aa2412186f6",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Commit-pinned source audit of historical revision 30609de2c in Paper 003 Appendix A.3 and A.5 and regression notes in test_allostery_exact.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-ee9d809ac4691587",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Predecessor DAG nodes PAPER003-HILL-SUM-THRESHOLD and SYS-EIS-002.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-92c7fa36764d6b04",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Exact Lemma B sum-threshold and contributor-bound functions in detector_lemmas.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-30f52f6006a75b03",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Commit-pinned source audit of historical revision 30609de2c in Paper 003 Appendix A.4 and A.5 and regression notes in test_thymus_binds_executed_matcher.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-bc038d2a4fbe9f54",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Predecessor DAG nodes PAPER003-PREDICATE-SCREEN-SOUNDNESS and SYS-EIS-001.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-ff0ef06ad8a1cba6",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "AST and source structure of PatternMatcher, PharmacyMatcher, FarmMatcher, and ProtocolMatcher in eis/infrastructure/mssn_ports.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-f149ac4857ac1418",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Python exact type-identity checks type(value) is int and type(value) is Fraction in _count and _exact.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-5850889998bb24cd",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Declared-universe bitmask bound _count(value, name) >= 1 << size in _validate_predicates.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-b13d5cc138128ddb",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Companion Markdown files under _lev_examiner_theoretical_minimum_quiz/ carrying AuthorityEffect: None.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-9019d7b50206fffe",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Standard-library Fraction and code/detector_lemmas.py imports used by the instructor_key.md replay block.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-5112922fe901cd70",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Clean out-of-tree lake build under leanprover/lean4:v4.35.0 (exit 0 across all six declared Lake root modules).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-4424070f06ab8074",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Bijection between the 86 theorem declarations across the six .lean files and the 86 #print axioms entries in Census.lean and axiom_report.txt.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-1a6c2bca99f7c06d",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Exact replay_lean_axiom_census.py --replay success under leanprover/lean4:v4.34.0-rc1 and whitelisted three-theorem Classical.choice elaboration shift in SparseLandingGeneral.lean under v4.35.0.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-fe857d56e8c25092",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Duplicate vertex and duplicate directed-edge checks in compute_phi1 raising ValueError.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-3fdbac7892c76f42",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Claim-key normalization mapping Edge instances to (u, v) tuples and rejecting malformed, undeclared, or colliding keys.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-524cd0d1a6e9d8e3",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Exact rational spanning-forest enumeration scoring the normalized Cochain1 when CORE_FUNCTIONAL_GRAPH_BIN is unset.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-923f45e26719530f",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Exact type check type(value) not in (int, Fraction) in step_assert and section step_cut refusing bool and float values with IncompleteProposal.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-9ffb2a81a242cbe3",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Vertex-membership set difference in section step_cut refusing undeclared vertices with CarrierViolation.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-b67dcb23867f8f35",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Dual-payload mutual exclusion in step_cut refusing simultaneous proposed_section and proposed_claims with MoveViolation while preserving edge_claims, section, and history.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-aeab53481667ec22",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Declared-edge lookup self.graph.edge_by_pair(*pair) and 2-element arity check on EDGE_MATCH obligations in step_verify.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-6657208c08c71cb4",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Residual cycle obstruction invariance (with PAPER005-INSTANCE-REPLACEMENT) keeping ZERO_OBSTRUCTION false when local declared edges match.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-1c301bf12274e80b",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Distinct obligation evaluators in step_verify separating ZERO_OBSTRUCTION (min_f D_c(f) == 0) from ZERO_DEFECT (D_c(s) == 0).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-774037fd5c55d64a",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Three-call compute_phi1 evaluation sequence across primary_obstruction, candidate scoring, and project in L1SymbolGameGovernor.step_cut.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-cf059206c116c56e",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Explicit try...finally guard in step_cut restoring self.edge_claims = old_claims when self.project(self.section) raises.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-4cb78f2a358c0ec6",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Unmediated exception propagation from compute_phi1 and native_functional.compute_graph_phi1.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-0589e73bba1f2cd6",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Preserved PUB-C06 baseline lower-bound and instance-replacement semantics.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-8e876d64d769ecf4",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Non-strict inequality gate (phi_after <= phi_before) in L1SymbolGameGovernor.step_cut emitting IdempotentStationary while committing mutated edge_claims (2, 1, 0) at quotient minimum 3.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-b751acd77faf76cb",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Scripted six-outcome trajectory in study_capstone.py::run_capstone refusing {} and (5, 0, 0), descending 3 -> 2 -> 0 across (0, 1, 1) and (-2, 1, 1), checking ZERO_OBSTRUCTION, and retracting step_003 back to minimum 3.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-889d45b2fa5b5dbb",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "AST import census of test_006_epistemic_immune.py confirming stdlib-only imports and zero imports of production pfp or eis owner modules.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-92d6ddec9d4dcfe8",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Module-local definitions of DangerSignal, ThymicCheckResult, evaluate_thymic_selection, and CemeteryDAGSink.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-61472046215153d3",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Behavioral divergence from production AllostericConsensusGate two-sensor quorum, ClonalSelectionEngine regex/self-panel screening, and CemeterySink persistent header-bound JSONL storage.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-6cabe1882db6bf10",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Preserved PAPER006-CATALOG-IS-NONEXECUTING-DATA 61-entry catalog and placeholder census.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-6ddb5dc74e61b1fc",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Recorded baseline commit 52cb5457f6c4 bindings in first_publication_validation_2026_10_02.json for pharmacy_catalog.json and external_application/prompt_doctor/use_cases/repair_service.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-f7fd5df8e4112aad",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "AST and field-access audit across eis/domain/, ops/adversary/, and core_epistemic_immune_system confirming negative_fixture and positive_fixture are stored and hashed in rule digests while cemetery_regression._screen_antibodies checks target_pattern as a literal substring.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-ec2c904b1de30cb5",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Standard-library-only AST and import surface in test_007_pedagogical_transmission.py without notebook runners or learner datasets.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-d664ced3e19bcb0a",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Chosen rational threshold comparisons in MicroAttentionPulse.is_within_half_life (3 to 5) and LearningCheckMetrics.meets_certification_standards (9/10, 17/20, 4/5) evaluated on hardcoded Fraction fixtures.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-2b5eb974738def92",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Dictionary status-string counting in evaluate_headless_notebook_grade matching cell_type == 'code', substring 'assert' in source, and execution_status == 'ok'.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-96e867a7ffbc27a2",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Single fenced Python worksheet in study_guide.md importing fractions.Fraction and executing triangle coboundary, shift, negation, wrong-sign mutant, float constructor, and list mass checks.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-a79e59452653672c",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Quiz structure in quiz.md declaring eight instructional levels (Level 0 through Level 7) with three contiguous problems per level (24 problems, 4 points each, 96 points total).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-7c96092ae9607822",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Separate rubric file instructor_key.md assigning four explicit 1-point items (1)-(4) to each of the 24 problems (12 points per level, 96 total).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-61aa252693d5426c",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Set-theoretic left-inverse identity d(u(a)) = a for all a in A implying u(a) = u(a') => a = d(u(a)) = d(u(a')) = a'.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-f7de18b528cb7cb2",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Explicit deductive theories T_A = (L_A, R_A) and T_B = (L_B, R_B) with u : L_A -> L_B and d o u = id_{L_A} where R_B derives an old-language proposition phi in L_A not derivable in T_A.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-b70ee7c9842626be",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Specified Boolean valuation semantics when evaluating model-theoretic conservativity alongside proof-theoretic consequence reflection.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-7e4b86e85bdc8c5e",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Proposal opcode base formula b(N) = 128 + 8(N - 22) for integer stages N >= 22 with 8-wide intervals [b(N), b(N) + 8).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-6ae2dbcc51b07fec",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Source opcode namespace bound < 128 (SOURCE_OPCODE_SET subset of [0, 45] in pfp/domain/tower/registry.py).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-183d0995b60e961f",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Unbounded Python int arithmetic; fixed-width w-bit unsigned wire formats require the separate upper bound b(N) + 7 < 2^w.",
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
@@ -54505,6 +55122,209 @@
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
+      "id": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_two_signals_one_detector.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_two_signals_one_detector.py",
+      "sha256": "41ce9bf1b8ef5dfc7238dbfd8830ddc26598b1d9841b1da8d049c022d36a47e4",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:eis/tests/unit/test_allostery_exact.py",
+      "kind": "pinned_source_file",
+      "path": "eis/tests/unit/test_allostery_exact.py",
+      "sha256": "d6e234ad7024114be9e85209750a55cb74e4d8606bc9a24b9ddacbb57c218b75",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:eis/infrastructure/mssn_ports.py",
+      "kind": "pinned_source_file",
+      "path": "eis/infrastructure/mssn_ports.py",
+      "sha256": "46821fa89230e43c8e0102dbb358026a0c37fd5f95607bfaa8c96de5742226dd",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:eis/tests/unit/test_thymus_binds_executed_matcher.py",
+      "kind": "pinned_source_file",
+      "path": "eis/tests/unit/test_thymus_binds_executed_matcher.py",
+      "sha256": "811dda6622cae50306e5cb1a25025f978e84f8dcc92592beb95b9086bfc4937f",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/docs/first_publication_review_2026_10_02.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/docs/first_publication_review_2026_10_02.md",
+      "sha256": "0b8dd42434c4c32765926a14a60deb2c192510f6e71de3d863cc1a7a81bbdf9a",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/_lev_examiner_theoretical_minimum_quiz/00_preface_at_apartment_50.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/_lev_examiner_theoretical_minimum_quiz/00_preface_at_apartment_50.md",
+      "sha256": "4756fdc149d33108188e6260a24aa89586a5494c3c0f0237c92f3051549c3d94",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/_lev_examiner_theoretical_minimum_quiz/quiz.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/_lev_examiner_theoretical_minimum_quiz/quiz.md",
+      "sha256": "9c166fe878f6beaf54d86ae4e3154a1bdcbe730888cf5d264575691299968534",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/_lev_examiner_theoretical_minimum_quiz/study_guide.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/_lev_examiner_theoretical_minimum_quiz/study_guide.md",
+      "sha256": "5aeb2b8bdc7a069c76e6fdf810695c57fba7c7d460a5eb8094ba57e149a55159",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/_lev_examiner_theoretical_minimum_quiz/instructor_key.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/_lev_examiner_theoretical_minimum_quiz/instructor_key.md",
+      "sha256": "679df9f2a53ad3a91a1ba1838f80b671d05743d3bfaf1d525b1bb324bcb7e00c",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/docs/first_publication_validation_2026_10_02.json",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/docs/first_publication_validation_2026_10_02.json",
+      "sha256": "02be9018ac8b41ec75fe6bec9e6ca179b05dde60dc9934a8a70ee28a88100f65",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/lean-toolchain",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/lean-toolchain",
+      "sha256": "27e73059e3a4d568450f74e39c2f79676c4f8d41373fff15170690f124e3bacd",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/lakefile.lean",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/lakefile.lean",
+      "sha256": "350eb797b3f272f5ceadf83cff938136ef0e4b02d1b144d1925badcaf2ef4aeb",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/Census.lean",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/Census.lean",
+      "sha256": "a15bd06e68564d6d6d166f20e033994ea2266517552c1366183311d4222f1bb0",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/axiom_report.txt",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/axiom_report.txt",
+      "sha256": "8921d1fc80d0cde4d99997f9d7dd58aae01b4d209d2b3f4ea0d33b44ba94a223",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/tools/replay_lean_axiom_census.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/tools/replay_lean_axiom_census.py",
+      "sha256": "c73bf94a0b15a3c7017578f4983a9044f3896609325bda2a7e7ddfba6c44f00d",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_manual_contracts.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_manual_contracts.py",
+      "sha256": "9adee8b8006cdf9c407619b9316d156f8fd392aa81b911a55140b73301c1c38f",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/code/study_capstone.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/study_capstone.py",
+      "sha256": "68bf4e85d5986f1d37a9ccb91eafcbe3c0cffca51c4506a626c9778b2b571a48",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/code/tests/test_006_epistemic_immune.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/code/tests/test_006_epistemic_immune.py",
+      "sha256": "93b83d552f2f63e01f5594fc1e69b0acc92eeeb113174fa0f429fdabbaa34906",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:eis/domain/pharmacy_search.py",
+      "kind": "pinned_source_file",
+      "path": "eis/domain/pharmacy_search.py",
+      "sha256": "1c7b8f06d0a654a1ff487bc0025ab74de9095ad06bfc5f47e9941f65d351ff43",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:eis/domain/external_admission.py",
+      "kind": "pinned_source_file",
+      "path": "eis/domain/external_admission.py",
+      "sha256": "9cab4cbf2ff160f738d00fd8d2c27b1f58b3f0850bab6f33d008f4ce7fd4be3a",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:ops/adversary/use_cases/cemetery_regression.py",
+      "kind": "pinned_source_file",
+      "path": "ops/adversary/use_cases/cemetery_regression.py",
+      "sha256": "f564b9ea3a38dfc9ade549ee16afe08a9ca63d3e41945700e4ee8b38df5e0e9d",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/code/tests/test_007_pedagogical_transmission.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/code/tests/test_007_pedagogical_transmission.py",
+      "sha256": "f491f0fc20debe76d71c89edc3e19acffc126d7bfe2d16c45f99832a4cec876e",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/_lev_examiner_theoretical_minimum_quiz/quiz.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/_lev_examiner_theoretical_minimum_quiz/quiz.md",
+      "sha256": "748715697a6f752a713c3943abf97870a7946104d3a59fce4cc04134c4b35905",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/_lev_examiner_theoretical_minimum_quiz/instructor_key.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/_lev_examiner_theoretical_minimum_quiz/instructor_key.md",
+      "sha256": "f023fb595e7cbcb8da9609e81f7cf3f8c94cd78711b21c628bfaae47b5321cf4",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+      "sha256": "bae9f180e8e83966de925dc2ce5b1f5a9a4a32d7c36b35d5e245c466135e1009",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+      "sha256": "ea6b886d5c9125084ade3dbcbcc85e90775470f3defa85b22c90682b7b1e3707",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/_lev_examiner_theoretical_minimum_quiz/study_guide.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/_lev_examiner_theoretical_minimum_quiz/study_guide.md",
+      "sha256": "39f63eaf131516ac06144339f134193aea28b3bafa482527301ccd14f12058b8",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/tests/test_008_mssn_tower_retraction.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/tests/test_008_mssn_tower_retraction.py",
+      "sha256": "048c3b267685b8c32b0b58a212d9366df918c56c39237d1c3aa01149d4755747",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:pfp/domain/tower/registry.py",
+      "kind": "pinned_source_file",
+      "path": "pfp/domain/tower/registry.py",
+      "sha256": "ec2e18d9dcdc90e75a34d9f44cd120d6cbff61406caca62d771776710b8b656b",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
       "id": "SOURCE:pfp/workflows/wf0001/workflow.py",
       "kind": "pinned_source_file",
       "path": "pfp/workflows/wf0001/workflow.py",
@@ -56280,14 +57100,20 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "SYS-EIS-002",
-          "PAPER003-HILL-SUM-THRESHOLD"
+          "AUDIT-P003-024"
         ],
-        "relation": "narrows",
-        "note": "SYS-EIS-002 describes the current exact allostery gate, not the historical floating-point version with single-sensor activation at sum 2 and empty-list activation at $t=0$.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_024.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P003-024, with SYS-EIS-002 and PAPER003-HILL-SUM-THRESHOLD: At historical commit 30609de2c, the floating-point Hill gate (n=2.5, K=2.0, t=0.5) activates on single-sensor input [2.0] with sum 2, lacks per-sensor caps or sensor keying despite its line-68 two-signal comment, and activates on [] at t=0.",
+        "partial_evidence": {
+          "nodes": [
+            "SYS-EIS-002",
+            "PAPER003-HILL-SUM-THRESHOLD"
+          ],
+          "relation": "narrows",
+          "note": "SYS-EIS-002 describes the current exact allostery gate, not the historical floating-point version with single-sensor activation at sum 2 and empty-list activation at $t=0$."
+        }
       }
     },
     {
@@ -56311,13 +57137,19 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "SYS-EIS-001"
+          "AUDIT-P003-025"
         ],
-        "relation": "narrows",
-        "note": "SYS-EIS-001 says the current thymus tests the executing matcher; the historical screened-versus-executed mismatch is not recorded.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_025.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P003-025, with SYS-EIS-001: At historical commit 30609de2c, AST inspection of eis/infrastructure/mssn_ports.py shows three of four AntigenMatcher classes (PharmacyMatcher, FarmMatcher, ProtocolMatcher) dispatch on structural codes rather than executing match_pattern as a content regex, while pharmacy rules screened escaped failure-class names that pass self panels on which structural checks fire.",
+        "partial_evidence": {
+          "nodes": [
+            "SYS-EIS-001"
+          ],
+          "relation": "narrows",
+          "note": "SYS-EIS-001 says the current thymus tests the executing matcher; the historical screened-versus-executed mismatch is not recorded."
+        }
       }
     },
     {
@@ -56429,11 +57261,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the input-boundary refusals of the exact helpers.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_029.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P003-029"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P003-029: Exact threshold, count, and bitmask helpers in Paper 003 code/detector_lemmas.py enforce exact int/Fraction type identity via _count and _exact (rejecting bool, float, fractional Hill exponents, non-positive scales/bounds, and negative masks with LemmaInputError) and reject predicate masks >= (1 << universe_bits) in sound_for_every_panel and rejects_no_harmless_rule."
       }
     },
     {
@@ -56457,11 +57290,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the companion's contents.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_030.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P003-030"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P003-030: Census and local replay of _lev_examiner_theoretical_minimum_quiz/ confirm 24 scoped problems (Q01-Q24 across Level 0-Level 7) in quiz.md, eight worked sections without leaked answers in study_guide.md, and a separate instructor_key.md containing 24 keyed solutions plus an eight-assertion exact Fraction/detector_lemmas worksheet that executes with exit code 0."
       }
     },
     {
@@ -56921,13 +57755,19 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PAPER004-CONDITIONAL-LEAN-SLICE"
+          "AUDIT-P004-016"
         ],
-        "relation": "narrows",
-        "note": "Node reviewed sources and historical axiom counts without compiling; the claimed build under the pinned toolchain and the 86-theorem census are not established by it.",
-        "proposed_derivation_file": "dag/derivations/atl_p004_016.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P004-016, with PAPER004-CONDITIONAL-LEAN-SLICE: All six package Lean modules compile cleanly (exit 0) under leanprover/lean4:v4.35.0, and Census.lean and axiom_report.txt enumerate all 86 theorems (47 axiom-free, 39 within {propext, Quot.sound, Classical.choice}), matching --replay identically at v4.34.0-rc1 with a three-theorem Classical.choice shift in SparseLandingGeneral.lean at v4.35.0.",
+        "partial_evidence": {
+          "nodes": [
+            "PAPER004-CONDITIONAL-LEAN-SLICE"
+          ],
+          "relation": "narrows",
+          "note": "Node reviewed sources and historical axiom counts without compiling; the claimed build under the pinned toolchain and the 86-theorem census are not established by it."
+        }
       }
     },
     {
@@ -57403,11 +58243,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node covers offline scoring refusals.",
-        "proposed_derivation_file": "dag/derivations/atl_p005_014.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P005-014"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P005-014: compute_phi1 rejects undeclared claim edges, duplicate carrier vertices or directed edges, malformed keys, and colliding normalized keys with ValueError, while normalizing Edge object keys to (u, v) tuples before offline or native scoring."
       }
     },
     {
@@ -57431,11 +58272,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node covers ASSERT and section CUT input refusals.",
-        "proposed_derivation_file": "dag/derivations/atl_p005_015.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P005-015"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P005-015: step_assert and section step_cut reject bool, float, and other non-exact inputs with IncompleteProposal, section step_cut rejects undeclared vertices with CarrierViolation, and dual-payload step_cut calls fail with MoveViolation, preserving edge_claims, section, and history while advancing _step_counter."
       }
     },
     {
@@ -57459,13 +58301,19 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PAPER005-INSTANCE-REPLACEMENT"
+          "AUDIT-P005-016"
         ],
-        "relation": "supports",
-        "note": "The node gives that a section gauge change cannot remove a nonzero cycle obstruction, the mathematics behind local equality not discharging it; the governor refusals are not covered.",
-        "proposed_derivation_file": "dag/derivations/atl_p005_016.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P005-016, with PAPER005-INSTANCE-REPLACEMENT: step_verify rejects undeclared or malformed EDGE_MATCH obligations with VerificationFailed, local EDGE_MATCH satisfaction on declared edges leaves nonzero cycle ZERO_OBSTRUCTION unrefuted, and ZERO_OBSTRUCTION (quotient minimum zero) is distinguished from ZERO_DEFECT (stored section residual zero).",
+        "partial_evidence": {
+          "nodes": [
+            "PAPER005-INSTANCE-REPLACEMENT"
+          ],
+          "relation": "supports",
+          "note": "The node gives that a section gauge change cannot remove a nonzero cycle obstruction, the mathematics behind local equality not discharging it; the governor refusals are not covered."
+        }
       }
     },
     {
@@ -57489,11 +58337,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node covers rollback on projection error.",
-        "proposed_derivation_file": "dag/derivations/atl_p005_017.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P005-017"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P005-017: L1SymbolGameGovernor.step_cut wraps gauge projection in a try...finally block that restores pre-CUT edge_claims and propagates the exception (verified via mocked configured adapter failure on the third compute_graph_phi1 call; not a compiled Rust execution)."
       }
     },
     {
@@ -57517,13 +58366,19 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PUB-C06"
+          "AUDIT-P005-018"
         ],
-        "relation": "supports",
-        "note": "The node notes snapshot restoration and that replacement creates a new instance; the capstone sequence 3,2,0 and restore to 3 is not recorded.",
-        "proposed_derivation_file": "dag/derivations/atl_p005_018.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P005-018, with PUB-C06: Replacing (1, 1, 1) with (2, 1, 0) on weights (1, 2, 3) preserves quotient minimum 3 with status IdempotentStationary while mutating edge_claims, and study_capstone.py refuses {} and (5, 0, 0), descends 3 to 2 to 0, verifies ZERO_OBSTRUCTION, and retracts step_003 back to minimum 3 on the python-enumeration path.",
+        "partial_evidence": {
+          "nodes": [
+            "PUB-C06"
+          ],
+          "relation": "supports",
+          "note": "The node notes snapshot restoration and that replacement creates a new instance; the capstone sequence 3,2,0 and restore to 3 is not recorded."
+        }
       }
     },
     {
@@ -57960,11 +58815,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node states that paper-local toy classes do not verify production integration.",
-        "proposed_derivation_file": "dag/derivations/atl_p006_014.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P006-014"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P006-014: test_006_epistemic_immune.py imports only Python standard-library modules, defines standalone module-local toy classes (DangerSignal, ThymicCheckResult, CemeteryDAGSink), and diverges from production AllostericConsensusGate, ClonalSelectionEngine, and CemeterySink contracts."
       }
     },
     {
@@ -58075,13 +58931,19 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PAPER006-CATALOG-IS-NONEXECUTING-DATA"
+          "AUDIT-P006-018"
         ],
-        "relation": "narrows",
-        "note": "Node leaves the baseline negative-search claim historical, not re-verified.",
-        "proposed_derivation_file": "dag/derivations/atl_p006_018.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P006-018, with PAPER006-CATALOG-IS-NONEXECUTING-DATA: Re-verified against baseline validation bindings and repository immune modules that negative_fixture and positive_fixture are stored and hashed into rule digests without proposal matching or positive-fixture repair synthesis, while cemetery_regression._screen_antibodies checks target_pattern via literal substring containment (historical repair_service.py blob 6e0e3e50 remains hash-bound outside this checkout).",
+        "partial_evidence": {
+          "nodes": [
+            "PAPER006-CATALOG-IS-NONEXECUTING-DATA"
+          ],
+          "relation": "narrows",
+          "note": "Node leaves the baseline negative-search claim historical, not re-verified."
+        }
       }
     },
     {
@@ -58394,11 +59256,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the legacy test module's content.",
-        "proposed_derivation_file": "dag/derivations/atl_p007_011.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P007-011"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P007-011: test_007_pedagogical_transmission.py compares hardcoded Fraction fixtures against chosen thresholds and counts supplied status strings without executing notebooks or measuring learners."
       }
     },
     {
@@ -58451,11 +59314,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the worksheet and quiz contents.",
-        "proposed_derivation_file": "dag/derivations/atl_p007_013.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P007-013"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P007-013: study_guide.md contains a runnable Fraction worksheet, and quiz.md with instructor_key.md defines 24 four-point problems (96 points) across eight levels."
       }
     },
     {
@@ -58566,13 +59430,19 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PAPER008-SINGLETON-LEFT-INVERSE"
+          "AUDIT-P008-003"
         ],
-        "relation": "supports",
-        "note": "Node applies the distinction to this instance; the general proposition and counterexample are not derived.",
-        "proposed_derivation_file": "dag/derivations/atl_p008_003.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P008-003, with PAPER008-SINGLETON-LEFT-INVERSE: Left invertibility d o u = id implies injectivity of u, while finite deductive and valuation counterexamples fail old-language conservativity.",
+        "partial_evidence": {
+          "nodes": [
+            "PAPER008-SINGLETON-LEFT-INVERSE"
+          ],
+          "relation": "supports",
+          "note": "Node applies the distinction to this instance; the general proposition and counterexample are not derived."
+        }
       }
     },
     {
@@ -58596,11 +59466,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node derives opcode block disjointness.",
-        "proposed_derivation_file": "dag/derivations/atl_p008_004.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P008-004"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P008-004: Blocks [b(N), b(N)+8) with b(N)=128+8(N-22) for N>=22 satisfy b(N)>=128 and b(M)-(b(N)+7)>=1 for N<M, verified over stages 22..100 with w-bit wire ceiling N<=5+2^(w-3)."
       }
     },
     {
@@ -77172,6 +78043,236 @@
     {
       "from": "ASSUMPTION-6589cd5748c454e1",
       "to": "AUDIT-P007-010",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-32620aa2412186f6",
+      "to": "AUDIT-P003-024",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-ee9d809ac4691587",
+      "to": "AUDIT-P003-024",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-92c7fa36764d6b04",
+      "to": "AUDIT-P003-024",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-30f52f6006a75b03",
+      "to": "AUDIT-P003-025",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-bc038d2a4fbe9f54",
+      "to": "AUDIT-P003-025",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-ff0ef06ad8a1cba6",
+      "to": "AUDIT-P003-025",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-f149ac4857ac1418",
+      "to": "AUDIT-P003-029",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-5850889998bb24cd",
+      "to": "AUDIT-P003-029",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-b13d5cc138128ddb",
+      "to": "AUDIT-P003-030",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-9019d7b50206fffe",
+      "to": "AUDIT-P003-030",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-5112922fe901cd70",
+      "to": "AUDIT-P004-016",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-4424070f06ab8074",
+      "to": "AUDIT-P004-016",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-1a6c2bca99f7c06d",
+      "to": "AUDIT-P004-016",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-fe857d56e8c25092",
+      "to": "AUDIT-P005-014",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-3fdbac7892c76f42",
+      "to": "AUDIT-P005-014",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-524cd0d1a6e9d8e3",
+      "to": "AUDIT-P005-014",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-923f45e26719530f",
+      "to": "AUDIT-P005-015",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-9ffb2a81a242cbe3",
+      "to": "AUDIT-P005-015",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-b67dcb23867f8f35",
+      "to": "AUDIT-P005-015",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-aeab53481667ec22",
+      "to": "AUDIT-P005-016",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-6657208c08c71cb4",
+      "to": "AUDIT-P005-016",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-1c301bf12274e80b",
+      "to": "AUDIT-P005-016",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-774037fd5c55d64a",
+      "to": "AUDIT-P005-017",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-cf059206c116c56e",
+      "to": "AUDIT-P005-017",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-4cb78f2a358c0ec6",
+      "to": "AUDIT-P005-017",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-0589e73bba1f2cd6",
+      "to": "AUDIT-P005-018",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-8e876d64d769ecf4",
+      "to": "AUDIT-P005-018",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-b751acd77faf76cb",
+      "to": "AUDIT-P005-018",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-889d45b2fa5b5dbb",
+      "to": "AUDIT-P006-014",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-92d6ddec9d4dcfe8",
+      "to": "AUDIT-P006-014",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-61472046215153d3",
+      "to": "AUDIT-P006-014",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-6cabe1882db6bf10",
+      "to": "AUDIT-P006-018",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-6ddb5dc74e61b1fc",
+      "to": "AUDIT-P006-018",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-f7fd5df8e4112aad",
+      "to": "AUDIT-P006-018",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-ec2c904b1de30cb5",
+      "to": "AUDIT-P007-011",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-d664ced3e19bcb0a",
+      "to": "AUDIT-P007-011",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-2b5eb974738def92",
+      "to": "AUDIT-P007-011",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-96e867a7ffbc27a2",
+      "to": "AUDIT-P007-013",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-a79e59452653672c",
+      "to": "AUDIT-P007-013",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-7c96092ae9607822",
+      "to": "AUDIT-P007-013",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-61aa252693d5426c",
+      "to": "AUDIT-P008-003",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-f7de18b528cb7cb2",
+      "to": "AUDIT-P008-003",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-b70ee7c9842626be",
+      "to": "AUDIT-P008-003",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-7e4b86e85bdc8c5e",
+      "to": "AUDIT-P008-004",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-6ae2dbcc51b07fec",
+      "to": "AUDIT-P008-004",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-183d0995b60e961f",
+      "to": "AUDIT-P008-004",
       "kind": "requires"
     },
     {
@@ -105517,6 +106618,600 @@
       "citation": "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/docs/release_validation_2026_10_02.json"
     },
     {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+      "to": "AUDIT-P003-024",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+      "to": "AUDIT-P003-024",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/detector_lemmas.py",
+      "to": "AUDIT-P003-024",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/detector_lemmas.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_two_signals_one_detector.py",
+      "to": "AUDIT-P003-024",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_two_signals_one_detector.py"
+    },
+    {
+      "from": "SOURCE:eis/domain/allostery.py",
+      "to": "AUDIT-P003-024",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "eis/domain/allostery.py"
+    },
+    {
+      "from": "SOURCE:eis/domain/value_objects.py",
+      "to": "AUDIT-P003-024",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "eis/domain/value_objects.py"
+    },
+    {
+      "from": "SOURCE:eis/tests/unit/test_allostery_exact.py",
+      "to": "AUDIT-P003-024",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "eis/tests/unit/test_allostery_exact.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+      "to": "AUDIT-P003-025",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+      "to": "AUDIT-P003-025",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/detector_lemmas.py",
+      "to": "AUDIT-P003-025",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/detector_lemmas.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_two_signals_one_detector.py",
+      "to": "AUDIT-P003-025",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_two_signals_one_detector.py"
+    },
+    {
+      "from": "SOURCE:eis/domain/thymus.py",
+      "to": "AUDIT-P003-025",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "eis/domain/thymus.py"
+    },
+    {
+      "from": "SOURCE:eis/infrastructure/mssn_ports.py",
+      "to": "AUDIT-P003-025",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "eis/infrastructure/mssn_ports.py"
+    },
+    {
+      "from": "SOURCE:eis/tests/unit/test_thymus_binds_executed_matcher.py",
+      "to": "AUDIT-P003-025",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "eis/tests/unit/test_thymus_binds_executed_matcher.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+      "to": "AUDIT-P003-029",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+      "to": "AUDIT-P003-029",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/detector_lemmas.py",
+      "to": "AUDIT-P003-029",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/detector_lemmas.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_two_signals_one_detector.py",
+      "to": "AUDIT-P003-029",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/tests/test_two_signals_one_detector.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/docs/first_publication_review_2026_10_02.md",
+      "to": "AUDIT-P003-029",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/docs/first_publication_review_2026_10_02.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+      "to": "AUDIT-P003-030",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+      "to": "AUDIT-P003-030",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/_lev_examiner_theoretical_minimum_quiz/00_preface_at_apartment_50.md",
+      "to": "AUDIT-P003-030",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/_lev_examiner_theoretical_minimum_quiz/00_preface_at_apartment_50.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/_lev_examiner_theoretical_minimum_quiz/quiz.md",
+      "to": "AUDIT-P003-030",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/_lev_examiner_theoretical_minimum_quiz/quiz.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/_lev_examiner_theoretical_minimum_quiz/study_guide.md",
+      "to": "AUDIT-P003-030",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/_lev_examiner_theoretical_minimum_quiz/study_guide.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/_lev_examiner_theoretical_minimum_quiz/instructor_key.md",
+      "to": "AUDIT-P003-030",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/_lev_examiner_theoretical_minimum_quiz/instructor_key.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/detector_lemmas.py",
+      "to": "AUDIT-P003-030",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/detector_lemmas.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/docs/first_publication_validation_2026_10_02.json",
+      "to": "AUDIT-P003-030",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/docs/first_publication_validation_2026_10_02.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper.md",
+      "to": "AUDIT-P004-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper_claim_ledger.md",
+      "to": "AUDIT-P004-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/lean-toolchain",
+      "to": "AUDIT-P004-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/lean-toolchain"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/lakefile.lean",
+      "to": "AUDIT-P004-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/lakefile.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/Census.lean",
+      "to": "AUDIT-P004-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/Census.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/axiom_report.txt",
+      "to": "AUDIT-P004-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/axiom_report.txt"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/TotalUnimodularity.lean",
+      "to": "AUDIT-P004-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/TotalUnimodularity.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/IdentityTypes.lean",
+      "to": "AUDIT-P004-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/IdentityTypes.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/Topology50.lean",
+      "to": "AUDIT-P004-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/Topology50.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/SparseLanding.lean",
+      "to": "AUDIT-P004-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/SparseLanding.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/SnTower.lean",
+      "to": "AUDIT-P004-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/SnTower.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/SparseLandingGeneral.lean",
+      "to": "AUDIT-P004-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/lean4/SparseLandingGeneral.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/tools/replay_lean_axiom_census.py",
+      "to": "AUDIT-P004-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/tools/replay_lean_axiom_census.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md",
+      "to": "AUDIT-P005-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
+      "to": "AUDIT-P005-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py",
+      "to": "AUDIT-P005-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/code/symbol_game_toolkit.py",
+      "to": "AUDIT-P005-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/symbol_game_toolkit.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_manual_contracts.py",
+      "to": "AUDIT-P005-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_manual_contracts.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md",
+      "to": "AUDIT-P005-015",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
+      "to": "AUDIT-P005-015",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py",
+      "to": "AUDIT-P005-015",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_manual_contracts.py",
+      "to": "AUDIT-P005-015",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_manual_contracts.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md",
+      "to": "AUDIT-P005-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
+      "to": "AUDIT-P005-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py",
+      "to": "AUDIT-P005-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_manual_contracts.py",
+      "to": "AUDIT-P005-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_manual_contracts.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md",
+      "to": "AUDIT-P005-017",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
+      "to": "AUDIT-P005-017",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/code/native_functional.py",
+      "to": "AUDIT-P005-017",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/native_functional.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py",
+      "to": "AUDIT-P005-017",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_manual_contracts.py",
+      "to": "AUDIT-P005-017",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_manual_contracts.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md",
+      "to": "AUDIT-P005-018",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
+      "to": "AUDIT-P005-018",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py",
+      "to": "AUDIT-P005-018",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/code/study_capstone.py",
+      "to": "AUDIT-P005-018",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/study_capstone.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_manual_contracts.py",
+      "to": "AUDIT-P005-018",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_manual_contracts.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper.md",
+      "to": "AUDIT-P006-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md",
+      "to": "AUDIT-P006-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/docs/first_publication_validation_2026_10_02.json",
+      "to": "AUDIT-P006-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/docs/first_publication_validation_2026_10_02.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/code/tests/test_006_epistemic_immune.py",
+      "to": "AUDIT-P006-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/code/tests/test_006_epistemic_immune.py"
+    },
+    {
+      "from": "SOURCE:eis/domain/allostery.py",
+      "to": "AUDIT-P006-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "eis/domain/allostery.py"
+    },
+    {
+      "from": "SOURCE:pfp/domain/immune/clonal_selection.py",
+      "to": "AUDIT-P006-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/domain/immune/clonal_selection.py"
+    },
+    {
+      "from": "SOURCE:pfp/infrastructure/persistence/cemetery_sink.py",
+      "to": "AUDIT-P006-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/infrastructure/persistence/cemetery_sink.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper.md",
+      "to": "AUDIT-P006-018",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md",
+      "to": "AUDIT-P006-018",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/docs/first_publication_validation_2026_10_02.json",
+      "to": "AUDIT-P006-018",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/docs/first_publication_validation_2026_10_02.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/code/fixtures/pharmacy_catalog_52cb5457f6c4.json",
+      "to": "AUDIT-P006-018",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/code/fixtures/pharmacy_catalog_52cb5457f6c4.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/code/tests/test_006_catalog_file.py",
+      "to": "AUDIT-P006-018",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/code/tests/test_006_catalog_file.py"
+    },
+    {
+      "from": "SOURCE:eis/domain/pharmacy_search.py",
+      "to": "AUDIT-P006-018",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "eis/domain/pharmacy_search.py"
+    },
+    {
+      "from": "SOURCE:eis/domain/external_admission.py",
+      "to": "AUDIT-P006-018",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "eis/domain/external_admission.py"
+    },
+    {
+      "from": "SOURCE:ops/adversary/use_cases/cemetery_regression.py",
+      "to": "AUDIT-P006-018",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "ops/adversary/use_cases/cemetery_regression.py"
+    },
+    {
+      "from": "SOURCE:ops/adversary/infrastructure/estates/oeeis_immune.py",
+      "to": "AUDIT-P006-018",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "ops/adversary/infrastructure/estates/oeeis_immune.py"
+    },
+    {
+      "from": "SOURCE:code/rust/core_epistemic_immune_system/src/pharmacy_search.rs",
+      "to": "AUDIT-P006-018",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "code/rust/core_epistemic_immune_system/src/pharmacy_search.rs"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/paper.md",
+      "to": "AUDIT-P007-011",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/paper_claim_ledger.md",
+      "to": "AUDIT-P007-011",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/code/tests/test_007_pedagogical_transmission.py",
+      "to": "AUDIT-P007-011",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/code/tests/test_007_pedagogical_transmission.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/code/tests/test_007_evidence_boundaries.py",
+      "to": "AUDIT-P007-011",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/code/tests/test_007_evidence_boundaries.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/paper.md",
+      "to": "AUDIT-P007-013",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/paper_claim_ledger.md",
+      "to": "AUDIT-P007-013",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/_lev_examiner_theoretical_minimum_quiz/study_guide.md",
+      "to": "AUDIT-P007-013",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/_lev_examiner_theoretical_minimum_quiz/study_guide.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/_lev_examiner_theoretical_minimum_quiz/quiz.md",
+      "to": "AUDIT-P007-013",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/_lev_examiner_theoretical_minimum_quiz/quiz.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/_lev_examiner_theoretical_minimum_quiz/instructor_key.md",
+      "to": "AUDIT-P007-013",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/_lev_examiner_theoretical_minimum_quiz/instructor_key.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/code/tests/test_007_evidence_boundaries.py",
+      "to": "AUDIT-P007-013",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/code/tests/test_007_evidence_boundaries.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+      "to": "AUDIT-P008-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+      "to": "AUDIT-P008-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/_lev_examiner_theoretical_minimum_quiz/study_guide.md",
+      "to": "AUDIT-P008-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/_lev_examiner_theoretical_minimum_quiz/study_guide.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+      "to": "AUDIT-P008-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+      "to": "AUDIT-P008-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/retraction_benchmark_runner.py",
+      "to": "AUDIT-P008-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/retraction_benchmark_runner.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/tests/test_008_mssn_tower_retraction.py",
+      "to": "AUDIT-P008-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/tests/test_008_mssn_tower_retraction.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/tests/test_008_source_bound_examples.py",
+      "to": "AUDIT-P008-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/tests/test_008_source_bound_examples.py"
+    },
+    {
+      "from": "SOURCE:pfp/domain/tower/registry.py",
+      "to": "AUDIT-P008-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/domain/tower/registry.py"
+    },
+    {
       "from": "SOURCE:pfp/workflows/wf0001/workflow.py",
       "to": "WLR-C01",
       "kind": "source_evidence_not_automatic_proof",
@@ -106552,6 +108247,12 @@
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:39"
     },
     {
+      "from": "AUDIT-P003-024",
+      "to": "ATL-P003-024",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SYS-EIS-002",
       "to": "ATL-P003-024",
       "kind": "narrows",
@@ -106568,6 +108269,12 @@
       "to": "ATL-P003-025",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:40"
+    },
+    {
+      "from": "AUDIT-P003-025",
+      "to": "ATL-P003-025",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "SYS-EIS-001",
@@ -106624,10 +108331,22 @@
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:44"
     },
     {
+      "from": "AUDIT-P003-029",
+      "to": "ATL-P003-029",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-030",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:45"
+    },
+    {
+      "from": "AUDIT-P003-030",
+      "to": "ATL-P003-030",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "SOURCE:atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper_claim_ledger.md",
@@ -106820,6 +108539,12 @@
       "to": "ATL-P004-016",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody/paper_claim_ledger.md:31"
+    },
+    {
+      "from": "AUDIT-P004-016",
+      "to": "ATL-P004-016",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "PAPER004-CONDITIONAL-LEAN-SLICE",
@@ -107044,16 +108769,34 @@
       "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md:27"
     },
     {
+      "from": "AUDIT-P005-014",
+      "to": "ATL-P005-014",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
       "to": "ATL-P005-015",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md:28"
     },
     {
+      "from": "AUDIT-P005-015",
+      "to": "ATL-P005-015",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
       "to": "ATL-P005-016",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md:29"
+    },
+    {
+      "from": "AUDIT-P005-016",
+      "to": "ATL-P005-016",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "PAPER005-INSTANCE-REPLACEMENT",
@@ -107068,10 +108811,22 @@
       "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md:30"
     },
     {
+      "from": "AUDIT-P005-017",
+      "to": "ATL-P005-017",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
       "to": "ATL-P005-018",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md:31"
+    },
+    {
+      "from": "AUDIT-P005-018",
+      "to": "ATL-P005-018",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "PUB-C06",
@@ -107260,6 +109015,12 @@
       "citation": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md:30"
     },
     {
+      "from": "AUDIT-P006-014",
+      "to": "ATL-P006-014",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md",
       "to": "ATL-P006-015",
       "kind": "source_evidence_not_automatic_proof",
@@ -107300,6 +109061,12 @@
       "to": "ATL-P006-018",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md:34"
+    },
+    {
+      "from": "AUDIT-P006-018",
+      "to": "ATL-P006-018",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "PAPER006-CATALOG-IS-NONEXECUTING-DATA",
@@ -107428,6 +109195,12 @@
       "citation": "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/paper_claim_ledger.md:24"
     },
     {
+      "from": "AUDIT-P007-011",
+      "to": "ATL-P007-011",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/paper_claim_ledger.md",
       "to": "ATL-P007-012",
       "kind": "source_evidence_not_automatic_proof",
@@ -107446,6 +109219,12 @@
       "citation": "atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/paper_claim_ledger.md:26"
     },
     {
+      "from": "AUDIT-P007-013",
+      "to": "ATL-P007-013",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/007_pfp_executable_lessons_and_evidence_boundaries/paper_claim_ledger.md",
       "to": "ATL-P007-014",
       "kind": "source_evidence_not_automatic_proof",
@@ -107458,7 +109237,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks",
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-001",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:11"
@@ -107470,7 +109249,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks",
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-002",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:12"
@@ -107482,10 +109261,16 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks",
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-003",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:13"
+    },
+    {
+      "from": "AUDIT-P008-003",
+      "to": "ATL-P008-003",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "PAPER008-SINGLETON-LEFT-INVERSE",
@@ -107494,19 +109279,25 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks",
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-004",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:14"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks",
+      "from": "AUDIT-P008-004",
+      "to": "ATL-P008-004",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-005",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:15"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks",
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-006",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:16"
@@ -107518,13 +109309,13 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks",
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-007",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:17"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks",
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-008",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:18"
@@ -107536,31 +109327,31 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks",
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-009",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:19"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks",
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-010",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:20"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks",
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-011",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:21"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks",
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-012",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:22"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks",
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-013",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:23"
@@ -107572,7 +109363,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks",
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-014",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:24"
@@ -107584,19 +109375,19 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks",
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-015",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:25"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks",
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-016",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:26"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks",
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-017",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:27"
@@ -107608,7 +109399,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks",
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-018",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:28"
@@ -107620,13 +109411,13 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks",
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-019",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:29"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks",
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-020",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:30"
@@ -162430,8 +164221,8 @@
     "Audit native implementations and claimed Lean correspondence at pinned source."
   ],
   "graph_validation": {
-    "unique_nodes": 4088,
-    "edges": 4587,
+    "unique_nodes": 4179,
+    "edges": 4748,
     "acyclic": true
   }
 }
