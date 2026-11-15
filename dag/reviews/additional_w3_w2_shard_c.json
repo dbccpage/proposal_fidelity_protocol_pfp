@@ -1,0 +1,161 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "bf3fbf738",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md",
+      "sha256": "9b2ce1d55daef68a3f995ea5a44e706d677677ba4dbc04849eca0483086b77d6",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 270]
+      ],
+      "assessment": "Audited Paper 005 guide sections covering discrete L1 projection semantics, standalone companion layout, native functional delegation, and relational completeness gating."
+    },
+    {
+      "path": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
+      "sha256": "9f6c0ae7bcb52d50584e0a3df6fe2d003f38b0add861af9f8b190cbe883f6e05",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 84]
+      ],
+      "assessment": "Audited Paper 005 claim ledger rows G005-10 (standalone companion and vendored provenance), G005-11 (native refusal propagation and exact enumeration), G005-12 (CUT completeness), and G005-13 (harness exact inputs)."
+    },
+    {
+      "path": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/native_functional.py",
+      "sha256": "bc99d3d71b3a15b7246482b9cb50c0986de196086fa67b1b3f8770583b3a3172",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 125]
+      ],
+      "assessment": "Audited native graph transport adapter compute_graph_phi1, provenance metadata headers binding upstream commit 52cb5457f6c4, and fail-closed exception paths."
+    },
+    {
+      "path": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py",
+      "sha256": "c6cd30cc12a8470a3f7e5aae5956b213b07fd01bdb479f56e5390857745a74bb",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 917]
+      ],
+      "assessment": "Audited L1SymbolGameGovernor compute_phi1 exception propagation and exact enumeration fallback, step_cut completeness check enforcing exact values on declared edges, and provenance headers binding commit 691a01ec3e0e and baseline 52cb5457f6c4."
+    },
+    {
+      "path": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/llm_streaming_harness.py",
+      "sha256": "7826649166dd5ec3b9a1394ba3262e85658b63c82c5c5a63ecf98c2e1c44e693",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 605]
+      ],
+      "assessment": "Audited SymbolGameStreamingSession turn execution, StreamingEnvelopeParser, and isinstance(val, (bool, float)) pre-conversion guard in run_turn emitting FW-OP_Refusal."
+    },
+    {
+      "path": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_vendored_sources.py",
+      "sha256": "149ba0e4039534d5ae2461eb40531978eeab0ce21089c534291f2d0ba3249d1d",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 201]
+      ],
+      "assessment": "Audited vendored module header checks, AST unpatched equivalence tests, step_cut completeness check presence test, and compute_phi1 exception handler absence test."
+    },
+    {
+      "path": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_native_refusal_propagation.py",
+      "sha256": "74ae7659515f36222a7c673dc7d04b0ee0835c191eae19b9dae90df146f1be6f",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 58]
+      ],
+      "assessment": "Audited native refusal propagation test suite verifying configured native failure propagation, unconfigured spanning forest potential enumeration, and float/bool weight refusal."
+    },
+    {
+      "path": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_cut_completeness.py",
+      "sha256": "1bf49a054ed02a3368edd55ce4871daa1576bc886f68061d4a9a7edfe1a5e416",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 72]
+      ],
+      "assessment": "Audited regression tests for R008-04 verifying refusal of empty proposals, proposals omitting declared edges, and non-exact value proposals with state unchanged."
+    },
+    {
+      "path": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_harness_exact_inputs.py",
+      "sha256": "af16ce1d34dd0f00fbb77e75723e3be703840065a4aa35d4372bed1cf0da1d7c",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 49]
+      ],
+      "assessment": "Audited streaming harness exact input tests verifying FW-OP_Refusal on float and bool claim values and defect scoring for exact integers and rational strings."
+    }
+  ],
+  "claims": [
+    {
+      "id": "AUDIT-P005-010",
+      "statement": "The Python companion runs outside the repository, and its copied adapter and governor match the recorded sources up to the documented patches.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Vendored metadata headers declaring source path, commit, and SHA-256 in native_functional.py and l1_symbol_game_governor.py.",
+        "AST normalization stripping excised bootstrap helpers (_find_repo_root, _REPO_ROOT) and remapping module imports.",
+        "Documented behavioral patches in compute_phi1, step_cut, step_assert, and step_verify."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/native_functional.py",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_vendored_sources.py"
+      ],
+      "limits": "Confirms structural AST equivalence outside documented patches; native binary solver execution is separately required."
+    },
+    {
+      "id": "AUDIT-P005-011",
+      "statement": "compute_phi1 propagates a configured native failure, enumerates exactly when unconfigured, and refuses float/Boolean weights.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Delegation to compute_graph_phi1 when CORE_FUNCTIONAL_GRAPH_BIN is configured without an enclosing exception handler.",
+        "Spanning-forest exact rational potential enumeration fallback when CORE_FUNCTIONAL_GRAPH_BIN is unconfigured.",
+        "Exact type guards enforcing type(weight) in (int, Fraction) and type(value) in (int, Fraction)."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_native_refusal_propagation.py",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_vendored_sources.py"
+      ],
+      "limits": "Describes the patched governor copy; Python spanning-forest enumeration results are not native execution results."
+    },
+    {
+      "id": "AUDIT-P005-012",
+      "statement": "A relational CUT missing a declared edge or with a non-exact value raises IncompleteProposal with state unchanged.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Declared edge key inventory check declared = [e.key for e in self.graph.edges].",
+        "Completeness predicate identifying missing keys or non-exact value types in proposed_claims.",
+        "Atomic refusal emission with status IncompleteProposal leaving edge_claims and primary_obstruction unchanged."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_cut_completeness.py",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_vendored_sources.py"
+      ],
+      "limits": "Applies to relational CUT proposals; syntactic completeness check does not imply factual domain accuracy of replacement claims."
+    },
+    {
+      "id": "AUDIT-P005-013",
+      "statement": "The streaming harness refuses float and Boolean claim values and scores integers and exact rational strings.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Streaming envelope parsing in StreamingEnvelopeParser.",
+        "Type-guard check isinstance(val, (bool, float)) in run_turn prior to Fraction conversion.",
+        "Governor Python evaluation of exact rational claims."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/llm_streaming_harness.py",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/test_harness_exact_inputs.py"
+      ],
+      "limits": "Evaluated on MockLLMStreamingProposer; does not measure live LLM token completion distributions or API network latency."
+    }
+  ]
+}

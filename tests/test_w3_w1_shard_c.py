@@ -14,9 +14,11 @@ Targets four audit derivations:
 from __future__ import annotations
 
 import hashlib
+import importlib
 import sys
 from fractions import Fraction
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -30,17 +32,42 @@ _PFP005_CODE = (
     / "code"
 )
 _PFP005_TESTS = _PFP005_CODE / "tests"
+_ISOLATED_NAMES = (
+    "conftest",
+    "native_functional",
+    "l1_symbol_game_governor",
+    "play_demo",
+    "quickstart",
+)
 
-for path in (_PFP005_TESTS, _PFP005_CODE):
-    path_str = str(path)
-    if path_str not in sys.path:
-        sys.path.insert(0, path_str)
 
-import conftest  # noqa: E402
-import l1_symbol_game_governor as gov_mod  # noqa: E402
-import native_functional as nf_mod  # noqa: E402
-import play_demo  # noqa: E402
-import quickstart as qs_mod  # noqa: E402
+def _load_isolated_pfp005_modules() -> dict[str, Any]:
+    """Import Paper 005 modules without colliding with earlier Paper 004 imports."""
+    saved_modules = {name: sys.modules.pop(name) for name in _ISOLATED_NAMES if name in sys.modules}
+    saved_path = list(sys.path)
+    try:
+        sys.path[:0] = [str(_PFP005_TESTS), str(_PFP005_CODE)]
+        return {name: importlib.import_module(name) for name in _ISOLATED_NAMES}
+    finally:
+        sys.path[:] = saved_path
+        for name in _ISOLATED_NAMES:
+            sys.modules.pop(name, None)
+        sys.modules.update(saved_modules)
+
+
+_PFP005_MODULES = _load_isolated_pfp005_modules()
+conftest = _PFP005_MODULES["conftest"]
+gov_mod = _PFP005_MODULES["l1_symbol_game_governor"]
+nf_mod = _PFP005_MODULES["native_functional"]
+play_demo = _PFP005_MODULES["play_demo"]
+qs_mod = _PFP005_MODULES["quickstart"]
+
+
+@pytest.fixture(autouse=True)
+def _pin_pfp005_sys_modules(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Keep lazy imports inside Paper 005 helpers bound to Paper 005 modules."""
+    for name, mod in _PFP005_MODULES.items():
+        monkeypatch.setitem(sys.modules, name, mod)
 
 
 class TestWorkedSession:

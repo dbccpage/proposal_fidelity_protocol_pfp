@@ -1,0 +1,126 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "bf3fbf738",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+      "sha256": "db9ce2c20408e6b8267ebab33e94cc172bf01762b6c32600108ae57967f7c00b",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 953]
+      ],
+      "assessment": "Audited Section 6 experiment manifest specification, Section 7 Bernoulli sample-size upper bound derivation, Section 8 pilot receipt custody limits, and Appendix A Lemma A two-signal collapse."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+      "sha256": "b93d68bf1e5092a8d6f9f054d2a5c487e0037715501632f03e1a525c87841626",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 78]
+      ],
+      "assessment": "Audited claim rows P3-17 (zero-failure Bernoulli bound 1-0.05^(1/n)), P3-18 (manifest disables live experiment), P3-19 (stored pilot insufficiency), and P3-23 (packaged immune Signal 2 derived from match count)."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/demos/demo_3/experiment_manifest.yaml",
+      "sha256": "7a1ea18f81a9294b6ec4782d3e319bbba3f446ec6440fb2b6c9e89e851dc3506",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 364]
+      ],
+      "assessment": "Audited status: proposed_not_executed, execution.live_enabled: false, null provider/model fields, pilot_repetitions_per_arm: 8, and freeze requirements."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/demos/demo_3/results/live_openrouter_trial_receipt.json",
+      "sha256": "7d664aeac4c65d731281d3e480719047783cc81c89aab946acfd842c5d8821f3",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 3150]
+      ],
+      "assessment": "Audited 30 trial records across arms D and R, verifying absence of arms P, T, C, A, absence of second model, truncated raw completion snippets, and older external runner schema certificates."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/detector_lemmas.py",
+      "sha256": "c1f7626458231b27caca0113316dedddfce48fe5387b268b413738a3d465aca7",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 203]
+      ],
+      "assessment": "Audited exact rational implementations of Lemma A (audited_signal2, gate, reachable, diagnostic_reachable_by_characterization)."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/danger_gate.py",
+      "sha256": "bec5440fddb5a36b753b939af35a16321b2b4fc8e35af93d2d9e9f51cc1f5311",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 190]
+      ],
+      "assessment": "Audited evaluate_two_signal_gate decision table and confirmed collapse to TOLERATED and QUARANTINED under derived high-severity Signal 2."
+    }
+  ],
+  "claims": [
+    {
+      "id": "AUDIT-P003-017",
+      "statement": "With 0 failures in n independent Bernoulli(p) trials, the one-sided 95% upper confidence bound on p is $1-0.05^{1/n}$.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Bernoulli distribution cumulative probability model under independent and identically distributed sampling.",
+        "Clopper-Pearson exact confidence interval inversion for zero observed failures.",
+        "Planning calculations in Paper 003 Section 7 lines 505-511."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md"
+      ],
+      "limits": "Assumes identically distributed and strictly independent trials; correlated proposal distributions, shared prompt fixtures, or multi-turn dependencies invalidate direct application of the bound."
+    },
+    {
+      "id": "AUDIT-P003-018",
+      "statement": "The historical experiment_manifest.yaml disables the planned live experiment.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Lifecycle status and execution flag specifications in Paper 003 Section 6.",
+        "Structured YAML manifest at demos/demo_3/experiment_manifest.yaml."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/demos/demo_3/experiment_manifest.yaml"
+      ],
+      "limits": "Records the administrative execution flags of the pinned historical manifest; does not evaluate preliminary pilots or configurations on uninspected branches."
+    },
+    {
+      "id": "AUDIT-P003-019",
+      "statement": "The stored live pilot receipt does not establish the frozen randomized study.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Frozen six-arm randomized study design specified in Paper 003 Section 6.",
+        "Pilot receipt record at demos/demo_3/results/live_openrouter_trial_receipt.json."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/demos/demo_3/experiment_manifest.yaml",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/demos/demo_3/results/live_openrouter_trial_receipt.json"
+      ],
+      "limits": "Assesses the historical pilot receipt against confirmatory experimental standards; does not dispute the exploratory engineering value of the descriptive trial log."
+    },
+    {
+      "id": "AUDIT-P003-023",
+      "statement": "At 30609de2c run_packaged_immune computes Signal 2 for its 24 controls as a high-severity defect from the match count, so Lemma A(3) applies when the screen admits every rule.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Two-signal decision table and Lemma A formalization in Paper 003 Appendix A.",
+        "Predecessor DAG node PAPER003-DERIVED-SIGNAL-COLLAPSE.",
+        "Exact rational finite model in detector_lemmas.py and danger_gate.py."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/detector_lemmas.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/danger_gate.py"
+      ],
+      "limits": "Pertains strictly to historical commit 30609de2c on the 24 control cases where Signal 2 is coupled to match count; does not apply to the corrected codebase enforcing independent host checks."
+    }
+  ]
+}
