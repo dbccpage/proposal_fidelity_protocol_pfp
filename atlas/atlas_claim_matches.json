@@ -5881,19 +5881,13 @@
     },
     {
       "atlas_id": "ATL-P008-005",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "Grading-basis statement; no derivation node.",
-      "proposed_derivation": {
-        "title": "Stage grade basis",
-        "claim": "Stage grades derive from executed syntax or checker fixtures, not level number.",
-        "hypotheses": [
-          "stage_status.py"
-        ],
-        "derivation": "Source-inspect stage_status.py and confirm each grade is computed from a recorded execution/fixture outcome.",
-        "obligations": []
-      }
+      "verdict": "partial",
+      "nodes": [
+        "AUDIT-P008-005"
+      ],
+      "relation": "narrows",
+      "note": "Derived in AUDIT-P008-005, with PFPDOMAIN-F055: GRADES=('NONE', 'SYNTAX', 'COMPUTED') excludes LEAN and GATED with 6/20/75 partition across stages 0..100 and pfp/domain/tower/checks.py plus reach/targets.py execute positive, stage-negative, and empty/flag-only fixture checks, whereas historical stage_status.py at 52cb5457 is outside this checkout and active pfp/domain/tower/stage_status.py dispatches statically via COMPUTED_LEVELS membership and level<=21 without invoking CheckerBinding.run.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P008-006",
@@ -5931,73 +5925,43 @@
     },
     {
       "atlas_id": "ATL-P008-009",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the evidence resolver's historical/active split.",
-      "proposed_derivation": {
-        "title": "Resolver no-fallback",
-        "claim": "Historical reads resolve from pinned Git blobs, active reads from v2 package resources, and a miss in one never falls back to the other.",
-        "hypotheses": [
-          "resolver.py"
-        ],
-        "derivation": "Replay the focused tests plus one control per direction removing the target resource; expect refusal, not fallback.",
-        "obligations": [
-          "Optional digest must be supplied for hash comparison"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P008-009"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P008-009: LevelEngineEvidenceResolver.read_bytes resolves v1 strictly from 40-hex pinned Git blobs (HISTORICAL_BYTES_UNAVAILABLE on miss) and v2 strictly from v2 package resources (ACTIVE_RESOURCE_UNAVAILABLE on miss) with bidirectional non-fallback and working-tree isolation; SHA-256 comparison (EVIDENCE_DIGEST_MISMATCH) executes when optional sha256 is supplied.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P008-010",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the runner's VERIFIED-on-missing-receipt behaviour.",
-      "proposed_derivation": {
-        "title": "150/150 label insufficiency",
-        "claim": "The historical runner can label a case VERIFIED when its receipt is missing or an exception occurs, so 150/150 does not imply 150 successful executions.",
-        "hypotheses": [
-          "run_150_tests_suite.py"
-        ],
-        "derivation": "Source-inspect the branches assigning VERIFIED; exhibit one input path (missing receipt) reaching VERIFIED.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P008-010"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P008-010: Retained Paper 008 Section 8 audit, c005_working_report.md (10 live queries), and test_c005_bakeoff.py counterexample specifications document that unarchived run_150_tests_suite.py at 52cb5457 mapped missing-receipt and exception branches to VERIFIED; across N=150 cases, C(152,2)=11,476 non-failing outcome triples yield PASSED+VERIFIED=150 versus 1 triple (150,0,0) under fail-closed PASSED/NOT_RUN/FAILED accounting.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P008-011",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the challenge census partition.",
-      "proposed_derivation": {
-        "title": "Challenge census partition",
-        "claim": "At a623568e: C011-C050 (40) delivered with two checker modules, C001 and C005 call for model measurements, C002-C004 and C006-C010 (8) are specifications only; C051 is delivered outside the range.",
-        "hypotheses": [
-          "Tree of commit a623568e"
-        ],
-        "derivation": "List each challenge folder and classify by presence of solver package and checker modules; check 40+2+8=50.",
-        "obligations": [
-          "Membership only; receipts and test content not evaluated"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P008-011"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P008-011: Retained historical_census_inventory.json and challenge_census.md at commit a623568eb0f853b968bc419bf06dfc6af256ab02 partition C001-C050 disjointly into 40 Category A solver/dual-checker packages (C011-C050), 2 Category B model-measurement entries (C001, C005), and 8 Category C specification blobs (C002-C004, C006-C010) (40+2+8=50), with C051 outside range under f_program_synthesis and explicit membership-only test/receipt caveats (C047 print-only AST, C048-C051 zero test files, C014 invalidated receipt, C015-C020 and C045-C051 no retained receipt).",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P008-012",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the retained mutation-suite results.",
-      "proposed_derivation": {
-        "title": "Mutation suite rejection",
-        "claim": "Retained September 28 runs show C011, C021, C031 suites rejecting 40, 40 and 45 mutation files, with C011/C031 dual-checker and C031 reference tests passing.",
-        "hypotheses": [
-          "Retained author test outputs"
-        ],
-        "derivation": "Recount rejected mutation files per suite from retained logs; optionally rerun.",
-        "obligations": [
-          "Untested failure modes remain"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P008-012"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P008-012: Historical commit a623568eb0f853b968bc419bf06dfc6af256ab02 census and retained September 28 author runs record 40, 40, and 45 rejected mutation files across C011, C021, and C031 (41, 41, and 47 pytest items plus 5 C011 dual-checker and 9 C031 reference-solver tests), while active reruns reject 40, 51 (40 original + 11 added), and 45 mutations with untested failure modes remaining open.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P008-013",
@@ -6021,37 +5985,23 @@
     },
     {
       "atlas_id": "ATL-P008-015",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the absence of a C001 measurement.",
-      "proposed_derivation": {
-        "title": "C001 measurement absence",
-        "claim": "C001 has no retained measurement; its McNemar module runs on a synthetic 200-case fixture with injected failures.",
-        "hypotheses": [
-          "C001 folder"
-        ],
-        "derivation": "Search the folder for run receipts; inspect the module to confirm synthetic generation.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P008-015"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P008-015: C001 retains zero empirical scoring receipts or trace logs across historical_census_inventory.json and the active repository (pipeline.json digests UNSET; 200-case GPU sweep listed under next_test_needed), while mcnemar_arms_evaluation.py runs deterministically on 200 generated cases with 80 modulo-5 injected Arm A failures (chi2 = 80, p = 2^-79).",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P008-016",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the K4 trace outcomes.",
-      "proposed_derivation": {
-        "title": "K4 trace outcomes",
-        "claim": "In eight K4 traces the correct repair appears exactly in the scratchpad and hinted conditions; baseline/masked runs end at Phi1 = 8, 6 (Qwen) and 5, 7 (Llama).",
-        "hypotheses": [
-          "Eight archived traces with matching SHA-256"
-        ],
-        "derivation": "Verify trace digests, then extract proposals and replay terminal Phi1 per trace.",
-        "obligations": [
-          "n=1 per cell; no stored final post-move result"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P008-016"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P008-016: All eight archived K4 traces (n = 1 per cell) match source_index.json byte, SHA-256, and Git blob digests; exact weighted L1 Phi1 replay matches 100% of embedded prefix logs, confirming tree-preserving coboundary repair appears in assisted scratchpad and hinted runs while unassisted baseline and partially_masked runs end at Phi1 = 8, 6 (Qwen) and 5, 7 (Llama) with no stored post-move host field on the final raw row.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P008-017",
@@ -6075,22 +6025,13 @@
     },
     {
       "atlas_id": "ATL-P008-019",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the offline runner's isolation and stub match counts.",
-      "proposed_derivation": {
-        "title": "Offline runner isolation",
-        "claim": "Offline mode opens no socket, reads no credential file, writes only outside the package, and the stub matches 3, 6, 3, 6 of 6 verdicts across conditions.",
-        "hypotheses": [
-          "Package runner",
-          "Offline flag"
-        ],
-        "derivation": "Replay the four named tests with socket and file-open hooks; count stub matches per condition.",
-        "obligations": [
-          "No model is measured"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P008-019"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P008-019: Hooked offline replay of retraction_benchmark_runner.py confirms zero socket calls, zero credential file reads, output writes restricted outside PACKAGE_ROOT (in-package paths refused with exit code 2), and 3, 6, 3, 6 of 6 verdict matches across baseline, hinted, scratchpad, and exact_oracle via OfflineStubClient \"gap=\" substring matching and host certificates without model measurement.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P008-020",
@@ -6128,91 +6069,53 @@
     },
     {
       "atlas_id": "ATL-P009-003",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node reviews the SemioticAudit fixture.",
-      "proposed_derivation": {
-        "title": "Semiotic fixture scope check",
-        "claim": "SemioticAudit compares two supplied strings only.",
-        "hypotheses": [
-          "pinned fixture source"
-        ],
-        "derivation": "Read the source and run the named test with an equal and a drifted string pair.",
-        "obligations": [
-          "No semantic equivalence decision"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P009-003"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P009-003: SemioticAudit.is_drift_detected compares self.signified != self.interpretant only, leaving self.signifier unread, parsing no source code, and making no semantic equivalence decision.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P009-004",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node reviews the StagnationRecord fixture.",
-      "proposed_derivation": {
-        "title": "Stagnation fixture scope check",
-        "claim": "StagnationRecord checks a supplied count, gauge flag and score.",
-        "hypotheses": [
-          "pinned fixture source"
-        ],
-        "derivation": "Source read plus a test varying each field independently.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P009-004"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P009-004: StagnationRecord.should_trigger_review evaluates consecutive_stagnant_rounds >= threshold_rounds and locked_gauge and current_defect_norm > Fraction(0, 1) over supplied fields without inspecting search history, computing defect norms, or licensing a gauge break.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P009-005",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node reviews evaluate_terminal_reality_gate.",
-      "proposed_derivation": {
-        "title": "Toy verdict function scope check",
-        "claim": "The verdict function branches only on supplied scores and flags.",
-        "hypotheses": [
-          "pinned source"
-        ],
-        "derivation": "Enumerate the branch table over the supplied inputs and confirm no score is computed.",
-        "obligations": [
-          "Flag provenance unverified"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P009-005"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P009-005: evaluate_terminal_reality_gate routes 36 sign/boolean cells over supplied (phi1, gamma2, semiotic_clean, unbudgeted_debt) into 33 REFUSE, 2 PASS_TO_MASTER (including unbudgeted_debt=True when phi1 == gamma2 == 0 and semiotic_clean=True), and 1 OPEN_RESIDUAL without computing scores or checking flag provenance.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P009-006",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node reviews the Level15 proposal non-authority theorem.",
-      "proposed_derivation": {
-        "title": "Proposal constructors are not terminal",
-        "claim": "Under the Lean definitions, proposal constructors are distinct from the terminal constructor.",
-        "hypotheses": [
-          "Lean inductive definitions"
-        ],
-        "derivation": "Constructor disjointness (no-confusion); confirm by source read and fresh build.",
-        "obligations": [
-          "Runtime correspondence"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P009-006"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P009-006: Under Level15AuthorityCalculus.lean (built out-of-tree on Lean 4.35.0 with zero axioms), MSSN.Level15.StateKind constructor disjointness separates proposal constructors (.proposal, .candidateTrace) from .terminalAuthority, while runtime correspondence remains a separate implementation obligation.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P009-007",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node reviews the self-critique non-verification theorem.",
-      "proposed_derivation": {
-        "title": "Self-critique fails the independence predicate",
-        "claim": "A state compared with itself has equal hashes, so the unequal-hash independence predicate fails.",
-        "hypotheses": [
-          "Lean definition of independence as unequal hashes"
-        ],
-        "derivation": "Reflexivity of equality contradicts the predicate; source read and fresh build.",
-        "obligations": [
-          "No statistical independence claim"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P009-007"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P009-007: Source inspection of Level15AuthorityCalculus.lean and a fresh out-of-tree lake build under leanprover/lean4:v4.35.0 confirm that isIndependentVerifier compares gen.paramHash != ver.paramHash and theorem2_self_critique_non_verification refutes isIndependentVerifier gen gen via rfl with zero axioms, while distinct hashes carry no statistical-independence claim across models.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P009-008",
@@ -6226,21 +6129,13 @@
     },
     {
       "atlas_id": "ATL-P009-009",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node inspects the external TerminalizerPolicy header.",
-      "proposed_derivation": {
-        "title": "Header warning check",
-        "claim": "The pinned TerminalizerPolicy.lean header states its declarations were not typechecked.",
-        "hypotheses": [
-          "external file at the pinned commit"
-        ],
-        "derivation": "Fetch the pinned blob and read the header comment.",
-        "obligations": [
-          "File is outside this package"
-        ]
-      }
+      "verdict": "partial",
+      "nodes": [
+        "AUDIT-P009-009"
+      ],
+      "relation": "narrows",
+      "note": "Derived in AUDIT-P009-009: Confirmed exclusion of TerminalizerPolicy.lean from both Paper 009 and top-level lean4/ Lake targets (with lean4/README.md recording that TerminalizerPolicy has no grade because its build did not complete and completion_supplement.md recording package exclusion), and cross-checked tracked attestations in paper.md, paper_claim_ledger.md, and meta_03_symbol_game_proof_ledger.md regarding external 52cb5457f6c485ba548cfd292f6012a941ed22cf:lean4/TerminalizerPolicy.lean (raw external blob remains outside this split checkout).",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P009-010",
@@ -6278,39 +6173,23 @@
     },
     {
       "atlas_id": "ATL-P009-013",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node recounts the retained replay receipt refusing all ten proposals.",
-      "proposed_derivation": {
-        "title": "Retained replay recount",
-        "claim": "The stored replay receipt refuses all 10 recorded proposals, including the 4 obstruction claims.",
-        "hypotheses": [
-          "receipt at the pinned hash"
-        ],
-        "derivation": "Verify the receipt hash, then count refusal verdicts per record.",
-        "obligations": [
-          "Checker revision not pinned; no fresh replay"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P009-013"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P009-013: Verified LF Git-blob digests of demo2_r7_adversarial_debate_receipt.json (41256258...) and demo2_r7_adversarial_debate_1790210039.jsonl (329e2922...) against provenance.json and recounted all 10 replay trials in current_replay_statuses (5 Refused_UnverifiedInvolution_InvalidWitness and 1 Refused_AM_FSP_2_NullXi across the 6 sign-free claims plus 4 Refused_UnverifiedObstruction across the 4 obstruction claims, 10/10 with current_replay_admitted == false), noting that the later checker revision is unpinned and not freshly re-executed.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P009-014",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No derivation node records this falsifier replay of the audited gate.",
-      "proposed_derivation": {
-        "title": "Gate falsifier replay",
-        "claim": "At the audited commit the gate authorizes a triangle with cochain (1,1,1), cycle sum 3, because the lifted carrier zeros the cochain.",
-        "hypotheses": [
-          "repository checkout at the audited commit"
-        ],
-        "derivation": "Run the falsifier replay F1 at the pinned commit and read the cited lines.",
-        "obligations": [
-          "Needs the pinned external checkout"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P009-014"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P009-014: Verified exact rational cycle-sum invariance (cycle_sum(1, 1, 1) = 3 under all vertex potentials vs 0 after zero replacement) via triangle_cycle_sum.py, confirmed from retained adversary_gate_falsifiers.json and replay_adversary_gate_falsifiers.py that external commit 30609de2c3928238715375a9bac608256fa381d8 zeroed the lifted cochain ([3.0, 0.0] -> [0.0] -> [0.0, 0.0]) and emitted AUTHORIZED, and verified on current ops/adversary/ modules that Act IV preserves (1, 1, 1), refuses lowering lifts (ADVERSARY_LIFT_LOWERED_OBSTRUCTION), and blocks authorization (historical 30609de2 Git object remains external to this split checkout).",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P009-015",

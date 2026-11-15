@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-11-15T12:04:05.150738+00:00",
+  "generated_at_utc": "2026-11-15T22:43:29.685986+00:00",
   "repository": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp",
   "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
   "status": "in_progress",
@@ -257,6 +257,10 @@
     "dag/reviews/additional_w4_w1_shard_b.json",
     "dag/reviews/additional_w4_w1_shard_c.json",
     "dag/reviews/additional_w4_w1_shard_d.json",
+    "dag/reviews/additional_w5_w1_shard_a.json",
+    "dag/reviews/additional_w5_w1_shard_b.json",
+    "dag/reviews/additional_w5_w1_shard_c.json",
+    "dag/reviews/additional_w5_w1_shard_d.json",
     "dag/reviews/additional_wiki_measurements.json",
     "dag/reviews/additional_wiki_remaining.json",
     "dag/reviews/additional_wiki_tests.json",
@@ -35053,6 +35057,376 @@
       "atlas_ledger_id": "ATL-D-AUDIT-P008-004"
     },
     {
+      "id": "AUDIT-P008-005",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "GRADES = ('NONE', 'SYNTAX', 'COMPUTED') contains no LEAN or GATED grade; pfp/domain/tower/checks.py and pfp/infrastructure/tower_research/reach/targets.py execute positive, stage-negative, and empty/flag-only fixture checks for the bound stages, whereas current pfp/domain/tower/stage_status.py diverges from the unarchived 52cb5457 baseline by assigning COMPUTED and SYNTAX via static COMPUTED_LEVELS membership and level <= 21 without invoking CheckerBinding.run.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Closed 3-tuple GRADES = ('NONE', 'SYNTAX', 'COMPUTED') and 6-stage BINDINGS ({0, 1, 23, 35, 36, 48}) yielding 6 COMPUTED, 20 SYNTAX, and 75 NONE across stages 0..100 in pfp/domain/tower/stage_status.py.",
+        "Deterministic positive, stage-negative, and empty WireError checks in pfp/domain/tower/checks.py (validate_stage, glue_finite_sections, check_markov, check_bayes, check_spin_z) and pinned target-checker negative probes in pfp/infrastructure/tower_research/reach/targets.py.",
+        "Open obligation: Historical research/mssn_sn_tower/code/python/stage_status.py at 52cb5457f6c485ba548cfd292f6012a941ed22cf is outside this checkout, and current pfp/domain/tower/stage_status.py checks level in COMPUTED_LEVELS and level <= 21 without calling CheckerBinding.run (corroborating PFPDOMAIN-F055)."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/_lev_examiner_theoretical_minimum_quiz/study_guide.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/source_index.json",
+        "pfp/domain/tower/stage_status.py",
+        "pfp/domain/tower/checks.py",
+        "pfp/infrastructure/tower_research/reach/targets.py",
+        "pfp/infrastructure/tower_evidence/reach/INJECTIONS.md"
+      ],
+      "limits": "Historical stage_status.py at 52cb5457 is not archived in-repo; current pfp/domain/tower/stage_status.py is a static lookup stub, and finite three-fixture checks do not establish general stage semantics.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P008-005"
+    },
+    {
+      "id": "AUDIT-P008-009",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "LevelEngineEvidenceResolver.read_bytes resolves version 'v1' exclusively from 40-hex pinned Git blobs via git cat-file blob and version 'v2' exclusively from installed v2 package resources, raising EvidenceRefusal on misses in either direction without falling back to the other namespace or working-tree files.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Pre-dispatch path validation _safe_path refusing traversal, absolute/drive paths, backslashes, NUL bytes, and Windows reserved device stems with EVIDENCE_PATH_INVALID.",
+        "Mutually exclusive 'v1' (40-hex revision + git cat-file blob -> HISTORICAL_BYTES_UNAVAILABLE on miss) and 'v2' (revision is None + importlib.resources v2/ read -> ACTIVE_RESOURCE_UNAVAILABLE on miss) branches in pfp/infrastructure/tower_evidence/level_engine/resolver.py.",
+        "Open obligation: SHA-256 content digest verification (EVIDENCE_DIGEST_MISMATCH) executes when sha256 is supplied and is bypassed when sha256 is None."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/_lev_examiner_theoretical_minimum_quiz/study_guide.md",
+        "pfp/infrastructure/tower_evidence/level_engine/resolver.py",
+        "pfp/tests/level_engine/test_finite_consumer.py",
+        "pfp/tests/level_engine/test_context.py"
+      ],
+      "limits": "Content SHA-256 verification requires callers to pass a non-None sha256 argument; 'v1' resolution requires a local git executable and local Git object availability.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P008-009"
+    },
+    {
+      "id": "AUDIT-P008-010",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "When a test runner maps missing-receipt and caught-exception branches to VERIFIED and aggregates PASSED + VERIFIED, 11,476 distinct 150-case outcome triples (n_pass, n_missing, n_exc) with n_fail = 0 produce 150/150, matching Paper 008's withdrawal of the historical run_150_tests_suite.py headline score.",
+      "status": "mathematical_proof_and_bounded_source_support",
+      "dependencies": [
+        "Retained Paper 008 Section 8 audit, completion_supplement.md withdrawal, c005_working_report.md query table (10 live queries in the 150-test suite), and test_c005_bakeoff.py counterexample specifications.",
+        "Exact combinatorial partition over N = 150 cases: C(150 + 2, 2) = 11,476 non-negative integer triples (n_pass, n_missing, n_exc) summing to 150 yield PASSED + VERIFIED = 150 under permissive VERIFIED fallback, versus 1 triple (150, 0, 0) under fail-closed PASSED / NOT_RUN / FAILED accounting.",
+        "Active custody guards in run_adversary_bakeoff.py issuing NOT_ADJUDICATED receipts, refusing run-folder overwrites, and writing failure_receipt.json on write exceptions."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_change_log.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/completion_supplement.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/c005_working_report.md",
+        "workflows/wf12_mechanism_control_arms/pilots/c005_hosted_decode_controls/run_adversary_bakeoff.py",
+        "workflows/wf12_mechanism_control_arms/pilots/c005_hosted_decode_controls/test_c005_bakeoff.py"
+      ],
+      "limits": "Historical projects/mssn_sn_symgam/challenges/run_150_tests_suite.py at 52cb5457 is outside this standalone repository checkout; analysis combines retained Paper 008 records, C005 custody code, and exact partition arithmetic.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P008-010"
+    },
+    {
+      "id": "AUDIT-P008-011",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "At commit a623568eb0f853b968bc419bf06dfc6af256ab02, challenges C001-C050 partition disjointly into 40 delivered Category A solver packages with two checker modules (C011-C050), 2 Category B model-measurement entries (C001, C005), and 8 Category C specification-only Markdown blobs (C002-C004, C006-C010), with C051 delivered outside C001-C050.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Machine-readable 50-entry inventory docs/historical_census_inventory.json and companion docs/challenge_census.md pinned to commit a623568eb0f853b968bc419bf06dfc6af256ab02.",
+        "Exact disjoint union |A| + |B| + |C| = 40 + 2 + 8 = 50 over {C001..C050} with len(reference_solver_files) >= 1 and len(checker_files) == 2 on all 40 Category A entries, plus C051 recorded under f_program_synthesis.",
+        "Open obligation: Category A is a file-presence predicate only; C047's sole test-named file test_cases_runner.py has zero assert or nonzero-exit statements, C048-C051 have zero test-named files, C015-C020 and C045-C051 lack retained scoring receipts, and C014's receipt is invalidated pending rescore."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_change_log.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/challenge_census.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/historical_census_inventory.json",
+        "workflows/tasks/certified_challenges/c047_sequence_law_discovery/judge_packet/test_cases_runner.py"
+      ],
+      "limits": "Verifies file-layout inventory at external commit a623568e from retained artifacts plus in-repo C047 runner AST; Category A membership does not attest pytest coverage, receipt completeness, or general solver correctness.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P008-011"
+    },
+    {
+      "id": "AUDIT-P008-012",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Retained September 28 runs show C011, C021, C031 suites rejecting 40, 40, and 45 mutation files, with C011/C031 dual-checker and C031 reference tests passing.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Historical census inventory at commit a623568eb0f853b968bc419bf06dfc6af256ab02 recording 40, 40, and 45 mutation JSON files across C011, C021, and C031 alongside the September 28 author command table (41, 5, 41, 47, and 9 passed items).",
+        "Active challenge test execution under workflows/tasks/certified_challenges/ rejecting 40/40 C011 mutations (plus 5 dual-checker tests), 40/40 original and 11/11 added C021 mutations (51 total across 44 active cases), and 45/45 C031 mutations (plus 5 dual-checker and 9 reference-solver tests).",
+        "Dual-evaluator disagreement and upstream case-mutation negative controls in c021_q40_r/judge_packet/checkers/dual_evaluator.py."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/challenge_census.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/historical_census_inventory.json",
+        "workflows/tasks/certified_challenges/c011_cycle_rank_ladder_coboundary_repair/judge_packet/mutation_suite/test_c011_checker_mutations.py",
+        "workflows/tasks/certified_challenges/c011_cycle_rank_ladder_coboundary_repair/tests/test_dual_checkers.py",
+        "workflows/tasks/certified_challenges/c021_q40_r/judge_packet/checkers/dual_evaluator.py",
+        "workflows/tasks/certified_challenges/c021_q40_r/judge_packet/mutation_suite/test_c021_checker_mutations.py",
+        "workflows/tasks/certified_challenges/c021_q40_r/tests/test_dual_checkers.py",
+        "workflows/tasks/certified_challenges/c031_anomaly_free_u1_charges/judge_packet/mutation_suite/test_c031_checker_mutations.py",
+        "workflows/tasks/certified_challenges/c031_anomaly_free_u1_charges/tests/test_dual_checkers.py",
+        "workflows/tasks/certified_challenges/c031_anomaly_free_u1_charges/tests/test_reference_solver.py"
+      ],
+      "limits": "Passing finite authored mutation catalogs does not exclude untested certificate corruptions, shared solver-checker specification errors, or upstream case-ingest drift; historical commitments/*_scoring_receipt.json files from commit a623568e are absent from active c011/c021/c031 directories, and active C021 has 51 mutations and 44 cases.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P008-012"
+    },
+    {
+      "id": "AUDIT-P008-015",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "C001 has no retained measurement; its McNemar module runs on a synthetic 200-case fixture with injected failures.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Zero scoring receipts, JSONL traces, or measurement reports for C001 in historical_census_inventory.json and dag/file_inventory.json, with UNSET tokenizer and prompt digests in pipeline.json and next_test_needed Sweep notice in empirical_neural_mcnemar_evaluation.py.",
+        "Explicit synthetic declarations (IS_SYNTHETIC_FIXTURE = True, IS_EMPIRICAL_MEASUREMENT = False) and stdlib/local-solver-only AST imports in mcnemar_arms_evaluation.py.",
+        "Modulo-5 baseline failure injection (case[\"seed\"] % 5 in (0, 1)) over 200 generated cases producing (a, b, c, d) = (120, 80, 0, 0), chi2 = 80, and exact two-sided binomial p = 1/2^79, collapsing to (b, c) = (0, 0) when removed."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/challenge_census.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/historical_census_inventory.json",
+        "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/pipeline.json",
+        "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/case_generator.py",
+        "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/solve.py",
+        "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/solver.py",
+        "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/mcnemar_arms_evaluation.py",
+        "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/empirical_neural_mcnemar_evaluation.py",
+        "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/test_mcnemar_arms_runner.py"
+      ],
+      "limits": "Establishes absence of retained empirical receipts and synthetic nature of mcnemar_arms_evaluation.py; makes no positive or negative empirical claim about transformer attention-distractor masking.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P008-015"
+    },
+    {
+      "id": "AUDIT-P008-016",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "In eight K4 traces the correct repair appears in the scratchpad and hinted conditions; baseline/masked runs end at Phi1 = 8, 6 (Qwen) and 5, 7 (Llama).",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Byte, SHA-256, and Git blob SHA-1 custody match across all eight K4 trace files in docs/source_archive/k4_traces/ against source_index.json (revision 52cb5457f6c485ba548cfd292f6012a941ed22cf).",
+        "Prompt inspection confirming worked arithmetic (-3, -3, -5) in scratchpad and explicit chord targets plus JSON CUT repair in hinted, absent from baseline and partially_masked.",
+        "Exact spanning-tree weighted L1 Phi1 replay matching 100% of embedded Turn 1..T-1 host prefix logs and yielding terminal Phi1 = 8, 6, 0, 0 (Qwen) and 5, 7, 0, 0 (Llama) with tree-preserving coboundary repair proposed exclusively in scratchpad and hinted."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/source_index.json",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_benchmark_report.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_qwen_qwen-2_5-7b-instruct_baseline_1790297180354.jsonl",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_qwen_qwen-2_5-7b-instruct_partially_masked_1790308412.jsonl",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_qwen_qwen-2_5-7b-instruct_scratchpad_1790310019.jsonl",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_qwen_qwen-2_5-7b-instruct_hinted_1790297190434.jsonl",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_meta-llama_llama-3_1-8b-instruct_baseline_1790297201231.jsonl",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_meta-llama_llama-3_1-8b-instruct_partially_masked_1790308428.jsonl",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_meta-llama_llama-3_1-8b-instruct_scratchpad_1790310061.jsonl",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_meta-llama_llama-3_1-8b-instruct_hinted_1790297215552.jsonl",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/tests/test_008_source_bound_examples.py"
+      ],
+      "limits": "Sample size is n = 1 per cell on one K4 fixture at temperature 0.0; scratchpad and hinted prompts supply the target chord values; raw JSONL rows store pending host fields with no post-move host output on the final turn; whole-map CUT replacement admits partial zero-chord payloads by zeroing omitted tree edges.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P008-016"
+    },
+    {
+      "id": "AUDIT-P008-019",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Offline mode opens no socket, reads no credential file, writes only outside the package, and the stub matches 3, 6, 3, 6 of 6 verdicts across conditions.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Runtime socket and file-open hook replay across baseline, hinted, scratchpad, and exact_oracle confirming zero socket calls, zero credential file opens, and output writes restricted to external or mkdtemp directories outside PACKAGE_ROOT.",
+        "Package-directory write guard in resolve_output_dir and keyless --live guard in main exiting with status 2 prior to any file write or socket creation.",
+        "Deterministic OfflineStubClient substring check (\"gap=\" in prompt) and exact_oracle host bypass matching 3, 6, 3, and 6 of the 6 BENCHMARK_INSTANCES (exit codes 1, 0, 1, 0)."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/publication_review_2026_10_02.md",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/review_validation_2026_10_02.json",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/retraction_benchmark_runner.py",
+        "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/tests/test_008_mssn_tower_retraction.py"
+      ],
+      "limits": "Offline mode executes local prompt formatting, \"gap=\" substring matching, and BFS host certificates; no language model is measured and no live OpenRouter request is issued.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P008-019"
+    },
+    {
+      "id": "AUDIT-P009-003",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The semiotic-audit fixture compares two supplied strings.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Standard-library-only imports (dataclasses.dataclass and fractions.Fraction) in test_009_adversarial_reality_gate.py with zero code parsers or semantic evaluators.",
+        "Single inequality comparison self.signified != self.interpretant in SemioticAudit.is_drift_detected leaving self.signifier unread.",
+        "Open obligation: No semantic equivalence decision or downstream code inspection is performed."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_009_adversarial_reality_gate.py"
+      ],
+      "limits": "Compares raw Python strings signified and interpretant only; ignores signifier, parses no code, and treats semantically equivalent distinct strings as drifted.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P009-003"
+    },
+    {
+      "id": "AUDIT-P009-004",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The stagnation fixture checks a supplied count, gauge flag, and score.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Frozen three-field dataclass StagnationRecord storing caller-supplied consecutive_stagnant_rounds, current_defect_norm, and locked_gauge.",
+        "Three-way conjunction consecutive_stagnant_rounds >= threshold_rounds and locked_gauge and current_defect_norm > Fraction(0, 1) in should_trigger_review with default threshold_rounds = 3."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_009_adversarial_reality_gate.py"
+      ],
+      "limits": "Evaluates caller-supplied summary fields only; computes no graph defect norm, implements no search strategy or escape-rate measurement, and grants no license to modify protected state.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P009-004"
+    },
+    {
+      "id": "AUDIT-P009-005",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The toy verdict function branches on supplied scores and flags.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Four ordered conditional branches in evaluate_terminal_reality_gate over supplied phi1, gamma2, semiotic_clean, and unbudgeted_debt arguments.",
+        "Zero arithmetic or solver calls inside evaluate_terminal_reality_gate, echoing phi1 and gamma2 unchanged into TerminalGateVerdict.",
+        "Open obligation: Flag provenance and score computation are unverified by this helper."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_009_adversarial_reality_gate.py"
+      ],
+      "limits": "Pure 36-cell routing helper on supplied Fraction and bool inputs; computes no scores, checks no receipt or flag provenance, and returns PASS_TO_MASTER when phi1 == 0 and gamma2 == 0 with semiotic_clean == True even if unbudgeted_debt == True.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P009-005"
+    },
+    {
+      "id": "AUDIT-P009-006",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Proposal constructors differ from the designated terminal constructor under the Lean definitions.",
+      "status": "fresh_kernel_build_and_census_verified",
+      "dependencies": [
+        "Five-constructor inductive MSSN.Level15.StateKind with isProposal k := (k = .proposal or k = .candidateTrace) and isTerminalAuthority k := (k = .terminalAuthority) in Level15AuthorityCalculus.lean.",
+        "Clean out-of-tree lake build and lake env lean Census.lean / FullCensus.lean replay under leanprover/lean4:v4.35.0 confirming MSSN.Level15.theorem1_proposal_non_authority compiles with zero axiom dependencies.",
+        "Open obligation: Runtime correspondence between abstract StateKind constructors and Python or Rust gate transitions requires separate implementation evidence."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/Level15AuthorityCalculus.lean",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/lakefile.lean",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/lean-toolchain",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/Census.lean",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/FullCensus.lean",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/axiom_report.txt",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/full_axiom_report.txt",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/SLevel.lean",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/RuntimeLimits.lean",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/TriggerNotLicense.lean",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/tools/replay_lean_axiom_census.py",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/v01_review_2026_10_02.json",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/adversary_gate_falsifiers.json"
+      ],
+      "limits": "Establishes static constructor disjointness on the standalone five-tag Lean inductive StateKind (where quotientWitness and immutableRefusal satisfy neither predicate); provides zero FFI or runtime state-preservation enforcement.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P009-006"
+    },
+    {
+      "id": "AUDIT-P009-007",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "A state compared with itself has equal hashes, so the unequal-hash independence predicate fails",
+      "status": "lean_kernel_and_source_verified",
+      "dependencies": [
+        "MSSN.Level15.AgentState structure with paramHash : Nat and isIndependentVerifier gen ver := gen.paramHash != ver.paramHash in Level15AuthorityCalculus.lean.",
+        "Kernel reflexivity term exact h rfl in theorem2_self_critique_non_verification with zero axiom dependencies.",
+        "Clean out-of-tree lake build and replay_lean_axiom_census.py --replay under leanprover/lean4:v4.35.0."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/completion_supplement.md",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/Level15AuthorityCalculus.lean",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/lakefile.lean",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/lean-toolchain",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/Census.lean",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/axiom_report.txt",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/tools/replay_lean_axiom_census.py"
+      ],
+      "limits": "Formalizes inequality of a single declared Nat field (paramHash); establishes neither statistical independence, uncorrelated failure modes, nor runtime state isolation.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P009-007"
+    },
+    {
+      "id": "AUDIT-P009-009",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The pinned TerminalizerPolicy.lean header states its declarations were not typechecked.",
+      "status": "bounded_provenance_and_exclusion_verified",
+      "dependencies": [
+        "Complete exclusion of TerminalizerPolicy.lean from Paper 009 lean4/lakefile.lean (4 roots) and top-level lean4/lakefile.lean (9 roots).",
+        "Separate secondary tracked attestations: paper.md:108 and paper_claim_ledger.md:20 record that external 52cb5457f6c485ba548cfd292f6012a941ed22cf:lean4/TerminalizerPolicy.lean imports Mathlib (paper.md:108) and carries a header warning that its declarations were not typechecked; docs/completion_supplement.md (## Formal-source boundaries, lines 45-65) records its exclusion from the Paper 009 Lake package and non-typechecked warning (lines 53-56) alongside the retained Lean 4.34.0 build note (line 58); education/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md (line 14 pin c419cc6beb note, lines 36 and 47) states that TerminalizerPolicy.lean's header says it does not elaborate; and lean4/README.md:30 states only that FiniteConsequences, LpWeakDuality, and TerminalizerPolicy have no grade because their builds did not complete.",
+        "Release review verification in v01_review_2026_10_02.json (source_identity_inspection and protected_artifacts_unchanged) and release_validation_2026_10_01.json confirming Paper 009 restricts bundled Lean compilation to its four core-Lean modules and cites no theorem from TerminalizerPolicy.lean."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/completion_supplement.md",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/v01_review_2026_10_02.json",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/release_validation_2026_10_01.json",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/lakefile.lean",
+        "lean4/README.md",
+        "lean4/lakefile.lean",
+        "education/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md"
+      ],
+      "limits": "Narrows ATL-P009-009 (partial, relation: narrows): external commit 52cb5457f6c485ba548cfd292f6012a941ed22cf and raw lean4/TerminalizerPolicy.lean reside outside the split proposal_fidelity_protocol_pfp checkout and were not directly read; Lake target exclusion is verified directly while header status rests on secondary tracked records.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P009-009"
+    },
+    {
+      "id": "AUDIT-P009-013",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The stored replay receipt refuses all 10 recorded proposals, including the 4 obstruction claims.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Complementary PAPER009-EXACT-HISTORICAL-RECOUNT original-bout confusion matrix (6 TP, 0 FN, 2 FP, 2 TN).",
+        "Exact LF-normalized SHA-256 and Git blob SHA-1 bindings of demo2_r7_adversarial_debate_receipt.json (41256258...) and demo2_r7_adversarial_debate_1790210039.jsonl (329e2922...) matching provenance.json and source_trace_sha256.",
+        "Per-record recount across all 10 trials confirming current_replay_admitted == false (4 Refused_UnverifiedObstruction on all 4 OPEN_SIGN_OBSTRUCTION claims, 5 Refused_UnverifiedInvolution_InvalidWitness, 1 Refused_AM_FSP_2_NullXi)."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/README.md",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/provenance.json",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/demo2_r7_adversarial_debate_1790210039.jsonl",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/demo2_r7_adversarial_debate_receipt.json",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/review_counts.py",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_recorded_bout_counts.py",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_review_counts.py"
+      ],
+      "limits": "The replay receipt omits any commit hash or version pin for the replay checker, and no live model call or fresh native physics checker replay is run.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P009-013"
+    },
+    {
+      "id": "AUDIT-P009-014",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "At the audited commit the gate authorizes a triangle with cochain (1, 1, 1), cycle sum 3, because the lifted carrier zeros the cochain.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Complementary PAPER009-EXACT-TRIANGLE-INVARIANT coboundary invariance on the oriented 3-cycle (cycle_sum((1, 1, 1) - df) == 3, quotient l1 minimum 3, versus 0 on the zero cochain).",
+        "Retained falsifier F1 record in adversary_gate_falsifiers.json and F1 call sequence in replay_adversary_gate_falsifiers.py at commit 30609de2c3928238715375a9bac608256fa381d8 recording act2_before [3.0, 0.0], act4_fired true, cochain_after_act4 [0.0], act2_after [0.0, 0.0], and observed AUTHORIZED.",
+        "Direct execution of current ops/adversary modules confirming execute_act4_gauge_break transports (1, 1, 1) unchanged across bridge-node lifts, bout_service._lift_replaced_cochain refuses lowering lifts with ADVERSARY_LIFT_LOWERED_OBSTRUCTION, NullCochainScoringAdapter returns NOT_MEASURED, and execute_act7_authorization_gate refuses authorization."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/provenance.json",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/adversary_gate_falsifiers.json",
+        "atlas/archive/pfp/tools/replay_adversary_gate_falsifiers.py",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/triangle_cycle_sum.py",
+        "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_triangle_cycle_sum.py",
+        "ops/adversary/use_cases/act_helpers.py",
+        "ops/adversary/use_cases/bout_service.py",
+        "ops/adversary/domain/ports.py",
+        "ops/adversary/domain/evidence.py"
+      ],
+      "limits": "Historical commit 30609de2c3928238715375a9bac608256fa381d8 resides outside the split proposal_fidelity_protocol_pfp Git object store; the 30609de2 AUTHORIZED trace is verified from retained adversary_gate_falsifiers.json and replay_adversary_gate_falsifiers.py while exact cohomology and remediated gate rejections execute directly in-repo.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P009-014"
+    },
+    {
       "id": "WIKI-C01",
       "kind": "mathematical_or_implementation_claim",
       "statement": "Typed syntax, lossless representation, query preservation, operation preservation and permission to act are different obligations. A decoder round trip establishes injectivity on its stated domain; preserving a query F across a lift u additionally requires F_prime composed with u equals F. Neither constructor names nor a receipt supply that equation.",
@@ -42024,6 +42398,288 @@
       "id": "ASSUMPTION-183d0995b60e961f",
       "kind": "explicit_assumption_or_obligation",
       "statement": "Unbounded Python int arithmetic; fixed-width w-bit unsigned wire formats require the separate upper bound b(N) + 7 < 2^w.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-d1daacd418646db7",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Closed 3-tuple GRADES = ('NONE', 'SYNTAX', 'COMPUTED') and 6-stage BINDINGS ({0, 1, 23, 35, 36, 48}) yielding 6 COMPUTED, 20 SYNTAX, and 75 NONE across stages 0..100 in pfp/domain/tower/stage_status.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-3037a6ca78b70c27",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Deterministic positive, stage-negative, and empty WireError checks in pfp/domain/tower/checks.py (validate_stage, glue_finite_sections, check_markov, check_bayes, check_spin_z) and pinned target-checker negative probes in pfp/infrastructure/tower_research/reach/targets.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-92f69a591df25130",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Open obligation: Historical research/mssn_sn_tower/code/python/stage_status.py at 52cb5457f6c485ba548cfd292f6012a941ed22cf is outside this checkout, and current pfp/domain/tower/stage_status.py checks level in COMPUTED_LEVELS and level <= 21 without calling CheckerBinding.run (corroborating PFPDOMAIN-F055).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-184f4ede4b17b00f",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Pre-dispatch path validation _safe_path refusing traversal, absolute/drive paths, backslashes, NUL bytes, and Windows reserved device stems with EVIDENCE_PATH_INVALID.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-5101a58008b51fd5",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Mutually exclusive 'v1' (40-hex revision + git cat-file blob -> HISTORICAL_BYTES_UNAVAILABLE on miss) and 'v2' (revision is None + importlib.resources v2/ read -> ACTIVE_RESOURCE_UNAVAILABLE on miss) branches in pfp/infrastructure/tower_evidence/level_engine/resolver.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-045a50b635e6cb3f",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Open obligation: SHA-256 content digest verification (EVIDENCE_DIGEST_MISMATCH) executes when sha256 is supplied and is bypassed when sha256 is None.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-b57e9ee90480b12d",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Retained Paper 008 Section 8 audit, completion_supplement.md withdrawal, c005_working_report.md query table (10 live queries in the 150-test suite), and test_c005_bakeoff.py counterexample specifications.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-67c4139e8a63cbd8",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Exact combinatorial partition over N = 150 cases: C(150 + 2, 2) = 11,476 non-negative integer triples (n_pass, n_missing, n_exc) summing to 150 yield PASSED + VERIFIED = 150 under permissive VERIFIED fallback, versus 1 triple (150, 0, 0) under fail-closed PASSED / NOT_RUN / FAILED accounting.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-0dc7be59b8c7b69a",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Active custody guards in run_adversary_bakeoff.py issuing NOT_ADJUDICATED receipts, refusing run-folder overwrites, and writing failure_receipt.json on write exceptions.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-8bcd82556bd7281b",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Machine-readable 50-entry inventory docs/historical_census_inventory.json and companion docs/challenge_census.md pinned to commit a623568eb0f853b968bc419bf06dfc6af256ab02.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-ce0242c1fc7651ae",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Exact disjoint union |A| + |B| + |C| = 40 + 2 + 8 = 50 over {C001..C050} with len(reference_solver_files) >= 1 and len(checker_files) == 2 on all 40 Category A entries, plus C051 recorded under f_program_synthesis.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-638da7d8a484e445",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Open obligation: Category A is a file-presence predicate only; C047's sole test-named file test_cases_runner.py has zero assert or nonzero-exit statements, C048-C051 have zero test-named files, C015-C020 and C045-C051 lack retained scoring receipts, and C014's receipt is invalidated pending rescore.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-da19dab8711ee520",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Historical census inventory at commit a623568eb0f853b968bc419bf06dfc6af256ab02 recording 40, 40, and 45 mutation JSON files across C011, C021, and C031 alongside the September 28 author command table (41, 5, 41, 47, and 9 passed items).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-1a120b8b39b633b3",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Active challenge test execution under workflows/tasks/certified_challenges/ rejecting 40/40 C011 mutations (plus 5 dual-checker tests), 40/40 original and 11/11 added C021 mutations (51 total across 44 active cases), and 45/45 C031 mutations (plus 5 dual-checker and 9 reference-solver tests).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-55649c5883581f3d",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Dual-evaluator disagreement and upstream case-mutation negative controls in c021_q40_r/judge_packet/checkers/dual_evaluator.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-21d1c27b040683ff",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Zero scoring receipts, JSONL traces, or measurement reports for C001 in historical_census_inventory.json and dag/file_inventory.json, with UNSET tokenizer and prompt digests in pipeline.json and next_test_needed Sweep notice in empirical_neural_mcnemar_evaluation.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-49ea7373fe3b0779",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Explicit synthetic declarations (IS_SYNTHETIC_FIXTURE = True, IS_EMPIRICAL_MEASUREMENT = False) and stdlib/local-solver-only AST imports in mcnemar_arms_evaluation.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-b1929a9561a7b379",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Modulo-5 baseline failure injection (case[\"seed\"] % 5 in (0, 1)) over 200 generated cases producing (a, b, c, d) = (120, 80, 0, 0), chi2 = 80, and exact two-sided binomial p = 1/2^79, collapsing to (b, c) = (0, 0) when removed.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-f91f281dd3e352cc",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Byte, SHA-256, and Git blob SHA-1 custody match across all eight K4 trace files in docs/source_archive/k4_traces/ against source_index.json (revision 52cb5457f6c485ba548cfd292f6012a941ed22cf).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-cd5173fe105eb167",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Prompt inspection confirming worked arithmetic (-3, -3, -5) in scratchpad and explicit chord targets plus JSON CUT repair in hinted, absent from baseline and partially_masked.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-c4e4206081a97e06",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Exact spanning-tree weighted L1 Phi1 replay matching 100% of embedded Turn 1..T-1 host prefix logs and yielding terminal Phi1 = 8, 6, 0, 0 (Qwen) and 5, 7, 0, 0 (Llama) with tree-preserving coboundary repair proposed exclusively in scratchpad and hinted.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-ba66bbb0670b7b2a",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Runtime socket and file-open hook replay across baseline, hinted, scratchpad, and exact_oracle confirming zero socket calls, zero credential file opens, and output writes restricted to external or mkdtemp directories outside PACKAGE_ROOT.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-f64f863f0ecf734c",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Package-directory write guard in resolve_output_dir and keyless --live guard in main exiting with status 2 prior to any file write or socket creation.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-ec4a782e06f710b3",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Deterministic OfflineStubClient substring check (\"gap=\" in prompt) and exact_oracle host bypass matching 3, 6, 3, and 6 of the 6 BENCHMARK_INSTANCES (exit codes 1, 0, 1, 0).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-4fdbb5aa6afde776",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Standard-library-only imports (dataclasses.dataclass and fractions.Fraction) in test_009_adversarial_reality_gate.py with zero code parsers or semantic evaluators.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-d68cc2b19107dbfa",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Single inequality comparison self.signified != self.interpretant in SemioticAudit.is_drift_detected leaving self.signifier unread.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-3b2c41ffc4a65e70",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Open obligation: No semantic equivalence decision or downstream code inspection is performed.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-fc2f9b8fa5b2d00d",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Frozen three-field dataclass StagnationRecord storing caller-supplied consecutive_stagnant_rounds, current_defect_norm, and locked_gauge.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-5753967f57e86f12",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Three-way conjunction consecutive_stagnant_rounds >= threshold_rounds and locked_gauge and current_defect_norm > Fraction(0, 1) in should_trigger_review with default threshold_rounds = 3.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-e6645b76f0977046",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Four ordered conditional branches in evaluate_terminal_reality_gate over supplied phi1, gamma2, semiotic_clean, and unbudgeted_debt arguments.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-000971b02bfe1327",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Zero arithmetic or solver calls inside evaluate_terminal_reality_gate, echoing phi1 and gamma2 unchanged into TerminalGateVerdict.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-ee7119278757d851",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Open obligation: Flag provenance and score computation are unverified by this helper.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-8fe772cf02d0a29f",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Five-constructor inductive MSSN.Level15.StateKind with isProposal k := (k = .proposal or k = .candidateTrace) and isTerminalAuthority k := (k = .terminalAuthority) in Level15AuthorityCalculus.lean.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-a03513b20cda6910",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Clean out-of-tree lake build and lake env lean Census.lean / FullCensus.lean replay under leanprover/lean4:v4.35.0 confirming MSSN.Level15.theorem1_proposal_non_authority compiles with zero axiom dependencies.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-ba6400d55e92fe59",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Open obligation: Runtime correspondence between abstract StateKind constructors and Python or Rust gate transitions requires separate implementation evidence.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-3e4e8e0ac5bf627a",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "MSSN.Level15.AgentState structure with paramHash : Nat and isIndependentVerifier gen ver := gen.paramHash != ver.paramHash in Level15AuthorityCalculus.lean.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-a2ce30d30b67acd7",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Kernel reflexivity term exact h rfl in theorem2_self_critique_non_verification with zero axiom dependencies.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-1a74b9a0e238ff7a",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Clean out-of-tree lake build and replay_lean_axiom_census.py --replay under leanprover/lean4:v4.35.0.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-ac0ef7e7425a6ca4",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Complete exclusion of TerminalizerPolicy.lean from Paper 009 lean4/lakefile.lean (4 roots) and top-level lean4/lakefile.lean (9 roots).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-0441af63dd98adea",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Separate secondary tracked attestations: paper.md:108 and paper_claim_ledger.md:20 record that external 52cb5457f6c485ba548cfd292f6012a941ed22cf:lean4/TerminalizerPolicy.lean imports Mathlib (paper.md:108) and carries a header warning that its declarations were not typechecked; docs/completion_supplement.md (## Formal-source boundaries, lines 45-65) records its exclusion from the Paper 009 Lake package and non-typechecked warning (lines 53-56) alongside the retained Lean 4.34.0 build note (line 58); education/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md (line 14 pin c419cc6beb note, lines 36 and 47) states that TerminalizerPolicy.lean's header says it does not elaborate; and lean4/README.md:30 states only that FiniteConsequences, LpWeakDuality, and TerminalizerPolicy have no grade because their builds did not complete.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-b3f76def9af16f35",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Release review verification in v01_review_2026_10_02.json (source_identity_inspection and protected_artifacts_unchanged) and release_validation_2026_10_01.json confirming Paper 009 restricts bundled Lean compilation to its four core-Lean modules and cites no theorem from TerminalizerPolicy.lean.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-e355d5709c4fec58",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Complementary PAPER009-EXACT-HISTORICAL-RECOUNT original-bout confusion matrix (6 TP, 0 FN, 2 FP, 2 TN).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-01f79e1562919c01",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Exact LF-normalized SHA-256 and Git blob SHA-1 bindings of demo2_r7_adversarial_debate_receipt.json (41256258...) and demo2_r7_adversarial_debate_1790210039.jsonl (329e2922...) matching provenance.json and source_trace_sha256.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-358f61dfb8ac4389",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Per-record recount across all 10 trials confirming current_replay_admitted == false (4 Refused_UnverifiedObstruction on all 4 OPEN_SIGN_OBSTRUCTION claims, 5 Refused_UnverifiedInvolution_InvalidWitness, 1 Refused_AM_FSP_2_NullXi).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-13e3f0eba87e7911",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Complementary PAPER009-EXACT-TRIANGLE-INVARIANT coboundary invariance on the oriented 3-cycle (cycle_sum((1, 1, 1) - df) == 3, quotient l1 minimum 3, versus 0 on the zero cochain).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-41e45bcfb0b19312",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Retained falsifier F1 record in adversary_gate_falsifiers.json and F1 call sequence in replay_adversary_gate_falsifiers.py at commit 30609de2c3928238715375a9bac608256fa381d8 recording act2_before [3.0, 0.0], act4_fired true, cochain_after_act4 [0.0], act2_after [0.0, 0.0], and observed AUTHORIZED.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-543af1439ec4b257",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Direct execution of current ops/adversary modules confirming execute_act4_gauge_break transports (1, 1, 1) unchanged across bridge-node lifts, bout_service._lift_replaced_cochain refuses lowering lifts with ADVERSARY_LIFT_LOWERED_OBSTRUCTION, NullCochainScoringAdapter returns NOT_MEASURED, and execute_act7_authorization_gate refuses authorization.",
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
@@ -55325,6 +55981,475 @@
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
+      "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/source_index.json",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/source_index.json",
+      "sha256": "cbde25538bd8096986ca442696a7a07cc71f2dcd32c524d05939de48cd69444b",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:pfp/domain/tower/stage_status.py",
+      "kind": "pinned_source_file",
+      "path": "pfp/domain/tower/stage_status.py",
+      "sha256": "96be7130f765bde46e6cbc4a381658eb1ccd307981969ca5dbc6cbec05e47fe9",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:pfp/infrastructure/tower_research/reach/targets.py",
+      "kind": "pinned_source_file",
+      "path": "pfp/infrastructure/tower_research/reach/targets.py",
+      "sha256": "26554b7a54207bb3d379fe1195ca02f7b49b4d78fb442c720c90a7b02f2fedbe",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:pfp/infrastructure/tower_evidence/reach/INJECTIONS.md",
+      "kind": "pinned_source_file",
+      "path": "pfp/infrastructure/tower_evidence/reach/INJECTIONS.md",
+      "sha256": "b068bfb2cfabd4b71dd79f9c24db307107100ff86c99e9e3e935ba5516d3d4d7",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:pfp/infrastructure/tower_evidence/level_engine/resolver.py",
+      "kind": "pinned_source_file",
+      "path": "pfp/infrastructure/tower_evidence/level_engine/resolver.py",
+      "sha256": "289c7c68eceb09a5a501335486391e68bdf9ccb8585d92dceb5a7479aba6dcb1",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:pfp/tests/level_engine/test_context.py",
+      "kind": "pinned_source_file",
+      "path": "pfp/tests/level_engine/test_context.py",
+      "sha256": "50f33f6a59ecfb8cb47749adc81f309b8f9204cef1718c54c50453095098ce61",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_change_log.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_change_log.md",
+      "sha256": "799209f9bf41aa979cef56aa142691f1b31ad00da3b7253b4639cf3662a12253",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/completion_supplement.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/completion_supplement.md",
+      "sha256": "d0753d545c5f5e6868dcef465a0555980925b9d7fdd0b1805fde8eaf969a99cf",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/wf12_mechanism_control_arms/pilots/c005_hosted_decode_controls/run_adversary_bakeoff.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/wf12_mechanism_control_arms/pilots/c005_hosted_decode_controls/run_adversary_bakeoff.py",
+      "sha256": "e3c5b5f8a5c30953ffdf41268eb0eda20443315a8223a2997d1cf4c34e797bce",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/wf12_mechanism_control_arms/pilots/c005_hosted_decode_controls/test_c005_bakeoff.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/wf12_mechanism_control_arms/pilots/c005_hosted_decode_controls/test_c005_bakeoff.py",
+      "sha256": "f59c7048a1e0a38d48f06fe73da44a99583f1ebcc1018bb7bf2b25140ad95322",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/challenge_census.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/challenge_census.md",
+      "sha256": "09f29bde09d4ef7b8577800dc2e1b27681d4c669b055da464daf7de37c3c05ed",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/historical_census_inventory.json",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/historical_census_inventory.json",
+      "sha256": "6e82d27979ca787c2c7b2b93d966aeb5e4d87552f0c08fb012810e0999d121ac",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/tasks/certified_challenges/c047_sequence_law_discovery/judge_packet/test_cases_runner.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/tasks/certified_challenges/c047_sequence_law_discovery/judge_packet/test_cases_runner.py",
+      "sha256": "9af222aeca93296ea41d0b4a4175570c7e234582a0b35e4cd211a9cb96ad04d2",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/tasks/certified_challenges/c011_cycle_rank_ladder_coboundary_repair/judge_packet/mutation_suite/test_c011_checker_mutations.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/tasks/certified_challenges/c011_cycle_rank_ladder_coboundary_repair/judge_packet/mutation_suite/test_c011_checker_mutations.py",
+      "sha256": "d3813dccd6783c675f06c865ddde96998ab323a966cccde65d45b705bbad4b4a",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/tasks/certified_challenges/c011_cycle_rank_ladder_coboundary_repair/tests/test_dual_checkers.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/tasks/certified_challenges/c011_cycle_rank_ladder_coboundary_repair/tests/test_dual_checkers.py",
+      "sha256": "d23d4ff29d1db33270ae05a9192e3971848b6ae6117264c3eb948562d01400b7",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/tasks/certified_challenges/c021_q40_r/judge_packet/checkers/dual_evaluator.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/tasks/certified_challenges/c021_q40_r/judge_packet/checkers/dual_evaluator.py",
+      "sha256": "6320dd28bd602fa06f1439844864c7ab412042b2b8470a9b1ab811a528d945d3",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/tasks/certified_challenges/c021_q40_r/judge_packet/mutation_suite/test_c021_checker_mutations.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/tasks/certified_challenges/c021_q40_r/judge_packet/mutation_suite/test_c021_checker_mutations.py",
+      "sha256": "7cbaaa51af6b07ab02a9bb44aad186b5c557cffb07f144c21029ae4a326a6a17",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/tasks/certified_challenges/c021_q40_r/tests/test_dual_checkers.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/tasks/certified_challenges/c021_q40_r/tests/test_dual_checkers.py",
+      "sha256": "338fce86208065ad3fcfb9f971109f3be1424ee8524c111506bfb62cdb1043e1",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/tasks/certified_challenges/c031_anomaly_free_u1_charges/judge_packet/mutation_suite/test_c031_checker_mutations.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/tasks/certified_challenges/c031_anomaly_free_u1_charges/judge_packet/mutation_suite/test_c031_checker_mutations.py",
+      "sha256": "6618ec51240b282fccbc7e9100176e62b578e84e8967bc75394fa3d6fc403cab",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/tasks/certified_challenges/c031_anomaly_free_u1_charges/tests/test_dual_checkers.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/tasks/certified_challenges/c031_anomaly_free_u1_charges/tests/test_dual_checkers.py",
+      "sha256": "d43b97d9ea272a39e47fa83dce3ad7763d00073bb3ca1cb946c28345e0833a63",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/tasks/certified_challenges/c031_anomaly_free_u1_charges/tests/test_reference_solver.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/tasks/certified_challenges/c031_anomaly_free_u1_charges/tests/test_reference_solver.py",
+      "sha256": "dd59e4be4e1f2c9c7da6f5d40dd451f3858dc49ba52c818e987988ec26ba03c3",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/pipeline.json",
+      "kind": "pinned_source_file",
+      "path": "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/pipeline.json",
+      "sha256": "c1a38b800c8a4eda862c0d56278d0ba88c9627328505a57ed439217e496fc916",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/case_generator.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/case_generator.py",
+      "sha256": "4f838c47d46c7dd9daff0d4ac61afb14f1a07a98591f3af32f06b54c93b0d1cc",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/solve.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/solve.py",
+      "sha256": "c91b6b28e4dd7d7e1e7b3a9623444887f43019c9d2a2c3ee7f296cf2d3e463a1",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/solver.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/solver.py",
+      "sha256": "ba8c76de61b77683d65ff100df81cdba5b78c8da7eb71c4f0d71b27edaf9041d",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/mcnemar_arms_evaluation.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/mcnemar_arms_evaluation.py",
+      "sha256": "d0b02c8e322ff8d1c83317d74e307663d0c995ed42f3ef1d324de01ec7fc7288",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/empirical_neural_mcnemar_evaluation.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/empirical_neural_mcnemar_evaluation.py",
+      "sha256": "54834830383c8c19b24c8ce44e96c6f3eebbb0b51c2a2c575b4256f81a3ad20a",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/test_mcnemar_arms_runner.py",
+      "kind": "pinned_source_file",
+      "path": "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/test_mcnemar_arms_runner.py",
+      "sha256": "f199c04d49727b0b725ebe9b543ecf22144f5c626b372bb57991d754d7f902ef",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_benchmark_report.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_benchmark_report.md",
+      "sha256": "83a3d2ec8fb65151ccf510fcb2cba663e5cc6ff672b742b99b39cef68e23be4d",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_qwen_qwen-2_5-7b-instruct_baseline_1790297180354.jsonl",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_qwen_qwen-2_5-7b-instruct_baseline_1790297180354.jsonl",
+      "sha256": "5f0d9fcd21ba0ff53034b914779042ff3f01b3cc44846fa484c4441c0306662a",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_qwen_qwen-2_5-7b-instruct_partially_masked_1790308412.jsonl",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_qwen_qwen-2_5-7b-instruct_partially_masked_1790308412.jsonl",
+      "sha256": "fda842283b4c7dd255faf980be0ba94b2817d310a5a289e8f8ade2fc52f05310",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_qwen_qwen-2_5-7b-instruct_scratchpad_1790310019.jsonl",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_qwen_qwen-2_5-7b-instruct_scratchpad_1790310019.jsonl",
+      "sha256": "26bba61c3c9fe8e9bdb0167c84135115842a7c8a4e4102fcd8a7c5edfbbf22f3",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_qwen_qwen-2_5-7b-instruct_hinted_1790297190434.jsonl",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_qwen_qwen-2_5-7b-instruct_hinted_1790297190434.jsonl",
+      "sha256": "5701d90eb5f0ac9c59e619b25e15e7a81054396b6664895ac75f7bef69c04282",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_meta-llama_llama-3_1-8b-instruct_baseline_1790297201231.jsonl",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_meta-llama_llama-3_1-8b-instruct_baseline_1790297201231.jsonl",
+      "sha256": "f8b4a22fb91f507336b9d514de2d9d912ff65ceabc7297b16056cdb824109e56",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_meta-llama_llama-3_1-8b-instruct_partially_masked_1790308428.jsonl",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_meta-llama_llama-3_1-8b-instruct_partially_masked_1790308428.jsonl",
+      "sha256": "9c62957c5d8d83aa52158d33983c179d83371c9d50f0aeaad1a68fc1d835b207",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_meta-llama_llama-3_1-8b-instruct_scratchpad_1790310061.jsonl",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_meta-llama_llama-3_1-8b-instruct_scratchpad_1790310061.jsonl",
+      "sha256": "648934f0e6aa01ae9bd039c871417a82dca98c75bcd72eb7b7fd98e3301f6211",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_meta-llama_llama-3_1-8b-instruct_hinted_1790297215552.jsonl",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_meta-llama_llama-3_1-8b-instruct_hinted_1790297215552.jsonl",
+      "sha256": "eea768f66aa395c3796a433138e5541eaf9b59f34afef862afaf2015af875e8f",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/publication_review_2026_10_02.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/publication_review_2026_10_02.md",
+      "sha256": "00a720e0063b13f66795a966ea04583f0bcc21c8ea99943eddb85c71d803a328",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/review_validation_2026_10_02.json",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/review_validation_2026_10_02.json",
+      "sha256": "eaa4624f14ca20cc0887767fe435770e6cda155559220f7ccf8717f71c887ea5",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md",
+      "sha256": "3a5b89eedc0f59cf75bec37393a890d780486b34b54f0e911cd65eacd7682415",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
+      "sha256": "3317bbd1b6a6070dcbec226a4ee30d0e62f6d06dd46127db506f8c0d4b9cf157",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_009_adversarial_reality_gate.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_009_adversarial_reality_gate.py",
+      "sha256": "05d750474ee03c0e62017ddc85b67e7731675a6863544e440cfe0ef9d0e7797a",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/Level15AuthorityCalculus.lean",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/Level15AuthorityCalculus.lean",
+      "sha256": "247bc714172a23cd2610812ebf547a0b5ee7bfee7e93cd1268ef08fde26a4da0",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/lakefile.lean",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/lakefile.lean",
+      "sha256": "fb1f377dd848bfd123d88d550fd254ac5047991779c343b19f2615c3f61729d2",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/lean-toolchain",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/lean-toolchain",
+      "sha256": "27e73059e3a4d568450f74e39c2f79676c4f8d41373fff15170690f124e3bacd",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/Census.lean",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/Census.lean",
+      "sha256": "bb3313c7a82b8f90a9b370da5b4d9799f847f9beabfbe1c9b9efdcd8eb897011",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/FullCensus.lean",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/FullCensus.lean",
+      "sha256": "7fb5bd239208e3496dd400d4affa5b0f1a81d48ba18db4faa89bfecbc8ffb69c",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/axiom_report.txt",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/axiom_report.txt",
+      "sha256": "4e89d11f00c1fad1bc6ad10eb93924309503bf5dfad38562cca0865740c0cd7d",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/full_axiom_report.txt",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/full_axiom_report.txt",
+      "sha256": "6e1cb6bdd3d76640eeaade7bb3906f278440f3902432f5ac20ef19cfe5577619",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/RuntimeLimits.lean",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/RuntimeLimits.lean",
+      "sha256": "4c20cb77ebde62d595b20b6e1a0314a70fa579111fa2de624d213aa3c1cfe833",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/tools/replay_lean_axiom_census.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/tools/replay_lean_axiom_census.py",
+      "sha256": "c73bf94a0b15a3c7017578f4983a9044f3896609325bda2a7e7ddfba6c44f00d",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/v01_review_2026_10_02.json",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/v01_review_2026_10_02.json",
+      "sha256": "acc8c7c20ccf2e9aeca54f7851ac1269276643370a9120ba871508fb3d03518d",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/adversary_gate_falsifiers.json",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/adversary_gate_falsifiers.json",
+      "sha256": "bc61e7e1d3efb435a5871410944301fd48d0087b8d459a406ceacdfa6bc967ba",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/completion_supplement.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/completion_supplement.md",
+      "sha256": "5fee93b50db8bb1f4dea0f51dd0cf19cd55b776c39efcc35c2ec43bc3f1f6bc9",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/release_validation_2026_10_01.json",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/release_validation_2026_10_01.json",
+      "sha256": "1e2e6cdb010e3515e9ddc3538366cbb25f3a48f475dc83b26da6eb78ee876a7c",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:lean4/README.md",
+      "kind": "pinned_source_file",
+      "path": "lean4/README.md",
+      "sha256": "9f31dc02945b114d8f54b7d1e4484e74cbc9bffa860bc96e0fb564a2b4c01060",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:lean4/lakefile.lean",
+      "kind": "pinned_source_file",
+      "path": "lean4/lakefile.lean",
+      "sha256": "807e37bb6876baf528dcc3cf51b53b9b1631e33b9b2f6012c2731de4ba784b1a",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:education/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md",
+      "kind": "pinned_source_file",
+      "path": "education/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md",
+      "sha256": "1e93e241003950e71f7e3310cc6ceda4237f342ec2cae1a07e9f52bc3a84ed16",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/README.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/README.md",
+      "sha256": "9960fbee344952eb7cc152c8e59ebcd89286a4826008f91e6a178282d13f9ebc",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/provenance.json",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/provenance.json",
+      "sha256": "fefaf2319d8302cb5d6ea3ec92a8f3c816c1414f473d6311d888a24d13bed5f6",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/demo2_r7_adversarial_debate_1790210039.jsonl",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/demo2_r7_adversarial_debate_1790210039.jsonl",
+      "sha256": "c050cf43b886597144e117547e5f48aa53d1425537b83ba1660a710798eeda61",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/demo2_r7_adversarial_debate_receipt.json",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/demo2_r7_adversarial_debate_receipt.json",
+      "sha256": "417626bc0d86811000430b5db36cd9251db3943226c9961f92a976e86d20cff4",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_recorded_bout_counts.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_recorded_bout_counts.py",
+      "sha256": "b36d7b950f76c1b5bdbbfb776b8d4953b2b8d808a8c52709f120921f7078031e",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/tools/replay_adversary_gate_falsifiers.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/tools/replay_adversary_gate_falsifiers.py",
+      "sha256": "4a86607118d7f532864acb7c8aa572b4562b93499e3aee9608b6c6f9c3b6d405",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:ops/adversary/use_cases/act_helpers.py",
+      "kind": "pinned_source_file",
+      "path": "ops/adversary/use_cases/act_helpers.py",
+      "sha256": "826cb0ca4729b6edecfd1c9d2addd08457982b61f856ae109b6c7ee86f208827",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:ops/adversary/domain/ports.py",
+      "kind": "pinned_source_file",
+      "path": "ops/adversary/domain/ports.py",
+      "sha256": "bce0aaac8c9e675da2cba96d3ba4ed3d7ec075c205568c000f55fa69d58a47c6",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:ops/adversary/domain/evidence.py",
+      "kind": "pinned_source_file",
+      "path": "ops/adversary/domain/evidence.py",
+      "sha256": "07c4c025451b06a936b47838e6893e260bd994e8d7927d285749e27557b09a23",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
       "id": "SOURCE:pfp/workflows/wf0001/workflow.py",
       "kind": "pinned_source_file",
       "path": "pfp/workflows/wf0001/workflow.py",
@@ -59495,11 +60620,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "Grading-basis statement; no derivation node.",
-        "proposed_derivation_file": "dag/derivations/atl_p008_005.md"
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P008-005"
+        ],
+        "relation": "narrows",
+        "note": "Derived in AUDIT-P008-005, with PFPDOMAIN-F055: GRADES=('NONE', 'SYNTAX', 'COMPUTED') excludes LEAN and GATED with 6/20/75 partition across stages 0..100 and pfp/domain/tower/checks.py plus reach/targets.py execute positive, stage-negative, and empty/flag-only fixture checks, whereas historical stage_status.py at 52cb5457 is outside this checkout and active pfp/domain/tower/stage_status.py dispatches statically via COMPUTED_LEVELS membership and level<=21 without invoking CheckerBinding.run."
       }
     },
     {
@@ -59609,11 +60735,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the evidence resolver's historical/active split.",
-        "proposed_derivation_file": "dag/derivations/atl_p008_009.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P008-009"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P008-009: LevelEngineEvidenceResolver.read_bytes resolves v1 strictly from 40-hex pinned Git blobs (HISTORICAL_BYTES_UNAVAILABLE on miss) and v2 strictly from v2 package resources (ACTIVE_RESOURCE_UNAVAILABLE on miss) with bidirectional non-fallback and working-tree isolation; SHA-256 comparison (EVIDENCE_DIGEST_MISMATCH) executes when optional sha256 is supplied."
       }
     },
     {
@@ -59637,11 +60764,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the runner's VERIFIED-on-missing-receipt behaviour.",
-        "proposed_derivation_file": "dag/derivations/atl_p008_010.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P008-010"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P008-010: Retained Paper 008 Section 8 audit, c005_working_report.md (10 live queries), and test_c005_bakeoff.py counterexample specifications document that unarchived run_150_tests_suite.py at 52cb5457 mapped missing-receipt and exception branches to VERIFIED; across N=150 cases, C(152,2)=11,476 non-failing outcome triples yield PASSED+VERIFIED=150 versus 1 triple (150,0,0) under fail-closed PASSED/NOT_RUN/FAILED accounting."
       }
     },
     {
@@ -59665,11 +60793,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the challenge census partition.",
-        "proposed_derivation_file": "dag/derivations/atl_p008_011.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P008-011"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P008-011: Retained historical_census_inventory.json and challenge_census.md at commit a623568eb0f853b968bc419bf06dfc6af256ab02 partition C001-C050 disjointly into 40 Category A solver/dual-checker packages (C011-C050), 2 Category B model-measurement entries (C001, C005), and 8 Category C specification blobs (C002-C004, C006-C010) (40+2+8=50), with C051 outside range under f_program_synthesis and explicit membership-only test/receipt caveats (C047 print-only AST, C048-C051 zero test files, C014 invalidated receipt, C015-C020 and C045-C051 no retained receipt)."
       }
     },
     {
@@ -59693,11 +60822,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the retained mutation-suite results.",
-        "proposed_derivation_file": "dag/derivations/atl_p008_012.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P008-012"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P008-012: Historical commit a623568eb0f853b968bc419bf06dfc6af256ab02 census and retained September 28 author runs record 40, 40, and 45 rejected mutation files across C011, C021, and C031 (41, 41, and 47 pytest items plus 5 C011 dual-checker and 9 C031 reference-solver tests), while active reruns reject 40, 51 (40 original + 11 added), and 45 mutations with untested failure modes remaining open."
       }
     },
     {
@@ -59779,11 +60909,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the absence of a C001 measurement.",
-        "proposed_derivation_file": "dag/derivations/atl_p008_015.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P008-015"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P008-015: C001 retains zero empirical scoring receipts or trace logs across historical_census_inventory.json and the active repository (pipeline.json digests UNSET; 200-case GPU sweep listed under next_test_needed), while mcnemar_arms_evaluation.py runs deterministically on 200 generated cases with 80 modulo-5 injected Arm A failures (chi2 = 80, p = 2^-79)."
       }
     },
     {
@@ -59807,11 +60938,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the K4 trace outcomes.",
-        "proposed_derivation_file": "dag/derivations/atl_p008_016.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P008-016"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P008-016: All eight archived K4 traces (n = 1 per cell) match source_index.json byte, SHA-256, and Git blob digests; exact weighted L1 Phi1 replay matches 100% of embedded prefix logs, confirming tree-preserving coboundary repair appears in assisted scratchpad and hinted runs while unassisted baseline and partially_masked runs end at Phi1 = 8, 6 (Qwen) and 5, 7 (Llama) with no stored post-move host field on the final raw row."
       }
     },
     {
@@ -59893,11 +61025,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the offline runner's isolation and stub match counts.",
-        "proposed_derivation_file": "dag/derivations/atl_p008_019.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P008-019"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P008-019: Hooked offline replay of retraction_benchmark_runner.py confirms zero socket calls, zero credential file reads, output writes restricted outside PACKAGE_ROOT (in-package paths refused with exit code 2), and 3, 6, 3, 6 of 6 verdict matches across baseline, hinted, scratchpad, and exact_oracle via OfflineStubClient \"gap=\" substring matching and host certificates without model measurement."
       }
     },
     {
@@ -60007,11 +61140,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node reviews the SemioticAudit fixture.",
-        "proposed_derivation_file": "dag/derivations/atl_p009_003.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P009-003"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P009-003: SemioticAudit.is_drift_detected compares self.signified != self.interpretant only, leaving self.signifier unread, parsing no source code, and making no semantic equivalence decision."
       }
     },
     {
@@ -60035,11 +61169,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node reviews the StagnationRecord fixture.",
-        "proposed_derivation_file": "dag/derivations/atl_p009_004.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P009-004"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P009-004: StagnationRecord.should_trigger_review evaluates consecutive_stagnant_rounds >= threshold_rounds and locked_gauge and current_defect_norm > Fraction(0, 1) over supplied fields without inspecting search history, computing defect norms, or licensing a gauge break."
       }
     },
     {
@@ -60063,11 +61198,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node reviews evaluate_terminal_reality_gate.",
-        "proposed_derivation_file": "dag/derivations/atl_p009_005.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P009-005"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P009-005: evaluate_terminal_reality_gate routes 36 sign/boolean cells over supplied (phi1, gamma2, semiotic_clean, unbudgeted_debt) into 33 REFUSE, 2 PASS_TO_MASTER (including unbudgeted_debt=True when phi1 == gamma2 == 0 and semiotic_clean=True), and 1 OPEN_RESIDUAL without computing scores or checking flag provenance."
       }
     },
     {
@@ -60091,11 +61227,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node reviews the Level15 proposal non-authority theorem.",
-        "proposed_derivation_file": "dag/derivations/atl_p009_006.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P009-006"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P009-006: Under Level15AuthorityCalculus.lean (built out-of-tree on Lean 4.35.0 with zero axioms), MSSN.Level15.StateKind constructor disjointness separates proposal constructors (.proposal, .candidateTrace) from .terminalAuthority, while runtime correspondence remains a separate implementation obligation."
       }
     },
     {
@@ -60119,11 +61256,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node reviews the self-critique non-verification theorem.",
-        "proposed_derivation_file": "dag/derivations/atl_p009_007.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P009-007"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P009-007: Source inspection of Level15AuthorityCalculus.lean and a fresh out-of-tree lake build under leanprover/lean4:v4.35.0 confirm that isIndependentVerifier compares gen.paramHash != ver.paramHash and theorem2_self_critique_non_verification refutes isIndependentVerifier gen gen via rfl with zero axioms, while distinct hashes carry no statistical-independence claim across models."
       }
     },
     {
@@ -60176,11 +61314,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node inspects the external TerminalizerPolicy header.",
-        "proposed_derivation_file": "dag/derivations/atl_p009_009.md"
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P009-009"
+        ],
+        "relation": "narrows",
+        "note": "Derived in AUDIT-P009-009: Confirmed exclusion of TerminalizerPolicy.lean from both Paper 009 and top-level lean4/ Lake targets (with lean4/README.md recording that TerminalizerPolicy has no grade because its build did not complete and completion_supplement.md recording package exclusion), and cross-checked tracked attestations in paper.md, paper_claim_ledger.md, and meta_03_symbol_game_proof_ledger.md regarding external 52cb5457f6c485ba548cfd292f6012a941ed22cf:lean4/TerminalizerPolicy.lean (raw external blob remains outside this split checkout)."
       }
     },
     {
@@ -60290,11 +61429,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node recounts the retained replay receipt refusing all ten proposals.",
-        "proposed_derivation_file": "dag/derivations/atl_p009_013.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P009-013"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P009-013: Verified LF Git-blob digests of demo2_r7_adversarial_debate_receipt.json (41256258...) and demo2_r7_adversarial_debate_1790210039.jsonl (329e2922...) against provenance.json and recounted all 10 replay trials in current_replay_statuses (5 Refused_UnverifiedInvolution_InvalidWitness and 1 Refused_AM_FSP_2_NullXi across the 6 sign-free claims plus 4 Refused_UnverifiedObstruction across the 4 obstruction claims, 10/10 with current_replay_admitted == false), noting that the later checker revision is unpinned and not freshly re-executed."
       }
     },
     {
@@ -60318,11 +61458,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No derivation node records this falsifier replay of the audited gate.",
-        "proposed_derivation_file": "dag/derivations/atl_p009_014.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P009-014"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P009-014: Verified exact rational cycle-sum invariance (cycle_sum(1, 1, 1) = 3 under all vertex potentials vs 0 after zero replacement) via triangle_cycle_sum.py, confirmed from retained adversary_gate_falsifiers.json and replay_adversary_gate_falsifiers.py that external commit 30609de2c3928238715375a9bac608256fa381d8 zeroed the lifted cochain ([3.0, 0.0] -> [0.0] -> [0.0, 0.0]) and emitted AUTHORIZED, and verified on current ops/adversary/ modules that Act IV preserves (1, 1, 1), refuses lowering lifts (ADVERSARY_LIFT_LOWERED_OBSTRUCTION), and blocks authorization (historical 30609de2 Git object remains external to this split checkout)."
       }
     },
     {
@@ -78273,6 +79414,241 @@
     {
       "from": "ASSUMPTION-183d0995b60e961f",
       "to": "AUDIT-P008-004",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-d1daacd418646db7",
+      "to": "AUDIT-P008-005",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-3037a6ca78b70c27",
+      "to": "AUDIT-P008-005",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-92f69a591df25130",
+      "to": "AUDIT-P008-005",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-184f4ede4b17b00f",
+      "to": "AUDIT-P008-009",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-5101a58008b51fd5",
+      "to": "AUDIT-P008-009",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-045a50b635e6cb3f",
+      "to": "AUDIT-P008-009",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-b57e9ee90480b12d",
+      "to": "AUDIT-P008-010",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-67c4139e8a63cbd8",
+      "to": "AUDIT-P008-010",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-0dc7be59b8c7b69a",
+      "to": "AUDIT-P008-010",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-8bcd82556bd7281b",
+      "to": "AUDIT-P008-011",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-ce0242c1fc7651ae",
+      "to": "AUDIT-P008-011",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-638da7d8a484e445",
+      "to": "AUDIT-P008-011",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-da19dab8711ee520",
+      "to": "AUDIT-P008-012",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-1a120b8b39b633b3",
+      "to": "AUDIT-P008-012",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-55649c5883581f3d",
+      "to": "AUDIT-P008-012",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-21d1c27b040683ff",
+      "to": "AUDIT-P008-015",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-49ea7373fe3b0779",
+      "to": "AUDIT-P008-015",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-b1929a9561a7b379",
+      "to": "AUDIT-P008-015",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-f91f281dd3e352cc",
+      "to": "AUDIT-P008-016",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-cd5173fe105eb167",
+      "to": "AUDIT-P008-016",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-c4e4206081a97e06",
+      "to": "AUDIT-P008-016",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-ba66bbb0670b7b2a",
+      "to": "AUDIT-P008-019",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-f64f863f0ecf734c",
+      "to": "AUDIT-P008-019",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-ec4a782e06f710b3",
+      "to": "AUDIT-P008-019",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-4fdbb5aa6afde776",
+      "to": "AUDIT-P009-003",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-d68cc2b19107dbfa",
+      "to": "AUDIT-P009-003",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-3b2c41ffc4a65e70",
+      "to": "AUDIT-P009-003",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-fc2f9b8fa5b2d00d",
+      "to": "AUDIT-P009-004",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-5753967f57e86f12",
+      "to": "AUDIT-P009-004",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-e6645b76f0977046",
+      "to": "AUDIT-P009-005",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-000971b02bfe1327",
+      "to": "AUDIT-P009-005",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-ee7119278757d851",
+      "to": "AUDIT-P009-005",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-8fe772cf02d0a29f",
+      "to": "AUDIT-P009-006",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-a03513b20cda6910",
+      "to": "AUDIT-P009-006",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-ba6400d55e92fe59",
+      "to": "AUDIT-P009-006",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-3e4e8e0ac5bf627a",
+      "to": "AUDIT-P009-007",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-a2ce30d30b67acd7",
+      "to": "AUDIT-P009-007",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-1a74b9a0e238ff7a",
+      "to": "AUDIT-P009-007",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-ac0ef7e7425a6ca4",
+      "to": "AUDIT-P009-009",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-0441af63dd98adea",
+      "to": "AUDIT-P009-009",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-b3f76def9af16f35",
+      "to": "AUDIT-P009-009",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-e355d5709c4fec58",
+      "to": "AUDIT-P009-013",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-01f79e1562919c01",
+      "to": "AUDIT-P009-013",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-358f61dfb8ac4389",
+      "to": "AUDIT-P009-013",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-13e3f0eba87e7911",
+      "to": "AUDIT-P009-014",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-41e45bcfb0b19312",
+      "to": "AUDIT-P009-014",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-543af1439ec4b257",
+      "to": "AUDIT-P009-014",
       "kind": "requires"
     },
     {
@@ -107212,6 +108588,792 @@
       "citation": "pfp/domain/tower/registry.py"
     },
     {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+      "to": "AUDIT-P008-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+      "to": "AUDIT-P008-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/_lev_examiner_theoretical_minimum_quiz/study_guide.md",
+      "to": "AUDIT-P008-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/_lev_examiner_theoretical_minimum_quiz/study_guide.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/source_index.json",
+      "to": "AUDIT-P008-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/source_index.json"
+    },
+    {
+      "from": "SOURCE:pfp/domain/tower/stage_status.py",
+      "to": "AUDIT-P008-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/domain/tower/stage_status.py"
+    },
+    {
+      "from": "SOURCE:pfp/domain/tower/checks.py",
+      "to": "AUDIT-P008-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/domain/tower/checks.py"
+    },
+    {
+      "from": "SOURCE:pfp/infrastructure/tower_research/reach/targets.py",
+      "to": "AUDIT-P008-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/infrastructure/tower_research/reach/targets.py"
+    },
+    {
+      "from": "SOURCE:pfp/infrastructure/tower_evidence/reach/INJECTIONS.md",
+      "to": "AUDIT-P008-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/infrastructure/tower_evidence/reach/INJECTIONS.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+      "to": "AUDIT-P008-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+      "to": "AUDIT-P008-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/_lev_examiner_theoretical_minimum_quiz/study_guide.md",
+      "to": "AUDIT-P008-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/_lev_examiner_theoretical_minimum_quiz/study_guide.md"
+    },
+    {
+      "from": "SOURCE:pfp/infrastructure/tower_evidence/level_engine/resolver.py",
+      "to": "AUDIT-P008-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/infrastructure/tower_evidence/level_engine/resolver.py"
+    },
+    {
+      "from": "SOURCE:pfp/tests/level_engine/test_finite_consumer.py",
+      "to": "AUDIT-P008-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/tests/level_engine/test_finite_consumer.py"
+    },
+    {
+      "from": "SOURCE:pfp/tests/level_engine/test_context.py",
+      "to": "AUDIT-P008-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/tests/level_engine/test_context.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+      "to": "AUDIT-P008-010",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+      "to": "AUDIT-P008-010",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_change_log.md",
+      "to": "AUDIT-P008-010",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_change_log.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/completion_supplement.md",
+      "to": "AUDIT-P008-010",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/completion_supplement.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/c005_working_report.md",
+      "to": "AUDIT-P008-010",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/c005_working_report.md"
+    },
+    {
+      "from": "SOURCE:workflows/wf12_mechanism_control_arms/pilots/c005_hosted_decode_controls/run_adversary_bakeoff.py",
+      "to": "AUDIT-P008-010",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "workflows/wf12_mechanism_control_arms/pilots/c005_hosted_decode_controls/run_adversary_bakeoff.py"
+    },
+    {
+      "from": "SOURCE:workflows/wf12_mechanism_control_arms/pilots/c005_hosted_decode_controls/test_c005_bakeoff.py",
+      "to": "AUDIT-P008-010",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "workflows/wf12_mechanism_control_arms/pilots/c005_hosted_decode_controls/test_c005_bakeoff.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+      "to": "AUDIT-P008-011",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+      "to": "AUDIT-P008-011",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_change_log.md",
+      "to": "AUDIT-P008-011",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_change_log.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/challenge_census.md",
+      "to": "AUDIT-P008-011",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/challenge_census.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/historical_census_inventory.json",
+      "to": "AUDIT-P008-011",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/historical_census_inventory.json"
+    },
+    {
+      "from": "SOURCE:workflows/tasks/certified_challenges/c047_sequence_law_discovery/judge_packet/test_cases_runner.py",
+      "to": "AUDIT-P008-011",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "workflows/tasks/certified_challenges/c047_sequence_law_discovery/judge_packet/test_cases_runner.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+      "to": "AUDIT-P008-012",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+      "to": "AUDIT-P008-012",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/challenge_census.md",
+      "to": "AUDIT-P008-012",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/challenge_census.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/historical_census_inventory.json",
+      "to": "AUDIT-P008-012",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/historical_census_inventory.json"
+    },
+    {
+      "from": "SOURCE:workflows/tasks/certified_challenges/c011_cycle_rank_ladder_coboundary_repair/judge_packet/mutation_suite/test_c011_checker_mutations.py",
+      "to": "AUDIT-P008-012",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "workflows/tasks/certified_challenges/c011_cycle_rank_ladder_coboundary_repair/judge_packet/mutation_suite/test_c011_checker_mutations.py"
+    },
+    {
+      "from": "SOURCE:workflows/tasks/certified_challenges/c011_cycle_rank_ladder_coboundary_repair/tests/test_dual_checkers.py",
+      "to": "AUDIT-P008-012",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "workflows/tasks/certified_challenges/c011_cycle_rank_ladder_coboundary_repair/tests/test_dual_checkers.py"
+    },
+    {
+      "from": "SOURCE:workflows/tasks/certified_challenges/c021_q40_r/judge_packet/checkers/dual_evaluator.py",
+      "to": "AUDIT-P008-012",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "workflows/tasks/certified_challenges/c021_q40_r/judge_packet/checkers/dual_evaluator.py"
+    },
+    {
+      "from": "SOURCE:workflows/tasks/certified_challenges/c021_q40_r/judge_packet/mutation_suite/test_c021_checker_mutations.py",
+      "to": "AUDIT-P008-012",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "workflows/tasks/certified_challenges/c021_q40_r/judge_packet/mutation_suite/test_c021_checker_mutations.py"
+    },
+    {
+      "from": "SOURCE:workflows/tasks/certified_challenges/c021_q40_r/tests/test_dual_checkers.py",
+      "to": "AUDIT-P008-012",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "workflows/tasks/certified_challenges/c021_q40_r/tests/test_dual_checkers.py"
+    },
+    {
+      "from": "SOURCE:workflows/tasks/certified_challenges/c031_anomaly_free_u1_charges/judge_packet/mutation_suite/test_c031_checker_mutations.py",
+      "to": "AUDIT-P008-012",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "workflows/tasks/certified_challenges/c031_anomaly_free_u1_charges/judge_packet/mutation_suite/test_c031_checker_mutations.py"
+    },
+    {
+      "from": "SOURCE:workflows/tasks/certified_challenges/c031_anomaly_free_u1_charges/tests/test_dual_checkers.py",
+      "to": "AUDIT-P008-012",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "workflows/tasks/certified_challenges/c031_anomaly_free_u1_charges/tests/test_dual_checkers.py"
+    },
+    {
+      "from": "SOURCE:workflows/tasks/certified_challenges/c031_anomaly_free_u1_charges/tests/test_reference_solver.py",
+      "to": "AUDIT-P008-012",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "workflows/tasks/certified_challenges/c031_anomaly_free_u1_charges/tests/test_reference_solver.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+      "to": "AUDIT-P008-015",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+      "to": "AUDIT-P008-015",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/challenge_census.md",
+      "to": "AUDIT-P008-015",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/challenge_census.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/historical_census_inventory.json",
+      "to": "AUDIT-P008-015",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/historical_census_inventory.json"
+    },
+    {
+      "from": "SOURCE:workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/pipeline.json",
+      "to": "AUDIT-P008-015",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/pipeline.json"
+    },
+    {
+      "from": "SOURCE:workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/case_generator.py",
+      "to": "AUDIT-P008-015",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/case_generator.py"
+    },
+    {
+      "from": "SOURCE:workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/solve.py",
+      "to": "AUDIT-P008-015",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/solve.py"
+    },
+    {
+      "from": "SOURCE:workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/solver.py",
+      "to": "AUDIT-P008-015",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/solver.py"
+    },
+    {
+      "from": "SOURCE:workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/mcnemar_arms_evaluation.py",
+      "to": "AUDIT-P008-015",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/mcnemar_arms_evaluation.py"
+    },
+    {
+      "from": "SOURCE:workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/empirical_neural_mcnemar_evaluation.py",
+      "to": "AUDIT-P008-015",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/empirical_neural_mcnemar_evaluation.py"
+    },
+    {
+      "from": "SOURCE:workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/test_mcnemar_arms_runner.py",
+      "to": "AUDIT-P008-015",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "workflows/wf12_mechanism_control_arms/pilots/c001_attention_distractor_mask/test_mcnemar_arms_runner.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+      "to": "AUDIT-P008-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+      "to": "AUDIT-P008-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/source_index.json",
+      "to": "AUDIT-P008-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/source_index.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_benchmark_report.md",
+      "to": "AUDIT-P008-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_benchmark_report.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_qwen_qwen-2_5-7b-instruct_baseline_1790297180354.jsonl",
+      "to": "AUDIT-P008-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_qwen_qwen-2_5-7b-instruct_baseline_1790297180354.jsonl"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_qwen_qwen-2_5-7b-instruct_partially_masked_1790308412.jsonl",
+      "to": "AUDIT-P008-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_qwen_qwen-2_5-7b-instruct_partially_masked_1790308412.jsonl"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_qwen_qwen-2_5-7b-instruct_scratchpad_1790310019.jsonl",
+      "to": "AUDIT-P008-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_qwen_qwen-2_5-7b-instruct_scratchpad_1790310019.jsonl"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_qwen_qwen-2_5-7b-instruct_hinted_1790297190434.jsonl",
+      "to": "AUDIT-P008-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_qwen_qwen-2_5-7b-instruct_hinted_1790297190434.jsonl"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_meta-llama_llama-3_1-8b-instruct_baseline_1790297201231.jsonl",
+      "to": "AUDIT-P008-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_meta-llama_llama-3_1-8b-instruct_baseline_1790297201231.jsonl"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_meta-llama_llama-3_1-8b-instruct_partially_masked_1790308428.jsonl",
+      "to": "AUDIT-P008-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_meta-llama_llama-3_1-8b-instruct_partially_masked_1790308428.jsonl"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_meta-llama_llama-3_1-8b-instruct_scratchpad_1790310061.jsonl",
+      "to": "AUDIT-P008-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_meta-llama_llama-3_1-8b-instruct_scratchpad_1790310061.jsonl"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_meta-llama_llama-3_1-8b-instruct_hinted_1790297215552.jsonl",
+      "to": "AUDIT-P008-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/k4_traces/bench_meta-llama_llama-3_1-8b-instruct_hinted_1790297215552.jsonl"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/tests/test_008_source_bound_examples.py",
+      "to": "AUDIT-P008-016",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/tests/test_008_source_bound_examples.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
+      "to": "AUDIT-P008-019",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
+      "to": "AUDIT-P008-019",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/publication_review_2026_10_02.md",
+      "to": "AUDIT-P008-019",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/publication_review_2026_10_02.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/review_validation_2026_10_02.json",
+      "to": "AUDIT-P008-019",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/review_validation_2026_10_02.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/retraction_benchmark_runner.py",
+      "to": "AUDIT-P008-019",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/retraction_benchmark_runner.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/tests/test_008_mssn_tower_retraction.py",
+      "to": "AUDIT-P008-019",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/tests/test_008_mssn_tower_retraction.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md",
+      "to": "AUDIT-P009-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
+      "to": "AUDIT-P009-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_009_adversarial_reality_gate.py",
+      "to": "AUDIT-P009-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_009_adversarial_reality_gate.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md",
+      "to": "AUDIT-P009-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
+      "to": "AUDIT-P009-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_009_adversarial_reality_gate.py",
+      "to": "AUDIT-P009-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_009_adversarial_reality_gate.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md",
+      "to": "AUDIT-P009-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
+      "to": "AUDIT-P009-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_009_adversarial_reality_gate.py",
+      "to": "AUDIT-P009-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_009_adversarial_reality_gate.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md",
+      "to": "AUDIT-P009-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
+      "to": "AUDIT-P009-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/Level15AuthorityCalculus.lean",
+      "to": "AUDIT-P009-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/Level15AuthorityCalculus.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/lakefile.lean",
+      "to": "AUDIT-P009-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/lakefile.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/lean-toolchain",
+      "to": "AUDIT-P009-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/lean-toolchain"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/Census.lean",
+      "to": "AUDIT-P009-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/Census.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/FullCensus.lean",
+      "to": "AUDIT-P009-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/FullCensus.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/axiom_report.txt",
+      "to": "AUDIT-P009-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/axiom_report.txt"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/full_axiom_report.txt",
+      "to": "AUDIT-P009-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/full_axiom_report.txt"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/SLevel.lean",
+      "to": "AUDIT-P009-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/SLevel.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/RuntimeLimits.lean",
+      "to": "AUDIT-P009-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/RuntimeLimits.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/TriggerNotLicense.lean",
+      "to": "AUDIT-P009-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/TriggerNotLicense.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/tools/replay_lean_axiom_census.py",
+      "to": "AUDIT-P009-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/tools/replay_lean_axiom_census.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/v01_review_2026_10_02.json",
+      "to": "AUDIT-P009-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/v01_review_2026_10_02.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/adversary_gate_falsifiers.json",
+      "to": "AUDIT-P009-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/adversary_gate_falsifiers.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md",
+      "to": "AUDIT-P009-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
+      "to": "AUDIT-P009-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/completion_supplement.md",
+      "to": "AUDIT-P009-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/completion_supplement.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/Level15AuthorityCalculus.lean",
+      "to": "AUDIT-P009-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/Level15AuthorityCalculus.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/lakefile.lean",
+      "to": "AUDIT-P009-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/lakefile.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/lean-toolchain",
+      "to": "AUDIT-P009-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/lean-toolchain"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/Census.lean",
+      "to": "AUDIT-P009-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/Census.lean"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/axiom_report.txt",
+      "to": "AUDIT-P009-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/axiom_report.txt"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/tools/replay_lean_axiom_census.py",
+      "to": "AUDIT-P009-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/tools/replay_lean_axiom_census.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md",
+      "to": "AUDIT-P009-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
+      "to": "AUDIT-P009-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/completion_supplement.md",
+      "to": "AUDIT-P009-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/completion_supplement.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/v01_review_2026_10_02.json",
+      "to": "AUDIT-P009-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/v01_review_2026_10_02.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/release_validation_2026_10_01.json",
+      "to": "AUDIT-P009-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/release_validation_2026_10_01.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/lakefile.lean",
+      "to": "AUDIT-P009-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/lakefile.lean"
+    },
+    {
+      "from": "SOURCE:lean4/README.md",
+      "to": "AUDIT-P009-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "lean4/README.md"
+    },
+    {
+      "from": "SOURCE:lean4/lakefile.lean",
+      "to": "AUDIT-P009-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "lean4/lakefile.lean"
+    },
+    {
+      "from": "SOURCE:education/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md",
+      "to": "AUDIT-P009-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "education/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md",
+      "to": "AUDIT-P009-013",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
+      "to": "AUDIT-P009-013",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/README.md",
+      "to": "AUDIT-P009-013",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/README.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/provenance.json",
+      "to": "AUDIT-P009-013",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/provenance.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/demo2_r7_adversarial_debate_1790210039.jsonl",
+      "to": "AUDIT-P009-013",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/demo2_r7_adversarial_debate_1790210039.jsonl"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/demo2_r7_adversarial_debate_receipt.json",
+      "to": "AUDIT-P009-013",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/demo2_r7_adversarial_debate_receipt.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/review_counts.py",
+      "to": "AUDIT-P009-013",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/review_counts.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_recorded_bout_counts.py",
+      "to": "AUDIT-P009-013",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_recorded_bout_counts.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_review_counts.py",
+      "to": "AUDIT-P009-013",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_review_counts.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md",
+      "to": "AUDIT-P009-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
+      "to": "AUDIT-P009-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/provenance.json",
+      "to": "AUDIT-P009-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/provenance.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/adversary_gate_falsifiers.json",
+      "to": "AUDIT-P009-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/docs/historical_evidence/adversary_gate_falsifiers.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/tools/replay_adversary_gate_falsifiers.py",
+      "to": "AUDIT-P009-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/tools/replay_adversary_gate_falsifiers.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/triangle_cycle_sum.py",
+      "to": "AUDIT-P009-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/triangle_cycle_sum.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_triangle_cycle_sum.py",
+      "to": "AUDIT-P009-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_triangle_cycle_sum.py"
+    },
+    {
+      "from": "SOURCE:ops/adversary/use_cases/act_helpers.py",
+      "to": "AUDIT-P009-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "ops/adversary/use_cases/act_helpers.py"
+    },
+    {
+      "from": "SOURCE:ops/adversary/use_cases/bout_service.py",
+      "to": "AUDIT-P009-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "ops/adversary/use_cases/bout_service.py"
+    },
+    {
+      "from": "SOURCE:ops/adversary/domain/ports.py",
+      "to": "AUDIT-P009-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "ops/adversary/domain/ports.py"
+    },
+    {
+      "from": "SOURCE:ops/adversary/domain/evidence.py",
+      "to": "AUDIT-P009-014",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "ops/adversary/domain/evidence.py"
+    },
+    {
       "from": "SOURCE:pfp/workflows/wf0001/workflow.py",
       "to": "WLR-C01",
       "kind": "source_evidence_not_automatic_proof",
@@ -109297,6 +111459,12 @@
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:15"
     },
     {
+      "from": "AUDIT-P008-005",
+      "to": "ATL-P008-005",
+      "kind": "narrows",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-006",
       "kind": "source_evidence_not_automatic_proof",
@@ -109333,10 +111501,22 @@
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:19"
     },
     {
+      "from": "AUDIT-P008-009",
+      "to": "ATL-P008-009",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-010",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:20"
+    },
+    {
+      "from": "AUDIT-P008-010",
+      "to": "ATL-P008-010",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
@@ -109345,10 +111525,22 @@
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:21"
     },
     {
+      "from": "AUDIT-P008-011",
+      "to": "ATL-P008-011",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-012",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:22"
+    },
+    {
+      "from": "AUDIT-P008-012",
+      "to": "ATL-P008-012",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
@@ -109381,10 +111573,22 @@
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:25"
     },
     {
+      "from": "AUDIT-P008-015",
+      "to": "ATL-P008-015",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-016",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:26"
+    },
+    {
+      "from": "AUDIT-P008-016",
+      "to": "ATL-P008-016",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
@@ -109417,6 +111621,12 @@
       "citation": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md:29"
     },
     {
+      "from": "AUDIT-P008-019",
+      "to": "ATL-P008-019",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper_claim_ledger.md",
       "to": "ATL-P008-020",
       "kind": "source_evidence_not_automatic_proof",
@@ -109429,13 +111639,13 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates",
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
       "to": "ATL-P009-001",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md:12"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates",
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
       "to": "ATL-P009-002",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md:13"
@@ -109447,37 +111657,67 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates",
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
       "to": "ATL-P009-003",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md:14"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates",
+      "from": "AUDIT-P009-003",
+      "to": "ATL-P009-003",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
       "to": "ATL-P009-004",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md:15"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates",
+      "from": "AUDIT-P009-004",
+      "to": "ATL-P009-004",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
       "to": "ATL-P009-005",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md:16"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates",
+      "from": "AUDIT-P009-005",
+      "to": "ATL-P009-005",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
       "to": "ATL-P009-006",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md:17"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates",
+      "from": "AUDIT-P009-006",
+      "to": "ATL-P009-006",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
       "to": "ATL-P009-007",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md:18"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates",
+      "from": "AUDIT-P009-007",
+      "to": "ATL-P009-007",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
       "to": "ATL-P009-008",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md:19"
@@ -109489,19 +111729,25 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates",
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
       "to": "ATL-P009-009",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md:20"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates",
+      "from": "AUDIT-P009-009",
+      "to": "ATL-P009-009",
+      "kind": "narrows",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
       "to": "ATL-P009-010",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md:21"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates",
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
       "to": "ATL-P009-011",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md:22"
@@ -109513,7 +111759,7 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates",
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
       "to": "ATL-P009-012",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md:23"
@@ -109525,37 +111771,49 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates",
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
       "to": "ATL-P009-013",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md:24"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates",
+      "from": "AUDIT-P009-013",
+      "to": "ATL-P009-013",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
       "to": "ATL-P009-014",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md:25"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates",
+      "from": "AUDIT-P009-014",
+      "to": "ATL-P009-014",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
       "to": "ATL-P009-015",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md:26"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates",
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
       "to": "ATL-P009-016",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md:27"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates",
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
       "to": "ATL-P009-017",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md:28"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates",
+      "from": "SOURCE:atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md",
       "to": "ATL-P009-018",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper_claim_ledger.md:29"
@@ -164221,8 +166479,8 @@
     "Audit native implementations and claimed Lean correspondence at pinned source."
   ],
   "graph_validation": {
-    "unique_nodes": 4179,
-    "edges": 4748,
+    "unique_nodes": 4309,
+    "edges": 4942,
     "acyclic": true
   }
 }
