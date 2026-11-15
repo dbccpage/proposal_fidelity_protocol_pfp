@@ -207,10 +207,10 @@ def validate_detector_admission(
         return False, "ADMISSION_REFUSED_DEFECT_NOT_REPRODUCED"
 
     # 2. Near miss controls
-    if not record.near_miss_controls or len(record.near_miss_controls) == 0:
+    if not record.near_miss_controls:
         return False, "ADMISSION_REFUSED_MISSING_NEAR_MISS_CONTROLS"
-    if not all(near_miss_oracles):
-        return False, "ADMISSION_REFUSED_NEAR_MISS_FAILED_ORACLE"
+    if len(near_miss_oracles) != len(record.near_miss_controls) or not all(near_miss_oracles):
+        return False, "ADMISSION_REFUSED_NEAR_MISS_NOT_VERIFIED"
 
     # 3. Declared route scope
     if not record.route_scope or record.route_scope == "*":
@@ -290,8 +290,17 @@ class TestDetectorAdmissionRecord:
         assert approved is False
         assert reason == "ADMISSION_REFUSED_MISSING_NEAR_MISS_CONTROLS"
 
-        # Near miss fails independent oracle
         record = self._sample_record()
+        approved_unverified, reason_unverified = validate_detector_admission(
+            record=record,
+            reproduced_defect_oracle=True,
+            near_miss_oracles=[],
+            computed_predicate_sha256=record.predicate_sha256,
+        )
+        assert approved_unverified is False
+        assert reason_unverified == "ADMISSION_REFUSED_NEAR_MISS_NOT_VERIFIED"
+
+        # Near miss fails independent oracle
         approved_nm_fail, reason_nm_fail = validate_detector_admission(
             record=record,
             reproduced_defect_oracle=True,
@@ -299,7 +308,7 @@ class TestDetectorAdmissionRecord:
             computed_predicate_sha256=record.predicate_sha256,
         )
         assert approved_nm_fail is False
-        assert reason_nm_fail == "ADMISSION_REFUSED_NEAR_MISS_FAILED_ORACLE"
+        assert reason_nm_fail == "ADMISSION_REFUSED_NEAR_MISS_NOT_VERIFIED"
 
     def test_admission_rejected_unbounded_scope(self) -> None:
         """Admission fails if route scope is empty or wildcard."""
@@ -336,7 +345,7 @@ class TestDetectorAdmissionRecord:
         assert reason == "ADMISSION_REFUSED_PREDICATE_DIGEST_MISMATCH"
 
     def test_repetition_count_does_not_equal_independent_instances(self) -> None:
-        """1,000 rows with 40 distinct base contents yield 40 independent clusters, not 1,000."""
+        """A synthetic 1,000-row panel can contain just 40 distinct base contents."""
         # Replicate repository self panel shape: 40 distinct contents repeated 25 times each = 1,000 rows
         base_contents = [f"Base defect pattern template #{i}" for i in range(40)]
         log_rows = [base_contents[i % 40] for i in range(1000)]
