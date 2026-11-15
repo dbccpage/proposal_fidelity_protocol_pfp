@@ -1288,11 +1288,12 @@
       "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
       "dag_node": "ATL-P003-004",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No derivation node covers the baseline verify_receipt_bytes digest-chain, fuel and arm-script checks.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_004.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P003-004"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P003-004: baseline verify_receipt_bytes recomputes 30-cell digest chains, checks fuel/arm scripts, and refuses {}, schema changes, chain breaks and certificate claims."
       }
     },
     {
@@ -1341,13 +1342,13 @@
       "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
       "dag_node": "ATL-P003-006",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PAPER003-PACKAGE-ROLLBACK-BOUNDARY"
+          "PAPER003-PACKAGE-ROLLBACK-BOUNDARY",
+          "AUDIT-P003-006"
         ],
-        "relation": "supports",
-        "note": "The node covers charged rollback of refused batches in the package host; fuel exhaustion to TERMINAL/FUEL_EXHAUSTED is not stated.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_006.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P003-006 and PAPER003-PACKAGE-ROLLBACK-BOUNDARY: charged rollback of refused batches and exhaustion to TERMINAL with FUEL_EXHAUSTED after initial fuel F refusals."
       }
     },
     {
@@ -1369,11 +1370,12 @@
       "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
       "dag_node": "ATL-P003-007",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the package receipt verifier's refusal set or that it omits fuel and arm-script checks.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_007.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P003-007"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P003-007: package verify_receipt_bytes refuses empty input, {}, certificate labels, non-hex bytes and unrecomputed digests, while omitting fuel and arm-script validation."
       }
     },
     {
@@ -8977,15 +8979,15 @@
       "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
       "dag_node": "ATL-N001-007",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
           "AC1120-C019",
           "PAPER007-CYCLE-RESIDUAL-IDENTITY",
-          "PFPDOMAIN-CL26"
+          "PFPDOMAIN-CL26",
+          "AUDIT-N001-007"
         ],
-        "relation": "supports",
-        "note": "Nodes give exact implies vanishing pairing generally and the converse on a single cycle or via fundamental cycles, without the $p$-indexed framing.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_007.md"
+        "relation": "states_same_claim_as",
+        "note": "AC1120-C019 gives exactness implies vanishing pairing; PAPER007-CYCLE-RESIDUAL-IDENTITY establishes zero cycle endpoint telescoping; PFPDOMAIN-CL26 establishes the converse on connected graphs; AUDIT-N001-007 provides the finite-dimensional orthogonal complement characterization im d_0 = (ker d_0^T)^perp independent of p."
       }
     },
     {
@@ -9007,14 +9009,14 @@
       "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
       "dag_node": "ATL-N001-008",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
           "AC1120-C019",
-          "PFPDOMAIN-CL26"
+          "PFPDOMAIN-CL26",
+          "AUDIT-N001-008"
         ],
-        "relation": "supports",
-        "note": "AC1120-C019 gives one direction; PFPDOMAIN-CL26 gives the converse on connected graphs via fundamental cycles.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_008.md"
+        "relation": "states_same_claim_as",
+        "note": "AC1120-C019 establishes that exact potentials pair to zero with circulations; PFPDOMAIN-CL26 establishes the converse on connected graphs; AUDIT-N001-008 generalizes to arbitrary finite graphs (including disconnected complexes) via componentwise spanning-tree path integration and fundamental-cycle pairing."
       }
     },
     {
@@ -9093,11 +9095,12 @@
       "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
       "dag_node": "ATL-N001-011",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node on $p$-Laplacian optimality.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_011.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N001-011"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Establishes strictly unique optimal quotient residual and nonlinear graph p-Laplacian Euler-Lagrange optimality condition d_0^T(w |r|^{p-2} r) = 0 for p in (1, inf) on finite graphs with positive edge weights."
       }
     },
     {
@@ -9119,13 +9122,13 @@
       "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
       "dag_node": "ATL-N001-012",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "AC1120-C014"
+          "AC1120-C014",
+          "AUDIT-N001-012"
         ],
-        "relation": "supports",
-        "note": "AC1120-C014 gives weighted orthogonal Hodge decomposition and uniqueness, not the Moore-Penrose formula.",
-        "proposed_derivation_file": "dag/derivations/atl_n001_012.md"
+        "relation": "states_same_claim_as",
+        "note": "AC1120-C014 establishes the weighted orthogonal Hodge decomposition; AUDIT-N001-012 establishes the Moore-Penrose pseudoinverse potential formula f = L^+ d_0^T W c with L = d_0^T W d_0 and minimum-norm uniqueness on (ker L)^perp."
       }
     },
     {
@@ -9360,11 +9363,12 @@
       "paper": "atlas/archive/non_pfp/002_l1_obstruction_framework",
       "dag_node": "ATL-N002-001",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N002-001"
+        ],
         "relation": null,
-        "note": "No derivation node proves monotonicity of the l1 defect under a contractive coboundary-commuting aggregation map.",
-        "proposed_derivation_file": "dag/derivations/atl_n002_001.md"
+        "note": "Derived in AUDIT-N002-001: contractive coboundary-commuting aggregation cannot increase the L1 defect."
       }
     },
     {
@@ -9546,11 +9550,12 @@
       "paper": "atlas/archive/non_pfp/002_l1_obstruction_framework",
       "dag_node": "ATL-N002-008",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-N002-008"
+        ],
         "relation": null,
-        "note": "No derivation node proves the additivity criterion via a common dual maximizer.",
-        "proposed_derivation_file": "dag/derivations/atl_n002_008.md"
+        "note": "Derived in AUDIT-N002-008: quotient norm is additive iff a common dual circulation maximizer exists in Z_w."
       }
     },
     {
@@ -9730,13 +9735,13 @@
       "paper": "atlas/archive/non_pfp/002_l1_obstruction_framework",
       "dag_node": "ATL-N002-015",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PFPDOMAIN-CL07"
+          "PFPDOMAIN-CL07",
+          "AUDIT-N002-015"
         ],
-        "relation": "supports",
-        "note": "PFPDOMAIN-CL07 gives the sufficiency direction (divergence-free sign-aligned dual implies minimality); the necessity of the KKT condition and the symmetry-conservation statement are not derived.",
-        "proposed_derivation_file": "dag/derivations/atl_n002_015.md"
+        "relation": null,
+        "note": "Derived in AUDIT-N002-015 (necessity) and PFPDOMAIN-CL07 (sufficiency): KKT condition for L1 quotient minimality."
       }
     },
     {
@@ -18223,6 +18228,69 @@
       "area": "Archived papers"
     },
     {
+      "atlas_id": "ATL-D-AUDIT-N001-007",
+      "dag_node": "AUDIT-N001-007",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For any finite graph, a cochain c is exact if and only if <y, c> = 0 for every circulation y in ker d_0^T, establishing im d_0 = (ker d_0^T)^perp independently of p.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N001-008",
+      "dag_node": "AUDIT-N001-008",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "On any finite graph, vanishing circulation pairings characterize exactness via spanning-tree path integration and fundamental-cycle pairing across each connected component.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N001-011",
+      "dag_node": "AUDIT-N001-011",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For p in (1, inf) on a finite graph with positive weights, the quotient defect minimizer is unique on the gauge-fixed subspace, yields a unique residual r_p^*, and satisfies the nonlinear graph p-Laplacian equation d_0^T(w |r_p^*|^{p-2} r_p^*) = 0.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N001-012",
+      "dag_node": "AUDIT-N001-012",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For p = 2 on a finite graph with positive weights W, the least-squares potential is given by the Moore-Penrose formula f = L^+ d_0^T W c with L = d_0^T W d_0, selecting the minimum Euclidean-norm potential on (ker L)^perp and yielding orthogonal Hodge decomposition c = d_0 f + r.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/001_l1_native_cohomology",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N002-001",
+      "dag_node": "AUDIT-N002-001",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "If A o d0^P = d0^Q o pi_* and ||A||_{l1 -> l1} <= 1 then ||d0^Q pi_* s||_1 <= ||d0^P s||_1 for every section s.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/002_l1_obstruction_framework",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N002-008",
+      "dag_node": "AUDIT-N002-008",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Phi_w(omega_1 + omega_2) = Phi_w(omega_1) + Phi_w(omega_2) iff some z in Z_w = {d0^* z = 0, |z_e| <= w_e} maximizes both <z, omega_1> and <z, omega_2>.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/002_l1_obstruction_framework",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-N002-015",
+      "dag_node": "AUDIT-N002-015",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "If s minimizes ||omega - d0 s||_1 on a finite graph with positive weights, then some phi in partial ||omega - d0 s||_1 satisfies d0^* phi = 0.",
+      "status_text": "complete_manuscript_and_implementation_read",
+      "paper": "atlas/archive/non_pfp/002_l1_obstruction_framework",
+      "area": "Archived papers"
+    },
+    {
       "atlas_id": "ATL-D-AUDIT-N001-001",
       "dag_node": "AUDIT-N001-001",
       "kind": "mathematical_or_implementation_claim",
@@ -18968,6 +19036,33 @@
       "status_text": "bounded_source_and_local_execution_support",
       "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
       "area": "PFP runtime, Lab, contracts and formal sources"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P003-004",
+      "dag_node": "AUDIT-P003-004",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "verify_receipt_bytes recomputes each of the 30 cells' digest chains from the initial digest, checks fuel and scripted arm decisions, and refuses {}, schema changes, chain breaks and certificate claims.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "area": "PFP runtime, Lab, contracts and formal sources"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P003-006",
+      "dag_node": "AUDIT-P003-006",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "In the package host every refused batch (move after VERIFY, empty, malformed id) costs one fuel unit and rolls back; after initial fuel F refusals the host is TERMINAL with FUEL_EXHAUSTED.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P003-007",
+      "dag_node": "AUDIT-P003-007",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The package verify_receipt_bytes refuses empty input, {}, certificate labels, non-hex event bytes and unrecomputed digest edits, and does not check fuel or arm scripts.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "area": "Archived papers"
     },
     {
       "atlas_id": "ATL-D-PAPER004-FINITE-EXACT-WITNESS",
@@ -23647,22 +23742,22 @@
   ],
   "correspondence": {
     "rule": "Every derivation node in dag/derivations_dag.json (kinds other than explicit_assumption_or_obligation, paper_assessment, pinned_source_file) carries exactly one atlas_ledger_id, and every ledger row names exactly one such node.",
-    "ledger_rows": 1370,
-    "derivation_nodes": 1370,
+    "ledger_rows": 1380,
+    "derivation_nodes": 1380,
     "archive_claims": 607,
     "archive_claims_without_earlier_dag_node": 607,
-    "dag_claims": 763,
-    "dag_claims_citing_an_archive_paper": 34,
+    "dag_claims": 773,
+    "dag_claims_citing_an_archive_paper": 44,
     "dag_claims_without_archive_source": 729,
     "archive_claim_review": {
-      "matched": 96,
-      "partial": 103,
-      "gap": 408
+      "matched": 106,
+      "partial": 98,
+      "gap": 403
     },
     "non_derivation_nodes_excluded": {
-      "explicit_assumption_or_obligation": 696,
+      "explicit_assumption_or_obligation": 723,
       "paper_assessment": 38,
-      "pinned_source_file": 1578
+      "pinned_source_file": 1585
     },
     "atlas_md_rows_cited_in_prose": 342
   }

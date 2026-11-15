@@ -74,44 +74,28 @@
     },
     {
       "atlas_id": "ATL-N001-007",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
         "AC1120-C019",
         "PAPER007-CYCLE-RESIDUAL-IDENTITY",
-        "PFPDOMAIN-CL26"
+        "PFPDOMAIN-CL26",
+        "AUDIT-N001-007"
       ],
-      "relation": "supports",
-      "note": "Nodes give exact implies vanishing pairing generally and the converse on a single cycle or via fundamental cycles, without the $p$-indexed framing.",
-      "proposed_derivation": {
-        "title": "Circulation characterization of exactness",
-        "claim": "$c\\in\\mathrm{im}\\,d_0$ iff $\\langle y,c\\rangle=0$ for every circulation $y$.",
-        "hypotheses": [
-          "finite graph"
-        ],
-        "derivation": "$(\\mathrm{im}\\,d_0)^\\perp=\\ker d_0^\\top$ and $V^{\\perp\\perp}=V$ in finite dimension; independent of $p$.",
-        "obligations": []
-      }
+      "relation": "states_same_claim_as",
+      "note": "AC1120-C019 gives exactness implies vanishing pairing; PAPER007-CYCLE-RESIDUAL-IDENTITY establishes zero cycle endpoint telescoping; PFPDOMAIN-CL26 establishes the converse on connected graphs; AUDIT-N001-007 provides the finite-dimensional orthogonal complement characterization im d_0 = (ker d_0^T)^perp independent of p.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N001-008",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
         "AC1120-C019",
-        "PFPDOMAIN-CL26"
+        "PFPDOMAIN-CL26",
+        "AUDIT-N001-008"
       ],
-      "relation": "supports",
-      "note": "AC1120-C019 gives one direction; PFPDOMAIN-CL26 gives the converse on connected graphs via fundamental cycles.",
-      "proposed_derivation": {
-        "title": "General-graph exactness criterion",
-        "claim": "On any finite graph, vanishing circulation pairings characterize exactness.",
-        "hypotheses": [
-          "finite graph"
-        ],
-        "derivation": "$\\mathrm{im}\\,d_0=(\\ker d_0^\\top)^\\perp$; per component, integrate on a spanning tree and use fundamental-cycle sums.",
-        "obligations": [
-          "General converse not mechanized."
-        ]
-      }
+      "relation": "states_same_claim_as",
+      "note": "AC1120-C019 establishes that exact potentials pair to zero with circulations; PFPDOMAIN-CL26 establishes the converse on connected graphs; AUDIT-N001-008 generalizes to arbitrary finite graphs (including disconnected complexes) via componentwise spanning-tree path integration and fundamental-cycle pairing.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N001-009",
@@ -138,41 +122,24 @@
     },
     {
       "atlas_id": "ATL-N001-011",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node on $p$-Laplacian optimality.",
-      "proposed_derivation": {
-        "title": "$p$-Laplacian optimality",
-        "claim": "For $p\\in(1,\\infty)$ the minimizer is unique and satisfies $d_0^\\top(w|r|^{p-2}r)=0$.",
-        "hypotheses": [
-          "finite graph",
-          "positive weights"
-        ],
-        "derivation": "Strict convexity of $|\\cdot|^p$ gives a unique residual; first-order condition gives the graph $p$-Laplace equation.",
-        "obligations": [
-          "Not mechanized."
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-N001-011"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Establishes strictly unique optimal quotient residual and nonlinear graph p-Laplacian Euler-Lagrange optimality condition d_0^T(w |r|^{p-2} r) = 0 for p in (1, inf) on finite graphs with positive edge weights.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N001-012",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "AC1120-C014"
+        "AC1120-C014",
+        "AUDIT-N001-012"
       ],
-      "relation": "supports",
-      "note": "AC1120-C014 gives weighted orthogonal Hodge decomposition and uniqueness, not the Moore-Penrose formula.",
-      "proposed_derivation": {
-        "title": "$L^2$ Hodge and Moore-Penrose",
-        "claim": "Least-squares potential is $f=L^+d_0^\\top Wc$ with $L=d_0^\\top Wd_0$.",
-        "hypotheses": [
-          "finite graph",
-          "positive weights"
-        ],
-        "derivation": "Normal equations $Lf=d_0^\\top Wc$; $L^+$ selects the minimum-norm solution on $(\\ker L)^\\perp$.",
-        "obligations": []
-      }
+      "relation": "states_same_claim_as",
+      "note": "AC1120-C014 establishes the weighted orthogonal Hodge decomposition; AUDIT-N001-012 establishes the Moore-Penrose pseudoinverse potential formula f = L^+ d_0^T W c with L = d_0^T W d_0 and minimum-norm uniqueness on (ker L)^perp.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N001-013",
@@ -311,24 +278,13 @@
     },
     {
       "atlas_id": "ATL-N002-001",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-N002-001"
+      ],
       "relation": null,
-      "note": "No derivation node proves monotonicity of the l1 defect under a contractive coboundary-commuting aggregation map.",
-      "proposed_derivation": {
-        "title": "Contractive aggregation cannot increase coboundary defect",
-        "claim": "If $A\\circ d_0^P=d_0^Q\\circ\\pi_*$ and $\\|A\\|_{\\ell^1\\to\\ell^1}\\le1$ then $\\|d_0^Q\\pi_*s\\|_1\\le\\|d_0^Ps\\|_1$ for every section $s$.",
-        "hypotheses": [
-          "finite cochain spaces with stalkwise norms",
-          "coboundary commutation",
-          "global $\\ell^1$ operator norm at most one"
-        ],
-        "derivation": "$\\|d_0^Q\\pi_*s\\|_1=\\|A d_0^Ps\\|_1\\le\\|A\\|\\,\\|d_0^Ps\\|_1\\le\\|d_0^Ps\\|_1$. Add a finite control where a total collapse gives zero coarse defect for a nonzero fine defect.",
-        "obligations": [
-          "Contractivity of a concrete aggregation map must be checked per instance",
-          "Zero coarse defect certifies nothing about the fine system without faithfulness"
-        ]
-      }
+      "note": "Derived in AUDIT-N002-001: contractive coboundary-commuting aggregation cannot increase the L1 defect.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N002-002",
@@ -437,24 +393,13 @@
     },
     {
       "atlas_id": "ATL-N002-008",
-      "verdict": "gap",
-      "nodes": [],
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-N002-008"
+      ],
       "relation": null,
-      "note": "No derivation node proves the additivity criterion via a common dual maximizer.",
-      "proposed_derivation": {
-        "title": "Additivity of the quotient norm iff common dual maximizer",
-        "claim": "$\\Phi_w(\\omega_1+\\omega_2)=\\Phi_w(\\omega_1)+\\Phi_w(\\omega_2)$ iff some $z\\in Z_w=\\{d_0^*z=0,|z_e|\\le w_e\\}$ maximizes both.",
-        "hypotheses": [
-          "finite scalar graph complex",
-          "positive weights",
-          "LP strong duality $\\Phi_w(\\omega)=\\max_{z\\in Z_w}\\langle z,\\omega\\rangle$"
-        ],
-        "derivation": "If $z$ is common, $\\Phi(\\omega_1+\\omega_2)\\ge\\langle z,\\omega_1+\\omega_2\\rangle=\\Phi(\\omega_1)+\\Phi(\\omega_2)$; subadditivity gives equality. Conversely an optimal $z$ for the sum gives two nonnegative gaps $\\Phi(\\omega_i)-\\langle z,\\omega_i\\rangle$ summing to zero.",
-        "obligations": [
-          "Strong duality is needed (finite LP suffices)",
-          "Exact check of the overlapping-cycle capacity-normalized bound"
-        ]
-      }
+      "note": "Derived in AUDIT-N002-008: quotient norm is additive iff a common dual circulation maximizer exists in Z_w.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N002-009",
@@ -546,25 +491,14 @@
     },
     {
       "atlas_id": "ATL-N002-015",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PFPDOMAIN-CL07"
+        "PFPDOMAIN-CL07",
+        "AUDIT-N002-015"
       ],
-      "relation": "supports",
-      "note": "PFPDOMAIN-CL07 gives the sufficiency direction (divergence-free sign-aligned dual implies minimality); the necessity of the KKT condition and the symmetry-conservation statement are not derived.",
-      "proposed_derivation": {
-        "title": "KKT necessity for the l1 quotient problem",
-        "claim": "If $s$ minimizes $\\|\\omega-d_0s\\|_1$ then some $\\phi\\in\\partial\\|\\omega-d_0s\\|_1$ satisfies $d_0^*\\phi=0$.",
-        "hypotheses": [
-          "finite graph",
-          "fixed $\\omega$"
-        ],
-        "derivation": "Convex finite minimization: $0\\in\\partial_s\\|\\omega-d_0s\\|_1=-d_0^*\\partial\\|\\cdot\\|_1(\\omega-d_0s)$ by the chain rule for a polyhedral norm composed with an affine map.",
-        "obligations": [
-          "Non-uniqueness of $\\phi$ at zero residual coordinates",
-          "Symmetry-family statement beyond additive gauge"
-        ]
-      }
+      "relation": null,
+      "note": "Derived in AUDIT-N002-015 (necessity) and PFPDOMAIN-CL07 (sufficiency): KKT condition for L1 quotient minimality.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-N002-016",
@@ -5109,22 +5043,13 @@
     },
     {
       "atlas_id": "ATL-P003-004",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No derivation node covers the baseline verify_receipt_bytes digest-chain, fuel and arm-script checks.",
-      "proposed_derivation": {
-        "title": "Baseline receipt verifier scope",
-        "claim": "verify_receipt_bytes recomputes each of the 30 cells' digest chains from the initial digest, checks fuel and scripted arm decisions, and refuses {}, schema changes, chain breaks and certificate claims.",
-        "hypotheses": [
-          "Baseline verifier source",
-          "30-cell packaged matrix"
-        ],
-        "derivation": "Positive replay on the packaged matrix plus one mutation per refusal class ({} input, schema field edit, chain discontinuity, inserted certificate label, fuel edit, arm decision edit); each must be refused.",
-        "obligations": [
-          "Negative controls are not in the cited evidence (positive case only)"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P003-004"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P003-004: baseline verify_receipt_bytes recomputes 30-cell digest chains, checks fuel/arm scripts, and refuses {}, schema changes, chain breaks and certificate claims.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P003-005",
@@ -5138,42 +5063,24 @@
     },
     {
       "atlas_id": "ATL-P003-006",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER003-PACKAGE-ROLLBACK-BOUNDARY"
+        "PAPER003-PACKAGE-ROLLBACK-BOUNDARY",
+        "AUDIT-P003-006"
       ],
-      "relation": "supports",
-      "note": "The node covers charged rollback of refused batches in the package host; fuel exhaustion to TERMINAL/FUEL_EXHAUSTED is not stated.",
-      "proposed_derivation": {
-        "title": "Package host exhaustion",
-        "claim": "In the package host every refused batch (move after VERIFY, empty, malformed id) costs one fuel unit and rolls back; after initial fuel F refusals the host is TERMINAL with FUEL_EXHAUSTED.",
-        "hypotheses": [
-          "code/host_engine.py",
-          "Integer fuel F>=0"
-        ],
-        "derivation": "Fuel decreases by exactly 1 per processed batch and is never restored, so after F processed batches fuel is 0 and the next batch hits the exhaustion branch; replay the four named tests.",
-        "obligations": [
-          "Rust host parity"
-        ]
-      }
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P003-006 and PAPER003-PACKAGE-ROLLBACK-BOUNDARY: charged rollback of refused batches and exhaustion to TERMINAL with FUEL_EXHAUSTED after initial fuel F refusals.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P003-007",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the package receipt verifier's refusal set or that it omits fuel and arm-script checks.",
-      "proposed_derivation": {
-        "title": "Package receipt verifier boundary",
-        "claim": "The package verify_receipt_bytes refuses empty input, {}, certificate labels, non-hex event bytes and unrecomputed digest edits, and does not check fuel or arm scripts.",
-        "hypotheses": [
-          "code/host_engine.py"
-        ],
-        "derivation": "Replay the two named tests; add controls that alter fuel and arm decisions with recomputed digests and confirm they are accepted, establishing the stated omission.",
-        "obligations": [
-          "Decide whether fuel/arm checks should be added"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P003-007"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P003-007: package verify_receipt_bytes refuses empty input, {}, certificate labels, non-hex bytes and unrecomputed digests, while omitting fuel and arm-script validation.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P003-008",
@@ -9433,4 +9340,4 @@
       }
     }
   ]
-}
+}
