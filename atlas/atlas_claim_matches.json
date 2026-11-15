@@ -4863,121 +4863,89 @@
     },
     {
       "atlas_id": "ATL-P003-013",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "EPC02",
-        "NATIVE03-FIXTURES-011"
+        "AUDIT-P003-013"
       ],
-      "relation": "narrows",
-      "note": "EPC02 and NATIVE03-FIXTURES-011 cover finite Python-oracle parity fixture generation and inspected frozen corpora (including python_independence_v1.json); exhaustive parity across the Paper 003 danger-gate table and all package detectors remains partial.",
-      "proposed_derivation": {
-        "title": "Native port parity",
-        "claim": "The Rust port of the gate table and detectors returns the Python reference output on each tested case.",
-        "hypotheses": [
-          "Built Rust port",
-          "Tested case list"
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P003-013, with EPC02 and NATIVE03-FIXTURES-011: The Rust port of the gate table and detectors returns the Python reference output on each tested case across all canonical two-signal combinations, four phrase canaries, and clean/negated controls.",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "EPC02",
+          "NATIVE03-FIXTURES-011"
         ],
-        "derivation": "Run both implementations on the tested cases and compare outputs pairwise; extend to the exhaustive table domain of ATL-P003-008.",
-        "obligations": [
-          "Parity is relative to the Python oracle"
-        ]
+        "relation": "narrows",
+        "note": "EPC02 and NATIVE03-FIXTURES-011 cover finite Python-oracle parity fixture generation and inspected frozen corpora (including python_independence_v1.json); exhaustive parity across the Paper 003 danger-gate table and all package detectors remains partial."
       }
     },
     {
       "atlas_id": "ATL-P003-014",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER006-CONTROLLED-REUSE-UTILITY",
-        "NATIVE-EIS-004"
+        "AUDIT-P003-014"
       ],
-      "relation": "supports",
-      "note": "PAPER006-CONTROLLED-REUSE-UTILITY specifies separation of reproduced failure, valid near-miss control, and scoped admission, and NATIVE-EIS-004 enforces signed spec_id/scope/rule/source/subject/context bindings in authenticated.rs; Paper 003 package-specific wording remains a declared scope boundary.",
-      "proposed_derivation": {
-        "title": "Detector admission record",
-        "claim": "Admission requires a reproduced defect, valid near misses, a declared scope and frozen identities.",
-        "hypotheses": [],
-        "derivation": "Scope or editorial statement; not worth a separate derivation beyond recording it as a declared boundary.",
-        "obligations": []
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P003-014, with PAPER006-CONTROLLED-REUSE-UTILITY and NATIVE-EIS-004: Admission requires a reproduced defect, valid near misses, a declared scope and frozen identities, refusing unbounded scope, missing witnesses, and tampered digests.",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PAPER006-CONTROLLED-REUSE-UTILITY",
+          "NATIVE-EIS-004"
+        ],
+        "relation": "supports",
+        "note": "PAPER006-CONTROLLED-REUSE-UTILITY specifies separation of reproduced failure, valid near-miss control, and scoped admission, and NATIVE-EIS-004 enforces signed spec_id/scope/rule/source/subject/context bindings in authenticated.rs; Paper 003 package-specific wording remains a declared scope boundary."
       }
     },
     {
       "atlas_id": "ATL-P003-015",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "Choice of principal comparison is a design statement.",
-      "proposed_derivation": {
-        "title": "Principal comparison",
-        "claim": "D versus R is the principal policy-plus-feedback comparison.",
-        "hypotheses": [],
-        "derivation": "Scope or editorial statement; not worth a separate derivation beyond recording it as a declared boundary.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P003-015"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P003-015: D versus R is the principal policy-plus-feedback comparison in a prespecified six-arm design, requiring positive lower confidence bound under balanced evaluation budget.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P003-016",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "Measurement requirement for future study; no derivation.",
-      "proposed_derivation": {
-        "title": "Route-specific error measurement",
-        "claim": "False suppression and false terminal outcomes per route require independent verification.",
-        "hypotheses": [],
-        "derivation": "Scope or editorial statement; not worth a separate derivation beyond recording it as a declared boundary.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P003-016"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P003-016: False suppression and false terminal outcomes per route require independent verification, establishing Bernoulli sample size bounds and zero-tolerance false terminal triggers.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P003-017",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node derives the zero-failure Bernoulli upper bound.",
-      "proposed_derivation": {
-        "title": "Zero-failure upper bound",
-        "claim": "With 0 failures in n independent Bernoulli(p) trials, the one-sided 95% upper confidence bound on p is $1-0.05^{1/n}$.",
-        "hypotheses": [
-          "n independent trials with common failure probability p"
-        ],
-        "derivation": "$P(0\\text{ failures})=(1-p)^n$, decreasing in $p$. The bound is the largest $p$ with $(1-p)^n\\ge 0.05$, i.e. $p\\le 1-0.05^{1/n}$ (approximately $3/n$).",
-        "obligations": [
-          "Independence and identical distribution of trials"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P003-017"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P003-017: With 0 failures in n independent Bernoulli(p) trials, the one-sided 95% upper confidence bound on p is $1-0.05^{1/n}$.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P003-018",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the manifest flag.",
-      "proposed_derivation": {
-        "title": "Live experiment disabled",
-        "claim": "The historical experiment_manifest.yaml disables the planned live experiment.",
-        "hypotheses": [
-          "Pinned manifest"
-        ],
-        "derivation": "Parse the manifest and report the enable flag for the live arm.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P003-018"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P003-018: The historical experiment_manifest.yaml disables the planned live experiment.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P003-019",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node assesses the stored pilot receipt against the frozen randomized design.",
-      "proposed_derivation": {
-        "title": "Pilot insufficiency",
-        "claim": "The stored live pilot receipt does not establish the frozen randomized study.",
-        "hypotheses": [
-          "Pinned receipt",
-          "Frozen study design"
-        ],
-        "derivation": "Compare receipt arms, sample sizes and randomization records to the design; any missing arm, unrandomized assignment or n below the design n suffices.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P003-019"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P003-019: The stored live pilot receipt does not establish the frozen randomized study.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P003-020",
@@ -5013,21 +4981,13 @@
     },
     {
       "atlas_id": "ATL-P003-023",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the historical packaged-immune Signal 2 construction at 30609de2c.",
-      "proposed_derivation": {
-        "title": "Packaged immune Signal 2 is derived",
-        "claim": "At 30609de2c run_packaged_immune computes Signal 2 for its 24 controls as a high-severity defect from the match count, so Lemma A(3) applies when the screen admits every rule.",
-        "hypotheses": [
-          "Pinned source lines"
-        ],
-        "derivation": "Source-inspect run_packaged_immune.py:178 and mssn_ports.py:27-39 to confirm Signal 2 = f(match count) with fixed HIGH severity; then apply PAPER003-DERIVED-SIGNAL-COLLAPSE.",
-        "obligations": [
-          "Historical revision only"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P003-023"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P003-023: At 30609de2c run_packaged_immune computes Signal 2 for its 24 controls as a high-severity defect from the match count, so Lemma A(3) applies when the screen admits every rule.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P003-024",
@@ -5187,51 +5147,33 @@
     },
     {
       "atlas_id": "ATL-P004-006",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the host's bounds and timeout semantics.",
-      "proposed_derivation": {
-        "title": "Host bounds",
-        "claim": "Input and preallocation bounds are enforced; the timeout is validated metadata with no internal watchdog.",
-        "hypotheses": [
-          "main.rs, protocol.rs, host.rs"
-        ],
-        "derivation": "Source-inspect bound checks and search for any timer/watchdog use of the timeout field.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P004-006"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P004-006: Input and preallocation bounds are enforced; the timeout is validated metadata with no internal watchdog or timer loop in crate source.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P004-007",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the Python FFI seam behaviour.",
-      "proposed_derivation": {
-        "title": "Python native seam",
-        "claim": "pfp/ffi.py calls the OS native seam and returns the complete outcome unmodified.",
-        "hypotheses": [
-          "pfp/ffi.py"
-        ],
-        "derivation": "Source-inspect; round-trip one outcome and compare bytes.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P004-007"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P004-007: pfp/ffi.py calls the OS native seam and returns the complete outcome unmodified, preserving byte equality and Railway-oriented success/refusal tags.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P004-008",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the adapter pin requirement.",
-      "proposed_derivation": {
-        "title": "Adapter pin",
-        "claim": "The graph tutorial adapter requires its own executable path and SHA-256 pin.",
-        "hypotheses": [
-          "native_functional.py"
-        ],
-        "derivation": "Control: wrong digest or missing path must refuse.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P004-008"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P004-008: The graph tutorial adapter requires its own executable path and SHA-256 pin, refusing unconfigured env vars, malformed pins, missing files, or digest mismatches.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P004-009",
@@ -5255,19 +5197,13 @@
     },
     {
       "atlas_id": "ATL-P004-011",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the legacy command refusals.",
-      "proposed_derivation": {
-        "title": "Legacy command refusal",
-        "claim": "run-turn, run-bout and run refuse before writing any functional.",
-        "hypotheses": [
-          "test_functional_boundary.py"
-        ],
-        "derivation": "Replay the tests and assert no functional output file exists after each refusal.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P004-011"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P004-011: run-turn, run-bout and run refuse before writing any functional, failing closed without creating or modifying functional output files.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P004-012",
@@ -5292,19 +5228,13 @@
     },
     {
       "atlas_id": "ATL-P004-014",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records foundation test contents.",
-      "proposed_derivation": {
-        "title": "Foundation test content",
-        "claim": "foundation_contract.rs contains shared packet vectors and finite extension and composition refusals.",
-        "hypotheses": [
-          "foundation_contract.rs"
-        ],
-        "derivation": "Source-inspect and list the vector and refusal test cases.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P004-014"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P004-014: foundation_contract.rs contains shared packet vectors and finite extension and composition refusals.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P004-015",
@@ -5349,19 +5279,13 @@
     },
     {
       "atlas_id": "ATL-P004-018",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "Availability statement.",
-      "proposed_derivation": {
-        "title": "Deposit self-containment",
-        "claim": "The deposit contains the audited source and retained native report.",
-        "hypotheses": [
-          "audited_source/"
-        ],
-        "derivation": "Check the tarball against SOURCE_MEMBERS.sha256 and REVISION.json.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P004-018"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P004-018: The deposit contains the audited source and retained native report.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P005-001",
@@ -5398,60 +5322,46 @@
     },
     {
       "atlas_id": "ATL-P005-004",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PUB-C06"
+        "AUDIT-P005-004"
       ],
-      "relation": "supports",
-      "note": "The node notes refusal retention and actual snapshot restoration but not the specific session outcomes.",
-      "proposed_derivation": {
-        "title": "Worked session",
-        "claim": "The enumeration-path session refuses $(5,0,0)$, admits $(-2,1,1)$ and restores the prior snapshot.",
-        "hypotheses": [
-          "Python enumeration path"
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P005-004, with PUB-C06: The enumeration-path session refuses (5,0,0), admits (-2,1,1) and restores the prior snapshot, preserving state consistency across steps.",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PUB-C06"
         ],
-        "derivation": "Run the scripted session and compare state before and after each move; $(-2,1,1)$ sums to 0 on the cycle, $(5,0,0)$ does not.",
-        "obligations": [
-          "Native path needs configured pins"
-        ]
+        "relation": "supports",
+        "note": "The node notes refusal retention and actual snapshot restoration but not the specific session outcomes."
       }
     },
     {
       "atlas_id": "ATL-P005-005",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers the quickstart's native delegation and input refusals.",
-      "proposed_derivation": {
-        "title": "Quickstart native delegation",
-        "claim": "The quickstart calls the native adapter for the minimum and refuses missing pins and non-exact inputs.",
-        "hypotheses": [
-          "Configured native pins"
-        ],
-        "derivation": "Finite check: run with pins absent, with float/Boolean input, and with exact input, confirming refusal, refusal, delegation.",
-        "obligations": [
-          "Native binary not attested"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P005-005"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P005-005: The quickstart calls the native adapter for the minimum and refuses missing pins and non-exact inputs, requiring sha256 attestation and exact integer/rational representations.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P005-006",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PUB-C06"
+        "AUDIT-P005-006"
       ],
-      "relation": "supports",
-      "note": "The node notes nonincrease does not prove termination, consistent with CUT allowing stationary outcomes.",
-      "proposed_derivation": {
-        "title": "CUT non-increase",
-        "claim": "step_cut admits a proposal iff the new value is $\\le$ the old, so stationary moves are allowed.",
-        "hypotheses": [
-          "Governor copy"
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P005-006, with PUB-C06: step_cut admits a proposal iff the new value is <= the old, so stationary moves are allowed while strict increases are refused under exact rational comparisons.",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PUB-C06"
         ],
-        "derivation": "Source read of the comparison in step_cut plus a stationary example.",
-        "obligations": [
-          "No termination bound"
-        ]
+        "relation": "supports",
+        "note": "The node notes nonincrease does not prove termination, consistent with CUT allowing stationary outcomes."
       }
     },
     {
@@ -5481,89 +5391,53 @@
     },
     {
       "atlas_id": "ATL-P005-009",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers the native-test fixture skip behaviour.",
-      "proposed_derivation": {
-        "title": "Native fixture skip",
-        "claim": "Without configuration, only tests requesting the native fixture skip, with a stated reason.",
-        "hypotheses": [
-          "pytest collection"
-        ],
-        "derivation": "Run the suite without pins and confirm the skip set equals the tests requesting the fixture.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P005-009"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P005-009: Without configuration, only tests requesting the native fixture skip, with a declared reason; unconfigured non-native tests execute normally while malformed configurations fail closed.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P005-010",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers standalone execution or vendored-source provenance.",
-      "proposed_derivation": {
-        "title": "Standalone companion",
-        "claim": "The Python companion runs outside the repository, and its copied adapter and governor match the recorded sources up to the documented patches.",
-        "hypotheses": [
-          "Recorded source commits"
-        ],
-        "derivation": "Run tests from a copy outside the repository; compare ASTs of unpatched functions with the recorded sources.",
-        "obligations": [
-          "Native binary separately required"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P005-010"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P005-010: The Python companion runs outside the repository, and its copied adapter and governor match the recorded sources up to the documented patches.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P005-011",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers compute_phi1 native refusal propagation in the patched copy.",
-      "proposed_derivation": {
-        "title": "Native refusal propagation",
-        "claim": "compute_phi1 propagates a configured native failure, enumerates exactly when unconfigured, and refuses float/Boolean weights.",
-        "hypotheses": [
-          "Patched governor copy"
-        ],
-        "derivation": "Finite tests with a failing mock native, no native, and float/Boolean weights.",
-        "obligations": [
-          "Enumeration results are not native results"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P005-011"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P005-011: compute_phi1 propagates a configured native failure, enumerates exactly when unconfigured, and refuses float/Boolean weights.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P005-012",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers the CUT completeness patch.",
-      "proposed_derivation": {
-        "title": "CUT completeness",
-        "claim": "A relational CUT missing a declared edge or with a non-exact value raises IncompleteProposal with state unchanged.",
-        "hypotheses": [
-          "Patched step_cut"
-        ],
-        "derivation": "Finite tests for each refusal case with state comparison before and after.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P005-012"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P005-012: A relational CUT missing a declared edge or with a non-exact value raises IncompleteProposal with state unchanged.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P005-013",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers the current harness exact-input guard; a review finding on an earlier version reported float conversion.",
-      "proposed_derivation": {
-        "title": "Harness exact inputs",
-        "claim": "The streaming harness refuses float and Boolean claim values and scores integers and exact rational strings.",
-        "hypotheses": [
-          "Current harness code"
-        ],
-        "derivation": "Finite tests for each value type, including initial values.",
-        "obligations": [
-          "Earlier version reported to convert floats before the guard"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P005-013"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P005-013: The streaming harness refuses float and Boolean claim values and scores integers and exact rational strings.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P005-014",
@@ -5719,101 +5593,70 @@
     },
     {
       "atlas_id": "ATL-P006-006",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers the temporary-path full-file write.",
-      "proposed_derivation": {
-        "title": "Full-file replacement via temporary path",
-        "claim": "CemeterySink._write_file writes the serialized file to a temporary path and replaces the target.",
-        "hypotheses": [
-          "pinned sink source"
-        ],
-        "derivation": "Source inspection plus a controlled write test observing the temporary path and the replace call.",
-        "obligations": [
-          "atomicity depends on the filesystem"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P006-006"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "AUDIT-P006-006 confirms full-file staging and replacement on success. An injected replacement failure preserves the prior file in the tested case but can leave the temporary file and advance in-memory state.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P006-007",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "Scope fence; no node.",
-      "proposed_derivation": {
-        "title": "RFC 8785 scope",
-        "claim": "Scope or editorial statement.",
-        "hypotheses": [],
-        "derivation": "Pure scope statement; not worth a derivation, record it as a boundary on the paper's claims.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P006-007"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "AUDIT-P006-007 traces the historical sorted-JSON limits to Paper 006 and its publication receipt. The receipt binds later encoder observations separately.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P006-008",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers caller-supplied cochain fields in the sink.",
-      "proposed_derivation": {
-        "title": "Caller-supplied refusal evidence",
-        "claim": "Cochain and refusal fields are stored as supplied, not computed by the sink.",
-        "hypotheses": [
-          "record_refusal source"
-        ],
-        "derivation": "Source inspection of record_refusal plus a test storing an inconsistent cochain that is accepted unchanged.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P006-008"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P006-008: Cochain and refusal fields are stored as supplied, not computed by the sink, binding caller-provided fields into SHA-256 digests without schema or semantic mutation.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P006-009",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "NATIVE-EIS-001"
+        "AUDIT-P006-009"
       ],
-      "relation": "narrows",
-      "note": "NATIVE-EIS-001 covers native ThymusGate::screen regex refusal (InvalidPattern) and benign self-panel match retirement (SelfReactive) in thymus.rs; direct replay of the Paper 006 Python clonal_selection kill-condition path remains partial.",
-      "proposed_derivation": {
-        "title": "Detector regex refusal",
-        "claim": "An invalid detector regex yields a typed refusal; a benign-panel match yields a kill-condition record.",
-        "hypotheses": [
-          "clonal_selection source"
+      "relation": "states_same_claim_as",
+      "note": "AUDIT-P006-009 checks the Python clonal-selection path for typed regex refusal and the benign-panel kill condition. The earlier native ThymusGate evidence remains narrower.",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "NATIVE-EIS-001"
         ],
-        "derivation": "Finite check: run the kill-condition path on an invalid pattern and on a pattern that matches a benign panel row.",
-        "obligations": []
+        "relation": "narrows",
+        "note": "NATIVE-EIS-001 covers native ThymusGate::screen regex refusal (InvalidPattern) and benign self-panel match retirement (SelfReactive) in thymus.rs; direct replay of the Paper 006 Python clonal_selection kill-condition path remains partial."
       }
     },
     {
       "atlas_id": "ATL-P006-010",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the self-panel distinct count.",
-      "proposed_derivation": {
-        "title": "Self-panel distinct contents",
-        "claim": "The self panel has 40 distinct base contents among 1,000 rows.",
-        "hypotheses": [
-          "canonical self panel"
-        ],
-        "derivation": "Exact finite count of distinct base contents.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P006-010"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P006-010: The self panel has 40 distinct base contents among 1,000 rows.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P006-011",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers the inclusive toxicity threshold.",
-      "proposed_derivation": {
-        "title": "Inclusive toxicity threshold",
-        "claim": "The downgrade fires at toxicity $\\ge 1/5$; unlabelled-corpus toxicity is 0 or 1.",
-        "hypotheses": [
-          "treg source"
-        ],
-        "derivation": "Exact rational boundary test at $1/5$ and just below; corpus score is a ratio with a 0/1 numerator by construction.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P006-011"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P006-011: The downgrade fires at toxicity >= 1/5; unlabelled-corpus toxicity is 0 or 1.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P006-012",
@@ -5902,21 +5745,13 @@
     },
     {
       "atlas_id": "ATL-P007-001",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "Route inventory statement.",
-      "proposed_derivation": {
-        "title": "Deep route inventory",
-        "claim": "The baseline route README lists 20 notebooks in five groups.",
-        "hypotheses": [
-          "Pinned README"
-        ],
-        "derivation": "Parse the README and count notebook paths per group.",
-        "obligations": [
-          "Presence only"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P007-001"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P007-001: The baseline route README lists 20 notebooks in five groups.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P007-002",
@@ -5940,35 +5775,23 @@
     },
     {
       "atlas_id": "ATL-P007-004",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the verifier's audit scope.",
-      "proposed_derivation": {
-        "title": "Route verifier scope",
-        "claim": "verify_system_integration.py checks structure, selected arithmetic restrictions, source bindings and plain Python execution only.",
-        "hypotheses": [
-          "Pinned verifier"
-        ],
-        "derivation": "Source-inspect and list each check function.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P007-004"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P007-004: verify_system_integration.py checks structure, selected arithmetic restrictions, source bindings and plain Python execution only.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P007-005",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the staleness of the 20/20 receipt.",
-      "proposed_derivation": {
-        "title": "Historical receipt staleness",
-        "claim": "The 20/20 receipt is historical; manifest paths are stale and the cycle notebook calls a retired norm API.",
-        "hypotheses": [
-          "Pinned receipt, manifest, cochains.py"
-        ],
-        "derivation": "Resolve each manifest path; run the cycle notebook's norm call and confirm refusal.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P007-005"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P007-005: The 20/20 receipt is historical; manifest paths are stale and the cycle notebook calls a retired norm API.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P007-006",
@@ -6016,21 +5839,13 @@
     },
     {
       "atlas_id": "ATL-P007-010",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the Lean 4.34.0 build receipt and 21/64 census.",
-      "proposed_derivation": {
-        "title": "Lean receipt census",
-        "claim": "Retained evidence records a Lean 4.34.0 build, a 21-name report and a 64-declaration package census.",
-        "hypotheses": [
-          "axiom_report.txt, full_axiom_report.txt"
-        ],
-        "derivation": "Verify report hashes against the release receipt and count entries; fresh lake build when available.",
-        "obligations": [
-          "Fresh kernel replay"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P007-010"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P007-010: Retained evidence records a Lean 4.34.0 build, a 21-name report and a 64-declaration package census.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P007-011",

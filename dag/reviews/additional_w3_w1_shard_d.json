@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "bf3fbf738",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper.md",
+      "sha256": "b4f7feb78b00f5cb77dc6a17329970313ecdc22e9856d012b381ad1f09f950a1",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          617
+        ]
+      ],
+      "assessment": "Audited Section 5 cemetery persistence, Section 6 hash-chaining verification, and Section 7 clonal selection and central tolerance.",
+      "git_blob_sha256": "dc90a190ae2c8b1bb72a9b0fe263c42cfd3206d3e0d517d887c69c208db28757"
+    },
+    {
+      "path": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md",
+      "sha256": "2713e58f46d233e3e29d32fd27159629e489957a27081f2ecfc8686535715e79",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          70
+        ]
+      ],
+      "assessment": "Audited rows P6-06 (temporary-path full file replacement), P6-07 (internal canonical JSON scope), P6-08 (caller-supplied refusal evidence custody), and P6-09 (detector regex refusal and kill condition).",
+      "git_blob_sha256": "9d5b329f6244e0397e6a4bc2b46f20ad10bc6a3018175b2d11c1f1870cc31263"
+    },
+    {
+      "path": "pfp/infrastructure/persistence/cemetery_sink.py",
+      "sha256": "fdde584bc8e7696366272f171e5c5f8f61156d0c18cfcb877219521b22f0201b",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          424
+        ]
+      ],
+      "assessment": "Audited CemeterySink._write_file temporary-path replacement, _canonical_json_bytes float rejection, and record_refusal parameter custody."
+    },
+    {
+      "path": "pfp/domain/immune/clonal_selection.py",
+      "sha256": "ec8392a7894b2fddd84fbb9c8f5264b28ce6484d25df41b6b784a82d3f7f107f",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [
+          1,
+          373
+        ]
+      ],
+      "assessment": "Audited ClonalSelectionEngine.check_kill_condition regex error interception emitting KillConditionRefusal and self-panel match emitting KillConditionReceipt."
+    },
+    {
+      "path": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/docs/first_publication_validation_2026_10_02.json",
+      "sha256": "0a1e501efceda29c79ad801588a9cf32eacdc330c447407fa9577aaf3eef75c9",
+      "full_source_read": false,
+      "reviewed_lines": [
+        [
+          1,
+          27
+        ],
+        [
+          112,
+          117
+        ]
+      ],
+      "assessment": "Verified the distinct source identities recorded for the audit baseline and the later encoder observation.",
+      "git_blob_sha256": "3bb27be62a09c7f7de78582e9a7dfd7cdc0cce8df077de0c2697b63fb42cd4da"
+    }
+  ],
+  "claims": [
+    {
+      "id": "AUDIT-P006-006",
+      "statement": "CemeterySink._write_file writes the serialized file to a temporary path and replaces the target.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Pinned sink source in pfp/infrastructure/persistence/cemetery_sink.py.",
+        "Filesystem replace operation os.replace with atomicity dependent on underlying filesystem."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper.md",
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md",
+        "pfp/infrastructure/persistence/cemetery_sink.py"
+      ],
+      "limits": "Confirms full-file write staging to temporary path and replacement; atomicity depends on operating system filesystem rename semantics without explicit fsync."
+    },
+    {
+      "id": "AUDIT-P006-007",
+      "statement": "The historical sink uses sorted JSON without establishing RFC 8785 conformance. The publication receipt separately identifies a later encoder revision.",
+      "status": "bounded_historical_source_and_receipt_support",
+      "dependencies": [
+        "Paper 006 Section 4 and its first-publication source bindings."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper.md",
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md",
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/docs/first_publication_validation_2026_10_02.json"
+      ],
+      "limits": "The retained receipt supports provenance. Tests of the present encoder exercise a different revision and do not replay the historical serializer."
+    },
+    {
+      "id": "AUDIT-P006-008",
+      "statement": "Cochain and refusal fields are stored as supplied, not computed by the sink.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Record refusal intake signature and pass-through normalization in pfp/infrastructure/persistence/cemetery_sink.py."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper.md",
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md",
+        "pfp/infrastructure/persistence/cemetery_sink.py"
+      ],
+      "limits": "Storage custody does not establish semantic truth of the recorded refusal reason or mathematical validity of the cochain projection."
+    },
+    {
+      "id": "AUDIT-P006-009",
+      "statement": "An invalid detector regex yields a typed refusal; a benign-panel match yields a kill-condition record.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Clonal selection engine check_kill_condition in pfp/domain/immune/clonal_selection.py.",
+        "Native ThymusGate screen parity in code/rust/core_epistemic_immune_system/src/thymus.rs (lineage NATIVE-EIS-001)."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper.md",
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md",
+        "pfp/domain/immune/clonal_selection.py"
+      ],
+      "limits": "The added tests exercise Python clonal selection. NATIVE-EIS-001 supplies separate partial evidence for the native screening path."
+    }
+  ],
+  "file_review_pins": "sha256 records the original inventory bytes. Where checkout line endings differ, git_blob_sha256 records the unchanged text as stored at source_commit."
+}

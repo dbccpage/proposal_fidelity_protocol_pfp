@@ -38,6 +38,7 @@ MATCHES = "atlas/atlas_claim_matches.json"
 DERIVATIONS = "dag/derivations"
 VERDICTS = ("matched", "partial", "gap")
 MATCH_EDGE = {"matched": "states_same_claim_as", "supports": "partially_supports", "narrows": "narrows", "refutes": "refutes"}
+PARTIAL_RELATIONS = ("supports", "narrows", "refutes")
 
 # DAG node kinds that are not derivations: source pins, stated hypotheses, per-paper verdicts.
 NON_DERIVATION_KINDS = frozenset({"pinned_source_file", "explicit_assumption_or_obligation", "paper_assessment"})
@@ -324,14 +325,21 @@ def build() -> tuple[dict, dict, str]:
         m = matches.get(c["atlas_id"])
         if m:
             c["match"] = {k: m[k] for k in ("verdict", "nodes", "relation", "note")}
+            partial = m.get("partial_evidence")
+            if partial:
+                c["match"]["partial_evidence"] = partial
             new_nodes[-1]["atlas_match"] = c["match"]
             if m.get("proposed_derivation"):
                 c["match"]["proposed_derivation_file"] = f"{DERIVATIONS}/{derivation_file(c['atlas_id'])}"
-            for nid in m["nodes"]:
-                if nid not in ids:
-                    raise SystemExit(f"{MATCHES}: {c['atlas_id']} names unknown node {nid}")
-                kind = MATCH_EDGE["matched" if m["verdict"] == "matched" else (m["relation"] or "supports")]
-                edges.append({"from": nid, "to": c["atlas_id"], "kind": kind, "citation": MATCHES})
+            relation = "matched" if m["verdict"] == "matched" else (m["relation"] or "supports")
+            evidence = [(m["nodes"], relation)]
+            if partial:
+                evidence.append((partial["nodes"], partial["relation"]))
+            for evidence_nodes, evidence_relation in evidence:
+                for nid in evidence_nodes:
+                    if nid not in ids:
+                        raise SystemExit(f"{MATCHES}: {c['atlas_id']} names unknown node {nid}")
+                    edges.append({"from": nid, "to": c["atlas_id"], "kind": MATCH_EDGE[evidence_relation], "citation": MATCHES})
     dag["nodes"] = nodes + new_nodes
     dag["edges"] = edges
     dag["graph_validation"] = validate_graph(dag)
@@ -366,6 +374,16 @@ def load_matches(claims: list[dict]) -> dict[str, dict]:
             raise SystemExit(f"{MATCHES}: {r['atlas_id']} gap must have no nodes, other verdicts at least one")
         if r["verdict"] == "gap" and not r.get("proposed_derivation"):
             raise SystemExit(f"{MATCHES}: gap {r['atlas_id']} lacks a proposed derivation")
+        if "partial_evidence" in r:
+            partial = r["partial_evidence"]
+            if (r["verdict"] != "matched" or not isinstance(partial, dict)
+                    or partial.get("relation") not in PARTIAL_RELATIONS
+                    or not isinstance(partial.get("nodes"), list) or not partial["nodes"]
+                    or not all(isinstance(node, str) for node in partial["nodes"])
+                    or not isinstance(partial.get("note"), str) or not partial["note"].strip()
+                    or len(set(partial["nodes"])) != len(partial["nodes"])
+                    or set(partial["nodes"]).intersection(r["nodes"])):
+                raise SystemExit(f"{MATCHES}: {r['atlas_id']} has invalid partial evidence")
         out[r["atlas_id"]] = r
     want = {c["atlas_id"] for c in claims}
     if set(out) != want:
@@ -454,6 +472,10 @@ def review_cell(cl: dict) -> str:
         return ""
     rel = f" {m['relation']}" if m["verdict"] == "partial" and m["relation"] else ""
     nodes = ", ".join(f"`{n}`" for n in m["nodes"])
+    partial = m.get("partial_evidence")
+    if partial:
+        partial_nodes = ", ".join(f"`{n}`" for n in partial["nodes"])
+        nodes += f" ({partial['relation']}: {partial_nodes})"
     link = f" [derivation](../{m['proposed_derivation_file']})" if m.get("proposed_derivation_file") else ""
     return f"`{m['verdict']}`{rel}" + (f": {nodes}" if nodes else "") + link
 
@@ -473,7 +495,7 @@ def render(ledger: dict) -> str:
            "- Not derivations, so not rows: " + ", ".join(f"{v} `{k}`" for k, v in c["non_derivation_nodes_excluded"].items()) + ".",
            f"- Claim-level review of the archive rows against the audit derivations (recorded in [`atlas_claim_matches.json`](atlas_claim_matches.json)): "
            + ", ".join(f"{c['archive_claim_review'][k]} `{k}`" for k in VERDICTS)
-           + ". A `matched` row has an edge `states_same_claim_as` from each audit node; a `partial` row has an edge `partially_supports`, `narrows` or `refutes`; a `gap` row has no audit node and a proposed derivation in [`dag/derivations/`](../dag/derivations/README.md).",
+           + ". A `matched` row has a `states_same_claim_as` edge from each matching node. A `matched` or `partial` row can also have `partially_supports`, `narrows` or `refutes` edges. A `gap` row has a proposed derivation in [`dag/derivations/`](../dag/derivations/README.md).",
            "",
            "Status is a coarse reading of the source's own status and evidence text: "
            + ", ".join(f"`{s}`" for s in ledger["status_vocabulary"]) + ". The source text is kept in `status_text`; the atlas grades nothing.",
