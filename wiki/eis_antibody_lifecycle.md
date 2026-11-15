@@ -155,3 +155,8 @@ protected fields, a replayed passing receipt and an explicit human decision. The
 first admitted v2 registry is scoped to one engineering profile and grants no
 global activation. A merged pull request, a legacy score, a repeated trace or
 model consensus is never an admission label.
+
+## Native host and ledger integration
+
+- `code/rust/core_epistemic_immune_system/src/thymus.rs` implements negative-selection screening (`ThymusGate::screen`); Draft PR `#108` migrates `clonal_selection.rs` to exact `BigRational` (`AffinityScore`).
+- Draft PR `#113` adds `code/rust/pfp_immune` (`screen` and `select`), Draft PR `#118` adds `pfp_core/operad_ledger.py` to log refused/admitted candidates, and Draft PR `#121` connects `pfp_core/immune_host.py` into `WF14`, `WF19`, `WF41`, and `WF51`.

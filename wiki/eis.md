@@ -79,3 +79,9 @@ small, exact rule, and none of them grants authority.
 
 Related papers: [003](paper_003.md) (admitting detectors and testing their
 effects) and [006](paper_006.md) (retained failure evidence and controlled reuse).
+
+## Native host and ledger integration
+
+- Pure Rust checks live in `code/rust/core_epistemic_immune_system` (integration compile fix and CI in Draft PR `#100`, normalized charpoly wire and host checks in Draft PR `#104`, `BigRational` clonal affinity and unified PCIV immunity in Draft PR `#108`).
+- Standalone host CLI `code/rust/pfp_immune` (Draft PR `#113`) exposes `screen`, `decide`, `taint`, `select`, and `exclusion` over typed JSON (`#[serde(deny_unknown_fields)]`).
+- Python host delegation and append-only failure ledger persistence live in `pfp_core/immune_host.py` (Draft PR `#121`) and `pfp_core/operad_ledger.py` (Draft PR `#118`), wired into `WF14`, `WF19`, `WF41`, `WF51` (`pfp_core/exclusions.py`), and `WF52`.

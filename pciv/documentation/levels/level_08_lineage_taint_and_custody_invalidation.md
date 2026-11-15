@@ -15,14 +15,14 @@ evidence_grades:
 authority_effect: "None"
 source_paths:
   - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - engine/crates_rs/core_prompt_civilization/src/immunity.rs
+  - code/rust/core_prompt_civilization/src/immunity.rs
 ---
 
 # Prompt Civ Level 08: Lineage Taint & Custody Invalidation: Causal vs Global
 
 **AuthorityEffect:** None.  
 **Level:** Level 08 (Security Quarantine, Subtree Taint & Global Disarming)  
-**Rust Immunity Seam:** [`core_prompt_civilization::immunity`](../../../engine/crates_rs/core_prompt_civilization/src/immunity.rs)  
+**Rust Immunity Seam:** [`core_prompt_civilization::immunity`](..\..\..\code\rust\core_prompt_civilization\src\immunity.rs)  
 **Primary Policies:** `TaintPolicyV1`, `ImmunityPropagationPolicyV1`  
 **Core Falsifiers:** `F-RES-07`, `F-RES-11`
 

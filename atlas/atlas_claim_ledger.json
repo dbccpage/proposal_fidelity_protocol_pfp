@@ -1397,10 +1397,12 @@
       "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
       "dag_node": "ATL-P003-008",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the two-signal danger-gate decision table.",
+        "verdict": "partial",
+        "nodes": [
+          "NATIVE-EIS-006"
+        ],
+        "relation": "narrows",
+        "note": "NATIVE-EIS-006 covers the native two-signal independence and disposition paths (signal_gate.rs maps S1 only -> DiagnosticOnly, S2 only -> DiagnosticOnly, S1 + S2 Low/Medium -> DefensiveLockdown, S1 + S2 High/Critical -> Quarantined); exhaustive matrix parity against the Paper 003 Python table remains partial.",
         "proposed_derivation_file": "dag/derivations/atl_p003_008.md"
       }
     },
@@ -1527,10 +1529,13 @@
       "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
       "dag_node": "ATL-P003-013",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records Rust/Python parity for the danger table and detectors in this package.",
+        "verdict": "partial",
+        "nodes": [
+          "EPC02",
+          "NATIVE03-FIXTURES-011"
+        ],
+        "relation": "narrows",
+        "note": "EPC02 and NATIVE03-FIXTURES-011 cover finite Python-oracle parity fixture generation and inspected frozen corpora (including python_independence_v1.json); exhaustive parity across the Paper 003 danger-gate table and all package detectors remains partial.",
         "proposed_derivation_file": "dag/derivations/atl_p003_013.md"
       }
     },
@@ -1553,10 +1558,13 @@
       "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
       "dag_node": "ATL-P003-014",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "Admission requirements are a policy definition; no derivation covers them.",
+        "verdict": "partial",
+        "nodes": [
+          "PAPER006-CONTROLLED-REUSE-UTILITY",
+          "NATIVE-EIS-004"
+        ],
+        "relation": "supports",
+        "note": "PAPER006-CONTROLLED-REUSE-UTILITY specifies separation of reproduced failure, valid near-miss control, and scoped admission, and NATIVE-EIS-004 enforces signed spec_id/scope/rule/source/subject/context bindings in authenticated.rs; Paper 003 package-specific wording remains a declared scope boundary.",
         "proposed_derivation_file": "dag/derivations/atl_p003_014.md"
       }
     },
@@ -3211,10 +3219,12 @@
       "paper": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining",
       "dag_node": "ATL-P006-009",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node covers the pfp immune regex refusal and kill-condition path.",
+        "verdict": "partial",
+        "nodes": [
+          "NATIVE-EIS-001"
+        ],
+        "relation": "narrows",
+        "note": "NATIVE-EIS-001 covers native ThymusGate::screen regex refusal (InvalidPattern) and benign self-panel match retirement (SelfReactive) in thymus.rs; direct replay of the Paper 006 Python clonal_selection kill-condition path remains partial.",
         "proposed_derivation_file": "dag/derivations/atl_p006_009.md"
       }
     },
@@ -23871,8 +23881,8 @@
     "dag_claims_without_archive_source": 729,
     "archive_claim_review": {
       "matched": 118,
-      "partial": 98,
-      "gap": 391
+      "partial": 102,
+      "gap": 387
     },
     "non_derivation_nodes_excluded": {
       "explicit_assumption_or_obligation": 757,

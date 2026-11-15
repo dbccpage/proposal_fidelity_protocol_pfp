@@ -110,3 +110,8 @@ descends from `P` through a second, longer path of length 4.
 rejection rule that is sound for its source task can become unsound after a
 task change, so a returned rule is re-used only when its task, evidence,
 transport and resource bindings survive.
+
+## Native host and ledger links
+
+- `code/rust/core_prompt_civilization/src/immunity.rs` enforces the 10-hop ceiling (`F-IMMUNE-09`) and shortest-path distance (`F-IMMUNE-10`) fixed in Draft PR `#100`, and delegates core immune logic to `code/rust/core_epistemic_immune_system` in Draft PR `#108`.
+- Workflow integration uses `code/rust/pfp_immune` (Draft PR `#113`), `pfp_core/operad_ledger.py` (Draft PR `#118`), and `pfp_core/immune_host.py` (Draft PR `#121`).

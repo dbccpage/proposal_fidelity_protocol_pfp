@@ -97,3 +97,8 @@ receipt is refused by the genealogy service.
 2. Two prompts address the same task and share half their text. Is there an
    edge between them? *Not unless one was generated from the other with a
    sealed witness. Similarity creates no edge.*
+
+## Native host and ledger links
+
+- Canonical genome serialization (`PromptGenomeV1`) lives in `code/rust/core_prompt_civilization/src/record.rs` (Draft PR `#100` addresses nested-key ordering stability for `genome_identity`).
+- Host-delegated execution uses `pfp_core/immune_host.py` (Draft PR `#121`) and `pfp_core/operad_ledger.py` (Draft PR `#118`) for `WF14` and `WF19`.

@@ -13,7 +13,7 @@ authority_effect: "None"
 source_paths:
 - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
 - product_planning_office/receipts/requested_plan_completion_2026_10_02.json
-- engine/crates_rs/core_prompt_civilization/src/lib.rs
+- code/rust/core_prompt_civilization/src/lib.rs
 prerequisites: []
 aliases: []
 related:

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-11-15T01:26:13.914963+00:00",
+  "generated_at_utc": "2026-11-15T05:05:39.432803+00:00",
   "repository": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp",
   "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
   "status": "in_progress",
@@ -53060,10 +53060,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the two-signal danger-gate decision table.",
+        "verdict": "partial",
+        "nodes": [
+          "NATIVE-EIS-006"
+        ],
+        "relation": "narrows",
+        "note": "NATIVE-EIS-006 covers the native two-signal independence and disposition paths (signal_gate.rs maps S1 only -> DiagnosticOnly, S2 only -> DiagnosticOnly, S1 + S2 Low/Medium -> DefensiveLockdown, S1 + S2 High/Critical -> Quarantined); exhaustive matrix parity against the Paper 003 Python table remains partial.",
         "proposed_derivation_file": "dag/derivations/atl_p003_008.md"
       }
     },
@@ -53200,10 +53202,13 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records Rust/Python parity for the danger table and detectors in this package.",
+        "verdict": "partial",
+        "nodes": [
+          "EPC02",
+          "NATIVE03-FIXTURES-011"
+        ],
+        "relation": "narrows",
+        "note": "EPC02 and NATIVE03-FIXTURES-011 cover finite Python-oracle parity fixture generation and inspected frozen corpora (including python_independence_v1.json); exhaustive parity across the Paper 003 danger-gate table and all package detectors remains partial.",
         "proposed_derivation_file": "dag/derivations/atl_p003_013.md"
       }
     },
@@ -53228,10 +53233,13 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "Admission requirements are a policy definition; no derivation covers them.",
+        "verdict": "partial",
+        "nodes": [
+          "PAPER006-CONTROLLED-REUSE-UTILITY",
+          "NATIVE-EIS-004"
+        ],
+        "relation": "supports",
+        "note": "PAPER006-CONTROLLED-REUSE-UTILITY specifies separation of reproduced failure, valid near-miss control, and scoped admission, and NATIVE-EIS-004 enforces signed spec_id/scope/rule/source/subject/context bindings in authenticated.rs; Paper 003 package-specific wording remains a declared scope boundary.",
         "proposed_derivation_file": "dag/derivations/atl_p003_014.md"
       }
     },
@@ -55010,10 +55018,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node covers the pfp immune regex refusal and kill-condition path.",
+        "verdict": "partial",
+        "nodes": [
+          "NATIVE-EIS-001"
+        ],
+        "relation": "narrows",
+        "note": "NATIVE-EIS-001 covers native ThymusGate::screen regex refusal (InvalidPattern) and benign self-panel match retirement (SelfReactive) in thymus.rs; direct replay of the Paper 006 Python clonal_selection kill-condition path remains partial.",
         "proposed_derivation_file": "dag/derivations/atl_p006_009.md"
       }
     },
@@ -101060,6 +101070,12 @@
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:23"
     },
     {
+      "from": "NATIVE-EIS-006",
+      "to": "ATL-P003-008",
+      "kind": "narrows",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-009",
       "kind": "source_evidence_not_automatic_proof",
@@ -101090,10 +101106,34 @@
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:28"
     },
     {
+      "from": "EPC02",
+      "to": "ATL-P003-013",
+      "kind": "narrows",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "NATIVE03-FIXTURES-011",
+      "to": "ATL-P003-013",
+      "kind": "narrows",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
       "to": "ATL-P003-014",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md:29"
+    },
+    {
+      "from": "PAPER006-CONTROLLED-REUSE-UTILITY",
+      "to": "ATL-P003-014",
+      "kind": "partially_supports",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "NATIVE-EIS-004",
+      "to": "ATL-P003-014",
+      "kind": "partially_supports",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "SOURCE:atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
@@ -101700,6 +101740,12 @@
       "to": "ATL-P006-009",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md:25"
+    },
+    {
+      "from": "NATIVE-EIS-001",
+      "to": "ATL-P006-009",
+      "kind": "narrows",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "SOURCE:atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md",
@@ -156753,7 +156799,7 @@
   ],
   "graph_validation": {
     "unique_nodes": 3782,
-    "edges": 4083,
+    "edges": 4089,
     "acyclic": true
   }
 }

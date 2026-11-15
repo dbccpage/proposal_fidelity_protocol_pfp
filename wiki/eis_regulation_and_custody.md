@@ -107,3 +107,8 @@ into authority by itself.
 `use_cases/research_memory.py` gives scoped, diagnostic failure guidance to
 experiments. Candidates offered this way never become admitted antibodies
 through this path.
+
+## Native host and operad ledger links
+
+- Refused candidates and exclusion hypotheses can be persisted to the operad failure ledger via `pfp_core/operad_ledger.py` (Draft PR `#118`), complementing the SQLite custody receipt ledger and `WF41`/`WF51` (`pfp_core/exclusions.py`).
+- Host-delegated native checks run through `code/rust/pfp_immune` (Draft PR `#113`) and `pfp_core/immune_host.py` (Draft PR `#121`).
