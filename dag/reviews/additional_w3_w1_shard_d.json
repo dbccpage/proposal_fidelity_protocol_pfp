@@ -1,0 +1,114 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "bf3fbf738",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper.md",
+      "sha256": "b4f7feb78b00f5cb77dc6a17329970313ecdc22e9856d012b381ad1f09f950a1",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 617]
+      ],
+      "assessment": "Audited Section 5 cemetery persistence, Section 6 hash-chaining verification, and Section 7 clonal selection and central tolerance."
+    },
+    {
+      "path": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md",
+      "sha256": "2713e58f46d233e3e29d32fd27159629e489957a27081f2ecfc8686535715e79",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 70]
+      ],
+      "assessment": "Audited rows P6-06 (temporary-path full file replacement), P6-07 (internal canonical JSON scope), P6-08 (caller-supplied refusal evidence custody), and P6-09 (detector regex refusal and kill condition)."
+    },
+    {
+      "path": "pfp/infrastructure/persistence/cemetery_sink.py",
+      "sha256": "fdde584bc8e7696366272f171e5c5f8f61156d0c18cfcb877219521b22f0201b",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 424]
+      ],
+      "assessment": "Audited CemeterySink._write_file temporary-path replacement, _canonical_json_bytes float rejection, and record_refusal parameter custody."
+    },
+    {
+      "path": "pfp/domain/immune/clonal_selection.py",
+      "sha256": "ec8392a7894b2fddd84fbb9c8f5264b28ce6484d25df41b6b784a82d3f7f107f",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 373]
+      ],
+      "assessment": "Audited ClonalSelectionEngine.check_kill_condition regex error interception emitting KillConditionRefusal and self-panel match emitting KillConditionReceipt."
+    },
+    {
+      "path": "code/rust/core_epistemic_immune_system/src/thymus.rs",
+      "sha256": "02bd96bd792a104053cacb310f74182ece787c81ca8dd2552e60672bce0c49ce",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 224]
+      ],
+      "assessment": "Audited native Rust ThymusGate::screen error mapping for InvalidPattern and SelfReactive verdicts preserving lineage NATIVE-EIS-001."
+    }
+  ],
+  "claims": [
+    {
+      "id": "AUDIT-P006-006",
+      "statement": "CemeterySink._write_file writes the serialized file to a temporary path and replaces the target.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Pinned sink source in pfp/infrastructure/persistence/cemetery_sink.py.",
+        "Filesystem replace operation os.replace with atomicity dependent on underlying filesystem."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper.md",
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md",
+        "pfp/infrastructure/persistence/cemetery_sink.py"
+      ],
+      "limits": "Confirms full-file write staging to temporary path and replacement; atomicity depends on operating system filesystem rename semantics without explicit fsync."
+    },
+    {
+      "id": "AUDIT-P006-007",
+      "statement": "Scope or editorial statement.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Internal sorted-key compact JSON profile in pfp/infrastructure/persistence/cemetery_sink.py.",
+        "Float rejection fence in _refuse_floats and hex-tagged sanitization."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper.md",
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md",
+        "pfp/infrastructure/persistence/cemetery_sink.py"
+      ],
+      "limits": "Scope boundary confirming internal profile characteristics; does not claim full RFC 8785 compliance."
+    },
+    {
+      "id": "AUDIT-P006-008",
+      "statement": "Cochain and refusal fields are stored as supplied, not computed by the sink.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Record refusal intake signature and pass-through normalization in pfp/infrastructure/persistence/cemetery_sink.py."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper.md",
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md",
+        "pfp/infrastructure/persistence/cemetery_sink.py"
+      ],
+      "limits": "Storage custody does not establish semantic truth of the recorded refusal reason or mathematical validity of the cochain projection."
+    },
+    {
+      "id": "AUDIT-P006-009",
+      "statement": "An invalid detector regex yields a typed refusal; a benign-panel match yields a kill-condition record.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Clonal selection engine check_kill_condition in pfp/domain/immune/clonal_selection.py.",
+        "Native ThymusGate screen parity in code/rust/core_epistemic_immune_system/src/thymus.rs (lineage NATIVE-EIS-001)."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper.md",
+        "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining/paper_claim_ledger.md",
+        "pfp/domain/immune/clonal_selection.py",
+        "code/rust/core_epistemic_immune_system/src/thymus.rs"
+      ],
+      "limits": "Central tolerance screening validates against the supplied finite self-panel; preserves lineage NATIVE-EIS-001."
+    }
+  ]
+}

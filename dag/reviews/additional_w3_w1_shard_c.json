@@ -1,0 +1,138 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "bf3fbf738",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md",
+      "sha256": "9b2ce1d55daef68a3f995ea5a44e706d677677ba4dbc04849eca0483086b77d6",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 270]
+      ],
+      "assessment": "Audited manuscript Sections 1-6 covering finite discrete L1 quotient model, quickstart native delegation, worked session on 3-cycle, CUT monotonicity semantics, and conftest fixture skip isolation."
+    },
+    {
+      "path": "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
+      "sha256": "9f6c0ae7bcb52d50584e0a3df6fe2d003f38b0add861af9f8b190cbe883f6e05",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 84]
+      ],
+      "assessment": "Audited Paper 005 claim ledger rows G005-04 (worked session refusal, admission, and snapshot restore), G005-05 (quickstart native delegation and input rejection), G005-06 (CUT non-increase and stationary outcomes), and G005-09 (native-test fixture skip isolation)."
+    },
+    {
+      "path": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/play_demo.py",
+      "sha256": "90d1ce43b7153de5f9873b3dda607e9bc0c88f81f2f05ad47b84d748df31a45a",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 90]
+      ],
+      "assessment": "Audited worked session execution driving L1SymbolGameGovernor through ASSERT (1,1,1) (Phi_1=3), refused CUT (5,0,0) (DefectIncrease), admitted CUT (-2,1,1) (ExactRepair, Phi_1=0), VERIFY ZERO_OBSTRUCTION, and step_retract rollback to snapshot."
+    },
+    {
+      "path": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/quickstart.py",
+      "sha256": "585ddeffd20f9cfd2a7eef758f75737fd780fbd02166409275fde509a6aef131",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 509]
+      ],
+      "assessment": "Audited quickstart tutorial structure, compute_discrete_l1_projection native delegation, candidate enumeration retirement raising RuntimeError, and Edge and Cochain1 exact type validation rejecting float and bool."
+    },
+    {
+      "path": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/native_functional.py",
+      "sha256": "bc99d3d71b3a15b7246482b9cb50c0986de196086fa67b1b3f8770583b3a3172",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 125]
+      ],
+      "assessment": "Audited native graph transport adapter compute_graph_phi1, strict SHA-256 binary pinning, _exact input type rejection of float/bool, and NativeFunctionalUnavailable fail-closed exception paths."
+    },
+    {
+      "path": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py",
+      "sha256": "c6cd30cc12a8470a3f7e5aae5956b213b07fd01bdb479f56e5390857745a74bb",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 917]
+      ],
+      "assessment": "Audited L1SymbolGameGovernor step_cut weak monotonic descent check (new <= old), admission of stationary moves (status IdempotentStationary), refusal of defect increases (status DefectIncrease), and atomic rollback on refusal."
+    },
+    {
+      "path": "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/conftest.py",
+      "sha256": "da71a99111f123b245c5922066434aba74c6b229403a4a1d87f8b4b0722a4d36",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 43]
+      ],
+      "assessment": "Audited native_functional fixture checking CORE_FUNCTIONAL_GRAPH_BIN and CORE_FUNCTIONAL_GRAPH_SHA256, calling pytest.skip with SKIP_REASON when unconfigured, and calling pytest.fail on malformed or mismatched digests."
+    }
+  ],
+  "claims": [
+    {
+      "id": "AUDIT-P005-004",
+      "statement": "The enumeration-path session refuses $(5,0,0)$, admits $(-2,1,1)$ and restores the prior snapshot.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Directed triangle constraint graph topology with edge weights (1, 2, 3).",
+        "Python tree enumeration path in l1_symbol_game_governor.py.",
+        "Exact rational representation of edge claims."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/play_demo.py",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py"
+      ],
+      "limits": "Evaluated on the declared finite 3-cycle session using Python enumeration; native path requires configured external binary pins."
+    },
+    {
+      "id": "AUDIT-P005-005",
+      "statement": "The quickstart calls the native adapter for the minimum and refuses missing pins and non-exact inputs.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "compute_discrete_l1_projection calling compute_graph_phi1 in native_functional.py.",
+        "Absence of Python fallback when CORE_FUNCTIONAL_GRAPH_BIN or digest is unset.",
+        "Exact type checking in Edge and Cochain1 __post_init__."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/quickstart.py",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/native_functional.py"
+      ],
+      "limits": "Binds execution to pinned native executable bytes; does not provide source-to-binary compilation attestation."
+    },
+    {
+      "id": "AUDIT-P005-006",
+      "statement": "step_cut admits a proposal iff the new value is $\\le$ the old, so stationary moves are allowed.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Governor implementation of step_cut for section and relational claim proposals.",
+        "Predicate defect_after > defect_before gating refusal with DefectIncrease.",
+        "Status assignment IdempotentStationary when defect_after == defect_before."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py"
+      ],
+      "limits": "Applies to individual step_cut proposals in the vendored governor; non-increase does not impose a finite termination bound on arbitrary search sequences."
+    },
+    {
+      "id": "AUDIT-P005-009",
+      "statement": "Without configuration, only tests requesting the native fixture skip, with a stated reason.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "native_functional fixture definition in code/tests/conftest.py.",
+        "Explicit SKIP_REASON constant declaring missing configuration requirements.",
+        "Pytest fixture dependency injection model without autouse."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/paper_claim_ledger.md",
+        "atlas/archive/pfp/005_pfp_practitioners_field_manual/code/tests/conftest.py"
+      ],
+      "limits": "Describes pytest harness skip behavior; skipping a test does not substitute for passing test verification."
+    }
+  ]
+}

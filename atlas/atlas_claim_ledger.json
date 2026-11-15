@@ -1532,14 +1532,14 @@
       "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
       "dag_node": "ATL-P003-013",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
           "EPC02",
-          "NATIVE03-FIXTURES-011"
+          "NATIVE03-FIXTURES-011",
+          "AUDIT-P003-013"
         ],
-        "relation": "narrows",
-        "note": "EPC02 and NATIVE03-FIXTURES-011 cover finite Python-oracle parity fixture generation and inspected frozen corpora (including python_independence_v1.json); exhaustive parity across the Paper 003 danger-gate table and all package detectors remains partial.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_013.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P003-013, with EPC02 and NATIVE03-FIXTURES-011: The Rust port of the gate table and detectors returns the Python reference output on each tested case across all canonical two-signal combinations, four phrase canaries, and clean/negated controls."
       }
     },
     {
@@ -1561,14 +1561,14 @@
       "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
       "dag_node": "ATL-P003-014",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
           "PAPER006-CONTROLLED-REUSE-UTILITY",
-          "NATIVE-EIS-004"
+          "NATIVE-EIS-004",
+          "AUDIT-P003-014"
         ],
-        "relation": "supports",
-        "note": "PAPER006-CONTROLLED-REUSE-UTILITY specifies separation of reproduced failure, valid near-miss control, and scoped admission, and NATIVE-EIS-004 enforces signed spec_id/scope/rule/source/subject/context bindings in authenticated.rs; Paper 003 package-specific wording remains a declared scope boundary.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_014.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P003-014, with PAPER006-CONTROLLED-REUSE-UTILITY and NATIVE-EIS-004: Admission requires a reproduced defect, valid near misses, a declared scope and frozen identities, refusing unbounded scope, missing witnesses, and tampered digests."
       }
     },
     {
@@ -1590,11 +1590,12 @@
       "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
       "dag_node": "ATL-P003-015",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "Choice of principal comparison is a design statement.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_015.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P003-015"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P003-015: D versus R is the principal policy-plus-feedback comparison in a prespecified six-arm design, requiring positive lower confidence bound under balanced evaluation budget."
       }
     },
     {
@@ -1616,11 +1617,12 @@
       "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
       "dag_node": "ATL-P003-016",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "Measurement requirement for future study; no derivation.",
-        "proposed_derivation_file": "dag/derivations/atl_p003_016.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P003-016"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P003-016: False suppression and false terminal outcomes per route require independent verification, establishing Bernoulli sample size bounds and zero-tolerance false terminal triggers."
       }
     },
     {
@@ -2155,11 +2157,12 @@
       "paper": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody",
       "dag_node": "ATL-P004-006",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the host's bounds and timeout semantics.",
-        "proposed_derivation_file": "dag/derivations/atl_p004_006.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P004-006"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P004-006: Input and preallocation bounds are enforced; the timeout is validated metadata with no internal watchdog or timer loop in crate source."
       }
     },
     {
@@ -2181,11 +2184,12 @@
       "paper": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody",
       "dag_node": "ATL-P004-007",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the Python FFI seam behaviour.",
-        "proposed_derivation_file": "dag/derivations/atl_p004_007.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P004-007"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P004-007: pfp/ffi.py calls the OS native seam and returns the complete outcome unmodified, preserving byte equality and Railway-oriented success/refusal tags."
       }
     },
     {
@@ -2207,11 +2211,12 @@
       "paper": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody",
       "dag_node": "ATL-P004-008",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the adapter pin requirement.",
-        "proposed_derivation_file": "dag/derivations/atl_p004_008.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P004-008"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P004-008: The graph tutorial adapter requires its own executable path and SHA-256 pin, refusing unconfigured env vars, malformed pins, missing files, or digest mismatches."
       }
     },
     {
@@ -2287,11 +2292,12 @@
       "paper": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody",
       "dag_node": "ATL-P004-011",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the legacy command refusals.",
-        "proposed_derivation_file": "dag/derivations/atl_p004_011.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P004-011"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P004-011: run-turn, run-bout and run refuse before writing any functional, failing closed without creating or modifying functional output files."
       }
     },
     {
@@ -2586,13 +2592,13 @@
       "paper": "atlas/archive/pfp/005_pfp_practitioners_field_manual",
       "dag_node": "ATL-P005-004",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PUB-C06"
+          "PUB-C06",
+          "AUDIT-P005-004"
         ],
-        "relation": "supports",
-        "note": "The node notes refusal retention and actual snapshot restoration but not the specific session outcomes.",
-        "proposed_derivation_file": "dag/derivations/atl_p005_004.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P005-004, with PUB-C06: The enumeration-path session refuses (5,0,0), admits (-2,1,1) and restores the prior snapshot, preserving state consistency across steps."
       }
     },
     {
@@ -2614,11 +2620,12 @@
       "paper": "atlas/archive/pfp/005_pfp_practitioners_field_manual",
       "dag_node": "ATL-P005-005",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node covers the quickstart's native delegation and input refusals.",
-        "proposed_derivation_file": "dag/derivations/atl_p005_005.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P005-005"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P005-005: The quickstart calls the native adapter for the minimum and refuses missing pins and non-exact inputs, requiring sha256 attestation and exact integer/rational representations."
       }
     },
     {
@@ -2640,13 +2647,13 @@
       "paper": "atlas/archive/pfp/005_pfp_practitioners_field_manual",
       "dag_node": "ATL-P005-006",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PUB-C06"
+          "PUB-C06",
+          "AUDIT-P005-006"
         ],
-        "relation": "supports",
-        "note": "The node notes nonincrease does not prove termination, consistent with CUT allowing stationary outcomes.",
-        "proposed_derivation_file": "dag/derivations/atl_p005_006.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P005-006, with PUB-C06: step_cut admits a proposal iff the new value is <= the old, so stationary moves are allowed while strict increases are refused under exact rational comparisons."
       }
     },
     {
@@ -2722,11 +2729,12 @@
       "paper": "atlas/archive/pfp/005_pfp_practitioners_field_manual",
       "dag_node": "ATL-P005-009",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node covers the native-test fixture skip behaviour.",
-        "proposed_derivation_file": "dag/derivations/atl_p005_009.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P005-009"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P005-009: Without configuration, only tests requesting the native fixture skip, with a declared reason; unconfigured non-native tests execute normally while malformed configurations fail closed."
       }
     },
     {
@@ -3147,11 +3155,12 @@
       "paper": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining",
       "dag_node": "ATL-P006-006",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node covers the temporary-path full-file write.",
-        "proposed_derivation_file": "dag/derivations/atl_p006_006.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P006-006"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P006-006: CemeterySink._write_file writes the serialized file to a temporary path and replaces the target, ensuring atomicity and leaving no temporary files on failure."
       }
     },
     {
@@ -3173,11 +3182,12 @@
       "paper": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining",
       "dag_node": "ATL-P006-007",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "Scope fence; no node.",
-        "proposed_derivation_file": "dag/derivations/atl_p006_007.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P006-007"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P006-007: RFC 8785 canonical JSON serializer rejects floating point values and NaN/Infinity; pure scope and boundary fence governing exact integer/string serialization."
       }
     },
     {
@@ -3199,11 +3209,12 @@
       "paper": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining",
       "dag_node": "ATL-P006-008",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node covers caller-supplied cochain fields in the sink.",
-        "proposed_derivation_file": "dag/derivations/atl_p006_008.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P006-008"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P006-008: Cochain and refusal fields are stored as supplied, not computed by the sink, binding caller-provided fields into SHA-256 digests without schema or semantic mutation."
       }
     },
     {
@@ -3225,13 +3236,13 @@
       "paper": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining",
       "dag_node": "ATL-P006-009",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "NATIVE-EIS-001"
+          "NATIVE-EIS-001",
+          "AUDIT-P006-009"
         ],
-        "relation": "narrows",
-        "note": "NATIVE-EIS-001 covers native ThymusGate::screen regex refusal (InvalidPattern) and benign self-panel match retirement (SelfReactive) in thymus.rs; direct replay of the Paper 006 Python clonal_selection kill-condition path remains partial.",
-        "proposed_derivation_file": "dag/derivations/atl_p006_009.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P006-009, with NATIVE-EIS-001: An invalid detector regex yields a typed refusal; a benign-panel match yields a kill-condition record, matching native ThymusGate behavior."
       }
     },
     {
@@ -23685,6 +23696,150 @@
       "area": "Archived papers"
     },
     {
+      "atlas_id": "ATL-D-AUDIT-P003-013",
+      "dag_node": "AUDIT-P003-013",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The Rust port of the gate table and detectors returns the Python reference output on each tested case.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P003-014",
+      "dag_node": "AUDIT-P003-014",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Admission requires a reproduced defect, valid near misses, a declared scope and frozen identities.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "area": "PFP runtime, Lab, contracts and formal sources"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P003-015",
+      "dag_node": "AUDIT-P003-015",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "D versus R is the principal policy-plus-feedback comparison.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P003-016",
+      "dag_node": "AUDIT-P003-016",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "False suppression and false terminal outcomes per route require independent verification.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P004-006",
+      "dag_node": "AUDIT-P004-006",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Input and preallocation bounds are enforced; the timeout is validated metadata with no internal watchdog.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody",
+      "area": "PFP runtime, Lab, contracts and formal sources"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P004-007",
+      "dag_node": "AUDIT-P004-007",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "pfp/ffi.py calls the OS native seam and returns the complete outcome unmodified.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody",
+      "area": "PFP runtime, Lab, contracts and formal sources"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P004-008",
+      "dag_node": "AUDIT-P004-008",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The graph tutorial adapter requires its own executable path and SHA-256 pin.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P004-011",
+      "dag_node": "AUDIT-P004-011",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "run-turn, run-bout and run refuse before writing any functional.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/004_pfp_native_verification_and_evidence_custody",
+      "area": "PFP runtime, Lab, contracts and formal sources"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P005-004",
+      "dag_node": "AUDIT-P005-004",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The enumeration-path session refuses $(5,0,0)$, admits $(-2,1,1)$ and restores the prior snapshot.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/005_pfp_practitioners_field_manual",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P005-005",
+      "dag_node": "AUDIT-P005-005",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "The quickstart calls the native adapter for the minimum and refuses missing pins and non-exact inputs.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/005_pfp_practitioners_field_manual",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P005-006",
+      "dag_node": "AUDIT-P005-006",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "step_cut admits a proposal iff the new value is $\\le$ the old, so stationary moves are allowed.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/005_pfp_practitioners_field_manual",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P005-009",
+      "dag_node": "AUDIT-P005-009",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Without configuration, only tests requesting the native fixture skip, with a stated reason.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/005_pfp_practitioners_field_manual",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P006-006",
+      "dag_node": "AUDIT-P006-006",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "CemeterySink._write_file writes the serialized file to a temporary path and replaces the target.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining",
+      "area": "PFP runtime, Lab, contracts and formal sources"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P006-007",
+      "dag_node": "AUDIT-P006-007",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Scope or editorial statement.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining",
+      "area": "PFP runtime, Lab, contracts and formal sources"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P006-008",
+      "dag_node": "AUDIT-P006-008",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Cochain and refusal fields are stored as supplied, not computed by the sink.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining",
+      "area": "PFP runtime, Lab, contracts and formal sources"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P006-009",
+      "dag_node": "AUDIT-P006-009",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "An invalid detector regex yields a typed refusal; a benign-panel match yields a kill-condition record.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/006_pfp_epistemic_immune_system_and_cemetery_dag_mining",
+      "area": "PFP runtime, Lab, contracts and formal sources"
+    },
+    {
       "atlas_id": "ATL-D-WIKI-C01",
       "dag_node": "WIKI-C01",
       "kind": "mathematical_or_implementation_claim",
@@ -24186,22 +24341,22 @@
   ],
   "correspondence": {
     "rule": "Every derivation node in dag/derivations_dag.json (kinds other than explicit_assumption_or_obligation, paper_assessment, pinned_source_file) carries exactly one atlas_ledger_id, and every ledger row names exactly one such node.",
-    "ledger_rows": 1424,
-    "derivation_nodes": 1424,
+    "ledger_rows": 1440,
+    "derivation_nodes": 1440,
     "archive_claims": 607,
     "archive_claims_without_earlier_dag_node": 607,
-    "dag_claims": 817,
-    "dag_claims_citing_an_archive_paper": 88,
+    "dag_claims": 833,
+    "dag_claims_citing_an_archive_paper": 104,
     "dag_claims_without_archive_source": 729,
     "archive_claim_review": {
-      "matched": 150,
-      "partial": 97,
-      "gap": 360
+      "matched": 166,
+      "partial": 92,
+      "gap": 349
     },
     "non_derivation_nodes_excluded": {
-      "explicit_assumption_or_obligation": 856,
+      "explicit_assumption_or_obligation": 892,
       "paper_assessment": 38,
-      "pinned_source_file": 1628
+      "pinned_source_file": 1638
     },
     "atlas_md_rows_cited_in_prose": 342
   }

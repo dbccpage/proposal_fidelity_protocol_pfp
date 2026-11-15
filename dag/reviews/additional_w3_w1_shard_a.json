@@ -1,0 +1,133 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "source_commit": "bf3fbf738",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+      "sha256": "db9ce2c20408e6b8267ebab33e94cc172bf01762b6c32600108ae57967f7c00b",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 953]
+      ],
+      "assessment": "Audited Section 3 admission protocol, Section 4 native port, Section 6 prespecified D vs R experiment design, and Section 7 route safety criteria."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+      "sha256": "b93d68bf1e5092a8d6f9f054d2a5c487e0037715501632f03e1a525c87841626",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 78]
+      ],
+      "assessment": "Audited claim rows P3-13 (Rust port parity on tested cases), P3-14 (detector admission requirements), P3-15 (D vs R principal comparison), and P3-16 (route error independent verification)."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/danger_gate.py",
+      "sha256": "bec5440fddb5a36b753b939af35a16321b2b4fc8e35af93d2d9e9f51cc1f5311",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 190]
+      ],
+      "assessment": "Audited evaluate_two_signal_gate decision table, Signal1Match, Signal2Danger, and TwoSignalDecision representations."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/canaries.py",
+      "sha256": "4ff3771a14b44bb5b4dde754afdb344a29257fd43248d56fdf5d6fd57749a2cd",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 147]
+      ],
+      "assessment": "Audited candidate phrase detector definitions and scan_for_canaries substring evaluation."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/rust/src/danger_gate.rs",
+      "sha256": "c71cf049910a2699bd88aa99008a6a4a4203a7d3a725aaddc4bb74e1bbb5c445",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 194]
+      ],
+      "assessment": "Audited Rust evaluate_two_signal_gate implementation and serialization models."
+    },
+    {
+      "path": "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/rust/src/canaries.rs",
+      "sha256": "5b0b05f5e142b1f4ab1b5b7d2ea6e56cbeadcebc960d396caac6182e6c04045a",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 214]
+      ],
+      "assessment": "Audited Rust scan_for_canaries implementation and string slice pattern scanning."
+    },
+    {
+      "path": "pfp/domain/immune/danger_gate.py",
+      "sha256": "946bb772a8542b886ddcd0c4ab27ad3fee90bedea10aa673f09fe7c192748d97",
+      "full_source_read": true,
+      "reviewed_lines": [
+        [1, 290]
+      ],
+      "assessment": "Audited repository danger gate domain model, zero-float invariant assertions, and frozen value object contracts."
+    }
+  ],
+  "claims": [
+    {
+      "id": "AUDIT-P003-013",
+      "statement": "The Rust port of the gate table and detectors returns the Python reference output on each tested case.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Two-signal gate and canary implementations in atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/danger_gate.py and canaries.py.",
+        "Rust native port in atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/rust/src/danger_gate.rs and canaries.rs."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/danger_gate.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/canaries.py",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/rust/src/danger_gate.rs",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/code/rust/src/canaries.rs"
+      ],
+      "limits": "Parity is evaluated strictly relative to the Python reference oracle on the declared finite case list; uncompiled source revisions and uninspected open-domain inputs are unassessed."
+    },
+    {
+      "id": "AUDIT-P003-014",
+      "statement": "Admission requires a reproduced defect, valid near misses, a declared scope and frozen identities.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Detector object and admission specifications in Paper 003 Section 3.",
+        "Lineage separation of reproduced failure, near-miss controls, and declared scope in PAPER006-CONTROLLED-REUSE-UTILITY and NATIVE-EIS-004."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md",
+        "pfp/domain/immune/danger_gate.py"
+      ],
+      "limits": "Specifies the formal admission protocol for failure detectors; candidate detectors in Paper 003 remain unadmitted prototypes."
+    },
+    {
+      "id": "AUDIT-P003-015",
+      "statement": "D versus R is the principal policy-plus-feedback comparison.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Prespecified effectiveness experiment design in Paper 003 Section 6.",
+        "Factorization of six experimental arms and matched token, feedback, and stopping budgets."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md"
+      ],
+      "limits": "Documents the prespecified comparison definition for the proposed experiment; Paper 003 presents no live causal effect estimate."
+    },
+    {
+      "id": "AUDIT-P003-016",
+      "statement": "False suppression and false terminal outcomes per route require independent verification.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Route false suppression definition and safety criteria in Paper 003 Section 7.",
+        "Exact binomial/Bernoulli sample size requirements for route error bounds."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper.md",
+        "atlas/archive/pfp/003_pfp_host_admitted_failure_detectors/paper_claim_ledger.md"
+      ],
+      "limits": "Specifies measurement standards and sample size constraints for route safety gates; does not report achieved empirical bounds below 1% in Paper 003."
+    }
+  ]
+}
