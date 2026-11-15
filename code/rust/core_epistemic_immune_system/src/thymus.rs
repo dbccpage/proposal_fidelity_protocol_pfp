@@ -80,7 +80,9 @@ impl ThymusGate {
         };
 
         for (index, sample) in self.self_panel.iter().enumerate() {
-            if regex.is_match(sample) {
+            let normalized_sample =
+                crate::normalization::NormalizedMatcher::normalize_content(sample);
+            if regex.is_match(&normalized_sample) {
                 spec.retire();
                 return ThymusVerdict::SelfReactive {
                     matched_sample: sample.clone(),

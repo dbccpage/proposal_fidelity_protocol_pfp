@@ -2,7 +2,7 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/core_epistemic_immune_system/src/thymus.rs",
-  "target_sha256": "27531fe201bb34939e24e7314362011e611af4b644abf3e438d5a3dc70fad72a",
+  "target_sha256": "a687cdfd028d8c345a66f21f1da97e1d0f17d576842282e95e0c7249ec18884e",
   "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p core_epistemic_immune_system",
   "counts": {
     "killed": 6,
@@ -33,8 +33,8 @@
     },
     {
       "name": "remaining capacity calculation altered",
-      "old": "capacity_bound - admitted_items",
-      "new": "capacity_bound + admitted_items",
+      "old": "capacity_bound.saturating_sub(self.admitted_items)",
+      "new": "capacity_bound.saturating_add(self.admitted_items)",
       "outcome": "killed"
     },
     {

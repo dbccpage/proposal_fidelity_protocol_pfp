@@ -1,12 +1,16 @@
 //! Separate host field/persona checks, preserving input order and character spans.
 //! Raw JSON ingress is strict; the source's parsed-value checks remain the oracle.
 use crate::Refusal;
+use num_bigint::BigInt;
+use num_rational::Ratio;
+use num_traits::{Signed, Zero};
+use regex::Regex;
 use serde::{
     de::{MapAccess, Visitor},
-    Deserialize, Deserializer,
+    Deserialize, Deserializer, Serialize,
 };
 use serde_json::value::RawValue;
-use std::{collections::BTreeSet, fmt};
+use std::{collections::BTreeSet, fmt, sync::LazyLock};
 
 pub const PROTECTED_FIELD_KEYS: [&str; 11] = [
     "phi",
@@ -253,6 +257,190 @@ pub fn protected_field_spans(content: &str) -> Result<Vec<(usize, usize)>, Refus
     Ok(result)
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct ChshCheckFinding {
+    pub antibody_id: String,
+    pub name: String,
+    pub passed: bool,
+    pub evidence: String,
+}
+
+static CHSH_HEADER_REGEX: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(
+        r"(?i)\b(?:maximal\s+)?(?:CHSH|Bell)\b(?:\s+(?:value|expectation|parameter))?\s*(?:(\|S\||S)\s*)?(=|<=|>=|<|>)\s*",
+    )
+    .expect("CHSH header regex compiles")
+});
+
+static CHSH_TERM_REGEX: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(
+        r"(?i)^\s*([+-])?\s*(?:([0-9]+(?:\.[0-9]+)?)\s*\*\s*)?(?:\\?sqrt\s*[\{\(]?\s*([0-9]+(?:\.[0-9]+)?)\s*[\}\)]?|([0-9]+(?:\.[0-9]+)?))",
+    )
+    .expect("CHSH term regex compiles")
+});
+
+fn parse_rational_number(s: &str) -> Option<Ratio<BigInt>> {
+    if let Some((whole, frac)) = s.split_once('.') {
+        let whole_big: BigInt = whole.parse().ok()?;
+        let frac_big: BigInt = frac.parse().ok()?;
+        let base = BigInt::from(10).pow(frac.len() as u32);
+        let num = whole_big * &base + frac_big;
+        Some(Ratio::new(num, base))
+    } else {
+        let n: BigInt = s.parse().ok()?;
+        Some(Ratio::from_integer(n))
+    }
+}
+
+fn isqrt_ratio_30dec(r: &Ratio<BigInt>) -> Ratio<BigInt> {
+    if r.is_zero() {
+        return Ratio::zero();
+    }
+    let scale_factor = BigInt::from(10).pow(60);
+    let scaled = (r.numer() * r.denom()) * scale_factor;
+    let root = scaled.sqrt();
+    let den = r.denom() * BigInt::from(10).pow(30);
+    Ratio::new(root, den)
+}
+
+/// Ab09: Physical CHSH range |S| <= 2*sqrt(2) (Tsirelson bound).
+///
+/// Refuses when correlation claim exceeds Cirel'son ceiling.
+pub fn check_ab09_chsh_bound_range(text: &str) -> ChshCheckFinding {
+    let two = BigInt::from(2);
+    let tsirelson = Ratio::from_integer(two.clone()) * isqrt_ratio_30dec(&Ratio::from_integer(two));
+    let eps = Ratio::new(BigInt::from(1), BigInt::from(10).pow(9));
+
+    let mut violations = Vec::new();
+    let mut notes = Vec::new();
+
+    for cap in CHSH_HEADER_REGEX.captures_iter(text) {
+        let full_match = cap.get(0).unwrap();
+        let match_start = full_match.start();
+        let mut pos = full_match.end();
+
+        let has_abs = cap.get(1).is_some_and(|m| m.as_str().contains('|'));
+        let op = cap.get(2).map(|m| m.as_str()).unwrap_or("=");
+
+        let mut total = Ratio::zero();
+        let mut first = true;
+
+        while pos < text.len() {
+            let slice = &text[pos..];
+            if let Some(term_cap) = CHSH_TERM_REGEX.captures(slice) {
+                let term_match = term_cap.get(0).unwrap();
+                let sign_str = term_cap.get(1).map(|m| m.as_str());
+
+                if !first && sign_str.is_none() {
+                    break;
+                }
+
+                let sign = if sign_str == Some("-") {
+                    BigInt::from(-1)
+                } else {
+                    BigInt::from(1)
+                };
+
+                let coeff_str = term_cap.get(2).map(|m| m.as_str());
+                let rad_str = term_cap.get(3).map(|m| m.as_str());
+                let plain_str = term_cap.get(4).map(|m| m.as_str());
+
+                let term_val = if let Some(rad) = rad_str {
+                    let coeff = coeff_str
+                        .and_then(parse_rational_number)
+                        .unwrap_or_else(|| Ratio::from_integer(BigInt::from(1)));
+                    let rad_r = match parse_rational_number(rad) {
+                        Some(r) => r,
+                        None => break,
+                    };
+                    coeff * isqrt_ratio_30dec(&rad_r)
+                } else if coeff_str.is_some() {
+                    break;
+                } else if let Some(plain) = plain_str {
+                    match parse_rational_number(plain) {
+                        Some(r) => r,
+                        None => break,
+                    }
+                } else {
+                    break;
+                };
+
+                total += Ratio::from_integer(sign) * term_val;
+                pos += term_match.end();
+                first = false;
+            } else {
+                break;
+            }
+        }
+
+        if first {
+            continue;
+        }
+
+        let claim = &text[match_start..pos];
+        let v = total;
+
+        let is_violation = match op {
+            "=" => v.abs() > (&tsirelson + &eps) || (has_abs && v < -&eps),
+            ">" | ">=" => v > (&tsirelson + &eps) || (op == ">" && (&v - &tsirelson).abs() <= eps),
+            "<" | "<=" => {
+                if has_abs {
+                    v < -&eps || (op == "<" && v.abs() <= eps)
+                } else {
+                    v < (-&tsirelson - &eps) || (op == "<" && (&v + &tsirelson).abs() <= eps)
+                }
+            }
+            _ => false,
+        };
+
+        if is_violation {
+            violations.push(claim.to_string());
+        } else if op == "=" {
+            let two_ratio = Ratio::from_integer(BigInt::from(2));
+            let label = if v.abs() > (two_ratio + &eps) {
+                "Bell violation"
+            } else {
+                "within the LHV bound"
+            };
+            notes.push(format!("{claim} ({label})"));
+        }
+    }
+
+    if !violations.is_empty() {
+        ChshCheckFinding {
+            antibody_id: "Ab09_CHSHBoundRange".to_string(),
+            name: "CHSH physical range |S| <= 2*sqrt(2)".to_string(),
+            passed: false,
+            evidence: format!(
+                "CHSH expectation violates Tsirelson ceiling |S| <= 2*sqrt(2): '{}'.",
+                violations[0]
+            ),
+        }
+    } else {
+        let note_suffix = if notes.is_empty() {
+            String::new()
+        } else {
+            format!(" {}", notes.join("; "))
+        };
+        ChshCheckFinding {
+            antibody_id: "Ab09_CHSHBoundRange".to_string(),
+            name: "CHSH physical range |S| <= 2*sqrt(2)".to_string(),
+            passed: true,
+            evidence: format!("No CHSH claim exceeds 2*sqrt(2).{note_suffix}"),
+        }
+    }
+}
+
+/// Refuses with CHSH range violation when a claim exceeds 2*sqrt(2).
+pub fn verify_ab09_chsh_bound_range(text: &str) -> Result<(), Refusal> {
+    let finding = check_ab09_chsh_bound_range(text);
+    if !finding.passed {
+        Err(Refusal::new("CHSH_RANGE_VIOLATION", finding.evidence))
+    } else {
+        Ok(())
+    }
+}
+
 // Origin: engine/crates_rs/core_epistemic_immune_system/src/host_checks.rs
 // Claim: urn:core:crates_rs:core-epistemic-immune-system:host-checks:l4-production-boundary:v1
 // AuthorityEffect: None
@@ -341,6 +529,56 @@ impl BoundaryRecord2ab35c36 {
     /// Returns the remaining capacity (`capacity_bound - admitted_items`).
     pub const fn remaining_capacity(&self) -> u64 {
         self.capacity_bound.saturating_sub(self.admitted_items)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_ab09_passes_within_physical_tsirelson_bound() {
+        let valid_cases = [
+            "CHSH = 0",
+            "CHSH = 2",
+            "CHSH = 2*sqrt(2)",
+            "CHSH = -2*sqrt(2)",
+            "Maximal CHSH = 1.5.",
+            "Bell expectation = 2.5",
+        ];
+        for text in valid_cases {
+            let res = check_ab09_chsh_bound_range(text);
+            assert!(res.passed, "Case '{text}' must pass physical range check");
+            assert!(verify_ab09_chsh_bound_range(text).is_ok());
+        }
+    }
+
+    #[test]
+    fn test_ab09_fails_on_chsh_bound_range_violation() {
+        let violation_cases = [
+            "CHSH expectation = 4",
+            "CHSH = -4",
+            "Maximal CHSH = 2.95.",
+            "CHSH |S| = 3",
+            "CHSH |S| = -1",
+            "Bell parameter S <= -3",
+            "CHSH > 2.83",
+        ];
+        for text in violation_cases {
+            let res = check_ab09_chsh_bound_range(text);
+            assert!(!res.passed, "Case '{text}' must fail Tsirelson bound");
+            assert!(res.evidence.contains("Tsirelson ceiling"));
+            let err = verify_ab09_chsh_bound_range(text).unwrap_err();
+            assert_eq!(err.code, "CHSH_RANGE_VIOLATION");
+        }
+    }
+
+    #[test]
+    fn test_ab09_does_not_fire_on_unrelated_expectation() {
+        let text = "Under maximal measurement angles, expectation = 4.";
+        let res = check_ab09_chsh_bound_range(text);
+        assert!(res.passed);
+        assert_eq!(res.evidence, "No CHSH claim exceeds 2*sqrt(2).");
     }
 }
 
