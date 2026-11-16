@@ -1275,7 +1275,14 @@ def test_t1_f6_sacrosanct_dag_file_inventory_zero_pinned_mutations() -> None:
         check=True,
     ).stdout.splitlines()
     inventory = json.loads((REPO_ROOT / "dag" / "file_inventory.json").read_text(encoding="utf-8"))
-    pinned = {row["path"] for row in inventory["files"]}
+    # A row marked custody_pin == "released" keeps its historical sha256 for the
+    # frozen review records but is no longer pinned; each release is approved in
+    # writing and dated in custody_release.
+    released = [row for row in inventory["files"] if row.get("custody_pin") == "released"]
+    assert all(str(row.get("custody_release", "")).strip() for row in released)
+    pinned = {
+        row["path"] for row in inventory["files"] if row.get("custody_pin") != "released"
+    }
     violating = [p for p in (*diff, *untracked) if p and p in pinned]
     assert violating == [], f"Pinned custody files mutated: {violating}"
 

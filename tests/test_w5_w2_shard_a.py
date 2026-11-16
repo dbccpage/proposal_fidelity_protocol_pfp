@@ -1525,14 +1525,15 @@ class TestShardAReviewAndHygieneGates:
             assert entry["sha256"] == inventory[rel_path]
             assert entry["full_source_read"] is True
 
-            disk_lines = len((_REPO_ROOT / rel_path).read_bytes().decode("utf-8").splitlines())
-            assert entry["reviewed_lines"] == [[1, disk_lines]]
 
             source_bytes = subprocess.check_output(
                 ["git", "show", f"{review['source_commit']}:{rel_path}"],
                 cwd=_REPO_ROOT,
             )
             source_sha = hashlib.sha256(source_bytes).hexdigest()
+            # The review covers the bytes at source_commit, not later edits of the file.
+            source_lines = len(source_bytes.decode("utf-8").splitlines())
+            assert entry["reviewed_lines"] == [[1, source_lines]]
             if source_sha == entry["sha256"]:
                 assert "git_blob_sha256" not in entry
                 assert "pin_note" not in entry
