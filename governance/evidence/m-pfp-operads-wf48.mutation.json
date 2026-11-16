@@ -1,0 +1,704 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf48.rs",
+  "target_sha256": "9c93244c2a5bdbe4f2f9f5762b05f2b7d871719bbdc614e1c3ff8ececf776c61",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf48",
+  "counts": {
+    "killed": 104,
+    "survived": 0,
+    "demonstrably_equivalent": 9,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "c length unchecked",
+      "old": "        .filter(|c| c.len() == named.graph.edges().len())\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "c length at most the edges",
+      "old": "        .filter(|c| c.len() == named.graph.edges().len())",
+      "new": "        .filter(|c| c.len() <= named.graph.edges().len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "c reason changed",
+      "old": "ok_or(\"c must be one exact integer per edge\")",
+      "new": "ok_or(\"\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "manifest need not be an object",
+      "old": "        .filter(|manifest| manifest.is_map())\n",
+      "new": "",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "A manifest that is not an object has no checkers, so the next step refuses it with the same reason in the same words."
+    },
+    {
+      "name": "manifest reason changed",
+      "old": "        .ok_or(\"judge_manifest must name its checkers\")?;\n    let checkers",
+      "new": "        .ok_or(\"\")?;\n    let checkers",
+      "outcome": "killed"
+    },
+    {
+      "name": "checkers reason changed",
+      "old": "        .ok_or(\"judge_manifest must name its checkers\")?;\n    let commitment",
+      "new": "        .ok_or(\"\")?;\n    let commitment",
+      "outcome": "killed"
+    },
+    {
+      "name": "checkers read from the manifest key",
+      "old": "        .get(\"checkers\")\n        .and_then(Datum::as_list)",
+      "new": "        .get(\"checker\")\n        .and_then(Datum::as_list)",
+      "outcome": "killed"
+    },
+    {
+      "name": "commitment read from the wrong key",
+      "old": "        .get(\"manifest_commitment\")",
+      "new": "        .get(\"commitment\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "commitment reason changed",
+      "old": "ok_or(\"manifest_commitment must be text\")",
+      "new": "ok_or(\"\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "salt need not be text",
+      "old": "        salt.as_text().ok_or(\"manifest_salt must be text\")?;",
+      "new": "        let _ = salt;",
+      "outcome": "killed"
+    },
+    {
+      "name": "salt reason changed",
+      "old": "ok_or(\"manifest_salt must be text\")",
+      "new": "ok_or(\"\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "salt key renamed",
+      "old": "    if let Some(salt) = sealed.get(\"manifest_salt\") {",
+      "new": "    if let Some(salt) = sealed.get(\"salt\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "commitment without the zero byte",
+      "old": "    sha256_hex(&format!(\"{salt}\\0{}\", artifact.canonical()))",
+      "new": "    sha256_hex(&format!(\"{salt}{}\", artifact.canonical()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "commitment without the salt",
+      "old": "    sha256_hex(&format!(\"{salt}\\0{}\", artifact.canonical()))",
+      "new": "    sha256_hex(&format!(\"\\0{}\", artifact.canonical()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "commitment of the artifact then the salt",
+      "old": "    sha256_hex(&format!(\"{salt}\\0{}\", artifact.canonical()))",
+      "new": "    sha256_hex(&format!(\"{}\\0{salt}\", artifact.canonical()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "commitment of the salt alone",
+      "old": "    sha256_hex(&format!(\"{salt}\\0{}\", artifact.canonical()))",
+      "new": "    sha256_hex(&format!(\"{salt}\\0\"))",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual not registered",
+      "old": "        \"residual.v1\" => Some(Checker::Residual),",
+      "new": "        \"residual.v0\" => Some(Checker::Residual),",
+      "outcome": "killed"
+    },
+    {
+      "name": "tree integration not registered",
+      "old": "        \"tree_integration.v1\" => Some(Checker::TreeIntegration),",
+      "new": "        \"tree_integration.v0\" => Some(Checker::TreeIntegration),",
+      "outcome": "killed"
+    },
+    {
+      "name": "length only not registered",
+      "old": "        \"length_only.v1\" => Some(Checker::LengthOnly),",
+      "new": "        \"length_only.v0\" => Some(Checker::LengthOnly),",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual is tree integration",
+      "old": "        \"residual.v1\" => Some(Checker::Residual),",
+      "new": "        \"residual.v1\" => Some(Checker::TreeIntegration),",
+      "outcome": "killed"
+    },
+    {
+      "name": "tree integration is length only",
+      "old": "        \"tree_integration.v1\" => Some(Checker::TreeIntegration),",
+      "new": "        \"tree_integration.v1\" => Some(Checker::LengthOnly),",
+      "outcome": "killed"
+    },
+    {
+      "name": "length only is residual",
+      "old": "        \"length_only.v1\" => Some(Checker::LengthOnly),",
+      "new": "        \"length_only.v1\" => Some(Checker::Residual),",
+      "outcome": "killed"
+    },
+    {
+      "name": "every name is registered",
+      "old": "        _ => None,\n    }\n}\n\n/// One exact value per vertex",
+      "new": "        _ => Some(Checker::LengthOnly),\n    }\n}\n\n/// One exact value per vertex",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential length unchecked",
+      "old": "    let sized = candidate.len() == judge.named.graph.names().len();",
+      "new": "    let sized = true;",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "Named::potential refuses a potential that does not have one value per vertex, so the same candidates are refused with or without this test."
+    },
+    {
+      "name": "potential length at most",
+      "old": "    let sized = candidate.len() == judge.named.graph.names().len();",
+      "new": "    let sized = candidate.len() <= judge.named.graph.names().len();",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "Named::potential refuses a potential that does not have one value per vertex, so the same candidates are refused with or without this test."
+    },
+    {
+      "name": "length only compares edges",
+      "old": "        Checker::LengthOnly => candidate.len() == graph.names().len(),",
+      "new": "        Checker::LengthOnly => candidate.len() == graph.edges().len(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "length only accepts all",
+      "old": "        Checker::LengthOnly => candidate.len() == graph.names().len(),",
+      "new": "        Checker::LengthOnly => true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "length only at most",
+      "old": "        Checker::LengthOnly => candidate.len() == graph.names().len(),",
+      "new": "        Checker::LengthOnly => candidate.len() <= graph.names().len(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual needs a nonzero entry",
+      "old": "            left.iter().all(Zero::is_zero)",
+      "new": "            left.iter().any(Zero::is_zero)",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual of the cochain alone",
+      "old": "            let left = graph.residual(&judge.values, &found);",
+      "new": "            let left = graph.residual(&judge.values, &vec![Rational::zero(); found.len()]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual always accepts",
+      "old": "        Checker::Residual => potential(judge, candidate).is_some_and(|found| {",
+      "new": "        Checker::Residual => potential(judge, candidate).is_none_or(|found| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "tree integration without a defect check",
+      "old": "            if !graph.defect(&judge.values).is_zero() {\n                return false;\n            }\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "tree integration defect inverted",
+      "old": "            if !graph.defect(&judge.values).is_zero() {",
+      "new": "            if graph.defect(&judge.values).is_zero() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "tree integration against the first vertex",
+      "old": "            let origin = judge.named.vertex(&Datum::from(0_usize));",
+      "new": "            let origin = judge.named.vertex(&Datum::from(1_usize));",
+      "outcome": "killed"
+    },
+    {
+      "name": "tree integration unanchored",
+      "old": "                    .all(|(here, there)| here - held == there - base)",
+      "new": "                    .all(|(here, there)| here == there)",
+      "outcome": "killed"
+    },
+    {
+      "name": "tree integration compares sums",
+      "old": "                    .all(|(here, there)| here - held == there - base)",
+      "new": "                    .all(|(here, there)| here + held == there + base)",
+      "outcome": "killed"
+    },
+    {
+      "name": "tree integration one entry",
+      "old": "                    .all(|(here, there)| here - held == there - base)",
+      "new": "                    .any(|(here, there)| here - held == there - base)",
+      "outcome": "killed"
+    },
+    {
+      "name": "tree integration base swapped",
+      "old": "            let ends = origin.and_then(|at| Some((found.get(at)?, integral.get(at)?)));",
+      "new": "            let ends = origin.and_then(|at| Some((integral.get(at)?, found.get(at)?)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "tree integration accepts an unknown origin",
+      "old": "            ends.is_some_and(|(held, base)| {",
+      "new": "            ends.is_none_or(|(held, base)| {",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "A task's graph has edges and its vertices are numbered 0 to n-1, so vertex 0 exists and both potentials have a value for it; the unknown case cannot be reached."
+    },
+    {
+      "name": "tree integration without the integral",
+      "old": "            let integral = graph.potential(&judge.values);",
+      "new": "            let integral = vec![Rational::zero(); graph.names().len()];",
+      "outcome": "killed"
+    },
+    {
+      "name": "artifact raised by one",
+      "old": "        for step in [1, -1] {",
+      "new": "        for step in [1, 1] {",
+      "outcome": "killed"
+    },
+    {
+      "name": "artifact lowered by one",
+      "old": "        for step in [1, -1] {",
+      "new": "        for step in [-1, -1] {",
+      "outcome": "killed"
+    },
+    {
+      "name": "artifact moved by two",
+      "old": "        for step in [1, -1] {",
+      "new": "        for step in [2, -2] {",
+      "outcome": "killed"
+    },
+    {
+      "name": "mutant moves the wrong entry",
+      "old": "                .take(at)\n                .cloned()\n                .chain([value + step])",
+      "new": "                .take(at)\n                .cloned()\n                .chain([value.clone()])",
+      "outcome": "killed"
+    },
+    {
+      "name": "mutant drops the later entries",
+      "old": "                .chain([value + step])\n                .chain(artifact.iter().skip(at + 1).cloned());",
+      "new": "                .chain([value + step])\n                .chain(artifact.iter().skip(at + 2).cloned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "mutant repeats an entry",
+      "old": "                .chain([value + step])\n                .chain(artifact.iter().skip(at + 1).cloned());",
+      "new": "                .chain([value + step])\n                .chain(artifact.iter().skip(at).cloned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "swapped pairs may be equal",
+      "old": "            if left != right {",
+      "new": "            if true {",
+      "outcome": "killed"
+    },
+    {
+      "name": "swapped pairs must be equal",
+      "old": "            if left != right {",
+      "new": "            if left == right {",
+      "outcome": "killed"
+    },
+    {
+      "name": "swap writes the pair as it was",
+      "old": "                    .chain([right.clone(), left.clone()])",
+      "new": "                    .chain([left.clone(), right.clone()])",
+      "outcome": "killed"
+    },
+    {
+      "name": "swap drops the later entries",
+      "old": "                    .chain([right.clone(), left.clone()])\n                    .chain(artifact.iter().skip(at + 2).cloned());",
+      "new": "                    .chain([right.clone(), left.clone()])\n                    .chain(artifact.iter().skip(at + 1).cloned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "swap drops the earlier entries",
+      "old": "                let swapped = artifact\n                    .iter()\n                    .take(at)",
+      "new": "                let swapped = artifact\n                    .iter()\n                    .take(at + 1)",
+      "outcome": "killed"
+    },
+    {
+      "name": "truncation leaves the artifact whole",
+      "old": "    let shorter = artifact.len().saturating_sub(1);",
+      "new": "    let shorter = artifact.len();",
+      "outcome": "killed"
+    },
+    {
+      "name": "truncation drops two",
+      "old": "    let shorter = artifact.len().saturating_sub(1);",
+      "new": "    let shorter = artifact.len().saturating_sub(2);",
+      "outcome": "killed"
+    },
+    {
+      "name": "truncation dropped",
+      "old": "    found.push(artifact.iter().take(shorter).cloned().collect());",
+      "new": "    let _ = shorter;",
+      "outcome": "killed"
+    },
+    {
+      "name": "stopped code changed",
+      "old": "    refused(NO_REPLY, Datum::map([(\"stage\", Datum::from(stage))]))",
+      "new": "    refused(\"BAD_REQUEST\", Datum::map([(\"stage\", Datum::from(stage))]))",
+      "outcome": "killed"
+    },
+    {
+      "name": "stopped names no stage",
+      "old": "Datum::map([(\"stage\", Datum::from(stage))])",
+      "new": "Datum::map([(\"stage\", Datum::from(\"commit\"))])",
+      "outcome": "killed"
+    },
+    {
+      "name": "salt read as empty when unsealed",
+      "old": "    let salt = run.sealed.get(\"manifest_salt\").and_then(Datum::as_text);",
+      "new": "    let salt = Some(\"\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "sealed salt key renamed",
+      "old": "    let salt = run.sealed.get(\"manifest_salt\").and_then(Datum::as_text);",
+      "new": "    let salt = run.sealed.get(\"salt\").and_then(Datum::as_text);",
+      "outcome": "killed"
+    },
+    {
+      "name": "absent salt is a word",
+      "old": "    let sealed = commitment(salt.unwrap_or(\"\"), judge.manifest) == judge.commitment;",
+      "new": "    let sealed = commitment(salt.unwrap_or(\"x\"), judge.manifest) == judge.commitment;",
+      "outcome": "killed"
+    },
+    {
+      "name": "commitment of the checkers only",
+      "old": "    let sealed = commitment(salt.unwrap_or(\"\"), judge.manifest) == judge.commitment;",
+      "new": "    let sealed = commitment(salt.unwrap_or(\"\"), &named) == judge.commitment;",
+      "outcome": "killed"
+    },
+    {
+      "name": "commitment always matches",
+      "old": "    let sealed = commitment(salt.unwrap_or(\"\"), judge.manifest) == judge.commitment;",
+      "new": "    let sealed = true;",
+      "outcome": "killed"
+    },
+    {
+      "name": "commitment never matches",
+      "old": "    let sealed = commitment(salt.unwrap_or(\"\"), judge.manifest) == judge.commitment;",
+      "new": "    let sealed = false;",
+      "outcome": "killed"
+    },
+    {
+      "name": "commitment check renamed",
+      "old": "checks.record(\"manifest_commitment_matches\", sealed, &named);",
+      "new": "checks.record(\"manifest_commitment_match\", sealed, &named);",
+      "outcome": "killed"
+    },
+    {
+      "name": "commitment evidence dropped",
+      "old": "checks.record(\"manifest_commitment_matches\", sealed, &named);",
+      "new": "checks.record(\"manifest_commitment_matches\", sealed, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "panel drops registered checkers",
+      "old": "        .filter_map(|id| Some((id.as_text()?, checker(id)?)))",
+      "new": "        .filter_map(|id| Some((id.as_text()?, Checker::Residual)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "two checkers or more",
+      "old": "    let two = judge.checkers.len() == 2",
+      "new": "    let two = judge.checkers.len() >= 2",
+      "outcome": "killed"
+    },
+    {
+      "name": "one checker is enough",
+      "old": "    let two = judge.checkers.len() == 2",
+      "new": "    let two = judge.checkers.len() >= 1",
+      "outcome": "killed"
+    },
+    {
+      "name": "two equal checkers",
+      "old": "        && judge.checkers.first() != judge.checkers.get(1)",
+      "new": "        && true",
+      "outcome": "killed"
+    },
+    {
+      "name": "two checkers need not be registered",
+      "old": "        && panel.len() == 2;",
+      "new": "        && true;",
+      "outcome": "killed"
+    },
+    {
+      "name": "one registered checker is enough",
+      "old": "        && panel.len() == 2;",
+      "new": "        && panel.len() >= 1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "independence check renamed",
+      "old": "checks.record(\"two_independent_registered_checkers\", two, &named);",
+      "new": "checks.record(\"two_independent_checkers\", two, &named);",
+      "outcome": "killed"
+    },
+    {
+      "name": "unsealed manifests go on",
+      "old": "    if !checks.certified() {\n        return Ok(checks.judge(CERTIFIED_CODE, Datum::map([])));",
+      "new": "    if false {\n        return Ok(checks.judge(CERTIFIED_CODE, Datum::map([])));",
+      "outcome": "killed"
+    },
+    {
+      "name": "sealed manifests stop",
+      "old": "    if !checks.certified() {\n        return Ok(checks.judge(CERTIFIED_CODE, Datum::map([])));",
+      "new": "    if checks.certified() {\n        return Ok(checks.judge(CERTIFIED_CODE, Datum::map([])));",
+      "outcome": "killed"
+    },
+    {
+      "name": "commit prompt without the task",
+      "old": "format!(\"{}\\nCommit H(salt || potential) only.\", run.prompt())",
+      "new": "format!(\"\\nCommit H(salt || potential) only.\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "commit prompt without the instruction",
+      "old": "format!(\"{}\\nCommit H(salt || potential) only.\", run.prompt())",
+      "new": "format!(\"{}\", run.prompt())",
+      "outcome": "killed"
+    },
+    {
+      "name": "commit stage renamed",
+      "old": "run.ask(\"commit\", prompt)?",
+      "new": "run.ask(\"commitment\", prompt)?",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing commit is a reveal",
+      "old": "        return Ok(stopped(\"commit\"));",
+      "new": "        return Ok(stopped(\"reveal\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "commit reply need not be an object",
+      "old": "    let given = object(reply, \"commit\")?",
+      "new": "    let given = reply",
+      "outcome": "killed"
+    },
+    {
+      "name": "commitment key renamed",
+      "old": "        .get(\"commitment\")\n        .and_then(Datum::as_text)",
+      "new": "        .get(\"hash\")\n        .and_then(Datum::as_text)",
+      "outcome": "killed"
+    },
+    {
+      "name": "commit reply reason changed",
+      "old": "Stop::Malformed(\"commitment must be a hex string\".to_owned())",
+      "new": "Stop::Malformed(String::new())",
+      "outcome": "killed"
+    },
+    {
+      "name": "reveal prompt without the commitment",
+      "old": "        \"{}\\nCommitment recorded: {given}\\nReveal now.\",",
+      "new": "        \"{}\\nCommitment recorded: \\nReveal now.\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "reveal prompt without the task",
+      "old": "        \"{}\\nCommitment recorded: {given}\\nReveal now.\",\n        run.prompt()",
+      "new": "        \"\\nCommitment recorded: {given}\\nReveal now.{}\",\n        \"\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "reveal stage renamed",
+      "old": "run.ask(\"reveal\", prompt)?",
+      "new": "run.ask(\"opening\", prompt)?",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing reveal is a commit",
+      "old": "        return Ok(stopped(\"reveal\"));",
+      "new": "        return Ok(stopped(\"commit\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "reveal reply need not be an object",
+      "old": "    let reply = object(reply, \"reveal\")?;",
+      "new": "    let reply = reply;",
+      "outcome": "killed"
+    },
+    {
+      "name": "artifact key renamed",
+      "old": "integers_under(reply, \"artifact\")?",
+      "new": "integers_under(reply, \"potential\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "salt reply key renamed",
+      "old": "        .get(\"salt\")\n        .and_then(Datum::as_text)",
+      "new": "        .get(\"nonce\")\n        .and_then(Datum::as_text)",
+      "outcome": "killed"
+    },
+    {
+      "name": "salt reply reason changed",
+      "old": "Stop::Malformed(\"salt must be a string\".to_owned())",
+      "new": "Stop::Malformed(String::new())",
+      "outcome": "killed"
+    },
+    {
+      "name": "reveal checked against the manifest commitment",
+      "old": "    let reveal = commitment(revealed, &Datum::from(artifact.clone())) == given;",
+      "new": "    let reveal = commitment(revealed, &Datum::from(artifact.clone())) == judge.commitment;",
+      "outcome": "killed"
+    },
+    {
+      "name": "reveal check ignores the salt",
+      "old": "    let reveal = commitment(revealed, &Datum::from(artifact.clone())) == given;",
+      "new": "    let reveal = commitment(\"\", &Datum::from(artifact.clone())) == given;",
+      "outcome": "killed"
+    },
+    {
+      "name": "reveal check always holds",
+      "old": "    let reveal = commitment(revealed, &Datum::from(artifact.clone())) == given;",
+      "new": "    let reveal = true;",
+      "outcome": "killed"
+    },
+    {
+      "name": "reveal check renamed",
+      "old": "checks.record(\"reveal_matches_commitment\", reveal, &Datum::text(given))",
+      "new": "checks.record(\"reveal_matches\", reveal, &Datum::text(given))",
+      "outcome": "killed"
+    },
+    {
+      "name": "reveal check inverted",
+      "old": "    if !checks.record(\"reveal_matches_commitment\", reveal, &Datum::text(given)) {",
+      "new": "    if checks.record(\"reveal_matches_commitment\", reveal, &Datum::text(given)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "changed artifact code renamed",
+      "old": "\"ARTIFACT_CHANGED_AFTER_COMMIT\"",
+      "new": "\"ARTIFACT_CHANGED\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "gauge shifted by one",
+      "old": "    let gauge: Vec<BigInt> = artifact.iter().map(|value| value + 3).collect();",
+      "new": "    let gauge: Vec<BigInt> = artifact.iter().map(|value| value + 1).collect();",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "Each registered checker reads only differences between entries or only the length, so adding one constant to every entry never changes whether it accepts; the artifact and its gauge are accepted together or rejected together, whatever the constant."
+    },
+    {
+      "name": "gauge not shifted",
+      "old": "    let gauge: Vec<BigInt> = artifact.iter().map(|value| value + 3).collect();",
+      "new": "    let gauge: Vec<BigInt> = artifact.iter().map(|value| value.clone()).collect();",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "Each registered checker reads only differences between entries or only the length, so adding one constant to every entry never changes whether it accepts; the artifact and its gauge are accepted together or rejected together, whatever the constant."
+    },
+    {
+      "name": "gauge only the first entry",
+      "old": "    let gauge: Vec<BigInt> = artifact.iter().map(|value| value + 3).collect();",
+      "new": "    let gauge: Vec<BigInt> = artifact.iter().enumerate().map(|(at, value)| if at == 0 { value + 3 } else { value.clone() }).collect();",
+      "outcome": "killed"
+    },
+    {
+      "name": "valid cases leave out the artifact",
+      "old": "    let valid = [artifact.clone(), gauge];",
+      "new": "    let valid = [gauge.clone(), gauge];",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "Each registered checker reads only differences between entries or only the length, so adding one constant to every entry never changes whether it accepts; the artifact and its gauge are accepted together or rejected together, whatever the constant."
+    },
+    {
+      "name": "valid cases leave out the gauge",
+      "old": "    let valid = [artifact.clone(), gauge];",
+      "new": "    let valid = [artifact.clone(), artifact.clone()];",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "Each registered checker reads only differences between entries or only the length, so adding one constant to every entry never changes whether it accepts; the artifact and its gauge are accepted together or rejected together, whatever the constant."
+    },
+    {
+      "name": "a rejected valid case is allowed",
+      "old": "            rejected == 0,",
+      "new": "            rejected <= 1,",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "The artifact and its gauge are accepted together or rejected together by every registered checker, so the number rejected is 0 or 2 and never 1."
+    },
+    {
+      "name": "valid acceptance renamed",
+      "old": "format!(\"{id}:accepts_artifact_and_gauge\")",
+      "new": "format!(\"{id}:accepts_artifact\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "rejected counted when accepted",
+      "old": "            .filter(|case| !accepts(kind, &judge, case))\n            .count();\n        let killed",
+      "new": "            .filter(|case| accepts(kind, &judge, case))\n            .count();\n        let killed",
+      "outcome": "killed"
+    },
+    {
+      "name": "killed counted when accepted",
+      "old": "            .filter(|case| !accepts(kind, &judge, case))\n            .count();\n        let score",
+      "new": "            .filter(|case| accepts(kind, &judge, case))\n            .count();\n        let score",
+      "outcome": "killed"
+    },
+    {
+      "name": "killed counted against the valid cases",
+      "old": "        let killed = hostile\n            .iter()",
+      "new": "        let killed = valid\n            .iter()",
+      "outcome": "killed"
+    },
+    {
+      "name": "score written the other way",
+      "old": "Datum::text(format!(\"{killed}/{}\", hostile.len()))",
+      "new": "Datum::text(format!(\"{}/{killed}\", hostile.len()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "score without the total",
+      "old": "Datum::text(format!(\"{killed}/{}\", hostile.len()))",
+      "new": "Datum::text(format!(\"{killed}\"))",
+      "outcome": "killed"
+    },
+    {
+      "name": "one kill is enough",
+      "old": "            killed == hostile.len(),",
+      "new": "            killed >= 1,",
+      "outcome": "killed"
+    },
+    {
+      "name": "every kill is not required",
+      "old": "            killed == hostile.len(),",
+      "new": "            true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "kills renamed",
+      "old": "format!(\"{id}:kills_every_mutant\")",
+      "new": "format!(\"{id}:kills_mutants\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "kills recorded for another checker",
+      "old": "        kills.insert(id.to_owned(), score);",
+      "new": "        kills.insert(\"checker\".to_owned(), score);",
+      "outcome": "killed"
+    },
+    {
+      "name": "kills not recorded",
+      "old": "        kills.insert(id.to_owned(), score);",
+      "new": "        let _ = score;",
+      "outcome": "killed"
+    },
+    {
+      "name": "certified code renamed",
+      "old": "        \"COMMIT_REVEAL_CERTIFIED\",",
+      "new": "        \"COMMIT_REVEAL_CERTIFY\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "kills key renamed",
+      "old": "        Datum::map([(\"kills\", Datum::Map(kills))]),",
+      "new": "        Datum::map([(\"kill\", Datum::Map(kills))]),",
+      "outcome": "killed"
+    }
+  ]
+}

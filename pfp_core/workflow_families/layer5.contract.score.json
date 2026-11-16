@@ -1,0 +1,94 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "pfp_core/workflow_families/layer5.py",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp_core/workflow_families/layer5.py",
+      "language": "Python",
+      "sha256": "c20369252bdf4690d1437fff66a3e02732e6417f50dfa13f637fde98713e50aa"
+    },
+    "contract_urn": "urn:pfp-core:workflow-families-layer5-py:v1",
+    "symbols": [
+      "MechanismControlArms",
+      "GuardedStagedSlotMaterialisation",
+      "AuthorityFirewallGate",
+      "ReasoningTraceValidation",
+      "GateHonestyAudit",
+      "CommitRevealMutationGate"
+    ],
+    "owned_invariants": [
+      "MechanismControlArms (WF12), GuardedStagedSlotMaterialisation (WF36), AuthorityFirewallGate (WF39), ReasoningTraceValidation (WF42), GateHonestyAudit (WF43) and CommitRevealMutationGate (WF48) are HostedFamily classes. Each holds its id, name and host check and fixtures that run through the Rust host. None makes a verdict, a comparison or a count.",
+      "Each fixture names the status its run must end with. The suite runs every fixture through the host and compares the status, the code and the findings.",
+      "The fixtures of WF39 and WF48 carry their digests and commitments as literal text a reader can compare with what the host recomputes. Neither fixture module judges anything; the host judges every receipt and commitment."
+    ],
+    "boundaries": [
+      "A hosted family used without the host binary gives no verdict; it raises the host's error.",
+      "Fixtures are offline examples, not live model trials."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp_core/workflow_families/layer5.py",
+      "language": "Python",
+      "sha256": "c20369252bdf4690d1437fff66a3e02732e6417f50dfa13f637fde98713e50aa"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Wiring and fixtures for the layer 5 families. All six hold a spec and fixtures only and take every verdict from the Rust host.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "The module docstring states the role; the contract binds AuthorityEffect None and names every exported symbol. Not B: no requirement-to-symbol trace beyond docs/plans/operads_redesign.md.",
+      "G2": "Exact: fixture values are integers or exact text, and the digests in a fixture are written out in full. Every verdict they lead to is the host's. Not B: tested on examples, not proven.",
+      "G3": "The module raises nothing of its own: the hosted families take their refusals from the host. Not B: no closed table of error codes for this module.",
+      "G4": "The 551 tests of pfp_core/workflow_families/tests/test_families.py run the fixtures of every family, the hosted ones through the Rust host, and assert the registry, the host's own listing of hosted families, that a hosted family holds no check, the refusal of a malformed task and of a sealed value, and that each of the 33 layer 5 fixtures ends with the code and the findings its name says; the 850-test run covers the rest of the workflow suite. 33 mutants survived: all of them change an integer literal written inside fixture data (a value in an item, an edge, a cochain or a reply), and the changed fixture still ends with the same code and findings. Not B: one generated campaign, no property tests. Mutation campaign R = 133/166.",
+      "G5": "Measured worst cyclomatic 2, cognitive 1, nesting 0; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T17:36:31Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/operad-host-workflow-tests-v14.run.json",
+        "sha256": "453bbd5bdead1d21a883597287c77422af9418cbb67bd2216be73638695c0e24",
+        "note": "850 offline tests (pfp/workflows, pfp_core/workflow_families, exclusions) against the release build of pfp_operad 0.11.0; exact source inputs bound. No live model performance claim."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.run.json",
+        "sha256": "070d448da3bce97bffdcb2c8095d7c52d792ea634bc321ba3b4af64b3b9576b0",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.json",
+        "sha256": "7533090aaa56c6585bb5e4ac4c61603e7dd6ba63ce6e31c95b1ee49b5bf6a97a",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 133,
+      "survived": 33,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 0.8012048192771084,
+      "report": {
+        "path": "governance/evidence/m-workflow-families-layer5-py.mutation.json",
+        "sha256": "1cfc37fadf138b24a2c6f1dd732439fb1500492ad32677bee809e5c495cdc848",
+        "note": "AST campaign, governance.tools.mutation, pytest as oracle; 166 mutants"
+      }
+    }
+  },
+  "history": []
+}

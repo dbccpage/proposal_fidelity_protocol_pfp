@@ -1,0 +1,102 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf39.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf39.rs",
+      "language": "Rust",
+      "sha256": "213b91c8a8bf8ddfeeb010dad1bbee907f793265f0f9b934e08e1a881467c88d"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf39:v1",
+    "symbols": [
+      "VERIFIER",
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task fixes a public cochain, edges (a graph on the vertices 0 to n-1) and c (one exact integer for each edge), a nonce that is text, and registered_verifiers, a list. A task that is not of this form is refused before anything is asked.",
+      "The reply is {payload, receipt}, both objects. The payload may name only edges, c and phi. phi, the witness, is a potential with one exact integer for each vertex.",
+      "payload_bound_to_task is recorded first: the payload names nothing but edges, c and phi, and an edges or c in it equals the task's. A payload that fails is refused as PAYLOAD_NOT_BOUND_TO_TASK. authority_effect_none is recorded second: the receipt's authority_effect is None and the receipt has no field beyond authority_effect, verifier_id, payload_sha256, replay_sha256, claimed and nonce. A receipt that fails is refused as AUTHORITY_ESCALATION, naming the extra fields.",
+      "witness_verifier_registered, witness_bound_to_payload, replay_hash, replay_match, zero_defect and fresh_nonce are recorded after them in that order, whether or not an earlier one held. The one verifier replayed is exact.cochain_residual.v1: the residual of the task's own cochain against phi, and the sum of its absolute values as the defect. Without a registered verifier there is no replay, and the three guards that read it fail.",
+      "payload_sha256 is the SHA-256 of the canonical form of {edges, c, phi} with the task's own edges and c, replay_sha256 is the SHA-256 of the canonical form of {defect, residual}, and claimed is that replay. The run is certified as ALL_GUARDS_PASS. Otherwise it is refused under the name of the first failed guard, with every failed guard in residual_evidence."
+    ],
+    "boundaries": [
+      "A passing gate says the receipt is bound to this payload, this task and this nonce. It does not say the receipt is signed.",
+      "Only one verifier is replayed. A receipt that names another is refused as unregistered, not run."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf39.rs",
+      "language": "Rust",
+      "sha256": "213b91c8a8bf8ddfeeb010dad1bbee907f793265f0f9b934e08e1a881467c88d"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "C"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: the residual and the defect are exact integers of any size, and the digests are SHA-256 the tests rebuild themselves. Not B: tested on examples, not proven; the hash library is trusted.",
+      "G3": "Each unreadable part of a task, a reply and a witness has its own reason, each failed guard is its own refusal with the failed guards listed, and a missing reply is refused without a predicate. No unwrap or expect, and no index. Not B: panic-freedom is tested, not proven.",
+      "G4": "26 WF39 tests assert the registry entry, a reply that passes every guard, a payload that leaves out the public cochain, names another one or has a field of its own, a receipt that claims authority or has fields of its own named in order, a self-certifying receipt, a verifier the task does not register or leaves off its list, a witness bound to another payload, the digest of the canonical form of edges, c and phi, a truthful receipt for a nonzero defect, a claim that is not the replay, a replay hash that is not its digest, a stale nonce, the first failed guard naming the refusal with all of them listed, a witness that is not a potential of exact integers, the residual and its sum of sizes, each malformed reply and task by its reason, a missing reply and a second reply not accepted. Mutation campaign R = 88/88. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 17, cognitive complexity is not measured for Rust, nesting 1; ceiling C, recorded C."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T17:36:31Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v14-test.run.json",
+        "sha256": "17ef478d1b74ab70cad46eaa772ca4e18327699ee8511ea6c9add106152e0213",
+        "note": "1145 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-clippy.run.json",
+        "sha256": "516525b28043fa1053b02b8c542e2b8eca12d687623187f8467c7159f8bb86fe",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-fmt.run.json",
+        "sha256": "a85094698679cc852f3b9040802cdb56d57909c3b9b0a95fe5d56892b53ad0e9",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.run.json",
+        "sha256": "070d448da3bce97bffdcb2c8095d7c52d792ea634bc321ba3b4af64b3b9576b0",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.json",
+        "sha256": "7533090aaa56c6585bb5e4ac4c61603e7dd6ba63ce6e31c95b1ee49b5bf6a97a",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 88,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf39.mutation.json",
+        "sha256": "9007f30fa0be5c620331c72d7045a56cb78b1c54d9839d2734dd60c5a280d0bf",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 88 mutants"
+      }
+    }
+  },
+  "history": []
+}

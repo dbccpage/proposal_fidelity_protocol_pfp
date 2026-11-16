@@ -5,16 +5,17 @@
 
 **Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet.
 
-**Run it offline** (no model call, no spend), from the repository root:
+**Run it offline** (no model call, no spend), from the repository root. The first line builds the Rust host once:
 
 ```powershell
+cargo build --release -p pfp_operads --manifest-path code/rust/Cargo.toml
 python -m pfp_core.workflow_families run WF43
 python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF43-"
 ```
 
-**The check:** `answer_free_probe_replay`. Only this check can certify; a model reply is evidence for it, never a verdict.
+**The check:** `answer_free_probe_replay`. Only this check can certify; a model reply is evidence for it, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
-**Code:** [`pfp_core/workflow_families/layer5.py`](../../pfp_core/workflow_families/layer5.py) (`GateHonestyAudit`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf43.rs`](../../code/rust/pfp_operads/src/families/wf43.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer5.py`](../../pfp_core/workflow_families/layer5.py) (`GateHonestyAudit`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** harness gate. **Builds on:** [WF23](../wf23_judge_packet_custody_audit/README.md).

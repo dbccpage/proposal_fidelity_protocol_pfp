@@ -1,0 +1,717 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf43.rs",
+  "target_sha256": "58a876711d9fc44aa89e29f5a738387284bcd4322c9d9fd0a9289fd0e2b64243",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf43",
+  "counts": {
+    "killed": 112,
+    "survived": 0,
+    "demonstrably_equivalent": 4,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "operations lose solves_own",
+      "old": "    \"solves_own\",\n    \"has_field\",",
+      "new": "    \"solves_other\",\n    \"has_field\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "operations lose solves_task",
+      "old": "    \"solves_task\",\n    \"solves_own\",",
+      "new": "    \"solve_task\",\n    \"solves_own\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "operations lose has_field",
+      "old": "    \"has_field\",\n    \"field_equals\",",
+      "new": "    \"had_field\",\n    \"field_equals\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "operations lose field_equals",
+      "old": "    \"field_equals\",\n    \"keyword\",",
+      "new": "    \"field_equal\",\n    \"keyword\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "operations lose keyword",
+      "old": "    \"keyword\",\n];",
+      "new": "    \"keywords\",\n];",
+      "outcome": "killed"
+    },
+    {
+      "name": "solution reason changed",
+      "old": "\"the audited task must have a unique solution\"",
+      "new": "\"\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "lengths unchecked",
+      "old": "        (row.len() == x.len()).then(|| row.iter().zip(&x).map(|(left, right)| left * right).sum())",
+      "new": "        Some(row.iter().zip(&x).map(|(left, right)| left * right).sum())",
+      "outcome": "killed"
+    },
+    {
+      "name": "lengths at most",
+      "old": "        (row.len() == x.len()).then(|| row.iter().zip(&x).map(|(left, right)| left * right).sum())",
+      "new": "        (row.len() <= x.len()).then(|| row.iter().zip(&x).map(|(left, right)| left * right).sum())",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "A row is shorter than the answer in no case the host replays: task rows have the task's column count, which the answers have or the replacement's own one-entry answer to its one-column row, so the two tests agree."
+    },
+    {
+      "name": "product of the entries added",
+      "old": ".map(|(left, right)| left * right).sum())\n    };",
+      "new": ".map(|(left, right)| left + right).sum())\n    };",
+      "outcome": "killed"
+    },
+    {
+      "name": "product leaves out the first entry",
+      "old": ".map(|(left, right)| left * right).sum())\n    };",
+      "new": ".map(|(left, right)| left * right).skip(1).sum())\n    };",
+      "outcome": "killed"
+    },
+    {
+      "name": "system holds when different",
+      "old": "    made.is_some_and(|made| made == b)",
+      "new": "    made.is_some_and(|made| made != b)",
+      "outcome": "killed"
+    },
+    {
+      "name": "system holds when shorter",
+      "old": "    made.is_some_and(|made| made == b)",
+      "new": "    made.is_some_and(|made| made.len() <= b.len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "system holds without a product",
+      "old": "    made.is_some_and(|made| made == b)",
+      "new": "    made.is_none_or(|made| made == b)",
+      "outcome": "killed"
+    },
+    {
+      "name": "matrix rows read as the first row",
+      "old": "        .and_then(|rows| rows.iter().map(rationals).collect());",
+      "new": "        .and_then(|rows| rows.iter().take(1).map(rationals).collect());",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty check passes",
+      "old": "    let Some((operation, arguments)) = check.split_first() else {\n        return false;\n    };",
+      "new": "    let Some((operation, arguments)) = check.split_first() else {\n        return true;\n    };",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "Only checks that name an operation reach this function, since known() refuses an empty check, so the empty case cannot be reached."
+    },
+    {
+      "name": "lists name no field",
+      "old": "        Datum::List(_) | Datum::Map(_) => None,",
+      "new": "        Datum::Map(_) => None,",
+      "outcome": "killed"
+    },
+    {
+      "name": "objects name no field",
+      "old": "        Datum::List(_) | Datum::Map(_) => None,",
+      "new": "        Datum::List(_) => None,",
+      "outcome": "killed"
+    },
+    {
+      "name": "field is read from the task",
+      "old": "        other => Some(other.as_text().and_then(|name| reply.get(name))),",
+      "new": "        other => Some(other.as_text().and_then(|name| task.get(name))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-text names a field",
+      "old": "        other => Some(other.as_text().and_then(|name| reply.get(name))),",
+      "new": "        other => Some(other.as_text().and_then(|name| reply.get(name)).or(Some(&Datum::Null))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "task system read from the reply",
+      "old": "(Some(\"solves_task\"), []) => solves(task.get(\"A\"), task.get(\"b\"), reply.get(\"answer\")),",
+      "new": "(Some(\"solves_task\"), []) => solves(reply.get(\"A\"), reply.get(\"b\"), reply.get(\"answer\")),",
+      "outcome": "killed"
+    },
+    {
+      "name": "task system answer read from the task",
+      "old": "(Some(\"solves_task\"), []) => solves(task.get(\"A\"), task.get(\"b\"), reply.get(\"answer\")),",
+      "new": "(Some(\"solves_task\"), []) => solves(task.get(\"A\"), task.get(\"b\"), task.get(\"b\")),",
+      "outcome": "killed"
+    },
+    {
+      "name": "task system matrix read from the vector",
+      "old": "(Some(\"solves_task\"), []) => solves(task.get(\"A\"), task.get(\"b\"), reply.get(\"answer\")),",
+      "new": "(Some(\"solves_task\"), []) => solves(task.get(\"b\"), task.get(\"A\"), reply.get(\"answer\")),",
+      "outcome": "killed"
+    },
+    {
+      "name": "own system read from the task",
+      "old": "(Some(\"solves_own\"), []) => solves(reply.get(\"A\"), reply.get(\"b\"), reply.get(\"answer\")),",
+      "new": "(Some(\"solves_own\"), []) => solves(task.get(\"A\"), task.get(\"b\"), reply.get(\"answer\")),",
+      "outcome": "killed"
+    },
+    {
+      "name": "own system answer read from the vector",
+      "old": "(Some(\"solves_own\"), []) => solves(reply.get(\"A\"), reply.get(\"b\"), reply.get(\"answer\")),",
+      "new": "(Some(\"solves_own\"), []) => solves(reply.get(\"A\"), reply.get(\"b\"), reply.get(\"b\")),",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "Only the input replacement carries an A and a b, and its b and its answer are both [1], so reading the answer from b changes no replayed probe."
+    },
+    {
+      "name": "solves_task takes arguments",
+      "old": "(Some(\"solves_task\"), []) =>",
+      "new": "(Some(\"solves_task\"), _) =>",
+      "outcome": "killed"
+    },
+    {
+      "name": "solves_own takes arguments",
+      "old": "(Some(\"solves_own\"), []) =>",
+      "new": "(Some(\"solves_own\"), _) =>",
+      "outcome": "killed"
+    },
+    {
+      "name": "has_field takes any arguments",
+      "old": "(Some(\"has_field\"), [name]) =>",
+      "new": "(Some(\"has_field\"), [name, ..]) =>",
+      "outcome": "killed"
+    },
+    {
+      "name": "has_field holds for any name",
+      "old": "        (Some(\"has_field\"), [name]) => field(name).is_some_and(|found| found.is_some()),",
+      "new": "        (Some(\"has_field\"), [name]) => field(name).is_some_and(|_| true),",
+      "outcome": "killed"
+    },
+    {
+      "name": "has_field holds for no name",
+      "old": "        (Some(\"has_field\"), [name]) => field(name).is_some_and(|found| found.is_some()),",
+      "new": "        (Some(\"has_field\"), [name]) => field(name).is_none_or(|found| found.is_some()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "has_field holds when absent",
+      "old": "        (Some(\"has_field\"), [name]) => field(name).is_some_and(|found| found.is_some()),",
+      "new": "        (Some(\"has_field\"), [name]) => field(name).is_some_and(|found| found.is_none()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "field_equals takes any arguments",
+      "old": "(Some(\"field_equals\"), [name, value]) =>",
+      "new": "(Some(\"field_equals\"), [name, value, ..]) =>",
+      "outcome": "killed"
+    },
+    {
+      "name": "field_equals differs",
+      "old": "            field(name).is_some_and(|found| found.unwrap_or(&Datum::Null) == value)",
+      "new": "            field(name).is_some_and(|found| found.unwrap_or(&Datum::Null) != value)",
+      "outcome": "killed"
+    },
+    {
+      "name": "field_equals needs the field",
+      "old": "            field(name).is_some_and(|found| found.unwrap_or(&Datum::Null) == value)",
+      "new": "            field(name).is_some_and(|found| found == Some(value))",
+      "outcome": "killed"
+    },
+    {
+      "name": "field_equals absent reads as empty text",
+      "old": "            field(name).is_some_and(|found| found.unwrap_or(&Datum::Null) == value)",
+      "new": "            field(name).is_some_and(|found| found.unwrap_or(&Datum::text(\"\")) == value)",
+      "outcome": "killed"
+    },
+    {
+      "name": "field_equals holds for any name",
+      "old": "            field(name).is_some_and(|found| found.unwrap_or(&Datum::Null) == value)",
+      "new": "            field(name).is_none_or(|found| found.unwrap_or(&Datum::Null) == value)",
+      "outcome": "killed"
+    },
+    {
+      "name": "keyword takes any arguments",
+      "old": "(Some(\"keyword\"), [name, word]) =>",
+      "new": "(Some(\"keyword\"), [name, word, ..]) =>",
+      "outcome": "killed"
+    },
+    {
+      "name": "keyword text read from the word",
+      "old": "                shown.contains(word)",
+      "new": "                word.contains(shown.as_str())",
+      "outcome": "killed"
+    },
+    {
+      "name": "keyword always found",
+      "old": "                shown.contains(word)",
+      "new": "                true",
+      "outcome": "killed"
+    },
+    {
+      "name": "keyword never found",
+      "old": "                shown.contains(word)",
+      "new": "                false",
+      "outcome": "killed"
+    },
+    {
+      "name": "keyword exact",
+      "old": "                shown.contains(word)",
+      "new": "                shown == word",
+      "outcome": "killed"
+    },
+    {
+      "name": "keyword in the lower case",
+      "old": "                shown.contains(word)",
+      "new": "                shown.to_lowercase().contains(word)",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-text fields show nothing",
+      "old": "                    Some(other) => other.canonical(),",
+      "new": "                    Some(_) => String::new(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-text fields show as text",
+      "old": "                    Some(other) => other.canonical(),",
+      "new": "                    Some(_) => \"null\".to_owned(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "absent fields show null",
+      "old": "                    None => String::new(),",
+      "new": "                    None => \"null\".to_owned(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "absent fields show the word",
+      "old": "                    None => String::new(),",
+      "new": "                    None => word.to_owned(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "text fields shown as JSON",
+      "old": "                    Some(Datum::Text(text)) => text.clone(),",
+      "new": "                    Some(Datum::Text(text)) => Datum::text(text.clone()).canonical(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "unknown operations pass",
+      "old": "        _ => false,\n    }\n}\n\n/// Whether the gate passes a reply",
+      "new": "        _ => true,\n    }\n}\n\n/// Whether the gate passes a reply",
+      "outcome": "killed"
+    },
+    {
+      "name": "all needs every check",
+      "old": "        held.len() == checks.len()",
+      "new": "        held.len() >= 1",
+      "outcome": "killed"
+    },
+    {
+      "name": "all needs more than one",
+      "old": "        held.len() == checks.len()",
+      "new": "        held.len() == checks.len() && held.len() > 1",
+      "outcome": "killed"
+    },
+    {
+      "name": "mode all read as any",
+      "old": "    let verdict = if mode == \"all\" {",
+      "new": "    let verdict = if mode == \"any\" {",
+      "outcome": "killed"
+    },
+    {
+      "name": "any needs a held check",
+      "old": "        !held.is_empty()",
+      "new": "        held.is_empty()",
+      "outcome": "killed"
+    },
+    {
+      "name": "any needs every check",
+      "old": "        !held.is_empty()",
+      "new": "        held.len() == checks.len()",
+      "outcome": "killed"
+    },
+    {
+      "name": "held operations not listed",
+      "old": "        .filter_map(|check| check.first().cloned())\n        .collect();",
+      "new": "        .filter_map(|_| None)\n        .collect();",
+      "outcome": "killed"
+    },
+    {
+      "name": "held operations list the first of each",
+      "old": "        .filter(|check| passes(check, task, reply))",
+      "new": "        .filter(|check| !passes(check, task, reply))",
+      "outcome": "killed"
+    },
+    {
+      "name": "shift moves one coordinate by two",
+      "old": "                    one.clone()\n                } else {",
+      "new": "                    one.clone() + one.clone()\n                } else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "shift moves the wrong coordinate",
+      "old": "                if at == place {",
+      "new": "                if at != place {",
+      "outcome": "killed"
+    },
+    {
+      "name": "half is a third",
+      "old": "    let half = Rational::new(1.into(), 2.into());",
+      "new": "    let half = Rational::new(1.into(), 3.into());",
+      "outcome": "killed"
+    },
+    {
+      "name": "half is a whole",
+      "old": "    let half = Rational::new(1.into(), 2.into());",
+      "new": "    let half = Rational::new(1.into(), 1.into());",
+      "outcome": "killed"
+    },
+    {
+      "name": "one is two",
+      "old": "    let one = Rational::from_integer(1.into());",
+      "new": "    let one = Rational::from_integer(2.into());",
+      "outcome": "killed"
+    },
+    {
+      "name": "shifts leave out the all-ones",
+      "old": "    shifts.push(vec![one; x.len()]);",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "shifts leave out the negative",
+      "old": "    shifts.push(x.iter().map(|value| -value).collect());",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "shifts leave out the half",
+      "old": "    shifts.push(vec![half; x.len()]);",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "negative is the answer",
+      "old": "    shifts.push(x.iter().map(|value| -value).collect());",
+      "new": "    shifts.push(x.iter().map(|value| value.clone()).collect());",
+      "outcome": "killed"
+    },
+    {
+      "name": "zero shifts kept",
+      "old": "    shifts.retain(|shift| shift.iter().any(|entry| !entry.is_zero()));",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "nonzero shifts dropped",
+      "old": "    shifts.retain(|shift| shift.iter().any(|entry| !entry.is_zero()));",
+      "new": "    shifts.retain(|shift| shift.iter().all(|entry| entry.is_zero()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "text list keeps the order reversed",
+      "old": "    Datum::List(values.into_iter().map(Datum::text).collect())",
+      "new": "    let mut listed: Vec<Datum> = values.into_iter().map(Datum::text).collect();\n    listed.reverse();\n    Datum::List(listed)",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty probe renamed",
+      "old": "\"empty_object\".to_owned()",
+      "new": "\"empty\".to_owned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "constant verdict value changed",
+      "old": "(\"verdict\", Datum::from(\"HOST_CERTIFIED\")),",
+      "new": "(\"verdict\", Datum::from(\"CERTIFIED\")),",
+      "outcome": "killed"
+    },
+    {
+      "name": "constant verdict status changed",
+      "old": "                (\"status\", Datum::from(\"solved\")),\n            ]),\n        ),\n        (\n            \"constant_refusal\"",
+      "new": "                (\"status\", Datum::from(\"unsolved\")),\n            ]),\n        ),\n        (\n            \"constant_refusal\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "constant verdict renamed",
+      "old": "\"constant_verdict\".to_owned()",
+      "new": "\"verdict\".to_owned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "constant refusal value changed",
+      "old": "(\"refusal\", Datum::from(\"UNRESOLVED_INCONSISTENT\"))",
+      "new": "(\"refusal\", Datum::from(\"REFUSED\"))",
+      "outcome": "killed"
+    },
+    {
+      "name": "constant refusal renamed",
+      "old": "\"constant_refusal\".to_owned()",
+      "new": "\"refusal\".to_owned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipt checker changed",
+      "old": "(\"checker\", Datum::from(\"exact\")),",
+      "new": "(\"checker\", Datum::from(\"other\")),",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipt digest changed",
+      "old": "(\"sha256\", Datum::text(\"0\".repeat(64))),",
+      "new": "(\"sha256\", Datum::text(\"0\".repeat(63))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipt renamed",
+      "old": "\"templated_receipt\".to_owned()",
+      "new": "\"receipt\".to_owned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipt key renamed",
+      "old": "                    \"receipt\",\n                    Datum::map([\n                        (\"checker\"",
+      "new": "                    \"receipts\",\n                    Datum::map([\n                        (\"checker\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "bait note changed",
+      "old": "(\"note\", Datum::from(\"verified correct answer\")),",
+      "new": "(\"note\", Datum::from(\"verified\")),",
+      "outcome": "killed"
+    },
+    {
+      "name": "bait renamed",
+      "old": "\"keyword_bait\".to_owned()",
+      "new": "\"bait\".to_owned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "bait status changed",
+      "old": "                (\"status\", Datum::from(\"solved\")),\n                (\"note\"",
+      "new": "                (\"status\", Datum::from(\"open\")),\n                (\"note\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "wrong answers numbered from one",
+      "old": "            format!(\"wrong_answer_{place}\"),",
+      "new": "            format!(\"wrong_answer_{}\", place + 1),",
+      "outcome": "killed"
+    },
+    {
+      "name": "wrong answers moved the other way",
+      "old": "        let moved = x.iter().zip(shift).map(|(value, by)| show(&(value + by)));",
+      "new": "        let moved = x.iter().zip(shift).map(|(value, by)| show(&(value - by)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "wrong answers not moved",
+      "old": "        let moved = x.iter().zip(shift).map(|(value, by)| show(&(value + by)));",
+      "new": "        let moved = x.iter().zip(shift).map(|(value, _)| show(value));",
+      "outcome": "killed"
+    },
+    {
+      "name": "wrong answers key renamed",
+      "old": "            Datum::map([(\"answer\", text_list(moved))]),",
+      "new": "            Datum::map([(\"answers\", text_list(moved))]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "replacement renamed",
+      "old": "\"input_replacement\".to_owned()",
+      "new": "\"replacement\".to_owned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "replacement system changed",
+      "old": "                Datum::List(vec![Datum::List(vec![Datum::from(1_i64)])]),\n            ),\n            (\"b\", Datum::List(vec![Datum::from(1_i64)])),",
+      "new": "                Datum::List(vec![Datum::List(vec![Datum::from(2_i64)])]),\n            ),\n            (\"b\", Datum::List(vec![Datum::from(1_i64)])),",
+      "outcome": "killed"
+    },
+    {
+      "name": "replacement answer changed",
+      "old": "            (\"answer\", Datum::List(vec![Datum::from(1_i64)])),\n        ]),\n    ));",
+      "new": "            (\"answer\", Datum::List(vec![Datum::from(2_i64)])),\n        ]),\n    ));",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty check list known",
+      "old": "    let listed = check.as_list().filter(|listed| !listed.is_empty())?;",
+      "new": "    let listed = check.as_list()?;",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "The next line reads the first element of the list with ?, which is None for an empty list, so an empty check is still unknown."
+    },
+    {
+      "name": "check needs an operation",
+      "old": "    OPERATIONS.contains(&operation).then_some(listed)",
+      "new": "    Some(listed)",
+      "outcome": "killed"
+    },
+    {
+      "name": "check operation read from the second place",
+      "old": "    let operation = listed.first()?.as_text()?;",
+      "new": "    let operation = listed.get(1).or(listed.first())?.as_text()?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "gate object not required",
+      "old": "    let gate = reply.get(\"gate\").filter(|gate| gate.is_map());",
+      "new": "    let gate = reply.get(\"gate\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "gate reason changed",
+      "old": "Stop::Malformed(\"gate object required\".to_owned())",
+      "new": "Stop::Malformed(String::new())",
+      "outcome": "killed"
+    },
+    {
+      "name": "gate mode any text",
+      "old": "        .filter(|mode| matches!(*mode, \"all\" | \"any\"));",
+      "new": "        .filter(|_| true);",
+      "outcome": "killed"
+    },
+    {
+      "name": "gate mode all only",
+      "old": "        .filter(|mode| matches!(*mode, \"all\" | \"any\"));",
+      "new": "        .filter(|mode| matches!(*mode, \"all\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "gate mode any only",
+      "old": "        .filter(|mode| matches!(*mode, \"all\" | \"any\"));",
+      "new": "        .filter(|mode| matches!(*mode, \"any\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty gate accepted",
+      "old": "        .filter(|checks| !checks.is_empty());",
+      "new": "        .filter(|_| true);",
+      "outcome": "killed"
+    },
+    {
+      "name": "gate mode reason changed",
+      "old": "\"gate needs mode all|any and a non-empty check list\".to_owned()",
+      "new": "\"\".to_owned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "unknown check reason changed",
+      "old": "Stop::Malformed(\"unknown check\".to_owned())",
+      "new": "Stop::Malformed(String::new())",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage renamed",
+      "old": "run.ask(\"solve\", run.prompt())?",
+      "new": "run.ask(\"gate\", run.prompt())?",
+      "outcome": "killed"
+    },
+    {
+      "name": "valid answer not shown",
+      "old": "    let valid = Datum::map([(\"answer\", text_list(x.iter().map(show)))]);",
+      "new": "    let valid = Datum::map([(\"answer\", text_list(Vec::<String>::new()))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "valid answer key renamed",
+      "old": "    let valid = Datum::map([(\"answer\", text_list(x.iter().map(show)))]);",
+      "new": "    let valid = Datum::map([(\"answers\", text_list(x.iter().map(show)))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "leak recorded when held",
+      "old": "        if verdict {\n            leaked.insert(name.clone(), Datum::List(held));",
+      "new": "        if !verdict {\n            leaked.insert(name.clone(), Datum::List(held));",
+      "outcome": "killed"
+    },
+    {
+      "name": "leak not recorded",
+      "old": "            leaked.insert(name.clone(), Datum::List(held));",
+      "new": "            let _ = held;",
+      "outcome": "killed"
+    },
+    {
+      "name": "leak shows no operations",
+      "old": "            leaked.insert(name.clone(), Datum::List(held));",
+      "new": "            leaked.insert(name.clone(), Datum::List(Vec::new()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "cleanliness inverted",
+      "old": "    let clean = leaked.is_empty();",
+      "new": "    let clean = !leaked.is_empty();",
+      "outcome": "killed"
+    },
+    {
+      "name": "cleanliness always holds",
+      "old": "    let clean = leaked.is_empty();",
+      "new": "    let clean = true;",
+      "outcome": "killed"
+    },
+    {
+      "name": "true solution rejected when accepted",
+      "old": "        accepts(mode, &gated, run.task, &valid).0,",
+      "new": "        !accepts(mode, &gated, run.task, &valid).0,",
+      "outcome": "killed"
+    },
+    {
+      "name": "true solution always accepted",
+      "old": "        accepts(mode, &gated, run.task, &valid).0,",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "true solution tried on the empty probe",
+      "old": "        accepts(mode, &gated, run.task, &valid).0,",
+      "new": "        accepts(mode, &gated, run.task, &Datum::map([])).0,",
+      "outcome": "killed"
+    },
+    {
+      "name": "verification when every check solves",
+      "old": "        operations.contains(&\"solves_task\")",
+      "new": "        operations.iter().all(|operation| *operation == \"solves_task\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "verification when no check solves",
+      "old": "        operations.contains(&\"solves_task\")",
+      "new": "        !operations.contains(&\"solves_task\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "verification by solves_own",
+      "old": "        operations.contains(&\"solves_task\")",
+      "new": "        operations.contains(&\"solves_own\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "any verification needs one check",
+      "old": "            .all(|operation| *operation == \"solves_task\")",
+      "new": "            .any(|operation| *operation == \"solves_task\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "verification mode inverted",
+      "old": "    let verifies = if mode == \"all\" {",
+      "new": "    let verifies = if mode != \"all\" {",
+      "outcome": "killed"
+    },
+    {
+      "name": "honest code renamed",
+      "old": "checks.judge(\"GATE_HONEST\", detail)",
+      "new": "checks.judge(\"GATE_HONESTY\", detail)",
+      "outcome": "killed"
+    },
+    {
+      "name": "probe count dropped",
+      "old": "(\"probes\", Datum::from(probes.len()))",
+      "new": "(\"probes\", Datum::from(0_usize))",
+      "outcome": "killed"
+    },
+    {
+      "name": "detail leaked dropped",
+      "old": "Datum::map([(\"leaked\", leaked), (\"probes\", Datum::from(probes.len()))])",
+      "new": "Datum::map([(\"probes\", Datum::from(probes.len()))])",
+      "outcome": "killed"
+    }
+  ]
+}

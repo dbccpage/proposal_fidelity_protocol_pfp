@@ -7,7 +7,7 @@
     "artifact": {
       "path": "pfp_core/workflow_families/tests/test_families.py",
       "language": "Python",
-      "sha256": "c6ec5b2c038820c45116a2e2eed3e2f971fe1f2d02aebb59a8795b093ebf70ed"
+      "sha256": "b7406d8d9b7721c11c003207b45d0851458101244fede41b8f4328687fce7567"
     },
     "contract_urn": "urn:pfp-core:workflow-families-tests-test_families-py:v1",
     "symbols": [
@@ -17,6 +17,8 @@
       "test_fixture_verdict",
       "test_the_layer_4_results_name_every_fixture_of_the_layer_4_families",
       "test_a_layer_4_fixture_ends_with_the_code_and_the_findings_its_name_says",
+      "test_the_layer_5_results_name_every_fixture_of_the_layer_5_families",
+      "test_a_layer_5_fixture_ends_with_the_code_and_the_findings_its_name_says",
       "test_authority_escalation_is_refused",
       "test_a_prompt_carrying_a_sealed_literal_never_dispatches",
       "test_a_priced_reply_is_refused_by_the_zero_spend_budget",
@@ -52,7 +54,7 @@
     "owned_invariants": [
       "The registry is asserted to cover exactly the workflow families named in the DAG, each spec to match its DAG node, and each family to have a positive and an adversarial fixture.",
       "Every fixture is run and its status asserted; the hosted families run through the real pfp_operad binary and none has a Python check of its own.",
-      "Each of the 44 layer 4 fixtures is also asserted to end with the code its name says and the findings in its report, with the hashes left out, so a fixture that reaches the right status for the wrong reason fails.",
+      "Each of the 44 layer 4 fixtures and each of the 33 layer 5 fixtures is also asserted to end with the code its name says and the findings in its report, with the hashes left out, so a fixture that reaches the right status for the wrong reason fails.",
       "The host's own list of hosted families is asserted equal to the registry's names, and the set of hosted ids is written out, so a family added or dropped fails here.",
       "A sealed value in a prompt, an authority escalation, a priced reply and a malformed task are each asserted refused before anything is dispatched."
     ],
@@ -67,7 +69,7 @@
     "artifact": {
       "path": "pfp_core/workflow_families/tests/test_families.py",
       "language": "Python",
-      "sha256": "c6ec5b2c038820c45116a2e2eed3e2f971fe1f2d02aebb59a8795b093ebf70ed"
+      "sha256": "b7406d8d9b7721c11c003207b45d0851458101244fede41b8f4328687fce7567"
     },
     "profile": "Non-Numeric",
     "level": "L2",
@@ -83,34 +85,34 @@
       "G1": "Each test name states the claim it checks.",
       "G2": "Expected statuses, codes and counts follow from the replies written in the test.",
       "G3": "Refusals are asserted by the host's code or the raised error.",
-      "G4": "All 509 pass in the recorded run; they killed 200 of 244 eligible layer 4 mutants.",
+      "G4": "All 551 pass in the recorded run; they killed 133 of 166 eligible layer 5 mutants.",
       "G5": "Measured worst cyclomatic 5, cognitive 2, nesting 1; ceiling A+, recorded A."
     },
     "composite_grade": "C",
     "score_token": "L2C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-16T15:22:10Z",
+    "evaluation_timestamp": "2026-11-16T17:36:31Z",
     "evidence": [
       {
-        "path": "governance/evidence/operad-host-workflow-tests-v13.run.json",
-        "sha256": "c809aeed4fac0eab39e21ad6361e4151a5a709c1a3650f1483f866b7b7a1ffb6",
-        "note": "808 offline tests (pfp/workflows, pfp_core/workflow_families, exclusions) against the release build of pfp_operad 0.11.0; exact source inputs bound. No live model performance claim."
+        "path": "governance/evidence/operad-host-workflow-tests-v14.run.json",
+        "sha256": "453bbd5bdead1d21a883597287c77422af9418cbb67bd2216be73638695c0e24",
+        "note": "850 offline tests (pfp/workflows, pfp_core/workflow_families, exclusions) against the release build of pfp_operad 0.11.0; exact source inputs bound. No live model performance claim."
       },
       {
-        "path": "governance/evidence/pfp-operads-v13-metrics.run.json",
-        "sha256": "1f073e9074334349e9fcb471b80bb4860fd71373d3593bc902d8fd4e46fd4f2d",
+        "path": "governance/evidence/pfp-operads-v14-metrics.run.json",
+        "sha256": "070d448da3bce97bffdcb2c8095d7c52d792ea634bc321ba3b4af64b3b9576b0",
         "note": "The run that measured Gate 5 structure."
       },
       {
-        "path": "governance/evidence/pfp-operads-v13-metrics.json",
-        "sha256": "f1e599a1782ed3478232245d33bf04cab5f389770a614a7f1840bc53ca8a9209",
+        "path": "governance/evidence/pfp-operads-v14-metrics.json",
+        "sha256": "7533090aaa56c6585bb5e4ac4c61603e7dd6ba63ce6e31c95b1ee49b5bf6a97a",
         "note": "Measured Gate 5 structure of every source this change touches."
       },
       {
-        "path": "governance/evidence/m-workflow-families-layer4-py.mutation.json",
-        "sha256": "1707ec71f060e72a4cecf462538b518f6770ef06d696df063b3710e090bcdc78",
-        "note": "Layer 4 campaign these tests are the oracle for."
+        "path": "governance/evidence/m-workflow-families-layer5-py.mutation.json",
+        "sha256": "1cfc37fadf138b24a2c6f1dd732439fb1500492ad32677bee809e5c495cdc848",
+        "note": "Layer 5 campaign these tests are the oracle for."
       }
     ],
     "mutation_accounting": null
@@ -443,6 +445,122 @@
           {
             "path": "governance/evidence/pfp-operads-v13-metrics.json",
             "sha256": "c78a4942b6937a2e0ef6b7ed4d2023b2a34259f868a263849f076536dcfd44d8",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          },
+          {
+            "path": "governance/evidence/m-workflow-families-layer4-py.mutation.json",
+            "sha256": "1707ec71f060e72a4cecf462538b518f6770ef06d696df063b3710e090bcdc78",
+            "note": "Layer 4 campaign these tests are the oracle for."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    },
+    {
+      "recorded_at": "2026-11-16T17:36:37.016740Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "pfp_core/workflow_families/tests/test_families.py",
+          "language": "Python",
+          "sha256": "c6ec5b2c038820c45116a2e2eed3e2f971fe1f2d02aebb59a8795b093ebf70ed"
+        },
+        "contract_urn": "urn:pfp-core:workflow-families-tests-test_families-py:v1",
+        "symbols": [
+          "test_registry_covers_wf6_to_wf49_wf51_and_wf55_to_wf57_exactly",
+          "test_spec_matches_the_dag_node",
+          "test_every_family_has_a_positive_and_an_adversarial_fixture",
+          "test_fixture_verdict",
+          "test_the_layer_4_results_name_every_fixture_of_the_layer_4_families",
+          "test_a_layer_4_fixture_ends_with_the_code_and_the_findings_its_name_says",
+          "test_authority_escalation_is_refused",
+          "test_a_prompt_carrying_a_sealed_literal_never_dispatches",
+          "test_a_priced_reply_is_refused_by_the_zero_spend_budget",
+          "test_canonical_rejects_floats_as_fractions",
+          "test_readme_blocks_and_dag_records_are_current",
+          "test_a_private_name_in_a_source_field_is_refused",
+          "test_a_readme_without_the_generated_markers_is_refused",
+          "test_every_generated_readme_block_is_current_and_says_runnable_offline",
+          "test_drift_in_the_index_or_the_dag_status_is_reported",
+          "test_an_unaffordable_call_is_never_dispatched",
+          "test_a_short_sealed_answer_is_caught_as_a_whole_token",
+          "test_the_rust_host_lists_every_hosted_family_under_the_registry_s_names",
+          "test_a_hosted_family_holds_no_check_of_its_own",
+          "test_a_hosted_family_refuses_a_malformed_task_before_any_proposal",
+          "test_a_hosted_family_asks_exactly_what_the_host_wrote",
+          "test_what_the_host_leaves_unchecked_keeps_the_run_from_being_fully_certified",
+          "test_a_battery_asks_one_capsule_at_a_time_and_counts_a_missing_reply",
+          "test_a_sealed_value_in_a_hosted_task_is_refused_by_the_host_and_never_dispatched",
+          "test_the_python_guard_of_the_unported_families_reads_a_closing_mark_as_the_host_does",
+          "test_a_non_binary_edge_label_is_refused_before_any_proposal",
+          "test_a_label_that_is_not_json_never_reaches_the_host",
+          "test_a_malformed_edge_is_refused_before_any_proposal",
+          "test_exact_binary_labels_are_still_admitted",
+          "test_docs_main_prints_the_result_and_exits_by_it",
+          "test_docs_build_writes_only_without_check",
+          "test_docs_a_missing_host_file_is_refused",
+          "test_docs_drift_reads_only_numbered_rows_with_a_status_cell",
+          "test_docs_readme_block_ids_are_wf6_to_wf49",
+          "test_docs_docstring_head_drops_only_the_id_prefix",
+          "test_docs_encode_keeps_crlf_only_when_seen_in_the_first_4096_bytes",
+          "test_docs_guard_names_the_whole_match"
+        ],
+        "owned_invariants": [
+          "The registry is asserted to cover exactly the workflow families named in the DAG, each spec to match its DAG node, and each family to have a positive and an adversarial fixture.",
+          "Every fixture is run and its status asserted; the hosted families run through the real pfp_operad binary and none has a Python check of its own.",
+          "Each of the 44 layer 4 fixtures is also asserted to end with the code its name says and the findings in its report, with the hashes left out, so a fixture that reaches the right status for the wrong reason fails.",
+          "The host's own list of hosted families is asserted equal to the registry's names, and the set of hosted ids is written out, so a family added or dropped fails here.",
+          "A sealed value in a prompt, an authority escalation, a priced reply and a malformed task are each asserted refused before anything is dispatched."
+        ],
+        "boundaries": [
+          "Offline fixtures only; fixtures are not live model trials.",
+          "Python guards of the unported families are asserted here; the hosted families' guards are the host's."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "pfp_core/workflow_families/tests/test_families.py",
+          "language": "Python",
+          "sha256": "c6ec5b2c038820c45116a2e2eed3e2f971fe1f2d02aebb59a8795b093ebf70ed"
+        },
+        "profile": "Non-Numeric",
+        "level": "L2",
+        "level_basis": "L2 verification support: explicit fixtures and finite negative controls with source-bound outcomes.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected statuses, codes and counts follow from the replies written in the test.",
+          "G3": "Refusals are asserted by the host's code or the raised error.",
+          "G4": "All 509 pass in the recorded run; they killed 200 of 244 eligible layer 4 mutants.",
+          "G5": "Measured worst cyclomatic 5, cognitive 2, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T15:22:10Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/operad-host-workflow-tests-v13.run.json",
+            "sha256": "c809aeed4fac0eab39e21ad6361e4151a5a709c1a3650f1483f866b7b7a1ffb6",
+            "note": "808 offline tests (pfp/workflows, pfp_core/workflow_families, exclusions) against the release build of pfp_operad 0.11.0; exact source inputs bound. No live model performance claim."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-metrics.run.json",
+            "sha256": "1f073e9074334349e9fcb471b80bb4860fd71373d3593bc902d8fd4e46fd4f2d",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-metrics.json",
+            "sha256": "f1e599a1782ed3478232245d33bf04cab5f389770a614a7f1840bc53ca8a9209",
             "note": "Measured Gate 5 structure of every source this change touches."
           },
           {
