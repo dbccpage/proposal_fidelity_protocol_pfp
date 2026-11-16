@@ -17,5 +17,6 @@ lean_lib «SymbolGameKernel» where
     `FidelityAdequacy,
     `LiftPatchSemantics,
     `OperationTreeFold,
-    `FunnelCompressionClosure
+    `FunnelCompressionClosure,
+    `RemainingClaimClosure
   ]
