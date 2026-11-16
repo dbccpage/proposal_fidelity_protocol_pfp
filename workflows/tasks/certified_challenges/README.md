@@ -130,8 +130,7 @@ C011, C021, C039, C049 and C050. `test_malformed_cohomology_certificates.py`
 feeds malformed certificates to the C013 and C016 checkers.
 
 `sqlite_pilot_store.py` and the `test_c05*_replay_custody.py` files store runs
-in SQLite and replay them against both checkers (wiki page
-Test-Certified-Run-Replay-Store).
+in SQLite and replay them against both checkers.
 
 `findings/` holds the working notes from the model runs (C043 to C060). Read
 their dated notices first: the model scores are exploratory, every

@@ -80,4 +80,4 @@ On integer sums with negative values, a model that drops signs at baseline
 answers more held-out cases correctly once an admitted sign rule is loaded, and
 a rule that does not help is never loaded. Not measured yet.
 
-More: [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf55) · [machine-readable entry](../../dag/reviews/workflows_audit.json)
+More: [machine-readable entry](../../dag/reviews/workflows_audit.json)

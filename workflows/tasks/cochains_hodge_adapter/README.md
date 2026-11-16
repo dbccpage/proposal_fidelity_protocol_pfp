@@ -14,5 +14,3 @@ python workflows/tasks/cochains_hodge_adapter/run.py --output-dir <scratch-dir>
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000040/`.
-
-See the wiki page `Test-Cochains-Hodge-Adapter`.

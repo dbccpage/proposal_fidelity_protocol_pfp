@@ -14,7 +14,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF14-"
 
 **The check:** `thymus_two_signal_admission`. Only this check can certify; a model reply is evidence for it, never a verdict.
 
-**Code:** [`pfp_core/workflow_families/layer6.py`](../../pfp_core/workflow_families/layer6.py) (`ImmuneFailureClassification`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf14)
+**Code:** [`pfp_core/workflow_families/layer6.py`](../../pfp_core/workflow_families/layer6.py) (`ImmuneFailureClassification`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** meta workflow. **Builds on:** [WF7](../wf07_typed_refusal/README.md), [WF12](../wf12_mechanism_control_arms/README.md).
@@ -62,4 +62,4 @@ Boost: when a detector fires on Self: discard it; run_o may propose one narrower
 | toxicity threshold and decay | 1/5 threshold; decay tau = 5 | policy arithmetic, not a rate | offline | P006 §8 |
 | self-panel diversity | 1000 rows, 40 distinct | effective n = 40 | offline | P003; P006 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf14) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

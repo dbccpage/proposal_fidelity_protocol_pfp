@@ -13,4 +13,4 @@ Run from the repository root:
 Expected: `5 passed`.
 
 Files: `ast_fault_tracer.py`, `diff_telemetry.py`, `state_graph_recovery.py`,
-`test_candidate_telemetry.py`. Wiki page: Test-Candidate-Revision-Telemetry.
+`test_candidate_telemetry.py`. 

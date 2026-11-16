@@ -14,5 +14,3 @@ python workflows/tasks/interference_weights/run.py --output-dir <scratch-dir>
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000031/`.
-
-See the wiki page `Test-Interference-Weights`.

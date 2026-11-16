@@ -3,8 +3,7 @@
 > **Moved (2026-10-27).** This folder was `papers/symbol_game_challenge_and_demos_findings/`.
 > It now sits next to the runnable challenge packages in `workflows/tasks/certified_challenges/`.
 > The notes are unchanged; their links still point into the source repository and do
-> not resolve here. The wiki's `Test-*` pages describe the checkers without the model
-> scores.
+> not resolve here.
 
 > **Notice (2026-09-29).** `stealth/space-bunny-alpha` ("Space Bunny") is a new free
 > stealth model offered on OpenRouter as of 2026-09-28. The provider does not disclose

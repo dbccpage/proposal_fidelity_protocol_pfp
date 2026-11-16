@@ -15,7 +15,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF32-"
 
 **The check:** `per_claim_independent_checkers`. Only this check can certify; a model reply is evidence for it, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
-**Check (Rust):** [`code/rust/pfp_operads/src/families/wf32.rs`](../../code/rust/pfp_operads/src/families/wf32.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer2.py`](../../pfp_core/workflow_families/layer2.py) (`ClaimScopedReceipt`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf32)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf32.rs`](../../code/rust/pfp_operads/src/families/wf32.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer2.py`](../../pfp_core/workflow_families/layer2.py) (`ClaimScopedReceipt`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** procedure extension. **Builds on:** [WF1](../wf01_typed_answer/README.md), [WF2](../wf02_full_slots/README.md).
@@ -47,4 +47,4 @@ Pattern `solo`: coder ×1 (sonnet); host_checker ×1 (none).
 
 Boost: when unchecked claim found: drop it from the receipt (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf32) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

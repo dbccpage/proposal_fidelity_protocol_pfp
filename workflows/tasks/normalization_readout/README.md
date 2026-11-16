@@ -14,5 +14,3 @@ python workflows/tasks/normalization_readout/run.py --output-dir <scratch-dir>
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000032/`.
-
-See the wiki page `Test-Normalization-Readout`.

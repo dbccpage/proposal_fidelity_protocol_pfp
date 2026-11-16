@@ -13,6 +13,3 @@ Run from the repository root (needs pydantic, which the repo declares, and PyYAM
     python -m pytest workflows/tasks/paper_run_rules -q
 
 Expected: `46 passed`.
-
-Wiki pages: Test-Paper-Run-Role-Gated-Transitions, Test-Stage-Receipt-Tape,
-Test-Domain-Purity-Scan.

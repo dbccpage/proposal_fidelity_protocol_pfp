@@ -14,7 +14,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF41-"
 
 **The check:** `detector_calibration_completeness`. Only this check can certify; a model reply is evidence for it, never a verdict.
 
-**Code:** [`pfp_core/workflow_families/layer7.py`](../../pfp_core/workflow_families/layer7.py) (`DetectorAdequacyTwoSignal`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf41)
+**Code:** [`pfp_core/workflow_families/layer7.py`](../../pfp_core/workflow_families/layer7.py) (`DetectorAdequacyTwoSignal`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** meta workflow. **Builds on:** [WF14](../wf14_immune_failure_classification/README.md).
@@ -46,4 +46,4 @@ Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (run_f); host_checker
 
 Boost: when a class is missing: DetectorInadequate (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf41) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

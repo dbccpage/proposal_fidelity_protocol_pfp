@@ -105,4 +105,4 @@ A model's claim that it fixed a file stops counting: only patches the host
 tested are accepted, and each failed patch becomes a ledger entry a later run
 can learn from. Not measured yet.
 
-More: [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf57) · [machine-readable entry](../../dag/reviews/workflows_audit.json)
+More: [machine-readable entry](../../dag/reviews/workflows_audit.json)

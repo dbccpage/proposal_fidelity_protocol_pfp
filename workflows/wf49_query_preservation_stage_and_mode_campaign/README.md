@@ -14,7 +14,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF49-"
 
 **The check:** `decoded_query_equality_seal_chain`. Only this check can certify; a model reply is evidence for it, never a verdict.
 
-**Code:** [`pfp_core/workflow_families/layer8.py`](../../pfp_core/workflow_families/layer8.py) (`QueryPreservationCampaign`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf49)
+**Code:** [`pfp_core/workflow_families/layer8.py`](../../pfp_core/workflow_families/layer8.py) (`QueryPreservationCampaign`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** experiment design. **Builds on:** [WF8](../wf08_staged_sealed_packets/README.md), [WF22](../wf22_certified_cost_ladder/README.md).
@@ -45,4 +45,4 @@ Pattern `sweep_with_shared_judge`: coder ×1 (sonnet); deep_researcher ×1 (run_
 
 Boost: when safety regression: stop the lane (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf49) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

@@ -1,0 +1,204 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_cli/tests/skills.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_cli/tests/skills.rs",
+      "language": "Rust",
+      "sha256": "edbc21ebdc4c2c525916c19b2c76b1e8a592bea48a528ebcd63650164a24de3a"
+    },
+    "contract_urn": "urn:pfp-cli:tests-skills:v1",
+    "symbols": [
+      "catalog",
+      "pfp",
+      "stdout",
+      "summary_counts_bound_skills_and_residuals",
+      "licence_follows_the_catalogue",
+      "mcp_export_lists_only_bound_skills",
+      "another_schema_is_refused",
+      "cli_skills_and_json",
+      "cli_licence_exit_codes",
+      "cli_needs_a_catalogue_and_the_mcp_flag",
+      "unlicensed_skill_is_explained"
+    ],
+    "owned_invariants": [
+      "Tests run the built pfp binary on the skill catalog fixtures and assert exit codes and output, including the UNLICENSED_SKILL refusal and its explain entry."
+    ],
+    "boundaries": [
+      "Offline fixtures only."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_cli/tests/skills.rs",
+      "language": "Rust",
+      "sha256": "edbc21ebdc4c2c525916c19b2c76b1e8a592bea48a528ebcd63650164a24de3a"
+    },
+    "profile": "Non-Numeric",
+    "level": "L2",
+    "level_basis": "L2 verification support: explicit catalog fixtures and negative controls with asserted exit codes.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected exit codes, counts and codes are written in the tests.",
+      "G3": "Refusals are asserted by exit code 2 and by the code printed.",
+      "G4": "All 8 pass in the recorded run (61 pfp-cli tests in all).",
+      "G5": "Test functions measured like runtime code. Cyclomatic complexity from lizard; nesting from the brace estimate; cognitive complexity is not measured for Rust, so A is not claimed. Metrics: worst function: cyclomatic 1, cognitive None, nesting 0; metrics ceiling A+."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T11:11:32Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-cli-nowiki-test.run.json",
+        "sha256": "54b98eca27be1938bfaadd36d956fcfb1f4c03cb59fb14197001ae4a74919ce5",
+        "note": "61 unit and end-to-end tests of pfp-cli pass."
+      },
+      {
+        "path": "governance/evidence/pfp-cli-nowiki-clippy.run.json",
+        "sha256": "46d34fa33ef9479efcbc09d0372118f8130a5a63d1c681a478277154a0ff7b3a",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-cli-nowiki-fmt.run.json",
+        "sha256": "c0035e3e93882a9195fd65569eb91922ea39159575573d1abfab596e63bc9916",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-cli-nowiki-wasm.run.json",
+        "sha256": "392c59a5cf3fb878ca54cc7ba2a0ed197f909ec93f67f6f0e84573b67a80fe62",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pfp-cli-nowiki-metrics.run.json",
+        "sha256": "a2f00826fc258095ec285e87a1a2d67259b9cb8804157caafc7e9d8969569ec5",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-cli-nowiki-metrics.json",
+        "sha256": "50e5fb9b0f1a35773dd5fc9cb897807a6145302e681282c23c3734a0f3de53aa",
+        "note": "Measured Gate 5 structure of the changed files."
+      },
+      {
+        "path": "governance/evidence/pfp-cli-nowiki-mutants.run.json",
+        "sha256": "85a0d31fa5d7b3f6d89442fe348a482d8956c3ba67e0b63297cff7913f23eb86",
+        "note": "cargo-mutants run on src/catalog.rs and src/lib.rs."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T11:11:41.975106Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_cli/tests/skills.rs",
+          "language": "Rust",
+          "sha256": "edbc21ebdc4c2c525916c19b2c76b1e8a592bea48a528ebcd63650164a24de3a"
+        },
+        "contract_urn": "urn:pfp-cli:tests-skills:v1",
+        "symbols": [
+          "catalog",
+          "pfp",
+          "stdout",
+          "summary_counts_bound_skills_and_residuals",
+          "licence_follows_the_catalogue",
+          "mcp_export_lists_only_bound_skills",
+          "another_schema_is_refused",
+          "cli_skills_and_json",
+          "cli_licence_exit_codes",
+          "cli_needs_a_catalogue_and_the_mcp_flag",
+          "unlicensed_skill_is_explained"
+        ],
+        "owned_invariants": [
+          "Tests run the built pfp binary on the skill catalog fixtures and assert exit codes and output, including the UNLICENSED_SKILL refusal and its explain entry."
+        ],
+        "boundaries": [
+          "Offline fixtures only."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_cli/tests/skills.rs",
+          "language": "Rust",
+          "sha256": "edbc21ebdc4c2c525916c19b2c76b1e8a592bea48a528ebcd63650164a24de3a"
+        },
+        "profile": "Non-Numeric",
+        "level": "L2",
+        "level_basis": "L2 verification support: explicit catalog fixtures and negative controls with asserted exit codes.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected exit codes, counts and codes are written in the tests.",
+          "G3": "Refusals are asserted by exit code 2 and by the code printed.",
+          "G4": "All 8 pass in the recorded run (61 pfp-cli tests in all).",
+          "G5": "Measured worst cyclomatic 1, nesting 0; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T11:11:32Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-cli-nowiki-test.run.json",
+            "sha256": "54b98eca27be1938bfaadd36d956fcfb1f4c03cb59fb14197001ae4a74919ce5",
+            "note": "61 unit and end-to-end tests of pfp-cli pass."
+          },
+          {
+            "path": "governance/evidence/pfp-cli-nowiki-clippy.run.json",
+            "sha256": "46d34fa33ef9479efcbc09d0372118f8130a5a63d1c681a478277154a0ff7b3a",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/pfp-cli-nowiki-fmt.run.json",
+            "sha256": "c0035e3e93882a9195fd65569eb91922ea39159575573d1abfab596e63bc9916",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/pfp-cli-nowiki-wasm.run.json",
+            "sha256": "392c59a5cf3fb878ca54cc7ba2a0ed197f909ec93f67f6f0e84573b67a80fe62",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/pfp-cli-nowiki-metrics.run.json",
+            "sha256": "a2f00826fc258095ec285e87a1a2d67259b9cb8804157caafc7e9d8969569ec5",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-cli-nowiki-metrics.json",
+            "sha256": "50e5fb9b0f1a35773dd5fc9cb897807a6145302e681282c23c3734a0f3de53aa",
+            "note": "Measured Gate 5 structure of the changed files."
+          },
+          {
+            "path": "governance/evidence/pfp-cli-nowiki-mutants.run.json",
+            "sha256": "85a0d31fa5d7b3f6d89442fe348a482d8956c3ba67e0b63297cff7913f23eb86",
+            "note": "cargo-mutants run on src/catalog.rs and src/lib.rs."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    }
+  ]
+}

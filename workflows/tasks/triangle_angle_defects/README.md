@@ -14,5 +14,3 @@ python workflows/tasks/triangle_angle_defects/run.py --output-dir <scratch-dir>
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000039/`.
-
-See the wiki page `Test-Triangle-Angle-Defects`.

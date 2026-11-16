@@ -9,5 +9,3 @@ Run from the repository root (Python 3.12+, pytest):
     python -m pytest workflows/tasks/qa_receipt_invariants -q
 
 Expected: `13 passed`.
-
-Wiki page: `wiki/test_qa_receipt_invariants.md`.

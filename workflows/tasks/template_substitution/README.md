@@ -13,5 +13,3 @@ python -m pytest workflows/tasks/template_substitution/tests -q -p no:cacheprovi
 python workflows/tasks/template_substitution/run.py
 python workflows/tasks/template_substitution/run.py --input workflows/tasks/template_substitution/examples/request.json
 ```
-
-See the wiki page `Test-Template-Substitution`.
