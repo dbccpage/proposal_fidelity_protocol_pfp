@@ -26,6 +26,7 @@
 //! * [`turns`]: a model turn as a workflow run stores it, judged by the host into a failure record
 //!   or, in fair pairs, into a rule's trial record.
 //! * [`patch`]: a text patch in unified format, read strictly and applied exactly where it says.
+//! * [`remaining_claim_closure`]: finite checks for workflow-DAG order, leaf-span agreement, and shipped graph potentials.
 //! * [`repair`]: bounded code repair, one supplied patch taken through capture, observe, evaluate,
 //!   incorporate, disposition and terminal, with a failure record when the candidate is at fault.
 //! * [`workshop`]: the source tree, run folder and local commands a repair run uses on a real
@@ -58,6 +59,7 @@ pub mod loading;
 pub mod mining;
 pub mod patch;
 pub mod perm;
+pub mod remaining_claim_closure;
 pub mod repair;
 pub mod running;
 pub mod term;

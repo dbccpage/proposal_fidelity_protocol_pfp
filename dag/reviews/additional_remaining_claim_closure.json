@@ -1,0 +1,300 @@
+{
+  "schema_version": "1.0",
+  "status": "scope_complete",
+  "AuthorityEffect": "None",
+  "source_commit": "fe0d64fe188a597ca22a6980d7276fc01419597d",
+  "file_reviews": [
+    {
+      "path": "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/code/replay.py",
+      "sha256": "a422e451ab28343ce7ba93879347e5668e7b2f77b5723f6217bd3d1e621da63b",
+      "full_source_read": true,
+      "assessment": "Read in full and executed."
+    }
+  ],
+  "claims": [
+    {
+      "id": "AUDIT-P012-010",
+      "statement": "If each step agrees with its observation maps on the inputs where the step is defined, and consecutive steps glue after to before, then a defined composite output carries the first before-observation (PFP.RemainingClaimClosure.composite_preserves).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "Each step is a partial map with an observation agreement hypothesis.",
+        "Consecutive steps identify the previous after-observation with the next before-observation."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/012_pfp_the_minimum_theorem/paper.md",
+        "lean4/RemainingClaimClosure.lean"
+      ],
+      "limits": "Option partial maps on one carrier. No graph of workflow folders is rewritten."
+    },
+    {
+      "id": "AUDIT-P012-011",
+      "statement": "Given a TerminalHyp whose checker soundness arrow sends acceptance to validity, the four hypotheses yield the conjunction boundTask, checkerAccept, validReply, prerequisitesDone, and authorityState (terminal_sound).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "The four hypotheses are inputs, not host checks performed by this theorem."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/012_pfp_the_minimum_theorem/paper.md",
+        "lean4/RemainingClaimClosure.lean"
+      ],
+      "limits": "No adapter is shown to enforce the hypotheses on a running host."
+    },
+    {
+      "id": "AUDIT-P013-001",
+      "statement": "If accept j = true implies R j, and every j in J is accepted, then every j in J satisfies R (receipt_conjunction).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "Acceptance implies R at each index, as a hypothesis."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper.md",
+        "lean4/RemainingClaimClosure.lean"
+      ],
+      "limits": "Finite index list. No receipt file is parsed."
+    },
+    {
+      "id": "AUDIT-P013-002",
+      "statement": "There exist R, J, and k such that R holds on J, k is outside J, and R k is false (unchecked_extension, carrier Fin 2).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "R is not assumed to follow from the admitted indices."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper.md",
+        "lean4/RemainingClaimClosure.lean"
+      ],
+      "limits": "One finite countermodel. It does not range over every predicate."
+    },
+    {
+      "id": "AUDIT-P013-003",
+      "statement": "There exist a witness, two sources, and a span such that the witness equals the span, the span equals source A, and the span does not equal source B (unbound_quotation).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "Span membership is list equality, not a byte-range parser."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper.md",
+        "lean4/RemainingClaimClosure.lean"
+      ],
+      "limits": "List Nat carriers. No file-format parser is built."
+    },
+    {
+      "id": "AUDIT-P013-004",
+      "statement": "Running atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/code/replay.py prints status PASS, provider_calls 0, and true for valid_witness, wrong_witness_refused, wrong_task_refused, false_prose_claim_refused, unbound_quote_refused, and mandatory_task_claim_retained.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "The frozen script is executed as stored. Its body is not edited."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper.md",
+        "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/code/replay.py"
+      ],
+      "limits": "One offline script. A different task family is not covered."
+    },
+    {
+      "id": "AUDIT-P014-001",
+      "statement": "If every pair (b, f) satisfies b(f(x)) = x, the composite of the b maps after the reversed f maps is the identity (sections_compose). If 0 < δ and k*δ ≤ B then k ≤ B/δ (op_budget).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "Each pair is a section by hypothesis.",
+        "The budget step uses a positive Nat cost."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md",
+        "lean4/RemainingClaimClosure.lean"
+      ],
+      "limits": "Adapters and checker soundness are not constructed."
+    },
+    {
+      "id": "AUDIT-P014-002",
+      "statement": "There is a map from Empty to Fin 1, and there is no map from Fin 1 to Empty (soundness_without_coverage, no_forward_cover).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "Empty is the empty type and Fin 1 is a one-element type."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md",
+        "lean4/RemainingClaimClosure.lean"
+      ],
+      "limits": "This is the empty-forward counterexample, not a coverage theorem for other carriers."
+    },
+    {
+      "id": "AUDIT-P017-001",
+      "statement": "If accept p w = true implies valid p w, the same implication holds in the presence of an unused channel argument (channel_independent).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "Checker soundness is a hypothesis. Decoder binding is not derived here."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "lean4/RemainingClaimClosure.lean"
+      ],
+      "limits": "No rate, completeness, or channel-specific bound."
+    },
+    {
+      "id": "AUDIT-P017-002",
+      "statement": "For an integer list, the absolute value of the sum is at most the sum of absolute values (natAbs_sum_le_l1). For each s there is a one-entry list with that sum and L1 norm |s| (l1_attained). sign(s)*s = |s| (dual_pair).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "The carrier is an integer list, read as the edge values of one directed cycle."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "lean4/RemainingClaimClosure.lean",
+        "code/rust/pfp_operads/src/remaining_claim_closure.rs"
+      ],
+      "limits": "Γ2 is not stated. Weighted coboundary geometry beyond the list sum is not stated."
+    },
+    {
+      "id": "AUDIT-P017-003",
+      "statement": "A concatenation of leaf lists is faithful exactly when both sides are (faithful_append). A non-faithful side stays non-faithful after concatenation on either side. The quotient is present exactly when the list is faithful (quotient_nonzero_iff).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "Faithfulness is byte agreement of each stored span with its slice, on a list."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "lean4/RemainingClaimClosure.lean",
+        "code/rust/pfp_operads/src/remaining_claim_closure.rs"
+      ],
+      "limits": "Leaf lists, not a coloured operad on general trees."
+    },
+    {
+      "id": "AUDIT-P017-004",
+      "statement": "A viable prefix outside L has a one-token extension that is still viable (frontier_nonempty). Every Masked prefix is viable (masked_prefixes_viable).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "Viability means some completion lands in L."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "lean4/RemainingClaimClosure.lean"
+      ],
+      "limits": "Completed-word membership is not a separate predicate here."
+    },
+    {
+      "id": "AUDIT-P017-005",
+      "statement": "When a ≤ b, (b^n - (b-a)^n) + (b-a)^n = b^n (admit_split). The Rust function returns None when a > b.",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "Conditional independence of retries is not derived."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "lean4/RemainingClaimClosure.lean",
+        "code/rust/pfp_operads/src/remaining_claim_closure.rs"
+      ],
+      "limits": "No probability space. The identity is the integer skeleton of the stated rate."
+    },
+    {
+      "id": "AUDIT-P017-006",
+      "statement": "A list whose cycle sum is nonzero is not a coboundary (false_green_not_coboundary). For each s there is a list with that cycle sum, and it is a coboundary exactly when s = 0 (family_indexed_by_sum).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "isCoboundary means the cycle sum is zero."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "lean4/RemainingClaimClosure.lean"
+      ],
+      "limits": "The partial guard program is not a separate artifact. The family is one-entry lists."
+    },
+    {
+      "id": "AUDIT-P017-007",
+      "statement": "chordEntry i i = 1 and chordEntry i j = 0 when i ≠ j. On the tested path and star, each fundamental cycle of the shipped Graph meets the chord set in exactly its own chord.",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "The rank count |V|-1+b1 is not a theorem in this file."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "lean4/RemainingClaimClosure.lean",
+        "code/rust/pfp_operads/src/remaining_claim_closure.rs"
+      ],
+      "limits": "Identity pattern plus two shipped graphs. No kernel-rank derivation."
+    },
+    {
+      "id": "AUDIT-P017-008",
+      "statement": "max(tree, chords) ≤ tree + 2*chords (max_le_staged). The five rows (5, 4) → 5, (7, 5) → 7, (4, 6) → 6, (9, 6) → 9, and (7, 7) → 7 hold with the stated unstaged sums (arity_examples). (t+c)-t-c = 0 (two_stage_zero).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "The five rows are the arithmetic named for K3,3, Q3, K5, Petersen, and W7."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "lean4/RemainingClaimClosure.lean",
+        "code/rust/pfp_operads/src/remaining_claim_closure.rs"
+      ],
+      "limits": "The graphs themselves are not constructed. The Rust rows repeat the same five tuples."
+    },
+    {
+      "id": "AUDIT-P017-009",
+      "statement": "On a path, the potential step equals the next tree-edge value (pot_step), and the holonomy is zero exactly when the chord equals the potential difference (holonomy_zero_iff). potential_follows_forest held on the tested path and star.",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "The Lean text uses a path of edge values, not an arbitrary spanning tree."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "lean4/RemainingClaimClosure.lean",
+        "code/rust/pfp_operads/src/remaining_claim_closure.rs"
+      ],
+      "limits": "Path case in Lean. The star is only a shipped-graph check, not a general tree theorem."
+    },
+    {
+      "id": "AUDIT-P017-010",
+      "statement": "On the tested path and star, bumping the first forest chord by delta leaves that residual, clears the other tested residuals, and reports defect equal to the absolute delta.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "The check calls the shipped Graph methods. It does not reimplement them."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "code/rust/pfp_operads/src/remaining_claim_closure.rs"
+      ],
+      "limits": "Two finite graphs. Not a general syndrome matrix."
+    },
+    {
+      "id": "AUDIT-P017-011",
+      "statement": "On the tested path and star, adding 1 to one stored tree-edge value shifts exactly the vertices whose parent chain crosses that edge, with the forest link sign.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "The shift uses the shipped forest parent pointers."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "code/rust/pfp_operads/src/remaining_claim_closure.rs"
+      ],
+      "limits": "Two finite graphs. Not a general inverse-column statement."
+    },
+    {
+      "id": "AUDIT-P021-003",
+      "statement": "workflows/dag/workflow_dag.json has 32 nodes with status other than implemented and an empty source_pilots list. The first of those ids is WF24.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "The reader uses id, status, depends_on, and source_pilots as stored."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/021_pfp_workflow_dag_process_and_mathematics/paper.md",
+        "workflows/dag/workflow_dag.json",
+        "code/rust/pfp_operads/src/remaining_claim_closure.rs"
+      ],
+      "limits": "This refuses the nonempty-pilot sentence on the current file. It does not edit the file."
+    },
+    {
+      "id": "AUDIT-P021-006",
+      "statement": "On workflows/dag/workflow_dag.json the shipped reader found 56 nodes, no dependency whose target was absent from the earlier prefix, and no duplicate id. A linked walk of strictly earlier edges cannot return to its start (no_decreasing_cycle).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "Topological order here means each depends_on target appears earlier in the node list."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/021_pfp_workflow_dag_process_and_mathematics/paper.md",
+        "workflows/dag/workflow_dag.json",
+        "lean4/RemainingClaimClosure.lean",
+        "code/rust/pfp_operads/src/remaining_claim_closure.rs"
+      ],
+      "limits": "One JSON file plus the abstract decreasing-edge lemma. Not the 49-node wiki registry."
+    }
+  ]
+}

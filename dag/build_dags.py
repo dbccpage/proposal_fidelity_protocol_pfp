@@ -153,11 +153,14 @@ def main():
             path=(ROOT/row['path']).resolve()
             if not path.is_relative_to(ROOT) or original['sha256']!=row['original_sha256']:
                 raise ValueError('Migration source revision pin changed: '+row['path'])
-            disk_sha = hashlib.sha256(path.read_bytes()).hexdigest()
             source_revisions[(row['path'],row['current_sha256'])]={
                 'sha256':row['current_sha256'],'outside_original_inventory':True,
                 'original_sha256':row['original_sha256'],
                 'revision_custody':'dag/migrations/demo_support_verification.json'}
+            # Removed education demo files keep the recorded pin. Do not invent a disk hash.
+            if not path.is_file():
+                continue
+            disk_sha = hashlib.sha256(path.read_bytes()).hexdigest()
             if disk_sha != row['current_sha256']:
                 source_revisions[(row['path'],disk_sha)]={
                     'sha256':disk_sha,'outside_original_inventory':True,
