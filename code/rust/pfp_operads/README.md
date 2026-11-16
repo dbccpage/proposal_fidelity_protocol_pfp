@@ -169,9 +169,9 @@ patch and `[0, 0]` after it, and leaves `request.json`, `candidate.patch`,
   (`CounterfeitExactness`), broke a passing one (`BoundaryLeakage`) or did
   not fit the sources or the write set (`StructuralNonFit`). A missing tool,
   a changed source or a full disk blames no candidate.
-- **Family runs**: a workflow family (WF6, WF7, WF9, WF10, WF11, WF13, WF16,
-  WF17, WF20, WF24, WF25, WF26, WF27, WF29, WF30, WF31, WF32, WF33, WF38,
-  WF40, WF44, WF45, WF46 and WF47 so far) is a walk the host owns. The request is the family's id, the
+- **Family runs**: a workflow family (WF6 to WF11, WF13, WF16, WF17, WF20,
+  WF21, WF23 to WF27, WF29 to WF33, WF38, WF40, WF44, WF45, WF46 and WF47 so
+  far) is a walk the host owns. The request is the family's id, the
   public `task`, the `sealed` part and the `replies` received so far, each `null` or
   `{"content": ...}`. `family next` returns the stage and the exact prompt to
   send, and `family judge` returns `HOST_CERTIFIED`, `TYPED_REFUSAL` or
@@ -231,6 +231,17 @@ patch and `[0, 0]` after it, and leaves `request.json`, `candidate.patch`,
   from a primal point and a dual point with no gap, and its infeasibility
   from a Farkas vector. A feasible pair with a gap is a bound and is
   refused.
+- **Fences and seal chains**: a fence is a span of a statement between two
+  marks that no rewrite and no packet may change (`src/families/fence.rs`).
+  WF21 applies a list of `{lhs, rhs, at}` edits at byte offsets, refuses any
+  that miss, overlap or touch a fence, and puts the rewritten text to the
+  model. WF8 runs three stages whose packets are linked by SHA-256, each
+  packet carrying the question once and the head of the chain before it; the
+  host recomputes each stage's payload. WF23 audits a judge packet: file
+  hashes against the host's manifest, the answer in no view of a participant
+  file (text, reversed, white space removed, base64 and hex tokens), the
+  executed checker against the recorded hash, and a keyed tag on every
+  output line.
 - **Resumable search**: WF47 recomputes every batch of a sign-gauge search
   on at most 16 vertices and at most 64 sessions. A resumed session replays
   the sealed chain from its first record; ten custody rules are applied in a

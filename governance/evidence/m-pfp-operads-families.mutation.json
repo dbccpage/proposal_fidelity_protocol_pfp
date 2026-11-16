@@ -2,10 +2,10 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/pfp_operads/src/families.rs",
-  "target_sha256": "d3a6cee5cefb5a6369510cd15e6be46ebeaf154839c5b32a8b8e4a68615b6658",
-  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test families --test wf07 --test wf09 --test wf10 --test wf11 --test wf13 --test wf20 --test wf24 --test wf25 --test wf26 --test wf27 --test wf30 --test wf31 --test wf32 --test wf33 --test wf38 --test wf40 --test wf45 --test wf46 --test wf47 --test wf06 --test wf16 --test wf17 --test wf29 --test wf44 --test labelled",
+  "target_sha256": "f01041a66b393c6028f425ee54d004500f66c2cc9abf1381997b6bfa01c099b0",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test families",
   "counts": {
-    "killed": 137,
+    "killed": 143,
     "survived": 0,
     "demonstrably_equivalent": 1,
     "invalid": 0,
@@ -634,6 +634,12 @@
       "outcome": "killed"
     },
     {
+      "name": "registry loses wf08",
+      "old": "    &wf08::FAMILY,\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
       "name": "registry loses wf09",
       "old": "    &wf09::FAMILY,\n",
       "new": "",
@@ -672,6 +678,18 @@
     {
       "name": "registry loses wf20",
       "old": "    &wf20::FAMILY,\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry loses wf21",
+      "old": "    &wf21::FAMILY,\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry loses wf23",
+      "old": "    &wf23::FAMILY,\n",
       "new": "",
       "outcome": "killed"
     },
@@ -767,8 +785,8 @@
     },
     {
       "name": "registry out of order",
-      "old": "    &wf07::FAMILY,\n    &wf09::FAMILY,\n",
-      "new": "    &wf09::FAMILY,\n    &wf07::FAMILY,\n",
+      "old": "    &wf07::FAMILY,\n    &wf08::FAMILY,\n",
+      "new": "    &wf08::FAMILY,\n    &wf07::FAMILY,\n",
       "outcome": "killed"
     },
     {
@@ -787,6 +805,24 @@
       "name": "registry puts WF29 after WF30",
       "old": "    &wf29::FAMILY,\n    &wf30::FAMILY,\n",
       "new": "    &wf30::FAMILY,\n    &wf29::FAMILY,\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry puts WF8 after WF9",
+      "old": "    &wf08::FAMILY,\n    &wf09::FAMILY,\n",
+      "new": "    &wf09::FAMILY,\n    &wf08::FAMILY,\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry puts WF21 after WF23",
+      "old": "    &wf21::FAMILY,\n    &wf23::FAMILY,\n",
+      "new": "    &wf23::FAMILY,\n    &wf21::FAMILY,\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry puts WF23 after WF24",
+      "old": "    &wf23::FAMILY,\n    &wf24::FAMILY,\n",
+      "new": "    &wf24::FAMILY,\n    &wf23::FAMILY,\n",
       "outcome": "killed"
     },
     {
@@ -843,5 +879,6 @@
       "new": "        verdict: REFUSED,\n        code: code.to_owned(),\n        detail,\n        obligations: vec![String::new()],",
       "outcome": "killed"
     }
-  ]
+  ],
+  "rerun_test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test families --test wf07 --test wf09 --test wf10 --test wf11 --test wf13 --test wf20 --test wf24 --test wf25 --test wf26 --test wf27 --test wf30 --test wf31 --test wf32 --test wf33 --test wf38 --test wf40 --test wf45 --test wf46 --test wf47 --test wf06 --test wf16 --test wf17 --test wf29 --test wf44 --test labelled --test wf08 --test wf21 --test wf23 --test fence"
 }

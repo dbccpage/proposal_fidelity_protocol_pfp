@@ -1,0 +1,777 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf23.rs",
+  "target_sha256": "97d140596105acae280e9f3a18243c555292eb094a216d37a91d767af7f7d6e1",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf23",
+  "counts": {
+    "killed": 115,
+    "survived": 0,
+    "demonstrably_equivalent": 10,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF23\",",
+      "new": "    workflow: \"WF023\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Judge-packet custody audit\",",
+      "new": "    name: \"Judge-Packet Custody Audit\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"judge_packet_custody_audit\",",
+      "new": "    host_check: \"custody_audit\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "integer answer written as a fraction",
+      "old": "    if value.is_integer() {",
+      "new": "    if !value.is_integer() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "fraction written the other way up",
+      "old": "        format!(\"{}/{}\", value.numer(), value.denom())",
+      "new": "        format!(\"{}/{}\", value.denom(), value.numer())",
+      "outcome": "killed"
+    },
+    {
+      "name": "fraction written with a space",
+      "old": "        format!(\"{}/{}\", value.numer(), value.denom())",
+      "new": "        format!(\"{} / {}\", value.numer(), value.denom())",
+      "outcome": "killed"
+    },
+    {
+      "name": "fraction written as its numerator",
+      "old": "        format!(\"{}/{}\", value.numer(), value.denom())",
+      "new": "        value.numer().to_string()",
+      "outcome": "killed"
+    },
+    {
+      "name": "text reason changed",
+      "old": "            .ok_or_else(|| format!(\"{key} must be text\"))",
+      "new": "            .ok_or_else(|| format!(\"{key}\"))",
+      "outcome": "killed"
+    },
+    {
+      "name": "manifest reason changed",
+      "old": "\"the host-held manifest is missing from the sealed packet\"",
+      "new": "\"manifest\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "manifest read from another key",
+      "old": "    let Some(Datum::Map(manifest)) = sealed.get(\"manifest\") else {",
+      "new": "    let Some(Datum::Map(manifest)) = sealed.get(\"hashes\") else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer read from another key",
+      "old": "        .get(\"expected_answer\")\n        .and_then(rational)",
+      "new": "        .get(\"answer\")\n        .and_then(rational)",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer reason changed",
+      "old": "\"expected_answer must be an exact rational\"",
+      "new": "\"answer\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "recorded hash read from another key",
+      "old": "        recorded: text(\"recorded_checker_sha256\")?,",
+      "new": "        recorded: text(\"checker_sha256\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "checker read from another key",
+      "old": "text(\"checker_source\")?",
+      "new": "text(\"checker\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "checker hashed with its line ends",
+      "old": "sha256_hex(&canonical_file(text(\"checker_source\")?))",
+      "new": "sha256_hex(text(\"checker_source\")?)",
+      "outcome": "killed"
+    },
+    {
+      "name": "key read from another key",
+      "old": "        key: text(\"stdout_key\")?,",
+      "new": "        key: text(\"key\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "line ends changed to nothing",
+      "old": "    text.replace(\"\\r\\n\", \"\\n\")",
+      "new": "    text.replace(\"\\r\\n\", \"\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "lone returns made line ends",
+      "old": "    text.replace(\"\\r\\n\", \"\\n\")",
+      "new": "    text.replace('\\r', \"\\n\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "line ends left alone",
+      "old": "    text.replace(\"\\r\\n\", \"\\n\")",
+      "new": "    text.to_owned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation refuses everything",
+      "old": "    Ok(())\n}\n\n/// Whether Python",
+      "new": "    Err(String::new())\n}\n\n/// Whether Python",
+      "outcome": "killed"
+    },
+    {
+      "name": "white space is only what Rust takes",
+      "old": "    letter.is_whitespace() || ('\\u{1c}'..='\\u{1f}').contains(&letter)",
+      "new": "    letter.is_whitespace()",
+      "outcome": "killed"
+    },
+    {
+      "name": "white space is only the separators",
+      "old": "    letter.is_whitespace() || ('\\u{1c}'..='\\u{1f}').contains(&letter)",
+      "new": "    ('\\u{1c}'..='\\u{1f}').contains(&letter)",
+      "outcome": "killed"
+    },
+    {
+      "name": "separator range ends early",
+      "old": "('\\u{1c}'..='\\u{1f}').contains(&letter)",
+      "new": "('\\u{1c}'..'\\u{1f}').contains(&letter)",
+      "outcome": "killed"
+    },
+    {
+      "name": "separator range starts late",
+      "old": "('\\u{1c}'..='\\u{1f}').contains(&letter)",
+      "new": "('\\u{1d}'..='\\u{1f}').contains(&letter)",
+      "outcome": "killed"
+    },
+    {
+      "name": "separator range ends late",
+      "old": "('\\u{1c}'..='\\u{1f}').contains(&letter)",
+      "new": "('\\u{1c}'..='\\u{20}').contains(&letter)",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "the extra character U+0020 is white space already, so the two ranges take the same characters out"
+    },
+    {
+      "name": "capitals stop at Y",
+      "old": "        b'A'..=b'Z' => Some(u32::from(digit - b'A')),",
+      "new": "        b'A'..b'Z' => Some(u32::from(digit - b'A')),",
+      "outcome": "killed"
+    },
+    {
+      "name": "capitals start at one",
+      "old": "        b'A'..=b'Z' => Some(u32::from(digit - b'A')),",
+      "new": "        b'A'..=b'Z' => Some(u32::from(digit - b'A') + 1),",
+      "outcome": "killed"
+    },
+    {
+      "name": "small letters stop at y",
+      "old": "        b'a'..=b'z' => Some(u32::from(digit - b'a') + 26),",
+      "new": "        b'a'..b'z' => Some(u32::from(digit - b'a') + 26),",
+      "outcome": "killed"
+    },
+    {
+      "name": "small letters follow 25",
+      "old": "        b'a'..=b'z' => Some(u32::from(digit - b'a') + 26),",
+      "new": "        b'a'..=b'z' => Some(u32::from(digit - b'a') + 25),",
+      "outcome": "killed"
+    },
+    {
+      "name": "digits stop at 8",
+      "old": "        b'0'..=b'9' => Some(u32::from(digit - b'0') + 52),",
+      "new": "        b'0'..b'9' => Some(u32::from(digit - b'0') + 52),",
+      "outcome": "killed"
+    },
+    {
+      "name": "digits follow 53",
+      "old": "        b'0'..=b'9' => Some(u32::from(digit - b'0') + 52),",
+      "new": "        b'0'..=b'9' => Some(u32::from(digit - b'0') + 53),",
+      "outcome": "killed"
+    },
+    {
+      "name": "plus is 63",
+      "old": "        b'+' => Some(62),",
+      "new": "        b'+' => Some(63),",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "a plus or a slash in strict base64 of UTF-8 text stands for the low six bits 62 or 63 of a byte, which can only be the ASCII punctuation > ~ ? or DEL, or a continuation byte; no byte of an expected answer (a digit, a minus or a slash) is one of these, and swapping 62 and 63 keeps every such byte the same kind, so the answer and the validity of the text do not change"
+    },
+    {
+      "name": "slash is 62",
+      "old": "        b'/' => Some(63),",
+      "new": "        b'/' => Some(62),",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "a plus or a slash in strict base64 of UTF-8 text stands for the low six bits 62 or 63 of a byte, which can only be the ASCII punctuation > ~ ? or DEL, or a continuation byte; no byte of an expected answer (a digit, a minus or a slash) is one of these, and swapping 62 and 63 keeps every such byte the same kind, so the answer and the validity of the text do not change"
+    },
+    {
+      "name": "other digits are zero",
+      "old": "        _ => None,\n    }\n}\n\n/// The bytes of strict base64",
+      "new": "        _ => Some(0),\n    }\n}\n\n/// The bytes of strict base64",
+      "outcome": "killed"
+    },
+    {
+      "name": "padding taken from the start",
+      "old": "    let digits = token.trim_end_matches('=');",
+      "new": "    let digits = token.trim_start_matches('=');",
+      "outcome": "killed"
+    },
+    {
+      "name": "three padding marks allowed",
+      "old": "    if token.len() - digits.len() > 2 ||",
+      "new": "    if token.len() - digits.len() > 3 ||",
+      "outcome": "killed"
+    },
+    {
+      "name": "two padding marks refused",
+      "old": "    if token.len() - digits.len() > 2 ||",
+      "new": "    if token.len() - digits.len() >= 2 ||",
+      "outcome": "killed"
+    },
+    {
+      "name": "length not a multiple of four allowed",
+      "old": " || !token.len().is_multiple_of(4) {",
+      "new": " || false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "length multiple of four refused",
+      "old": " || !token.len().is_multiple_of(4) {",
+      "new": " || token.len().is_multiple_of(4) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "digits shifted by five",
+      "old": "        held = (held << 6) | sextet(digit)?;",
+      "new": "        held = (held << 5) | sextet(digit)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "digits added instead of joined",
+      "old": "        held = (held << 6) | sextet(digit)?;",
+      "new": "        held = (held << 6) + sextet(digit)?;",
+      "equivalent": "the six low bits of the shifted value are zero, so adding the digit and joining it give the same value",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "width grows by five",
+      "old": "        width += 6;",
+      "new": "        width += 5;",
+      "outcome": "killed"
+    },
+    {
+      "name": "byte emitted at nine bits",
+      "old": "        if width >= 8 {",
+      "new": "        if width > 8 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "byte emitted at seven bits",
+      "old": "        if width >= 8 {",
+      "new": "        if width >= 7 {",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "the number of bits held grows by six and falls by eight, so it is always even and is never seven; at least seven and at least eight are the same test"
+    },
+    {
+      "name": "width shrinks by seven",
+      "old": "            width -= 8;",
+      "new": "            width -= 7;",
+      "outcome": "killed"
+    },
+    {
+      "name": "byte narrowed without a check",
+      "old": "            out.push(u8::try_from(held >> width).ok()?);",
+      "new": "            out.push((held >> width) as u8);",
+      "equivalent": "held holds under 2^14 bits when a byte is emitted, after the mask of the byte before, so held shifted down by the width that remains is under 256 and always fits",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "byte mask left out",
+      "old": "            held &= (1 << width) - 1;\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "byte mask one bit short",
+      "old": "            held &= (1 << width) - 1;",
+      "new": "            held &= (1 << width) - 2;",
+      "outcome": "killed"
+    },
+    {
+      "name": "padding bits returned as a byte",
+      "old": "    Some(out)\n}\n\n/// The tokens",
+      "new": "    out.push(0);\n    Some(out)\n}\n\n/// The tokens",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "an appended zero byte is valid UTF-8 and holds no digit, minus or slash, so it neither makes a text invalid nor makes an expected answer appear"
+    },
+    {
+      "name": "tokens end at letters only",
+      "old": "!(letter.is_ascii_alphanumeric() || matches!(letter, '+' | '/' | '='))",
+      "new": "!(letter.is_ascii_alphabetic() || matches!(letter, '+' | '/' | '='))",
+      "outcome": "killed"
+    },
+    {
+      "name": "tokens end at the slash",
+      "old": "matches!(letter, '+' | '/' | '=')",
+      "new": "matches!(letter, '+' | '=')",
+      "outcome": "killed"
+    },
+    {
+      "name": "tokens end at the plus",
+      "old": "matches!(letter, '+' | '/' | '=')",
+      "new": "matches!(letter, '/' | '=')",
+      "outcome": "killed"
+    },
+    {
+      "name": "tokens end at the padding mark",
+      "old": "matches!(letter, '+' | '/' | '=')",
+      "new": "matches!(letter, '+' | '/')",
+      "outcome": "killed"
+    },
+    {
+      "name": "tokens of four need five",
+      "old": "    .filter(|token| token.len() >= 4)",
+      "new": "    .filter(|token| token.len() > 4)",
+      "outcome": "killed"
+    },
+    {
+      "name": "tokens of three read",
+      "old": "    .filter(|token| token.len() >= 4)",
+      "new": "    .filter(|token| token.len() >= 3)",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "a token of three characters is neither a multiple of four, as base64 needs, nor of even length, as hex needs, so it decodes to nothing"
+    },
+    {
+      "name": "base64 not decoded",
+      "old": "    [base64(token), hex::decode(token).ok()]",
+      "new": "    [None, hex::decode(token).ok()]",
+      "outcome": "killed"
+    },
+    {
+      "name": "hex not decoded",
+      "old": "    [base64(token), hex::decode(token).ok()]",
+      "new": "    [base64(token), None]",
+      "outcome": "killed"
+    },
+    {
+      "name": "decodings read leniently",
+      "old": "        .filter_map(|bytes| String::from_utf8(bytes).ok())",
+      "new": "        .map(|bytes| String::from_utf8_lossy(&bytes).into_owned())",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty decodings dropped",
+      "old": "        .filter_map(|bytes| String::from_utf8(bytes).ok())",
+      "new": "        .filter_map(|bytes| String::from_utf8(bytes).ok().filter(|text| !text.is_empty()))",
+      "equivalent": "an empty decoding cannot contain an answer, which is never empty, so dropping it changes no view that matters",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "text not searched",
+      "old": "    once(text.to_owned())",
+      "new": "    once(String::new())",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "an expected answer has no white space, so wherever it occurs in the text it occurs in the text with its white space taken out, which is searched"
+    },
+    {
+      "name": "reversed text not searched",
+      "old": "        .chain([reversed, squeezed])",
+      "new": "        .chain([String::new(), squeezed])",
+      "outcome": "killed"
+    },
+    {
+      "name": "squeezed text not searched",
+      "old": "        .chain([reversed, squeezed])",
+      "new": "        .chain([reversed, String::new()])",
+      "outcome": "killed"
+    },
+    {
+      "name": "decodings not searched",
+      "old": "        .chain(tokens(text).flat_map(decodings))",
+      "new": "        .chain(std::iter::empty())",
+      "outcome": "killed"
+    },
+    {
+      "name": "views must equal the answer",
+      "old": "        .any(|view| view.contains(answer))",
+      "new": "        .any(|view| view == answer)",
+      "outcome": "killed"
+    },
+    {
+      "name": "views must carry the answer in every view",
+      "old": "        .any(|view| view.contains(answer))",
+      "new": "        .all(|view| view.contains(answer))",
+      "outcome": "killed"
+    },
+    {
+      "name": "squeezed text keeps its white space only",
+      "old": "text.chars().filter(|&letter| !is_space(letter)).collect();",
+      "new": "text.chars().filter(|&letter| is_space(letter)).collect();",
+      "outcome": "killed"
+    },
+    {
+      "name": "reversed text kept in order",
+      "old": "    let reversed: String = text.chars().rev().collect();",
+      "new": "    let reversed: String = text.chars().collect();",
+      "outcome": "killed"
+    },
+    {
+      "name": "participant read from another key",
+      "old": "        (reply.get(\"participant\"), reply.get(\"run\"))",
+      "new": "        (reply.get(\"files\"), reply.get(\"run\"))",
+      "outcome": "killed"
+    },
+    {
+      "name": "run read from another key",
+      "old": "        (reply.get(\"participant\"), reply.get(\"run\"))",
+      "new": "        (reply.get(\"participant\"), reply.get(\"record\"))",
+      "outcome": "killed"
+    },
+    {
+      "name": "run may be anything",
+      "old": "Some(run @ Datum::Map(_))",
+      "new": "Some(run)",
+      "outcome": "killed"
+    },
+    {
+      "name": "packet reason changed",
+      "old": "\"packet fields\"",
+      "new": "\"packet\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "file reason changed",
+      "old": "\"participant files are text\"",
+      "new": "\"files\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "stdout of another type read as empty",
+      "old": "        Some(_) => return Err(Stop::Malformed(\"stdout is a list of lines\".to_owned())),",
+      "new": "        Some(_) => &[],",
+      "outcome": "killed"
+    },
+    {
+      "name": "stdout type reason changed",
+      "old": "        Some(_) => return Err(Stop::Malformed(\"stdout is a list of lines\".to_owned())),",
+      "new": "        Some(_) => return Err(Stop::Malformed(\"stdout\".to_owned())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "some line is an object",
+      "old": "    if lines.iter().all(Datum::is_map) {",
+      "new": "    if lines.iter().any(Datum::is_map) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "every line is an object or the list is empty",
+      "old": "    if lines.iter().all(Datum::is_map) {",
+      "new": "    if lines.is_empty() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "lines reason changed",
+      "old": "        Err(Stop::Malformed(\"stdout is a list of lines\".to_owned()))\n    }",
+      "new": "        Err(Stop::Malformed(\"lines\".to_owned()))\n    }",
+      "outcome": "killed"
+    },
+    {
+      "name": "tag without the zero byte",
+      "old": "    sha256_hex(&format!(\"{key}\\u{0}{}\", line.canonical()))",
+      "new": "    sha256_hex(&format!(\"{key}{}\", line.canonical()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "tag with the key last",
+      "old": "    sha256_hex(&format!(\"{key}\\u{0}{}\", line.canonical()))",
+      "new": "    sha256_hex(&format!(\"{}\\u{0}{key}\", line.canonical()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "tag without the key",
+      "old": "    sha256_hex(&format!(\"{key}\\u{0}{}\", line.canonical()))",
+      "new": "    sha256_hex(&format!(\"\\u{0}{}\", line.canonical()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "tag without the line",
+      "old": "    sha256_hex(&format!(\"{key}\\u{0}{}\", line.canonical()))",
+      "new": "    sha256_hex(&format!(\"{key}\\u{0}\"))",
+      "outcome": "killed"
+    },
+    {
+      "name": "packet asked under another stage",
+      "old": "    let Some(reply) = run.ask(\"packet\", run.prompt())? else {",
+      "new": "    let Some(reply) = run.ask(\"judge\", run.prompt())? else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "packet asked with no prompt",
+      "old": "    let Some(reply) = run.ask(\"packet\", run.prompt())? else {",
+      "new": "    let Some(reply) = run.ask(\"packet\", String::new())? else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "files hashed with their line ends",
+      "old": "        .map(|(name, text)| (*name, sha256_hex(&canonical_file(text))))",
+      "new": "        .map(|(name, text)| (*name, sha256_hex(text)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "files named by manifest differ",
+      "old": "        .eq(files.keys().copied());",
+      "new": "        .ne(files.keys().copied());",
+      "outcome": "killed"
+    },
+    {
+      "name": "manifest predicate renamed",
+      "old": "    checks.record(\"manifest_complete\", named, &Datum::Null);",
+      "new": "    checks.record(\"manifest\", named, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "manifest predicate always held",
+      "old": "    checks.record(\"manifest_complete\", named, &Datum::Null);",
+      "new": "    checks.record(\"manifest_complete\", true, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "some file hash is enough",
+      "old": "    let matching = hashes.iter().all(|(name, hash)| {",
+      "new": "    let matching = hashes.iter().any(|(name, hash)| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "hashes differ",
+      "old": "        held.manifest.get(*name).and_then(Datum::as_text) == Some(hash.as_str())",
+      "new": "        held.manifest.get(*name).and_then(Datum::as_text) != Some(hash.as_str())",
+      "outcome": "killed"
+    },
+    {
+      "name": "hash predicate renamed",
+      "old": "    checks.record(\"file_hashes_match\", matching, &Datum::Null);",
+      "new": "    checks.record(\"file_hashes\", matching, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "hash predicate always held",
+      "old": "    checks.record(\"file_hashes_match\", matching, &Datum::Null);",
+      "new": "    checks.record(\"file_hashes_match\", true, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "files that do not hold the answer are leaked",
+      "old": "        .filter(|(_, text)| derivable(text, &held.answer))",
+      "new": "        .filter(|(_, text)| !derivable(text, &held.answer))",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer searched under the key",
+      "old": "        .filter(|(_, text)| derivable(text, &held.answer))",
+      "new": "        .filter(|(_, text)| derivable(text, held.key))",
+      "outcome": "killed"
+    },
+    {
+      "name": "leaked names dropped",
+      "old": "        .map(|(name, _)| *name)\n        .collect();",
+      "new": "        .map(|(_, text)| *text)\n        .collect();",
+      "outcome": "killed"
+    },
+    {
+      "name": "derivable predicate renamed",
+      "old": "        \"answer_not_derivable\",",
+      "new": "        \"answer_hidden\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "derivable predicate inverted",
+      "old": "        leaked.is_empty(),",
+      "new": "        !leaked.is_empty(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "derivable predicate always held",
+      "old": "        leaked.is_empty(),",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "derivable predicate recorded without evidence",
+      "old": "        &Datum::from(leaked.clone()),",
+      "new": "        &Datum::Null,",
+      "outcome": "killed"
+    },
+    {
+      "name": "recorded hash predicate renamed",
+      "old": "        \"recorded_hash_is_checker\",",
+      "new": "        \"recorded_hash\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "recorded hash predicate inverted",
+      "old": "        held.recorded == held.checker,",
+      "new": "        held.recorded != held.checker,",
+      "outcome": "killed"
+    },
+    {
+      "name": "recorded hash predicate always held",
+      "old": "        held.recorded == held.checker,",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "executed hash read from another key",
+      "old": "        .get(\"executed_checker_sha256\")",
+      "new": "        .get(\"checker_sha256\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "executed predicate renamed",
+      "old": "        \"executed_checker_is_recorded\",",
+      "new": "        \"executed_checker\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "executed predicate compared with the checker",
+      "old": "        executed == Some(held.recorded),",
+      "new": "        executed == Some(held.checker.as_str()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "executed predicate inverted",
+      "old": "        executed == Some(held.recorded),",
+      "new": "        executed != Some(held.recorded),",
+      "outcome": "killed"
+    },
+    {
+      "name": "executed predicate any hash",
+      "old": "        executed == Some(held.recorded),",
+      "new": "        executed.is_some(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "line read from another key",
+      "old": "            let expected = tag(held.key, line.get(\"line\").unwrap_or(&Datum::Null));",
+      "new": "            let expected = tag(held.key, line.get(\"text\").unwrap_or(&Datum::Null));",
+      "outcome": "killed"
+    },
+    {
+      "name": "line missing read as the line itself",
+      "old": "            let expected = tag(held.key, line.get(\"line\").unwrap_or(&Datum::Null));",
+      "new": "            let expected = tag(held.key, line.get(\"line\").unwrap_or(line));",
+      "outcome": "killed"
+    },
+    {
+      "name": "tag read from another key",
+      "old": "            line.get(\"tag\").and_then(Datum::as_text) != Some(expected.as_str())",
+      "new": "            line.get(\"seal\").and_then(Datum::as_text) != Some(expected.as_str())",
+      "outcome": "killed"
+    },
+    {
+      "name": "forged lines are the authentic ones",
+      "old": "            line.get(\"tag\").and_then(Datum::as_text) != Some(expected.as_str())",
+      "new": "            line.get(\"tag\").and_then(Datum::as_text) == Some(expected.as_str())",
+      "outcome": "killed"
+    },
+    {
+      "name": "lines with any tag are authentic",
+      "old": "            line.get(\"tag\").and_then(Datum::as_text) != Some(expected.as_str())",
+      "new": "            line.get(\"tag\").and_then(Datum::as_text).is_none()",
+      "outcome": "killed"
+    },
+    {
+      "name": "no lines is authentic",
+      "old": "        !output.is_empty() && forged == 0,",
+      "new": "        forged == 0,",
+      "outcome": "killed"
+    },
+    {
+      "name": "one forged line or none is authentic",
+      "old": "        !output.is_empty() && forged == 0,",
+      "new": "        !output.is_empty() && forged <= 1,",
+      "outcome": "killed"
+    },
+    {
+      "name": "lines or none is authentic",
+      "old": "        !output.is_empty() && forged == 0,",
+      "new": "        !output.is_empty() || forged == 0,",
+      "outcome": "killed"
+    },
+    {
+      "name": "authentic predicate renamed",
+      "old": "        \"stdout_lines_authentic\",",
+      "new": "        \"stdout_authentic\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "authentic predicate evidence dropped",
+      "old": "        &Datum::from(forged),\n    );",
+      "new": "        &Datum::Null,\n    );",
+      "outcome": "killed"
+    },
+    {
+      "name": "digest of the names",
+      "old": "            .map(|(name, hash)| ((*name).to_owned(), Datum::text(hash.as_str())))",
+      "new": "            .map(|(name, _)| ((*name).to_owned(), Datum::text(*name)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "digest of the hashes by position",
+      "old": "            .map(|(name, hash)| ((*name).to_owned(), Datum::text(hash.as_str())))",
+      "new": "            .map(|(name, hash)| (hash.clone(), Datum::text(*name)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "digest empty",
+      "old": "            Datum::text(sha256_hex(&digest.canonical())),",
+      "new": "            Datum::text(sha256_hex(\"\")),",
+      "outcome": "killed"
+    },
+    {
+      "name": "digest key renamed",
+      "old": "            \"participant_sha256\",",
+      "new": "            \"digest\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "leaked files renamed",
+      "old": "        (\"leaked_files\", Datum::from(leaked)),",
+      "new": "        (\"leaked\", Datum::from(leaked)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "leaked files left out",
+      "old": "        (\"leaked_files\", Datum::from(leaked)),",
+      "new": "        (\"leaked_files\", Datum::from(Vec::<&str>::new())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "forged lines renamed",
+      "old": "        (\"forged_lines\", Datum::from(forged)),",
+      "new": "        (\"forged\", Datum::from(forged)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "forged lines counted as one",
+      "old": "        (\"forged_lines\", Datum::from(forged)),",
+      "new": "        (\"forged_lines\", Datum::from(forged.min(1))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "certified under another code",
+      "old": "    Ok(checks.judge(\"CUSTODY_INTACT\", detail))",
+      "new": "    Ok(checks.judge(\"INTACT\", detail))",
+      "outcome": "killed"
+    }
+  ]
+}

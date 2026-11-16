@@ -1,0 +1,202 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf23.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf23.rs",
+      "language": "Rust",
+      "sha256": "97d140596105acae280e9f3a18243c555292eb094a216d37a91d767af7f7d6e1"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf23:v1",
+    "symbols": [
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task needs no field. The sealed part holds manifest (the SHA-256 of each participant file), expected_answer, checker_source, recorded_checker_sha256 and stdout_key; a run without any of them is refused as malformed before anything is asked.",
+      "The packet is asked for once. Its reply is {participant: {name: text, ...}, run: {...}}. A manifest in the reply is not read.",
+      "A file's hash is the SHA-256 of its text in UTF-8 with each CRLF written as LF. The host records, in order, manifest_complete (manifest and reply name the same files), file_hashes_match, answer_not_derivable, recorded_hash_is_checker, executed_checker_is_recorded (run.executed_checker_sha256) and stdout_lines_authentic (run.stdout has a line and every tag is the SHA-256 of the key, a zero byte and the line value in canonical form).",
+      "The expected answer, as an integer or as p/q, must be in no view of any file: the text, the text reversed by code point, the text with the white space of Python's str.split taken out, and each decoding to UTF-8 text of each run of four or more of A-Za-z0-9+/= as strict base64 and as hex.",
+      "All six passing certifies CUSTODY_INTACT with the digest of the file hashes, the files that held the answer and the number of forged lines. A reply that is not a packet, a file that is not text, or stdout that is not a list of objects is malformed."
+    ],
+    "boundaries": [
+      "The audit shows the packet is intact and holds no view of the answer it knows of. A model that hides the answer in another way is not found.",
+      "A decoding is tried only on runs of base64 or hex characters, as strict base64 and whole hex bytes.",
+      "The host does not run the checker or the participant's code; it compares hashes."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf23.rs",
+      "language": "Rust",
+      "sha256": "97d140596105acae280e9f3a18243c555292eb094a216d37a91d767af7f7d6e1"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Non-numeric: hashes are SHA-256 digests the tests rebuild, line ends are normalised before hashing, and the answer is written as an exact integer or p/q. Base64 and hex decodings are checked against values worked by hand. Not B: tested on examples, not proven; the hash library is trusted.",
+      "G3": "Each unreadable part of the sealed packet and of the reply has its own reason, a failing audit is a failed predicate with its own refusal, and a missing reply is refused without a predicate. No panicking unwrap or expect, and no index. The base64 reader does its arithmetic on a width kept under 14. Not B: panic-freedom is tested, not proven.",
+      "G4": "40 WF23 tests assert the registry entry, a clean packet certified with its digest, the prompt carrying the statement only, a manifest in the reply not read, a file edited, unlisted or missing, line ends not changing a hash, the answer found in the text, reversed, with white space taken out, in base64 and in hex, inside a longer number and as p/q, strict base64 and whole hex bytes, a token ending at the first character outside the alphabet, text that is not UTF-8 once decoded, every file searched and the leaks named, a recorded hash that is not the checker's, another checker run, a checker hashed with Unix line ends, a forged line and every forged line counted, a tag keyed by the key and a zero byte, no output at all, each malformed reply by its reason, and a sealed part the host cannot audit with. 10 mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 115/115. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 7, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T15:22:10Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v13-test.run.json",
+        "sha256": "e95f7cbb61ec569653c33c43224a08a2dd50d966fadd2ffb10683ec9251899fb",
+        "note": "975 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-clippy.run.json",
+        "sha256": "9f3bb56911bdd12f7b66947930bf454026cdc5a5079549d88ce90dbe884870bd",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-fmt.run.json",
+        "sha256": "e211f169bda4dde79d3c9eb5aaabec93f90b2eba08ad48d08389558e8796d830",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-metrics.run.json",
+        "sha256": "1f073e9074334349e9fcb471b80bb4860fd71373d3593bc902d8fd4e46fd4f2d",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-metrics.json",
+        "sha256": "f1e599a1782ed3478232245d33bf04cab5f389770a614a7f1840bc53ca8a9209",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 115,
+      "survived": 0,
+      "demonstrably_equivalent": 10,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf23.mutation.json",
+        "sha256": "7a10cfde96d4a7c54ccee65f4910c3086b7af57692b065660e82c352d3897147",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 125 mutants"
+      }
+    }
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T15:22:12.679057Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf23.rs",
+          "language": "Rust",
+          "sha256": "97d140596105acae280e9f3a18243c555292eb094a216d37a91d767af7f7d6e1"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf23:v1",
+        "symbols": [
+          "FAMILY"
+        ],
+        "owned_invariants": [
+          "The task needs no field. The sealed part holds manifest (the SHA-256 of each participant file), expected_answer, checker_source, recorded_checker_sha256 and stdout_key; a run without any of them is refused as malformed before anything is asked.",
+          "The packet is asked for once. Its reply is {participant: {name: text, ...}, run: {...}}. A manifest in the reply is not read.",
+          "A file's hash is the SHA-256 of its text in UTF-8 with each CRLF written as LF. The host records, in order, manifest_complete (manifest and reply name the same files), file_hashes_match, answer_not_derivable, recorded_hash_is_checker, executed_checker_is_recorded (run.executed_checker_sha256) and stdout_lines_authentic (run.stdout has a line and every tag is the SHA-256 of the key, a zero byte and the line value in canonical form).",
+          "The expected answer, as an integer or as p/q, must be in no view of any file: the text, the text reversed by code point, the text with the white space of Python's str.split taken out, and each decoding to UTF-8 text of each run of four or more of A-Za-z0-9+/= as strict base64 and as hex.",
+          "All six passing certifies CUSTODY_INTACT with the digest of the file hashes, the files that held the answer and the number of forged lines. A reply that is not a packet, a file that is not text, or stdout that is not a list of objects is malformed."
+        ],
+        "boundaries": [
+          "The audit shows the packet is intact and holds no view of the answer it knows of. A model that hides the answer in another way is not found.",
+          "A decoding is tried only on runs of base64 or hex characters, as strict base64 and whole hex bytes.",
+          "The host does not run the checker or the participant's code; it compares hashes."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf23.rs",
+          "language": "Rust",
+          "sha256": "97d140596105acae280e9f3a18243c555292eb094a216d37a91d767af7f7d6e1"
+        },
+        "profile": "Non-Numeric",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Non-numeric: hashes are SHA-256 digests the tests rebuild, line ends are normalised before hashing, and the answer is written as an exact integer or p/q. Base64 and hex decodings are checked against values worked by hand. Not B: tested on examples, not proven; the hash library is trusted.",
+          "G3": "Each unreadable part of the sealed packet and of the reply has its own reason, a failing audit is a failed predicate with its own refusal, and a missing reply is refused without a predicate. No panicking unwrap or expect, and no index. The base64 reader does its arithmetic on a width kept under 14. Not B: panic-freedom is tested, not proven.",
+          "G4": "40 WF23 tests assert the registry entry, a clean packet certified with its digest, the prompt carrying the statement only, a manifest in the reply not read, a file edited, unlisted or missing, line ends not changing a hash, the answer found in the text, reversed, with white space taken out, in base64 and in hex, inside a longer number and as p/q, strict base64 and whole hex bytes, a token ending at the first character outside the alphabet, text that is not UTF-8 once decoded, every file searched and the leaks named, a recorded hash that is not the checker's, another checker run, a checker hashed with Unix line ends, a forged line and every forged line counted, a tag keyed by the key and a zero byte, no output at all, each malformed reply by its reason, and a sealed part the host cannot audit with. 10 mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 115/115. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 7, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T15:21:51Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v13-test.run.json",
+            "sha256": "e95f7cbb61ec569653c33c43224a08a2dd50d966fadd2ffb10683ec9251899fb",
+            "note": "975 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-clippy.run.json",
+            "sha256": "9f3bb56911bdd12f7b66947930bf454026cdc5a5079549d88ce90dbe884870bd",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-fmt.run.json",
+            "sha256": "e211f169bda4dde79d3c9eb5aaabec93f90b2eba08ad48d08389558e8796d830",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-metrics.run.json",
+            "sha256": "3d0d04aa70736844f559fe2cc2e31648805123b08f79c8920fc4b9897d7983b6",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-metrics.json",
+            "sha256": "c78a4942b6937a2e0ef6b7ed4d2023b2a34259f868a263849f076536dcfd44d8",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 115,
+          "survived": 0,
+          "demonstrably_equivalent": 10,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-wf23.mutation.json",
+            "sha256": "7a10cfde96d4a7c54ccee65f4910c3086b7af57692b065660e82c352d3897147",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 125 mutants"
+          }
+        }
+      }
+    }
+  ]
+}

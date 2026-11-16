@@ -1,0 +1,666 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf08.rs",
+  "target_sha256": "e8c4de3d237c618de43654f1b1a967950b6d3f0eb84be84974842f8b1b7e47a8",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf08",
+  "counts": {
+    "killed": 100,
+    "survived": 0,
+    "demonstrably_equivalent": 7,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF8\",",
+      "new": "    workflow: \"WF08\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Staged sealed packets\",",
+      "new": "    name: \"Staged Sealed Packets\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"stage_seal_chain_recompute\",",
+      "new": "    host_check: \"stage_seal_chain\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "question begin mark changed",
+      "old": "    begin: \"<<Q>>\",",
+      "new": "    begin: \"<<q>>\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "question end mark changed",
+      "old": "    end: \"<</Q>>\",",
+      "new": "    end: \"<<Q>>\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "question fence renamed",
+      "old": "    name: \"question\",",
+      "new": "    name: \"carry\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "first stage renamed",
+      "old": "pub const STAGES: [&str; 3] = [\"eliminate\", \"solve\", \"residual\"];",
+      "new": "pub const STAGES: [&str; 3] = [\"reduce\", \"solve\", \"residual\"];",
+      "outcome": "killed"
+    },
+    {
+      "name": "second stage renamed",
+      "old": "pub const STAGES: [&str; 3] = [\"eliminate\", \"solve\", \"residual\"];",
+      "new": "pub const STAGES: [&str; 3] = [\"eliminate\", \"back_substitute\", \"residual\"];",
+      "outcome": "killed"
+    },
+    {
+      "name": "third stage renamed",
+      "old": "pub const STAGES: [&str; 3] = [\"eliminate\", \"solve\", \"residual\"];",
+      "new": "pub const STAGES: [&str; 3] = [\"eliminate\", \"solve\", \"check\"];",
+      "outcome": "killed"
+    },
+    {
+      "name": "stages swapped",
+      "old": "pub const STAGES: [&str; 3] = [\"eliminate\", \"solve\", \"residual\"];",
+      "new": "pub const STAGES: [&str; 3] = [\"solve\", \"eliminate\", \"residual\"];",
+      "outcome": "killed"
+    },
+    {
+      "name": "task needs no unique solution message changed",
+      "old": "Err(\"the staged instance needs a unique solution\".to_owned())",
+      "new": "Err(\"not unique\".to_owned())",
+      "outcome": "killed"
+    },
+    {
+      "name": "statement read from another key",
+      "old": "        .get(\"statement\")\n        .and_then(Datum::as_text)\n        .ok_or(\"statement must be text\")?;",
+      "new": "        .get(\"question\")\n        .and_then(Datum::as_text)\n        .ok_or(\"statement must be text\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "statement refusal message changed",
+      "old": ".ok_or(\"statement must be text\")?;",
+      "new": ".ok_or(\"statement\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "right side put first in the augmented matrix",
+      "old": ".map(|(row, entry)| row.iter().cloned().chain([entry.clone()]).collect())",
+      "new": ".map(|(row, entry)| [entry.clone()].into_iter().chain(row.iter().cloned()).collect())",
+      "outcome": "killed"
+    },
+    {
+      "name": "right side left out of the augmented matrix",
+      "old": ".map(|(row, entry)| row.iter().cloned().chain([entry.clone()]).collect())",
+      "new": ".map(|(row, _)| row.clone())",
+      "outcome": "killed"
+    },
+    {
+      "name": "solution read from the rows of the equations",
+      "old": "        .take(solution.len())\n",
+      "new": "        .take(rows.len())\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "solution read from one row",
+      "old": "        .take(solution.len())\n",
+      "new": "        .take(1)\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "solution read from the first column",
+      "old": "        .filter_map(|row| row.last().cloned())",
+      "new": "        .filter_map(|row| row.first().cloned())",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual multiplies instead of adds",
+      "old": ".map(|(a, x)| a * x).sum();",
+      "new": ".map(|(a, x)| a + x).sum();",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual adds the right side",
+      "old": "            product - entry\n",
+      "new": "            product + entry\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual leaves the right side",
+      "old": "            product - entry\n",
+      "new": "            product\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "first stage expects the solution",
+      "old": "            Datum::List(reduced.iter().map(|row| listed(row)).collect()),",
+      "new": "            listed(&solved),",
+      "outcome": "killed"
+    },
+    {
+      "name": "second stage expects the residual",
+      "old": "            listed(&solved),\n            listed(&residual),",
+      "new": "            listed(&residual),\n            listed(&residual),",
+      "outcome": "killed"
+    },
+    {
+      "name": "third stage expects the solution",
+      "old": "            listed(&solved),\n            listed(&residual),",
+      "new": "            listed(&solved),\n            listed(&solved),",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation accepts everything",
+      "old": "    pipeline(task).map(|_| ())",
+      "new": "    pipeline(task).map(|_| ()).or(Ok(()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "lists compared as one",
+      "old": "        Datum::List(items) => items\n            .iter()\n            .map(exact_form)\n            .collect::<Option<Vec<_>>>()\n            .map(Datum::List),",
+      "new": "        Datum::List(items) => items\n            .iter()\n            .map(exact_form)\n            .collect::<Option<Vec<_>>>()\n            .map(|_| Datum::Null),",
+      "outcome": "killed"
+    },
+    {
+      "name": "lists keep only their first item",
+      "old": "            .collect::<Option<Vec<_>>>()\n            .map(Datum::List),",
+      "new": "            .collect::<Option<Vec<_>>>()\n            .map(|items| Datum::List(items.into_iter().take(1).collect())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "objects normalised to the empty text",
+      "old": "            .collect::<Option<_>>()\n            .map(Datum::Map),",
+      "new": "            .collect::<Option<Vec<_>>>()\n            .map(|_| Datum::text(\"\")),",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "an object is never equal to a stage payload, which is built of lists and non-empty number text, so an object read as the empty text gives the same verdict as one read as an object"
+    },
+    {
+      "name": "object keys dropped",
+      "old": ".map(|inner| (key.clone(), inner)))",
+      "new": ".map(|inner| (String::new(), inner)))",
+      "equivalent": "an object never equals a stage payload, which is a list, whatever its keys, so no reply can tell the two forms apart",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "scalars kept as text",
+      "old": "        scalar => rational(scalar).map(|number| Datum::text(show(&number))),",
+      "new": "        scalar => rational(scalar).map(|_| scalar.clone()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "scalars all read as zero",
+      "old": "        scalar => rational(scalar).map(|number| Datum::text(show(&number))),",
+      "new": "        scalar => rational(scalar).map(|_| Datum::text(\"0\")),",
+      "outcome": "killed"
+    },
+    {
+      "name": "link puts the payload first",
+      "old": "    sha256_hex(&format!(\"{before}{}\", payload.canonical()))",
+      "new": "    sha256_hex(&format!(\"{}{before}\", payload.canonical()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "link leaves out the payload",
+      "old": "    sha256_hex(&format!(\"{before}{}\", payload.canonical()))",
+      "new": "    sha256_hex(before)",
+      "outcome": "killed"
+    },
+    {
+      "name": "link leaves out the head",
+      "old": "    sha256_hex(&format!(\"{before}{}\", payload.canonical()))",
+      "new": "    sha256_hex(&payload.canonical())",
+      "outcome": "killed"
+    },
+    {
+      "name": "link separates with a space",
+      "old": "    sha256_hex(&format!(\"{before}{}\", payload.canonical()))",
+      "new": "    sha256_hex(&format!(\"{before} {}\", payload.canonical()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "chain starts empty",
+      "old": "        .fold(sha256_hex(&task.canonical()), |before, payload| {",
+      "new": "        .fold(sha256_hex(\"\"), |before, payload| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "chain starts at the statement",
+      "old": "        .fold(sha256_hex(&task.canonical()), |before, payload| {",
+      "new": "        .fold(sha256_hex(task.get(\"statement\").and_then(Datum::as_text).unwrap_or(\"\")), |before, payload| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "packet stage field renamed",
+      "old": "            stage: whole.get(\"stage\")?,",
+      "new": "            stage: whole.get(\"name\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "packet carry field renamed",
+      "old": "            carry: whole.get(\"carry\")?,",
+      "new": "            carry: whole.get(\"question\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "packet payload field renamed",
+      "old": "            payload: whole.get(\"payload\")?,",
+      "new": "            payload: whole.get(\"data\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "packet prev field renamed",
+      "old": "            prev: whole.get(\"prev\")?,",
+      "new": "            prev: whole.get(\"before\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "packet seal field renamed",
+      "old": "            seal: whole.get(\"seal\")?,",
+      "new": "            seal: whole.get(\"after\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "packet fields reason changed",
+      "old": "\"packet fields missing\"",
+      "new": "\"packet\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "payload reason changed",
+      "old": "\"payload must be exact rationals\"",
+      "new": "\"payload\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage name predicate renamed",
+      "old": "            \"stage_named\",",
+      "new": "            \"stage\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage name predicate inverted",
+      "old": "            packet.stage.as_text() == Some(name),",
+      "new": "            packet.stage.as_text() != Some(name),",
+      "outcome": "killed"
+    },
+    {
+      "name": "any stage name accepted",
+      "old": "            packet.stage.as_text() == Some(name),",
+      "new": "            packet.stage.as_text().is_some(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage name code changed",
+      "old": "            \"STAGE_MISNAMED\",",
+      "new": "            \"STAGE_WRONG\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "fence predicate renamed",
+      "old": "            \"fence_intact\",",
+      "new": "            \"fence\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "fence predicate inverted",
+      "old": "                .is_some_and(|carry| line.question.kept_by(carry)),",
+      "new": "                .is_some_and(|carry| !line.question.kept_by(carry)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "any carry accepted",
+      "old": "                .is_some_and(|carry| line.question.kept_by(carry)),",
+      "new": "                .is_some(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "fence code changed",
+      "old": "            \"FENCE_VIOLATED\",",
+      "new": "            \"FENCE_BROKEN\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "chain predicate renamed",
+      "old": "            \"chain_linked\",",
+      "new": "            \"chain\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "chain compared with the new head",
+      "old": "            packet.prev.as_text() == Some(before.as_str()),",
+      "new": "            packet.prev.as_text() == Some(after.as_str()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "chain predicate inverted",
+      "old": "            packet.prev.as_text() == Some(before.as_str()),",
+      "new": "            packet.prev.as_text() != Some(before.as_str()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "any prev accepted",
+      "old": "            packet.prev.as_text() == Some(before.as_str()),",
+      "new": "            packet.prev.as_text().is_some(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "chain code changed",
+      "old": "            \"CHAIN_BROKEN\",",
+      "new": "            \"CHAIN_CUT\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "seal predicate renamed",
+      "old": "            \"seal_matches\",",
+      "new": "            \"seal\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "seal compared with the old head",
+      "old": "            packet.seal.as_text() == Some(after.as_str()),",
+      "new": "            packet.seal.as_text() == Some(before.as_str()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "seal predicate inverted",
+      "old": "            packet.seal.as_text() == Some(after.as_str()),",
+      "new": "            packet.seal.as_text() != Some(after.as_str()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "any seal accepted",
+      "old": "            packet.seal.as_text() == Some(after.as_str()),",
+      "new": "            packet.seal.as_text().is_some(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "seal code changed",
+      "old": "            \"SEAL_MISMATCH\",",
+      "new": "            \"SEAL_BAD\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "recompute predicate renamed",
+      "old": "            \"recomputed\",",
+      "new": "            \"recompute\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "recompute predicate inverted",
+      "old": "            recomputed == *expected,",
+      "new": "            recomputed != *expected,",
+      "outcome": "killed"
+    },
+    {
+      "name": "any payload accepted",
+      "old": "            recomputed == *expected,",
+      "new": "            true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "recompute code changed",
+      "old": "            \"STAGE_RECOMPUTE_MISMATCH\",",
+      "new": "            \"STAGE_WRONG_PAYLOAD\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "last failing predicate gives the code",
+      "old": "            first = first.or(Some(code));",
+      "new": "            first = Some(code);",
+      "outcome": "killed"
+    },
+    {
+      "name": "no predicate gives a code",
+      "old": "            first = first.or(Some(code));",
+      "new": "            first = first.or(None);",
+      "outcome": "killed"
+    },
+    {
+      "name": "predicate named predicate first",
+      "old": "        if !checks.record(&format!(\"{name}:{predicate}\"), held, packet.whole) {",
+      "new": "        if !checks.record(&format!(\"{predicate}:{name}\"), held, packet.whole) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "predicate recorded without evidence",
+      "old": "        if !checks.record(&format!(\"{name}:{predicate}\"), held, packet.whole) {",
+      "new": "        if !checks.record(&format!(\"{name}:{predicate}\"), held, &Datum::Null) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "predicate recorded as held",
+      "old": "        if !checks.record(&format!(\"{name}:{predicate}\"), held, packet.whole) {",
+      "new": "        if !checks.record(&format!(\"{name}:{predicate}\"), true, packet.whole) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "task refusal read as malformed",
+      "old": "    let line = pipeline(run.task).map_err(Stop::Malformed)?;",
+      "new": "    let line = pipeline(run.task).map_err(|_| Stop::Malformed(String::new()))?;",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "a walk starts only after validate has accepted the same task by running pipeline on it, so the error of pipeline is never taken here"
+    },
+    {
+      "name": "previous packet note reworded",
+      "old": "            format!(\"\\nPrevious sealed packet: {}\", packet.canonical())",
+      "new": "            format!(\"\\nPrevious: {}\", packet.canonical())",
+      "outcome": "killed"
+    },
+    {
+      "name": "previous packet shown in lists",
+      "old": "            format!(\"\\nPrevious sealed packet: {}\", packet.canonical())",
+      "new": "            format!(\"\\nPrevious sealed packet: {}\", packet.get(\"payload\").map_or(String::new(), Datum::canonical))",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage note dropped from the prompt",
+      "old": "        let prompt = format!(\"{}\\nStage {name}.{note}\", run.prompt());",
+      "new": "        let prompt = format!(\"{}\\nStage {name}.\", run.prompt()) + &note[..0];",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage line dropped from the prompt",
+      "old": "        let prompt = format!(\"{}\\nStage {name}.{note}\", run.prompt());",
+      "new": "        let prompt = format!(\"{}{note}\", run.prompt());",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage asked under its bare name",
+      "old": "        let Some(whole) = run.ask(&format!(\"stage:{name}\"), prompt)? else {",
+      "new": "        let Some(whole) = run.ask(name, prompt)? else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing packet predicate renamed",
+      "old": "            checks.record(&format!(\"{name}:packet_received\"), false, &Datum::Null);",
+      "new": "            checks.record(&format!(\"{name}:received\"), false, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing packet recorded as received",
+      "old": "            checks.record(&format!(\"{name}:packet_received\"), false, &Datum::Null);",
+      "new": "            checks.record(&format!(\"{name}:packet_received\"), true, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing packet not recorded",
+      "old": "            checks.record(&format!(\"{name}:packet_received\"), false, &Datum::Null);\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing packet code changed",
+      "old": "                \"STAGE_MISSING\",",
+      "new": "                \"STAGE_ABSENT\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing packet detail renamed",
+      "old": "                Datum::map([(\"stage\", Datum::from(name))]),",
+      "new": "                Datum::map([(\"name\", Datum::from(name))]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing packet detail empty",
+      "old": "                Datum::map([(\"stage\", Datum::from(name))]),",
+      "new": "                Datum::map([]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal detail stage renamed",
+      "old": "                (\"stage\", Datum::from(name)),\n                (\"sealed_stages\"",
+      "new": "                (\"name\", Datum::from(name)),\n                (\"sealed_stages\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal detail sealed count renamed",
+      "old": "                (\"sealed_stages\", Datum::from(accepted.len())),",
+      "new": "                (\"sealed\", Datum::from(accepted.len())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal detail counts the stage itself",
+      "old": "                (\"sealed_stages\", Datum::from(accepted.len())),",
+      "new": "                (\"sealed_stages\", Datum::from(accepted.len() + 1)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal detail counts every stage",
+      "old": "                (\"sealed_stages\", Datum::from(accepted.len())),",
+      "new": "                (\"sealed_stages\", Datum::from(STAGES.len())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "next prompt carries no packet",
+      "old": "        last = Some(whole);",
+      "new": "        last = None;",
+      "outcome": "killed"
+    },
+    {
+      "name": "next prompt carries the payload",
+      "old": "        last = Some(whole);",
+      "new": "        last = Some(packet.payload);",
+      "outcome": "killed"
+    },
+    {
+      "name": "solution read from the first payload",
+      "old": "    let solved = accepted.get(1).copied().and_then(rationals);",
+      "new": "    let solved = accepted.first().copied().and_then(rationals);",
+      "outcome": "killed"
+    },
+    {
+      "name": "solution read from the last payload",
+      "old": "    let solved = accepted.get(1).copied().and_then(rationals);",
+      "new": "    let solved = accepted.get(2).copied().and_then(rationals);",
+      "outcome": "killed"
+    },
+    {
+      "name": "solution predicate renamed",
+      "old": "        \"answer_is_unique_solution\",",
+      "new": "        \"answer_is_solution\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "solution predicate inverted",
+      "old": "        solved == Some(line.solution.clone()),",
+      "new": "        solved != Some(line.solution.clone()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "solution predicate always held",
+      "old": "        solved == Some(line.solution.clone()),",
+      "new": "        true,",
+      "equivalent": "a stage that reaches this point passed the recompute check, which made its payload equal to the solution of the instance in exact form, so the predicate is always held",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "solution predicate never held",
+      "old": "        solved == Some(line.solution.clone()),",
+      "new": "        false,",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual read from the solution payload",
+      "old": "    let residual = accepted.get(2).copied().and_then(rationals);",
+      "new": "    let residual = accepted.get(1).copied().and_then(rationals);",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual predicate renamed",
+      "old": "    checks.record(\"final_residual_zero\", zero, &Datum::Null);",
+      "new": "    checks.record(\"residual_zero\", zero, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual predicate always held",
+      "old": "    checks.record(\"final_residual_zero\", zero, &Datum::Null);",
+      "new": "    checks.record(\"final_residual_zero\", true, &Datum::Null);",
+      "equivalent": "a stage that reaches this point passed the recompute check, which made its residual payload equal to A x - b for the solution, and that is zero",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "residual predicate never held",
+      "old": "    checks.record(\"final_residual_zero\", zero, &Datum::Null);",
+      "new": "    checks.record(\"final_residual_zero\", false, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "some residual entry zero is enough",
+      "old": "    let zero = residual.is_some_and(|entries| entries.iter().all(Zero::is_zero));",
+      "new": "    let zero = residual.is_some_and(|entries| entries.iter().any(Zero::is_zero));",
+      "equivalent": "the residual payload has one entry for each equation, at least one, and the recompute check made every entry zero, so any and all agree",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "missing residual is zero",
+      "old": "    let zero = residual.is_some_and(|entries| entries.iter().all(Zero::is_zero));",
+      "new": "    let zero = residual.is_none_or(|entries| entries.iter().all(Zero::is_zero));",
+      "equivalent": "the residual payload read as rationals exists whenever the recompute check passed, so the missing case cannot arise",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "certified under another code",
+      "old": "    Ok(checks.judge(\"SEALED_PIPELINE\", detail))",
+      "new": "    Ok(checks.judge(\"PIPELINE\", detail))",
+      "outcome": "killed"
+    },
+    {
+      "name": "certified detail stages renamed",
+      "old": "        (\"stages\", Datum::from(accepted.len())),",
+      "new": "        (\"n\", Datum::from(accepted.len())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "certified detail stages overcounted",
+      "old": "        (\"stages\", Datum::from(accepted.len())),",
+      "new": "        (\"stages\", Datum::from(accepted.len() + 1)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "certified detail head renamed",
+      "old": "        (\"head\", Datum::text(head(run.task, &accepted))),",
+      "new": "        (\"seal\", Datum::text(head(run.task, &accepted))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "certified head of the empty chain",
+      "old": "        (\"head\", Datum::text(head(run.task, &accepted))),",
+      "new": "        (\"head\", Datum::text(head(run.task, &[]))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "certified head one stage short",
+      "old": "        (\"head\", Datum::text(head(run.task, &accepted))),",
+      "new": "        (\"head\", Datum::text(head(run.task, &accepted[..2]))),",
+      "outcome": "killed"
+    }
+  ]
+}

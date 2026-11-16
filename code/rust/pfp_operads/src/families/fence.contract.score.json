@@ -1,0 +1,206 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/fence.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/fence.rs",
+      "language": "Rust",
+      "sha256": "4dcf5ecdf85b2283e6497d891cae24dc9a72febb414d0559e02db433640e5e94"
+    },
+    "contract_urn": "urn:pfp-operads:families-fence:v1",
+    "symbols": [
+      "Marks",
+      "Fence",
+      "locate",
+      "Fence::kept_by",
+      "Fence::touches"
+    ],
+    "owned_invariants": [
+      "locate finds the fence a pair of marks makes in a statement. The begin mark must occur exactly once. The end mark is searched for from the second byte of the begin mark on, so it may share bytes with the begin mark, and its first occurrence closes the fence. With no begin mark, with two or more, or with no end mark after it, there is no fence and the reason names the fence.",
+      "A fence is the text from the first byte of the begin mark to the last byte of the end mark, both included, with its start and end as byte offsets into the statement and the name of its marks.",
+      "kept_by says whether a text carries the fenced text exactly once, counting occurrences that do not overlap.",
+      "touches says whether a byte range and the fence share at least one byte. An empty range touches nothing, and ranges that only meet at an end do not touch."
+    ],
+    "boundaries": [
+      "The marks are text compared as written. They are ASCII in this crate, and a begin mark that starts with a multi-byte character gives no fence.",
+      "A fence says where text may not change. The refusal code for a broken fence is each family's."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/fence.rs",
+      "language": "Rust",
+      "sha256": "4dcf5ecdf85b2283e6497d891cae24dc9a72febb414d0559e02db433640e5e94"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Non-numeric: offsets are byte offsets, asserted for text with a multi-byte character before the fence, and occurrences are counted as exact integers. Not B: tested on examples, not proven.",
+      "G3": "locate gives a reason that names the fence for a missing or repeated mark, and kept_by and touches are total. No panicking unwrap or expect, and no index. Offsets are sums of lengths of the same statement and marks. Not B: panic-freedom is tested, not proven.",
+      "G4": "10 tests assert the fence as a whole value, offsets in bytes after a multi-byte character, the first end mark closing the fence, a begin mark that occurs twice, each missing mark, an end mark that starts inside the begin mark, one mark that cannot open and close a fence, a text that carries the fenced text once, none or twice, occurrences that overlap counting once, and a range that meets, shares or lies beside the fence. Three mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 24/24. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 0; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T15:22:10Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v13-test.run.json",
+        "sha256": "e95f7cbb61ec569653c33c43224a08a2dd50d966fadd2ffb10683ec9251899fb",
+        "note": "975 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-clippy.run.json",
+        "sha256": "9f3bb56911bdd12f7b66947930bf454026cdc5a5079549d88ce90dbe884870bd",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-fmt.run.json",
+        "sha256": "e211f169bda4dde79d3c9eb5aaabec93f90b2eba08ad48d08389558e8796d830",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-metrics.run.json",
+        "sha256": "1f073e9074334349e9fcb471b80bb4860fd71373d3593bc902d8fd4e46fd4f2d",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-metrics.json",
+        "sha256": "f1e599a1782ed3478232245d33bf04cab5f389770a614a7f1840bc53ca8a9209",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 24,
+      "survived": 0,
+      "demonstrably_equivalent": 3,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-families-fence.mutation.json",
+        "sha256": "93eb67e7d2345a94b66903ee8e37354fcf1ffb18579139b8bc7c40ff27fe3259",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 27 mutants"
+      }
+    }
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T15:22:11.650632Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/fence.rs",
+          "language": "Rust",
+          "sha256": "4dcf5ecdf85b2283e6497d891cae24dc9a72febb414d0559e02db433640e5e94"
+        },
+        "contract_urn": "urn:pfp-operads:families-fence:v1",
+        "symbols": [
+          "Marks",
+          "Fence",
+          "locate",
+          "Fence::kept_by",
+          "Fence::touches"
+        ],
+        "owned_invariants": [
+          "locate finds the fence a pair of marks makes in a statement. The begin mark must occur exactly once. The end mark is searched for from the second byte of the begin mark on, so it may share bytes with the begin mark, and its first occurrence closes the fence. With no begin mark, with two or more, or with no end mark after it, there is no fence and the reason names the fence.",
+          "A fence is the text from the first byte of the begin mark to the last byte of the end mark, both included, with its start and end as byte offsets into the statement and the name of its marks.",
+          "kept_by says whether a text carries the fenced text exactly once, counting occurrences that do not overlap.",
+          "touches says whether a byte range and the fence share at least one byte. An empty range touches nothing, and ranges that only meet at an end do not touch."
+        ],
+        "boundaries": [
+          "The marks are text compared as written. They are ASCII in this crate, and a begin mark that starts with a multi-byte character gives no fence.",
+          "A fence says where text may not change. The refusal code for a broken fence is each family's."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/fence.rs",
+          "language": "Rust",
+          "sha256": "4dcf5ecdf85b2283e6497d891cae24dc9a72febb414d0559e02db433640e5e94"
+        },
+        "profile": "Non-Numeric",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Non-numeric: offsets are byte offsets, asserted for text with a multi-byte character before the fence, and occurrences are counted as exact integers. Not B: tested on examples, not proven.",
+          "G3": "locate gives a reason that names the fence for a missing or repeated mark, and kept_by and touches are total. No panicking unwrap or expect, and no index. Offsets are sums of lengths of the same statement and marks. Not B: panic-freedom is tested, not proven.",
+          "G4": "10 tests assert the fence as a whole value, offsets in bytes after a multi-byte character, the first end mark closing the fence, a begin mark that occurs twice, each missing mark, an end mark that starts inside the begin mark, one mark that cannot open and close a fence, a text that carries the fenced text once, none or twice, occurrences that overlap counting once, and a range that meets, shares or lies beside the fence. Three mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 24/24. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 0; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T15:21:51Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v13-test.run.json",
+            "sha256": "e95f7cbb61ec569653c33c43224a08a2dd50d966fadd2ffb10683ec9251899fb",
+            "note": "975 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-clippy.run.json",
+            "sha256": "9f3bb56911bdd12f7b66947930bf454026cdc5a5079549d88ce90dbe884870bd",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-fmt.run.json",
+            "sha256": "e211f169bda4dde79d3c9eb5aaabec93f90b2eba08ad48d08389558e8796d830",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-metrics.run.json",
+            "sha256": "3d0d04aa70736844f559fe2cc2e31648805123b08f79c8920fc4b9897d7983b6",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-metrics.json",
+            "sha256": "c78a4942b6937a2e0ef6b7ed4d2023b2a34259f868a263849f076536dcfd44d8",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 24,
+          "survived": 0,
+          "demonstrably_equivalent": 3,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-families-fence.mutation.json",
+            "sha256": "93eb67e7d2345a94b66903ee8e37354fcf1ffb18579139b8bc7c40ff27fe3259",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 27 mutants"
+          }
+        }
+      }
+    }
+  ]
+}

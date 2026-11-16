@@ -7,18 +7,20 @@
     "artifact": {
       "path": "code/rust/pfp_operads/src/families.rs",
       "language": "Rust",
-      "sha256": "d3a6cee5cefb5a6369510cd15e6be46ebeaf154839c5b32a8b8e4a68615b6658"
+      "sha256": "f01041a66b393c6028f425ee54d004500f66c2cc9abf1381997b6bfa01c099b0"
     },
     "contract_urn": "urn:pfp-operads:families:v1",
     "symbols": [
       "attempts",
       "cochain",
       "domains",
+      "fence",
       "labelled",
       "monic",
       "sealed",
       "wf06",
       "wf07",
+      "wf08",
       "wf09",
       "wf10",
       "wf11",
@@ -26,6 +28,8 @@
       "wf16",
       "wf17",
       "wf20",
+      "wf21",
+      "wf23",
       "wf24",
       "wf25",
       "wf26",
@@ -106,7 +110,7 @@
     "artifact": {
       "path": "code/rust/pfp_operads/src/families.rs",
       "language": "Rust",
-      "sha256": "d3a6cee5cefb5a6369510cd15e6be46ebeaf154839c5b32a8b8e4a68615b6658"
+      "sha256": "f01041a66b393c6028f425ee54d004500f66c2cc9abf1381997b6bfa01c099b0"
     },
     "profile": "Non-Numeric",
     "level": "L4",
@@ -122,43 +126,43 @@
       "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
       "G2": "Non-numeric: counts of replies and steps, and SHA-256 digests asserted against digests the tests compute themselves. Not B: the hash library is trusted.",
       "G3": "Typed refusal codes BAD_REQUEST, BAD_JSON, BAD_TASK, UNKNOWN_WORKFLOW, SEALED_LEAK, REPLIES_INCOMPLETE and ENCODING, each with a sentence. Replies are read with get, never by index. No unwrap or expect. Not B: panic-freedom is tested, not proven.",
-      "G4": "33 protocol tests assert the listed registry of twenty-four families, the exact default prompt and its hash for a task and for a part of one, each refusal by code and message, the turn and the report field by field, obligations on a verdict that stands and on one the host refuses, repeated predicate names, a test family that claims a certified verdict or a typed refusal with no predicate or past a failed one, and the three commands of the binary with exit codes 0, 1 and 2. One mutant is recorded as demonstrably equivalent with its justification in the report. Mutation campaign R = 137/137. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G4": "33 protocol tests assert the listed registry of twenty-seven families, the exact default prompt and its hash for a task and for a part of one, each refusal by code and message, the turn and the report field by field, obligations on a verdict that stands and on one the host refuses, repeated predicate names, a test family that claims a certified verdict or a typed refusal with no predicate or past a failed one, and the three commands of the binary with exit codes 0, 1 and 2. One mutant is recorded as demonstrably equivalent with its justification in the report. Mutation campaign R = 143/143. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
       "G5": "Measured worst cyclomatic 15, cognitive complexity is not measured for Rust, nesting 3; ceiling B, recorded B."
     },
     "composite_grade": "C",
     "score_token": "L4C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-16T11:13:32Z",
+    "evaluation_timestamp": "2026-11-16T15:22:10Z",
     "evidence": [
       {
-        "path": "governance/evidence/pfp-operads-v12-test.run.json",
-        "sha256": "c1c7e51c0eb07084391826baaecea82b3d91f3ec4782526261031f67143806c3",
-        "note": "870 tests: pfp_operads and core_operad_canon, locked build."
+        "path": "governance/evidence/pfp-operads-v13-test.run.json",
+        "sha256": "e95f7cbb61ec569653c33c43224a08a2dd50d966fadd2ffb10683ec9251899fb",
+        "note": "975 tests: pfp_operads and core_operad_canon, locked build."
       },
       {
-        "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
-        "sha256": "22cbb798d2f7300f2ca3c63fbe61d6032e01c51073db01719c5fcb34ad32f60c",
+        "path": "governance/evidence/pfp-operads-v13-clippy.run.json",
+        "sha256": "9f3bb56911bdd12f7b66947930bf454026cdc5a5079549d88ce90dbe884870bd",
         "note": "clippy with -D warnings on both crates, all targets."
       },
       {
-        "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
-        "sha256": "8d8806ba499f22d1ed9deae362c634aeb8f3b0118020360122555f94aa6a9913",
+        "path": "governance/evidence/pfp-operads-v13-fmt.run.json",
+        "sha256": "e211f169bda4dde79d3c9eb5aaabec93f90b2eba08ad48d08389558e8796d830",
         "note": "rustfmt --check on both crates."
       },
       {
-        "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
-        "sha256": "11c4b704b504ab4496e4187cafd96b735cb563b85fcd306d5ba627c2565288fc",
+        "path": "governance/evidence/pfp-operads-v13-metrics.run.json",
+        "sha256": "1f073e9074334349e9fcb471b80bb4860fd71373d3593bc902d8fd4e46fd4f2d",
         "note": "The run that measured Gate 5 structure."
       },
       {
-        "path": "governance/evidence/pfp-operads-v12-metrics.json",
-        "sha256": "35e322d577846769b739d4fc2262a8e808a0c66444e7fdad3ee0de45304db976",
+        "path": "governance/evidence/pfp-operads-v13-metrics.json",
+        "sha256": "f1e599a1782ed3478232245d33bf04cab5f389770a614a7f1840bc53ca8a9209",
         "note": "Measured Gate 5 structure of every source this change touches."
       }
     ],
     "mutation_accounting": {
-      "killed": 137,
+      "killed": 143,
       "survived": 0,
       "demonstrably_equivalent": 1,
       "invalid": 0,
@@ -167,8 +171,8 @@
       "conservative_ratio": 1.0,
       "report": {
         "path": "governance/evidence/m-pfp-operads-families.mutation.json",
-        "sha256": "238bdce4e0621320f38499aa67d9431121fac0fd0bf70923b72458b11408a956",
-        "note": "lexical campaign of one-line mutants, crate tests as oracle; 138 mutants"
+        "sha256": "9e55fb039248fceb7834741169601ad17e6856b228729dded17f23553ac71107",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 144 mutants"
       }
     }
   },
@@ -1449,6 +1453,356 @@
             "path": "governance/evidence/m-pfp-operads-families.mutation.json",
             "sha256": "238bdce4e0621320f38499aa67d9431121fac0fd0bf70923b72458b11408a956",
             "note": "lexical campaign of one-line mutants, crate tests as oracle; 138 mutants"
+          }
+        }
+      }
+    },
+    {
+      "recorded_at": "2026-11-16T15:21:54.210855Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families.rs",
+          "language": "Rust",
+          "sha256": "d3a6cee5cefb5a6369510cd15e6be46ebeaf154839c5b32a8b8e4a68615b6658"
+        },
+        "contract_urn": "urn:pfp-operads:families:v1",
+        "symbols": [
+          "attempts",
+          "cochain",
+          "domains",
+          "labelled",
+          "monic",
+          "sealed",
+          "wf06",
+          "wf07",
+          "wf09",
+          "wf10",
+          "wf11",
+          "wf13",
+          "wf16",
+          "wf17",
+          "wf20",
+          "wf24",
+          "wf25",
+          "wf26",
+          "wf27",
+          "wf29",
+          "wf30",
+          "wf31",
+          "wf32",
+          "wf33",
+          "wf38",
+          "wf40",
+          "wf44",
+          "wf45",
+          "wf46",
+          "wf47",
+          "xor",
+          "CERTIFIED",
+          "TYPED_REFUSAL",
+          "REFUSED",
+          "CERTIFIED_CODE",
+          "NO_REPLY",
+          "MALFORMED",
+          "NO_PREDICATE",
+          "Family",
+          "FAMILIES",
+          "Ask",
+          "Asked",
+          "Stop",
+          "require",
+          "Run",
+          "Run::prompt",
+          "Run::prompt_for",
+          "Run::ask",
+          "Predicate",
+          "Checks",
+          "Checks::record",
+          "Checks::certified",
+          "Checks::judge",
+          "Verdict",
+          "Verdict::owing",
+          "certified",
+          "typed_refusal",
+          "refused",
+          "no_reply",
+          "Turn",
+          "Report",
+          "Listed",
+          "next",
+          "next_in",
+          "judge",
+          "judge_in",
+          "list"
+        ],
+        "owned_invariants": [
+          "A request is closed: workflow, task, and optionally sealed and replies; any other field is refused as BAD_REQUEST. The task and the sealed part must be objects, and a reply is null or an object with the one key content.",
+          "The walk is a function of the request alone. The same request gives the same prompts, the same predicates and the same verdict.",
+          "The host writes every prompt. Before a prompt is returned or counted as asked it is passed through the sealed-value guard, and a prompt that carries a sealed value refuses the whole run as SEALED_LEAK, naming the stage.",
+          "A task the family cannot read is refused as BAD_TASK with the family's reason before any step is asked.",
+          "next returns the first step that has no reply, with its stage, its prompt and the prompt's SHA-256, or no step when the replies are enough for a verdict. judge refuses a run that still waits for a reply as REPLIES_INCOMPLETE, and both refuse replies beyond the end of the run.",
+          "Whatever a family's walk returns, a certified verdict or a typed refusal stands only when at least one predicate was recorded and every one passed. Otherwise the run is refused under the first failed predicate's name in capitals, or NO_HOST_PREDICATE when none was recorded, with the walk's claim kept in the detail.",
+          "A predicate name is recorded once. A second record under the same name is kept as a failed predicate named repeated:<name>, so the run cannot certify.",
+          "A report lists every predicate in the order it was recorded with the SHA-256 of the canonical text of its evidence, and every step that was asked with the SHA-256 of its prompt. judge answers PASS for HOST_CERTIFIED and TYPED_REFUSAL and FAIL for REFUSED.",
+          "A reply the walk cannot read gives the verdict REFUSED with the code MALFORMED_CANDIDATE and the reason; a null reply is the model giving none.",
+          "A verdict may name obligations: what the reply asserts that no predicate covers. They are reported as uncertified_obligations whatever the verdict, and a verdict the host turns into a refusal keeps them.",
+          "prompt_for writes the family's default prompt for a part of the task: the family's id and name, the part's statement, then the rest of the part as canonical JSON. prompt is prompt_for on the whole task."
+        ],
+        "boundaries": [
+          "The host does not call a model and does not see that a reply came from one, or from the prompt it wrote. The caller sends prompts and brings replies back.",
+          "The run budget and the transcript are kept by the caller.",
+          "A certified verdict covers the predicates listed with it on the replies in the request, and nothing else.",
+          "next_in and judge_in take the registry to use, so a family can be tested without being shipped. The command line always uses FAMILIES.",
+          "An obligation is a name the family gives. The host reports it and does not interpret it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families.rs",
+          "language": "Rust",
+          "sha256": "d3a6cee5cefb5a6369510cd15e6be46ebeaf154839c5b32a8b8e4a68615b6658"
+        },
+        "profile": "Non-Numeric",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "B"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Non-numeric: counts of replies and steps, and SHA-256 digests asserted against digests the tests compute themselves. Not B: the hash library is trusted.",
+          "G3": "Typed refusal codes BAD_REQUEST, BAD_JSON, BAD_TASK, UNKNOWN_WORKFLOW, SEALED_LEAK, REPLIES_INCOMPLETE and ENCODING, each with a sentence. Replies are read with get, never by index. No unwrap or expect. Not B: panic-freedom is tested, not proven.",
+          "G4": "33 protocol tests assert the listed registry of twenty-four families, the exact default prompt and its hash for a task and for a part of one, each refusal by code and message, the turn and the report field by field, obligations on a verdict that stands and on one the host refuses, repeated predicate names, a test family that claims a certified verdict or a typed refusal with no predicate or past a failed one, and the three commands of the binary with exit codes 0, 1 and 2. One mutant is recorded as demonstrably equivalent with its justification in the report. Mutation campaign R = 137/137. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 15, cognitive complexity is not measured for Rust, nesting 3; ceiling B, recorded B."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T11:13:32Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v12-test.run.json",
+            "sha256": "c1c7e51c0eb07084391826baaecea82b3d91f3ec4782526261031f67143806c3",
+            "note": "870 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
+            "sha256": "22cbb798d2f7300f2ca3c63fbe61d6032e01c51073db01719c5fcb34ad32f60c",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
+            "sha256": "8d8806ba499f22d1ed9deae362c634aeb8f3b0118020360122555f94aa6a9913",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
+            "sha256": "11c4b704b504ab4496e4187cafd96b735cb563b85fcd306d5ba627c2565288fc",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.json",
+            "sha256": "35e322d577846769b739d4fc2262a8e808a0c66444e7fdad3ee0de45304db976",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 137,
+          "survived": 0,
+          "demonstrably_equivalent": 1,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-families.mutation.json",
+            "sha256": "238bdce4e0621320f38499aa67d9431121fac0fd0bf70923b72458b11408a956",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 138 mutants"
+          }
+        }
+      }
+    },
+    {
+      "recorded_at": "2026-11-16T15:22:12.919846Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families.rs",
+          "language": "Rust",
+          "sha256": "f01041a66b393c6028f425ee54d004500f66c2cc9abf1381997b6bfa01c099b0"
+        },
+        "contract_urn": "urn:pfp-operads:families:v1",
+        "symbols": [
+          "attempts",
+          "cochain",
+          "domains",
+          "fence",
+          "labelled",
+          "monic",
+          "sealed",
+          "wf06",
+          "wf07",
+          "wf08",
+          "wf09",
+          "wf10",
+          "wf11",
+          "wf13",
+          "wf16",
+          "wf17",
+          "wf20",
+          "wf21",
+          "wf23",
+          "wf24",
+          "wf25",
+          "wf26",
+          "wf27",
+          "wf29",
+          "wf30",
+          "wf31",
+          "wf32",
+          "wf33",
+          "wf38",
+          "wf40",
+          "wf44",
+          "wf45",
+          "wf46",
+          "wf47",
+          "xor",
+          "CERTIFIED",
+          "TYPED_REFUSAL",
+          "REFUSED",
+          "CERTIFIED_CODE",
+          "NO_REPLY",
+          "MALFORMED",
+          "NO_PREDICATE",
+          "Family",
+          "FAMILIES",
+          "Ask",
+          "Asked",
+          "Stop",
+          "require",
+          "Run",
+          "Run::prompt",
+          "Run::prompt_for",
+          "Run::ask",
+          "Predicate",
+          "Checks",
+          "Checks::record",
+          "Checks::certified",
+          "Checks::judge",
+          "Verdict",
+          "Verdict::owing",
+          "certified",
+          "typed_refusal",
+          "refused",
+          "no_reply",
+          "Turn",
+          "Report",
+          "Listed",
+          "next",
+          "next_in",
+          "judge",
+          "judge_in",
+          "list"
+        ],
+        "owned_invariants": [
+          "A request is closed: workflow, task, and optionally sealed and replies; any other field is refused as BAD_REQUEST. The task and the sealed part must be objects, and a reply is null or an object with the one key content.",
+          "The walk is a function of the request alone. The same request gives the same prompts, the same predicates and the same verdict.",
+          "The host writes every prompt. Before a prompt is returned or counted as asked it is passed through the sealed-value guard, and a prompt that carries a sealed value refuses the whole run as SEALED_LEAK, naming the stage.",
+          "A task the family cannot read is refused as BAD_TASK with the family's reason before any step is asked.",
+          "next returns the first step that has no reply, with its stage, its prompt and the prompt's SHA-256, or no step when the replies are enough for a verdict. judge refuses a run that still waits for a reply as REPLIES_INCOMPLETE, and both refuse replies beyond the end of the run.",
+          "Whatever a family's walk returns, a certified verdict or a typed refusal stands only when at least one predicate was recorded and every one passed. Otherwise the run is refused under the first failed predicate's name in capitals, or NO_HOST_PREDICATE when none was recorded, with the walk's claim kept in the detail.",
+          "A predicate name is recorded once. A second record under the same name is kept as a failed predicate named repeated:<name>, so the run cannot certify.",
+          "A report lists every predicate in the order it was recorded with the SHA-256 of the canonical text of its evidence, and every step that was asked with the SHA-256 of its prompt. judge answers PASS for HOST_CERTIFIED and TYPED_REFUSAL and FAIL for REFUSED.",
+          "A reply the walk cannot read gives the verdict REFUSED with the code MALFORMED_CANDIDATE and the reason; a null reply is the model giving none.",
+          "A verdict may name obligations: what the reply asserts that no predicate covers. They are reported as uncertified_obligations whatever the verdict, and a verdict the host turns into a refusal keeps them.",
+          "prompt_for writes the family's default prompt for a part of the task: the family's id and name, the part's statement, then the rest of the part as canonical JSON. prompt is prompt_for on the whole task."
+        ],
+        "boundaries": [
+          "The host does not call a model and does not see that a reply came from one, or from the prompt it wrote. The caller sends prompts and brings replies back.",
+          "The run budget and the transcript are kept by the caller.",
+          "A certified verdict covers the predicates listed with it on the replies in the request, and nothing else.",
+          "next_in and judge_in take the registry to use, so a family can be tested without being shipped. The command line always uses FAMILIES.",
+          "An obligation is a name the family gives. The host reports it and does not interpret it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families.rs",
+          "language": "Rust",
+          "sha256": "f01041a66b393c6028f425ee54d004500f66c2cc9abf1381997b6bfa01c099b0"
+        },
+        "profile": "Non-Numeric",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "B"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Non-numeric: counts of replies and steps, and SHA-256 digests asserted against digests the tests compute themselves. Not B: the hash library is trusted.",
+          "G3": "Typed refusal codes BAD_REQUEST, BAD_JSON, BAD_TASK, UNKNOWN_WORKFLOW, SEALED_LEAK, REPLIES_INCOMPLETE and ENCODING, each with a sentence. Replies are read with get, never by index. No unwrap or expect. Not B: panic-freedom is tested, not proven.",
+          "G4": "33 protocol tests assert the listed registry of twenty-seven families, the exact default prompt and its hash for a task and for a part of one, each refusal by code and message, the turn and the report field by field, obligations on a verdict that stands and on one the host refuses, repeated predicate names, a test family that claims a certified verdict or a typed refusal with no predicate or past a failed one, and the three commands of the binary with exit codes 0, 1 and 2. One mutant is recorded as demonstrably equivalent with its justification in the report. Mutation campaign R = 143/143. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 15, cognitive complexity is not measured for Rust, nesting 3; ceiling B, recorded B."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T15:21:51Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v13-test.run.json",
+            "sha256": "e95f7cbb61ec569653c33c43224a08a2dd50d966fadd2ffb10683ec9251899fb",
+            "note": "975 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-clippy.run.json",
+            "sha256": "9f3bb56911bdd12f7b66947930bf454026cdc5a5079549d88ce90dbe884870bd",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-fmt.run.json",
+            "sha256": "e211f169bda4dde79d3c9eb5aaabec93f90b2eba08ad48d08389558e8796d830",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-metrics.run.json",
+            "sha256": "3d0d04aa70736844f559fe2cc2e31648805123b08f79c8920fc4b9897d7983b6",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-metrics.json",
+            "sha256": "c78a4942b6937a2e0ef6b7ed4d2023b2a34259f868a263849f076536dcfd44d8",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 143,
+          "survived": 0,
+          "demonstrably_equivalent": 1,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-families.mutation.json",
+            "sha256": "9e55fb039248fceb7834741169601ad17e6856b228729dded17f23553ac71107",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 144 mutants"
           }
         }
       }
