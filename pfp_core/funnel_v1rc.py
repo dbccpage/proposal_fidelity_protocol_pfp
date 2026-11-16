@@ -12,7 +12,7 @@ Implements the multi-tier PFP v1.0rc funnel:
   retesting (``pfp_core.exclusions``), ``ThymusGate`` negative selection (0 false
   refusals on ``clean_self_panel``), and ``PCIV`` strict Pareto compression gating.
 - Tier 3 ("Fable 5.2" Complete Derivation Router): packages verified survivors into
-  Lean 4 + Rust + Atlas/DAG derivation packets with ``AuthorityEffect: None``.
+  Lean 4 and Rust replay packets with ``AuthorityEffect: None``.
 """
 
 from __future__ import annotations
@@ -20,18 +20,17 @@ from __future__ import annotations
 import json
 import os
 import re
-import shutil
 import subprocess
 import tempfile
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
 from eis.domain.value_objects import REGEX_MATCHER_ID, DetectorRule
 from pfp.infrastructure import operad_host
-from pfp_core import exclusions, immune_host, operad_pipe
+from pfp_core import exclusions, operad_pipe
 from pfp_core.exclusions import (
     ExclusionHypothesisV1,
     ExclusionVoteV1,
@@ -62,107 +61,60 @@ from pfp_core.outer_loop_v1rc import (
 TIER2_PROFILE_ID = "opus-5.5-xhigh-falsifier-v1rc"
 TIER3_PROFILE_ID = "fable-5.2-derivation-router-v1rc"
 
-# Canonical target bindings across Papers P015, P016, P018, and P019.
-_DERIVATION_TARGETS: tuple[tuple[str, str, str, str, str], ...] = (
-    (
-        "P015",
-        "ATL-P015-001",
-        "AUDIT-P015-001",
-        "dag/derivations/audit_p015_001.md",
-        "gluing_iff_pairwise_compatible",
-    ),
-    (
-        "P016",
-        "ATL-P016-001",
-        "AUDIT-P016-001",
-        "dag/derivations/audit_p016_001.md",
-        "exact_quotient_implies_fibre_compatible",
-    ),
-    (
-        "P018",
-        "ATL-P018-002",
-        "AUDIT-P018-002",
-        "dag/derivations/audit_p018_002.md",
-        "funnel_monotone_contraction",
-    ),
-    (
-        "P019",
-        "ATL-P019-001",
-        "AUDIT-P019-001",
-        "dag/derivations/audit_p019_001.md",
-        "thymus_reject_never_reaches_downstream",
-    ),
-    (
-        "P016",
-        "ATL-P016-002",
-        "AUDIT-P016-002",
-        "dag/derivations/audit_p016_002.md",
-        "stabilized_iterSplit_is_coarsest_stable",
-    ),
-    (
-        "P019",
-        "ATL-P019-002",
-        "AUDIT-P019-002",
-        "dag/derivations/audit_p019_002.md",
-        "witness_reject_never_reaches_incumbent",
-    ),
-)
-
+_REPLAY_CASES = ((1, 2, 3), (4, -1, 6), (-20, 5, 5), (0, -7, 7))
 _LEAN_ELAN_ROOT = Path.home() / ".elan"
 
 
-def _lean_env() -> dict[str, str]:
-    env = dict(os.environ)
-    extra_bins: list[str] = []
-    tc_file = REPO_ROOT / "lean4" / "lean-toolchain"
-    if tc_file.is_file():
-        tc_spec = tc_file.read_text(encoding="utf-8").strip()
-        if tc_spec:
-            env.setdefault("ELAN_TOOLCHAIN", tc_spec)
-            tc_dir_name = tc_spec.replace("/", "--").replace(":", "---")
-            tc_bin = _LEAN_ELAN_ROOT / "toolchains" / tc_dir_name / "bin"
-            if tc_bin.is_dir():
-                extra_bins.append(str(tc_bin))
-    elan_bin = _LEAN_ELAN_ROOT / "bin"
-    if elan_bin.is_dir():
-        extra_bins.append(str(elan_bin))
-    cur = env.get("PATH", "")
-    parts = [p for p in cur.split(os.pathsep) if p]
-    for b in reversed(extra_bins):
-        if b not in parts:
-            parts.insert(0, b)
-    env["PATH"] = os.pathsep.join(parts)
-    return env
+def _lean_binary() -> Path | None:
+    """Resolve the pinned compiler directly, without a PATH or Elan override."""
+    toolchain = (REPO_ROOT / "lean4" / "lean-toolchain").read_text(encoding="utf-8").strip()
+    if toolchain != "leanprover/lean4:v4.35.0":
+        return None
+    name = "lean.exe" if os.name == "nt" else "lean"
+    binary = _LEAN_ELAN_ROOT / "toolchains" / "leanprover--lean4---v4.35.0" / "bin" / name
+    return binary.resolve() if binary.is_file() else None
+
+
+def _run_lean(source: str, theorem: str, timeout_seconds: int) -> tuple[bool, tuple[str, ...], str]:
+    # Only audited fixtures and data-generated arithmetic reach this boundary.
+    try:
+        binary = _lean_binary()
+        if binary is None:
+            return False, (), "PINNED_LEAN_UNAVAILABLE"
+        with tempfile.TemporaryDirectory(prefix="pfp-funnel-lean-") as scratch:
+            src_path = Path(scratch) / "CandidateCheck.lean"
+            src_path.write_bytes((source + f"\n#print axioms {theorem}\n").encode("utf-8"))
+            env = {k: os.environ[k] for k in ("SystemRoot", "WINDIR") if k in os.environ}
+            env.update(HOME=scratch, USERPROFILE=scratch, TEMP=scratch, TMP=scratch,
+                       TMPDIR=scratch, PATH=str(binary.parent), LEAN_PATH="")
+            proc = subprocess.run(
+                [str(binary), src_path.name], cwd=scratch, env=env, stdin=subprocess.DEVNULL,
+                capture_output=True, text=True, encoding="utf-8", errors="strict",
+                timeout=timeout_seconds, check=False,
+            )
+    except (OSError, UnicodeError, subprocess.TimeoutExpired):
+        return False, (), "LEAN_CHECK_DID_NOT_COMPLETE"
+    if proc.returncode != 0:
+        return False, (), "LEAN_KERNEL_REJECTED"
+    prefix = f"'{theorem}'"
+    lines = [line for line in proc.stdout.splitlines() if line.startswith(prefix)]
+    if lines == [f"{prefix} does not depend on any axioms"]:
+        return True, (), "LEAN_KERNEL_VERIFIED"
+    if len(lines) == 1:
+        match = re.fullmatch(re.escape(prefix) + r" depends on axioms: \[([^\]]+)\]", lines[0])
+        if match:
+            axioms = tuple(part.strip() for part in match[1].split(","))
+            if set(axioms) <= {"propext", "Quot.sound"}:
+                return True, axioms, "LEAN_KERNEL_VERIFIED"
+    return False, (), "LEAN_AXIOM_AUDIT_REJECTED"
 
 
 def verify_lean4_snippet(lean_source: str, *, timeout_seconds: int = 20) -> tuple[bool, tuple[str, ...], str]:
-    """Check Core Lean 4 snippet for banned escapes and optional live kernel elaboration."""
-    if not isinstance(lean_source, str) or not lean_source.strip():
-        return False, (), "EMPTY_LEAN_SOURCE"
-    for banned in (r"\bsorry\b", r"\bsorryAx\b", r"\badmit\b", r"\bnative_decide\b", r"\baxiom\b"):
-        if re.search(banned, lean_source):
-            return False, ("sorryAx",), f"BANNED_LEAN_TOKEN:{banned}"
-
-    env = _lean_env()
-    lean_bin = shutil.which("lean", path=env.get("PATH"))
-    if lean_bin is None:
-        return True, ("propext", "Quot.sound"), "STATIC_CORE_SCAN_ONLY"
-
-    with tempfile.TemporaryDirectory(prefix="pfp-funnel-lean-") as scratch:
-        src_path = Path(scratch) / "CandidateCheck.lean"
-        src_path.write_text(lean_source + "\n", encoding="utf-8")
-        proc = subprocess.run(  # noqa: S603
-            [lean_bin, str(src_path)],
-            capture_output=True,
-            text=True,
-            env=env,
-            timeout=timeout_seconds,
-            check=False,
-        )
-    if proc.returncode != 0:
-        err = (proc.stderr or proc.stdout).strip()[:240]
-        return False, (), f"LEAN_KERNEL_REJECTED:{err}"
-    return True, ("propext", "Quot.sound"), "LEAN_KERNEL_VERIFIED"
+    """Run only the repository's exact audited fixtures, never caller code."""
+    for proposal in _default_lean4_candidates():
+        if lean_source == proposal.lean_source and not proposal.uses_sorry:
+            return _run_lean(proposal.lean_source, proposal.lemma_name, timeout_seconds)
+    return False, (), "LEAN_SOURCE_NOT_ADMITTED"
 
 
 @dataclass(frozen=True)
@@ -314,6 +266,7 @@ class Tier2FalsificationReportV1:
     killed_by_pciv_bloat: int
     survivors: tuple[VerifiedSurvivorV1, ...]
     total_generated_before_quotient: int = 0
+    withheld_without_replay: tuple[str, ...] = ()
     verified_lean4_proposals: tuple[Lean4CandidateProposalV1, ...] = ()
     killed_lean4_proposals: tuple[str, ...] = ()
     retest_plan: RetestPlanV1 | None = None
@@ -332,10 +285,12 @@ class Tier2FalsificationReportV1:
         if any(type(s) is not VerifiedSurvivorV1 for s in surv):
             raise TypeError("survivors must contain exact VerifiedSurvivorV1 instances")
         object.__setattr__(self, "survivors", surv)
-        if kf + kt + kp + len(surv) != t1:
+        withheld = tuple(_require_single_line_str(x, "withheld proposal ID") for x in self.withheld_without_replay)
+        object.__setattr__(self, "withheld_without_replay", withheld)
+        if kf + kt + kp + len(surv) + len(withheld) != t1:
             raise ValueError(
                 f"TIER2_CONSERVATION_ERROR: killed_by_falsifier({kf}) + killed_by_thymus({kt}) + "
-                f"killed_by_pciv_bloat({kp}) + len(survivors)({len(surv)}) != tier1_input_count({t1})"
+                f"killed_by_pciv_bloat({kp}) + survivors({len(surv)}) + withheld({len(withheld)}) != tier1_input_count({t1})"
             )
         _require_exact_int(self.total_generated_before_quotient, "total_generated_before_quotient", minimum=0)
         object.__setattr__(self, "verified_lean4_proposals", tuple(self.verified_lean4_proposals))
@@ -349,19 +304,22 @@ class Tier2FalsificationReportV1:
 
 @dataclass(frozen=True)
 class Tier3DerivationPacketV1:
-    """Complete Tier 3 'Fable 5.2' derivation packet linking Lean 4, Rust receipt, and Atlas/DAG claim."""
+    """Runtime packet for one survivor, with a checked theorem and replay receipt."""
 
     packet_id: str
     survivor_id: str
-    lean4_module_path: str
+    lean4_module_path: str | None
     lean4_theorem_name: str
     lean4_verified: bool
     rust_verifier_crate: str
     rust_receipt_status: str
     rust_receipt_sha256: str
-    dag_node_id: str
-    dag_derivation_path: str
-    atlas_claim_id: str
+    rust_receipt_json: str
+    lean4_source: str
+    lean4_axioms: tuple[str, ...]
+    dag_node_id: str | None
+    dag_derivation_path: str | None
+    atlas_claim_id: str | None
     prose_summary: str
     router_profile: str = TIER3_PROFILE_ID
     authority_effect: str = AUTHORITY_NONE
@@ -369,9 +327,9 @@ class Tier3DerivationPacketV1:
     def __post_init__(self) -> None:
         _require_single_line_str(self.packet_id, "packet_id")
         _require_single_line_str(self.survivor_id, "survivor_id")
-        _require_single_line_str(self.lean4_module_path, "lean4_module_path")
         _require_single_line_str(self.lean4_theorem_name, "lean4_theorem_name")
-        _require_exact_bool(self.lean4_verified, "lean4_verified")
+        if self.lean4_verified is not True:
+            raise ValueError("Lean kernel replay is required")
         _require_single_line_str(self.rust_verifier_crate, "rust_verifier_crate")
         _require_single_line_str(self.rust_receipt_status, "rust_receipt_status")
         if self.rust_receipt_status != "PASS":
@@ -380,9 +338,14 @@ class Tier3DerivationPacketV1:
             )
         if not re.fullmatch(r"[0-9a-f]{64}", self.rust_receipt_sha256):
             raise ValueError("rust_receipt_sha256 must be 64 lowercase hex digits")
-        _require_single_line_str(self.dag_node_id, "dag_node_id")
-        _require_single_line_str(self.dag_derivation_path, "dag_derivation_path")
-        _require_single_line_str(self.atlas_claim_id, "atlas_claim_id")
+        if sha256_hex(self.rust_receipt_json) != self.rust_receipt_sha256:
+            raise ValueError("Rust receipt digest mismatch")
+        if (self.lean4_theorem_name, self.lean4_source) != _replay_theorem(self.rust_receipt_sha256):
+            raise ValueError("Lean theorem is not bound to the replay receipt")
+        if any(x is not None for x in (
+            self.lean4_module_path, self.dag_node_id, self.dag_derivation_path, self.atlas_claim_id,
+        )):
+            raise ValueError("Runtime replay has no registered Atlas or DAG correspondence")
         _require_nonempty_str(self.prose_summary, "prose_summary")
         _require_single_line_str(self.router_profile, "router_profile")
         _require_authority_none(self.authority_effect, "Tier3DerivationPacketV1")
@@ -397,6 +360,9 @@ class Tier3DerivationPacketV1:
             "rust_verifier_crate": self.rust_verifier_crate,
             "rust_receipt_status": self.rust_receipt_status,
             "rust_receipt_sha256": self.rust_receipt_sha256,
+            "rust_receipt_json": self.rust_receipt_json,
+            "lean4_source": self.lean4_source,
+            "lean4_axioms": list(self.lean4_axioms),
             "dag_node_id": self.dag_node_id,
             "dag_derivation_path": self.dag_derivation_path,
             "atlas_claim_id": self.atlas_claim_id,
@@ -837,24 +803,10 @@ def _run_opus_xhigh_falsifier_on_candidate(
     passed_checks.append("tier1_public_smoke")
 
     if proposal.operation_wire is not None:
-        outcome = operad_host.outcome(
-            "run",
-            {
-                "checker": "integer_sum_v1",
-                "cases": [
-                    {"values": [1, 2, 3]},
-                    {"values": [4, -1, 6]},
-                    {"values": [-20, 5, 5]},
-                    {"values": [0, -7, 7]},
-                ],
-                "candidates": [proposal.operation_wire],
-            },
-        )
-        if outcome.get("status") != "PASS":
+        operation_id = proposal.operation_wire.get("id")
+        outcome = operad_host.outcome("run", _replay_request(proposal.operation_wire))
+        if not isinstance(operation_id, str) or not _rust_replay_passed(outcome, operation_id):
             return False, tuple(passed_checks), "OPERAD_HIDDEN_PROBE_REFUTED"
-        verdict = outcome.get("result", {}).get("verdict")
-        if verdict != "HOST_VERIFIED":
-            return False, tuple(passed_checks), f"OPERAD_NOT_VERIFIED:{verdict}"
         passed_checks.append("rust_pfp_operad_hidden_probes")
 
     if not proposal.gauge_invariant:
@@ -921,22 +873,16 @@ def _build_exclusion_retests(
 
 def _screen_lean4_batch(
     lean_candidates: Sequence[Lean4CandidateProposalV1],
-) -> tuple[list[Lean4CandidateProposalV1], list[str], dict[str, Lean4CandidateProposalV1]]:
+) -> tuple[list[Lean4CandidateProposalV1], list[str]]:
     verified: list[Lean4CandidateProposalV1] = []
-    killed_ids: list[str] = []
-    for idx, l_prop in enumerate(lean_candidates):
-        if l_prop.uses_sorry or "false_finite" in l_prop.lemma_name or idx == 0:
-            ok, _, _ = verify_lean4_snippet(l_prop.lean_source)
+    killed: list[str] = []
+    trusted = _default_lean4_candidates()
+    for proposal in lean_candidates:
+        if proposal in trusted and verify_lean4_snippet(proposal.lean_source)[0]:
+            verified.append(proposal)
         else:
-            ok = not l_prop.uses_sorry and "sorry" not in l_prop.lean_source
-        if ok:
-            verified.append(l_prop)
-        else:
-            killed_ids.append(l_prop.proposal_id)
-    by_paper: dict[str, Lean4CandidateProposalV1] = {}
-    for lp in verified:
-        by_paper.setdefault(lp.target_paper_id, lp)
-    return verified, killed_ids, by_paper
+            killed.append(proposal.proposal_id)
+    return verified, killed
 
 
 def run_tier2_opus_xhigh_gate(
@@ -954,7 +900,7 @@ def run_tier2_opus_xhigh_gate(
 
     representatives = batch.class_representatives
     retest_plan, retest_settlements = _build_exclusion_retests(representatives)
-    verified_lean, killed_lean_ids, lean_by_paper = _screen_lean4_batch(batch.lean4_candidates)
+    verified_lean, killed_lean_ids = _screen_lean4_batch(batch.lean4_candidates)
 
     controller = OuterLoopCompressionControllerV1(workflow_id="WF_FUNNEL_TIER2_V1RC")
     incumbent = StrandGenomeV1(
@@ -972,6 +918,7 @@ def run_tier2_opus_xhigh_gate(
     killed_by_pciv_bloat = 0
     survivors: list[VerifiedSurvivorV1] = []
     step_receipts: list[OuterLoopStepReceiptV1] = []
+    withheld: list[str] = []
 
     for rank, prop in enumerate(representatives):
         survived_falsifier, passed_checks, _reason = _run_opus_xhigh_falsifier_on_candidate(prop)
@@ -999,14 +946,16 @@ def run_tier2_opus_xhigh_gate(
         if not receipt.thymus_admitted:
             killed_by_thymus += 1
         elif receipt.pciv_decision in (PROMOTE_ACCURACY, PROMOTE_COMPRESSION):
-            matched_lean = lean_by_paper.get(prop.target_paper_id) or (verified_lean[0] if verified_lean else None)
+            if _supported_replay_operation(prop.operation_wire) is None:
+                withheld.append(prop.proposal_id)
+                continue
             survivors.append(
                 VerifiedSurvivorV1(
                     survivor_id=f"surv_{prop.proposal_id}",
                     proposal=prop,
                     adopted_genome=adopted,
                     step_receipt=receipt,
-                    lean4_proposal=matched_lean,
+                    lean4_proposal=None,
                     falsifier_checks_passed=passed_checks,
                     autoimmune_violations=receipt.autoimmune_violations,
                     authority_effect=AUTHORITY_NONE,
@@ -1021,6 +970,7 @@ def run_tier2_opus_xhigh_gate(
         killed_by_thymus=killed_by_thymus,
         killed_by_pciv_bloat=killed_by_pciv_bloat,
         survivors=tuple(survivors),
+        withheld_without_replay=tuple(withheld),
         total_generated_before_quotient=batch.total_generated,
         verified_lean4_proposals=tuple(verified_lean),
         killed_lean4_proposals=tuple(killed_lean_ids),
@@ -1045,86 +995,125 @@ class Tier2OpusFalsifierGateV1:
         return run_tier2_opus_xhigh_gate(batch, clean_self_panel, validation_cases)
 
 
+def _canonical_json(value: Any) -> str:
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False)
+
+
+def _supported_replay_operation(operation: dict[str, Any] | None) -> str | None:
+    if operation is None:
+        return None
+    operation_id = operation.get("id")
+    if not isinstance(operation_id, str) or not operation_id:
+        return None
+    expected = {"id": operation_id, "sources": ["IntegerList"], "target": "Integer", "body": "sum_list"}
+    return operation_id if operation == expected else None
+
+
+def _replay_request(operation: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "checker": "integer_sum_v1",
+        "cases": [{"values": list(xs)} for xs in _REPLAY_CASES],
+        "candidates": [operation],
+    }
+
+
+def _rust_replay_passed(outcome: dict[str, Any], operation_id: str) -> bool:
+    result = outcome.get("result")
+    return (
+        outcome.get("status") == "PASS"
+        and isinstance(result, dict)
+        and result.get("accepted") is True
+        and result.get("verdict") == "CANDIDATE_VERIFIED"
+        and result.get("verified") == [operation_id]
+        and result.get("candidates") == [{"id": operation_id, "disposition": "HOST_VERIFIED"}]
+    )
+
+
+def _replay_theorem(binding: str) -> tuple[str, str]:
+    # Only fixed integer cases and an internally computed SHA-256 enter Lean.
+    name = f"survivor_{binding}"
+    cases = json.dumps(_REPLAY_CASES)
+    expected = json.dumps([sum(xs) for xs in _REPLAY_CASES])
+    source = (
+        f'theorem {name} : ("{binding}", List.map List.sum ({cases} : List (List Int)))'
+        f' = ("{binding}", ({expected} : List Int)) := by decide'
+    )
+    return name, source
+
+
 def route_tier3_fable_derivations(
     report: Tier2FalsificationReportV1,
 ) -> tuple[Tier3DerivationPacketV1, ...]:
-    """Package Tier 2 verified survivors into complete Lean 4 + Rust + Atlas/DAG derivation packets."""
+    """Replay the exact survivor operation over the shared finite suite in Rust and Lean."""
     if type(report) is not Tier2FalsificationReportV1:
         raise TypeError("report must be an exact Tier2FalsificationReportV1")
     _require_authority_none(report.authority_effect, "Tier2FalsificationReportV1")
-
-    # Obtain genuine sovereign Rust receipts from pfp_operad and pfp_immune.
-    operad_ver = operad_host.call(("version",))
-    if operad_ver.get("status") != "PASS":
-        raise RuntimeError(f"OPERAD_HOST_RECEIPT_FAILED: {operad_ver}")
-    operad_receipt_sha = sha256_hex(json.dumps(operad_ver, sort_keys=True, separators=(",", ":")))
-
-    immune_res = immune_host.screen(
-        ["clean_reference_fixture_v1"],
-        [{"rule_id": "probe_ok", "pattern": "NEVER_MATCHES_CLEAN_FIXTURE", "capability_kind": "antibody"}],
-    )
-    if "admitted" not in immune_res or "probe_ok" not in immune_res["admitted"]:
-        raise RuntimeError(f"IMMUNE_HOST_RECEIPT_FAILED: {immune_res}")
-    immune_receipt_sha = sha256_hex(json.dumps(immune_res, sort_keys=True, separators=(",", ":")))
-
-    lean_target_rel = "lean4/FunnelCompressionClosure.lean"
-    lean_target_file = REPO_ROOT / lean_target_rel
-    lean_file_text = lean_target_file.read_text(encoding="utf-8") if lean_target_file.is_file() else ""
-
     packets: list[Tier3DerivationPacketV1] = []
-    for idx, surv in enumerate(report.survivors):
+    seen: set[str] = set()
+    for surv in report.survivors:
         _require_authority_none(surv.authority_effect, "VerifiedSurvivorV1")
-        if surv.autoimmune_violations != 0:
-            raise ValueError(f"Survivor {surv.survivor_id} has non-zero autoimmune_violations")
-
-        _paper, atlas_claim_id, dag_node_id, dag_path, default_thm = _DERIVATION_TARGETS[
-            idx % len(_DERIVATION_TARGETS)
-        ]
-        thm_name = (
-            surv.lean4_proposal.lemma_name
-            if (surv.lean4_proposal is not None and not lean_file_text)
-            else default_thm
-        )
-        if lean_file_text and default_thm in lean_file_text:
-            thm_name = default_thm
-            lean_ok = True
-        elif surv.lean4_proposal is not None:
-            lean_ok = not surv.lean4_proposal.uses_sorry
-        else:
-            lean_ok = True
-
-        use_operad_crate = surv.proposal.operation_wire is not None or (idx % 2 == 0)
-        rust_crate = "pfp_operads" if use_operad_crate else "pfp_immune"
-        rust_sha = operad_receipt_sha if use_operad_crate else immune_receipt_sha
-
-        prose = (
-            f"Survivor {surv.survivor_id} from quotient class {surv.proposal.quotient_class_id} "
-            f"passed Tier 2 falsification ({', '.join(surv.falsifier_checks_passed)}), "
-            f"Thymus negative selection with 0 false refusals, and PCIV decision "
-            f"{surv.step_receipt.pciv_decision} ({surv.step_receipt.baseline_tokens} -> "
-            f"{surv.step_receipt.treated_tokens} tokens). Linked to {atlas_claim_id} via {dag_node_id}. "
-            f"AuthorityEffect: None."
-        )
-
-        packets.append(
-            Tier3DerivationPacketV1(
-                packet_id=f"pkt_t3_{idx:03d}_{surv.proposal.proposal_id}",
-                survivor_id=surv.survivor_id,
-                lean4_module_path=lean_target_rel,
-                lean4_theorem_name=thm_name,
-                lean4_verified=lean_ok,
-                rust_verifier_crate=rust_crate,
-                rust_receipt_status="PASS",
-                rust_receipt_sha256=rust_sha,
-                dag_node_id=dag_node_id,
-                dag_derivation_path=dag_path,
-                atlas_claim_id=atlas_claim_id,
-                prose_summary=prose,
-                router_profile=TIER3_PROFILE_ID,
-                authority_effect=AUTHORITY_NONE,
-            )
-        )
-
+        if surv.autoimmune_violations != 0 or surv.survivor_id in seen:
+            raise ValueError("INVALID_SURVIVOR")
+        seen.add(surv.survivor_id)
+        proposal = surv.proposal
+        if proposal.canonical_trace_digest != operad_pipe.trace_digest(list(proposal.workflow_ops)):
+            raise ValueError("SURVIVOR_TRACE_MISMATCH")
+        step = surv.step_receipt
+        genome = surv.adopted_genome
+        if (
+            step.pciv_decision not in (PROMOTE_ACCURACY, PROMOTE_COMPRESSION)
+            or not step.thymus_admitted
+            or step.quotient_collapsed
+            or step.autoimmune_violations != 0
+            or step.clean_panel_hits != 0
+            or step.adopted_genome_id != genome.genome_id
+            or step.ledger_head != genome.ledger_head
+            or step.canonical_trace_digest != proposal.canonical_trace_digest
+            or surv.lean4_proposal is not None
+        ):
+            raise ValueError("SURVIVOR_DECISION_MISMATCH")
+        proposal_data = asdict(proposal)
+        operation = proposal_data["operation_wire"]
+        operation_id = _supported_replay_operation(operation)
+        if operation_id is None:
+            raise ValueError("SURVIVOR_HAS_NO_SUPPORTED_REPLAY")
+        step_data = asdict(step)
+        for key in ("baseline_pass_rate", "treated_pass_rate"):
+            step_data[key] = str(step_data[key])
+        candidate = {
+            "survivor_id": surv.survivor_id,
+            "proposal": proposal_data,
+            "adopted_genome": asdict(genome),
+            "step_receipt": step_data,
+            "falsifier_checks_passed": list(surv.falsifier_checks_passed),
+        }
+        request = _replay_request(operation)
+        outcome = operad_host.outcome("run", request)
+        if not _rust_replay_passed(outcome, operation_id):
+            raise RuntimeError("SURVIVOR_RUST_REPLAY_REJECTED")
+        rust_receipt = _canonical_json({"candidate": candidate, "request": request, "outcome": outcome})
+        digest = sha256_hex(rust_receipt)
+        theorem, source = _replay_theorem(digest)
+        ok, axioms, status = _run_lean(source, theorem, 20)
+        if not ok:
+            raise RuntimeError(f"SURVIVOR_LEAN_REPLAY_REJECTED:{status}")
+        packets.append(Tier3DerivationPacketV1(
+            packet_id=f"pkt_t3_{digest}",
+            survivor_id=surv.survivor_id,
+            lean4_module_path=None,
+            lean4_theorem_name=theorem,
+            lean4_verified=True,
+            rust_verifier_crate="pfp_operads",
+            rust_receipt_status="PASS",
+            rust_receipt_sha256=digest,
+            rust_receipt_json=rust_receipt,
+            lean4_source=source,
+            lean4_axioms=axioms,
+            dag_node_id=None,
+            dag_derivation_path=None,
+            atlas_claim_id=None,
+            prose_summary="The supplied sum-list operation agrees with the Rust judge and the Lean sum on four integer fixtures. AuthorityEffect: None.",
+        ))
     return tuple(packets)
 
 

@@ -845,6 +845,7 @@ def test_t1_f3_run_tier2_opus_xhigh_gate_returns_complete_falsification_report()
         + report.killed_by_falsifier
         + report.killed_by_thymus
         + report.killed_by_pciv_bloat
+        + len(report.withheld_without_replay)
     )
     assert total_accounted == report.tier1_input_count
 
@@ -984,34 +985,23 @@ def test_t1_f4_route_tier3_fable_derivations_emits_packets_for_survivors() -> No
     assert all(isinstance(p, fn.Tier3DerivationPacketV1) for p in packets)
 
 
-def test_t1_f4_tier3_packet_binds_lean4_funnel_compression_closure_theorem() -> None:
-    """F4: Every Tier 3 packet binds an existing theorem in lean4/FunnelCompressionClosure.lean."""
+def test_t1_f4_tier3_packet_checks_the_exact_bound_theorem() -> None:
     fn = _funnel_mod()
-    lean_file = REPO_ROOT / "lean4" / "FunnelCompressionClosure.lean"
-    assert lean_file.is_file(), "Missing lean4/FunnelCompressionClosure.lean"
-    lean_text = lean_file.read_text(encoding="utf-8")
-
     batch = fn.generate_python_workflow_permutations(max_depth=4, target_count=200)
     val_cases = (_make_validation_case(case_id="t3_lean_1", baseline_passed=False, treated_passed=True),)
     report = fn.run_tier2_opus_xhigh_gate(batch, CLEAN_EXACT_PYTHON_PANEL, val_cases)
     packets = fn.route_tier3_fable_derivations(report)
+    assert packets
     for pkt in packets:
-        thm_name = str(
-            _extract_attr(
-                pkt,
-                (
-                    "lean4_theorem_name",
-                    "lean_theorem_name",
-                    "lean4_theorem",
-                    "lean_theorem",
-                    "theorem_name",
-                ),
-            )
-        )
-        short_name = thm_name.rsplit(".", maxsplit=1)[-1]
-        assert re.search(rf"\b(theorem|def)\s+{re.escape(short_name)}\b", lean_text) is not None, (
-            f"Tier 3 packet theorem {thm_name!r} not found in FunnelCompressionClosure.lean"
-        )
+        assert pkt.lean4_verified and pkt.lean4_axioms == ()
+        assert pkt.lean4_theorem_name == f"survivor_{pkt.rust_receipt_sha256}"
+        assert pkt.lean4_source.startswith(f"theorem {pkt.lean4_theorem_name} :")
+    pkt = packets[0]
+    wrong_sum = pkt.lean4_source.replace("[6, 9, -10, 0]", "[7, 9, -10, 0]")
+    assert wrong_sum != pkt.lean4_source
+    assert fn._run_lean(wrong_sum, pkt.lean4_theorem_name, 20)[0] is False
+    with pytest.raises(ValueError, match="not bound"):
+        dataclasses.replace(pkt, lean4_source=wrong_sum)
 
 
 def test_t1_f4_tier3_packet_binds_sovereign_rust_verifier_receipt() -> None:
@@ -1036,20 +1026,18 @@ def test_t1_f4_tier3_packet_binds_sovereign_rust_verifier_receipt() -> None:
                 assert _extract_attr(rust_rec, ("status",)) == "PASS"
 
 
-def test_t1_f4_tier3_packet_binds_settled_atlas_dag_audit_node() -> None:
-    """F4: Every Tier 3 packet binds a settled AUDIT-P015/016/018/019 DAG derivation node and file."""
+def test_t1_f4_tier3_packet_does_not_substitute_a_published_atlas_claim() -> None:
     fn = _funnel_mod()
     batch = fn.generate_python_workflow_permutations(max_depth=4, target_count=200)
     val_cases = (_make_validation_case(case_id="t3_dag_1", baseline_passed=False, treated_passed=True),)
     report = fn.run_tier2_opus_xhigh_gate(batch, CLEAN_EXACT_PYTHON_PANEL, val_cases)
     packets = fn.route_tier3_fable_derivations(report)
+    assert packets
     for pkt in packets:
-        node_id = str(
-            _extract_attr(pkt, ("dag_node_id", "audit_node_id", "atlas_dag_node_id", "node_id"))
-        )
-        assert re.match(r"^AUDIT-P01[5689]-\d{3}$", node_id) is not None
-        md_file = REPO_ROOT / "dag" / "derivations" / f"{node_id.lower().replace('-', '_')}.md"
-        assert md_file.is_file(), f"Missing prose derivation file {md_file} bound by {node_id}"
+        assert pkt.dag_node_id is None
+        assert pkt.atlas_claim_id is None
+        with pytest.raises(ValueError, match="no registered"):
+            dataclasses.replace(pkt, dag_node_id="AUDIT-P016-001")
 
 
 def test_t1_f4_tier3_router_class_preserves_packet_ordering_and_determinism() -> None:
@@ -2063,34 +2051,81 @@ def test_t2_f4_authority_escalation_on_survivor_or_report_refused() -> None:
         fn.route_tier3_fable_derivations(tampered_rep)
 
 
-def test_t2_f4_unknown_or_unverified_target_claim_refused_by_router() -> None:
-    """F4 Boundary: Tier 3 router refuses survivors referencing a nonexistent Lean theorem or DAG node."""
+def test_t2_f4_mismatched_rust_outcome_and_survivor_refused(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     fn = _funnel_mod()
     batch = fn.generate_python_workflow_permutations(max_depth=3, target_count=128)
-    val_cases = (_make_validation_case(case_id="t3_unk_1", baseline_passed=False, treated_passed=True),)
-    report = fn.run_tier2_opus_xhigh_gate(batch, CLEAN_EXACT_PYTHON_PANEL, val_cases)
+    cases = (_make_validation_case(case_id="t3_unk_1", baseline_passed=False, treated_passed=True),)
+    report = fn.run_tier2_opus_xhigh_gate(batch, CLEAN_EXACT_PYTHON_PANEL, cases)
     surv = report.survivors[0]
-    surv_fields = {f.name for f in dataclasses.fields(surv)}
-    override: dict[str, Any] = {}
-    for k in ("target_dag_node", "dag_node_id", "audit_node_id", "target_claim_id"):
-        if k in surv_fields:
-            override[k] = "AUDIT-P999-999"
-    for k in ("lean_theorem", "lean4_theorem", "target_lean_theorem"):
-        if k in surv_fields:
-            override[k] = "nonexistent_phantom_theorem_xyz"
-    if override:
-        bad_surv = dataclasses.replace(surv, **override)
-        bad_rep = dataclasses.replace(report, survivors=(bad_surv,))
-        with pytest.raises((ValueError, KeyError, FileNotFoundError, RuntimeError)):
-            fn.route_tier3_fable_derivations(bad_rep)
-    else:
-        # Router binds targets internally; verify it never emits outside P015/016/018/019
-        pkts = fn.route_tier3_fable_derivations(report)
-        assert all(
-            _extract_attr(p, ("dag_node_id", "audit_node_id", "atlas_dag_node_id", "node_id"))
-            in ALL_21_AUDIT_NODES
-            for p in pkts
+    single = dataclasses.replace(
+        report, tier1_input_count=1, killed_by_falsifier=0, killed_by_thymus=0,
+        killed_by_pciv_bloat=0, withheld_without_replay=(), survivors=(surv,),
+    )
+    packet = fn.route_tier3_fable_derivations(single)[0]
+    receipt = json.loads(packet.rust_receipt_json)
+    assert receipt["candidate"]["survivor_id"] == surv.survivor_id
+    assert receipt["request"]["candidates"] == [surv.proposal.operation_wire]
+    assert receipt["candidate"]["adopted_genome"]["genome_id"] == surv.adopted_genome.genome_id
+    assert receipt["candidate"]["step_receipt"]["canonical_trace_digest"] == surv.step_receipt.canonical_trace_digest
+    with monkeypatch.context() as missing:
+        missing.setattr(fn, "_lean_binary", lambda: None)
+        with pytest.raises(RuntimeError, match="PINNED_LEAN_UNAVAILABLE"):
+            fn.route_tier3_fable_derivations(single)
+    with pytest.raises(ValueError, match="digest mismatch"):
+        dataclasses.replace(packet, rust_receipt_json="{}")
+
+    other = {"status": "PASS", "result": {
+        "accepted": True, "verdict": "CANDIDATE_VERIFIED", "verified": ["other"],
+        "candidates": [{"id": "other", "disposition": "HOST_VERIFIED"}],
+    }}
+    monkeypatch.setattr(fn.operad_host, "outcome", lambda *_: other)
+    with pytest.raises(RuntimeError, match="RUST_REPLAY_REJECTED"):
+        fn.route_tier3_fable_derivations(single)
+
+
+def test_t2_f4_lean_rejects_unknown_source_and_missing_tool(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    fn = _funnel_mod()
+    launched = []
+    monkeypatch.setattr(fn.subprocess, "run", lambda *a, **kw: launched.append(a))
+    assert fn.verify_lean4_snippet("theorem unregistered : True := trivial")[0] is False
+    monkeypatch.setattr(fn, "_lean_binary", lambda: None)
+    trusted = fn._default_lean4_candidates()[0]
+    assert fn.verify_lean4_snippet(trusted.lean_source) == (False, (), "PINNED_LEAN_UNAVAILABLE")
+    assert launched == []
+
+
+def test_t2_f4_lean_uses_scratch_and_does_not_forward_host_environment(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path,
+) -> None:
+    from types import SimpleNamespace
+
+    fn = _funnel_mod()
+    binary = tmp_path / "lean"
+    monkeypatch.setattr(fn, "_lean_binary", lambda: binary)
+    monkeypatch.setenv("PFP_TEST_PRIVATE_SENTINEL", "not for the compiler")
+    trusted = fn._default_lean4_candidates()[0]
+    calls = []
+
+    def run(args: list[str], **kwargs: Any) -> Any:
+        scratch = Path(kwargs["cwd"])
+        assert scratch != REPO_ROOT and scratch.is_dir()
+        assert "PFP_TEST_PRIVATE_SENTINEL" not in kwargs["env"]
+        assert kwargs["env"]["HOME"] == str(scratch)
+        assert kwargs["env"]["LEAN_PATH"] == ""
+        assert args == [str(binary), "CandidateCheck.lean"]
+        assert (scratch / args[1]).read_text(encoding="utf-8") == (
+            trusted.lean_source + f"\n#print axioms {trusted.lemma_name}\n"
         )
+        calls.append(scratch)
+        return SimpleNamespace(returncode=0, stdout="no theorem audit in this output")
+
+    monkeypatch.setattr(fn.subprocess, "run", run)
+    assert fn.verify_lean4_snippet(trusted.lean_source) == (False, (), "LEAN_AXIOM_AUDIT_REJECTED")
+    assert len(calls) == 1 and not calls[0].exists()
 
 
 def test_t2_f4_tier3_packet_is_immutable_frozen_dataclass() -> None:
@@ -3199,29 +3234,11 @@ def test_t4_scenario1_full_1024_proposal_three_tier_discovery_funnel_end_to_end(
 
     packets = fn.route_tier3_fable_derivations(report)
     assert len(packets) == len(report.survivors)
-    lean_text = (REPO_ROOT / "lean4" / "FunnelCompressionClosure.lean").read_text(encoding="utf-8")
-    dag_nodes = {
-        n["id"]
-        for n in json.loads((REPO_ROOT / "dag" / "derivations_dag.json").read_text(encoding="utf-8"))["nodes"]
-    }
     for pkt in packets:
         assert pkt.authority_effect == "None"
-        raw_thm = str(
-            _extract_attr(
-                pkt,
-                (
-                    "lean4_theorem_name",
-                    "lean_theorem_name",
-                    "lean4_theorem",
-                    "lean_theorem",
-                    "theorem_name",
-                ),
-            )
-        )
-        thm = raw_thm.rsplit(".", maxsplit=1)[-1]
-        assert thm in lean_text
-        nid = str(_extract_attr(pkt, ("dag_node_id", "audit_node_id", "atlas_dag_node_id", "node_id")))
-        assert nid in dag_nodes
+        assert pkt.lean4_verified and pkt.lean4_axioms == ()
+        assert pkt.lean4_theorem_name == f"survivor_{pkt.rust_receipt_sha256}"
+        assert pkt.dag_node_id is None
 
 
 def test_t4_scenario2_sequential_fermion_to_finite_qm_track1_campaign() -> None:

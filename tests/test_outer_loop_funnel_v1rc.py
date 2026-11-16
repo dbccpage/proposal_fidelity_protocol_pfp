@@ -430,6 +430,7 @@ def test_tier2_opus_xhigh_gate_and_tier3_fable_router_preserve_zero_false_refusa
         report.killed_by_falsifier
         + report.killed_by_thymus
         + report.killed_by_pciv_bloat
+        + len(report.withheld_without_replay)
         + len(report.survivors)
         == report.tier1_input_count
     )
@@ -440,9 +441,9 @@ def test_tier2_opus_xhigh_gate_and_tier3_fable_router_preserve_zero_false_refusa
     assert len(report.retest_settlements) > 0
     assert all(s.autoimmune_violations == 0 for s in report.survivors)
 
-    ok_lean, _ax, tag = verify_lean4_snippet("theorem ok_check : 2 + 2 = 4 := by decide")
-    assert ok_lean is True
-    assert tag in ("LEAN_KERNEL_VERIFIED", "STATIC_CORE_SCAN_ONLY")
+    trusted = batch.lean4_candidates[0]
+    assert verify_lean4_snippet(trusted.lean_source) == (True, (), "LEAN_KERNEL_VERIFIED")
+    assert verify_lean4_snippet("theorem ok_check : 2 + 2 = 4 := by decide")[0] is False
 
     router = Tier3FableDerivationRouterV1()
     packets = router.route(report)
@@ -451,9 +452,9 @@ def test_tier2_opus_xhigh_gate_and_tier3_fable_router_preserve_zero_false_refusa
         assert pkt.authority_effect == "None"
         assert pkt.rust_receipt_status == "PASS"
         assert len(pkt.rust_receipt_sha256) == 64
-        assert pkt.lean4_module_path == "lean4/FunnelCompressionClosure.lean"
-        assert pkt.atlas_claim_id.startswith("ATL-P01")
-        assert pkt.dag_node_id.startswith("AUDIT-P01")
+        assert pkt.lean4_verified and pkt.lean4_axioms == ()
+        assert pkt.lean4_theorem_name == f"survivor_{pkt.rust_receipt_sha256}"
+        assert pkt.atlas_claim_id is None and pkt.dag_node_id is None
         assert FORBIDDEN_PROMOTIONAL_PATTERN.search(pkt.prose_summary) is None
 
     # Direct function entrypoints match facade behavior.
