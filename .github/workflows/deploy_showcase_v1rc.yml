@@ -90,7 +90,8 @@ jobs:
       - run: cd dist && sha256sum * > SHA256SUMS
       - env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" dist/* --draft --repo "$GITHUB_REPOSITORY" --title "omegaengine_pfp_v1.0rc" --notes "Guest CLI binaries for tag v1.0.0-rc1. Verify downloads against SHA256SUMS. AuthorityEffect: None."
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/* --draft --repo "$GITHUB_REPOSITORY" --title "omegaengine_pfp_v1.0rc" --notes "Guest CLI binaries for tag v1.0.0-rc1. Verify downloads against SHA256SUMS. AuthorityEffect: None."
 
   deploy:
     needs: guest-site
