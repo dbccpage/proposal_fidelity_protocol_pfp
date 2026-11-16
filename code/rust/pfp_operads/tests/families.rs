@@ -56,6 +56,8 @@ fn the_host_lists_its_families_in_workflow_order() {
             {"workflow": "WF6", "name": "Dialect sweep",
              "host_check": "dialect_query_preservation_sweep"},
             {"workflow": "WF7", "name": "Typed refusal", "host_check": "typed_refusal_rank_test"},
+            {"workflow": "WF8", "name": "Staged sealed packets",
+             "host_check": "stage_seal_chain_recompute"},
             {"workflow": "WF9", "name": "Bounded check-and-repair",
              "host_check": "xor_cycle_minimal_repair"},
             {"workflow": "WF10", "name": "Local-to-global obstruction certificate",
@@ -70,6 +72,10 @@ fn the_host_lists_its_families_in_workflow_order() {
              "host_check": "hml_separator_bisimulation_check"},
             {"workflow": "WF20", "name": "Derivation loop with lift grants",
              "host_check": "structural_lift_grant_loop"},
+            {"workflow": "WF21", "name": "Structural prompt rewriting",
+             "host_check": "fenced_rewrite_exact_judge"},
+            {"workflow": "WF23", "name": "Judge-packet custody audit",
+             "host_check": "judge_packet_custody_audit"},
             {"workflow": "WF24", "name": "Pinned-token operational scratchpad",
              "host_check": "dual_holonomy_checkers"},
             {"workflow": "WF25", "name": "Hierarchical decimation",
@@ -102,7 +108,7 @@ fn the_host_lists_its_families_in_workflow_order() {
              "host_check": "sign_gauge_checkpoint_chain"},
         ]})
     );
-    assert_eq!(FAMILIES.len(), 24);
+    assert_eq!(FAMILIES.len(), 27);
 }
 
 #[test]
@@ -258,12 +264,12 @@ fn a_request_that_is_not_the_request_shape_is_refused() {
 
 #[test]
 fn a_family_this_host_does_not_check_is_refused_by_name() {
-    let request = json!({"workflow": "WF8", "task": task()}).to_string();
+    let request = json!({"workflow": "WF12", "task": task()}).to_string();
     assert_eq!(
         refusal(next(&request)),
         (
             "UNKNOWN_WORKFLOW",
-            "this host checks no family named WF8".to_owned()
+            "this host checks no family named WF12".to_owned()
         )
     );
     assert_eq!(refusal(judge(&request)).0, "UNKNOWN_WORKFLOW");

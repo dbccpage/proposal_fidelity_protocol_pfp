@@ -1,0 +1,288 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf23.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf23.rs",
+      "language": "Rust",
+      "sha256": "47c6d383322e4aeff56956be71f3c7e839710b56196f780418d09e891a4ba568"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf23-tests:v1",
+    "symbols": [
+      "sha",
+      "file_hash",
+      "files",
+      "manifest",
+      "tag",
+      "sealed",
+      "record",
+      "packet",
+      "task",
+      "request",
+      "judged",
+      "audit",
+      "with_files",
+      "with_notes",
+      "outcomes",
+      "all_but",
+      "fails",
+      "passes",
+      "leaked",
+      "malformed",
+      "the_registry_names_the_family",
+      "a_clean_packet_is_certified_with_its_digest",
+      "the_packet_is_asked_for_with_the_statement_only",
+      "a_prompt_that_carries_a_sealed_value_is_not_sent",
+      "a_manifest_in_the_reply_is_not_read",
+      "a_file_edited_after_the_manifest_fails_its_hash",
+      "a_file_the_manifest_does_not_list_fails_both_its_checks",
+      "a_file_missing_from_the_reply_fails_the_manifest_only",
+      "line_endings_do_not_change_a_files_hash",
+      "the_expected_answer_in_a_file_is_a_leak",
+      "the_answer_is_found_in_the_text_reversed",
+      "the_answer_is_found_with_white_space_taken_out",
+      "a_character_that_is_not_white_space_does_not_join_the_digits",
+      "the_answer_is_found_in_base64",
+      "digests",
+      "the_evidence_of_a_predicate_is_what_it_was_judged_on",
+      "every_kind_of_base64_digit_is_read",
+      "a_token_of_four_characters_is_read",
+      "base64_must_be_strict_to_be_read",
+      "a_token_ends_at_the_first_character_outside_the_base64_alphabet",
+      "text_that_is_not_utf8_once_decoded_is_not_a_view",
+      "the_answer_is_found_in_hex",
+      "hex_must_be_whole_bytes_to_be_read",
+      "the_answer_is_found_inside_a_longer_number",
+      "every_file_is_searched_and_the_leaks_are_listed_by_name",
+      "the_answer_is_written_as_an_integer_or_as_a_ratio",
+      "a_recorded_hash_that_is_not_the_checkers_fails_its_check",
+      "a_checker_other_than_the_recorded_one_fails_its_check",
+      "the_checker_is_hashed_with_unix_line_endings",
+      "a_line_whose_tag_is_not_the_keyed_hash_is_forged",
+      "every_forged_line_is_counted",
+      "a_line_may_be_any_value_and_a_missing_one_is_null",
+      "a_tag_is_keyed_by_the_sealed_key_and_a_zero_byte",
+      "no_output_at_all_is_not_authentic",
+      "every_predicate_is_recorded_even_after_one_fails",
+      "stdout_that_is_not_a_list_of_objects_is_malformed_after_five_predicates",
+      "a_reply_that_is_not_a_packet_is_malformed_before_any_predicate",
+      "participant_files_must_be_text",
+      "a_missing_reply_is_refused_without_a_predicate",
+      "a_sealed_part_the_host_cannot_audit_with_is_refused_before_anything_is_asked",
+      "a_task_may_have_any_fields"
+    ],
+    "owned_invariants": [
+      "Hashes and tags are SHA-256 digests the tests rebuild themselves, and decodings are worked by hand.",
+      "Each view of the answer is asserted found alone, and strict base64 and whole hex bytes asserted by what they refuse.",
+      "Each of the six predicates is asserted failing alone, and each unreadable reply and sealed part by its reason."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf23.rs",
+      "language": "Rust",
+      "sha256": "47c6d383322e4aeff56956be71f3c7e839710b56196f780418d09e891a4ba568"
+    },
+    "profile": "Non-Numeric",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 40 pass in the recorded run; the suite they belong to killed 115 of 115 eligible WF23 mutants.",
+      "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T15:22:10Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v13-test.run.json",
+        "sha256": "e95f7cbb61ec569653c33c43224a08a2dd50d966fadd2ffb10683ec9251899fb",
+        "note": "975 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-clippy.run.json",
+        "sha256": "9f3bb56911bdd12f7b66947930bf454026cdc5a5079549d88ce90dbe884870bd",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-fmt.run.json",
+        "sha256": "e211f169bda4dde79d3c9eb5aaabec93f90b2eba08ad48d08389558e8796d830",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-metrics.run.json",
+        "sha256": "1f073e9074334349e9fcb471b80bb4860fd71373d3593bc902d8fd4e46fd4f2d",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-metrics.json",
+        "sha256": "f1e599a1782ed3478232245d33bf04cab5f389770a614a7f1840bc53ca8a9209",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T15:22:14.061391Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf23.rs",
+          "language": "Rust",
+          "sha256": "47c6d383322e4aeff56956be71f3c7e839710b56196f780418d09e891a4ba568"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf23-tests:v1",
+        "symbols": [
+          "sha",
+          "file_hash",
+          "files",
+          "manifest",
+          "tag",
+          "sealed",
+          "record",
+          "packet",
+          "task",
+          "request",
+          "judged",
+          "audit",
+          "with_files",
+          "with_notes",
+          "outcomes",
+          "all_but",
+          "fails",
+          "passes",
+          "leaked",
+          "malformed",
+          "the_registry_names_the_family",
+          "a_clean_packet_is_certified_with_its_digest",
+          "the_packet_is_asked_for_with_the_statement_only",
+          "a_prompt_that_carries_a_sealed_value_is_not_sent",
+          "a_manifest_in_the_reply_is_not_read",
+          "a_file_edited_after_the_manifest_fails_its_hash",
+          "a_file_the_manifest_does_not_list_fails_both_its_checks",
+          "a_file_missing_from_the_reply_fails_the_manifest_only",
+          "line_endings_do_not_change_a_files_hash",
+          "the_expected_answer_in_a_file_is_a_leak",
+          "the_answer_is_found_in_the_text_reversed",
+          "the_answer_is_found_with_white_space_taken_out",
+          "a_character_that_is_not_white_space_does_not_join_the_digits",
+          "the_answer_is_found_in_base64",
+          "digests",
+          "the_evidence_of_a_predicate_is_what_it_was_judged_on",
+          "every_kind_of_base64_digit_is_read",
+          "a_token_of_four_characters_is_read",
+          "base64_must_be_strict_to_be_read",
+          "a_token_ends_at_the_first_character_outside_the_base64_alphabet",
+          "text_that_is_not_utf8_once_decoded_is_not_a_view",
+          "the_answer_is_found_in_hex",
+          "hex_must_be_whole_bytes_to_be_read",
+          "the_answer_is_found_inside_a_longer_number",
+          "every_file_is_searched_and_the_leaks_are_listed_by_name",
+          "the_answer_is_written_as_an_integer_or_as_a_ratio",
+          "a_recorded_hash_that_is_not_the_checkers_fails_its_check",
+          "a_checker_other_than_the_recorded_one_fails_its_check",
+          "the_checker_is_hashed_with_unix_line_endings",
+          "a_line_whose_tag_is_not_the_keyed_hash_is_forged",
+          "every_forged_line_is_counted",
+          "a_line_may_be_any_value_and_a_missing_one_is_null",
+          "a_tag_is_keyed_by_the_sealed_key_and_a_zero_byte",
+          "no_output_at_all_is_not_authentic",
+          "every_predicate_is_recorded_even_after_one_fails",
+          "stdout_that_is_not_a_list_of_objects_is_malformed_after_five_predicates",
+          "a_reply_that_is_not_a_packet_is_malformed_before_any_predicate",
+          "participant_files_must_be_text",
+          "a_missing_reply_is_refused_without_a_predicate",
+          "a_sealed_part_the_host_cannot_audit_with_is_refused_before_anything_is_asked",
+          "a_task_may_have_any_fields"
+        ],
+        "owned_invariants": [
+          "Hashes and tags are SHA-256 digests the tests rebuild themselves, and decodings are worked by hand.",
+          "Each view of the answer is asserted found alone, and strict base64 and whole hex bytes asserted by what they refuse.",
+          "Each of the six predicates is asserted failing alone, and each unreadable reply and sealed part by its reason."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf23.rs",
+          "language": "Rust",
+          "sha256": "47c6d383322e4aeff56956be71f3c7e839710b56196f780418d09e891a4ba568"
+        },
+        "profile": "Non-Numeric",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected values follow by hand from the request written in the test.",
+          "G3": "Refusals are asserted by code.",
+          "G4": "All 40 pass in the recorded run; the suite they belong to killed 115 of 115 eligible WF23 mutants.",
+          "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T15:21:51Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v13-test.run.json",
+            "sha256": "e95f7cbb61ec569653c33c43224a08a2dd50d966fadd2ffb10683ec9251899fb",
+            "note": "975 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-clippy.run.json",
+            "sha256": "9f3bb56911bdd12f7b66947930bf454026cdc5a5079549d88ce90dbe884870bd",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-fmt.run.json",
+            "sha256": "e211f169bda4dde79d3c9eb5aaabec93f90b2eba08ad48d08389558e8796d830",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-metrics.run.json",
+            "sha256": "3d0d04aa70736844f559fe2cc2e31648805123b08f79c8920fc4b9897d7983b6",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-metrics.json",
+            "sha256": "c78a4942b6937a2e0ef6b7ed4d2023b2a34259f868a263849f076536dcfd44d8",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    }
+  ]
+}

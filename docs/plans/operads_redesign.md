@@ -173,9 +173,15 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
      sets and checks bisimulation certificates, and WF6 rewrites each item
      in each dialect, keeps the dialects that preserve the query, and grades
      every reply with WF7's check.
-   - **Next.** WF8, WF21 and WF23 (fences, seal chains and custody
-     hashing), then the families of layers 5 to 8. Then the WF1-WF5 and
-     WF52-WF54 host checks, the run budget and run custody.
+   - **4f (built, offline).** The rest of layer 4: WF8, WF21 and WF23. The
+     host now has fences (`families/fence.rs`: a span between two marks that
+     no edit and no packet may change) and on them WF21's byte-offset rewrite
+     with the answer key kept out, WF8's three sealed stages linked by a hash
+     chain and recomputed, and WF23's custody audit of a judge packet (file
+     hashes, the answer in no view of a file, the sealed checker, keyed tags
+     on every output line).
+   - **Next.** The families of layers 5 to 8. Then the WF1-WF5 and WF52-WF54
+     host checks, the run budget and run custody.
 5. **Retire Python `operads/`** (682 files) once nothing imports it, re-pin
    the canonical ID fixture, and score the Rust files that change.
 6. **Lean.** State and prove the laws for the term model, and link each
@@ -212,9 +218,8 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
   derivation is written for them.
 - Python still validates reply schemas, routes statuses and keeps run
   custody (manifests, replay). Those move in slice 4.
-- After 4e the host checks WF6, WF7, WF9, WF10, WF11, WF13, WF16, WF17,
-  WF20, WF24, WF25, WF26, WF27, WF29, WF30, WF31, WF32, WF33, WF38, WF40,
-  WF44, WF45, WF46 and WF47.
+- After 4f the host checks WF6 to WF11, WF13, WF16, WF17, WF20, WF21, WF23
+  to WF27, WF29 to WF33, WF38, WF40, WF44, WF45, WF46 and WF47.
   Every other family still runs its check and its sealed-value guard in
   Python. WF6 and WF22 grade with WF7's check and so reach the host for that
   part.
@@ -317,3 +322,18 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
   call malformed in other words, 30 WF29 runs on which both stop because a
   prompt would carry a sealed value, and 267 runs under the WF17 and WF29
   readings above.
+- The 4f host differs from the Python it replaces only in wording. A task
+  is read before the first question, as in 4e. The fence refusal names the
+  fence, and a payload or answer that is not an exact rational is called
+  malformed in the host's words. On 4,500 random runs of WF8, WF21 and WF23
+  (1,500 each, with edited, overlapping, leaking, forged and malformed
+  replies among them), 4,106 were identical, 98 tasks both refuse in the
+  same words, 257 tasks both refuse in other words and 39 replies both call
+  malformed in other words. No verdict, code, predicate, stage or prompt
+  differed. Another 6,000 random runs of WF23 alone were identical. As
+  before, that compares two checkers; it is not a model result.
+- WF21 reads a position as a byte offset: one that is negative or too large
+  to count is no match. The sealed parts of WF21 and WF23 are read by the
+  host once the run starts, so a run without a usable sealed part is refused
+  as malformed before anything is asked. WF8 and WF21 share the fence
+  reading in `families/fence.rs`.

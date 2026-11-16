@@ -64,6 +64,218 @@ def test_fixture_verdict(wf_id, name, expected):
         assert not [k for k, v in first.host['certified_predicates'].items() if not v]
 
 
+LAYER4_RESULTS = {
+    ('WF6', 'all_dialects_accepted'): (
+        'SWEEP_GRADED',
+        {'acceptance': {'plain': 1, 'swapped': 1},
+         'flips_vs_first': [],
+         'items': {'i1': {'plain': True, 'swapped': True}, 'i2': {'plain': True, 'swapped': True}}},
+    ),
+    ('WF6', 'one_dialect_fails_item_by_item'): (
+        'SWEEP_GRADED',
+        {'acceptance': {'plain': 1, 'swapped': '1/2'},
+         'flips_vs_first': [['i1', 'swapped']],
+         'items': {'i1': {'plain': True, 'swapped': False}, 'i2': {'plain': True, 'swapped': True}}},
+    ),
+    ('WF6', 'dialect_zeroes_a_row'): (
+        'DIALECT_CHANGES_QUERY',
+        {'broken': [['i1', 'zero_row'], ['i2', 'zero_row']]},
+    ),
+    ('WF6', 'dialect_shifts_rhs'): (
+        'DIALECT_CHANGES_QUERY',
+        {'broken': [['i1', 'shifted']]},
+    ),
+    ('WF6', 'incomplete_sweep'): (
+        'INCOMPLETE_SWEEP',
+        {'missing': [['i2', 'swapped']]},
+    ),
+    ('WF8', 'three_sealed_stages'): (
+        'SEALED_PIPELINE',
+        {'stages': 3},
+    ),
+    ('WF8', 'packet_edited_after_seal'): (
+        'SEAL_MISMATCH',
+        {'sealed_stages': 1, 'stage': 'solve'},
+    ),
+    ('WF8', 'chain_link_broken'): (
+        'CHAIN_BROKEN',
+        {'sealed_stages': 1, 'stage': 'solve'},
+    ),
+    ('WF8', 'fence_dropped_from_packet'): (
+        'FENCE_VIOLATED',
+        {'sealed_stages': 1, 'stage': 'solve'},
+    ),
+    ('WF8', 'sealed_but_wrong_stage'): (
+        'STAGE_RECOMPUTE_MISMATCH',
+        {'sealed_stages': 1, 'stage': 'solve'},
+    ),
+    ('WF16', 'one_crosswalk_preserves'): (
+        'CROSSWALK_PRESERVED',
+        {'choices': [{'flipped_edges': [1, 2]}], 'differ_on_vertices': [], 'verdict': 'exact'},
+    ),
+    ('WF16', 'two_crosswalks_non_unique'): (
+        'CROSSWALK_PRESERVED',
+        {'choices': [{'flipped_edges': [1, 2]}, {'flipped_edges': [0, 3]}],
+         'differ_on_vertices': [['a', 'b', 'c', 'd']],
+         'verdict': 'exact'},
+    ),
+    ('WF16', 'orientation_sign_dropped'): (
+        'CROSSWALK0:RELATIONS_PRESERVED',
+        {'choices': [{'flipped_edges': [1]}],
+         'differ_on_vertices': [],
+         'failed': ['crosswalk0:relations_preserved', 'crosswalk0:data_transported'],
+         'verdict': 'exact'},
+    ),
+    ('WF16', 'two_vertices_one_column'): (
+        'CROSSWALK0:BIJECTIVE',
+        {'choices': [],
+         'differ_on_vertices': [],
+         'failed': ['crosswalk0:bijective'],
+         'verdict': 'exact'},
+    ),
+    ('WF16', 'target_data_not_transported'): (
+        'VERDICTS_IDENTICAL',
+        {'choices': [{'flipped_edges': [1, 2]}],
+         'differ_on_vertices': [],
+         'failed': ['verdicts_identical', 'crosswalk0:data_transported'],
+         'verdict': 'exact'},
+    ),
+    ('WF17', 'difference_and_equivalence_witnessed'): (
+        'CLAIMS_WITNESSED',
+        {'claims': 2},
+    ),
+    ('WF17', 'unwitnessed_difference'): (
+        'CLAIM0:WITNESSED',
+        {'claims': 2, 'failed': ['claim0:witnessed']},
+    ),
+    ('WF17', 'formula_does_not_separate'): (
+        'CLAIM0:SEPARATES',
+        {'claims': 1, 'failed': ['claim0:separates']},
+    ),
+    ('WF17', 'trace_equivalent_is_not_bisimilar'): (
+        'CLAIM0:BISIMULATION',
+        {'claims': 1, 'failed': ['claim0:bisimulation']},
+    ),
+    ('WF17', 'claims_name_undeclared_states'): (
+        'CLAIM0:STATES_DECLARED',
+        {'claims': 2, 'failed': ['claim0:states_declared', 'claim1:states_declared']},
+    ),
+    ('WF21', 'rewrite_outside_fences_solved'): (
+        'REWRITE_CERTIFIED',
+        {},
+    ),
+    ('WF21', 'edit_inside_question_fence'): (
+        'EDIT_INSIDE_FENCE',
+        {},
+    ),
+    ('WF21', 'rewrite_leaks_answer_key'): (
+        'ANSWER_KEY_LEAK',
+        {},
+    ),
+    ('WF21', 'overlapping_matches'): (
+        'OVERLAPPING_MATCHES',
+        {},
+    ),
+    ('WF21', 'question_duplicated_outside_fence'): (
+        'QUESTION_NOT_PRESERVED',
+        {'violations': ['question']},
+    ),
+    ('WF23', 'clean_custody'): (
+        'CUSTODY_INTACT',
+        {'forged_lines': 0, 'leaked_files': []},
+    ),
+    ('WF23', 'answer_in_participant_bytes'): (
+        'ANSWER_NOT_DERIVABLE',
+        {'failed': ['answer_not_derivable'], 'forged_lines': 0, 'leaked_files': ['notes.txt']},
+    ),
+    ('WF23', 'answer_base64_encoded'): (
+        'ANSWER_NOT_DERIVABLE',
+        {'failed': ['answer_not_derivable'], 'forged_lines': 0, 'leaked_files': ['notes.txt']},
+    ),
+    ('WF23', 'forged_stdout_line'): (
+        'STDOUT_LINES_AUTHENTIC',
+        {'failed': ['stdout_lines_authentic'], 'forged_lines': 1, 'leaked_files': []},
+    ),
+    ('WF23', 'stale_checker_executed'): (
+        'EXECUTED_CHECKER_IS_RECORDED',
+        {'failed': ['executed_checker_is_recorded'], 'forged_lines': 0, 'leaked_files': []},
+    ),
+    ('WF23', 'file_edited_after_manifest'): (
+        'FILE_HASHES_MATCH',
+        {'failed': ['file_hashes_match'], 'forged_lines': 0, 'leaked_files': []},
+    ),
+    ('WF23', 'edited_file_with_self_computed_manifest'): (
+        'FILE_HASHES_MATCH',
+        {'failed': ['file_hashes_match'], 'forged_lines': 0, 'leaked_files': []},
+    ),
+    ('WF29', 'sound_checker_kills_all'): (
+        'CHECKER_ACCEPTED',
+        {'false_rejections': 0, 'kill_rate': 1, 'mutants': 5},
+    ),
+    ('WF29', 'root_gauge_falsely_rejects'): (
+        'NO_FALSE_REJECTION',
+        {'failed': ['no_false_rejection'], 'false_rejections': 2, 'kill_rate': 1, 'mutants': 5},
+    ),
+    ('WF29', 'cycle_only_checker_too_weak'): (
+        'KILL_RATE_MEETS_BAR',
+        {'failed': ['kill_rate_meets_bar'], 'false_rejections': 0, 'kill_rate': '2/5', 'mutants': 5},
+    ),
+    ('WF29', 'model_code_not_executed'): (
+        'MALFORMED_CANDIDATE',
+        {'reason': 'unknown predicate "lambda case: True"'},
+    ),
+    ('WF44', 'coboundary_potential_valid'): (
+        'CERTIFICATE_VALID',
+        {'schema': 'coboundary_potential'},
+    ),
+    ('WF44', 'l1_dual_pair_optimal'): (
+        'CERTIFICATE_VALID',
+        {'schema': 'l1_dual_circulation'},
+    ),
+    ('WF44', 'canonical_rational_solution'): (
+        'CERTIFICATE_VALID',
+        {'schema': 'canonical_rational'},
+    ),
+    ('WF44', 'non_canonical_rational'): (
+        'CANONICAL_FORM',
+        {'failed': ['canonical_form'], 'schema': 'canonical_rational'},
+    ),
+    ('WF44', 'dual_not_a_circulation'): (
+        'DUAL_IS_CIRCULATION',
+        {'failed': ['dual_is_circulation'], 'schema': 'l1_dual_circulation'},
+    ),
+    ('WF44', 'ill_typed_short_dual'): (
+        'ILL_TYPED',
+        {},
+    ),
+    ('WF44', 'float_in_certificate'): (
+        'FLOAT_IN_CERTIFICATE',
+        {},
+    ),
+    ('WF44', 'wrong_schema_named'): (
+        'ILL_TYPED',
+        {},
+    ),
+}
+
+
+def _findings(detail):
+    """What a verdict found, without the hashes in it."""
+    return {key: value for key, value in detail.items() if 'sha256' not in key and key != 'head'}
+
+
+def test_the_layer_4_results_name_every_fixture_of_the_layer_4_families():
+    families = {wf_id for wf_id, _name in LAYER4_RESULTS}
+    assert families == {'WF6', 'WF8', 'WF16', 'WF17', 'WF21', 'WF23', 'WF29', 'WF44'}
+    assert set(LAYER4_RESULTS) == {(wf_id, name) for wf_id in families for name in REGISTRY[wf_id]().fixtures()}
+
+
+@pytest.mark.parametrize(('wf_id', 'name'), sorted(LAYER4_RESULTS))
+def test_a_layer_4_fixture_ends_with_the_code_and_the_findings_its_name_says(wf_id, name):
+    result = run_fixture(REGISTRY[wf_id](), name)
+    assert (result.code, _findings(result.detail)) == LAYER4_RESULTS[(wf_id, name)]
+
+
 def test_authority_escalation_is_refused():
     with pytest.raises(ValueError, match='AUTHORITY_ESCALATION'):
         WorkflowFamilySpecV1('WF7', 'x', 1, (), None, 'c', 'workflows/wf07_typed_refusal', authority_effect='Host')
@@ -174,9 +386,9 @@ def test_the_rust_host_lists_every_hosted_family_under_the_registry_s_names():
     listed = operad_host.result(operad_host.call(('family', 'list')))['families']
     assert listed == [{'workflow': wf_id, 'name': cls.spec.name, 'host_check': cls.spec.host_check_id}
                       for wf_id, cls in HOSTED.items()]
-    assert set(HOSTED) == {'WF6', 'WF7', 'WF9', 'WF10', 'WF11', 'WF13', 'WF16', 'WF17', 'WF20', 'WF24', 'WF25',
-                           'WF26', 'WF27', 'WF29', 'WF30', 'WF31', 'WF32', 'WF33', 'WF38', 'WF40', 'WF44', 'WF45',
-                           'WF46', 'WF47'}
+    assert set(HOSTED) == {'WF6', 'WF7', 'WF8', 'WF9', 'WF10', 'WF11', 'WF13', 'WF16', 'WF17', 'WF20', 'WF21',
+                           'WF23', 'WF24', 'WF25', 'WF26', 'WF27', 'WF29', 'WF30', 'WF31', 'WF32', 'WF33', 'WF38',
+                           'WF40', 'WF44', 'WF45', 'WF46', 'WF47'}
 
 
 @pytest.mark.parametrize('wf_id', sorted(HOSTED))

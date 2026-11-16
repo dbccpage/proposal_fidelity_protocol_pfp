@@ -1,0 +1,236 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf08.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf08.rs",
+      "language": "Rust",
+      "sha256": "69105744ba667f56836557b45c1c9c12055f52a93613cd4de5d790a4490f3780"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf08-tests:v1",
+    "symbols": [
+      "sha",
+      "task",
+      "payloads",
+      "packets",
+      "honest",
+      "request",
+      "all",
+      "run_task",
+      "run",
+      "ask",
+      "bad_task",
+      "malformed",
+      "owned",
+      "outcomes",
+      "refused",
+      "the_registry_names_the_family",
+      "an_honest_run_is_certified_with_every_predicate_in_order",
+      "each_stage_is_asked_with_the_packet_before_it",
+      "a_packet_may_carry_more_than_its_five_fields",
+      "the_same_rationals_written_another_way_are_the_same_payload",
+      "an_overdetermined_system_has_a_row_of_zeros_and_a_residual_per_row",
+      "the_carry_may_hold_more_than_the_question",
+      "a_packet_edited_after_it_was_sealed_breaks_its_seal",
+      "a_broken_chain_link_is_found_before_the_seal",
+      "a_packet_that_drops_the_question_is_refused_for_its_fence",
+      "a_packet_must_name_its_stage",
+      "a_stage_that_is_sealed_but_wrong_is_refused_for_its_payload",
+      "a_payload_of_another_shape_is_not_the_recomputed_one",
+      "every_predicate_of_a_packet_is_recorded_even_after_one_fails",
+      "the_first_failure_names_the_refusal",
+      "a_stage_with_no_packet_is_refused_as_missing",
+      "a_reply_that_is_not_a_packet_is_malformed",
+      "a_payload_that_is_not_exact_is_malformed_before_any_predicate_of_its_stage",
+      "a_task_the_host_cannot_stage_is_a_bad_task",
+      "a_single_unknown_is_a_staged_run_too"
+    ],
+    "owned_invariants": [
+      "Chain heads are SHA-256 digests the tests rebuild themselves, and each stage's payload is worked by hand.",
+      "Each of the five predicates of a packet is asserted failing alone, and the first failure is asserted to name the refusal.",
+      "Each unreadable packet and payload is asserted by its reason, and a task the host cannot stage as a bad task."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf08.rs",
+      "language": "Rust",
+      "sha256": "69105744ba667f56836557b45c1c9c12055f52a93613cd4de5d790a4490f3780"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 20 pass in the recorded run; the suite they belong to killed 100 of 100 eligible WF8 mutants.",
+      "G5": "Measured worst cyclomatic 5, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T15:22:10Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v13-test.run.json",
+        "sha256": "e95f7cbb61ec569653c33c43224a08a2dd50d966fadd2ffb10683ec9251899fb",
+        "note": "975 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-clippy.run.json",
+        "sha256": "9f3bb56911bdd12f7b66947930bf454026cdc5a5079549d88ce90dbe884870bd",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-fmt.run.json",
+        "sha256": "e211f169bda4dde79d3c9eb5aaabec93f90b2eba08ad48d08389558e8796d830",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-metrics.run.json",
+        "sha256": "1f073e9074334349e9fcb471b80bb4860fd71373d3593bc902d8fd4e46fd4f2d",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-metrics.json",
+        "sha256": "f1e599a1782ed3478232245d33bf04cab5f389770a614a7f1840bc53ca8a9209",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T15:22:13.481225Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf08.rs",
+          "language": "Rust",
+          "sha256": "69105744ba667f56836557b45c1c9c12055f52a93613cd4de5d790a4490f3780"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf08-tests:v1",
+        "symbols": [
+          "sha",
+          "task",
+          "payloads",
+          "packets",
+          "honest",
+          "request",
+          "all",
+          "run_task",
+          "run",
+          "ask",
+          "bad_task",
+          "malformed",
+          "owned",
+          "outcomes",
+          "refused",
+          "the_registry_names_the_family",
+          "an_honest_run_is_certified_with_every_predicate_in_order",
+          "each_stage_is_asked_with_the_packet_before_it",
+          "a_packet_may_carry_more_than_its_five_fields",
+          "the_same_rationals_written_another_way_are_the_same_payload",
+          "an_overdetermined_system_has_a_row_of_zeros_and_a_residual_per_row",
+          "the_carry_may_hold_more_than_the_question",
+          "a_packet_edited_after_it_was_sealed_breaks_its_seal",
+          "a_broken_chain_link_is_found_before_the_seal",
+          "a_packet_that_drops_the_question_is_refused_for_its_fence",
+          "a_packet_must_name_its_stage",
+          "a_stage_that_is_sealed_but_wrong_is_refused_for_its_payload",
+          "a_payload_of_another_shape_is_not_the_recomputed_one",
+          "every_predicate_of_a_packet_is_recorded_even_after_one_fails",
+          "the_first_failure_names_the_refusal",
+          "a_stage_with_no_packet_is_refused_as_missing",
+          "a_reply_that_is_not_a_packet_is_malformed",
+          "a_payload_that_is_not_exact_is_malformed_before_any_predicate_of_its_stage",
+          "a_task_the_host_cannot_stage_is_a_bad_task",
+          "a_single_unknown_is_a_staged_run_too"
+        ],
+        "owned_invariants": [
+          "Chain heads are SHA-256 digests the tests rebuild themselves, and each stage's payload is worked by hand.",
+          "Each of the five predicates of a packet is asserted failing alone, and the first failure is asserted to name the refusal.",
+          "Each unreadable packet and payload is asserted by its reason, and a task the host cannot stage as a bad task."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf08.rs",
+          "language": "Rust",
+          "sha256": "69105744ba667f56836557b45c1c9c12055f52a93613cd4de5d790a4490f3780"
+        },
+        "profile": "Exact",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected values follow by hand from the request written in the test.",
+          "G3": "Refusals are asserted by code.",
+          "G4": "All 20 pass in the recorded run; the suite they belong to killed 100 of 100 eligible WF8 mutants.",
+          "G5": "Measured worst cyclomatic 5, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T15:21:51Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v13-test.run.json",
+            "sha256": "e95f7cbb61ec569653c33c43224a08a2dd50d966fadd2ffb10683ec9251899fb",
+            "note": "975 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-clippy.run.json",
+            "sha256": "9f3bb56911bdd12f7b66947930bf454026cdc5a5079549d88ce90dbe884870bd",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-fmt.run.json",
+            "sha256": "e211f169bda4dde79d3c9eb5aaabec93f90b2eba08ad48d08389558e8796d830",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-metrics.run.json",
+            "sha256": "3d0d04aa70736844f559fe2cc2e31648805123b08f79c8920fc4b9897d7983b6",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-metrics.json",
+            "sha256": "c78a4942b6937a2e0ef6b7ed4d2023b2a34259f868a263849f076536dcfd44d8",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    }
+  ]
+}

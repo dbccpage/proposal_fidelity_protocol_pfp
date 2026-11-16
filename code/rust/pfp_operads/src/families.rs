@@ -25,11 +25,13 @@
 pub mod attempts;
 pub mod cochain;
 pub mod domains;
+pub mod fence;
 pub mod labelled;
 pub mod monic;
 pub mod sealed;
 pub mod wf06;
 pub mod wf07;
+pub mod wf08;
 pub mod wf09;
 pub mod wf10;
 pub mod wf11;
@@ -37,6 +39,8 @@ pub mod wf13;
 pub mod wf16;
 pub mod wf17;
 pub mod wf20;
+pub mod wf21;
+pub mod wf23;
 pub mod wf24;
 pub mod wf25;
 pub mod wf26;
@@ -97,6 +101,7 @@ pub struct Family {
 pub const FAMILIES: &[&Family] = &[
     &wf06::FAMILY,
     &wf07::FAMILY,
+    &wf08::FAMILY,
     &wf09::FAMILY,
     &wf10::FAMILY,
     &wf11::FAMILY,
@@ -104,6 +109,8 @@ pub const FAMILIES: &[&Family] = &[
     &wf16::FAMILY,
     &wf17::FAMILY,
     &wf20::FAMILY,
+    &wf21::FAMILY,
+    &wf23::FAMILY,
     &wf24::FAMILY,
     &wf25::FAMILY,
     &wf26::FAMILY,

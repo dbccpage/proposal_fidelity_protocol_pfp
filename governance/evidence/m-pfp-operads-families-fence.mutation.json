@@ -1,0 +1,183 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/fence.rs",
+  "target_sha256": "4dcf5ecdf85b2283e6497d891cae24dc9a72febb414d0559e02db433640e5e94",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test fence --test wf08 --test wf21",
+  "counts": {
+    "killed": 24,
+    "survived": 0,
+    "demonstrably_equivalent": 3,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "begin mark must occur at least once",
+      "old": "statement.matches(marks.begin).count() == 1",
+      "new": "statement.matches(marks.begin).count() >= 1",
+      "outcome": "killed"
+    },
+    {
+      "name": "begin mark may occur at most once",
+      "old": "statement.matches(marks.begin).count() == 1",
+      "new": "statement.matches(marks.begin).count() <= 1",
+      "equivalent": "find returns nothing when the begin mark does not occur, so only counts of one and more reach the filter, and for those at most one is exactly one",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "begin mark counted by the end mark",
+      "old": "statement.matches(marks.begin).count() == 1",
+      "new": "statement.matches(marks.end).count() == 1",
+      "outcome": "killed"
+    },
+    {
+      "name": "begin mark taken from the last occurrence",
+      "old": "        .find(marks.begin)\n",
+      "new": "        .rfind(marks.begin)\n",
+      "equivalent": "the filter keeps the first occurrence only when it is the sole occurrence, and then it is the last one too",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "begin count filter dropped",
+      "old": "        .filter(|_| statement.matches(marks.begin).count() == 1);",
+      "new": "        .filter(|_| true);",
+      "outcome": "killed"
+    },
+    {
+      "name": "end mark searched from the begin mark",
+      "old": "statement.get(start + 1..)",
+      "new": "statement.get(start..)",
+      "outcome": "killed"
+    },
+    {
+      "name": "end mark searched after the begin mark",
+      "old": "statement.get(start + 1..)",
+      "new": "statement.get(start + marks.begin.len()..)",
+      "outcome": "killed"
+    },
+    {
+      "name": "end mark searched one byte later",
+      "old": "statement.get(start + 1..)",
+      "new": "statement.get(start + 2..)",
+      "outcome": "killed"
+    },
+    {
+      "name": "last end mark closes the fence",
+      "old": "rest.find(marks.end)",
+      "new": "rest.rfind(marks.end)",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal code changed",
+      "old": "\"FENCE_MARKERS_NOT_UNIQUE: the {} fence",
+      "new": "\"FENCE_MARKERS: the {} fence",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal omits the name",
+      "old": "            marks.name\n        )",
+      "new": "            \"\"\n        )",
+      "outcome": "killed"
+    },
+    {
+      "name": "end counted from the start of the end mark",
+      "old": "let end = start + 1 + found + marks.end.len();",
+      "new": "let end = start + 1 + found;",
+      "outcome": "killed"
+    },
+    {
+      "name": "end counted without the begin offset",
+      "old": "let end = start + 1 + found + marks.end.len();",
+      "new": "let end = start + found + marks.end.len();",
+      "outcome": "killed"
+    },
+    {
+      "name": "end counted by the begin mark",
+      "old": "let end = start + 1 + found + marks.end.len();",
+      "new": "let end = start + 1 + found + marks.begin.len();",
+      "outcome": "killed"
+    },
+    {
+      "name": "fence loses its name",
+      "old": "        name: marks.name,\n",
+      "new": "        name: \"\",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "fence starts after the begin mark",
+      "old": "        start,\n        end,",
+      "new": "        start: start + 1,\n        end,",
+      "outcome": "killed"
+    },
+    {
+      "name": "fenced text ends early",
+      "old": "text: statement.get(start..end).unwrap_or_default().to_owned(),",
+      "new": "text: statement.get(start..end - 1).unwrap_or_default().to_owned(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "fenced text starts late",
+      "old": "text: statement.get(start..end).unwrap_or_default().to_owned(),",
+      "new": "text: statement.get(start + 1..end).unwrap_or_default().to_owned(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "fenced text absent",
+      "old": "text: statement.get(start..end).unwrap_or_default().to_owned(),",
+      "new": "text: String::new(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "fenced text has a stand-in",
+      "old": "statement.get(start..end).unwrap_or_default()",
+      "new": "statement.get(start..end).unwrap_or(\"?\")",
+      "equivalent": "start and end both lie on character boundaries, so the slice always exists and the stand-in is never taken",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "text kept when it occurs at least once",
+      "old": "text.matches(self.text.as_str()).count() == 1",
+      "new": "text.matches(self.text.as_str()).count() >= 1",
+      "outcome": "killed"
+    },
+    {
+      "name": "text kept when it occurs at most once",
+      "old": "text.matches(self.text.as_str()).count() == 1",
+      "new": "text.matches(self.text.as_str()).count() <= 1",
+      "outcome": "killed"
+    },
+    {
+      "name": "text kept when it occurs twice",
+      "old": "text.matches(self.text.as_str()).count() == 1",
+      "new": "text.matches(self.text.as_str()).count() == 2",
+      "outcome": "killed"
+    },
+    {
+      "name": "range tested from the earlier start",
+      "old": "start.max(self.start) < end.min(self.end)",
+      "new": "start.min(self.start) < end.min(self.end)",
+      "outcome": "killed"
+    },
+    {
+      "name": "range tested to the later end",
+      "old": "start.max(self.start) < end.min(self.end)",
+      "new": "start.max(self.start) < end.max(self.end)",
+      "outcome": "killed"
+    },
+    {
+      "name": "ranges that meet at a byte touch",
+      "old": "start.max(self.start) < end.min(self.end)",
+      "new": "start.max(self.start) <= end.min(self.end)",
+      "outcome": "killed"
+    },
+    {
+      "name": "ranges that overlap are not touching",
+      "old": "start.max(self.start) < end.min(self.end)",
+      "new": "start.max(self.start) > end.min(self.end)",
+      "outcome": "killed"
+    }
+  ],
+  "rerun_test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test fence"
+}

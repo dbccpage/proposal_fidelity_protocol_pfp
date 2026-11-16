@@ -1,0 +1,190 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/fence.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/fence.rs",
+      "language": "Rust",
+      "sha256": "a29101a0e054c9f23eb16468dddba4c39249d7e92edeba7680031f066c717e40"
+    },
+    "contract_urn": "urn:pfp-operads:families-fence-tests:v1",
+    "symbols": [
+      "marks",
+      "fence",
+      "a_fence_runs_from_the_begin_mark_to_the_end_of_the_end_mark",
+      "offsets_count_bytes_and_not_characters",
+      "the_first_end_mark_after_the_begin_mark_closes_the_fence",
+      "a_begin_mark_that_occurs_twice_makes_no_fence",
+      "a_missing_mark_makes_no_fence",
+      "the_end_mark_may_start_inside_the_begin_mark",
+      "one_mark_cannot_open_and_close_a_fence",
+      "a_text_keeps_a_fence_when_it_carries_the_fenced_text_once",
+      "occurrences_that_overlap_count_once",
+      "a_range_touches_a_fence_when_they_share_a_byte"
+    ],
+    "owned_invariants": [
+      "A fence is asserted as a whole value, with its offsets counted in bytes after a multi-byte character.",
+      "Each way a fence can be missing is asserted, and an end mark that starts inside the begin mark.",
+      "Keeping a fence and touching one are asserted at every edge of the range."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/fence.rs",
+      "language": "Rust",
+      "sha256": "a29101a0e054c9f23eb16468dddba4c39249d7e92edeba7680031f066c717e40"
+    },
+    "profile": "Non-Numeric",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 10 pass in the recorded run; the suite they belong to killed 24 of 24 eligible fence mutants.",
+      "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 0; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T15:22:10Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v13-test.run.json",
+        "sha256": "e95f7cbb61ec569653c33c43224a08a2dd50d966fadd2ffb10683ec9251899fb",
+        "note": "975 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-clippy.run.json",
+        "sha256": "9f3bb56911bdd12f7b66947930bf454026cdc5a5079549d88ce90dbe884870bd",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-fmt.run.json",
+        "sha256": "e211f169bda4dde79d3c9eb5aaabec93f90b2eba08ad48d08389558e8796d830",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-metrics.run.json",
+        "sha256": "1f073e9074334349e9fcb471b80bb4860fd71373d3593bc902d8fd4e46fd4f2d",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-metrics.json",
+        "sha256": "f1e599a1782ed3478232245d33bf04cab5f389770a614a7f1840bc53ca8a9209",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T15:22:13.206504Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/fence.rs",
+          "language": "Rust",
+          "sha256": "a29101a0e054c9f23eb16468dddba4c39249d7e92edeba7680031f066c717e40"
+        },
+        "contract_urn": "urn:pfp-operads:families-fence-tests:v1",
+        "symbols": [
+          "marks",
+          "fence",
+          "a_fence_runs_from_the_begin_mark_to_the_end_of_the_end_mark",
+          "offsets_count_bytes_and_not_characters",
+          "the_first_end_mark_after_the_begin_mark_closes_the_fence",
+          "a_begin_mark_that_occurs_twice_makes_no_fence",
+          "a_missing_mark_makes_no_fence",
+          "the_end_mark_may_start_inside_the_begin_mark",
+          "one_mark_cannot_open_and_close_a_fence",
+          "a_text_keeps_a_fence_when_it_carries_the_fenced_text_once",
+          "occurrences_that_overlap_count_once",
+          "a_range_touches_a_fence_when_they_share_a_byte"
+        ],
+        "owned_invariants": [
+          "A fence is asserted as a whole value, with its offsets counted in bytes after a multi-byte character.",
+          "Each way a fence can be missing is asserted, and an end mark that starts inside the begin mark.",
+          "Keeping a fence and touching one are asserted at every edge of the range."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/fence.rs",
+          "language": "Rust",
+          "sha256": "a29101a0e054c9f23eb16468dddba4c39249d7e92edeba7680031f066c717e40"
+        },
+        "profile": "Non-Numeric",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected values follow by hand from the request written in the test.",
+          "G3": "Refusals are asserted by code.",
+          "G4": "All 10 pass in the recorded run; the suite they belong to killed 24 of 24 eligible fence mutants.",
+          "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 0; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T15:21:51Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v13-test.run.json",
+            "sha256": "e95f7cbb61ec569653c33c43224a08a2dd50d966fadd2ffb10683ec9251899fb",
+            "note": "975 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-clippy.run.json",
+            "sha256": "9f3bb56911bdd12f7b66947930bf454026cdc5a5079549d88ce90dbe884870bd",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-fmt.run.json",
+            "sha256": "e211f169bda4dde79d3c9eb5aaabec93f90b2eba08ad48d08389558e8796d830",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-metrics.run.json",
+            "sha256": "3d0d04aa70736844f559fe2cc2e31648805123b08f79c8920fc4b9897d7983b6",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-metrics.json",
+            "sha256": "c78a4942b6937a2e0ef6b7ed4d2023b2a34259f868a263849f076536dcfd44d8",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    }
+  ]
+}
