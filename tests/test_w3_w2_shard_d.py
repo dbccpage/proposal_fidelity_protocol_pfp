@@ -12,6 +12,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import subprocess
 import sys
 from collections import Counter
 from fractions import Fraction
@@ -20,6 +21,21 @@ from pathlib import Path
 import pytest
 
 _REPO_ROOT = Path(__file__).resolve().parent.parent
+# Parent of the commit that removed the education curriculum tree from this checkout.
+_EDU_TREE_REMOVAL = "0aa967c4dfa285495b47da3e15f48575d6980fbf"
+
+
+def _education_blob_text(relative: str) -> str:
+    """Return a curriculum file from the commit before it left this worktree."""
+    assert not (_REPO_ROOT / relative).exists()
+    return subprocess.check_output(
+        ["git", "cat-file", "blob", f"{_EDU_TREE_REMOVAL}^:{relative}"],
+        cwd=_REPO_ROOT,
+        text=True,
+        encoding="utf-8",
+        errors="strict",
+    )
+
 
 if str(_REPO_ROOT / "ops") not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT / "ops"))
@@ -39,10 +55,12 @@ class TestDeepRouteInventory:
     """Witnesses that the baseline route README lists 20 notebooks in five groups."""
 
     def test_readme_table_contains_twenty_notebooks_in_five_groups(self) -> None:
-        """Parse the curriculum README route table and verify 5 groups of 4 notebooks."""
-        readme_path = _REPO_ROOT / "education" / "004_oepfp" / "curriculum" / "README.md"
-        assert readme_path.exists()
-        text = readme_path.read_text(encoding="utf-8")
+        """Parse the historical curriculum README: 5 groups of 4 notebooks.
+
+        The worktree path is absent after _EDU_TREE_REMOVAL. The table is the
+        parent blob of that commit.
+        """
+        text = _education_blob_text("education/004_oepfp/curriculum/README.md")
 
         # Extract markdown table rows matching | Route | Lessons in order | ...
         # Route groups: Beginners, Novices, Intermediates, Advanced, Researchers
@@ -272,10 +290,13 @@ class TestHistoricalReceiptStaleness:
     """
 
     def test_headless_receipt_attributes_and_stale_paths(self) -> None:
-        """Inspect headless_receipt.json: 20 records dated 2026-09-25 with 0 existing paths."""
-        receipt_path = _REPO_ROOT / "education" / "004_oepfp" / "curriculum" / "headless_receipt.json"
-        assert receipt_path.exists()
-        receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+        """Historical headless_receipt.json: 20 records dated 2026-09-25, 0 paths on disk.
+
+        The receipt file itself is absent from the worktree after _EDU_TREE_REMOVAL.
+        """
+        receipt = json.loads(
+            _education_blob_text("education/004_oepfp/curriculum/headless_receipt.json")
+        )
 
         assert receipt["status"] == "PASS"
         assert receipt["passed"] == 20
@@ -296,10 +317,13 @@ class TestHistoricalReceiptStaleness:
         assert existing_count == 0
 
     def test_lesson_manifest_paths_are_stale(self) -> None:
-        """Inspect lesson_manifest.json: 20 lessons pointing to absent documentation tree."""
-        manifest_path = _REPO_ROOT / "education" / "004_oepfp" / "curriculum" / "lesson_manifest.json"
-        assert manifest_path.exists()
-        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        """Historical lesson_manifest.json: 20 lessons whose recorded paths stay absent.
+
+        The manifest file itself is absent from the worktree after _EDU_TREE_REMOVAL.
+        """
+        manifest = json.loads(
+            _education_blob_text("education/004_oepfp/curriculum/lesson_manifest.json")
+        )
 
         lessons = manifest["lessons"]
         assert len(lessons) == 20

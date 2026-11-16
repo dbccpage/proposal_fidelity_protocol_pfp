@@ -2,9 +2,17 @@
 // The page only edits JSON and draws results; every number shown comes from the core.
 "use strict";
 
-const $ = (id) => document.getElementById(id);
+const $ = (id) => (typeof document === "undefined" ? null : document.getElementById(id));
 const SVG_NS = "http://www.w3.org/2000/svg";
+const PFP_PAGE = {
+  authorityEffect: "None",
+  moves: ["ASSERT", "CUT", "VERIFY", "RETRACT"],
+  zeroSpendDefault: true,
+};
+if (typeof window !== "undefined") window.PFP_PAGE = PFP_PAGE;
 let lastReceipt = null;
+const SEAL_TEXT = '{"authority_effect":"None","move":"ASSERT"}\n';
+const SEAL_HEX = "bff6d22e20670d258ff274c8c354b4a9678d7712b9a809b96a4cdd47e2058f60";
 
 const TEMPLATES = {
   ASSERT: { move: "ASSERT", source: "a", target: "b", value: "1" },
@@ -15,6 +23,7 @@ const TEMPLATES = {
 
 function showBanner(text, good) {
   const banner = $("banner");
+  if (!banner) return;
   banner.textContent = text;
   banner.classList.toggle("good", Boolean(good));
   banner.hidden = !text;
@@ -222,11 +231,60 @@ async function start() {
   }
 }
 
-$("pack").addEventListener("change", (event) => loadPack(event.target.value).catch((e) => showBanner(e.message)));
-$("run").addEventListener("click", run);
-$("download").addEventListener("click", download);
-$("upload").addEventListener("change", verifyUpload);
-for (const button of document.querySelectorAll("[data-move]")) {
-  button.addEventListener("click", () => insertMove(button.dataset.move));
+function selectTab(name) {
+  for (const button of document.querySelectorAll("[data-tab]")) {
+    const on = button.dataset.tab === name;
+    button.setAttribute("aria-selected", on ? "true" : "false");
+    const panel = $("tab-" + button.dataset.tab);
+    if (panel) panel.hidden = !on;
+  }
 }
-start();
+
+async function verifySealSample() {
+  if (!globalThis.crypto || !crypto.subtle) {
+    showBanner("This context has no SHA-256 implementation.");
+    return;
+  }
+  const bytes = new TextEncoder().encode(SEAL_TEXT);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  const hex = [...new Uint8Array(digest)].map((part) => part.toString(16).padStart(2, "0")).join("");
+  const digestNode = $("digest");
+  if (digestNode) digestNode.textContent = hex;
+  showBanner(hex === SEAL_HEX ? `SHA-256 matches the sealed sample.\n${hex}` : `SHA-256 does not match.\n${hex}`, hex === SEAL_HEX);
+}
+
+function replaySealed() {
+  const node = $("strand-readout");
+  if (!node) return;
+  node.textContent = "zero-spend replay. provider_calls=0. acc(full loop, H) - acc(PFP alone, H) = 0. The null is retained.";
+  showBanner("Sealed receipt replayed. No provider was called.", true);
+}
+
+function requestLive() {
+  const token = ($("invite") && $("invite").value.trim()) || "";
+  if (!token) {
+    showBanner("Live calls stay closed until an invite token is present. Replay remains the default.");
+    return;
+  }
+  showBanner("Invite token noted. This bundle still performs no provider call.");
+}
+
+if (typeof document !== "undefined" && $("pack")) {
+  $("pack").addEventListener("change", (event) => loadPack(event.target.value).catch((e) => showBanner(e.message)));
+  $("run").addEventListener("click", run);
+  $("download").addEventListener("click", download);
+  $("upload").addEventListener("change", verifyUpload);
+  for (const button of document.querySelectorAll("[data-move]")) {
+    button.addEventListener("click", () => insertMove(button.dataset.move));
+  }
+  for (const button of document.querySelectorAll("[data-tab]")) {
+    button.addEventListener("click", () => selectTab(button.dataset.tab));
+  }
+  const seal = $("seal-sample");
+  if (seal) seal.addEventListener("click", () => verifySealSample().catch((error) => showBanner(error.message)));
+  const replay = $("replay");
+  if (replay) replay.addEventListener("click", replaySealed);
+  const live = $("live");
+  if (live) live.addEventListener("click", requestLive);
+  start();
+}

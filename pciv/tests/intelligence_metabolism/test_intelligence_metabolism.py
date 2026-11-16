@@ -54,7 +54,7 @@ def intelligence_fixture(tmp_path: Path):
     (runs_dir / "receipt.json").write_text(json.dumps(receipt_data), encoding="utf-8")
 
     # Source 2: DDC traces (jsonl)
-    dda_dir = root / ".agents" / "dda_traces"
+    dda_dir = SOURCE_REGISTRY["dda_traces"].resolve_path(root)
     dda_dir.mkdir(parents=True)
     trace_lines = [
         json.dumps({"seq": 0, "letter": "C", "actor": "init"}),

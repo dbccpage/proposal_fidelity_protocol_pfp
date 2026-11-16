@@ -1,0 +1,49 @@
+name: v1rc gates
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      CORE_CREDENTIAL_DISCOVERY: "off"
+    steps:
+      # Custody tests read origin/main and older blobs. A depth-1 checkout
+      # makes those object names invalid.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Install Elan so pytest can call lake
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain leanprover/lean4:v4.35.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Install the project venv the editable-import check expects
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install -e ".[dev,workflows]"
+      - name: Build host binaries and Lean roots before pytest
+        run: |
+          cargo build --release --manifest-path code/rust/Cargo.toml -p pfp_operads -p pfp_immune
+          lake --dir lean4 build
+          test -x "$HOME/.elan/toolchains/leanprover--lean4---v4.35.0/bin/lean"
+          lake --dir lean4 env lean lean4/FunnelCompressionClosure.lean
+      - run: .venv/bin/python -B -X utf8 -m ruff check pfp_core/ tests/
+      - run: .venv/bin/python -B -X utf8 -m pytest pfp_lab/tests/test_boundaries.py -q
+      # Section-3 suite plus the two-signal EIS file. The rest of eis/ and the
+      # operads/ and pciv trees import optional hosts and historical receipt scripts.
+      - run: .venv/bin/python -B -X utf8 -m pytest tests/ pfp_lab/tests pfp_core/tests pfp_core/workflow_families/tests governance/tools/tests eis/tests/unit/test_two_signal_regulation.py -q
+      # pfp-cli is a separate workspace (package name pfp-cli). The engine manifest has no pfp_cli member.
+      - run: cargo test --manifest-path code/rust/Cargo.toml -p pfp -p pfp_runtime -p pfp_operads -p pfp_immune -p core_operad_canon
+      - run: cargo test --manifest-path code/rust/pfp_cli/Cargo.toml
+      - run: .venv/bin/python -B -X utf8 dag/build_atlas.py --check

@@ -54,7 +54,7 @@ SOURCE_REGISTRY: dict[str, DataSourceAdapter] = {
     ),
     "dda_traces": DataSourceAdapter(
         source_id="dda_traces",
-        relative_path=".agents/dda_traces",
+        relative_path="ops/dda_traces",
         file_pattern="**/*.jsonl",
         record_parser_kind="jsonl",
         description="Canonical DDC / DDA operational letter tapes and step rows",

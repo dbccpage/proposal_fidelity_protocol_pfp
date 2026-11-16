@@ -18,6 +18,7 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
+from operads.canon import DDC_LETTER, OperadColour
 from operations.domain.rop.result import Err, Ok, Refusal, Result
 
 try:
@@ -45,6 +46,28 @@ SORT_CONTRACT = "Contract"
 SORT_LEDGER = "Ledger"
 SORT_CODE = "Code"
 SORT_PAPER = "Paper"
+
+def require_operad_colour(name: str) -> OperadColour:
+    """Admit a colour only when it is one of the ten fixed canon names."""
+    try:
+        return OperadColour(name)
+    except ValueError as exc:
+        allowed = tuple(colour.value for colour in OperadColour)
+        raise ValueError(f"OPERAD_COLOUR_REFUSED: {name!r} is outside the ten fixed colours {allowed}") from exc
+
+
+for _sort_name in (
+    SORT_STATE,
+    SORT_PROOF,
+    SORT_RECEIPT,
+    SORT_AUDIT,
+    SORT_CONTRACT,
+    SORT_LEDGER,
+    SORT_CODE,
+    SORT_PAPER,
+):
+    require_operad_colour(_sort_name)
+
 
 OPERAD_MAPPING_DEFAULTS: dict[str, tuple[tuple[str, ...], str, str]] = {
     "C": ((SORT_STATE,), SORT_STATE, "context_exposure"),

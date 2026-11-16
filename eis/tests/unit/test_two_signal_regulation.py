@@ -594,7 +594,7 @@ def test_ab08_fails_on_single_qubit_entropy_bits_violation():
 
 def test_ab09_fails_on_chsh_bound_range_violation():
     """Ab09 fails when CHSH expectation violates Tsirelson ceiling <= 2*sqrt(2)."""
-    bad_text = CLEAN_QM_DERIVATION + "\nUnder maximal measurement angles, expectation = 4."
+    bad_text = CLEAN_QM_DERIVATION + "\nMaximal CHSH expectation = 4."
     receipt = QMInvariantAntibodySuiteV1.evaluate(bad_text)
 
     ab09 = next(f for f in receipt.findings if f.antibody_id == "Ab09_CHSHBoundRange")

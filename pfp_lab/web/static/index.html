@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PFP Lab</title>
-  <link rel="stylesheet" href="/static/app.css">
 </head>
 <body>
   <header class="bar">
@@ -21,49 +20,129 @@
     </div>
   </header>
 
+  <nav class="tabs" aria-label="Showcase sections">
+    <button type="button" class="tab" data-tab="lab" aria-selected="true">Scenario lab</button>
+    <button type="button" class="tab" data-tab="funnel" aria-selected="false">Funnel</button>
+    <button type="button" class="tab" data-tab="strand" aria-selected="false">Strand</button>
+  </nav>
+
   <div id="banner" class="banner" role="status" hidden></div>
 
-  <main class="layout">
-    <section class="panel editor">
-      <div class="panel-head">
-        <h2>Scenario</h2>
-        <div class="templates" aria-label="Insert a move">
-          <button type="button" data-move="ASSERT">+ ASSERT</button>
-          <button type="button" data-move="CUT">+ CUT</button>
-          <button type="button" data-move="VERIFY">+ VERIFY</button>
-          <button type="button" data-move="RETRACT">+ RETRACT</button>
+  <div id="tab-lab" class="panel-tab">
+    <main class="layout">
+      <section class="panel editor">
+        <div class="panel-head">
+          <h2>Scenario</h2>
+          <div class="templates" aria-label="Insert a move">
+            <button type="button" data-move="ASSERT">+ ASSERT</button>
+            <button type="button" data-move="CUT">+ CUT</button>
+            <button type="button" data-move="VERIFY">+ VERIFY</button>
+            <button type="button" data-move="RETRACT">+ RETRACT</button>
+          </div>
         </div>
-      </div>
-      <textarea id="scenario" spellcheck="false" aria-label="Scenario JSON"></textarea>
-      <p class="hint">Rationals are strings: <code>"3"</code>, <code>"-2"</code>, <code>"3/2"</code>.
-        Every number in the results is recomputed by the core; nothing the proposer says is trusted.</p>
-    </section>
+        <textarea id="scenario" spellcheck="false" aria-label="Scenario JSON">{
+  "moves": []
+}</textarea>
+        <p class="hint">Rationals are strings: <code>"3"</code>, <code>"-2"</code>, <code>"3/2"</code>.
+          Every number in the results is recomputed by the core; nothing the proposer says is trusted.</p>
+        <p class="hint">Default mode is a zero-spend replay. The seal button hashes a fixed sample in the browser and does not call a model.</p>
+        <button id="seal-sample" type="button">Check SHA-256 seal</button>
+      </section>
 
-    <section class="panel results">
-      <div class="cards">
-        <div class="card"><span class="label">Final defect D(s)</span><span id="defect" class="value">–</span></div>
-        <div class="card"><span class="label">Obstruction Φ₁</span><span id="obstruction" class="value">–</span></div>
-        <div class="card"><span class="label">Admitted</span><span id="admitted" class="value">–</span></div>
+      <section class="panel results">
+        <div class="cards">
+          <div class="card"><span class="label">Final defect D(s)</span><span id="defect" class="value">–</span></div>
+          <div class="card"><span class="label">Obstruction Φ₁</span><span id="obstruction" class="value">–</span></div>
+          <div class="card"><span class="label">Admitted</span><span id="admitted" class="value">–</span></div>
+        </div>
+        <div class="figures">
+          <figure>
+            <figcaption>Graph and final claims</figcaption>
+            <svg id="graph" viewBox="0 0 320 260" role="img" aria-label="Constraint graph"></svg>
+          </figure>
+          <figure>
+            <figcaption>Defect after each step</figcaption>
+            <svg id="chart" viewBox="0 0 320 260" role="img" aria-label="Defect by step"></svg>
+          </figure>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Step</th><th>Move</th><th>Status</th><th>Before</th><th>After</th><th>Details</th></tr></thead>
+            <tbody id="trace"></tbody>
+          </table>
+        </div>
+        <p id="digest" class="muted mono"></p>
+      </section>
+    </main>
+  </div>
+
+  <div id="tab-funnel" class="panel-tab" hidden>
+    <section class="panel">
+      <h2>3-tier proposal funnel</h2>
+      <p>Sealed fixture from the inherited Tier-1 generator. These counts are replayed, not a fresh paid search.</p>
+      <ol class="funnel" id="funnel-steps">
+        <li><strong>Tier 1.</strong> 1024 Python and Lean 4 workflow permutations, collapsed to 372 operational quotient classes. Port mismatch, budget, and self-intolerant candidates are refused at USD 0.00.</li>
+        <li><strong>Tier 2.</strong> Equivalence-class representatives go to the opus-5.5-xhigh role for counterexamples, mutation-kill probes, Thymus screening, and a strict token-plus-call Pareto check. Offline replay is the default.</li>
+        <li><strong>Tier 3.</strong> Survivors go to the fable-5.2 role for Lean 4 (<code>FunnelCompressionClosure.lean</code>) and Rust (<code>pfp_operads</code>, <code>pfp_immune</code>) closure. A live call needs an explicit whole-run budget manifest.</li>
+      </ol>
+      <div class="cards" id="funnel-cards">
+        <div class="card"><span class="label">Generated</span><span class="value">1024</span></div>
+        <div class="card"><span class="label">Quotient classes</span><span class="value">372</span></div>
+        <div class="card"><span class="label">Provider calls</span><span class="value">0</span></div>
       </div>
-      <div class="figures">
-        <figure>
-          <figcaption>Graph and final claims</figcaption>
-          <svg id="graph" viewBox="0 0 320 260" role="img" aria-label="Constraint graph"></svg>
-        </figure>
-        <figure>
-          <figcaption>Defect after each step</figcaption>
-          <svg id="chart" viewBox="0 0 320 260" role="img" aria-label="Defect by step"></svg>
-        </figure>
-      </div>
+    </section>
+  </div>
+
+  <div id="tab-strand" class="panel-tab" hidden>
+    <section class="panel">
+      <h2>Strand extraction replay</h2>
+      <p>Six sealed arms share one frozen curriculum. The holdout delta between the full loop and PFP alone is 0 on this receipt. That null stays in the record.</p>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Step</th><th>Move</th><th>Status</th><th>Before</th><th>After</th><th>Details</th></tr></thead>
-          <tbody id="trace"></tbody>
+          <thead><tr><th>Arm</th><th>Memory</th><th>Token base</th></tr></thead>
+          <tbody>
+            <tr><td>Direct</td><td>none</td><td>40</td></tr>
+            <tr><td>Best-of-k</td><td>none across tasks</td><td>160</td></tr>
+            <tr><td>PFP alone</td><td>none across tasks</td><td>70</td></tr>
+            <tr><td>Naive memory</td><td>append every past failure</td><td>220</td></tr>
+            <tr><td>Full loop</td><td>screened antibody, quotiented operad, Pareto compression</td><td>55</td></tr>
+          </tbody>
         </table>
       </div>
-      <p id="digest" class="muted mono"></p>
+      <p id="strand-readout" class="mono">Replay has not been opened.</p>
+      <div class="controls">
+        <button id="replay" type="button">Replay sealed receipt</button>
+        <label for="invite">Invite token</label>
+        <input id="invite" type="password" autocomplete="off" placeholder="required before any live call">
+        <button id="live" type="button">Live mode</button>
+      </div>
+      <p class="hint">Live mode stays closed in this bundle. A token does not start a provider call.</p>
     </section>
-  </main>
-  <script src="/static/app.js"></script>
+  </div>
+
+  <script id="sealed-sample" type="application/json">{"authority_effect":"None","move":"ASSERT"}
+</script>
+  <script>
+    (function () {
+      function mount(prefix) {
+        var link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = prefix + "app.css";
+        document.head.appendChild(link);
+        var script = document.createElement("script");
+        script.src = prefix + "app.js";
+        document.body.appendChild(script);
+      }
+      if (location.protocol === "file:") {
+        mount("");
+        return;
+      }
+      fetch("app.css").then(function (response) {
+        mount(response.ok ? "" : "/static/");
+      }).catch(function () {
+        mount("/static/");
+      });
+    })();
+  </script>
 </body>
 </html>

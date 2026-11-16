@@ -164,6 +164,8 @@ packages = [
     "pfp.workflows.wf0003",
     "pfp.workflows.wf0004",
     "pfp.workflows.wf0005",
+    "pfp_core",
+    "pfp_core.workflow_families",
     "pfp_lab",
     "pfp_lab.cli",
     "pfp_lab.core",
@@ -219,6 +221,40 @@ ignore = ["PLR2004", "PLR0913", "PLR0917"]
 
 [tool.ruff.lint.per-file-ignores]
 "**/tests/**" = ["S101", "S603", "S607", "S104", "S105", "S106", "PLC0415", "PLR0402"]
+# Inherited modules fail the release lint for reasons that predate this branch.
+# Import order in several of them is load-bearing: a package import extends sys.path
+# before the next import. The new release modules are not listed here.
+"pfp_core/fidelity.py" = ["I001", "UP037"]
+"pfp_core/legacy_importer.py" = ["I001"]
+"pfp_core/normalize.py" = ["I001"]
+"pfp_core/operad_pipe.py" = ["B018", "I001"]
+"pfp_core/tests/test_hardening_20261111.py" = ["I001"]
+"pfp_core/tests/test_pfp_core.py" = ["I001", "PLE2515"]
+"pfp_core/tests/test_llm_mechanisms.py" = ["E402"]
+"pfp_core/workflow_families/base.py" = ["PLW2901", "S105"]
+"pfp_core/workflow_families/learning.py" = ["PLR0911"]
+"pfp_core/workflow_families/tests/test_repair.py" = ["F401"]
+"tests/test_note001_duality.py" = ["F841", "I001", "PLR1730"]
+"tests/test_note001_exactness_and_laplacian.py" = ["B007", "B905", "E501", "F401", "I001", "N803", "N806"]
+"tests/test_note002_capacities.py" = ["F841", "I001", "W293"]
+"tests/test_note003_degree_separation.py" = ["E501", "I001", "UP006", "UP035"]
+"tests/test_note004_wave1.py" = ["E741", "F841", "I001", "UP006", "UP035"]
+"tests/test_note_001_quotient_norm.py" = ["I001", "PLR1730"]
+"tests/test_paper001_reference_governor_review.py" = ["E402", "I001"]
+"tests/test_paper001_weighted_nullspace_uniqueness.py" = ["F841", "I001"]
+"tests/test_paper002_stoquastic_thermal_nonnegativity.py" = ["I001", "N803", "N806"]
+"tests/test_paper_002_native_and_convergence.py" = ["E402", "E501", "F401", "I001"]
+"tests/test_paper_002_search_trace.py" = ["E402", "E501", "F401", "I001", "PLR0133", "PLR0911"]
+"tests/test_paper_003_receipts.py" = ["E402", "F401", "I001"]
+"tests/test_paper_003_substantive.py" = ["E402", "F401", "F841", "I001"]
+"tests/test_paper_003_verifiers_and_exhaustion.py" = ["E402", "E501", "I001", "N802", "PLR0912", "PLR0915", "PLR5501"]
+"tests/test_paper_004_wave4.py" = ["E402", "E501", "F401", "I001", "SIM108", "UP006", "UP035"]
+"tests/test_w2_shard_a.py" = ["E402", "E501", "F401", "I001"]
+"tests/test_w2_shard_b.py" = ["B023", "B905", "F401", "F841", "I001", "N806", "RET505"]
+"tests/test_w2_shard_c.py" = ["F401", "F841", "I001"]
+"tests/test_w2w2_shard_a.py" = ["E402", "F401", "F841", "I001", "UP034"]
+"tests/test_w2w2_shard_b.py" = ["B905", "F401", "I001", "N806", "PLR1730", "RET505", "UP035"]
+"tests/test_w2w2_shard_d.py" = ["E501", "F841", "I001", "PLR0911", "PLR0912", "PLR1714", "SIM102", "UP006", "UP035"]
 
 [tool.importlinter]
 root_packages = ["pfp_lab"]
