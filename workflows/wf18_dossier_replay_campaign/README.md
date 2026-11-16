@@ -5,16 +5,17 @@
 
 **Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet. The pilots/ folder holds data from earlier model experiments run with an older harness; they are records, not runs of this runner.
 
-**Run it offline** (no model call, no spend), from the repository root:
+**Run it offline** (no model call, no spend), from the repository root. The first line builds the Rust host once:
 
 ```powershell
+cargo build --release -p pfp_operads --manifest-path code/rust/Cargo.toml
 python -m pfp_core.workflow_families run WF18
 python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF18-"
 ```
 
-**The check:** `dossier_replay_reproduces_grades`. Only this check can certify; a model reply is evidence for it, never a verdict.
+**The check:** `dossier_replay_reproduces_grades`. Only this check can certify; a model reply is evidence for it, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
-**Code:** [`pfp_core/workflow_families/layer6.py`](../../pfp_core/workflow_families/layer6.py) (`DossierReplayCampaign`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf18.rs`](../../code/rust/pfp_operads/src/families/wf18.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer6.py`](../../pfp_core/workflow_families/layer6.py) (`DossierReplayCampaign`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** harness gate. **Builds on:** [WF6](../wf06_dialect_sweep/README.md), [WF12](../wf12_mechanism_control_arms/README.md).

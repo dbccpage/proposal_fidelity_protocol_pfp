@@ -1,0 +1,246 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf18.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf18.rs",
+      "language": "Rust",
+      "sha256": "0df032bb106fd38ed47af327b684bf06a001e67a5e6e7fea1c88bd002d10210d"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf18-tests:v1",
+    "symbols": [
+      "sha",
+      "canonical",
+      "feasible",
+      "negative",
+      "cell",
+      "cells",
+      "pins",
+      "task_of",
+      "task",
+      "request",
+      "run",
+      "outcomes",
+      "bad_task",
+      "edit",
+      "cleared",
+      "the_registry_names_the_family",
+      "a_dossier_whose_every_grade_reproduces_is_certified",
+      "the_host_asks_nothing",
+      "a_reply_that_nothing_asked_for_is_not_accepted",
+      "a_reply_byte_that_drifted_is_refused_with_the_cell",
+      "an_input_that_drifted_is_refused_with_the_cell",
+      "drift_is_listed_by_cell_with_the_reply_before_the_input",
+      "a_digest_that_is_missing_or_not_text_is_drift",
+      "a_digest_is_the_hash_of_the_reply_text_and_of_the_inputs_canonical_form",
+      "a_grade_that_does_not_reproduce_is_refused_with_the_cell",
+      "digests",
+      "the_evidence_of_each_predicate_is_the_names_it_lists",
+      "the_mismatched_cells_are_listed_in_order_of_name",
+      "every_kind_of_grade_is_regraded",
+      "a_parallel_edge_violation_a_grader_might_miss_is_regraded_as_refused",
+      "a_pin_that_does_not_match_the_grader_refuses_first",
+      "a_pin_that_is_missing_or_not_text_does_not_match",
+      "pins_of_other_graders_are_ignored",
+      "a_dossier_states_its_grader_pins_and_cells",
+      "the_dossier_is_read_in_the_order_the_task_lists_its_parts",
+      "a_cell_states_its_input_its_name_its_reply_and_its_grade",
+      "a_cell_is_read_in_the_order_its_parts_are_listed",
+      "the_input_of_a_cell_is_a_weighted_digraph",
+      "each_cell_needs_its_own_name",
+      "a_dossier_of_one_cell_is_replayed"
+    ],
+    "owned_invariants": [
+      "Digests are SHA-256 the tests rebuild themselves, and the grade of each stored reply is worked by hand.",
+      "A drifted reply, a drifted input, a grade that does not reproduce and a pin that does not match are each asserted with the cell or the refusal they name.",
+      "Each unreadable dossier and cell is asserted by its reason, and the dossier and a cell are asserted read in the order their parts are listed."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf18.rs",
+      "language": "Rust",
+      "sha256": "0df032bb106fd38ed47af327b684bf06a001e67a5e6e7fea1c88bd002d10210d"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 24 pass in the recorded run; the suite they belong to killed 77 of 77 eligible WF18 mutants.",
+      "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T22:06:04Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v15-test.run.json",
+        "sha256": "961d394a63c16d206ba212c2f0e771539928f3b958cf63472c35089adc791aa9",
+        "note": "1219 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-clippy.run.json",
+        "sha256": "fe8e4f5bab606fb274fa7fd77441f236d1ef7ab99e2dceb702d6f8ebc1887d08",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-fmt.run.json",
+        "sha256": "fcd4bbf1b7bc812fa56575170d36f18bd3fe6e6e5f73b5be845584264e93a3e1",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-metrics.run.json",
+        "sha256": "e4c24e720d1823e3d047da11b130f1d5d4a45bb021b6b929fc72bb7f1377e61a",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-metrics.json",
+        "sha256": "e204ef1d998e58a6f5b13694279c83863b493ca88e21fcdc395014191976e4f2",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T22:06:07.304821Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf18.rs",
+          "language": "Rust",
+          "sha256": "0df032bb106fd38ed47af327b684bf06a001e67a5e6e7fea1c88bd002d10210d"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf18-tests:v1",
+        "symbols": [
+          "sha",
+          "canonical",
+          "feasible",
+          "negative",
+          "cell",
+          "cells",
+          "pins",
+          "task_of",
+          "task",
+          "request",
+          "run",
+          "outcomes",
+          "bad_task",
+          "edit",
+          "cleared",
+          "the_registry_names_the_family",
+          "a_dossier_whose_every_grade_reproduces_is_certified",
+          "the_host_asks_nothing",
+          "a_reply_that_nothing_asked_for_is_not_accepted",
+          "a_reply_byte_that_drifted_is_refused_with_the_cell",
+          "an_input_that_drifted_is_refused_with_the_cell",
+          "drift_is_listed_by_cell_with_the_reply_before_the_input",
+          "a_digest_that_is_missing_or_not_text_is_drift",
+          "a_digest_is_the_hash_of_the_reply_text_and_of_the_inputs_canonical_form",
+          "a_grade_that_does_not_reproduce_is_refused_with_the_cell",
+          "digests",
+          "the_evidence_of_each_predicate_is_the_names_it_lists",
+          "the_mismatched_cells_are_listed_in_order_of_name",
+          "every_kind_of_grade_is_regraded",
+          "a_parallel_edge_violation_a_grader_might_miss_is_regraded_as_refused",
+          "a_pin_that_does_not_match_the_grader_refuses_first",
+          "a_pin_that_is_missing_or_not_text_does_not_match",
+          "pins_of_other_graders_are_ignored",
+          "a_dossier_states_its_grader_pins_and_cells",
+          "the_dossier_is_read_in_the_order_the_task_lists_its_parts",
+          "a_cell_states_its_input_its_name_its_reply_and_its_grade",
+          "a_cell_is_read_in_the_order_its_parts_are_listed",
+          "the_input_of_a_cell_is_a_weighted_digraph",
+          "each_cell_needs_its_own_name",
+          "a_dossier_of_one_cell_is_replayed"
+        ],
+        "owned_invariants": [
+          "Digests are SHA-256 the tests rebuild themselves, and the grade of each stored reply is worked by hand.",
+          "A drifted reply, a drifted input, a grade that does not reproduce and a pin that does not match are each asserted with the cell or the refusal they name.",
+          "Each unreadable dossier and cell is asserted by its reason, and the dossier and a cell are asserted read in the order their parts are listed."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf18.rs",
+          "language": "Rust",
+          "sha256": "0df032bb106fd38ed47af327b684bf06a001e67a5e6e7fea1c88bd002d10210d"
+        },
+        "profile": "Exact",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected values follow by hand from the request written in the test.",
+          "G3": "Refusals are asserted by code.",
+          "G4": "All 24 pass in the recorded run; the suite they belong to killed 77 of 77 eligible WF18 mutants.",
+          "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T22:05:53Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v15-test.run.json",
+            "sha256": "961d394a63c16d206ba212c2f0e771539928f3b958cf63472c35089adc791aa9",
+            "note": "1219 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-clippy.run.json",
+            "sha256": "fe8e4f5bab606fb274fa7fd77441f236d1ef7ab99e2dceb702d6f8ebc1887d08",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-fmt.run.json",
+            "sha256": "fcd4bbf1b7bc812fa56575170d36f18bd3fe6e6e5f73b5be845584264e93a3e1",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-metrics.run.json",
+            "sha256": "e4c24e720d1823e3d047da11b130f1d5d4a45bb021b6b929fc72bb7f1377e61a",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-metrics.json",
+            "sha256": "e204ef1d998e58a6f5b13694279c83863b493ca88e21fcdc395014191976e4f2",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    }
+  ]
+}

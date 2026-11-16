@@ -1,0 +1,443 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/duality.rs",
+  "target_sha256": "1826acc6396ecf8afe6ece7bedd0e65db8d52abb95911b8970f409c70ba83a52",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test duality --test wf18 --test wf35",
+  "counts": {
+    "killed": 64,
+    "survived": 0,
+    "demonstrably_equivalent": 6,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "pin keeps carriage-return pairs",
+      "old": ".replace(\"\\r\\n\", \"\\n\")",
+      "new": "",
+      "equivalent": "the source file holds only line feeds on this checkout, so the replacement changes nothing the tests can see; it exists for checkouts that store carriage returns",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "pin keeps lone carriage returns",
+      "old": ".replace('\\r', \"\\n\")",
+      "new": "",
+      "equivalent": "the source file holds only line feeds on this checkout, so the replacement changes nothing the tests can see; it exists for checkouts that store carriage returns",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "pin of the empty text",
+      "old": "sha256_hex(&SOURCE.replace",
+      "new": "sha256_hex(&String::new().replace",
+      "outcome": "killed"
+    },
+    {
+      "name": "n read from edges",
+      "old": ".get(\"n\")\n            .and_then(Datum::as_int)",
+      "new": ".get(\"edges\")\n            .and_then(Datum::as_int)",
+      "outcome": "killed"
+    },
+    {
+      "name": "edges read from n",
+      "old": ".get(\"edges\")\n            .and_then(Datum::as_list)\n            .ok_or(\"edges must be a list\")",
+      "new": ".get(\"n\")\n            .and_then(Datum::as_list)\n            .ok_or(\"edges must be a list\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "n reason emptied",
+      "old": "ok_or(\"n must be an exact integer\")",
+      "new": "ok_or(\"\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "edges reason emptied",
+      "old": "ok_or(\"edges must be a list\")",
+      "new": "ok_or(\"\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "edge reason emptied",
+      "old": "ok_or(\"an edge is two integer ends and an exact rational weight\")",
+      "new": "ok_or(\"\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "a bad edge is skipped",
+      "old": "edges: edges.ok_or(\"an edge is two integer ends and an exact rational weight\")?,",
+      "new": "edges: edges.unwrap_or_default(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "edge start read from the end",
+      "old": "            from.as_int()?.clone(),\n            to.as_int()?.clone(),",
+      "new": "            to.as_int()?.clone(),\n            to.as_int()?.clone(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "edge end read from the start",
+      "old": "            from.as_int()?.clone(),\n            to.as_int()?.clone(),",
+      "new": "            from.as_int()?.clone(),\n            from.as_int()?.clone(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "edge weight read from the start",
+      "old": "            rational(weight)?,\n        )),",
+      "new": "            rational(from)?,\n        )),",
+      "outcome": "killed"
+    },
+    {
+      "name": "edge ends swapped",
+      "old": "            from.as_int()?.clone(),\n            to.as_int()?.clone(),",
+      "new": "            to.as_int()?.clone(),\n            from.as_int()?.clone(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a potential of another length is graded",
+      "old": "        if BigInt::from(listed.len()) != self.n {",
+      "new": "        if BigInt::from(listed.len()) == self.n {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a short potential is graded",
+      "old": "        if BigInt::from(listed.len()) != self.n {",
+      "new": "        if BigInt::from(listed.len()) > self.n {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a long potential is graded",
+      "old": "        if BigInt::from(listed.len()) != self.n {",
+      "new": "        if BigInt::from(listed.len()) < self.n {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a potential of any length is graded",
+      "old": "        if BigInt::from(listed.len()) != self.n {",
+      "new": "        if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a potential read from the cycle key",
+      "old": "reply.get(\"potential\").and_then(Datum::as_list)?;",
+      "new": "reply.get(\"negative_cycle\").and_then(Datum::as_list)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a bad potential entry is certified",
+      "old": "Some(phi.map_or(Grade::Refused, |phi| self.feasible(&phi)))",
+      "new": "Some(phi.map_or(Grade::Certified, |phi| self.feasible(&phi)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a bad potential entry falls through",
+      "old": "        Some(phi.map_or(Grade::Refused, |phi| self.feasible(&phi)))",
+      "new": "        phi.map(|phi| self.feasible(&phi))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a potential is certified unchecked",
+      "old": "|phi| self.feasible(&phi)))",
+      "new": "|_| Grade::Certified))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a potential is refused unchecked",
+      "old": "|phi| self.feasible(&phi)))",
+      "new": "|_| Grade::Refused))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a vertex is found one place on",
+      "old": "phi.get(place))",
+      "new": "phi.get(place + 1))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a vertex is found one place back",
+      "old": "phi.get(place))",
+      "new": "phi.get(place.wrapping_sub(1)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "feasibility needs a gap below the weight",
+      "old": "high - low <= *weight)",
+      "new": "high - low < *weight)",
+      "outcome": "killed"
+    },
+    {
+      "name": "feasibility needs a gap above the weight",
+      "old": "high - low <= *weight)",
+      "new": "high - low >= *weight)",
+      "outcome": "killed"
+    },
+    {
+      "name": "feasibility measures the other way",
+      "old": "high - low <= *weight)",
+      "new": "low - high <= *weight)",
+      "outcome": "killed"
+    },
+    {
+      "name": "feasibility adds the ends",
+      "old": "high - low <= *weight)",
+      "new": "high + low <= *weight)",
+      "outcome": "killed"
+    },
+    {
+      "name": "feasibility has the ends swapped",
+      "old": "(Some(low), Some(high)) if",
+      "new": "(Some(high), Some(low)) if",
+      "outcome": "killed"
+    },
+    {
+      "name": "feasibility ignores the weight",
+      "old": "high - low <= *weight)",
+      "new": "high - low <= *high)",
+      "outcome": "killed"
+    },
+    {
+      "name": "feasibility needs one edge to hold",
+      "old": "        let holds = self.edges.iter().all(",
+      "new": "        let holds = self.edges.iter().any(",
+      "outcome": "killed"
+    },
+    {
+      "name": "feasibility holds when an edge fails",
+      "old": "        if holds {\n            Grade::Certified",
+      "new": "        if !holds {\n            Grade::Certified",
+      "outcome": "killed"
+    },
+    {
+      "name": "feasibility is always certified",
+      "old": "        if holds {\n            Grade::Certified",
+      "new": "        if true {\n            Grade::Certified",
+      "outcome": "killed"
+    },
+    {
+      "name": "feasibility fails with every edge held",
+      "old": "        if holds {\n            Grade::Certified\n        } else {\n            Grade::Refused\n        }",
+      "new": "        if holds {\n            Grade::Refused\n        } else {\n            Grade::Refused\n        }",
+      "outcome": "killed"
+    },
+    {
+      "name": "feasibility refuses a typed way",
+      "old": "        } else {\n            Grade::Refused\n        }\n    }\n\n    /// The lightest",
+      "new": "        } else {\n            Grade::TypedRefusal\n        }\n    }\n\n    /// The lightest",
+      "outcome": "killed"
+    },
+    {
+      "name": "an edge end outside the vertices is ignored",
+      "old": "matches!((at(from), at(to)), (Some(low), Some(high)) if high - low <= *weight)",
+      "new": "!matches!((at(from), at(to)), (Some(low), Some(high)) if high - low > *weight)",
+      "outcome": "killed"
+    },
+    {
+      "name": "the lightest edge is the heaviest",
+      "old": "            if weight < *held {",
+      "new": "            if weight > *held {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the lightest edge is the first",
+      "old": "            if weight < *held {",
+      "new": "            if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the lightest edge is the last",
+      "old": "            if weight < *held {",
+      "new": "            if true {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the lightest edge needs a strict drop",
+      "old": "            if weight < *held {",
+      "new": "            if weight <= *held {",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "replacing the held weight by an equal weight leaves the lightest weight unchanged"
+    },
+    {
+      "name": "the lightest edges are not kept",
+      "old": "                *held = weight;",
+      "new": "                let _ = weight;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a cycle is read from the potential key",
+      "old": "let listed = reply.get(\"negative_cycle\").and_then(Datum::as_list);",
+      "new": "let listed = reply.get(\"potential\").and_then(Datum::as_list);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a cycle may be one vertex",
+      "old": "            .filter(|ends| ends.len() >= 2)",
+      "new": "            .filter(|ends| ends.len() >= 1)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a cycle needs three vertices",
+      "old": "            .filter(|ends| ends.len() >= 2)",
+      "new": "            .filter(|ends| ends.len() >= 3)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a cycle may be empty",
+      "old": "            .filter(|ends| ends.len() >= 2)",
+      "new": "            .filter(|_| true)",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "an empty walk has no steps and its weights add up to zero, which is not below zero, so it is refused here as well"
+    },
+    {
+      "name": "a cycle of two is too short",
+      "old": "            .filter(|ends| ends.len() >= 2)",
+      "new": "            .filter(|ends| ends.len() > 2)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a cycle with a bad end is kept",
+      "old": "            .and_then(|ends| ends.iter().map(Datum::as_int).collect());",
+      "new": "            .map(|ends| ends.iter().filter_map(Datum::as_int).collect());",
+      "outcome": "killed"
+    },
+    {
+      "name": "a cycle is not closed",
+      "old": "ends.iter().zip(ends.iter().cycle().skip(1));",
+      "new": "ends.iter().zip(ends.iter().skip(1));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a cycle closes on the second vertex",
+      "old": "ends.iter().zip(ends.iter().cycle().skip(1));",
+      "new": "ends.iter().zip(ends.iter().cycle().skip(2));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a cycle steps to itself",
+      "old": "ends.iter().zip(ends.iter().cycle().skip(1));",
+      "new": "ends.iter().zip(ends.iter().cycle());",
+      "outcome": "killed"
+    },
+    {
+      "name": "a cycle step goes backwards",
+      "old": "lightest.get(&(*from, *to)).copied())",
+      "new": "lightest.get(&(*to, *from)).copied())",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing edge weighs nothing",
+      "old": "            .map(|(from, to)| lightest.get(&(*from, *to)).copied())\n            .collect();\n        let total: Option<Rational> = weights.map(|weights| weights.into_iter().sum());",
+      "new": "            .map(|(from, to)| lightest.get(&(*from, *to)).copied())\n            .collect();\n        let total: Option<Rational> = weights.or(Some(Vec::new())).map(|weights| weights.into_iter().sum());",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "a walk with a step that is no edge would then add up an empty list of weights, which is zero, not below zero, so it is refused as before"
+    },
+    {
+      "name": "a cycle must weigh nothing or less",
+      "old": "Some(total) if total < Rational::zero() => Grade::TypedRefusal,",
+      "new": "Some(total) if total <= Rational::zero() => Grade::TypedRefusal,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a cycle must weigh more than nothing",
+      "old": "Some(total) if total < Rational::zero() => Grade::TypedRefusal,",
+      "new": "Some(total) if total > Rational::zero() => Grade::TypedRefusal,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a cycle must weigh exactly nothing",
+      "old": "Some(total) if total < Rational::zero() => Grade::TypedRefusal,",
+      "new": "Some(total) if total == Rational::zero() => Grade::TypedRefusal,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a cycle is certified",
+      "old": "Some(total) if total < Rational::zero() => Grade::TypedRefusal,",
+      "new": "Some(total) if total < Rational::zero() => Grade::Certified,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a heavy cycle is a typed refusal",
+      "old": "            _ => Grade::Refused,\n        }\n    }\n}",
+      "new": "            _ => Grade::TypedRefusal,\n        }\n    }\n}",
+      "outcome": "killed"
+    },
+    {
+      "name": "a bad cycle is a typed refusal",
+      "old": "        let Some(ends) = ends else {\n            return Grade::Refused;",
+      "new": "        let Some(ends) = ends else {\n            return Grade::TypedRefusal;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a certified grade has the typed refusal word",
+      "old": "Grade::Certified => CERTIFIED,",
+      "new": "Grade::Certified => TYPED_REFUSAL,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a typed refusal has the certified word",
+      "old": "Grade::TypedRefusal => TYPED_REFUSAL,",
+      "new": "Grade::TypedRefusal => CERTIFIED,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a refusal has the certified word",
+      "old": "Grade::Refused => REFUSED,",
+      "new": "Grade::Refused => CERTIFIED,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a refused grade stands",
+      "old": "        self != Grade::Refused",
+      "new": "        self == Grade::Refused",
+      "outcome": "killed"
+    },
+    {
+      "name": "every grade stands",
+      "old": "        self != Grade::Refused",
+      "new": "        true",
+      "outcome": "killed"
+    },
+    {
+      "name": "only a certified grade stands",
+      "old": "        self != Grade::Refused",
+      "new": "        self == Grade::Certified",
+      "outcome": "killed"
+    },
+    {
+      "name": "only a typed refusal stands",
+      "old": "        self != Grade::Refused",
+      "new": "        self == Grade::TypedRefusal",
+      "outcome": "killed"
+    },
+    {
+      "name": "a reply that is not JSON is certified",
+      "old": "        Err(_) => Grade::Refused,",
+      "new": "        Err(_) => Grade::Certified,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a reply that is not JSON is read as a cycle",
+      "old": "        Err(_) => Grade::Refused,",
+      "new": "        Err(_) => item.cycle(&Datum::Null),",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "a null reply holds no negative_cycle, so reading it as a walk gives the same refusal"
+    },
+    {
+      "name": "a reply without a potential is refused",
+      "old": "item.answer(&reply).unwrap_or_else(|| item.cycle(&reply))",
+      "new": "item.answer(&reply).unwrap_or(Grade::Refused)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a reply is read as a cycle first",
+      "old": "item.answer(&reply).unwrap_or_else(|| item.cycle(&reply))",
+      "new": "match item.cycle(&reply) { Grade::Refused => item.answer(&reply).unwrap_or(Grade::Refused), found => found }",
+      "outcome": "killed"
+    },
+    {
+      "name": "a potential reply is always a cycle",
+      "old": "item.answer(&reply).unwrap_or_else(|| item.cycle(&reply))",
+      "new": "item.cycle(&reply)",
+      "outcome": "killed"
+    }
+  ]
+}
