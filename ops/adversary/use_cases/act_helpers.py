@@ -22,17 +22,28 @@ AuthorityEffect: None.
 from __future__ import annotations
 
 import ast
+from dataclasses import dataclass
 import datetime
 import hashlib
 import json
 import re
-from collections.abc import Mapping, Sequence
+from collections.abc import Callable, Mapping, Sequence
 from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
+from eis.domain.pharmacy_models import LearningEvidencePreimageV1
 from operations.domain.rop.result import Err, Ok, Refusal, Result
+from pciv.use_cases.custody import ensure_caller_prompt_genome
+from pciv.use_cases.immunity import resolve_civilization_immune_store
 from pfp.domain.value_objects.seat_turn import SeatTurnRequestV1
+from pfp_core.caller_feedback import (
+    HOLD as _IMMUNE_HOLD,
+    CallerLineageContextV1,
+    ImmuneScreenRequestV1,
+    ImmuneScreenVerdictV1,
+    screen_caller_turn,
+)
 from adversary.domain.evidence import (
     CRITIQUE_REPLY_CONTRACT,
     CandidateCheckV1,
@@ -1466,26 +1477,164 @@ def execute_act7_authorization_gate(
     return Ok((status, selected_cand, verdict_proposal, is_authorized, narrative))
 
 
+@dataclass(frozen=True)
+class Act3SieveResultV1:
+    """Structured result emitted by ``execute_act3_epistemic_sieve``."""
+
+    disposition: str
+    surviving_candidates: tuple[CandidateProposalV1, ...]
+    buried_headstones: tuple[CemeteryHeadstoneV1, ...]
+    per_candidate_verdicts: tuple[ImmuneScreenVerdictV1, ...]
+    sbe_metrics: dict[str, Any]
+    narrative: dict[str, Any]
+    authority_effect: str = "None"
+
+
 def execute_act3_epistemic_sieve(
     objective: str,
     candidates: Sequence[CandidateProposalV1],
     candidates_data: Sequence[dict[str, Any]],
-) -> tuple[dict[str, Any], dict[str, Any]]:
-    """Act III: Epistemic Sieve — Calculates synthetic SBE purity trajectory."""
-    sieve_disposition = "PASS" if candidates else "HOLD"
-    survivor_ids = {c.candidate_id for c in candidates}
-    surviving_data = [item for item in candidates_data if item["candidate_id"] in survivor_ids]
+    *,
+    immune_store: Any | None = None,
+    lineage_ctx: CallerLineageContextV1 | None = None,
+    host_danger_probe: Callable[[CandidateProposalV1, bytes], Any] | None = None,
+    prompt_utf8_bytes: bytes | None = None,
+    run_key: str = "act3_sieve",
+    repo_root: Path | str | None = None,
+    cemetery: Any | None = None,
+    return_result: bool = False,
+) -> tuple[dict[str, Any], dict[str, Any]] | Act3SieveResultV1:
+    """Act III: Epistemic Sieve — screens candidates via EIS ``screen_caller_turn``."""
+    resolved_root = Path(repo_root) if repo_root is not None else Path(__file__).resolve().parents[3]
+    store = (
+        immune_store
+        if immune_store is not None
+        else resolve_civilization_immune_store(None, resolved_root, read_only=True)
+    )
+    p_bytes = prompt_utf8_bytes if prompt_utf8_bytes is not None else objective.encode("utf-8")
+    caller_lineage = (
+        lineage_ctx
+        if lineage_ctx is not None
+        else CallerLineageContextV1(
+            prompt_id=ensure_caller_prompt_genome(p_bytes, {"objective": objective}).prompt_id
+        )
+    )
+
+    by_id: dict[str, dict[str, Any]] = {
+        str(item["candidate_id"]): item
+        for item in candidates_data
+        if isinstance(item, Mapping) and item.get("candidate_id")
+    }
+    surviving: list[CandidateProposalV1] = []
+    headstones: list[CemeteryHeadstoneV1] = []
+    verdicts: list[ImmuneScreenVerdictV1] = []
+    all_fired: list[str] = []
+
+    for cand in candidates:
+        entry = by_id.get(cand.candidate_id)
+        raw_content = str(entry.get("content", "")) if entry is not None else ""
+        c_bytes = raw_content.encode("utf-8")
+
+        danger = None
+        checker_bytes = b""
+        checker_id = "host.public_smoke"
+        if host_danger_probe is not None:
+            probe_out = host_danger_probe(cand, c_bytes)
+            if isinstance(probe_out, tuple) and len(probe_out) == 3:
+                danger, checker_bytes, checker_id = probe_out
+            else:
+                danger = probe_out
+                if danger is not None:
+                    checker_bytes = danger.evidence_digest.encode("utf-8")
+                    checker_id = danger.observer_id
+
+        verdict = screen_caller_turn(
+            ImmuneScreenRequestV1(
+                lineage=caller_lineage,
+                prompt_utf8_bytes=p_bytes,
+                candidate_reply_bytes=c_bytes,
+                signal2_danger=danger,
+            ),
+            store,
+        )
+        verdicts.append(verdict)
+        for ab_id in verdict.fired_antibody_ids:
+            if ab_id not in all_fired:
+                all_fired.append(ab_id)
+
+        if verdict.disposition == _IMMUNE_HOLD:
+            fired_tag = ",".join(verdict.fired_antibody_ids) or (
+                danger.danger_type if danger is not None else "HOST_DANGER"
+            )
+            hs = CemeteryHeadstoneV1(
+                candidate_id=cand.candidate_id,
+                run_key=run_key or "act3_sieve",
+                scene_id="act3_epistemic_sieve",
+                cause_of_death=f"KILLED_BY_ACT3_IMMUNE_SIEVE:{fired_tag}",
+                killing_seat_id="eis_act3_sieve",
+                evidence_refs=tuple(verdict.fired_antibody_ids),
+                candidate_payload_sha256="sha256:" + hashlib.sha256(c_bytes).hexdigest(),
+            )
+            headstones.append(hs)
+            if cemetery is not None and hasattr(cemetery, "record_headstone"):
+                cemetery.record_headstone(hs)
+            if not store.read_only and danger is not None:
+                pred = verdict.fired_antibody_ids[0] if verdict.fired_antibody_ids else danger.danger_type
+                preimage = LearningEvidencePreimageV1(
+                    prompt_id=caller_lineage.prompt_id,
+                    prompt_utf8_bytes=p_bytes,
+                    candidate_reply_bytes=c_bytes,
+                    failure_class=str(danger.danger_type or "ACT3_SIEVE_FAILURE"),
+                    failed_predicates=(pred,),
+                    checker_id=checker_id,
+                    checker_output_bytes=checker_bytes or danger.evidence_digest.encode("utf-8"),
+                )
+                try:
+                    store.record_failure(
+                        lineage=caller_lineage,
+                        preimage=preimage,
+                        target_pattern=re.escape(pred),
+                        positive_fixture="HOST_ACCEPTED_CLEAN_CANDIDATE",
+                        run_id=run_key,
+                        task_id=run_key,
+                        producer_actor=cand.producer_agent_id,
+                    )
+                except ValueError:
+                    pass
+        else:
+            if verdict.normalized_text is not None and isinstance(entry, dict):
+                entry["content"] = verdict.normalized_text
+            surviving.append(cand)
+
+    sieve_disposition = "PASS" if surviving else "HOLD"
+    survivor_ids = {c.candidate_id for c in surviving}
+    surviving_data = [
+        item for item in candidates_data if item.get("candidate_id") in survivor_ids
+    ]
     selected_code = surviving_data[0]["content"] if surviving_data else ""
     sieve_sbe = compute_sbe_metrics(objective + " " + selected_code, dim=28)
 
     narrative = {
         "act_number": "III",
         "title": "Epistemic Sieve",
+        "disposition": sieve_disposition,
+        "fired_antibody_ids": list(all_fired),
         "body": (
-            f"Adversary Epistemic Sieve recorded disposition: {sieve_disposition}. "
+            f"Adversary Epistemic Sieve recorded disposition: {sieve_disposition} "
+            f"(fired antibodies: {all_fired}). "
             "SBE values are deterministic synthetic diagnostics, not verification."
         ),
     }
+    if return_result:
+        return Act3SieveResultV1(
+            disposition=sieve_disposition,
+            surviving_candidates=tuple(surviving),
+            buried_headstones=tuple(headstones),
+            per_candidate_verdicts=tuple(verdicts),
+            sbe_metrics=sieve_sbe,
+            narrative=narrative,
+            authority_effect="None",
+        )
     return sieve_sbe, narrative
 
 
@@ -1664,6 +1813,7 @@ def execute_act7_crystallization(
 
 
 __all__ = [
+    "Act3SieveResultV1",
     "CARRIER_DECLARED",
     "CARRIER_KEYS",
     "CARRIER_NOT_DECLARED",

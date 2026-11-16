@@ -40,6 +40,7 @@ class Severity(str, Enum):
 
 class PharmacyStatus(str, Enum):
     CANDIDATE = "candidate"
+    PROVISIONAL = "provisional"
     ADMITTED = "admitted"
     REJECTED = "rejected"
     #: The defect this antibody guards against never existed -- the detector was
@@ -88,6 +89,13 @@ class Antibody:
     defect_description: str = ""
     occurrences: int = 0
     is_active: bool = False
+    source_prompt_id: str | None = None
+    scope_level: str = "prompt_line"
+    family_id: str | None = None
+    society_id: str | None = None
+    civilization_id: str | None = None
+    thymus_receipt_sha256: str | None = None
+    producer_actor: str = ""
     def __post_init__(self) -> None:
         # The status is a bare `str`, so the enum alone is advisory. Rejecting
         # unknown values here makes it load-bearing.

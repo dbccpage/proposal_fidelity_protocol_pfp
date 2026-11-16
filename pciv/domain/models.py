@@ -296,6 +296,11 @@ class PromptGenomeV1:
             raise ValueError("GENOME_IDENTITY_MISMATCH")
         object.__setattr__(self, "prompt_id", identity)
 
+    @property
+    def content_digest(self) -> str:
+        """Canonical ``sha256:<hex>`` alias compatible with Lamarckian receipts."""
+        return "sha256:" + self.prompt_id.removeprefix("genome_")
+
     def to_dict(self) -> Dict[str, Any]:
         """Lossless JSON representation for durable host storage."""
         return {

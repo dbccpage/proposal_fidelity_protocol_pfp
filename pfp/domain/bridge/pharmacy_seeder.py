@@ -17,12 +17,14 @@ try:
     from eis.domain.pharmacy_models import (
         Antibody,
         ConstraintType,
+        LearningEvidencePreimageV1,
         Operatorizability,
         PharmacyStatus,
         RuntimeAction,
         Severity,
+        compute_learning_evidence_sha256,
     )
-    from eis.domain.pharmacy_seeder import PharmacySeeder
+    from eis.domain.pharmacy_seeder import PharmacySeeder, record_reproduced_failure
     from eis.domain.pharmacy_templates import (
         ANTIBODY_TEMPLATES as DEFAULT_ANTIBODY_TEMPLATES,
     )
@@ -49,6 +51,9 @@ except Exception as exc:
     Severity = _UnavailableComponent  # type: ignore[misc,assignment]
     PharmacyCatalogRepository = _UnavailableComponent  # type: ignore[misc,assignment]
     DEFAULT_ANTIBODY_TEMPLATES = _UnavailableTemplates()  # type: ignore[assignment]
+    LearningEvidencePreimageV1 = _UnavailableComponent  # type: ignore[misc,assignment]
+    compute_learning_evidence_sha256 = _UnavailableComponent  # type: ignore[misc,assignment]
+    record_reproduced_failure = _UnavailableComponent  # type: ignore[misc,assignment]
 
 __all__ = [
     "BridgeUnavailableError",
@@ -61,4 +66,7 @@ __all__ = [
     "Severity",
     "PharmacyCatalogRepository",
     "DEFAULT_ANTIBODY_TEMPLATES",
+    "LearningEvidencePreimageV1",
+    "compute_learning_evidence_sha256",
+    "record_reproduced_failure",
 ]

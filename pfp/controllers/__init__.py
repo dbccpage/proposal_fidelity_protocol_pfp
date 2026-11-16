@@ -16,8 +16,6 @@ if TYPE_CHECKING:
     from .turn_controller import TurnController
     from pfp.controllers.pfp_controller import PfpController
 
-__all__ = list(dict.fromkeys([*__all__, 'PfpController']))
-
 _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     'CodeChangeController': ('.code_change_controller', 'CodeChangeController'),
     'PromptController': ('.prompt_controller', 'PromptController'),
@@ -26,6 +24,8 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     'TurnController': ('.turn_controller', 'TurnController'),
     'PfpController': ('pfp.controllers.pfp_controller', 'PfpController'),
 }
+
+__all__ = list(_LAZY_IMPORTS.keys())
 
 
 def __getattr__(name: str) -> Any:

@@ -273,7 +273,139 @@ class LamarckianMutationReceiptV1:
         return receipt
 
 
+@dataclass(frozen=True)
+class ReproducedFailureCaseV1:
+    """Minimal parent failure case replayed to test whether a child genome cured the defect."""
+
+    case_id: str
+    prompt_utf8_bytes: bytes
+    parent_failing_reply_bytes: bytes
+    failure_class: str
+    witness_sha256: str
+    authority_effect: str = "None"
+
+    def __post_init__(self) -> None:
+        import re as _re
+
+        if type(self.case_id) is not str or not self.case_id.strip():
+            raise ValueError("REPRODUCED_CASE_ID_REQUIRED")
+        if type(self.prompt_utf8_bytes) is not bytes or not self.prompt_utf8_bytes:
+            raise ValueError("REPRODUCED_CASE_PROMPT_BYTES_REQUIRED")
+        if type(self.parent_failing_reply_bytes) is not bytes or not self.parent_failing_reply_bytes:
+            raise ValueError("REPRODUCED_CASE_REPLY_BYTES_REQUIRED")
+        if type(self.failure_class) is not str or not self.failure_class.strip():
+            raise ValueError("REPRODUCED_CASE_FAILURE_CLASS_REQUIRED")
+        hex_part = (
+            self.witness_sha256.removeprefix("sha256:")
+            if isinstance(self.witness_sha256, str)
+            else ""
+        )
+        if not _re.fullmatch(r"[0-9a-f]{64}", hex_part):
+            raise ValueError(f"REPRODUCED_CASE_WITNESS_INVALID:{self.witness_sha256!r}")
+        if self.authority_effect != "None":
+            raise ValueError("AUTHORITY_EFFECT_MUST_BE_NONE")
+
+
+@dataclass(frozen=True)
+class LineageCureReceiptV1:
+    """Receipt attesting whether a Lamarckian child genome cured or relapsed on the parent failure."""
+
+    receipt_id: str
+    parent_genome_id: str
+    child_genome_id: str
+    lamarckian_receipt_id: str
+    antibody_id: str
+    antibody_screened: bool
+    antibody_fired_on_parent_failure: bool
+    child_signal1_fired: bool
+    host_failure_reproduced: bool
+    child_checker_receipt_sha256: str
+    cure_status: str
+    authority_effect: str = "None"
+
+    def __post_init__(self) -> None:
+        import re as _re
+
+        for attr in (
+            "receipt_id",
+            "parent_genome_id",
+            "child_genome_id",
+            "lamarckian_receipt_id",
+            "child_checker_receipt_sha256",
+        ):
+            val = getattr(self, attr)
+            if type(val) is not str or not _re.fullmatch(r"sha256:[0-9a-f]{64}", val):
+                raise ValueError(f"INVALID_CURE_SHA256_REF:{attr}:{val!r}")
+        if type(self.antibody_id) is not str or not self.antibody_id.strip():
+            raise ValueError("INVALID_CURE_ANTIBODY_ID")
+        for battr in (
+            "antibody_screened",
+            "antibody_fired_on_parent_failure",
+            "child_signal1_fired",
+            "host_failure_reproduced",
+        ):
+            if type(getattr(self, battr)) is not bool:
+                raise TypeError(f"{battr} must be an exact bool")
+        if self.cure_status not in ("RELAPSED_BURIED", "CURED_ADOPTED"):
+            raise ValueError(f"INVALID_CURE_STATUS:{self.cure_status!r}")
+        if self.authority_effect != "None":
+            raise ValueError("AUTHORITY_EFFECT_MUST_BE_NONE")
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        parent_genome_id: str,
+        child_genome_id: str,
+        lamarckian_receipt_id: str,
+        antibody_id: str,
+        antibody_screened: bool,
+        antibody_fired_on_parent_failure: bool,
+        child_signal1_fired: bool,
+        host_failure_reproduced: bool,
+        child_checker_receipt_sha256: str,
+        cure_status: str,
+    ) -> "LineageCureReceiptV1":
+        """Create a content-addressed lineage cure receipt."""
+        import hashlib as _hashlib
+        import json as _json
+
+        payload = {
+            "antibody_fired_on_parent_failure": antibody_fired_on_parent_failure,
+            "antibody_id": antibody_id,
+            "antibody_screened": antibody_screened,
+            "authority_effect": "None",
+            "child_checker_receipt_sha256": child_checker_receipt_sha256,
+            "child_genome_id": child_genome_id,
+            "child_signal1_fired": child_signal1_fired,
+            "cure_status": cure_status,
+            "host_failure_reproduced": host_failure_reproduced,
+            "lamarckian_receipt_id": lamarckian_receipt_id,
+            "parent_genome_id": parent_genome_id,
+        }
+        raw = _json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode(
+            "utf-8"
+        )
+        receipt_id = "sha256:" + _hashlib.sha256(raw).hexdigest()
+        return cls(
+            receipt_id=receipt_id,
+            parent_genome_id=parent_genome_id,
+            child_genome_id=child_genome_id,
+            lamarckian_receipt_id=lamarckian_receipt_id,
+            antibody_id=antibody_id,
+            antibody_screened=antibody_screened,
+            antibody_fired_on_parent_failure=antibody_fired_on_parent_failure,
+            child_signal1_fired=child_signal1_fired,
+            host_failure_reproduced=host_failure_reproduced,
+            child_checker_receipt_sha256=child_checker_receipt_sha256,
+            cure_status=cure_status,
+            authority_effect="None",
+        )
+
+
 __all__ = [
     "CochainResidualV1",
     "LamarckianMutationReceiptV1",
+    "LineageCureReceiptV1",
+    "ReproducedFailureCaseV1",
 ]

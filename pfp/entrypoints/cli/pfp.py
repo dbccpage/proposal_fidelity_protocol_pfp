@@ -12,8 +12,6 @@ from pathlib import Path
 from types import SimpleNamespace
 from typing import List, Optional
 
-from ...controllers.pfp_controller import PfpController
-
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
@@ -117,6 +115,9 @@ def main(argv: Optional[List[str]] = None) -> int:
         return _seed_command(args, parser)
     if args.command in ("prepare-task", "check-task"):
         return _task_command(args)
+
+    from ...controllers.pfp_controller import PfpController
+
     controller = PfpController()
 
     if args.command == "run-demo":

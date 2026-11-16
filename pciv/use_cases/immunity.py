@@ -6,7 +6,8 @@ AuthorityEffect: None.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Dict, List, Sequence, Set, Tuple
+from pathlib import Path
+from typing import Any, Dict, List, Mapping, Sequence, Set, Tuple
 
 
 class ImmunityPropagationEngineV1:
@@ -129,3 +130,71 @@ class LineageTaintEngineV1:
             for parent, child in edges:
                 if parent in self._tainted_nodes:
                     self._tainted_nodes.add(child)
+
+
+SUPPORTED_IMMUNE_REGISTRY_URIS = frozenset({"oeeis:registry:v1"})
+
+
+def resolve_civilization_immune_store(
+    civ: Any | None,
+    repo_root: Path,
+    *,
+    read_only: bool = False,
+    family_index: Mapping[str, Any] | None = None,
+    societies: Mapping[str, Any] | None = None,
+) -> Any:
+    """Resolve a civilization registry string (e.g. ``oeeis:registry:v1``) to the shared pharmacy store."""
+    from eis.domain.pharmacy_catalog import PharmacyCatalogRepository
+    from eis.infrastructure.pharmacy_writer import (
+        filesystem_byte_writer,
+        filesystem_catalog_bytes,
+    )
+    from pciv.domain.society import resolve_society_families
+    from pciv.use_cases.lamarckian_loop import LamarckianReceiptStore
+    from pfp_core.caller_feedback import BoundImmuneStoreV1
+    from pfp_core.immunity import AntibodyRegistry
+
+    root = Path(repo_root)
+    if civ is not None:
+        if civ.global_immune_registry not in SUPPORTED_IMMUNE_REGISTRY_URIS:
+            raise ValueError(
+                f"UNBOUND_IMMUNE_REGISTRY: {civ.global_immune_registry!r}"
+            )
+        if societies is not None:
+            for soc_id in civ.society_ids:
+                soc = societies.get(soc_id)
+                if soc is None:
+                    raise ValueError(f"DANGLING_SOCIETY_ID: {soc_id!r}")
+                if family_index is not None:
+                    resolve_society_families(soc, family_index)
+    elif societies is not None and family_index is not None:
+        for soc in societies.values():
+            resolve_society_families(soc, family_index)
+
+    catalog_file = root / "eis" / "antibodies" / "pharmacy_catalog.json"
+    telemetry_dir = root / "_ic" / "nara" / "_archive" / "telemetry" / "antibodies"
+    repo = PharmacyCatalogRepository(
+        root,
+        catalog_file=catalog_file,
+        telemetry_dir=telemetry_dir,
+        byte_writer=filesystem_byte_writer if not read_only else None,
+        byte_source=filesystem_catalog_bytes,
+    )
+    if not read_only and not catalog_file.exists():
+        repo._atomic_write(catalog_file, repo._json_bytes(repo._empty_catalog(with_timestamp=True)))
+    elif catalog_file.exists():
+        repo.load_catalog()
+
+    lineage_file = root / "eis" / "antibodies" / "lamarckian_lineage.jsonl"
+    receipt_store = LamarckianReceiptStore(lineage_file, read_only=read_only)
+    return BoundImmuneStoreV1(
+        repo_root=root,
+        catalog=repo,
+        registry=AntibodyRegistry(),
+        receipt_store=receipt_store,
+        custody_registry=GlobalCustodyRegistryV1(),
+        read_only=read_only,
+        civilization_id=civ.civilization_id if civ is not None else None,
+        family_index=dict(family_index) if family_index is not None else {},
+        societies=dict(societies) if societies is not None else {},
+    )

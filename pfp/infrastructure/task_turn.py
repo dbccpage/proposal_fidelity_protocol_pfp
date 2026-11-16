@@ -9,6 +9,9 @@ from __future__ import annotations
 import base64
 from dataclasses import dataclass, field, replace
 from hashlib import sha256
+import json
+from pathlib import Path
+import re
 
 from pfp.domain.contracts.pfp_runtime import (
     PfpPrompt,
@@ -100,9 +103,17 @@ def prepare_task_turn(*, system: str, user: str, task_id: str, attempt_id: str,
 
 
 def complete_task_turn(gateway, request, *, task_id: str, attempt_id: str,
-    provider=None, model=None, answer_schema=None, checker_id="shape-only-v1"):
+    provider=None, model=None, answer_schema=None, checker_id="shape-only-v1",
+    judges=(), require_checker: bool = False,
+    immune_store=None, lineage=None,
+    model_id: str | None = None,
+    scaffold_digest: str = "task_turn_v1",
+    precedent_set_digest: str = "none"):
     """Compatibility facade for existing complete(request)->(candidate, receipt) ports."""
-    import json
+    import pfp_core.caller_feedback as cf
+    from eis.domain.pharmacy_models import LearningEvidencePreimageV1
+    from pciv.use_cases.custody import ensure_caller_prompt_genome
+    from pciv.use_cases.immunity import resolve_civilization_immune_store
 
     user = request.user
     if request.messages:
@@ -110,6 +121,22 @@ def complete_task_turn(gateway, request, *, task_id: str, attempt_id: str,
     turn = prepare_task_turn(system=request.system or "Carry out the supplied conversation task.",
         user=user, task_id=task_id, attempt_id=attempt_id,
         answer_schema=answer_schema, checker_id=checker_id)
+    prompt_bytes = (turn.prompt.system + "\n" + turn.prompt.user).encode("utf-8")
+    caller_lineage = (
+        lineage
+        if lineage is not None
+        else cf.CallerLineageContextV1(
+            prompt_id=ensure_caller_prompt_genome(
+                prompt_bytes, {"task_id": task_id, "checker_id": checker_id}
+            ).prompt_id
+        )
+    )
+    repo_root = Path(__file__).resolve().parents[2]
+    store = (
+        immune_store
+        if immune_store is not None
+        else resolve_civilization_immune_store(None, repo_root, read_only=True)
+    )
     decoding = request.decoding
     if decoding is not None and decoding.response_format is not None:
         decoding = replace(decoding, response_format={"type": "json_schema", "json_schema": {
@@ -128,8 +155,81 @@ def complete_task_turn(gateway, request, *, task_id: str, attempt_id: str,
         if refusal is None:
             raise
         raise refusal from exc
-    checked = turn.check_completion(candidate.content)
-    if not checked["schema_valid"]:
+    checked = turn.check_completion(candidate.content, judges=judges, require_checker=require_checker)
+    reply_bytes = candidate.content.encode("utf-8", errors="replace")
+    host_failed = (
+        (not checked["schema_valid"])
+        or (checked.get("failure_class", "NONE") != "NONE")
+        or (checked.get("status") == "CHECKER_DEFECT")
+    )
+    danger = None
+    if host_failed:
+        observer = checker_id if checker_id in cf.HOST_OBSERVERS else "host.public_smoke"
+        checker_payload = {
+            "status": checked.get("status"),
+            "failure_class": checked.get("failure_class"),
+            "reason": checked.get("reason", ""),
+            "judges": checked.get("judges", ()),
+        }
+        danger_text = json.dumps(checker_payload, sort_keys=True, separators=(",", ":"))
+        danger = cf.host_danger("PUBLIC_CHECK_FAILED", observer, danger_text, defects=1)
+    verdict = cf.screen_caller_turn(
+        cf.ImmuneScreenRequestV1(
+            lineage=caller_lineage,
+            prompt_utf8_bytes=prompt_bytes,
+            candidate_reply_bytes=reply_bytes,
+            signal2_danger=danger,
+        ),
+        store,
+    )
+    checked["immune_verdict"] = verdict.to_dict()
+    checked["prompt_id"] = caller_lineage.prompt_id
+
+    if host_failed and not store.read_only:
+        judge_reasons = [
+            str(item.get("reason", ""))
+            for item in checked.get("judges", ())
+            if isinstance(item, dict) and not item.get("accepted", True) and item.get("reason")
+        ]
+        failed_preds = tuple(judge_reasons) or (str(checked.get("failure_class", "TASK_FAILURE")),)
+        checker_bytes = json.dumps(
+            {
+                "status": checked.get("status"),
+                "failure_class": checked.get("failure_class"),
+                "reason": checked.get("reason", ""),
+                "judges": checked.get("judges", ()),
+            },
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+        preimage = LearningEvidencePreimageV1(
+            prompt_id=caller_lineage.prompt_id,
+            prompt_utf8_bytes=prompt_bytes,
+            candidate_reply_bytes=reply_bytes,
+            failure_class=str(checked.get("failure_class") or "TASK_TURN_FAILURE"),
+            failed_predicates=failed_preds,
+            checker_id=checker_id,
+            checker_output_bytes=checker_bytes,
+        )
+        raw_pat = (judge_reasons[0] if judge_reasons else str(checked.get("reason") or checked.get("failure_class") or "TASK_FAILURE"))[:80]
+        safe_pat = re.escape(raw_pat.strip() or "TASK_FAILURE")
+        try:
+            store.record_failure(
+                lineage=caller_lineage,
+                preimage=preimage,
+                target_pattern=safe_pat,
+                positive_fixture="HOST_ACCEPTED_CLEAN_RESPONSE",
+                run_id=attempt_id,
+                task_id=task_id,
+                producer_actor="wild_caller",
+                model_id=model_id or (str(model) if model is not None else "unknown_model"),
+                scaffold_digest=scaffold_digest,
+                precedent_set_digest=precedent_set_digest,
+            )
+        except ValueError:
+            pass
+
+    if not checked["schema_valid"] or verdict.disposition == cf.HOLD:
         raise PfpTurnRefusal(checked, candidate=candidate, budget_receipt=receipt)
     answer = checked["answer"]
     if type(answer) is str:

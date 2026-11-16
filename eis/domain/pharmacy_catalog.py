@@ -12,6 +12,8 @@ from .external_admission import HumanAntiSkillAdmissionDecisionV1, HumanAdmissio
 from .pharmacy_models import Antibody, PharmacyStatus
 from .pharmacy_search import rule_content_bytes, rule_content_sha256
 from .ports import CatalogByteSource
+from .thymus import ThymusGate
+from .value_objects import DetectorRule
 
 
 @dataclass(frozen=True)
@@ -232,17 +234,74 @@ class PharmacyCatalogRepository:
             self._atomic_write(self._projection_path(projections[antibody_id]), self._json_bytes(entries[antibody_id]))
         self._atomic_write(self.catalog_file, payload)
 
+    def upsert_managed_record(
+        self,
+        record: Dict[str, Any],
+        *,
+        allowed_existing_statuses: frozenset[str] = frozenset({"candidate", "provisional"}),
+    ) -> Dict[str, Any]:
+        """Persist a managed antibody record and its byte-identical projection cleanly.
+
+        Used when updating observational counts, provisional promotions, or scope
+        metadata on an already-validated catalog without leaving an unconsumed
+        publication marker on disk. Preserves human-judged entries unless explicitly
+        permitted by ``allowed_existing_statuses``.
+        """
+        antibody_id = record.get("antibody_id", "")
+        if not isinstance(antibody_id, str) or not re.fullmatch(r"[a-z0-9_-]+", antibody_id):
+            raise ValueError("PHARMACY_ID_INVALID")
+        if record.get("authority_effect") != "None":
+            raise ValueError("PHARMACY_AUTHORITY_EFFECT_NON_NONE")
+        catalog = self.load_catalog()
+        entries = catalog.setdefault("antibodies", {})
+        projections = catalog.setdefault("managed_projections", {})
+        existing = entries.get(antibody_id)
+        if existing is not None and existing.get("pharmacy_status") not in allowed_existing_statuses:
+            return dict(existing)
+        entry = dict(record)
+        destination = self.candidates_dir / f"{antibody_id}.json"
+        relative = destination.resolve().relative_to(self.repo_root.resolve()).as_posix()
+        entries[antibody_id] = entry
+        projections[antibody_id] = relative
+        payload = self._json_bytes(catalog)
+        self._atomic_write(self._projection_path(relative), self._json_bytes(entry))
+        self._atomic_write(self.catalog_file, payload)
+        return dict(entry)
+
     def publish_admission(
-        self, antibody_id: str, decision: HumanAntiSkillAdmissionDecisionV1,
-        *, applier: HumanAdmissionApplierV1,
+        self,
+        antibody_id: str,
+        decision: HumanAntiSkillAdmissionDecisionV1,
+        *,
+        applier: HumanAdmissionApplierV1,
+        self_panel: Sequence[str] | None = None,
     ) -> tuple[Dict[str, str], str]:
-        """Persist a separately supplied operator decision after the existing gate."""
+        """Persist a separately supplied operator decision after Thymus and authority gates."""
         catalog = self.load_catalog()
         record = catalog["antibodies"][antibody_id]
         if antibody_id not in catalog.get("managed_projections", {}):
             raise ValueError("PHARMACY_UNMANAGED_REVISION")
         if record.get("rule_sha256") != rule_content_sha256(record):
             raise ValueError("PHARMACY_RULE_DIGEST_MISMATCH")
+        producer_actor = record.get("producer_actor", "")
+        if isinstance(producer_actor, str) and producer_actor.strip() and decision.issuer == producer_actor:
+            raise PermissionError("SELF_ADMISSION_REFUSED")
+        if self_panel is not None:
+            selection = ThymusGate(self_panel=self_panel).evaluate_rule(
+                DetectorRule(
+                    rule_id=antibody_id,
+                    target_epitope=str(record.get("failure_class", antibody_id)),
+                    match_pattern=str(record.get("target_pattern", "")),
+                )
+            )
+            if not selection.is_admitted:
+                record["pharmacy_status"] = PharmacyStatus.RETIRED.value
+                record["revoked"] = True
+                self.upsert_managed_record(
+                    record,
+                    allowed_existing_statuses=frozenset({"candidate", "provisional", "admitted"}),
+                )
+                raise ValueError(f"AUTOIMMUNE_RULE_REFUSED:{selection.rationale}")
         result = applier.apply_admission(decision, rule_content_bytes(record))
         if result.get("status") != "ADMITTED":
             raise ValueError(f"PHARMACY_ADMISSION_REFUSED:{result.get('reason', 'unknown')}")

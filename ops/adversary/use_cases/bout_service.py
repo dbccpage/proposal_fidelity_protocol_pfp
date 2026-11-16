@@ -59,7 +59,12 @@ from ..domain.bout_journal import (
     BoutJournalEntryV1,
     BoutJournalPort,
 )
-from ..domain.evidence import ObstructionMeasurementV1, canonical_rational, parse_exact_rational
+from ..domain.evidence import (
+    CheckerVerdict,
+    ObstructionMeasurementV1,
+    canonical_rational,
+    parse_exact_rational,
+)
 from ..domain.graph_ports import GraphExecutionPort, GraphRunReferenceV1
 from ..domain.graph_task import GraphTaskV1
 from ..domain.instruction_ingress import (
@@ -302,6 +307,8 @@ def execute_7act_adversary_bout(
     anti_skill_gate: AntiSkillGatePort | None = None,
     anti_skill_request: AdversaryBoutRequestV1 | None = None,
     dispatch_decision: AntiSkillDecisionV1 | None = None,
+    immune_store: Any | None = None,
+    lineage_ctx: Any | None = None,
     native_support: NativeOperationPort,
 ) -> Result[AdversaryBoutReceiptV1, Refusal]:
     """Execute the complete 7-Act Adversary Swarm bout.
@@ -470,6 +477,8 @@ def execute_7act_adversary_bout(
             anti_skill_gate=anti_skill_gate,
             anti_skill_request=anti_skill_request,
             dispatch_decision=dispatch_decision,
+            immune_store=immune_store,
+            lineage_ctx=lineage_ctx,
             native_support=native_support,
         )
     except Exception as exc:
@@ -804,11 +813,73 @@ def _act_iv_gauge(ctx):
 
 
 def _act_sandbox(ctx):
+    from pfp_core.caller_feedback import HOST_OBSERVERS, host_danger
+
     ctx.progress["act"] = "SANDBOX"
-    ctx.sieve_sbe, sieve_narrative = execute_act3_epistemic_sieve(
-        ctx.objective, ctx.candidates, ctx.candidates_data
+
+    def _probe_candidate(cand, c_bytes: bytes):
+        if ctx.candidate_checker is None:
+            return None
+        res = ctx.candidate_checker.check_candidate(
+            run_key=ctx.run_key,
+            objective=ctx.objective,
+            candidate_id=cand.candidate_id,
+            candidate_bytes=c_bytes,
+            carrier_context=ctx.carrier_ctx,
+        )
+        if res.is_err:
+            ref = res.unwrap_err()
+            ev = f"{ref.code}: {ref.message}"
+            return (
+                host_danger("PUBLIC_CHECK_FAILED", "host.public_smoke", ev, defects=1),
+                ev.encode("utf-8"),
+                "host.public_smoke",
+            )
+        chk = res.unwrap()
+        if chk.verdict is CheckerVerdict.REJECTED:
+            receipt_bytes = chk.checker_receipt_bytes or chk.reason.encode("utf-8")
+            observer = chk.checker_id if chk.checker_id in HOST_OBSERVERS else "host.public_smoke"
+            danger = host_danger(
+                "PUBLIC_CHECK_FAILED",
+                observer,
+                receipt_bytes.decode("utf-8", errors="replace"),
+                defects=1,
+            )
+            return danger, receipt_bytes, chk.checker_id
+        return None
+
+    sieve_res = execute_act3_epistemic_sieve(
+        ctx.objective,
+        ctx.candidates,
+        ctx.candidates_data,
+        immune_store=ctx.immune_store,
+        lineage_ctx=ctx.lineage_ctx,
+        host_danger_probe=_probe_candidate,
+        prompt_utf8_bytes=ctx.objective.encode("utf-8"),
+        run_key=ctx.run_key,
+        repo_root=ctx.repo_root,
+        cemetery=(ctx.rt.emitters.cemetery if getattr(ctx.rt, "emitters", None) else None),
+        return_result=True,
     )
-    ctx.acts_narrative.append(sieve_narrative)
+    ctx.sieve_sbe = sieve_res.sbe_metrics
+    ctx.acts_narrative.append(sieve_res.narrative)
+    ctx.candidates = list(sieve_res.surviving_candidates)
+    ctx.dead_candidates = list(ctx.dead_candidates) + list(sieve_res.buried_headstones)
+    ctx.candidate_payloads = _candidate_payloads(ctx.candidates_data)
+    if sieve_res.disposition == "HOLD" and any(
+        v.disposition == "HOLD_OR_REPAIR" for v in sieve_res.per_candidate_verdicts
+    ):
+        fired = sorted(
+            {aid for v in sieve_res.per_candidate_verdicts for aid in v.fired_antibody_ids}
+        )
+        return Err(
+            Refusal(
+                code="ACT3_IMMUNE_SIEVE_HOLD",
+                message=f"Act III immune sieve held candidates; fired antibodies: {fired}",
+                locus=_LOCUS,
+            )
+        )
+
     sandbox_res = execute_act4_sandbox_verification(
         ctx.rt,
         candidates=ctx.candidates,
@@ -1266,6 +1337,8 @@ def _run_acts(
     anti_skill_request: AdversaryBoutRequestV1 | None,
     dispatch_decision: AntiSkillDecisionV1 | None,
     native_support: NativeOperationPort,
+    immune_store: Any | None = None,
+    lineage_ctx: Any | None = None,
 ) -> Result[AdversaryBoutReceiptV1, Refusal]:
     """The seven acts. ``progress['act']`` names the stage currently running."""
     ctx = SimpleNamespace(
@@ -1286,6 +1359,8 @@ def _run_acts(
         anti_skill_request=anti_skill_request,
         dispatch_decision=dispatch_decision,
         native_support=native_support,
+        immune_store=immune_store,
+        lineage_ctx=lineage_ctx,
         run_key=packet.task_key,
         objective=packet.objective,
         anti_skill_decisions=[],
@@ -1331,6 +1406,8 @@ class AdversarySwarmService:
         require_instruction_ingress: bool = False,
         anti_skill_gate: AntiSkillGatePort | None = None,
         admitted_antibody_reader: AdmittedAntibodyReader | None = None,
+        immune_store: Any | None = None,
+        lineage_ctx: Any | None = None,
         *,
         native_support: NativeOperationPort,
     ) -> None:
@@ -1360,6 +1437,8 @@ class AdversarySwarmService:
         self.require_instruction_ingress = require_instruction_ingress
         self.anti_skill_gate = anti_skill_gate
         self.admitted_antibody_reader = admitted_antibody_reader
+        self.immune_store = immune_store
+        self.lineage_ctx = lineage_ctx
 
     def run_graph(self, task: GraphTaskV1, mode: str) -> Result[GraphRunReferenceV1, Refusal]:
         """The graph entry point uses its licensed checker, never the fixed demonstration runner."""
@@ -1908,6 +1987,8 @@ class AdversarySwarmService:
             anti_skill_gate=self._live_gate(request),
             anti_skill_request=self._live_request(request),
             dispatch_decision=dispatch_decision,
+            immune_store=self.immune_store,
+            lineage_ctx=self.lineage_ctx,
             native_support=self._native_support,
         )
         if res.is_err:
@@ -1986,6 +2067,8 @@ def create_adversary_circuit_runner(
     candidate_checker: CandidateCheckerPort | None = None,
     fixture_seats: bool = True,
     admitted_antibody_reader: AdmittedAntibodyReader | None = None,
+    immune_store: Any | None = None,
+    lineage_ctx: Any | None = None,
     native_support: NativeOperationPort,
 ) -> Callable[[Any, Any, str], Any]:
     """Create an acts_runner function bridging AdversarySevenActCircuit to execute_7act_adversary_bout."""
@@ -2004,6 +2087,8 @@ def create_adversary_circuit_runner(
             candidate_checker=candidate_checker,
             fixture_seats=fixture_seats,
             admitted_antibody_reader=admitted_antibody_reader,
+            immune_store=immune_store,
+            lineage_ctx=lineage_ctx,
             native_support=native_support,
         )
         if res.is_ok:

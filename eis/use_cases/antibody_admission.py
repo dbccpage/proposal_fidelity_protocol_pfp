@@ -10,13 +10,18 @@ admission.
 from __future__ import annotations
 
 from dataclasses import asdict
-from typing import Any, Mapping, Protocol
+from typing import Any, Mapping, Protocol, Sequence
 
 from eis.domain.external_admission import (
     AdmissionError,
     AntibodyObservationV1,
+    HumanAdmissionApplierV1,
+    HumanAntiSkillAdmissionDecisionV1,
 )
+from eis.domain.pharmacy_catalog import PharmacyCatalogRepository
+from eis.domain.pharmacy_models import PharmacyStatus
 from eis.infrastructure.native_domain import native_admission
+from eis.infrastructure.pharmacy_writer import release_publication_marker
 
 
 class ObservationLedgerPort(Protocol):
@@ -57,4 +62,49 @@ def assess_antibody(
     )
 
 
-__all__ = ["ObservationLedgerPort", "assess_antibody"]
+def admit_antibody_by_operator(
+    antibody_id: str,
+    decision: HumanAntiSkillAdmissionDecisionV1,
+    *,
+    catalog: PharmacyCatalogRepository,
+    applier: HumanAdmissionApplierV1 | None = None,
+    self_panel: Sequence[str] | None = None,
+) -> dict[str, Any]:
+    """Screen an antibody via Thymus + fixture polarity, then persist operator admission."""
+    from pfp_core.caller_feedback import screen_antibody_with_thymus
+
+    loaded = catalog.load_catalog()
+    entries = loaded.get("antibodies", {})
+    if antibody_id not in entries:
+        raise KeyError(antibody_id)
+    record = dict(entries[antibody_id])
+    producer_actor = record.get("producer_actor", "")
+    if isinstance(producer_actor, str) and producer_actor.strip() and decision.issuer == producer_actor:
+        raise PermissionError("SELF_ADMISSION_REFUSED: issuer cannot equal producer_actor")
+
+    thymus_receipt = screen_antibody_with_thymus(record, self_panel=self_panel)
+    if not thymus_receipt.is_admitted:
+        record["pharmacy_status"] = PharmacyStatus.RETIRED.value
+        record["revoked"] = True
+        catalog.upsert_managed_record(
+            record,
+            allowed_existing_statuses=frozenset({"candidate", "provisional", "admitted"}),
+        )
+        raise ValueError(f"AUTOIMMUNE_RULE_REFUSED: {thymus_receipt.rationale}")
+
+    _result, marker_path = catalog.publish_admission(
+        antibody_id,
+        decision,
+        applier=applier or HumanAdmissionApplierV1(),
+        self_panel=None,
+    )
+    release_publication_marker(marker_path)
+    admitted_record = dict(catalog.load_catalog()["antibodies"][antibody_id])
+    admitted_record["thymus_receipt_sha256"] = thymus_receipt.receipt_sha256
+    return catalog.upsert_managed_record(
+        admitted_record,
+        allowed_existing_statuses=frozenset({"admitted"}),
+    )
+
+
+__all__ = ["ObservationLedgerPort", "admit_antibody_by_operator", "assess_antibody"]

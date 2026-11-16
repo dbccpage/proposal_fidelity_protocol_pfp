@@ -221,3 +221,42 @@ def test_actual_provider_parser_lone_surrogate_becomes_typed_task_refusal():
     assert checked["reason"] == "INVALID_COMPLETION_UNICODE"
     assert checked["raw_reply_encoding"] == "utf-8-surrogatepass"
     assert base64.b64decode(checked["raw_reply_base64"]) == b"\xed\xa0\x80"
+
+
+def test_wild_task_turn_screens_against_pharmacy_and_records_reproduced_failure_without_swarm(
+    tmp_path,
+):
+    from adversary.domain.providers.types import CandidateRequest, CandidateResponse
+    from pciv.use_cases.immunity import resolve_civilization_immune_store
+
+    store = resolve_civilization_immune_store(None, tmp_path, read_only=False)
+
+    class WildGateway:
+        def complete(self, request, **_options):
+            public = json.loads(request.user)
+            payload = {
+                **{k: public[k] for k in ("task_id", "attempt_id", "input_sha256")},
+                "answer": "float(0.25)",
+            }
+            return CandidateResponse(json.dumps(payload), "test-model", "openrouter"), None
+
+    failing_judge = (("host.public_smoke", lambda _c, _a: (False, "float cast forbidden")),)
+    with pytest.raises(PfpTurnRefusal) as exc:
+        complete_task_turn(
+            WildGateway(),
+            CandidateRequest("Exact only.", "Solve"),
+            task_id="wild-turn-1",
+            attempt_id="att-1",
+            checker_id="host.public_smoke",
+            judges=failing_judge,
+            require_checker=True,
+            immune_store=store,
+        )
+    verdict = exc.value.checked["immune_verdict"]
+    assert verdict["disposition"] == "HOLD_OR_REPAIR"
+    saved = store.catalog.load_catalog()["antibodies"]
+    assert len(saved) == 1
+    entry = next(iter(saved.values()))
+    assert entry["source_prompt_id"] == exc.value.checked["prompt_id"]
+    assert entry["pharmacy_status"] == "candidate"
+    assert entry["authority_effect"] == "None"
