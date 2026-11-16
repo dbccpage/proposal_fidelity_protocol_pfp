@@ -134,6 +134,7 @@ fn rat(value: i64) -> Rational {
     Rational::from_integer(BigInt::from(value))
 }
 
+#[cfg(test)]
 fn graph_of(edges: &[(i64, i64)]) -> (Vec<(BigInt, BigInt)>, Graph) {
     let owned: Vec<(BigInt, BigInt)> = edges
         .iter()
@@ -156,12 +157,15 @@ fn along(values: &[Rational], edge: usize, sign: i8) -> Rational {
 pub fn potential_follows_forest(graph: &Graph, values: &[Rational]) -> bool {
     let forest = graph.forest();
     let potential = graph.potential(values);
-    forest.order.iter().all(|&vertex| match forest.parent[vertex] {
-        None => potential[vertex] == Rational::zero(),
-        Some((above, edge, sign)) => {
-            potential[vertex] == &potential[above] + along(values, edge, sign)
-        }
-    })
+    forest
+        .order
+        .iter()
+        .all(|&vertex| match forest.parent[vertex] {
+            None => potential[vertex] == Rational::zero(),
+            Some((above, edge, sign)) => {
+                potential[vertex] == &potential[above] + along(values, edge, sign)
+            }
+        })
 }
 
 fn crosses(forest: &Forest, vertex: usize, edge: usize) -> bool {
@@ -207,14 +211,18 @@ pub fn chord_support_is_identity(graph: &Graph) -> bool {
     if cycles.len() != forest.chords.len() {
         return false;
     }
-    cycles.iter().zip(forest.chords.iter()).all(|(cycle, &chord)| {
-        let hits: Vec<usize> = cycle
-            .iter()
-            .filter(|(edge, _)| forest.chords.contains(edge))
-            .map(|(edge, _)| *edge)
-            .collect();
-        hits == vec![chord] && walk_sum(cycle, &vec![Rational::zero(); graph.edges().len()]) == Rational::zero()
-    })
+    cycles
+        .iter()
+        .zip(forest.chords.iter())
+        .all(|(cycle, &chord)| {
+            let hits: Vec<usize> = cycle
+                .iter()
+                .filter(|(edge, _)| forest.chords.contains(edge))
+                .map(|(edge, _)| *edge)
+                .collect();
+            hits == vec![chord]
+                && walk_sum(cycle, &vec![Rational::zero(); graph.edges().len()]) == Rational::zero()
+        })
 }
 
 /// A coboundary has defect zero. Adding `delta` on one chord leaves that residual and no tree residual.
@@ -228,10 +236,15 @@ pub fn chord_error_residual(graph: &Graph, potential: &[Rational], delta: i64) -
     values[chord] += rat(delta);
     let explained = graph.potential(&values);
     let residual = graph.residual(&values, &explained);
-    let tree_clear = residual.iter().enumerate().all(|(edge, value)| {
-        forest.chords.contains(&edge) || value.is_zero()
-    });
-    let other_chords_clear = forest.chords.iter().skip(1).all(|&edge| residual[edge].is_zero());
+    let tree_clear = residual
+        .iter()
+        .enumerate()
+        .all(|(edge, value)| forest.chords.contains(&edge) || value.is_zero());
+    let other_chords_clear = forest
+        .chords
+        .iter()
+        .skip(1)
+        .all(|&edge| residual[edge].is_zero());
     if tree_clear && other_chords_clear && residual[chord] == rat(delta) {
         Some(graph.defect(&values))
     } else {
@@ -280,7 +293,8 @@ mod tests {
 
     #[test]
     fn workflow_dag_earlier_order_and_empty_pilot_counterexamples() {
-        let path = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../workflows/dag/workflow_dag.json");
+        let path =
+            Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../workflows/dag/workflow_dag.json");
         let report = inspect_workflow_dag_file(&path).expect("workflow dag");
         assert_eq!(report.node_count, 56);
         assert!(report.earlier_dependency_failures.is_empty());
@@ -296,7 +310,10 @@ mod tests {
         let coboundary = path.coboundary(&potentials);
         assert!(path.defect(&coboundary).is_zero());
         assert!(potential_follows_forest(&path, &coboundary));
-        assert_eq!(chord_error_residual(&path, &potentials, 4), Some(rat(4).abs()));
+        assert_eq!(
+            chord_error_residual(&path, &potentials, 4),
+            Some(rat(4).abs())
+        );
         let child = path
             .forest()
             .parent
@@ -313,7 +330,10 @@ mod tests {
         assert_eq!(star.forest().chords.len(), 2);
         assert!(potential_follows_forest(&star, &star_values));
         assert!(chord_support_is_identity(&star));
-        assert_eq!(chord_error_residual(&star, &star_potential, 5), Some(rat(5)));
+        assert_eq!(
+            chord_error_residual(&star, &star_potential, 5),
+            Some(rat(5))
+        );
         for cycle in star.fundamental_cycles() {
             assert!(walk_sum(&cycle, &star_values).is_zero());
         }
