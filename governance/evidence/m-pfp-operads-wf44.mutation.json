@@ -1,0 +1,600 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf44.rs",
+  "target_sha256": "e81464fff66954ab011c966b96d2e521f6aab73f7d85455d4415a82e8d1f65be",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
+  "counts": {
+    "killed": 97,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "a schema is replaced",
+      "old": "    \"l1_dual_circulation\",\n    \"canonical_rational\",\n];",
+      "new": "    \"l1_dual_circulation\",\n    \"other\",\n];",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF44\",",
+      "new": "    workflow: \"WF440\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Exact certificate presets\",",
+      "new": "    name: \"Presets\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"exact_certificate_presets\",",
+      "new": "    host_check: \"presets\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "on_edges may be shorter",
+      "old": "        .filter(|values| values.len() == graph.graph.edges().len())",
+      "new": "        .filter(|values| values.len() <= graph.graph.edges().len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "on_edges may be longer",
+      "old": "        .filter(|values| values.len() == graph.graph.edges().len())",
+      "new": "        .filter(|values| values.len() >= graph.graph.edges().len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "on_edges error loses its key",
+      "old": "        .ok_or(format!(\"{key} must be one exact rational per edge\"))",
+      "new": "        .ok_or(\"must be one exact rational per edge\".to_owned())",
+      "outcome": "killed"
+    },
+    {
+      "name": "a schema may be anything",
+      "old": "    let schema = schema.filter(|schema| SCHEMAS.contains(schema));",
+      "new": "    let schema = schema.filter(|schema| !schema.is_empty());",
+      "outcome": "killed"
+    },
+    {
+      "name": "schema error reworded",
+      "old": "    let schema = schema.ok_or(\"unknown certificate schema\")?;",
+      "new": "    let schema = schema.ok_or(\"schema\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "edges error reworded",
+      "old": "        .ok_or(\"edges must be a list of pairs of text\")?;",
+      "new": "        .ok_or(\"edges\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the linear task is read from the wrong schema",
+      "old": "    if schema == \"canonical_rational\" {",
+      "new": "    if schema == \"l1_dual_circulation\" {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the potential schema reads w",
+      "old": "        let values = on_edges(task, \"c\", &graph)?;",
+      "new": "        let values = on_edges(task, \"w\", &graph)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the dual schema reads c",
+      "old": "    let weights = on_edges(task, \"w\", &graph)?;",
+      "new": "    let weights = on_edges(task, \"c\", &graph)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the potential schema is the dual one",
+      "old": "    if schema == \"coboundary_potential\" {",
+      "new": "    if schema == \"l1_dual_circulation\" {",
+      "outcome": "killed"
+    },
+    {
+      "name": "caps are read as the weights",
+      "old": "        Some(_) => on_edges(task, \"cap\", &graph)?,",
+      "new": "        Some(_) => on_edges(task, \"w\", &graph)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing cap is zero",
+      "old": "        None => vec![Rational::from_integer(1.into()); weights.len()],",
+      "new": "        None => vec![Rational::from_integer(0.into()); weights.len()],",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing cap is two",
+      "old": "        None => vec![Rational::from_integer(1.into()); weights.len()],",
+      "new": "        None => vec![Rational::from_integer(2.into()); weights.len()],",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing cap has one entry",
+      "old": "        None => vec![Rational::from_integer(1.into()); weights.len()],",
+      "new": "        None => vec![Rational::from_integer(1.into())],",
+      "outcome": "killed"
+    },
+    {
+      "name": "a plus sign does not start a decimal",
+      "old": "    let body = text.strip_prefix(['-', '+']).unwrap_or(text);",
+      "new": "    let body = text.strip_prefix('-').unwrap_or(text);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a minus sign does not start a decimal",
+      "old": "    let body = text.strip_prefix(['-', '+']).unwrap_or(text);",
+      "new": "    let body = text.strip_prefix('+').unwrap_or(text);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a decimal may lack digits before the point",
+      "old": "            .is_some_and(|(whole, rest)| digits(whole) && digits(rest))",
+      "new": "            .is_some_and(|(whole, rest)| digits(rest))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a decimal may lack digits after the point",
+      "old": "            .is_some_and(|(whole, rest)| digits(whole) && digits(rest))",
+      "new": "            .is_some_and(|(whole, rest)| digits(whole))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a decimal needs digits on one side only",
+      "old": "            .is_some_and(|(whole, rest)| digits(whole) && digits(rest))",
+      "new": "            .is_some_and(|(whole, rest)| digits(whole) || digits(rest))",
+      "outcome": "killed"
+    },
+    {
+      "name": "digits may be anything",
+      "old": "    let digits = |part: &str| part.bytes().all(|byte| byte.is_ascii_digit());",
+      "new": "    let digits = |part: &str| !part.is_empty() || part.is_empty();",
+      "outcome": "killed"
+    },
+    {
+      "name": "a decimal point alone is not a decimal",
+      "old": "    if pointed(body) {\n        return true;\n    }",
+      "new": "    if pointed(body) && body != \".\" {\n        return true;\n    }",
+      "outcome": "killed"
+    },
+    {
+      "name": "an upper case exponent is not an exponent",
+      "old": "    let Some((mantissa, exponent)) = body.split_once(['e', 'E']) else {",
+      "new": "    let Some((mantissa, exponent)) = body.split_once('e') else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a lower case exponent is not an exponent",
+      "old": "    let Some((mantissa, exponent)) = body.split_once(['e', 'E']) else {",
+      "new": "    let Some((mantissa, exponent)) = body.split_once('E') else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an exponent sign is not stripped",
+      "old": "    let exponent = exponent.strip_prefix(['-', '+']).unwrap_or(exponent);",
+      "new": "    let exponent = exponent;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a minus sign in an exponent is not stripped",
+      "old": "    let exponent = exponent.strip_prefix(['-', '+']).unwrap_or(exponent);",
+      "new": "    let exponent = exponent.strip_prefix('+').unwrap_or(exponent);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a plus sign in an exponent is not stripped",
+      "old": "    let exponent = exponent.strip_prefix(['-', '+']).unwrap_or(exponent);",
+      "new": "    let exponent = exponent.strip_prefix('-').unwrap_or(exponent);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a mantissa may lack its whole part",
+      "old": "    let mantissa = !whole.is_empty() && (digits(mantissa) || pointed(mantissa));",
+      "new": "    let mantissa = digits(mantissa) || pointed(mantissa);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a mantissa may be anything with a whole part",
+      "old": "    let mantissa = !whole.is_empty() && (digits(mantissa) || pointed(mantissa));",
+      "new": "    let mantissa = !whole.is_empty();",
+      "outcome": "killed"
+    },
+    {
+      "name": "a mantissa may not be an integer",
+      "old": "    let mantissa = !whole.is_empty() && (digits(mantissa) || pointed(mantissa));",
+      "new": "    let mantissa = !whole.is_empty() && pointed(mantissa);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a mantissa may not be a pointed number",
+      "old": "    let mantissa = !whole.is_empty() && (digits(mantissa) || pointed(mantissa));",
+      "new": "    let mantissa = !whole.is_empty() && digits(mantissa);",
+      "outcome": "killed"
+    },
+    {
+      "name": "an exponent may be empty",
+      "old": "    mantissa && !exponent.is_empty() && digits(exponent)",
+      "new": "    mantissa && digits(exponent)",
+      "outcome": "killed"
+    },
+    {
+      "name": "an exponent may be anything",
+      "old": "    mantissa && !exponent.is_empty() && digits(exponent)",
+      "new": "    mantissa && !exponent.is_empty()",
+      "outcome": "killed"
+    },
+    {
+      "name": "the whole part is the text after the point",
+      "old": "        .map_or(mantissa, |(whole, _)| whole);",
+      "new": "        .map_or(mantissa, |(_, rest)| rest);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a decimal number is not a float",
+      "old": "        Datum::Decimal(_) => true,",
+      "new": "        Datum::Decimal(_) => false,",
+      "outcome": "killed"
+    },
+    {
+      "name": "text is not looked at",
+      "old": "        Datum::Text(text) => floatish(text),",
+      "new": "        Datum::Text(_) => false,",
+      "outcome": "killed"
+    },
+    {
+      "name": "lists are not looked into",
+      "old": "        Datum::List(items) => items.iter().any(has_float),",
+      "new": "        Datum::List(_) => false,",
+      "outcome": "killed"
+    },
+    {
+      "name": "maps are not looked into",
+      "old": "        Datum::Map(entries) => entries.values().any(has_float),",
+      "new": "        Datum::Map(_) => false,",
+      "outcome": "killed"
+    },
+    {
+      "name": "one float in a list is not enough",
+      "old": "        Datum::List(items) => items.iter().any(has_float),",
+      "new": "        Datum::List(items) => items.iter().all(has_float),",
+      "outcome": "killed"
+    },
+    {
+      "name": "one float in a map is not enough",
+      "old": "        Datum::Map(entries) => entries.values().any(has_float),",
+      "new": "        Datum::Map(entries) => entries.values().all(has_float),",
+      "outcome": "killed"
+    },
+    {
+      "name": "keys are looked at too",
+      "old": "        Datum::Map(entries) => entries.values().any(has_float),",
+      "new": "        Datum::Map(entries) => entries.values().any(has_float) || entries.keys().any(|key| floatish(key)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a padded denominator is typed",
+      "old": "        Datum::Text(text) if padded(text) => None,",
+      "new": "        Datum::Text(text) if !padded(text) => None,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a padded numerator is not typed",
+      "old": "            .is_some_and(|(_, bottom)| bottom.starts_with('0'))",
+      "new": "            .is_some_and(|(top, _)| top.starts_with('0'))",
+      "outcome": "killed"
+    },
+    {
+      "name": "only a lone zero denominator is untyped",
+      "old": "            .is_some_and(|(_, bottom)| bottom.starts_with('0'))",
+      "new": "            .is_some_and(|(_, bottom)| bottom == \"0\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "a vector may be shorter",
+      "old": "    entries.filter(|entries| entries.len() == count)",
+      "new": "    entries.filter(|entries| entries.len() <= count)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a vector may be longer",
+      "old": "    entries.filter(|entries| entries.len() == count)",
+      "new": "    entries.filter(|entries| entries.len() >= count)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a vertex map need not cover the vertices",
+      "old": "        .filter(|_| graph.covers(listed))",
+      "new": "        .filter(|_| true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a vertex map is read in order of its keys",
+      "old": "        .by_name(listed, typed)\n",
+      "new": "        .by_name(listed, rational)\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "a certificate may have extra fields",
+      "old": "        .filter(|_| entries.len() == N)",
+      "new": "        .filter(|_| entries.len() >= N)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a certificate may lack fields",
+      "old": "    let found: Vec<&Datum> = names.iter().filter_map(|name| entries.get(*name)).collect();",
+      "new": "    let found: Vec<&Datum> = names.iter().filter_map(|name| entries.values().next().filter(|_| name.len() > 0)).collect();",
+      "outcome": "killed"
+    },
+    {
+      "name": "canonical text of an integer has a denominator",
+      "old": "        value.numer().to_string()",
+      "new": "        format!(\"{}/1\", value.numer())",
+      "outcome": "killed"
+    },
+    {
+      "name": "canonical text of a fraction is upside down",
+      "old": "        format!(\"{}/{}\", value.numer(), value.denom())\n    }\n}\n\nfn dot",
+      "new": "        format!(\"{}/{}\", value.denom(), value.numer())\n    }\n}\n\nfn dot",
+      "outcome": "killed"
+    },
+    {
+      "name": "a dot product is a sum of sums",
+      "old": "    left.iter().zip(right).map(|(a, b)| a * b).sum()",
+      "new": "    left.iter().zip(right).map(|(a, b)| a + b).sum()",
+      "outcome": "killed"
+    },
+    {
+      "name": "the coboundary need not match",
+      "old": "    let exact = graph.graph.coboundary(&potential) == values;",
+      "new": "    let exact = graph.graph.coboundary(&potential).len() == values.len();",
+      "outcome": "killed"
+    },
+    {
+      "name": "the coboundary must differ",
+      "old": "    let exact = graph.graph.coboundary(&potential) == values;",
+      "new": "    let exact = graph.graph.coboundary(&potential) != values;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the potential is read from another field",
+      "old": "    let [phi] = fields(certificate, [\"phi\"])?;",
+      "new": "    let [phi] = fields(certificate, [\"f\"])?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the net flow leaves the head",
+      "old": "            *at -= amount;\n        }\n        if let Some(at) = net.get_mut(head) {",
+      "new": "            *at += amount;\n        }\n        if let Some(at) = net.get_mut(head) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the net flow does not enter the head",
+      "old": "            *at += amount;\n        }\n    }\n    net.iter()",
+      "new": "            *at -= amount;\n        }\n    }\n    net.iter()",
+      "outcome": "killed"
+    },
+    {
+      "name": "the net flow ignores the tail",
+      "old": "        if let Some(at) = net.get_mut(tail) {\n            *at -= amount;\n        }\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "the net flow ignores the head",
+      "old": "        if let Some(at) = net.get_mut(head) {\n            *at += amount;\n        }\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "one vertex without net flow is enough",
+      "old": "    net.iter().all(Zero::is_zero)",
+      "new": "    net.iter().any(Zero::is_zero)",
+      "outcome": "killed"
+    },
+    {
+      "name": "the net flow is counted over the edges",
+      "old": "    let mut net = vec![Rational::zero(); graph.names().len()];",
+      "new": "    let mut net = vec![Rational::zero(); graph.graph.edges().len()];",
+      "outcome": "killed"
+    },
+    {
+      "name": "the dual reads r where f belongs",
+      "old": "    let [f, r, z] = fields(certificate, [\"f\", \"r\", \"z\"])?;",
+      "new": "    let [f, r, z] = fields(certificate, [\"f\", \"z\", \"r\"])?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the residual is read with the weights count minus one",
+      "old": "    let residual = vector(r, weights.len())?;",
+      "new": "    let residual = vector(r, weights.len().saturating_sub(1))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the flow is read as long as the vertices",
+      "old": "    let flow = vector(z, weights.len())?;",
+      "new": "    let flow = vector(z, graph.names().len())?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the residual is w less the coboundary",
+      "old": "        .map(|(weight, step)| weight + step);",
+      "new": "        .map(|(weight, step)| weight - step);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the flow is within its cap when it is below it",
+      "old": "        .all(|(amount, cap)| amount.abs() <= *cap);",
+      "new": "        .all(|(amount, cap)| amount.abs() < *cap);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the flow may exceed its cap by its sign",
+      "old": "        .all(|(amount, cap)| amount.abs() <= *cap);",
+      "new": "        .all(|(amount, cap)| *amount <= *cap);",
+      "outcome": "killed"
+    },
+    {
+      "name": "one flow within its cap is enough",
+      "old": "    let within = flow\n        .iter()\n        .zip(caps)\n        .all(",
+      "new": "    let within = flow\n        .iter()\n        .zip(caps)\n        .any(",
+      "outcome": "killed"
+    },
+    {
+      "name": "the residual size is not taken",
+      "old": "    let sizes: Vec<Rational> = residual.iter().map(Signed::abs).collect();",
+      "new": "    let sizes: Vec<Rational> = residual.clone();",
+      "outcome": "killed"
+    },
+    {
+      "name": "the gap is against the weights",
+      "old": "        (\"duality_gap_zero\", dot(weights, &flow) == dot(caps, &sizes)),",
+      "new": "        (\"duality_gap_zero\", dot(weights, &flow) == dot(weights, &sizes)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the gap is against the residual",
+      "old": "        (\"duality_gap_zero\", dot(weights, &flow) == dot(caps, &sizes)),",
+      "new": "        (\"duality_gap_zero\", dot(residual.as_slice(), &flow) == dot(caps, &sizes)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the gap may be a bound",
+      "old": "        (\"duality_gap_zero\", dot(weights, &flow) == dot(caps, &sizes)),",
+      "new": "        (\"duality_gap_zero\", dot(weights, &flow) <= dot(caps, &sizes)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the unknowns are the rows",
+      "old": "    let values = vector(x, rows.first().map_or(0, Vec::len))?;",
+      "new": "    let values = vector(x, rows.len())?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the written entries are not compared in canonical form",
+      "old": "        Datum::Text(text) => *text == canonical(value),",
+      "new": "        Datum::Text(text) => *text != canonical(value),",
+      "outcome": "killed"
+    },
+    {
+      "name": "numbers are not canonical",
+      "old": "        _ => true,\n    });",
+      "new": "        _ => false,\n    });",
+      "outcome": "killed"
+    },
+    {
+      "name": "the solution may be any",
+      "old": "            matches!(solvability, Solvability::Unique(_)),",
+      "new": "            !matches!(solvability, Solvability::Unique(_)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the values are not the solution",
+      "old": "            solvability == Solvability::Unique(values),",
+      "new": "            solvability != Solvability::Unique(values),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the coboundary preset is named differently",
+      "old": "            Preset::Coboundary { .. } => \"coboundary_potential\",",
+      "new": "            Preset::Coboundary { .. } => \"potential\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "the dual preset is named differently",
+      "old": "            Preset::Dual { .. } => \"l1_dual_circulation\",",
+      "new": "            Preset::Dual { .. } => \"dual\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "the linear preset is named differently",
+      "old": "            Preset::Canonical { .. } => \"canonical_rational\",",
+      "new": "            Preset::Canonical { .. } => \"canonical\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "the certificate may be any value",
+      "old": "        .filter(|certificate| certificate.is_map())\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "certificate error reworded",
+      "old": "        .ok_or_else(|| Stop::Malformed(\"certificate\".to_owned()))?;",
+      "new": "        .ok_or_else(|| Stop::Malformed(\"cert\".to_owned()))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "floats are accepted",
+      "old": "    if !checks.record(\"no_float\", !has_float(certificate), &Datum::Null) {",
+      "new": "    if !checks.record(\"no_float\", has_float(certificate), &Datum::Null) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "floats are not recorded",
+      "old": "    if !checks.record(\"no_float\", !has_float(certificate), &Datum::Null) {",
+      "new": "    if has_float(certificate) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the float refusal has another code",
+      "old": "        return Ok(refused(\"FLOAT_IN_CERTIFICATE\", Datum::map([])));",
+      "new": "        return Ok(refused(\"FLOAT\", Datum::map([])));",
+      "outcome": "killed"
+    },
+    {
+      "name": "floats are looked for in the reply",
+      "old": "    if !checks.record(\"no_float\", !has_float(certificate), &Datum::Null) {",
+      "new": "    if !checks.record(\"no_float\", !has_float(reply), &Datum::Null) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the schema need not be named",
+      "old": "    let named = reply.get(\"schema\").and_then(Datum::as_text) == Some(preset.name());",
+      "new": "    let named = true;",
+      "outcome": "killed"
+    },
+    {
+      "name": "any schema name will do",
+      "old": "    let named = reply.get(\"schema\").and_then(Datum::as_text) == Some(preset.name());",
+      "new": "    let named = reply.get(\"schema\").is_some();",
+      "outcome": "killed"
+    },
+    {
+      "name": "well_typed is recorded as true",
+      "old": "    checks.record(\"well_typed\", equations.is_some(), reply);",
+      "new": "    checks.record(\"well_typed\", true, reply);",
+      "outcome": "killed"
+    },
+    {
+      "name": "ill typed has another code",
+      "old": "        return Ok(refused(\"ILL_TYPED\", Datum::map([])));",
+      "new": "        return Ok(refused(\"TYPED\", Datum::map([])));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the equations are recorded against the reply",
+      "old": "        checks.record(name, holds, certificate);",
+      "new": "        checks.record(name, holds, reply);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the schema is not detailed",
+      "old": "    let detail = Datum::map([(\"schema\", Datum::from(preset.name()))]);",
+      "new": "    let detail = Datum::map([(\"schema\", Datum::from(\"none\"))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "judged under another code",
+      "old": "Ok(checks.judge(\"CERTIFICATE_VALID\", detail))",
+      "new": "Ok(checks.judge(\"CERTIFICATE_KEPT\", detail))",
+      "outcome": "killed"
+    }
+  ],
+  "rerun_test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf44"
+}

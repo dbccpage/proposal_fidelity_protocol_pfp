@@ -1,0 +1,283 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/labelled.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/labelled.rs",
+      "language": "Rust",
+      "sha256": "82eafa65c4a1c56edb6299cd23d60450bb89498887e60ecace9974943b2336e4"
+    },
+    "contract_urn": "urn:pfp-operads:families-labelled-tests:v1",
+    "symbols": [
+      "datum",
+      "graph",
+      "ratio",
+      "triangle",
+      "vertices_are_numbered_in_the_order_the_edges_first_name_them",
+      "loops_and_repeated_edges_are_kept_as_written",
+      "an_empty_list_is_the_graph_with_no_vertices",
+      "edges_that_are_not_pairs_of_text_are_not_a_graph",
+      "a_value_covers_the_graph_when_its_keys_are_exactly_the_vertex_names",
+      "a_potential_is_read_by_name_into_vertex_order",
+      "a_potential_with_a_missing_or_unreadable_entry_is_nothing",
+      "any_reading_of_the_entries_comes_back_in_vertex_order"
+    ],
+    "owned_invariants": [
+      "Numbering, covering and reading by name are asserted on a graph whose names do not sort in the order the edges first name them.",
+      "Loops, repeated edges and the empty list are asserted as written.",
+      "A missing and an unreadable entry are each asserted to give nothing, and entries under other keys to be left alone."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/labelled.rs",
+      "language": "Rust",
+      "sha256": "82eafa65c4a1c56edb6299cd23d60450bb89498887e60ecace9974943b2336e4"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 8 pass in the recorded run; the suite they belong to killed 23 of 23 eligible mutants of the shared labelled graph.",
+      "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 0; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T11:13:32Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v12-test.run.json",
+        "sha256": "c1c7e51c0eb07084391826baaecea82b3d91f3ec4782526261031f67143806c3",
+        "note": "870 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
+        "sha256": "22cbb798d2f7300f2ca3c63fbe61d6032e01c51073db01719c5fcb34ad32f60c",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
+        "sha256": "8d8806ba499f22d1ed9deae362c634aeb8f3b0118020360122555f94aa6a9913",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
+        "sha256": "11c4b704b504ab4496e4187cafd96b735cb563b85fcd306d5ba627c2565288fc",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-metrics.json",
+        "sha256": "35e322d577846769b739d4fc2262a8e808a0c66444e7fdad3ee0de45304db976",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T11:00:08.301383Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/labelled.rs",
+          "language": "Rust",
+          "sha256": "82eafa65c4a1c56edb6299cd23d60450bb89498887e60ecace9974943b2336e4"
+        },
+        "contract_urn": "urn:pfp-operads:families-labelled-tests:v1",
+        "symbols": [
+          "datum",
+          "graph",
+          "ratio",
+          "triangle",
+          "vertices_are_numbered_in_the_order_the_edges_first_name_them",
+          "loops_and_repeated_edges_are_kept_as_written",
+          "an_empty_list_is_the_graph_with_no_vertices",
+          "edges_that_are_not_pairs_of_text_are_not_a_graph",
+          "a_value_covers_the_graph_when_its_keys_are_exactly_the_vertex_names",
+          "a_potential_is_read_by_name_into_vertex_order",
+          "a_potential_with_a_missing_or_unreadable_entry_is_nothing",
+          "any_reading_of_the_entries_comes_back_in_vertex_order"
+        ],
+        "owned_invariants": [
+          "Numbering, covering and reading by name are asserted on a graph whose names do not sort in the order the edges first name them.",
+          "Loops, repeated edges and the empty list are asserted as written.",
+          "A missing and an unreadable entry are each asserted to give nothing, and entries under other keys to be left alone."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/labelled.rs",
+          "language": "Rust",
+          "sha256": "82eafa65c4a1c56edb6299cd23d60450bb89498887e60ecace9974943b2336e4"
+        },
+        "profile": "Exact",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected values follow by hand from the request written in the test.",
+          "G3": "Refusals are asserted by code.",
+          "G4": "All 8 pass in the recorded run; the suite they belong to killed 23 of 23 eligible mutants of the shared labelled graph.",
+          "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 0; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T10:26:33Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v12-test.run.json",
+            "sha256": "ee5f813968e3e8802c1d8be777265eeac821ceb003b52ee0fe6e8b8563e66381",
+            "note": "870 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
+            "sha256": "73a978fab4163bc53efc22019f7e50f0912af33c25467f0480e518d5dbbca7ad",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
+            "sha256": "d6e58ab04a4027e91f0df4200c8357109ca84ad2fc7c6f61a84fd0dec7db4778",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
+            "sha256": "2e8dd1a3f41e59d4a22d28d0f867d00184f0373065d30bbf09108d1d521ddabd",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.json",
+            "sha256": "41a41eff69db08a4a194f9c3078f8c424b936d2076017eef778acb0e5e728e19",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    },
+    {
+      "recorded_at": "2026-11-16T11:13:36.463543Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/labelled.rs",
+          "language": "Rust",
+          "sha256": "82eafa65c4a1c56edb6299cd23d60450bb89498887e60ecace9974943b2336e4"
+        },
+        "contract_urn": "urn:pfp-operads:families-labelled-tests:v1",
+        "symbols": [
+          "datum",
+          "graph",
+          "ratio",
+          "triangle",
+          "vertices_are_numbered_in_the_order_the_edges_first_name_them",
+          "loops_and_repeated_edges_are_kept_as_written",
+          "an_empty_list_is_the_graph_with_no_vertices",
+          "edges_that_are_not_pairs_of_text_are_not_a_graph",
+          "a_value_covers_the_graph_when_its_keys_are_exactly_the_vertex_names",
+          "a_potential_is_read_by_name_into_vertex_order",
+          "a_potential_with_a_missing_or_unreadable_entry_is_nothing",
+          "any_reading_of_the_entries_comes_back_in_vertex_order"
+        ],
+        "owned_invariants": [
+          "Numbering, covering and reading by name are asserted on a graph whose names do not sort in the order the edges first name them.",
+          "Loops, repeated edges and the empty list are asserted as written.",
+          "A missing and an unreadable entry are each asserted to give nothing, and entries under other keys to be left alone."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/labelled.rs",
+          "language": "Rust",
+          "sha256": "82eafa65c4a1c56edb6299cd23d60450bb89498887e60ecace9974943b2336e4"
+        },
+        "profile": "Exact",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected values follow by hand from the request written in the test.",
+          "G3": "Refusals are asserted by code.",
+          "G4": "All 8 pass in the recorded run; the suite they belong to killed 23 of 23 eligible mutants of the shared labelled graph.",
+          "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 0; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T11:00:04Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v12-test.run.json",
+            "sha256": "ee5f813968e3e8802c1d8be777265eeac821ceb003b52ee0fe6e8b8563e66381",
+            "note": "870 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
+            "sha256": "73a978fab4163bc53efc22019f7e50f0912af33c25467f0480e518d5dbbca7ad",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
+            "sha256": "d6e58ab04a4027e91f0df4200c8357109ca84ad2fc7c6f61a84fd0dec7db4778",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
+            "sha256": "8e9a063c83d4defaa8512fdb2c090de5830b5a9270b903f0641d6c692a287afc",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.json",
+            "sha256": "35e322d577846769b739d4fc2262a8e808a0c66444e7fdad3ee0de45304db976",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    }
+  ]
+}
