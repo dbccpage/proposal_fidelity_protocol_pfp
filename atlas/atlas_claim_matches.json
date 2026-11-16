@@ -7372,45 +7372,30 @@
     },
     {
       "atlas_id": "ATL-P012-010",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers composition of observation-preserving partial maps.",
-      "proposed_derivation": {
-        "title": "Composite preserves observation",
-        "claim": "If $Q_i(f_i(x))=Q_{i-1}(x)$ on each stage, the composite preserves $Q_0$.",
-        "hypotheses": [
-          "finite dependency DAG",
-          "maps defined along it"
-        ],
-        "derivation": "Induction on topological order: $Q_n(f_n\\cdots f_1x)=Q_{n-1}(f_{n-1}\\cdots f_1x)=\\dots=Q_0(x)$ wherever defined.",
-        "obligations": [
-          "partial-domain bookkeeping"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P012-010"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "composite_preserves: a glued list of partial maps, each carrying its before observation to its after observation, carries the first observation to the last defined output. Partial domains stay Option values.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P012-011",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PFP-HOST-TERMINAL",
-        "PFPAPPREM-C003"
+        "AUDIT-P012-011"
       ],
-      "relation": "supports",
-      "note": "Nodes compute terminal status from host facts; the conditional soundness theorem is not derived.",
-      "proposed_derivation": {
-        "title": "Terminal soundness",
-        "claim": "A terminal checked result is sound for the original task under binding, prerequisite, checker and authority assumptions.",
-        "hypotheses": [
-          "input binding",
-          "prerequisite completion",
-          "checker soundness",
-          "authority state"
+      "relation": "states_same_claim_as",
+      "note": "terminal_sound is the conjunction under the four hypotheses: bound task, checker acceptance, checker soundness, completed prerequisites, and authority state. Host enforcement of those hypotheses stays outside the theorem.",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PFP-HOST-TERMINAL",
+          "PFPAPPREM-C003"
         ],
-        "derivation": "Binding identifies the task; checker soundness gives validity of the bound reply; prerequisites and authority are hypotheses.",
-        "obligations": [
-          "host enforcement of each hypothesis"
-        ]
+        "relation": "supports",
+        "note": "PFP-HOST-TERMINAL and PFPAPPREM-C003 compute terminal status from host facts. They do not discharge the conditional conjunction."
       }
     },
     {
@@ -7429,102 +7414,70 @@
     },
     {
       "atlas_id": "ATL-P013-001",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node.",
-      "proposed_derivation": {
-        "title": "Receipt soundness",
-        "claim": "A receipt admitting $J$ establishes $\\bigwedge_{j\\in J}R_j(P,w)$.",
-        "hypotheses": [
-          "$C_j=\\mathsf{accept}\\Rightarrow R_j$ for each $j\\in J$"
-        ],
-        "derivation": "Each $j\\in J$ has $C_j=\\mathsf{accept}$; apply soundness and conjoin.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P013-001"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "receipt_conjunction: every index admitted in J satisfies R when acceptance implies R.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P013-002",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node.",
-      "proposed_derivation": {
-        "title": "No unchecked extension",
-        "claim": "A receipt for $J$ does not establish $R_k$ for $k\\notin J$.",
-        "hypotheses": [
-          "$R_k$ not entailed by $\\{R_j\\}_{j\\in J}$"
-        ],
-        "derivation": "Countermodel: an interpretation with all $R_j$ true and $R_k$ false.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P013-002"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "unchecked_extension is a Fin 2 countermodel: R holds on J = [0] and fails at k = 1, which is outside J.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P013-003",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node.",
-      "proposed_derivation": {
-        "title": "Unbound quotation",
-        "claim": "A correct witness does not validate an invented quotation without source bytes and span verification.",
-        "hypotheses": [],
-        "derivation": "Countermodel: same witness, two sources, one containing the span and one not.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P013-003"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "unbound_quotation: the same span sits in source A and not in source B.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P013-004",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node.",
-      "proposed_derivation": {
-        "title": "Fail-closed task checking",
-        "claim": "Malformed submissions and task mismatches are refused.",
-        "hypotheses": [],
-        "derivation": "Finite check: run wrong_witness_refused, wrong_task_refused and mandatory_task_claim_retained.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P013-004"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "The frozen replay.py exited PASS with provider_calls 0. The checks were valid_witness, wrong_witness_refused, wrong_task_refused, false_prose_claim_refused, unbound_quote_refused, and mandatory_task_claim_retained. The record is that script only.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P014-001",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "HISTORY-REENTRY-CARRIERS"
+        "AUDIT-P014-001"
       ],
-      "relation": "narrows",
-      "note": "The node checks decoder admissibility on specific nine-element carriers; the general composition and budget laws are not derived.",
-      "proposed_derivation": {
-        "title": "Re-entry composition laws",
-        "claim": "Under edge obligations, $b_0\\circ\\cdots\\circ b_{n-1}$ decodes checked $P_n$ solutions to $P_0$; forward maps compose in reverse; $b_i\\circ f_i=\\mathrm{id}$ composes; with costs $\\ge\\delta>0$ against budget $B$ at most $\\lfloor B/\\delta\\rfloor$ operations run.",
-        "hypotheses": [
-          "Each $b_i$ maps $\\mathrm{Sol}(P_{i+1})\\to\\mathrm{Sol}(P_i)$",
-          "Each $f_i$ maps $\\mathrm{Sol}(P_i)\\to\\mathrm{Sol}(P_{i+1})$",
-          "One shared budget"
+      "relation": "states_same_claim_as",
+      "note": "sections_compose is the identity for a list of sections, and op_budget gives k ≤ B/δ when 0 < δ and k*δ ≤ B. Solution-set adapters are not constructed.",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "HISTORY-REENTRY-CARRIERS"
         ],
-        "derivation": "Induction on $n$ for decoding and coverage. $(b_0\\circ b_1)\\circ(f_1\\circ f_0)=b_0\\circ(b_1\\circ f_1)\\circ f_0=b_0\\circ f_0=\\mathrm{id}$. If $k$ operations ran, $k\\delta\\le B$, so $k\\le\\lfloor B/\\delta\\rfloor$.",
-        "obligations": [
-          "Adapters and checker soundness are not constructed"
-        ]
+        "relation": "narrows",
+        "note": "HISTORY-REENTRY-CARRIERS checks decoder admissibility on specific nine-element carriers. It does not give the general section identity."
       }
     },
     {
       "atlas_id": "ATL-P014-002",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node gives the soundness-without-coverage counterexample.",
-      "proposed_derivation": {
-        "title": "Soundness does not imply coverage",
-        "claim": "There is a sound backward map with no forward coverage map.",
-        "hypotheses": [
-          "$\\mathrm{Sol}(P)=\\{0\\}$",
-          "$\\mathrm{Sol}(P')=\\emptyset$"
-        ],
-        "derivation": "The empty map $\\emptyset\\to\\mathrm{Sol}(P)$ vacuously sends solutions to solutions, but there is no map $\\{0\\}\\to\\emptyset$.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P014-002"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "soundness_without_coverage: a map Empty → Fin 1 exists, and every map Fin 1 → Empty yields False.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P014-003",
@@ -7681,71 +7634,58 @@
     },
     {
       "atlas_id": "ATL-P017-001",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PFP-INPUT-BINDING",
-        "PFP-ACCEPTANCE"
+        "AUDIT-P017-001"
       ],
-      "relation": "supports",
-      "note": "Nodes implement reply-to-task binding and checker-relative acceptance; the channel-independent soundness statement is not derived.",
-      "proposed_derivation": {
-        "title": "Channel-independent soundness",
-        "claim": "If the decoder binds replies to $P$ and $C(P,w)=\\mathsf{accept}\\Rightarrow R(P,w)$, no invalid candidate is accepted on any channel.",
-        "hypotheses": [
-          "decoder binding to $P$",
-          "checker soundness"
+      "relation": "states_same_claim_as",
+      "note": "channel_independent keeps the channel argument unused, so accept-implies-valid does not read the channel. No rate or completeness bound is stated.",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PFP-INPUT-BINDING",
+          "PFP-ACCEPTANCE"
         ],
-        "derivation": "An accepted $w$ satisfies $R(P,w)$ by soundness, so it is valid; the channel does not appear in the argument.",
-        "obligations": [
-          "no rate or completeness bound"
-        ]
+        "relation": "supports",
+        "note": "PFP-INPUT-BINDING and PFP-ACCEPTANCE cover reply-to-task binding and checker-relative acceptance."
       }
     },
     {
       "atlas_id": "ATL-P017-002",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER005-WEIGHTED-COBOUNDARY-DISTANCE",
-        "PAPER009-EXACT-TRIANGLE-INVARIANT"
+        "AUDIT-P017-002"
       ],
-      "relation": "narrows",
-      "note": "Nodes treat the triangle case only.",
-      "proposed_derivation": {
-        "title": "Cycle obstruction value",
-        "claim": "On a directed $k$-cycle, $\\Phi_1(c)=|s|$ with $s=\\sum_ic_i$, equal to the dual maximum.",
-        "hypotheses": [
-          "directed $k$-cycle",
-          "unit weights"
+      "relation": "states_same_claim_as",
+      "note": "natAbs_sum_le_l1, l1_attained, and dual_pair use an integer list as the cycle's edge values: the absolute sum is at most the L1 norm, one entry attains it, and sign(s)*s equals the absolute value. Γ2 is not stated.",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PAPER005-WEIGHTED-COBOUNDARY-DISTANCE",
+          "PAPER009-EXACT-TRIANGLE-INVARIANT"
         ],
-        "derivation": "Coboundaries are exactly $\\{\\sum c'_i=0\\}$ (telescoping, rank $k-1$). For any residual $r=c-d_0u$, $\\sum|r_i|\\ge|\\sum r_i|=|s|$, attained by putting $s$ on one edge. The circulation $z=\\mathrm{sgn}(s)\\mathbf 1$ gives $\\langle z,c\\rangle=|s|$.",
-        "obligations": [
-          "$\\Gamma_2$ equality depends on the declared 2-cell"
-        ]
+        "relation": "narrows",
+        "note": "Those two nodes treat the triangle case only."
       }
     },
     {
       "atlas_id": "ATL-P017-003",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers the prompt-tree operad ideal.",
-      "proposed_derivation": {
-        "title": "Non-faithful trees form an ideal",
-        "claim": "Non-faithful prompt trees form a two-sided operad ideal; in the quotient a composite is nonzero iff every leaf span is byte-identical to its slice.",
-        "hypotheses": [
-          "planar prompt-tree operad",
-          "faithfulness by byte-identical leaf spans"
-        ],
-        "derivation": "Leaf spans of a composite are the union of the components' leaf spans, so the composite is faithful iff every component is; hence composing a non-faithful tree on either side stays non-faithful, and the quotient sends the ideal to the null tree.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P017-003"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "faithful_append, nonfaithful_left, nonfaithful_right, and quotient_nonzero_iff treat lists of leaf spans. Coloured operad geometry on general trees is outside this file.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P017-004",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers BPE frontier masking.",
+      "verdict": "partial",
+      "nodes": [
+        "AUDIT-P017-004"
+      ],
+      "relation": "narrows",
+      "note": "frontier_nonempty and masked_prefixes_viable check viability of a one-token extension and of a Masked prefix. A separate completed-word membership predicate is not in the file.",
       "proposed_derivation": {
         "title": "Admissible token masking",
         "claim": "Masking logits to the admissible BPE frontier keeps every prefix viable and every completed word in the language.",
@@ -7763,10 +7703,12 @@
     },
     {
       "atlas_id": "ATL-P017-005",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers the guarded-retry probability theorem.",
+      "verdict": "partial",
+      "nodes": [
+        "AUDIT-P017-005"
+      ],
+      "relation": "narrows",
+      "note": "admit_split is the Nat identity (b^n - (b-a)^n) + (b-a)^n = b^n when a ≤ b. Conditional independence stays a hypothesis. No probability measure is constructed. The Rust check admit_split(1, 4, 5) returned Some(true), and the swapped arguments returned None.",
       "proposed_derivation": {
         "title": "Guarded retry with abstention",
         "claim": "With a sound and complete Stage-1 guard and conditionally independent retries of pass probability $p$, admission probability is $1-(1-p)^n$, Stage-2 precision is that of the admitted set, and savings are $(1-p)^n$ calls per task.",
@@ -7782,29 +7724,23 @@
     },
     {
       "atlas_id": "ATL-P017-006",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers the false-green kernel.",
-      "proposed_derivation": {
-        "title": "False-green kernel",
-        "claim": "Omitting the global cycle-sum equation leaves false-green inputs parameterised by $s\\in\\mathbb Z\\setminus\\{0\\}$.",
-        "hypotheses": [
-          "integer claims on a cycle",
-          "guard checks all but the cycle-sum equation"
-        ],
-        "derivation": "Inputs passing the partial guard form an affine family indexed by the free cycle sum $s$; $s=0$ is exactly a coboundary, so the false greens are $s\\neq0$.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P017-006"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "false_green_not_coboundary and family_indexed_by_sum: a nonzero cycle sum is not a coboundary, and each integer s has a one-entry list with that sum.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P017-007",
       "verdict": "partial",
       "nodes": [
-        "PFPDOMAIN-CL26"
+        "PFPDOMAIN-CL26",
+        "AUDIT-P017-007"
       ],
-      "relation": "supports",
-      "note": "Node states fundamental cycles decouple chord equations; the identity incidence and kernel rank are not derived.",
+      "relation": "narrows",
+      "note": "chord_entry_diag and chord_entry_off give the identity pattern on Fin b1. chord_support_is_identity held on the shipped path and star examples. The rank |V|-1+b1 is not derived.",
       "proposed_derivation": {
         "title": "Chord incidence and kernel rank",
         "claim": "Chord-coordinate incidence of the fundamental cycle basis is $I_{b_1}$; the partial-guard false-green kernel has rank $|V|-1+b_1$.",
@@ -7818,29 +7754,24 @@
     },
     {
       "atlas_id": "ATL-P017-008",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers tree-then-chord staging arity.",
-      "proposed_derivation": {
-        "title": "Staged arity reduction",
-        "claim": "Max per-turn arity falls from $|V|-1+2b_1$ to $\\max(|V|-1,b_1)$.",
-        "hypotheses": [
-          "connected graph"
-        ],
-        "derivation": "Arithmetic: $K_{3,3}$: $5+8=13\\to5$; $Q_3$: $7+10=17\\to7$; $K_5$: $4+12=16\\to6$; Petersen: $9+12=21\\to9$; $W_7$: $7+14=21\\to7$. Each stage fixes its unknowns, which closes the two-stage kernel.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P017-008"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "max_le_staged, arity_examples, and two_stage_zero check the five arithmetic rows 5+8=13 to 5, 7+10=17 to 7, 4+12=16 to 6, 9+12=21 to 9, and 7+14=21 to 7. The named graphs are not built in this file.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P017-009",
       "verdict": "partial",
       "nodes": [
         "PFPDOMAIN-CL26",
-        "PAPER008-INTEGER-GRAPH-CERTIFICATES"
+        "PAPER008-INTEGER-GRAPH-CERTIFICATES",
+        "AUDIT-P017-009"
       ],
-      "relation": "supports",
-      "note": "Nodes give tree integration and potential vs nonzero closed-walk witnesses; the three-way equivalence via chord holonomies is not stated.",
+      "relation": "narrows",
+      "note": "pot_step and holonomy_zero_iff are the path spanning-tree case: the potential is the prefix sum and the chord holonomy is the chord minus the potential difference. A general tree is not derived.",
       "proposed_derivation": {
         "title": "Discrete Fredholm alternative",
         "claim": "$d\\in\\mathrm{im}\\,d_0$ iff every chord holonomy vanishes iff $d=d_0p_T^*$.",
@@ -7854,10 +7785,12 @@
     },
     {
       "atlas_id": "ATL-P017-010",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers the syndrome decoder.",
+      "verdict": "partial",
+      "nodes": [
+        "AUDIT-P017-010"
+      ],
+      "relation": "narrows",
+      "note": "chord_error_residual on the shipped Graph returned the chord delta as the residual and the absolute delta as the defect for the tested path (delta 4) and star (delta 5). This is not a general syndrome matrix S = [P_T | -I].",
       "proposed_derivation": {
         "title": "Syndrome decoding",
         "claim": "$\\mathbf r^*=\\hat{\\mathbf c}^*-\\mathbf c|_{E\\setminus T}=S\\mathbf c$ decodes verdict, single-edge repair and audit.",
@@ -7870,10 +7803,12 @@
     },
     {
       "atlas_id": "ATL-P017-011",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node covers the tree-edge error propagation.",
+      "verdict": "partial",
+      "nodes": [
+        "AUDIT-P017-011"
+      ],
+      "relation": "narrows",
+      "note": "tree_edge_shift_matches held on the tested path and star: adding 1 on a tree edge shifted the vertices whose parent chain uses that edge. This is not a general column of B_T inverse.",
       "proposed_derivation": {
         "title": "Tree-edge error propagation",
         "claim": "A single tree-edge error shifts the potentials of the whole descendant subtree; $B_T^{-1}$ identifies it in one step.",
@@ -8339,19 +8274,13 @@
     },
     {
       "atlas_id": "ATL-P021-003",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node checks the source_pilots fields.",
-      "proposed_derivation": {
-        "title": "Pilot citations",
-        "claim": "Every derived family in workflow_dag.json has a nonempty source_pilots list.",
-        "hypotheses": [
-          "workflow_dag.json"
-        ],
-        "derivation": "Finite check over nodes with status other than implemented.",
-        "obligations": []
-      }
+      "verdict": "partial",
+      "nodes": [
+        "AUDIT-P021-003"
+      ],
+      "relation": "refutes",
+      "note": "inspect_workflow_dag reported 32 nodes whose status is not implemented and whose source_pilots list is empty. The first id is WF24. The claim that every such node has a nonempty source_pilots list does not hold on this file.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P021-004",
@@ -8389,20 +8318,19 @@
     },
     {
       "atlas_id": "ATL-P021-006",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "WIKI-WFD-C02"
+        "AUDIT-P021-006"
       ],
-      "relation": "supports",
-      "note": "The wiki node finds no cycle in a related 49-node registry, not in this paper's workflow_dag.json.",
-      "proposed_derivation": {
-        "title": "Workflow DAG acyclicity",
-        "claim": "workflow_dag.json is acyclic and listed in topological order.",
-        "hypotheses": [
-          "workflow_dag.json"
+      "relation": "states_same_claim_as",
+      "note": "inspect_workflow_dag on workflows/dag/workflow_dag.json reported 56 nodes, 0 earlier-dependency failures, and 0 duplicate ids. no_decreasing_cycle refuses a return along strictly earlier edges. The wiki node is a different registry.",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "WIKI-WFD-C02"
         ],
-        "derivation": "Check each depends_on target appears earlier in node order, which implies acyclicity.",
-        "obligations": []
+        "relation": "supports",
+        "note": "WIKI-WFD-C02 finds no cycle in a related 49-node registry, not in this file."
       }
     },
     {

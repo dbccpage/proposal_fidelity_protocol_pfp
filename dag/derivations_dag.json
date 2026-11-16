@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-11-16T03:40:12.266661+00:00",
+  "generated_at_utc": "2026-11-16T11:27:09.589034+00:00",
   "repository": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp",
   "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
   "status": "in_progress",
@@ -8,10 +8,10 @@
   "interpretation": "Edges are declared dependencies, not themselves proofs. Claims retain separate implementation, formal, numerical and empirical evidence grades.",
   "review_ledger": "dag/file_inventory.json",
   "coverage_at_inventory": {
-    "files": 31063,
+    "files": 31052,
     "remote_files": 32261,
     "local_head_files": 32261,
-    "bytes": 972940517
+    "bytes": 972850904
   },
   "substantive_coverage": {
     "scope_files": 32261,
@@ -225,6 +225,7 @@
     "dag/reviews/additional_pfp_domain_remaining.json",
     "dag/reviews/additional_pfp_infrastructure_remaining.json",
     "dag/reviews/additional_pfp_tests_remaining.json",
+    "dag/reviews/additional_remaining_claim_closure.json",
     "dag/reviews/additional_rust_adversary_remaining.json",
     "dag/reviews/additional_rust_category_remaining.json",
     "dag/reviews/additional_rust_finite_algebra_remaining.json",
@@ -21558,6 +21559,332 @@
       "atlas_ledger_id": "ATL-D-PFPTESTS-CL061"
     },
     {
+      "id": "AUDIT-P012-010",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "If each step agrees with its observation maps on the inputs where the step is defined, and consecutive steps glue after to before, then a defined composite output carries the first before-observation (PFP.RemainingClaimClosure.composite_preserves).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "Each step is a partial map with an observation agreement hypothesis.",
+        "Consecutive steps identify the previous after-observation with the next before-observation."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/012_pfp_the_minimum_theorem/paper.md",
+        "lean4/RemainingClaimClosure.lean"
+      ],
+      "limits": "Option partial maps on one carrier. No graph of workflow folders is rewritten.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P012-010"
+    },
+    {
+      "id": "AUDIT-P012-011",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Given a TerminalHyp whose checker soundness arrow sends acceptance to validity, the four hypotheses yield the conjunction boundTask, checkerAccept, validReply, prerequisitesDone, and authorityState (terminal_sound).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "The four hypotheses are inputs, not host checks performed by this theorem."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/012_pfp_the_minimum_theorem/paper.md",
+        "lean4/RemainingClaimClosure.lean"
+      ],
+      "limits": "No adapter is shown to enforce the hypotheses on a running host.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P012-011"
+    },
+    {
+      "id": "AUDIT-P013-001",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "If accept j = true implies R j, and every j in J is accepted, then every j in J satisfies R (receipt_conjunction).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "Acceptance implies R at each index, as a hypothesis."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper.md",
+        "lean4/RemainingClaimClosure.lean"
+      ],
+      "limits": "Finite index list. No receipt file is parsed.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P013-001"
+    },
+    {
+      "id": "AUDIT-P013-002",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "There exist R, J, and k such that R holds on J, k is outside J, and R k is false (unchecked_extension, carrier Fin 2).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "R is not assumed to follow from the admitted indices."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper.md",
+        "lean4/RemainingClaimClosure.lean"
+      ],
+      "limits": "One finite countermodel. It does not range over every predicate.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P013-002"
+    },
+    {
+      "id": "AUDIT-P013-003",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "There exist a witness, two sources, and a span such that the witness equals the span, the span equals source A, and the span does not equal source B (unbound_quotation).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "Span membership is list equality, not a byte-range parser."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper.md",
+        "lean4/RemainingClaimClosure.lean"
+      ],
+      "limits": "List Nat carriers. No file-format parser is built.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P013-003"
+    },
+    {
+      "id": "AUDIT-P013-004",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Running atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/code/replay.py prints status PASS, provider_calls 0, and true for valid_witness, wrong_witness_refused, wrong_task_refused, false_prose_claim_refused, unbound_quote_refused, and mandatory_task_claim_retained.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "The frozen script is executed as stored. Its body is not edited."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper.md",
+        "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/code/replay.py"
+      ],
+      "limits": "One offline script. A different task family is not covered.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P013-004"
+    },
+    {
+      "id": "AUDIT-P014-001",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "If every pair (b, f) satisfies b(f(x)) = x, the composite of the b maps after the reversed f maps is the identity (sections_compose). If 0 < δ and k*δ ≤ B then k ≤ B/δ (op_budget).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "Each pair is a section by hypothesis.",
+        "The budget step uses a positive Nat cost."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md",
+        "lean4/RemainingClaimClosure.lean"
+      ],
+      "limits": "Adapters and checker soundness are not constructed.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P014-001"
+    },
+    {
+      "id": "AUDIT-P014-002",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "There is a map from Empty to Fin 1, and there is no map from Fin 1 to Empty (soundness_without_coverage, no_forward_cover).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "Empty is the empty type and Fin 1 is a one-element type."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md",
+        "lean4/RemainingClaimClosure.lean"
+      ],
+      "limits": "This is the empty-forward counterexample, not a coverage theorem for other carriers.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P014-002"
+    },
+    {
+      "id": "AUDIT-P017-001",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "If accept p w = true implies valid p w, the same implication holds in the presence of an unused channel argument (channel_independent).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "Checker soundness is a hypothesis. Decoder binding is not derived here."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "lean4/RemainingClaimClosure.lean"
+      ],
+      "limits": "No rate, completeness, or channel-specific bound.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P017-001"
+    },
+    {
+      "id": "AUDIT-P017-002",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For an integer list, the absolute value of the sum is at most the sum of absolute values (natAbs_sum_le_l1). For each s there is a one-entry list with that sum and L1 norm |s| (l1_attained). sign(s)*s = |s| (dual_pair).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "The carrier is an integer list, read as the edge values of one directed cycle."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "lean4/RemainingClaimClosure.lean",
+        "code/rust/pfp_operads/src/remaining_claim_closure.rs"
+      ],
+      "limits": "Γ2 is not stated. Weighted coboundary geometry beyond the list sum is not stated.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P017-002"
+    },
+    {
+      "id": "AUDIT-P017-003",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "A concatenation of leaf lists is faithful exactly when both sides are (faithful_append). A non-faithful side stays non-faithful after concatenation on either side. The quotient is present exactly when the list is faithful (quotient_nonzero_iff).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "Faithfulness is byte agreement of each stored span with its slice, on a list."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "lean4/RemainingClaimClosure.lean",
+        "code/rust/pfp_operads/src/remaining_claim_closure.rs"
+      ],
+      "limits": "Leaf lists, not a coloured operad on general trees.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P017-003"
+    },
+    {
+      "id": "AUDIT-P017-004",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "A viable prefix outside L has a one-token extension that is still viable (frontier_nonempty). Every Masked prefix is viable (masked_prefixes_viable).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "Viability means some completion lands in L."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "lean4/RemainingClaimClosure.lean"
+      ],
+      "limits": "Completed-word membership is not a separate predicate here.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P017-004"
+    },
+    {
+      "id": "AUDIT-P017-005",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "When a ≤ b, (b^n - (b-a)^n) + (b-a)^n = b^n (admit_split). The Rust function returns None when a > b.",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "Conditional independence of retries is not derived."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "lean4/RemainingClaimClosure.lean",
+        "code/rust/pfp_operads/src/remaining_claim_closure.rs"
+      ],
+      "limits": "No probability space. The identity is the integer skeleton of the stated rate.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P017-005"
+    },
+    {
+      "id": "AUDIT-P017-006",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "A list whose cycle sum is nonzero is not a coboundary (false_green_not_coboundary). For each s there is a list with that cycle sum, and it is a coboundary exactly when s = 0 (family_indexed_by_sum).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "isCoboundary means the cycle sum is zero."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "lean4/RemainingClaimClosure.lean"
+      ],
+      "limits": "The partial guard program is not a separate artifact. The family is one-entry lists.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P017-006"
+    },
+    {
+      "id": "AUDIT-P017-007",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "chordEntry i i = 1 and chordEntry i j = 0 when i ≠ j. On the tested path and star, each fundamental cycle of the shipped Graph meets the chord set in exactly its own chord.",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "The rank count |V|-1+b1 is not a theorem in this file."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "lean4/RemainingClaimClosure.lean",
+        "code/rust/pfp_operads/src/remaining_claim_closure.rs"
+      ],
+      "limits": "Identity pattern plus two shipped graphs. No kernel-rank derivation.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P017-007"
+    },
+    {
+      "id": "AUDIT-P017-008",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "max(tree, chords) ≤ tree + 2*chords (max_le_staged). The five rows (5, 4) → 5, (7, 5) → 7, (4, 6) → 6, (9, 6) → 9, and (7, 7) → 7 hold with the stated unstaged sums (arity_examples). (t+c)-t-c = 0 (two_stage_zero).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "The five rows are the arithmetic named for K3,3, Q3, K5, Petersen, and W7."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "lean4/RemainingClaimClosure.lean",
+        "code/rust/pfp_operads/src/remaining_claim_closure.rs"
+      ],
+      "limits": "The graphs themselves are not constructed. The Rust rows repeat the same five tuples.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P017-008"
+    },
+    {
+      "id": "AUDIT-P017-009",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "On a path, the potential step equals the next tree-edge value (pot_step), and the holonomy is zero exactly when the chord equals the potential difference (holonomy_zero_iff). potential_follows_forest held on the tested path and star.",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "The Lean text uses a path of edge values, not an arbitrary spanning tree."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "lean4/RemainingClaimClosure.lean",
+        "code/rust/pfp_operads/src/remaining_claim_closure.rs"
+      ],
+      "limits": "Path case in Lean. The star is only a shipped-graph check, not a general tree theorem.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P017-009"
+    },
+    {
+      "id": "AUDIT-P017-010",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "On the tested path and star, bumping the first forest chord by delta leaves that residual, clears the other tested residuals, and reports defect equal to the absolute delta.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "The check calls the shipped Graph methods. It does not reimplement them."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "code/rust/pfp_operads/src/remaining_claim_closure.rs"
+      ],
+      "limits": "Two finite graphs. Not a general syndrome matrix.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P017-010"
+    },
+    {
+      "id": "AUDIT-P017-011",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "On the tested path and star, adding 1 to one stored tree-edge value shifts exactly the vertices whose parent chain crosses that edge, with the forest link sign.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "The shift uses the shipped forest parent pointers."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+        "code/rust/pfp_operads/src/remaining_claim_closure.rs"
+      ],
+      "limits": "Two finite graphs. Not a general inverse-column statement.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P017-011"
+    },
+    {
+      "id": "AUDIT-P021-003",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "workflows/dag/workflow_dag.json has 32 nodes with status other than implemented and an empty source_pilots list. The first of those ids is WF24.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "The reader uses id, status, depends_on, and source_pilots as stored."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/021_pfp_workflow_dag_process_and_mathematics/paper.md",
+        "workflows/dag/workflow_dag.json",
+        "code/rust/pfp_operads/src/remaining_claim_closure.rs"
+      ],
+      "limits": "This refuses the nonempty-pilot sentence on the current file. It does not edit the file.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P021-003"
+    },
+    {
+      "id": "AUDIT-P021-006",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "On workflows/dag/workflow_dag.json the shipped reader found 56 nodes, no dependency whose target was absent from the earlier prefix, and no duplicate id. A linked walk of strictly earlier edges cannot return to its start (no_decreasing_cycle).",
+      "status": "formal_lean_and_host_check",
+      "dependencies": [
+        "Topological order here means each depends_on target appears earlier in the node list."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/021_pfp_workflow_dag_process_and_mathematics/paper.md",
+        "workflows/dag/workflow_dag.json",
+        "lean4/RemainingClaimClosure.lean",
+        "code/rust/pfp_operads/src/remaining_claim_closure.rs"
+      ],
+      "limits": "One JSON file plus the abstract decreasing-edge lemma. Not the 49-node wiki registry.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P021-006"
+    },
+    {
       "id": "RAD-C01",
       "kind": "mathematical_or_implementation_claim",
       "title": "Exact finite predicates are real mechanisms, conditional on admitted encodings.",
@@ -40553,6 +40880,144 @@
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
+      "id": "ASSUMPTION-b5101fecd2020468",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Each step is a partial map with an observation agreement hypothesis.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-17c822861f44a611",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Consecutive steps identify the previous after-observation with the next before-observation.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-c3797d10f2cd8bfa",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "The four hypotheses are inputs, not host checks performed by this theorem.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-df55f160f13aab77",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Acceptance implies R at each index, as a hypothesis.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-7ea4f4deda18b288",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "R is not assumed to follow from the admitted indices.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-69a4bc532326d42b",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Span membership is list equality, not a byte-range parser.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-6a9170e5ffe4040d",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "The frozen script is executed as stored. Its body is not edited.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-fe66c209312388a3",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Each pair is a section by hypothesis.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-1fd6fa394d135a3c",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "The budget step uses a positive Nat cost.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-237e30afbc64f331",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Empty is the empty type and Fin 1 is a one-element type.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-74d0ab97c85a96f6",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Checker soundness is a hypothesis. Decoder binding is not derived here.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-6c426780ec8984ba",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "The carrier is an integer list, read as the edge values of one directed cycle.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-932820ffeeeced07",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Faithfulness is byte agreement of each stored span with its slice, on a list.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-aada8d1d6760ab93",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Viability means some completion lands in L.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-71a6810205a162ee",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Conditional independence of retries is not derived.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-ae1d25a4c0b64167",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "isCoboundary means the cycle sum is zero.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-0635c0eff2956dec",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "The rank count |V|-1+b1 is not a theorem in this file.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-de1cba29a0117c2a",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "The five rows are the arithmetic named for K3,3, Q3, K5, Petersen, and W7.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-8609b419563cb98e",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "The Lean text uses a path of edge values, not an arbitrary spanning tree.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-5a1f0778f4db1ef7",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "The check calls the shipped Graph methods. It does not reimplement them.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-47d24d6c5de30e6e",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "The shift uses the shipped forest parent pointers.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-12c2deff3d9f7ab8",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "The reader uses id, status, depends_on, and source_pilots as stored.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-915360597d54a4e6",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Topological order here means each depends_on target appears earlier in the node list.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
       "id": "ASSUMPTION-c74bb69eefddf2b2",
       "kind": "explicit_assumption_or_obligation",
       "statement": "Independent category validity",
@@ -43781,7 +44246,7 @@
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
-      "id": "ASSUMPTION-10a8d6cf17fdb0ce",
+      "id": "ASSUMPTION-fca820cc8553b82a",
       "kind": "explicit_assumption_or_obligation",
       "statement": "Exhaustive absence of test_010_adversarial_refusals_and_decimation.py and any filter-benchmark runner, report, or receipt across atlas/archive/pfp/010_pfp_holonomy_checks_and_model_pilots/, dag/file_inventory.json, and the 400-commit ancestry of source_commit 78bc23b35 in proposal_fidelity_protocol_pfp.",
       "status": "requires_evidence_not_discharged_by_this_edge"
@@ -43799,7 +44264,7 @@
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
-      "id": "ASSUMPTION-17f5242ddea721b7",
+      "id": "ASSUMPTION-01ace1ad9771639e",
       "kind": "explicit_assumption_or_obligation",
       "statement": "Open obligation: Pre-split commit 35e3d7ba2e0e20904d17a79cc395980f50a1a0f1 resides outside this split checkout so the removed v1.0.0 test file is attested via tracked Paper 010 records rather than direct local blob reads, and negative searches are bounded to tracked repository files and the 400-commit ancestry of source_commit 78bc23b35.",
       "status": "requires_evidence_not_discharged_by_this_edge"
@@ -47133,13 +47598,6 @@
       "kind": "pinned_source_file",
       "path": "pfp_lab/core/session.py",
       "sha256": "8ec322fe99245b05b6c383bcc38b5ca2f38f7e42d67da52030bb812d56700df2",
-      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
-    },
-    {
-      "id": "SOURCE:pyproject.toml",
-      "kind": "pinned_source_file",
-      "path": "pyproject.toml",
-      "sha256": "d5860624f5282c9c827705bb904dc9908282371c754b4c0c62d0c51b5974a60d",
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
@@ -52863,6 +53321,48 @@
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
+      "id": "SOURCE:atlas/archive/pfp/012_pfp_the_minimum_theorem/paper.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/012_pfp_the_minimum_theorem/paper.md",
+      "sha256": "b270ce6a476f40729fc59c1154d8929396cb996bbb06b50ef5b4ef33e7b6c335",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper.md",
+      "sha256": "4b29010ebf9d8d6f4e3666bed260ccbc6d37174a0adc8fbbf54394aa41a3a02a",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/code/replay.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/code/replay.py",
+      "sha256": "a422e451ab28343ce7ba93879347e5668e7b2f77b5723f6217bd3d1e621da63b",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md",
+      "sha256": "c092a2bc3e9bdc68e432be68035f76bbf5f986fd2a21ce114dbf90b8e1e21741",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+      "sha256": "17a70be8601f2589a9e840e760809cd1ad4c99d39caaa44344078c5db460e9eb",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/021_pfp_workflow_dag_process_and_mathematics/paper.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/021_pfp_workflow_dag_process_and_mathematics/paper.md",
+      "sha256": "570398f03b6ba63c3809eb4bbee33a2a748756c8ded0efcdd4e7984c0b1517fe",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
       "id": "SOURCE:code/rust/core_adversary/src/primary_gates.rs",
       "kind": "pinned_source_file",
       "path": "code/rust/core_adversary/src/primary_gates.rs",
@@ -57928,13 +58428,6 @@
       "kind": "pinned_source_file",
       "path": "lean4/README.md",
       "sha256": "9f31dc02945b114d8f54b7d1e4484e74cbc9bffa860bc96e0fb564a2b4c01060",
-      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
-    },
-    {
-      "id": "SOURCE:lean4/lakefile.lean",
-      "kind": "pinned_source_file",
-      "path": "lean4/lakefile.lean",
-      "sha256": "807e37bb6876baf528dcc3cf51b53b9b1631e33b9b2f6012c2731de4ba784b1a",
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
@@ -65781,11 +66274,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node covers composition of observation-preserving partial maps.",
-        "proposed_derivation_file": "dag/derivations/atl_p012_010.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P012-010"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "composite_preserves: a glued list of partial maps, each carrying its before observation to its after observation, carries the first observation to the last defined output. Partial domains stay Option values."
       }
     },
     {
@@ -65809,14 +66303,20 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PFP-HOST-TERMINAL",
-          "PFPAPPREM-C003"
+          "AUDIT-P012-011"
         ],
-        "relation": "supports",
-        "note": "Nodes compute terminal status from host facts; the conditional soundness theorem is not derived.",
-        "proposed_derivation_file": "dag/derivations/atl_p012_011.md"
+        "relation": "states_same_claim_as",
+        "note": "terminal_sound is the conjunction under the four hypotheses: bound task, checker acceptance, checker soundness, completed prerequisites, and authority state. Host enforcement of those hypotheses stays outside the theorem.",
+        "partial_evidence": {
+          "nodes": [
+            "PFP-HOST-TERMINAL",
+            "PFPAPPREM-C003"
+          ],
+          "relation": "supports",
+          "note": "PFP-HOST-TERMINAL and PFPAPPREM-C003 compute terminal status from host facts. They do not discharge the conditional conjunction."
+        }
       }
     },
     {
@@ -65868,11 +66368,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node.",
-        "proposed_derivation_file": "dag/derivations/atl_p013_001.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P013-001"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "receipt_conjunction: every index admitted in J satisfies R when acceptance implies R."
       }
     },
     {
@@ -65896,11 +66397,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node.",
-        "proposed_derivation_file": "dag/derivations/atl_p013_002.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P013-002"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "unchecked_extension is a Fin 2 countermodel: R holds on J = [0] and fails at k = 1, which is outside J."
       }
     },
     {
@@ -65924,11 +66426,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node.",
-        "proposed_derivation_file": "dag/derivations/atl_p013_003.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P013-003"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "unbound_quotation: the same span sits in source A and not in source B."
       }
     },
     {
@@ -65952,11 +66455,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node.",
-        "proposed_derivation_file": "dag/derivations/atl_p013_004.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P013-004"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "The frozen replay.py exited PASS with provider_calls 0. The checks were valid_witness, wrong_witness_refused, wrong_task_refused, false_prose_claim_refused, unbound_quote_refused, and mandatory_task_claim_retained. The record is that script only."
       }
     },
     {
@@ -65980,13 +66484,19 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "HISTORY-REENTRY-CARRIERS"
+          "AUDIT-P014-001"
         ],
-        "relation": "narrows",
-        "note": "The node checks decoder admissibility on specific nine-element carriers; the general composition and budget laws are not derived.",
-        "proposed_derivation_file": "dag/derivations/atl_p014_001.md"
+        "relation": "states_same_claim_as",
+        "note": "sections_compose is the identity for a list of sections, and op_budget gives k ≤ B/δ when 0 < δ and k*δ ≤ B. Solution-set adapters are not constructed.",
+        "partial_evidence": {
+          "nodes": [
+            "HISTORY-REENTRY-CARRIERS"
+          ],
+          "relation": "narrows",
+          "note": "HISTORY-REENTRY-CARRIERS checks decoder admissibility on specific nine-element carriers. It does not give the general section identity."
+        }
       }
     },
     {
@@ -66010,11 +66520,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node gives the soundness-without-coverage counterexample.",
-        "proposed_derivation_file": "dag/derivations/atl_p014_002.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P014-002"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "soundness_without_coverage: a map Empty → Fin 1 exists, and every map Fin 1 → Empty yields False."
       }
     },
     {
@@ -66386,14 +66897,20 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PFP-INPUT-BINDING",
-          "PFP-ACCEPTANCE"
+          "AUDIT-P017-001"
         ],
-        "relation": "supports",
-        "note": "Nodes implement reply-to-task binding and checker-relative acceptance; the channel-independent soundness statement is not derived.",
-        "proposed_derivation_file": "dag/derivations/atl_p017_001.md"
+        "relation": "states_same_claim_as",
+        "note": "channel_independent keeps the channel argument unused, so accept-implies-valid does not read the channel. No rate or completeness bound is stated.",
+        "partial_evidence": {
+          "nodes": [
+            "PFP-INPUT-BINDING",
+            "PFP-ACCEPTANCE"
+          ],
+          "relation": "supports",
+          "note": "PFP-INPUT-BINDING and PFP-ACCEPTANCE cover reply-to-task binding and checker-relative acceptance."
+        }
       }
     },
     {
@@ -66417,14 +66934,20 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PAPER005-WEIGHTED-COBOUNDARY-DISTANCE",
-          "PAPER009-EXACT-TRIANGLE-INVARIANT"
+          "AUDIT-P017-002"
         ],
-        "relation": "narrows",
-        "note": "Nodes treat the triangle case only.",
-        "proposed_derivation_file": "dag/derivations/atl_p017_002.md"
+        "relation": "states_same_claim_as",
+        "note": "natAbs_sum_le_l1, l1_attained, and dual_pair use an integer list as the cycle's edge values: the absolute sum is at most the L1 norm, one entry attains it, and sign(s)*s equals the absolute value. Γ2 is not stated.",
+        "partial_evidence": {
+          "nodes": [
+            "PAPER005-WEIGHTED-COBOUNDARY-DISTANCE",
+            "PAPER009-EXACT-TRIANGLE-INVARIANT"
+          ],
+          "relation": "narrows",
+          "note": "Those two nodes treat the triangle case only."
+        }
       }
     },
     {
@@ -66448,11 +66971,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node covers the prompt-tree operad ideal.",
-        "proposed_derivation_file": "dag/derivations/atl_p017_003.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P017-003"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "faithful_append, nonfaithful_left, nonfaithful_right, and quotient_nonzero_iff treat lists of leaf spans. Coloured operad geometry on general trees is outside this file."
       }
     },
     {
@@ -66476,10 +67000,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node covers BPE frontier masking.",
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P017-004"
+        ],
+        "relation": "narrows",
+        "note": "frontier_nonempty and masked_prefixes_viable check viability of a one-token extension and of a Masked prefix. A separate completed-word membership predicate is not in the file.",
         "proposed_derivation_file": "dag/derivations/atl_p017_004.md"
       }
     },
@@ -66504,10 +67030,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node covers the guarded-retry probability theorem.",
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P017-005"
+        ],
+        "relation": "narrows",
+        "note": "admit_split is the Nat identity (b^n - (b-a)^n) + (b-a)^n = b^n when a ≤ b. Conditional independence stays a hypothesis. No probability measure is constructed. The Rust check admit_split(1, 4, 5) returned Some(true), and the swapped arguments returned None.",
         "proposed_derivation_file": "dag/derivations/atl_p017_005.md"
       }
     },
@@ -66532,11 +67060,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node covers the false-green kernel.",
-        "proposed_derivation_file": "dag/derivations/atl_p017_006.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P017-006"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "false_green_not_coboundary and family_indexed_by_sum: a nonzero cycle sum is not a coboundary, and each integer s has a one-entry list with that sum."
       }
     },
     {
@@ -66562,10 +67091,11 @@
       "atlas_match": {
         "verdict": "partial",
         "nodes": [
-          "PFPDOMAIN-CL26"
+          "PFPDOMAIN-CL26",
+          "AUDIT-P017-007"
         ],
-        "relation": "supports",
-        "note": "Node states fundamental cycles decouple chord equations; the identity incidence and kernel rank are not derived.",
+        "relation": "narrows",
+        "note": "chord_entry_diag and chord_entry_off give the identity pattern on Fin b1. chord_support_is_identity held on the shipped path and star examples. The rank |V|-1+b1 is not derived.",
         "proposed_derivation_file": "dag/derivations/atl_p017_007.md"
       }
     },
@@ -66590,11 +67120,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node covers tree-then-chord staging arity.",
-        "proposed_derivation_file": "dag/derivations/atl_p017_008.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P017-008"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "max_le_staged, arity_examples, and two_stage_zero check the five arithmetic rows 5+8=13 to 5, 7+10=17 to 7, 4+12=16 to 6, 9+12=21 to 9, and 7+14=21 to 7. The named graphs are not built in this file."
       }
     },
     {
@@ -66621,10 +67152,11 @@
         "verdict": "partial",
         "nodes": [
           "PFPDOMAIN-CL26",
-          "PAPER008-INTEGER-GRAPH-CERTIFICATES"
+          "PAPER008-INTEGER-GRAPH-CERTIFICATES",
+          "AUDIT-P017-009"
         ],
-        "relation": "supports",
-        "note": "Nodes give tree integration and potential vs nonzero closed-walk witnesses; the three-way equivalence via chord holonomies is not stated.",
+        "relation": "narrows",
+        "note": "pot_step and holonomy_zero_iff are the path spanning-tree case: the potential is the prefix sum and the chord holonomy is the chord minus the potential difference. A general tree is not derived.",
         "proposed_derivation_file": "dag/derivations/atl_p017_009.md"
       }
     },
@@ -66649,10 +67181,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node covers the syndrome decoder.",
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P017-010"
+        ],
+        "relation": "narrows",
+        "note": "chord_error_residual on the shipped Graph returned the chord delta as the residual and the absolute delta as the defect for the tested path (delta 4) and star (delta 5). This is not a general syndrome matrix S = [P_T | -I].",
         "proposed_derivation_file": "dag/derivations/atl_p017_010.md"
       }
     },
@@ -66677,10 +67211,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node covers the tree-edge error propagation.",
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P017-011"
+        ],
+        "relation": "narrows",
+        "note": "tree_edge_shift_matches held on the tested path and star: adding 1 on a tree edge shifted the vertices whose parent chain uses that edge. This is not a general column of B_T inverse.",
         "proposed_derivation_file": "dag/derivations/atl_p017_011.md"
       }
     },
@@ -67609,11 +68145,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node checks the source_pilots fields.",
-        "proposed_derivation_file": "dag/derivations/atl_p021_003.md"
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P021-003"
+        ],
+        "relation": "refutes",
+        "note": "inspect_workflow_dag reported 32 nodes whose status is not implemented and whose source_pilots list is empty. The first id is WF24. The claim that every such node has a nonempty source_pilots list does not hold on this file."
       }
     },
     {
@@ -67693,13 +68230,19 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "WIKI-WFD-C02"
+          "AUDIT-P021-006"
         ],
-        "relation": "supports",
-        "note": "The wiki node finds no cycle in a related 49-node registry, not in this paper's workflow_dag.json.",
-        "proposed_derivation_file": "dag/derivations/atl_p021_006.md"
+        "relation": "states_same_claim_as",
+        "note": "inspect_workflow_dag on workflows/dag/workflow_dag.json reported 56 nodes, 0 earlier-dependency failures, and 0 duplicate ids. no_decreasing_cycle refuses a return along strictly earlier edges. The wiki node is a different registry.",
+        "partial_evidence": {
+          "nodes": [
+            "WIKI-WFD-C02"
+          ],
+          "relation": "supports",
+          "note": "WIKI-WFD-C02 finds no cycle in a related 49-node registry, not in this file."
+        }
       }
     },
     {
@@ -79121,6 +79664,121 @@
       "kind": "requires"
     },
     {
+      "from": "ASSUMPTION-b5101fecd2020468",
+      "to": "AUDIT-P012-010",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-17c822861f44a611",
+      "to": "AUDIT-P012-010",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-c3797d10f2cd8bfa",
+      "to": "AUDIT-P012-011",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-df55f160f13aab77",
+      "to": "AUDIT-P013-001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-7ea4f4deda18b288",
+      "to": "AUDIT-P013-002",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-69a4bc532326d42b",
+      "to": "AUDIT-P013-003",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-6a9170e5ffe4040d",
+      "to": "AUDIT-P013-004",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-fe66c209312388a3",
+      "to": "AUDIT-P014-001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-1fd6fa394d135a3c",
+      "to": "AUDIT-P014-001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-237e30afbc64f331",
+      "to": "AUDIT-P014-002",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-74d0ab97c85a96f6",
+      "to": "AUDIT-P017-001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-6c426780ec8984ba",
+      "to": "AUDIT-P017-002",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-932820ffeeeced07",
+      "to": "AUDIT-P017-003",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-aada8d1d6760ab93",
+      "to": "AUDIT-P017-004",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-71a6810205a162ee",
+      "to": "AUDIT-P017-005",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-ae1d25a4c0b64167",
+      "to": "AUDIT-P017-006",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-0635c0eff2956dec",
+      "to": "AUDIT-P017-007",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-de1cba29a0117c2a",
+      "to": "AUDIT-P017-008",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-8609b419563cb98e",
+      "to": "AUDIT-P017-009",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-5a1f0778f4db1ef7",
+      "to": "AUDIT-P017-010",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-47d24d6c5de30e6e",
+      "to": "AUDIT-P017-011",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-12c2deff3d9f7ab8",
+      "to": "AUDIT-P021-003",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-915360597d54a4e6",
+      "to": "AUDIT-P021-006",
+      "kind": "requires"
+    },
+    {
       "from": "ASSUMPTION-c74bb69eefddf2b2",
       "to": "RCT-C08",
       "kind": "requires"
@@ -81821,7 +82479,7 @@
       "kind": "requires"
     },
     {
-      "from": "ASSUMPTION-10a8d6cf17fdb0ce",
+      "from": "ASSUMPTION-fca820cc8553b82a",
       "to": "AUDIT-P010-001",
       "kind": "requires"
     },
@@ -81836,7 +82494,7 @@
       "kind": "requires"
     },
     {
-      "from": "ASSUMPTION-17f5242ddea721b7",
+      "from": "ASSUMPTION-01ace1ad9771639e",
       "to": "AUDIT-P010-001",
       "kind": "requires"
     },
@@ -84909,12 +85567,6 @@
       "to": "CONFIG-CLAIM-01",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "pfp_lab/core/session.py"
-    },
-    {
-      "from": "SOURCE:pyproject.toml",
-      "to": "CONFIG-CLAIM-02",
-      "kind": "source_evidence_not_automatic_proof",
-      "citation": "pyproject.toml:241"
     },
     {
       "from": "SOURCE:education/004_oepfp/math/02_math_cochain_complexes_repairs_and_quotients.md",
@@ -97621,6 +98273,138 @@
           1879
         ]
       }
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/012_pfp_the_minimum_theorem/paper.md",
+      "to": "AUDIT-P012-010",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/012_pfp_the_minimum_theorem/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/012_pfp_the_minimum_theorem/paper.md",
+      "to": "AUDIT-P012-011",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/012_pfp_the_minimum_theorem/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper.md",
+      "to": "AUDIT-P013-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper.md",
+      "to": "AUDIT-P013-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper.md",
+      "to": "AUDIT-P013-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper.md",
+      "to": "AUDIT-P013-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/code/replay.py",
+      "to": "AUDIT-P013-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/code/replay.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md",
+      "to": "AUDIT-P014-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md",
+      "to": "AUDIT-P014-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+      "to": "AUDIT-P017-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+      "to": "AUDIT-P017-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+      "to": "AUDIT-P017-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+      "to": "AUDIT-P017-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+      "to": "AUDIT-P017-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+      "to": "AUDIT-P017-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+      "to": "AUDIT-P017-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+      "to": "AUDIT-P017-008",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+      "to": "AUDIT-P017-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+      "to": "AUDIT-P017-010",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
+      "to": "AUDIT-P017-011",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/021_pfp_workflow_dag_process_and_mathematics/paper.md",
+      "to": "AUDIT-P021-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/021_pfp_workflow_dag_process_and_mathematics/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/021_pfp_workflow_dag_process_and_mathematics/paper.md",
+      "to": "AUDIT-P021-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/021_pfp_workflow_dag_process_and_mathematics/paper.md"
     },
     {
       "from": "SOURCE:code/rust/core_adversary/src/primary_gates.rs",
@@ -112190,12 +112974,6 @@
       "citation": "lean4/README.md"
     },
     {
-      "from": "SOURCE:lean4/lakefile.lean",
-      "to": "AUDIT-P009-009",
-      "kind": "source_evidence_not_automatic_proof",
-      "citation": "lean4/lakefile.lean"
-    },
-    {
       "from": "SOURCE:education/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md",
       "to": "AUDIT-P009-009",
       "kind": "source_evidence_not_automatic_proof",
@@ -116669,10 +117447,22 @@
       "citation": "atlas/archive/pfp/012_pfp_the_minimum_theorem/paper_claim_ledger.md:18"
     },
     {
+      "from": "AUDIT-P012-010",
+      "to": "ATL-P012-010",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "PAPER:atlas/archive/pfp/012_pfp_the_minimum_theorem",
       "to": "ATL-P012-011",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/012_pfp_the_minimum_theorem/paper_claim_ledger.md:19"
+    },
+    {
+      "from": "AUDIT-P012-011",
+      "to": "ATL-P012-011",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "PFP-HOST-TERMINAL",
@@ -116699,10 +117489,22 @@
       "citation": "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper_claim_ledger.md:11"
     },
     {
+      "from": "AUDIT-P013-001",
+      "to": "ATL-P013-001",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "PAPER:atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control",
       "to": "ATL-P013-002",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper_claim_ledger.md:12"
+    },
+    {
+      "from": "AUDIT-P013-002",
+      "to": "ATL-P013-002",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "PAPER:atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control",
@@ -116711,16 +117513,34 @@
       "citation": "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper_claim_ledger.md:13"
     },
     {
+      "from": "AUDIT-P013-003",
+      "to": "ATL-P013-003",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "PAPER:atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control",
       "to": "ATL-P013-004",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/013_pfp_task_bound_claims_and_hallucination_control/paper_claim_ledger.md:14"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope",
+      "from": "AUDIT-P013-004",
+      "to": "ATL-P013-004",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md",
       "to": "ATL-P014-001",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md:44"
+    },
+    {
+      "from": "AUDIT-P014-001",
+      "to": "ATL-P014-001",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "HISTORY-REENTRY-CARRIERS",
@@ -116729,13 +117549,19 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope",
+      "from": "SOURCE:atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md",
       "to": "ATL-P014-002",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md:61"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope",
+      "from": "AUDIT-P014-002",
+      "to": "ATL-P014-002",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md",
       "to": "ATL-P014-003",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md:69"
@@ -116747,13 +117573,13 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope",
+      "from": "SOURCE:atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md",
       "to": "ATL-P014-004",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md:85"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope",
+      "from": "SOURCE:atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md",
       "to": "ATL-P014-005",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md:135"
@@ -116897,10 +117723,16 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions",
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
       "to": "ATL-P017-001",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md:98"
+    },
+    {
+      "from": "AUDIT-P017-001",
+      "to": "ATL-P017-001",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "PFP-INPUT-BINDING",
@@ -116915,10 +117747,16 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions",
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
       "to": "ATL-P017-002",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md:150"
+    },
+    {
+      "from": "AUDIT-P017-002",
+      "to": "ATL-P017-002",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "PAPER005-WEIGHTED-COBOUNDARY-DISTANCE",
@@ -116933,31 +117771,55 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions",
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
       "to": "ATL-P017-003",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md:214"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions",
+      "from": "AUDIT-P017-003",
+      "to": "ATL-P017-003",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
       "to": "ATL-P017-004",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md:246"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions",
+      "from": "AUDIT-P017-004",
+      "to": "ATL-P017-004",
+      "kind": "narrows",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
       "to": "ATL-P017-005",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md:293"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions",
+      "from": "AUDIT-P017-005",
+      "to": "ATL-P017-005",
+      "kind": "narrows",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
       "to": "ATL-P017-006",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md:347"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions",
+      "from": "AUDIT-P017-006",
+      "to": "ATL-P017-006",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
       "to": "ATL-P017-007",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md:404"
@@ -116965,17 +117827,29 @@
     {
       "from": "PFPDOMAIN-CL26",
       "to": "ATL-P017-007",
-      "kind": "partially_supports",
+      "kind": "narrows",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions",
+      "from": "AUDIT-P017-007",
+      "to": "ATL-P017-007",
+      "kind": "narrows",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
       "to": "ATL-P017-008",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md:491"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions",
+      "from": "AUDIT-P017-008",
+      "to": "ATL-P017-008",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
       "to": "ATL-P017-009",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md:549"
@@ -116983,29 +117857,47 @@
     {
       "from": "PFPDOMAIN-CL26",
       "to": "ATL-P017-009",
-      "kind": "partially_supports",
+      "kind": "narrows",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "PAPER008-INTEGER-GRAPH-CERTIFICATES",
       "to": "ATL-P017-009",
-      "kind": "partially_supports",
+      "kind": "narrows",
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions",
+      "from": "AUDIT-P017-009",
+      "to": "ATL-P017-009",
+      "kind": "narrows",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
       "to": "ATL-P017-010",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md:615"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions",
+      "from": "AUDIT-P017-010",
+      "to": "ATL-P017-010",
+      "kind": "narrows",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
       "to": "ATL-P017-011",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md:688"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions",
+      "from": "AUDIT-P017-011",
+      "to": "ATL-P017-011",
+      "kind": "narrows",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
       "to": "ATL-P017-012",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md:758"
@@ -117023,13 +117915,13 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions",
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
       "to": "ATL-P017-013",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md:1307"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions",
+      "from": "SOURCE:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md",
       "to": "ATL-P017-014",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md:1317"
@@ -117329,6 +118221,12 @@
       "citation": "atlas/archive/pfp/021_pfp_workflow_dag_process_and_mathematics/paper_claim_ledger.md:7"
     },
     {
+      "from": "AUDIT-P021-003",
+      "to": "ATL-P021-003",
+      "kind": "refutes",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
       "from": "PAPER:atlas/archive/pfp/021_pfp_workflow_dag_process_and_mathematics",
       "to": "ATL-P021-004",
       "kind": "source_evidence_not_automatic_proof",
@@ -117345,6 +118243,12 @@
       "to": "ATL-P021-006",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/021_pfp_workflow_dag_process_and_mathematics/paper_claim_ledger.md:10"
+    },
+    {
+      "from": "AUDIT-P021-006",
+      "to": "ATL-P021-006",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "WIKI-WFD-C02",
@@ -170627,8 +171531,8 @@
     "Audit native implementations and claimed Lean correspondence at pinned source."
   ],
   "graph_validation": {
-    "unique_nodes": 4504,
-    "edges": 5328,
+    "unique_nodes": 4552,
+    "edges": 5392,
     "acyclic": true
   }
 }
