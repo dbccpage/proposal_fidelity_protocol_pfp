@@ -147,7 +147,7 @@ class TestInitialDraftFilterUnmeasured:
         assert all(entry["immune_assisted"]["passed"] is False for entry in cases)
 
         # Pre-split commit 35e3d7ba... is outside this standalone Git repository,
-        # while source_commit 78bc23b35 has a 266-commit ancestry with zero copies of the removed test.
+        # while source_commit 78bc23b35 has a 400-commit ancestry with zero copies of the removed test.
         probe = subprocess.run(
             ["git", "cat-file", "-t", "35e3d7ba2e0e20904d17a79cc395980f50a1a0f1"],
             cwd=_REPO_ROOT,
@@ -172,7 +172,7 @@ class TestInitialDraftFilterUnmeasured:
                 text=True,
             ).strip()
         )
-        assert rev_count == 266
+        assert rev_count == 400
         log_probe = subprocess.check_output(
             ["git", "log", "78bc23b35", "--oneline", "--", "*test_010_adversarial*"],
             cwd=_REPO_ROOT,
@@ -827,7 +827,7 @@ class TestShardBReviewAndArtifactIntegrity:
                 text=True,
             ).strip()
         )
-        assert rev_count == 266
+        assert rev_count == 400
 
         inventory = json.loads((_REPO_ROOT / "dag" / "file_inventory.json").read_text(encoding="utf-8"))
         inv_sha_by_path = {entry["path"]: entry["sha256"] for entry in inventory["files"]}
