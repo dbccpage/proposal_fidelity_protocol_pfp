@@ -1,0 +1,117 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "pfp_core/workflow_families/docs.py",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp_core/workflow_families/docs.py",
+      "language": "Python",
+      "sha256": "3e4a7b4314cf1abfe6be57b78bd8ee35a662435f1f5d1963ad52862fcb8a8ea6"
+    },
+    "contract_urn": "urn:pfp-core:workflow-families-docs-py:v1",
+    "symbols": [
+      "TESTS",
+      "HOST_CRATE",
+      "AUDIT",
+      "INDEX",
+      "WORKFLOW_DAG",
+      "DAG_STATUS",
+      "INDEX_STATUS",
+      "README_BEGIN",
+      "README_END",
+      "README_BLOCK_IDS",
+      "STATUS",
+      "PILOTS_NOTE",
+      "_PRIVATE",
+      "FORBIDDEN",
+      "guard",
+      "status_text",
+      "_docstring",
+      "_module",
+      "host_files",
+      "HOSTED_NOTE",
+      "HOST_BUILD",
+      "render_readme_block",
+      "splice_readme",
+      "drift",
+      "_encode",
+      "build",
+      "main"
+    ],
+    "owned_invariants": [
+      "It writes only the generated block between README_BEGIN and README_END of each WF6-WF49 README, and the family nodes of dag/reviews/workflows_audit.json; a README without exactly one pair of markers is refused.",
+      "With --check it writes nothing and lists every output whose bytes differ, then the drift report; the command exits 1 when that list is non-empty.",
+      "A rendered block that names a private project is refused with the field it came from.",
+      "A hosted family whose Rust source or test file is missing is refused.",
+      "A file whose first 4096 bytes contain CRLF is written back with CRLF."
+    ],
+    "boundaries": [
+      "It never writes workflows/README.md or workflows/dag/workflow_dag.json; it only reports their drift.",
+      "It certifies nothing about a family; the host check does."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp_core/workflow_families/docs.py",
+      "language": "Python",
+      "sha256": "3e4a7b4314cf1abfe6be57b78bd8ee35a662435f1f5d1963ad52862fcb8a8ea6"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "A documentation generator with one job: render each family README block and audit record from the registry and refuse stale or private output. No verdict about a family is made here.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Module docstring states the outputs, the --check mode and the private-name guard; the contract names every top-level symbol. Not B: no requirement-to-symbol trace beyond workflows/README.md.",
+      "G2": "No arithmetic. Outputs are compared byte for byte; JSON is written with a fixed indent and the existing line endings.",
+      "G3": "Missing markers, missing host files and private names raise ValueError with the family id and field. Not B: unreadable files raise the reader's own error.",
+      "G4": "489 tests pass in the recorded run, 14 of them on this module (main, build with and without --check, stale detection, drift parsing, host-file refusal, CRLF window, guard message). Mutation campaign R = 78/78. Not B: one generated campaign, no property tests.",
+      "G5": "Measured worst cyclomatic 11, cognitive 14, nesting 2; ceiling B, recorded B."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "B",
+    "evaluation_timestamp": "2026-11-16T11:04:58Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/wf-families-docs-tests.run.json",
+        "sha256": "16f2f24499047f63fc874f154737b26b943843b33913d00b644b4c7ba2c81e38",
+        "note": "489 offline tests in pfp_core/workflow_families/tests with the release build of pfp_operad; exact source inputs bound. No model call."
+      },
+      {
+        "path": "governance/evidence/wf-families-docs-metrics.run.json",
+        "sha256": "6abe5390dec03287d524660df898443791a004c6992ea90d9a3c5a8864677c64",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/wf-families-docs-metrics.json",
+        "sha256": "f86d6a0b4109d294bce7f7a18767c3291fdb70ca6db442974cbb05df2e12d09e",
+        "note": "Measured Gate 5 structure of docs.py and its test file."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 78,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-workflow-families-docs-py.mutation.json",
+        "sha256": "27685c2a155c74aa43ec7d7546fb69a0f590a88e5032def4dc3dc40ffd4702fe",
+        "note": "AST campaign, governance.tools.mutation, pytest as oracle; 78 mutants"
+      }
+    }
+  },
+  "history": []
+}

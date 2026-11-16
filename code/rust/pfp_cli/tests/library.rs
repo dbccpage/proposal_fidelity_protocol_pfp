@@ -400,3 +400,20 @@ fn an_unclosed_fence_gives_back_the_line_after_it() {
     assert_eq!(report.findings.len(), 1);
     assert_eq!(report.findings[0].line, Some(2));
 }
+
+#[test]
+fn explain_keeps_an_overlong_first_word_on_the_label_line() {
+    let long = "x".repeat(70);
+    let word: &'static str = Box::leak(long.clone().into_boxed_str());
+    let entry = pfp_cli::catalog::Entry {
+        code: "LONG",
+        short: "s",
+        what: word,
+        why: "w",
+        instead: "i",
+    };
+    assert_eq!(
+        pfp_cli::render_explain(&entry),
+        format!("LONG: s\n\n  What:    {long}\n  Why:     w\n  Instead: i\n")
+    );
+}
