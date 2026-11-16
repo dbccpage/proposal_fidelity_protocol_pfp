@@ -10,11 +10,11 @@ import enum
 import hashlib
 import json
 import threading
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from dataclasses import asdict, dataclass, field
 from fractions import Fraction
 from types import MappingProxyType
-from typing import Any, Dict, List, Optional, Sequence
+from typing import Any
 
 from .canonical import (
     digest,
@@ -32,7 +32,7 @@ from .canonical import (
 # =============================================================================
 
 @enum.unique
-class PopulationTier(str, enum.Enum):
+class PopulationTier(str, enum.Enum):  # noqa: UP042
     """The 4-population demographic lifecycle tiers (+ Cemetery refusal store).
 
     - WILD: Untrusted inbound user queries and uncurated model continuations.
@@ -58,7 +58,7 @@ class UnauthorizedAdmissionError(Exception):
 
 
 @dataclass(frozen=True)
-class CivilizationPrompt:
+class CivilizationPrompt:  # noqa: PLW1641
     """A prompt or behavioral instruction residing in a demographic tier."""
 
     prompt_id: str
@@ -88,7 +88,7 @@ class CivilizationPrompt:
 
 
 @dataclass(frozen=True)
-class PromotionDecision:
+class PromotionDecision:  # noqa: PLW1641
     """Decision recording demographic promotion or refusal."""
 
     prompt_id: str
@@ -230,7 +230,7 @@ class CivilizationState:
 # CUSTODY, PROTECTED SPANS & PROMPT GENOMES
 # =============================================================================
 
-class CustodyTier(str, enum.Enum):
+class CustodyTier(str, enum.Enum):  # noqa: UP042
     WILD = "Wild"
     CANDIDATE = "Candidate"
     REVIEWED = "Reviewed"
@@ -272,9 +272,9 @@ class ProtectedSpanV1:
 class PromptGenomeV1:
     """Immutable prompt genome with birth custody and content-addressed ID."""
 
-    source_packet_refs: Sequence[Dict[str, str]]
+    source_packet_refs: Sequence[dict[str, str]]
     domain_model: Any
-    parents: Sequence[Dict[str, Any]] = ()
+    parents: Sequence[dict[str, Any]] = ()
     birth_custody: CustodyTier = CustodyTier.WILD
     prompt_id: str = ""
     generation: int = 0
@@ -290,13 +290,24 @@ class PromptGenomeV1:
             self.birth_custody.value if hasattr(self.birth_custody, "value") else str(self.birth_custody),
             [asdict(span) for span in self.protected_spans],
         ]
-        raw = json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False).encode("utf-8")
+        raw = json.dumps(
+            payload,
+            sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=False,
+            allow_nan=False,
+        ).encode("utf-8")
         identity = "genome_" + hashlib.sha256(b"core-prompt-genome-v1:" + raw).hexdigest()
         if self.prompt_id and self.prompt_id != identity:
             raise ValueError("GENOME_IDENTITY_MISMATCH")
         object.__setattr__(self, "prompt_id", identity)
 
-    def to_dict(self) -> Dict[str, Any]:
+    @property
+    def content_digest(self) -> str:
+        """Canonical ``sha256:<hex>`` alias compatible with Lamarckian receipts."""
+        return "sha256:" + self.prompt_id.removeprefix("genome_")
+
+    def to_dict(self) -> dict[str, Any]:
         """Lossless JSON representation for durable host storage."""
         return {
             "source_packet_refs": _plain(self.source_packet_refs),
@@ -309,7 +320,7 @@ class PromptGenomeV1:
         }
 
     @classmethod
-    def from_dict(cls, fields: Dict[str, Any]) -> "PromptGenomeV1":
+    def from_dict(cls, fields: dict[str, Any]) -> PromptGenomeV1:
         values = dict(fields)
         values["birth_custody"] = CustodyTier(values["birth_custody"])
         values["protected_spans"] = tuple(ProtectedSpanV1(**span) for span in values["protected_spans"])
@@ -319,18 +330,15 @@ class PromptGenomeV1:
     def create_verified(
         cls,
         *,
-        source_packet_refs: Sequence[Dict[str, str]],
-        domain_model: Dict[str, Any],
-        parents: Sequence[Dict[str, Any]],
+        source_packet_refs: Sequence[dict[str, str]],
+        domain_model: dict[str, Any],
+        parents: Sequence[dict[str, Any]],
         declared_generation: int,
         protected_spans: Sequence[ProtectedSpanV1] = (),
         birth_custody: CustodyTier = CustodyTier.WILD,
-        allowed_boundary_names: Optional[Sequence[str]] = None,
-    ) -> "PromptGenomeV1":
-        if parents:
-            expected_generation = max(p.get("generation", 0) for p in parents) + 1
-        else:
-            expected_generation = 0
+        allowed_boundary_names: Sequence[str] | None = None,
+    ) -> PromptGenomeV1:
+        expected_generation = max(p.get("generation", 0) for p in parents) + 1 if parents else 0
 
         if declared_generation != expected_generation:
             raise ValueError(
@@ -338,7 +346,10 @@ class PromptGenomeV1:
                 f"does not match expected derived generation {expected_generation}"
             )
 
-        known_boundaries = set(allowed_boundary_names or ["system_framing", "type_signatures", "claim_hygiene", "authority_effect", "core"])
+        known_boundaries = set(
+            allowed_boundary_names
+            or ["system_framing", "type_signatures", "claim_hygiene", "authority_effect", "core"]
+        )
         for span in protected_spans:
             if span.name not in known_boundaries:
                 raise ValueError(f"PROTECTED_BOUNDARY_UNRESOLVED: boundary '{span.name}' could not be resolved")
@@ -389,7 +400,7 @@ def scope_covers(scope: str, target: str) -> bool:
 
     An exact label does not grant its children. `math.*` does not cover `mathematics`.
     """
-    if scope == "*" or scope == target:
+    if scope in {"*", target}:
         return True
     if scope.endswith(".*"):
         stem = scope[:-2]
@@ -465,7 +476,7 @@ class CemeteryHeadstoneV1:
         }
 
     @classmethod
-    def from_dict(cls, value: Any) -> "CemeteryHeadstoneV1":
+    def from_dict(cls, value: Any) -> CemeteryHeadstoneV1:
         wire = exact_object(
             value,
             frozenset(
@@ -527,7 +538,7 @@ class AntibodyEntryV1:
         }
 
     @classmethod
-    def from_dict(cls, value: Any) -> "AntibodyEntryV1":
+    def from_dict(cls, value: Any) -> AntibodyEntryV1:
         wire = exact_object(
             value,
             frozenset(
@@ -602,7 +613,7 @@ class GenealogyEntryV1:
         }
 
     @classmethod
-    def from_dict(cls, value: Any) -> "GenealogyEntryV1":
+    def from_dict(cls, value: Any) -> GenealogyEntryV1:
         wire = exact_object(
             value,
             frozenset(
@@ -671,14 +682,14 @@ class PromptGenomeRegistryV1:
 
     def __init__(self) -> None:
         self._lock = threading.Lock()
-        self._genomes: Dict[str, PromptGenomeV1] = {}
-        self._occurrences: Dict[str, ExecutionOccurrenceV1] = {}
+        self._genomes: dict[str, PromptGenomeV1] = {}
+        self._occurrences: dict[str, ExecutionOccurrenceV1] = {}
 
     def register_genome(self, genome: PromptGenomeV1) -> None:
         with self._lock:
             self._genomes[genome.prompt_id] = genome
 
-    def get_genome(self, prompt_id: str) -> Optional[PromptGenomeV1]:
+    def get_genome(self, prompt_id: str) -> PromptGenomeV1 | None:
         with self._lock:
             return self._genomes.get(prompt_id)
 
@@ -693,7 +704,7 @@ class PromptGenomeRegistryV1:
         input_packet_id: str,
         output_packet_id: str,
     ) -> ExecutionOccurrenceV1:
-        raw = f"{prompt_id}:{session_id}:{input_packet_id}:{output_packet_id}".encode("utf-8")
+        raw = f"{prompt_id}:{session_id}:{input_packet_id}:{output_packet_id}".encode()
         occ_id = f"occ_{hashlib.sha256(raw).hexdigest()[:16]}"
         occ = ExecutionOccurrenceV1(
             occurrence_id=occ_id,
@@ -705,7 +716,7 @@ class PromptGenomeRegistryV1:
         self.record_occurrence(occ)
         return occ
 
-    def get_occurrences_for_prompt(self, prompt_id: str) -> List[ExecutionOccurrenceV1]:
+    def get_occurrences_for_prompt(self, prompt_id: str) -> list[ExecutionOccurrenceV1]:
         with self._lock:
             return [occ for occ in self._occurrences.values() if occ.prompt_id == prompt_id]
 

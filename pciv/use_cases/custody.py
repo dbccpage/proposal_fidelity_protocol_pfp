@@ -4,13 +4,39 @@ The host must inject an authenticating verifier. Generated status, rank, fitness
 and a receipt-shaped string alone cannot change custody. AuthorityEffect: None.
 """
 
+import hashlib
 import json
 import sqlite3
+from collections.abc import Mapping, Sequence
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Protocol
+from typing import Any, Protocol
 
-from ..domain.models import CustodyTier, PromptGenomeV1, PromptViewV1
+from ..domain.models import CustodyTier, PromptGenomeV1, PromptViewV1, ProtectedSpanV1
+
+
+def ensure_caller_prompt_genome(
+    prompt_utf8_bytes: bytes,
+    domain_model: Mapping[str, Any] | None = None,
+    *,
+    parents: Sequence[dict[str, Any]] = (),
+    protected_spans: Sequence[ProtectedSpanV1] = (),
+    birth_custody: CustodyTier = CustodyTier.WILD,
+) -> PromptGenomeV1:
+    """Bind raw caller prompt bytes to a deterministic ``PromptGenomeV1``."""
+    if type(prompt_utf8_bytes) is not bytes:
+        raise TypeError("prompt_utf8_bytes must be exact bytes")
+    pkt_sha = hashlib.sha256(prompt_utf8_bytes).hexdigest()
+    parent_list = list(parents)
+    generation = max((int(p.get("generation", 0)) for p in parent_list), default=-1) + 1
+    return PromptGenomeV1(
+        source_packet_refs=[{"sha256": pkt_sha}],
+        domain_model=dict(domain_model) if domain_model is not None else {"domain": "pfp.caller"},
+        parents=parent_list,
+        birth_custody=birth_custody,
+        generation=generation,
+        protected_spans=tuple(protected_spans),
+    )
 
 
 @dataclass(frozen=True)
@@ -134,7 +160,12 @@ class PromptCustodyLedgerV1:
     def apply(self, genome: PromptGenomeV1, receipt: PromptReviewReceiptV1) -> PromptViewV1:
         if receipt.prompt_id != genome.prompt_id or receipt.authority_effect != "None":
             raise ValueError("REVIEW_SUBJECT_MISMATCH")
-        if not receipt.decision_id or not receipt.actor_id or not receipt.external_receipt or self.verifier.verify(receipt) is not True:
+        if (
+            not receipt.decision_id
+            or not receipt.actor_id
+            or not receipt.external_receipt
+            or self.verifier.verify(receipt) is not True
+        ):
             raise PermissionError("EXTERNAL_REVIEW_NOT_AUTHENTICATED")
         with self.connection:
             # Reserve the writer before reading custody; two simultaneous hosts

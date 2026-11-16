@@ -1,17 +1,20 @@
 from __future__ import annotations
 
-import json
 import hashlib
+import json
 import re
+from collections.abc import Callable, Sequence
 from dataclasses import asdict, dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Callable, Dict, Sequence
+from typing import Any
 
-from .external_admission import HumanAntiSkillAdmissionDecisionV1, HumanAdmissionApplierV1
+from .external_admission import HumanAdmissionApplierV1, HumanAntiSkillAdmissionDecisionV1
 from .pharmacy_models import Antibody, PharmacyStatus
 from .pharmacy_search import rule_content_bytes, rule_content_sha256
 from .ports import CatalogByteSource
+from .thymus import ThymusGate
+from .value_objects import DetectorRule
 
 
 @dataclass(frozen=True)
@@ -76,7 +79,7 @@ class PharmacyCatalogRepository:
         return self.antibodies_dir
 
     def get_antibody_path(self, antibody_id: str, status: str | None = None) -> Path:
-        """Locates the path of an antibody file, checking telemetry candidates first, then specs, then antibodies_dir."""
+        """Locate the path of an antibody file (candidates, then specs, then root)."""
         cand_path = self.candidates_dir / f"{antibody_id}.json"
         if self._is_file(cand_path):
             return cand_path
@@ -118,7 +121,7 @@ class PharmacyCatalogRepository:
     def _read_bytes(self, path: Path) -> bytes:
         return self._source().read_bytes(str(path))
 
-    def load_catalog(self) -> Dict[str, Any]:
+    def load_catalog(self) -> dict[str, Any]:
         if self._exists(self.publication_marker):
             raise ValueError("PHARMACY_PUBLICATION_INTERRUPTED")
         catalog = self._read_catalog()
@@ -129,7 +132,7 @@ class PharmacyCatalogRepository:
                 raise ValueError(f"PHARMACY_PROJECTION_DRIFT:{antibody_id}")
         return catalog
 
-    def _read_catalog(self) -> Dict[str, Any]:
+    def _read_catalog(self) -> dict[str, Any]:
         if not self._exists(self.catalog_file):
             return self._empty_catalog(with_timestamp=True)
         try:
@@ -173,7 +176,7 @@ class PharmacyCatalogRepository:
         self._write_bytes(path, payload)
 
     def publish_candidates(
-        self, records: Sequence[Dict[str, Any]], *, observation_id: str
+        self, records: Sequence[dict[str, Any]], *, observation_id: str
     ) -> PublicationDecision:
         """Publish an identified observation once; judgement remains a separate act.
 
@@ -222,7 +225,7 @@ class PharmacyCatalogRepository:
         self._commit_catalog(catalog, changed)
         return PublicationDecision(tuple(changed), str(self.publication_marker))
 
-    def _commit_catalog(self, catalog: Dict[str, Any], changed: list[str]) -> None:
+    def _commit_catalog(self, catalog: dict[str, Any], changed: list[str]) -> None:
         entries = catalog["antibodies"]
         projections = catalog["managed_projections"]
         payload = self._json_bytes(catalog)
@@ -232,17 +235,74 @@ class PharmacyCatalogRepository:
             self._atomic_write(self._projection_path(projections[antibody_id]), self._json_bytes(entries[antibody_id]))
         self._atomic_write(self.catalog_file, payload)
 
+    def upsert_managed_record(
+        self,
+        record: dict[str, Any],
+        *,
+        allowed_existing_statuses: frozenset[str] = frozenset({"candidate", "provisional"}),
+    ) -> dict[str, Any]:
+        """Persist a managed antibody record and its byte-identical projection cleanly.
+
+        Used when updating observational counts, provisional promotions, or scope
+        metadata on an already-validated catalog without leaving an unconsumed
+        publication marker on disk. Preserves human-judged entries unless explicitly
+        permitted by ``allowed_existing_statuses``.
+        """
+        antibody_id = record.get("antibody_id", "")
+        if not isinstance(antibody_id, str) or not re.fullmatch(r"[a-z0-9_-]+", antibody_id):
+            raise ValueError("PHARMACY_ID_INVALID")
+        if record.get("authority_effect") != "None":
+            raise ValueError("PHARMACY_AUTHORITY_EFFECT_NON_NONE")
+        catalog = self.load_catalog()
+        entries = catalog.setdefault("antibodies", {})
+        projections = catalog.setdefault("managed_projections", {})
+        existing = entries.get(antibody_id)
+        if existing is not None and existing.get("pharmacy_status") not in allowed_existing_statuses:
+            return dict(existing)
+        entry = dict(record)
+        destination = self.candidates_dir / f"{antibody_id}.json"
+        relative = destination.resolve().relative_to(self.repo_root.resolve()).as_posix()
+        entries[antibody_id] = entry
+        projections[antibody_id] = relative
+        payload = self._json_bytes(catalog)
+        self._atomic_write(self._projection_path(relative), self._json_bytes(entry))
+        self._atomic_write(self.catalog_file, payload)
+        return dict(entry)
+
     def publish_admission(
-        self, antibody_id: str, decision: HumanAntiSkillAdmissionDecisionV1,
-        *, applier: HumanAdmissionApplierV1,
-    ) -> tuple[Dict[str, str], str]:
-        """Persist a separately supplied operator decision after the existing gate."""
+        self,
+        antibody_id: str,
+        decision: HumanAntiSkillAdmissionDecisionV1,
+        *,
+        applier: HumanAdmissionApplierV1,
+        self_panel: Sequence[str] | None = None,
+    ) -> tuple[dict[str, str], str]:
+        """Persist a separately supplied operator decision after Thymus and authority gates."""
         catalog = self.load_catalog()
         record = catalog["antibodies"][antibody_id]
         if antibody_id not in catalog.get("managed_projections", {}):
             raise ValueError("PHARMACY_UNMANAGED_REVISION")
         if record.get("rule_sha256") != rule_content_sha256(record):
             raise ValueError("PHARMACY_RULE_DIGEST_MISMATCH")
+        producer_actor = record.get("producer_actor", "")
+        if isinstance(producer_actor, str) and producer_actor.strip() and decision.issuer == producer_actor:
+            raise PermissionError("SELF_ADMISSION_REFUSED")
+        if self_panel is not None:
+            selection = ThymusGate(self_panel=self_panel).evaluate_rule(
+                DetectorRule(
+                    rule_id=antibody_id,
+                    target_epitope=str(record.get("failure_class", antibody_id)),
+                    match_pattern=str(record.get("target_pattern", "")),
+                )
+            )
+            if not selection.is_admitted:
+                record["pharmacy_status"] = PharmacyStatus.RETIRED.value
+                record["revoked"] = True
+                self.upsert_managed_record(
+                    record,
+                    allowed_existing_statuses=frozenset({"candidate", "provisional", "admitted"}),
+                )
+                raise ValueError(f"AUTOIMMUNE_RULE_REFUSED:{selection.rationale}")
         result = applier.apply_admission(decision, rule_content_bytes(record))
         if result.get("status") != "ADMITTED":
             raise ValueError(f"PHARMACY_ADMISSION_REFUSED:{result.get('reason', 'unknown')}")
@@ -270,7 +330,7 @@ class PharmacyCatalogRepository:
         task_id: str,
     ) -> None:
         catalog = self.load_catalog()
-        catalog["updated_at"] = datetime.now(timezone.utc).isoformat()
+        catalog["updated_at"] = datetime.now(UTC).isoformat()
         catalog["last_mined_run_id"] = run_id
         catalog["last_mined_task_id"] = task_id
         entries = catalog.setdefault("antibodies", {})
@@ -284,12 +344,12 @@ class PharmacyCatalogRepository:
         self._write_bytes(self.catalog_file, payload)
 
     @staticmethod
-    def _empty_catalog(*, with_timestamp: bool) -> Dict[str, Any]:
-        catalog: Dict[str, Any] = {
+    def _empty_catalog(*, with_timestamp: bool) -> dict[str, Any]:
+        catalog: dict[str, Any] = {
             "catalog_version": "1.0.0",
             "authority_effect": "None",
             "antibodies": {},
         }
         if with_timestamp:
-            catalog["updated_at"] = datetime.now(timezone.utc).isoformat()
+            catalog["updated_at"] = datetime.now(UTC).isoformat()
         return catalog

@@ -9,19 +9,19 @@ Zero-Float Law: Uses exact rational arithmetic (fractions.Fraction).
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
-from fractions import Fraction
 import hashlib
 import json
 import re
-from typing import Sequence
+from collections.abc import Mapping
+from dataclasses import asdict, dataclass
+from fractions import Fraction
 
 SHA256_PATTERN = re.compile(r"^sha256:[0-9a-f]{64}$")
 RATIONAL_PATTERN = re.compile(r"^-?[0-9]+/[1-9][0-9]*$")
 
 
 def _scope_covers(scope: str, target: str) -> bool:
-    if scope == "*" or scope == target:
+    if scope in {"*", target}:
         return True
     if scope.endswith(".*"):
         stem = scope[:-2]
@@ -124,6 +124,54 @@ class MigrationPolicyV1:
         pop_cap = 1 if current_population <= 0 else (current_population + 19) // 20
         effective_cap = max(1, min(self.max_incoming_per_epoch, pop_cap))
         return incoming_count <= effective_cap
+
+
+@dataclass(frozen=True, slots=True)
+class PromptFamilyRecordV1:
+    """Smallest cohort of prompt genomes sharing a root lineage, self panel, and antibodies."""
+
+    family_id: str
+    society_id: str
+    root_genome_id: str
+    member_genome_ids: tuple[str, ...]
+    shared_antibody_ids: tuple[str, ...] = ()
+    self_panel_digest: str = ""
+    authority_effect: str = "None"
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.member_genome_ids, tuple):
+            object.__setattr__(self, "member_genome_ids", tuple(self.member_genome_ids))
+        if not isinstance(self.shared_antibody_ids, tuple):
+            object.__setattr__(self, "shared_antibody_ids", tuple(self.shared_antibody_ids))
+        self.validate()
+
+    def validate(self) -> None:
+        if not SHA256_PATTERN.match(self.family_id):
+            raise ValueError(f"INVALID_FAMILY_ID_FORMAT: {self.family_id!r}")
+        if not SHA256_PATTERN.match(self.society_id):
+            raise ValueError(f"INVALID_SOCIETY_ID_FORMAT: {self.society_id!r}")
+        if not isinstance(self.root_genome_id, str) or not self.root_genome_id.strip():
+            raise ValueError("EMPTY_ROOT_GENOME_ID")
+        if self.root_genome_id not in self.member_genome_ids:
+            raise ValueError("ROOT_GENOME_NOT_IN_FAMILY_MEMBERS")
+        if self.authority_effect != "None":
+            raise ValueError("AUTHORITY_EFFECT_MUST_BE_NONE")
+
+
+def resolve_society_families(
+    society: PromptSocietyV1,
+    family_index: Mapping[str, PromptFamilyRecordV1],
+) -> tuple[PromptFamilyRecordV1, ...]:
+    """Resolve every ``family_ids`` entry on a society and reject dangling or foreign IDs."""
+    resolved: list[PromptFamilyRecordV1] = []
+    for fid in society.family_ids:
+        record = family_index.get(fid)
+        if record is None or record.society_id != society.society_id:
+            raise ValueError(
+                f"DANGLING_OR_FOREIGN_FAMILY_ID: {fid!r} for society {society.society_id!r}"
+            )
+        resolved.append(record)
+    return tuple(resolved)
 
 
 @dataclass(frozen=True, slots=True)
