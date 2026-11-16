@@ -5,16 +5,17 @@
 
 **Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet.
 
-**Run it offline** (no model call, no spend), from the repository root:
+**Run it offline** (no model call, no spend), from the repository root. The first line builds the Rust host once:
 
 ```powershell
+cargo build --release -p pfp_operads --manifest-path code/rust/Cargo.toml
 python -m pfp_core.workflow_families run WF44
 python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF44-"
 ```
 
-**The check:** `exact_certificate_presets`. Only this check can certify; a model reply is evidence for it, never a verdict.
+**The check:** `exact_certificate_presets`. Only this check can certify; a model reply is evidence for it, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
-**Code:** [`pfp_core/workflow_families/layer4.py`](../../pfp_core/workflow_families/layer4.py) (`ExactCertificatePresets`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf44)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf44.rs`](../../code/rust/pfp_operads/src/families/wf44.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer4.py`](../../pfp_core/workflow_families/layer4.py) (`ExactCertificatePresets`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** task preset. **Builds on:** [WF11](../wf11_dual_certificate_synthesis/README.md), [WF10](../wf10_local_to_global_obstruction_certificate/README.md).
@@ -44,4 +45,4 @@ Pattern `solo`: coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×
 
 Boost: when certificate rejected: one run_o attempt (limit 1).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf44) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

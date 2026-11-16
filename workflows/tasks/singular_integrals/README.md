@@ -14,5 +14,3 @@ python workflows/tasks/singular_integrals/run.py --output-dir <scratch-dir>
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000038/`.
-
-See the wiki page `Test-Singular-Integrals`.

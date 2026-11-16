@@ -15,7 +15,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF9-"
 
 **The check:** `xor_cycle_minimal_repair`. Only this check can certify; a model reply is evidence for it, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
-**Check (Rust):** [`code/rust/pfp_operads/src/families/wf09.rs`](../../code/rust/pfp_operads/src/families/wf09.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer2.py`](../../pfp_core/workflow_families/layer2.py) (`BoundedCheckAndRepair`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf9)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf09.rs`](../../code/rust/pfp_operads/src/families/wf09.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer2.py`](../../pfp_core/workflow_families/layer2.py) (`BoundedCheckAndRepair`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** procedure extension. **Builds on:** [WF2](../wf02_full_slots/README.md).
@@ -61,4 +61,4 @@ Boost: when two rejections in a row: final attempt goes to run_o with the full r
 | negative control | deletion edit that makes the ratio test pass vacuously | passes: a known gap | code | P018 CE 3.1 |
 | retry kind | blind retry vs packet-changing retry | blind retry saturates as (1-p)^n p | theory | P028 §10.3 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf9) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

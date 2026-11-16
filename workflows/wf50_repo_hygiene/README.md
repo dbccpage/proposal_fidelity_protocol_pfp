@@ -23,8 +23,7 @@ anywhere) and the custody test
 (no file pinned in `dag/file_inventory.json` changes unrecorded).
 
 **Code:** [hygiene.py](hygiene.py), [test_hygiene.py](test_hygiene.py),
-[naming_policy.json](naming_policy.json), [workflow.js](workflow.js). Wiki page:
-[workflow_wf50](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf50).
+[naming_policy.json](naming_policy.json), [workflow.js](workflow.js).
 
 **Kind:** maintenance workflow. **Builds on:** nothing.
 

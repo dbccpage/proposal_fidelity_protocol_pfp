@@ -15,7 +15,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF46-"
 
 **The check:** `glued_trace_global_evaluator`. Only this check can certify; a model reply is evidence for it, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
-**Check (Rust):** [`code/rust/pfp_operads/src/families/wf46.rs`](../../code/rust/pfp_operads/src/families/wf46.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer3.py`](../../pfp_core/workflow_families/layer3.py) (`BoundarySufficiency`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf46)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf46.rs`](../../code/rust/pfp_operads/src/families/wf46.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer3.py`](../../pfp_core/workflow_families/layer3.py) (`BoundarySufficiency`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** procedure extension. **Builds on:** [WF4](../wf04_five_agents_lggr/README.md).
@@ -46,4 +46,4 @@ Pattern `parallel_isolated_then_global`: coder ×1 (sonnet); deep_researcher ×1
 
 Boost: when none: diagnostic only (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf46) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

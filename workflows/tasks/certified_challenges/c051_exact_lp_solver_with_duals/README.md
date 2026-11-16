@@ -15,5 +15,3 @@ Replay-custody test for this challenge:
 Score the reference solver on the 14 public examples:
 
     python workflows/tasks/certified_challenges/c051_exact_lp_solver_with_duals/participant_packet/runner.py workflows/tasks/certified_challenges/c051_exact_lp_solver_with_duals/reference_solver/solver.py
-
-Wiki page: Test-Exact-LP-Dual-Certificates.

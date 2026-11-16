@@ -14,7 +14,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF35-"
 
 **The check:** `channel_blind_fixed_oracle`. Only this check can certify; a model reply is evidence for it, never a verdict.
 
-**Code:** [`pfp_core/workflow_families/layer6.py`](../../pfp_core/workflow_families/layer6.py) (`ProposalChannelComparison`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf35)
+**Code:** [`pfp_core/workflow_families/layer6.py`](../../pfp_core/workflow_families/layer6.py) (`ProposalChannelComparison`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** experiment design. **Builds on:** [WF6](../wf06_dialect_sweep/README.md), [WF12](../wf12_mechanism_control_arms/README.md).
@@ -45,4 +45,4 @@ Pattern `sweep_with_shared_judge`: coder ×1 (sonnet); deep_researcher ×1 (run_
 
 Boost: when none: channels are arms, not boosts (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf35) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

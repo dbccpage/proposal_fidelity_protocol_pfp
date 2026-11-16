@@ -14,5 +14,3 @@ python workflows/tasks/finite_provenance/run.py --output-dir <scratch-dir>
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000036/`.
-
-See the wiki page `Test-Finite-Provenance`.

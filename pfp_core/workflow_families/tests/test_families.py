@@ -94,17 +94,16 @@ def test_canonical_rejects_floats_as_fractions():
     assert base.as_fraction('1/2', 'x') == base.Fraction(1, 2)
 
 
-def test_wiki_pages_and_dag_records_are_current():
+def test_readme_blocks_and_dag_records_are_current():
     from pfp_core.workflow_families import docs
     assert docs.build(check=True) == []
 
 
-def test_a_private_name_in_a_source_field_is_refused(audit_nodes):
+def test_a_private_name_in_a_source_field_is_refused():
     from pfp_core.workflow_families import docs
     private = 'run it on the ' + 'om' + 'ega' + '_engine host'
-    node = {**audit_nodes['WF7'], 'process': ['Freeze the task', private]}
     with pytest.raises(ValueError, match=r"WF7: field 'process'"):
-        docs.render(REGISTRY['WF7'], node, [])
+        docs.guard('WF7', 'process', private)
     with pytest.raises(ValueError, match='readme'):
         docs.guard('WF7', 'readme block', 'see the ' + 'wo' + 'land gate')
     # The Greek letter as a math symbol is not a name.
@@ -175,8 +174,9 @@ def test_the_rust_host_lists_every_hosted_family_under_the_registry_s_names():
     listed = operad_host.result(operad_host.call(('family', 'list')))['families']
     assert listed == [{'workflow': wf_id, 'name': cls.spec.name, 'host_check': cls.spec.host_check_id}
                       for wf_id, cls in HOSTED.items()]
-    assert set(HOSTED) == {'WF7', 'WF9', 'WF10', 'WF11', 'WF13', 'WF20', 'WF24', 'WF25', 'WF26', 'WF27', 'WF30',
-                           'WF31', 'WF32', 'WF33', 'WF38', 'WF40', 'WF45', 'WF46', 'WF47'}
+    assert set(HOSTED) == {'WF6', 'WF7', 'WF9', 'WF10', 'WF11', 'WF13', 'WF16', 'WF17', 'WF20', 'WF24', 'WF25',
+                           'WF26', 'WF27', 'WF29', 'WF30', 'WF31', 'WF32', 'WF33', 'WF38', 'WF40', 'WF44', 'WF45',
+                           'WF46', 'WF47'}
 
 
 @pytest.mark.parametrize('wf_id', sorted(HOSTED))
@@ -308,3 +308,84 @@ def test_exact_binary_labels_are_still_admitted(wf_id):
     family = REGISTRY[wf_id]()
     task = {'edges': [[0, 1], [1, 2], [2, 0]], 'labels': [1, 0, 0], 'fuel': 9}
     assert family.validate(task) is task
+
+
+def test_docs_main_prints_the_result_and_exits_by_it(monkeypatch, capsys):
+    from pfp_core.workflow_families import docs
+    monkeypatch.setattr(docs, 'build', lambda check: [])
+    assert docs.main(['--check']) == 0
+    assert capsys.readouterr().out == '{\n  "stale": []\n}\n'
+    monkeypatch.setattr(docs, 'build', lambda check: ['README.md'])
+    assert docs.main([]) == 1
+    assert capsys.readouterr().out == '{\n  "drift": [\n    "README.md"\n  ]\n}\n'
+
+
+def test_docs_build_writes_only_without_check(monkeypatch):
+    from pathlib import Path
+
+    from pfp_core.workflow_families import docs
+    written = []
+    monkeypatch.setattr(Path, 'write_bytes', lambda self, data: written.append(self))
+    assert docs.build(check=True) == []
+    assert written == []
+    assert docs.build(check=False) == []
+    assert docs.AUDIT in written and len(written) == 45
+    monkeypatch.setattr(docs, '_encode', lambda path, text: b'changed')
+    stale = docs.build(check=True)
+    assert len(stale) == 45 and 'dag/reviews/workflows_audit.json' in stale
+
+
+def test_docs_a_missing_host_file_is_refused(monkeypatch, tmp_path):
+    from pfp_core.workflow_families import docs
+    assert docs.host_files(REGISTRY['WF7']) is not None
+    monkeypatch.setattr(docs, 'REPO_ROOT', tmp_path)
+    with pytest.raises(ValueError, match=r'WF7: the host file code/rust/pfp_operads/src/families/wf07\.rs is missing'):
+        docs.host_files(REGISTRY['WF7'])
+
+
+def test_docs_drift_reads_only_numbered_rows_with_a_status_cell():
+    from pfp_core.workflow_families import docs
+    one = {'WF7': REGISTRY['WF7']}
+    dag = {'nodes': [{'id': 'WF7', 'status': 'implemented_offline'}]}
+    assert docs.drift(one, '| 7 |\n| WF | Workflow | Status |\n| 7 | Typed refusal | runnable offline |\n', dag) == []
+    assert docs.drift(one, '| 7 | Typed refusal | design |\n', dag) == [
+        "workflows/README.md#WF7: status 'design', expected 'runnable offline'"]
+    assert docs.drift(one, '| 7 | Typed refusal | runnable offline |\n', {'nodes': []}) == [
+        "workflows/dag/workflow_dag.json#WF7: status None, expected 'implemented_offline'"]
+
+
+def test_docs_readme_block_ids_are_wf6_to_wf49():
+    from pfp_core.workflow_families import docs
+    assert len(docs.README_BLOCK_IDS) == 44
+    assert 'WF6' in docs.README_BLOCK_IDS and 'WF49' in docs.README_BLOCK_IDS
+    assert 'WF5' not in docs.README_BLOCK_IDS and 'WF50' not in docs.README_BLOCK_IDS
+
+
+def test_docs_docstring_head_drops_only_the_id_prefix():
+    from types import SimpleNamespace
+
+    from pfp_core.workflow_families import docs
+
+    class Fake:
+        """WF7. Typed refusal. It refuses.
+
+        Body line.
+        """
+        spec = SimpleNamespace(wf_id='WF7')
+    assert docs._docstring(Fake) == ('Typed refusal. It refuses.', 'Body line.')
+
+
+def test_docs_encode_keeps_crlf_only_when_seen_in_the_first_4096_bytes(tmp_path):
+    from pfp_core.workflow_families import docs
+    early, late = tmp_path / 'early', tmp_path / 'late'
+    early.write_bytes(b'a' * 4094 + b'\r\n')
+    late.write_bytes(b'a' * 4095 + b'\r\n')
+    assert docs._encode(early, 'x\ny\n') == b'x\r\ny\r\n'
+    assert docs._encode(late, 'x\ny\n') == b'x\ny\n'
+    assert docs._encode(tmp_path / 'absent', 'x\n') == b'x\n'
+
+
+def test_docs_guard_names_the_whole_match():
+    from pfp_core.workflow_families import docs
+    with pytest.raises(ValueError, match=r"WF7: field 'name' carries a private name \('Symbol Game'\)"):
+        docs.guard('WF7', 'name', 'the Symbol Game rules')

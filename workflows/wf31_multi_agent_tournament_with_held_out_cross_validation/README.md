@@ -15,7 +15,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF31-"
 
 **The check:** `exact_held_out_referee`. Only this check can certify; a model reply is evidence for it, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
-**Check (Rust):** [`code/rust/pfp_operads/src/families/wf31.rs`](../../code/rust/pfp_operads/src/families/wf31.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer1.py`](../../pfp_core/workflow_families/layer1.py) (`HeldOutTournament`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf31)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf31.rs`](../../code/rust/pfp_operads/src/families/wf31.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer1.py`](../../pfp_core/workflow_families/layer1.py) (`HeldOutTournament`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** experiment design. **Builds on:** [WF1](../wf01_typed_answer/README.md).
@@ -53,4 +53,4 @@ Boost: when none: tournaments do not escalate mid-round (limit 0).
 | --- | --- | --- | --- | --- |
 | difficulty and noise | N=2 vs N=4 modes; noise budget 1/100 vs 1/50; four targets | random 0/16, others 16/16 | offline | P022 §4.2 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf31) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

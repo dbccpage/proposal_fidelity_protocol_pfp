@@ -2,12 +2,12 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/pfp_operads/src/families/wf07.rs",
-  "target_sha256": "5f08c4fc4115597f1b90ce4f5dda791b32307ea7b878b2542f6e048b591b7a93",
-  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf07 --test domains --test wf13",
+  "target_sha256": "048b3746127230b96cbfceac2acf5bdbcdd2bfcf312f24cc579875706da31190",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
   "counts": {
-    "killed": 54,
+    "killed": 55,
     "survived": 0,
-    "demonstrably_equivalent": 1,
+    "demonstrably_equivalent": 0,
     "invalid": 0,
     "inconclusive": 0,
     "unrun": 0
@@ -83,8 +83,7 @@
       "name": "width taken from the last row",
       "old": "    let width = a.first().map_or(0, Vec::len);\n    if width == 0",
       "new": "    let width = a.last().map_or(0, Vec::len);\n    if width == 0",
-      "equivalent": "the next line refuses any row whose length differs from this width, so a ragged matrix is refused whichever row gives the width, and a rectangular one has one width",
-      "outcome": "demonstrably_equivalent"
+      "outcome": "killed"
     },
     {
       "name": "zero-width matrix accepted",
@@ -344,6 +343,5 @@
       "new": "    Ok(checks.judge(super::CERTIFIED_CODE, Datum::map([])))",
       "outcome": "killed"
     }
-  ],
-  "rerun_test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf07 --test families --test domains --test wf13"
+  ]
 }

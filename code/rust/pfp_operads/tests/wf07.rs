@@ -3,7 +3,10 @@
 //! AuthorityEffect: None.
 //! Contract: urn:pfp-operads:families-wf07-tests:v1
 
-use pfp_operads::families::wf07::{FAMILY, INCONSISTENT, UNDERDETERMINED};
+use num_bigint::BigInt;
+use pfp_operads::datum::Datum;
+use pfp_operads::exact::Rational;
+use pfp_operads::families::wf07::{system, FAMILY, INCONSISTENT, UNDERDETERMINED};
 use pfp_operads::families::{judge, next};
 use pfp_operads::host::Outcome;
 use serde_json::{json, Value};
@@ -332,5 +335,27 @@ fn the_smallest_system_is_accepted() {
             json!({"refusal": "UNRESOLVED_UNDERDETERMINED"})
         ),
         pair("TYPED_REFUSAL", "UNRESOLVED_UNDERDETERMINED")
+    );
+}
+
+#[test]
+fn other_families_read_a_system_as_this_one_does() {
+    let ratio = |top: i64, bottom: i64| Rational::new(BigInt::from(top), BigInt::from(bottom));
+    let task =
+        Datum::parse(r#"{"A":[[1,"1/2"],["-6/4",0]],"b":["2/3",5],"id":"u"}"#).expect("a datum");
+    assert_eq!(
+        system(&task),
+        Ok((
+            vec![
+                vec![ratio(1, 1), ratio(1, 2)],
+                vec![ratio(-3, 2), ratio(0, 1)]
+            ],
+            vec![ratio(2, 3), ratio(5, 1)],
+        ))
+    );
+    let ragged = Datum::parse(r#"{"A":[[1,2],[3]],"b":[1,2]}"#).expect("a datum");
+    assert_eq!(
+        system(&ragged),
+        Err("A must be rectangular, with a column, and match b".to_owned())
     );
 }

@@ -14,5 +14,3 @@ python workflows/tasks/triangle_fan_pairing/run.py --output-dir <scratch-dir>
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000045/`.
-
-See the wiki page `Test-Triangle-Fan-Pairing`.

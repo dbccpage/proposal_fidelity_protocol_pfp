@@ -14,5 +14,3 @@ python workflows/tasks/clique_homology/run.py --output-dir <scratch-dir>
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000044/`.
-
-See the wiki page `Test-Clique-Homology`.

@@ -14,7 +14,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF22-"
 
 **The check:** `cost_ladder_refusal_escalation`. Only this check can certify; a model reply is evidence for it, never a verdict.
 
-**Code:** [`pfp_core/workflow_families/layer7.py`](../../pfp_core/workflow_families/layer7.py) (`CertifiedCostLadder`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf22)
+**Code:** [`pfp_core/workflow_families/layer7.py`](../../pfp_core/workflow_families/layer7.py) (`CertifiedCostLadder`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** experiment design. **Builds on:** [WF6](../wf06_dialect_sweep/README.md), [WF8](../wf08_staged_sealed_packets/README.md), [WF18](../wf18_dossier_replay_campaign/README.md).
@@ -63,4 +63,4 @@ Boost: when none: a ladder run never escalates mid-campaign: boosted arms are se
 | context policy | compressed vs full history at the same ceiling | — | not run | P026; P029 |
 | arrival vs completion rate | cohort vs window counting | — | code | P005(gap) §3.3 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf22) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

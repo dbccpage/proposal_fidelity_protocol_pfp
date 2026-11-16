@@ -10,5 +10,3 @@ Run from the repository root:
     python -m pytest workflows/tasks/yardstick -q
 
 Expected: `18 passed`. Only pytest is needed.
-
-Wiki page: Test-Yardstick-Arm-Statistics.

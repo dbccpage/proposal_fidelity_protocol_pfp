@@ -1,0 +1,485 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf29.rs",
+  "target_sha256": "bb4bf5b7706dda71531d9fe4e696727e43cf7ee372cd9998e1844adbfcccfd0b",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
+  "counts": {
+    "killed": 78,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "depth ceiling raised",
+      "old": "pub const MAX_DEPTH: usize = 6;",
+      "new": "pub const MAX_DEPTH: usize = 7;",
+      "outcome": "killed"
+    },
+    {
+      "name": "depth ceiling lowered",
+      "old": "pub const MAX_DEPTH: usize = 6;",
+      "new": "pub const MAX_DEPTH: usize = 5;",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF29\",",
+      "new": "    workflow: \"WF290\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Checker synthesis scored by mutation kill rate\",",
+      "new": "    name: \"Checker synthesis\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"mutation_kill_rate_with_valid_panel\",",
+      "new": "    host_check: \"kill_rate\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "edges error reworded",
+      "old": ".ok_or(\"edges must be a list of pairs of text\")?;",
+      "new": ".ok_or(\"edges\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "valid error reworded",
+      "old": ".ok_or(\"valid must be a list of cases\")?;",
+      "new": ".ok_or(\"valid\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "bar error reworded",
+      "old": ".ok_or(\"min_kill_rate must be an exact rational\")?;",
+      "new": ".ok_or(\"bar\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "valid is read from another key",
+      "old": "        .get(\"valid\")",
+      "new": "        .get(\"cases\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "the bar is read from another key",
+      "old": "        .get(\"min_kill_rate\")",
+      "new": "        .get(\"bar\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "mutants are read from another key",
+      "old": "    let mutants = match sealed.get(\"mutants\") {",
+      "new": "    let mutants = match sealed.get(\"hostile\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "sealed mutants error reworded",
+      "old": "Some(listed) => listed.as_list().ok_or(\"sealed mutants must be a list\")?,",
+      "new": "Some(listed) => listed.as_list().ok_or(\"mutants\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a sealed value that is not a list is no mutants",
+      "old": "Some(listed) => listed.as_list().ok_or(\"sealed mutants must be a list\")?,",
+      "new": "Some(listed) => listed.as_list().unwrap_or(&[]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a checker is a predicate named at any depth",
+      "old": "    if depth > MAX_DEPTH {\n        return Err(\"checker too deep\".to_owned());",
+      "new": "    if depth >= MAX_DEPTH {\n        return Err(\"checker too deep\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "depth error reworded",
+      "old": "return Err(\"checker too deep\".to_owned());",
+      "new": "return Err(\"deep\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "unknown predicate error reworded",
+      "old": "format!(\"unknown predicate {}\", tree.canonical())",
+      "new": "format!(\"unknown {}\", tree.canonical())",
+      "outcome": "killed"
+    },
+    {
+      "name": "bad checker error reworded",
+      "old": "        operands(tree).ok_or_else(|| format!(\"bad checker {}\", tree.canonical()))?;",
+      "new": "        operands(tree).ok_or_else(|| format!(\"bad {}\", tree.canonical()))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a part is read at the same depth",
+      "old": "        .map(|part| checker(part, depth + 1))",
+      "new": "        .map(|part| checker(part, depth))",
+      "outcome": "killed"
+    },
+    {
+      "name": "c_length_matches is another predicate",
+      "old": "        \"c_length_matches\" => length_matches,",
+      "new": "        \"c_length_matches\" => covers_vertices,",
+      "outcome": "killed"
+    },
+    {
+      "name": "phi_covers_vertices is another predicate",
+      "old": "        \"phi_covers_vertices\" => covers_vertices,",
+      "new": "        \"phi_covers_vertices\" => length_matches,",
+      "outcome": "killed"
+    },
+    {
+      "name": "coboundary_matches is another predicate",
+      "old": "        \"coboundary_matches\" => coboundary_matches,",
+      "new": "        \"coboundary_matches\" => cycle_sums_zero,",
+      "outcome": "killed"
+    },
+    {
+      "name": "cycle_sums_zero is another predicate",
+      "old": "        \"cycle_sums_zero\" => cycle_sums_zero,",
+      "new": "        \"cycle_sums_zero\" => coboundary_matches,",
+      "outcome": "killed"
+    },
+    {
+      "name": "phi_root_zero is another predicate",
+      "old": "        \"phi_root_zero\" => root_zero,",
+      "new": "        \"phi_root_zero\" => covers_vertices,",
+      "outcome": "killed"
+    },
+    {
+      "name": "an operator needs no part",
+      "old": "        (Datum::Text(operator), written) if !written.is_empty() => {",
+      "new": "        (Datum::Text(operator), written) => {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only and is an operator",
+      "old": "            let known = [\"and\", \"or\", \"not\"].contains(&operator.as_str());",
+      "new": "            let known = [\"and\", \"not\"].contains(&operator.as_str());",
+      "outcome": "killed"
+    },
+    {
+      "name": "only or is missing as an operator",
+      "old": "            let known = [\"and\", \"or\", \"not\"].contains(&operator.as_str());",
+      "new": "            let known = [\"or\", \"not\"].contains(&operator.as_str());",
+      "outcome": "killed"
+    },
+    {
+      "name": "not is not an operator",
+      "old": "            let known = [\"and\", \"or\", \"not\"].contains(&operator.as_str());",
+      "new": "            let known = [\"and\", \"or\"].contains(&operator.as_str());",
+      "outcome": "killed"
+    },
+    {
+      "name": "any text is an operator",
+      "old": "            let known = [\"and\", \"or\", \"not\"].contains(&operator.as_str());",
+      "new": "            let known = !operator.is_empty();",
+      "outcome": "killed"
+    },
+    {
+      "name": "and is read as any",
+      "old": "        (\"and\", _) => Ok(Checker::All(parts)),",
+      "new": "        (\"and\", _) => Ok(Checker::Any(parts)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "or is read as all",
+      "old": "        (\"or\", _) => Ok(Checker::Any(parts)),",
+      "new": "        (\"or\", _) => Ok(Checker::All(parts)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "not takes the first of many parts",
+      "old": "        (_, 1) => Ok(Checker::Not(Box::new(parts.remove(0)))),",
+      "new": "        (_, _) => Ok(Checker::Not(Box::new(parts.remove(0)))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "not error reworded",
+      "old": "        _ => Err(\"not takes one checker\".to_owned()),",
+      "new": "        _ => Err(\"not\".to_owned()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "phi may be any value",
+      "old": "    case.get(\"phi\").filter(|phi| phi.is_map())",
+      "new": "    case.get(\"phi\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "the edge count is the vertex count",
+      "old": "    panel.graph.graph.edges().len()",
+      "new": "    panel.graph.names().len()",
+      "outcome": "killed"
+    },
+    {
+      "name": "the length may be below the edge count",
+      "old": "    Some(case.get(\"c\")?.as_list()?.len() == edge_count(panel))",
+      "new": "    Some(case.get(\"c\")?.as_list()?.len() <= edge_count(panel))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the length may be above the edge count",
+      "old": "    Some(case.get(\"c\")?.as_list()?.len() == edge_count(panel))",
+      "new": "    Some(case.get(\"c\")?.as_list()?.len() >= edge_count(panel))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the length of an unlisted c is zero",
+      "old": "    Some(case.get(\"c\")?.as_list()?.len() == edge_count(panel))",
+      "new": "    Some(case.get(\"c\").and_then(Datum::as_list).map_or(0, <[Datum]>::len) == edge_count(panel))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the cover of a missing phi is false",
+      "old": "    Some(panel.graph.covers(phi(case)?))",
+      "new": "    Some(phi(case).is_some_and(|phi| panel.graph.covers(phi)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the coboundary of phi is not compared",
+      "old": "    Some(panel.graph.graph.coboundary(&potential) == listed)",
+      "new": "    Some(panel.graph.graph.coboundary(&potential).len() == listed.len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "the coboundary differs from c",
+      "old": "    Some(panel.graph.graph.coboundary(&potential) == listed)",
+      "new": "    Some(panel.graph.graph.coboundary(&potential) != listed)",
+      "outcome": "killed"
+    },
+    {
+      "name": "phi is read without being an object in coboundary",
+      "old": "    let potential = panel.graph.potential(phi(case)?)?;",
+      "new": "    let potential = panel.graph.potential(case.get(\"phi\")?)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "c is read from another key in coboundary",
+      "old": "    let listed = rationals(case.get(\"c\")?)?;\n    Some(panel.graph.graph.coboundary",
+      "new": "    let listed = rationals(case.get(\"phi\")?)?;\n    Some(panel.graph.graph.coboundary",
+      "outcome": "killed"
+    },
+    {
+      "name": "c may be any length in the cycle predicate",
+      "old": "    let values = rationals(case.get(\"c\")?).filter(|values| values.len() == edges)?;",
+      "new": "    let values = rationals(case.get(\"c\")?)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "c may be shorter in the cycle predicate",
+      "old": "    let values = rationals(case.get(\"c\")?).filter(|values| values.len() == edges)?;",
+      "new": "    let values = rationals(case.get(\"c\")?).filter(|values| values.len() <= edges)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the cycle predicate holds when the defect is not zero",
+      "old": "    Some(panel.graph.graph.defect(&values).is_zero())",
+      "new": "    Some(!panel.graph.graph.defect(&values).is_zero())",
+      "outcome": "killed"
+    },
+    {
+      "name": "the root is the last vertex",
+      "old": "    let root = panel.graph.names().first()?;",
+      "new": "    let root = panel.graph.names().last()?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the root holds when its value is not zero",
+      "old": "    Some(rational(phi(case)?.get(root)?)?.is_zero())",
+      "new": "    Some(!rational(phi(case)?.get(root)?)?.is_zero())",
+      "outcome": "killed"
+    },
+    {
+      "name": "the root reads phi without checking it",
+      "old": "    Some(rational(phi(case)?.get(root)?)?.is_zero())",
+      "new": "    Some(rational(case.get(\"phi\")?.get(root)?)?.is_zero())",
+      "outcome": "killed"
+    },
+    {
+      "name": "not holds where its part holds",
+      "old": "        Checker::Not(part) => says(panel, part, case).map(|held| !held),",
+      "new": "        Checker::Not(part) => says(panel, part, case),",
+      "outcome": "killed"
+    },
+    {
+      "name": "not of an unreadable case is true",
+      "old": "        Checker::Not(part) => says(panel, part, case).map(|held| !held),",
+      "new": "        Checker::Not(part) => Some(!says(panel, part, case).unwrap_or(false)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "and does not stop at the first part that fails",
+      "old": "                if !says(panel, part, case)? {\n                    return Some(false);\n                }",
+      "new": "                if says(panel, part, case) == Some(false) {\n                    return Some(false);\n                }",
+      "outcome": "killed"
+    },
+    {
+      "name": "and stops at the first part that holds",
+      "old": "                if !says(panel, part, case)? {\n                    return Some(false);\n                }",
+      "new": "                if says(panel, part, case)? {\n                    return Some(false);\n                }",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty and fails",
+      "old": "            Some(true)\n        }\n        Checker::Any",
+      "new": "            Some(false)\n        }\n        Checker::Any",
+      "outcome": "killed"
+    },
+    {
+      "name": "or does not stop at the first part that holds",
+      "old": "                if says(panel, part, case)? {\n                    return Some(true);\n                }",
+      "new": "                if says(panel, part, case) == Some(true) {\n                    return Some(true);\n                }",
+      "outcome": "killed"
+    },
+    {
+      "name": "or stops at the first part that fails",
+      "old": "                if says(panel, part, case)? {\n                    return Some(true);\n                }",
+      "new": "                if !says(panel, part, case)? {\n                    return Some(true);\n                }",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty or holds",
+      "old": "            Some(false)\n        }\n    }\n}",
+      "new": "            Some(true)\n        }\n    }\n}",
+      "outcome": "killed"
+    },
+    {
+      "name": "a case is accepted when the checker says nothing",
+      "old": "    let accepted = |case: &&Datum| says(panel, checker, case) == Some(true);",
+      "new": "    let accepted = |case: &&Datum| says(panel, checker, case) != Some(false);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a case is accepted when the checker rejects it",
+      "old": "    let accepted = |case: &&Datum| says(panel, checker, case) == Some(true);",
+      "new": "    let accepted = |case: &&Datum| says(panel, checker, case) == Some(false);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the rejected count is the accepted count",
+      "old": "    cases.len() - cases.iter().filter(accepted).count()",
+      "new": "    cases.iter().filter(accepted).count()",
+      "outcome": "killed"
+    },
+    {
+      "name": "a whole kill rate is written as text",
+      "old": "    if value.is_integer() {\n        Datum::Int(value.numer().clone())",
+      "new": "    if false {\n        Datum::Int(value.numer().clone())",
+      "outcome": "killed"
+    },
+    {
+      "name": "a fraction is written with its numerator over its numerator",
+      "old": "        Datum::text(format!(\"{}/{}\", value.numer(), value.denom()))",
+      "new": "        Datum::text(format!(\"{}/{}\", value.numer(), value.numer()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a fraction is written upside down",
+      "old": "        Datum::text(format!(\"{}/{}\", value.numer(), value.denom()))",
+      "new": "        Datum::text(format!(\"{}/{}\", value.denom(), value.numer()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the question is asked under another stage",
+      "old": "run.ask(\"solve\", run.prompt())?",
+      "new": "run.ask(\"write\", run.prompt())?",
+      "outcome": "killed"
+    },
+    {
+      "name": "checker error reworded",
+      "old": ".ok_or_else(|| Stop::Malformed(\"checker required\".to_owned()))?;",
+      "new": ".ok_or_else(|| Stop::Malformed(\"checker\".to_owned()))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the checker is read from another key",
+      "old": "        .get(\"checker\")\n",
+      "new": "        .get(\"tree\")\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "valid cases are counted as mutants",
+      "old": "    let false_rejections = rejected(&panel, &checker, panel.valid);",
+      "new": "    let false_rejections = rejected(&panel, &checker, panel.mutants);",
+      "outcome": "killed"
+    },
+    {
+      "name": "mutants are counted as valid cases",
+      "old": "    let killed = rejected(&panel, &checker, panel.mutants);",
+      "new": "    let killed = rejected(&panel, &checker, panel.valid);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the rate with no mutants is one",
+      "old": "        Rational::zero()\n",
+      "new": "        Rational::from_integer(BigInt::from(1))\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "the rate is over the valid cases",
+      "old": "        Rational::new(BigInt::from(killed), BigInt::from(panel.mutants.len()))",
+      "new": "        Rational::new(BigInt::from(killed), BigInt::from(panel.valid.len().max(1)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the rate is over the mutants plus one",
+      "old": "        Rational::new(BigInt::from(killed), BigInt::from(panel.mutants.len()))",
+      "new": "        Rational::new(BigInt::from(killed), BigInt::from(panel.mutants.len() + 1))",
+      "outcome": "killed"
+    },
+    {
+      "name": "no_false_rejection needs one rejection",
+      "old": "        false_rejections == 0,",
+      "new": "        false_rejections > 0,",
+      "outcome": "killed"
+    },
+    {
+      "name": "no_false_rejection tolerates one",
+      "old": "        false_rejections == 0,",
+      "new": "        false_rejections <= 1,",
+      "outcome": "killed"
+    },
+    {
+      "name": "the rate may be below the bar",
+      "old": "    checks.record(\"kill_rate_meets_bar\", rate >= panel.bar, &plain(&rate));",
+      "new": "    checks.record(\"kill_rate_meets_bar\", rate > panel.bar, &plain(&rate));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the rate must be below the bar",
+      "old": "    checks.record(\"kill_rate_meets_bar\", rate >= panel.bar, &plain(&rate));",
+      "new": "    checks.record(\"kill_rate_meets_bar\", rate <= panel.bar, &plain(&rate));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the false rejection evidence is the mutant count",
+      "old": "        &Datum::from(false_rejections),",
+      "new": "        &Datum::from(panel.mutants.len()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the false rejections are not detailed",
+      "old": "        (\"false_rejections\", Datum::from(false_rejections)),",
+      "new": "        (\"false_rejections\", Datum::from(0_usize)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the mutant count is not detailed",
+      "old": "        (\"mutants\", Datum::from(panel.mutants.len())),",
+      "new": "        (\"mutants\", Datum::from(panel.valid.len())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "judged under another code",
+      "old": "Ok(checks.judge(\"CHECKER_ACCEPTED\", detail))",
+      "new": "Ok(checks.judge(\"CHECKER_KEPT\", detail))",
+      "outcome": "killed"
+    }
+  ]
+}

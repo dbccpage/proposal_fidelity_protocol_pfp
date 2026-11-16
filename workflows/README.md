@@ -1,6 +1,6 @@
 # Workflows
 
-**One folder per workflow, numbered to match the wiki.** WF1-WF5 have their
+**One folder per workflow, numbered WF1 upward.** WF1-WF5 have their
 own runners. WF6-WF49, WF51 and WF55-WF57 run offline on a shared family runtime
 ([`pfp_core/workflow_families/`](../pfp_core/workflow_families/)): fixtures only,
 no model campaign yet. WF50 is a maintenance workflow. WF52-WF54 have their
@@ -11,8 +11,7 @@ the answer, and where its code is.
 
 **Start here:** [WF1 — typed answer](wf01_typed_answer/README.md). Install once
 with `pip install ".[workflows]"`. Every README has offline commands (no model,
-no cost); WF1-WF5 also have live commands. The step-by-step
-guides are on the [Workflows wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflows).
+no cost); WF1-WF5 also have live commands.
 
 | WF | Workflow | Status | Kind | Builds on | Pilots |
 | --- | --- | --- | --- | --- | ---: |

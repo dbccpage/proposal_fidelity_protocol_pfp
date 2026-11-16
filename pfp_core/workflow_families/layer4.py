@@ -9,7 +9,7 @@ from typing import Any, ClassVar
 
 from ..fidelity import HostOracleContext, ProtectedContract
 from .base import (
-    POSITIVE,
+    HostedFamily,
     MalformedCandidateError,
     Session,
     Verdict,
@@ -25,19 +25,14 @@ from .base import (
     spec_from,
 )
 from .exact import (
-    Graph,
     classify_linear,
     commitment,
     det,
-    dot,
     matvec,
-    mutation_score,
-    rank,
     rref,
     seal_chain,
     sha256_bytes,
 )
-from .layer1 import TypedRefusal
 from .registry import register
 
 # ---------------------------------------------------------------- shared helpers (candidates for exact.py)
@@ -80,79 +75,17 @@ def fenced_contract(text: str, fences: list[tuple[str, str, str]]) -> ProtectedC
 
 # ---------------------------------------------------------------- WF6
 
-def apply_dialect(dialect: Mapping[str, Any], a: list[list[Fraction]], b: list[Fraction]):
-    """rho(s): rows permuted and scaled, variables renamed by ``col_perm``, optional shift of b."""
-    m, n = len(a), len(a[0])
-    rp = dialect.get('row_perm', list(range(m)))
-    cp = dialect.get('col_perm', list(range(n)))
-    scale = [as_fraction(s, 'row_scale') for s in dialect.get('row_scale', [1] * m)]
-    shift = [as_fraction(s, 'b_shift') for s in dialect.get('b_shift', [0] * m)]
-    require(sorted(rp) == list(range(m)) and sorted(cp) == list(range(n)), 'permutations required')
-    require(len(scale) == m and len(shift) == m, 'one scale and shift per row')
-    a2 = [[scale[i] * a[rp[i]][cp[j]] for j in range(n)] for i in range(m)]
-    b2 = [scale[i] * b[rp[i]] + shift[i] for i in range(m)]
-    return a2, b2, cp
-
-
-def query(a, b, cp=None):
-    """q(s): answerability status and the solution in seed coordinates (decoded through ``cp``)."""
-    st = classify_linear(a, b)
-    if st.solution is None or cp is None:
-        return st.status, st.solution
-    x = [Fraction(0)] * len(cp)
-    for j, old in enumerate(cp):
-        x[old] = st.solution[j]
-    return st.status, tuple(x)
-
-
 @register
-class DialectSweep(WorkflowFamily):
+class DialectSweep(HostedFamily):
     """WF6. Pose each seed item in k query-preserving dialects and grade every reply with one checker.
 
-    Items are linear systems ``A x = b``. A dialect permutes and scales rows and renames variables;
-    the host checks ``decode(rho_k(s)) = q(s)`` (same rank-test status, same decoded solution) before
-    anything is dispatched, then grades each capsule with the WF7 checker and reports acceptance per
-    dialect, item by item. A dialect that changes the query or an incomplete sweep is refused.
+    Items are linear systems ``A x = b``. A dialect permutes and scales rows and renames variables.
+    The host checks that each dialect keeps the rank-test status and the decoded solution before
+    anything is dispatched, then grades each reply as WF7 does and reports acceptance per dialect,
+    item by item. A dialect that changes the query or an incomplete sweep is refused.
     """
     spec = spec_from('WF6', 'Dialect sweep', 4, ['WF5'], 'Sweep', 'dialect_query_preservation_sweep',
                      'wf06_dialect_sweep')
-
-    def validate(self, task):
-        require(isinstance(task.get('items'), list) and task['items'], 'items required')
-        require(isinstance(task.get('dialects'), list) and task['dialects'], 'dialects required')
-        return task
-
-    def run(self, session: Session, host: HostOracleContext) -> Verdict:
-        task = session.task
-        capsules, broken = [], []
-        for item in task['items']:
-            a, b = linear_task(item)
-            seed = query(a, b)
-            for d in task['dialects']:
-                a2, b2, cp = apply_dialect(d, a, b)
-                if query(a2, b2, cp) != seed:
-                    broken.append([item['id'], d['name']])
-                capsules.append((item['id'], d['name'], {'A': jsonable(a2), 'b': jsonable(b2)}))
-        if not host.record('dialects_preserve_query', not broken, str(broken)):
-            return refused('DIALECT_CHANGES_QUERY', broken=broken)
-        grader, table = TypedRefusal(), {}
-        for item_id, name, enc in capsules:
-            reply = session.ask(f'{item_id}:{name}', f'{task["statement"]}\n' + canonical(enc).decode('utf-8'))
-            if reply is None:
-                table.setdefault(item_id, {})[name] = None
-                continue
-            try:
-                ok = grader.check(enc, {}, reply.content, HostOracleContext()).verdict in POSITIVE
-            except MalformedCandidateError:
-                ok = False
-            table.setdefault(item_id, {})[name] = ok
-        missing = [[i, n] for i, row in table.items() for n, v in row.items() if v is None]
-        if not host.record('every_capsule_graded_once', not missing, str(missing)):
-            return refused('INCOMPLETE_SWEEP', missing=missing)
-        names = [d['name'] for d in task['dialects']]
-        acceptance = {n: jsonable(Fraction(sum(row[n] for row in table.values()), len(table))) for n in names}
-        flips = [[i, n] for i, row in table.items() for n in names[1:] if row[n] != row[names[0]]]
-        return judge(host, 'SWEEP_GRADED', acceptance=acceptance, items=table, flips_vs_first=flips)
 
     def fixtures(self):
         items = [{'id': 'i1', 'A': [[1, 2], [3, 4]], 'b': [5, 6]}, {'id': 'i2', 'A': [[1, 1], [2, 2]], 'b': [1, 3]}]
@@ -288,7 +221,7 @@ class StagedSealedPackets(WorkflowFamily):
 # ---------------------------------------------------------------- WF16
 
 @register
-class SubstrateCrosswalk(WorkflowFamily):
+class SubstrateCrosswalk(HostedFamily):
     """WF16. Map one finite task between two substrates and require the same host verdict in both.
 
     Source: an edge cochain ``c`` on an oriented graph (exact iff every fundamental cycle sum is 0).
@@ -299,47 +232,6 @@ class SubstrateCrosswalk(WorkflowFamily):
     """
     spec = spec_from('WF16', 'Substrate crosswalk', 4, ['WF5', 'WF10'], 'WF5', 'incidence_rank_crosswalk',
                      'wf16_substrate_crosswalk')
-
-    def validate(self, task):
-        require(all(isinstance(task.get(k), list) for k in ('edges', 'c', 'D', 'y')), 'edges, c, D, y required')
-        return task
-
-    def check(self, task, sealed, content, host):
-        g = Graph.of(task['edges'])
-        verts, c = g.vertices, [as_fraction(x, 'c') for x in task['c']]
-        d = [[as_fraction(x, 'D') for x in row] for row in task['D']]
-        y = [as_fraction(x, 'y') for x in task['y']]
-        source = g.is_exact(c)
-        target = rank(d) == rank([[*row, yi] for row, yi in zip(d, y, strict=True)])
-        host.record('verdicts_identical', source == target, f'{source}|{target}')
-        require(isinstance(content, Mapping) and isinstance(content.get('crosswalks'), list)
-                and content['crosswalks'], 'crosswalks required')
-        maps = []
-        for k, f in enumerate(content['crosswalks']):
-            require(isinstance(f, Mapping) and isinstance(f.get('vertex_col'), Mapping)
-                    and isinstance(f.get('edge_row'), Mapping), 'vertex_col and edge_row maps required')
-            cols = {v: as_int(f['vertex_col'].get(v), 'column') for v in verts}
-            rows = {i: f['edge_row'].get(str(i)) for i in range(len(g.edges))}
-            require(all(isinstance(r, list) and len(r) == 2 for r in rows.values()), 'edge_row entries are [row, sign]')
-            rows = {i: (as_int(r, 'row'), as_int(s, 'sign')) for i, (r, s) in rows.items()}
-            bij = (sorted(cols.values()) == list(range(len(verts))) and len(d) == len(rows)
-                   and sorted(r for r, _ in rows.values()) == list(range(len(d)))
-                   and all(s in (1, -1) for _, s in rows.values()))
-            if not host.record(f'crosswalk{k}:bijective', bij, canonical(f).decode('utf-8')):
-                continue
-            image = {}
-            for i, (u, v) in enumerate(g.edges):
-                r, s = rows[i]
-                image[i] = [s * ((j == cols[v]) - (j == cols[u])) for j in range(len(verts))]
-            host.record(f'crosswalk{k}:relations_preserved', all(image[i] == d[rows[i][0]] for i in image),
-                        canonical(f).decode('utf-8'))
-            host.record(f'crosswalk{k}:data_transported', all(y[r] == s * c[i] for i, (r, s) in rows.items()),
-                        canonical(f).decode('utf-8'))
-            maps.append((cols, rows))
-        choices = [{'flipped_edges': [i for i, (_, s) in rows.items() if s == -1]} for _, rows in maps]
-        differ = [[v for v in verts if maps[0][0][v] != m[0][v]] for m in maps[1:]]
-        return judge(host, 'CROSSWALK_PRESERVED', verdict='exact' if source else 'not_exact', choices=choices,
-                     differ_on_vertices=differ)
 
     def fixtures(self):
         task = {'statement': 'Map the graph cochain onto the incidence matrix: vertex -> column, edge -> [row, sign].',
@@ -363,35 +255,8 @@ class SubstrateCrosswalk(WorkflowFamily):
 
 # ---------------------------------------------------------------- WF17
 
-def hml(lts: Mapping[str, list[tuple[str, str]]], state: str, formula: Any, depth: int = 0) -> bool:
-    """Hennessy-Milner logic: 'tt', 'ff', ['not', f], ['and'|'or', f, g], ['dia'|'box', label, f]."""
-    require(depth <= 12, 'formula too deep')
-    if formula in ('tt', 'ff'):
-        return formula == 'tt'
-    require(isinstance(formula, list) and formula and formula[0] in ('not', 'and', 'or', 'dia', 'box'),
-            f'unknown formula {formula!r}')
-    op, args = formula[0], formula[1:]
-    if op == 'not':
-        require(len(args) == 1, 'not takes one formula')
-        return not hml(lts, state, args[0], depth + 1)
-    require(len(args) == 2, f'{op} takes two arguments')
-    if op in ('and', 'or'):
-        vals = [hml(lts, state, f, depth + 1) for f in args]
-        return all(vals) if op == 'and' else any(vals)
-    succ = [hml(lts, t, args[1], depth + 1) for lab, t in lts.get(state, []) if lab == args[0]]
-    return any(succ) if op == 'dia' else all(succ)
-
-
-def is_bisimulation(lts: Mapping[str, list[tuple[str, str]]], rel: set[tuple[str, str]]) -> bool:
-    """Every move of either side is matched by a move with the same label into a related pair."""
-    def matched(p, q, flip):
-        return all(any(lab == lab2 and ((q2, p2) if flip else (p2, q2)) in rel for lab2, q2 in lts.get(q, []))
-                   for lab, p2 in lts.get(p, []))
-    return all(matched(p, q, False) and matched(q, p, True) for p, q in rel)
-
-
 @register
-class WitnessedDifferenceProgramme(WorkflowFamily):
+class WitnessedDifferenceProgramme(HostedFamily):
     """WF17. Every claimed difference needs a separating formula; every equivalence needs a bisimulation.
 
     Instance: a finite labelled transition system (a.(b+c) versus a.b+a.c, and a.b versus a.b+a.b).
@@ -401,36 +266,6 @@ class WitnessedDifferenceProgramme(WorkflowFamily):
     """
     spec = spec_from('WF17', 'Witnessed-difference programme', 4, ['WF10', 'WF11'], 'WF10',
                      'hml_separator_bisimulation_check', 'wf17_witnessed_difference_programme')
-
-    def validate(self, task):
-        require(isinstance(task.get('transitions'), list), 'transitions required')
-        return task
-
-    def check(self, task, sealed, content, host):
-        lts: dict[str, list[tuple[str, str]]] = {}
-        for t in task['transitions']:
-            require(isinstance(t, list) and len(t) == 3 and all(isinstance(x, str) for x in t), 'transitions')
-            lts.setdefault(t[0], []).append((t[1], t[2]))
-        states = {t[0] for t in task['transitions']} | {t[2] for t in task['transitions']}
-        require(isinstance(content, Mapping) and isinstance(content.get('claims'), list) and content['claims'],
-                'claims required')
-        for k, claim in enumerate(content['claims']):
-            require(isinstance(claim, Mapping) and claim.get('kind') in ('difference', 'equivalence'), 'claim kind')
-            p, q, ev = claim.get('left'), claim.get('right'), canonical(claim).decode('utf-8')
-            if not host.record(f'claim{k}:states_declared', p in states and q in states, ev):
-                continue
-            if claim['kind'] == 'difference':
-                if not host.record(f'claim{k}:witnessed', 'witness' in claim, ev):
-                    continue
-                host.record(f'claim{k}:separates', hml(lts, p, claim['witness']) != hml(lts, q, claim['witness']), ev)
-            else:
-                if not host.record(f'claim{k}:witnessed', isinstance(claim.get('certificate'), list), ev):
-                    continue
-                pairs = claim['certificate']
-                rel = {(x[0], x[1]) for x in pairs if isinstance(x, list) and len(x) == 2}
-                in_lts = len(rel) == len(pairs) and all(a in states and b in states for a, b in rel)
-                host.record(f'claim{k}:bisimulation', in_lts and (p, q) in rel and is_bisimulation(lts, rel), ev)
-        return judge(host, 'CLAIMS_WITNESSED', claims=len(content['claims']))
 
     def fixtures(self):
         tr = [['p0', 'a', 'p1'], ['p1', 'b', 'p2'], ['p1', 'c', 'p3'],
@@ -663,69 +498,24 @@ class JudgePacketCustodyAudit(WorkflowFamily):
 
 # ---------------------------------------------------------------- WF29
 
-def potential_atoms(g: Graph) -> dict[str, Callable[[Mapping[str, Any]], bool]]:
-    """Declared predicates over a case ``{'c': edge values, 'phi': vertex potential}``."""
-    verts = g.vertices
-
-    def edge_values(case):
-        return [as_fraction(x, 'c') for x in case['c']]
-    return {
-        'c_length_matches': lambda case: len(case['c']) == len(g.edges),
-        'phi_covers_vertices': lambda case: set(case['phi']) == set(verts),
-        'coboundary_matches': lambda case: g.coboundary(
-            {v: as_fraction(case['phi'][v], 'phi') for v in verts}) == edge_values(case),
-        'cycle_sums_zero': lambda case: g.is_exact(edge_values(case)),
-        'phi_root_zero': lambda case: as_fraction(case['phi'][verts[0]], 'phi') == 0,
-    }
-
-
-def compile_checker(tree: Any, atoms: Mapping[str, Callable[[Any], bool]], depth: int = 0) -> Callable[[Any], bool]:
-    """Interpret the checker DSL (atom names, ['and'|'or', ...], ['not', x]); nothing is executed."""
-    require(depth <= 6, 'checker too deep')
-    if isinstance(tree, str):
-        require(tree in atoms, f'unknown predicate {tree!r}')
-        return atoms[tree]
-    require(isinstance(tree, list) and len(tree) >= 2 and tree[0] in ('and', 'or', 'not'), f'bad checker {tree!r}')
-    parts = [compile_checker(t, atoms, depth + 1) for t in tree[1:]]
-    if tree[0] == 'not':
-        require(len(parts) == 1, 'not takes one checker')
-        return lambda x: not parts[0](x)
-    combine = all if tree[0] == 'and' else any
-    return lambda x: combine(p(x) for p in parts)
-
-
 @register
-class CheckerSynthesisMutationKill(WorkflowFamily):
+class CheckerSynthesisMutationKill(HostedFamily):
     """WF29. Score a proposed checker by its mutation kill rate, after it passes every valid case.
 
     The declared certificate is a vertex potential ``phi`` with ``delta phi = c`` on a fixed graph. The
     checker is a tree over declared predicates (never model code). The host runs it on the public
-    valid panel and the sealed hostile mutants with exact.mutation_score, and certifies only a sound
-    checker (zero false rejections) whose kill rate meets the declared bar.
+    valid panel and the sealed hostile mutants, and certifies only a sound checker (zero false
+    rejections) whose kill rate meets the declared bar.
     """
     spec = spec_from('WF29', 'Checker synthesis scored by mutation kill rate', 4, ['WF11'], 'WF11',
                      'mutation_kill_rate_with_valid_panel', 'wf29_checker_synthesis_scored_by_mutation_kill_rate')
-
-    def validate(self, task):
-        require(isinstance(task.get('edges'), list) and isinstance(task.get('valid'), list), 'edges, valid required')
-        as_fraction(task.get('min_kill_rate'), 'min_kill_rate')
-        return task
-
-    def check(self, task, sealed, content, host):
-        require(isinstance(content, Mapping) and 'checker' in content, 'checker required')
-        checker = compile_checker(content['checker'], potential_atoms(Graph.of(task['edges'])))
-        score = mutation_score(checker, task['valid'], sealed.get('mutants', []))
-        host.record('no_false_rejection', score.sound, str(score.false_rejections))
-        host.record('kill_rate_meets_bar', score.kill_rate >= as_fraction(task['min_kill_rate'], 'bar'),
-                    str(score.kill_rate))
-        return judge(host, 'CHECKER_ACCEPTED', kill_rate=jsonable(score.kill_rate),
-                     false_rejections=score.false_rejections, mutants=score.mutants_total)
 
     def fixtures(self):
         phi = {'a': 0, 'b': 1, 'c': 3, 'd': 7}
         task = {'statement': 'Write a checker for "phi is a potential of c" from the declared predicates.',
                 'edges': [['a', 'b'], ['b', 'c'], ['c', 'a'], ['c', 'd']], 'min_kill_rate': '4/5',
-                'predicates': sorted(potential_atoms(Graph.of([['a', 'b']]))),
+                'predicates': ['c_length_matches', 'coboundary_matches', 'cycle_sums_zero', 'phi_covers_vertices',
+                               'phi_root_zero'],
                 'valid': [{'c': [1, 2, -3, 4], 'phi': phi},
                           {'c': [1, 2, -3, 4], 'phi': {k: v + 5 for k, v in phi.items()}},
                           {'c': [0, -2, 2, -1], 'phi': {'a': 2, 'b': 2, 'c': 0, 'd': -1}}]}
@@ -746,73 +536,8 @@ class CheckerSynthesisMutationKill(WorkflowFamily):
 
 # ---------------------------------------------------------------- WF44
 
-RATIONAL = re.compile(r'-?\d+(/[1-9]\d*)?')
-FLOATISH = re.compile(r'[-+]?(\d*\.\d*|\d+(\.\d*)?[eE][-+]?\d+)')
-
-
-def _has_float(x: Any) -> bool:
-    if isinstance(x, float):
-        return True
-    if isinstance(x, str):
-        return bool(FLOATISH.fullmatch(x))
-    if isinstance(x, Mapping):
-        return any(_has_float(v) for v in x.values())
-    return isinstance(x, list) and any(_has_float(v) for v in x)
-
-
-def _rational_typed(x: Any) -> bool:
-    return type(x) is int or (isinstance(x, str) and bool(RATIONAL.fullmatch(x)))
-
-
-def _well_typed(kind: str, value: Any, task: Mapping[str, Any]) -> bool:
-    """Shape and scalar type only; no equation of the certificate is evaluated here."""
-    if kind == 'vertex_map':
-        verts = Graph.of(task['edges']).vertices
-        return isinstance(value, Mapping) and set(value) == set(verts) and all(map(_rational_typed, value.values()))
-    size = len(task['edges']) if kind == 'edge_vector' else len(task['A'][0])
-    return isinstance(value, list) and len(value) == size and all(map(_rational_typed, value))
-
-
-def _check_coboundary(task, cert, host):
-    g = Graph.of(task['edges'])
-    c = [as_fraction(x, 'c') for x in task['c']]
-    host.record('coboundary_matches', g.residual(c, rationals(cert['phi'])) == [0] * len(c), canonical(cert).decode())
-
-
-def _check_l1_dual(task, cert, host):
-    """r = w + B f, B^T z = 0, |z_e| <= cap_e, w . z = sum cap_e |r_e|  (weak duality makes r optimal)."""
-    g = Graph.of(task['edges'])
-    w = [as_fraction(x, 'w') for x in task['w']]
-    cap = [as_fraction(x, 'cap') for x in task.get('cap', [1] * len(w))]
-    f, r, z = rationals(cert['f']), rationals(cert['r']), rationals(cert['z'])
-    ev = canonical(cert).decode()
-    host.record('residual_is_w_plus_Bf', r == [wi + bi for wi, bi in zip(w, g.coboundary(f), strict=True)], ev)
-    flow = {v: Fraction(0) for v in g.vertices}
-    for (u, v), ze in zip(g.edges, z, strict=True):
-        flow[u] -= ze
-        flow[v] += ze
-    host.record('dual_is_circulation', not any(flow.values()), ev)
-    host.record('dual_within_caps', all(abs(ze) <= ce for ze, ce in zip(z, cap, strict=True)), ev)
-    host.record('duality_gap_zero', dot(w, z) == sum(ce * abs(re) for ce, re in zip(cap, r, strict=True)), ev)
-
-
-def _check_canonical(task, cert, host):
-    a, b = linear_task(task)
-    st = classify_linear(a, b)
-    host.record('unique_solution', st.status == 'unique', st.status)
-    host.record('values_equal_solution', tuple(rationals(cert['x'])) == st.solution, canonical(cert).decode())
-    host.record('canonical_form', all(type(x) is int or x == str(Fraction(x)) for x in cert['x']), str(cert['x']))
-
-
-CERTIFICATE_PRESETS: dict[str, tuple[dict[str, str], Callable[[Any, Any, HostOracleContext], None]]] = {
-    'coboundary_potential': ({'phi': 'vertex_map'}, _check_coboundary),
-    'l1_dual_circulation': ({'f': 'vertex_map', 'r': 'edge_vector', 'z': 'edge_vector'}, _check_l1_dual),
-    'canonical_rational': ({'x': 'unknown_vector'}, _check_canonical),
-}
-
-
 @register
-class ExactCertificatePresets(WorkflowFamily):
+class ExactCertificatePresets(HostedFamily):
     """WF44. Check a certificate against a registered exact schema; type-check before evaluating.
 
     Presets: a coboundary potential (``delta phi = c``), an l1 primal-dual pair (residual
@@ -822,23 +547,6 @@ class ExactCertificatePresets(WorkflowFamily):
     """
     spec = spec_from('WF44', 'Exact certificate presets', 4, ['WF11', 'WF10'], 'WF11', 'exact_certificate_presets',
                      'wf44_exact_certificate_presets')
-
-    def validate(self, task):
-        require(task.get('schema') in CERTIFICATE_PRESETS, 'unknown certificate schema')
-        return task
-
-    def check(self, task, sealed, content, host):
-        require(isinstance(content, Mapping) and isinstance(content.get('certificate'), Mapping), 'certificate')
-        fields, evaluate = CERTIFICATE_PRESETS[task['schema']]
-        cert = content['certificate']
-        if not host.record('no_float', not _has_float(cert), ''):
-            return refused('FLOAT_IN_CERTIFICATE')
-        typed = (content.get('schema') == task['schema'] and set(cert) == set(fields)
-                 and all(_well_typed(kind, cert[name], task) for name, kind in fields.items()))
-        if not host.record('well_typed', typed, canonical(content).decode()):
-            return refused('ILL_TYPED')
-        evaluate(task, cert, host)
-        return judge(host, 'CERTIFICATE_VALID', schema=task['schema'])
 
     def fixtures(self):
         square = [['a', 'b'], ['b', 'c'], ['c', 'd'], ['d', 'a'], ['a', 'c']]

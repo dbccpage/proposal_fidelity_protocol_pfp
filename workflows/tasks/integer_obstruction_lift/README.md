@@ -14,5 +14,3 @@ python workflows/tasks/integer_obstruction_lift/run.py --output-dir <scratch-dir
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000029/`.
-
-See the wiki page `Test-Integer-Obstruction-Lift`.

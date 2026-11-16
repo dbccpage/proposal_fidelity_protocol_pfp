@@ -7,7 +7,7 @@
     "artifact": {
       "path": "code/rust/pfp_operads/tests/wf07.rs",
       "language": "Rust",
-      "sha256": "8219ae3adb14641cab997909dcda747e98657c735a5a600a67f1e791c0ac7197"
+      "sha256": "536e3fa5770d08f037a0cb1284c90b79556f058d6e01a6ddccf062140d94bdf7"
     },
     "contract_urn": "urn:pfp-operads:families-wf07-tests:v1",
     "symbols": [
@@ -32,12 +32,14 @@
       "a_reply_that_is_not_an_object_is_malformed",
       "an_overdetermined_system_with_one_solution_is_answerable",
       "a_task_that_is_not_an_exact_rectangular_system_is_refused",
-      "the_smallest_system_is_accepted"
+      "the_smallest_system_is_accepted",
+      "other_families_read_a_system_as_this_one_does"
     ],
     "owned_invariants": [
       "Each verdict is asserted with its code, its witness and its predicate rows, the evidence digests rebuilt in the test.",
       "Refusal codes are written out as text, so a renamed code fails here.",
-      "Each malformed task and reply is asserted by its reason."
+      "Each malformed task and reply is asserted by its reason.",
+      "The system other families read is asserted as exact rationals, and a ragged system by its reason."
     ],
     "boundaries": [
       "Test support only; no production path imports it."
@@ -49,9 +51,9 @@
     "artifact": {
       "path": "code/rust/pfp_operads/tests/wf07.rs",
       "language": "Rust",
-      "sha256": "8219ae3adb14641cab997909dcda747e98657c735a5a600a67f1e791c0ac7197"
+      "sha256": "536e3fa5770d08f037a0cb1284c90b79556f058d6e01a6ddccf062140d94bdf7"
     },
-    "profile": "Exact",
+    "profile": "Non-Numeric",
     "level": "L2",
     "level_basis": "Integration tests in the standard cargo layout.",
     "gates": {
@@ -65,42 +67,356 @@
       "G1": "Each test name states the claim it checks.",
       "G2": "Expected values follow by hand from the request written in the test.",
       "G3": "Refusals are asserted by code.",
-      "G4": "All 14 pass in the recorded run; the suite they belong to killed 54 of 54 eligible WF7 mutants.",
+      "G4": "All 15 pass in the recorded run; the suite they belong to killed 55 of 55 eligible WF7 mutants.",
       "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
     },
     "composite_grade": "C",
     "score_token": "L2C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-14T12:56:03Z",
+    "evaluation_timestamp": "2026-11-16T11:13:32Z",
     "evidence": [
       {
-        "path": "governance/evidence/pfp-operads-v8-test.run.json",
-        "sha256": "39e3d54df0f53e66efe9e7c79ccb58d2c64b227e5ae057ba2db430c2248a81ef",
-        "note": "329 tests: pfp_operads and core_operad_canon, locked build."
+        "path": "governance/evidence/pfp-operads-v12-test.run.json",
+        "sha256": "c1c7e51c0eb07084391826baaecea82b3d91f3ec4782526261031f67143806c3",
+        "note": "870 tests: pfp_operads and core_operad_canon, locked build."
       },
       {
-        "path": "governance/evidence/pfp-operads-v8-clippy.run.json",
-        "sha256": "36f330c8dd7d904983f941e99b4eaed4ea0a5926c65e1506bee3a976a63b199f",
+        "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
+        "sha256": "22cbb798d2f7300f2ca3c63fbe61d6032e01c51073db01719c5fcb34ad32f60c",
         "note": "clippy with -D warnings on both crates, all targets."
       },
       {
-        "path": "governance/evidence/pfp-operads-v8-fmt.run.json",
-        "sha256": "304f9442ff6202fbcc60ee643fa68b521ca2229ef90cb498605391f139d1c684",
+        "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
+        "sha256": "8d8806ba499f22d1ed9deae362c634aeb8f3b0118020360122555f94aa6a9913",
         "note": "rustfmt --check on both crates."
       },
       {
-        "path": "governance/evidence/pfp-operads-v8-metrics.run.json",
-        "sha256": "5c9ed7ff128e413a3a694a13976441d3ab914d3ac77dcd1a8d1645c9805ec339",
+        "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
+        "sha256": "11c4b704b504ab4496e4187cafd96b735cb563b85fcd306d5ba627c2565288fc",
         "note": "The run that measured Gate 5 structure."
       },
       {
-        "path": "governance/evidence/pfp-operads-v8-metrics.json",
-        "sha256": "132913181d26af963eec9d6f7ed2a20ca7531a5b5347a857a7562e352ef2ee4d",
+        "path": "governance/evidence/pfp-operads-v12-metrics.json",
+        "sha256": "35e322d577846769b739d4fc2262a8e808a0c66444e7fdad3ee0de45304db976",
         "note": "Measured Gate 5 structure of every source this change touches."
       }
     ],
     "mutation_accounting": null
   },
-  "history": []
+  "history": [
+    {
+      "recorded_at": "2026-11-16T10:26:37.380410Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf07.rs",
+          "language": "Rust",
+          "sha256": "8219ae3adb14641cab997909dcda747e98657c735a5a600a67f1e791c0ac7197"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf07-tests:v1",
+        "symbols": [
+          "sha",
+          "solvable",
+          "inconsistent",
+          "underdetermined",
+          "run",
+          "verdict",
+          "pair",
+          "bad_task",
+          "the_family_is_registered_under_its_names",
+          "the_one_solution_is_certified_with_the_rank_witness",
+          "the_solution_may_be_written_as_fractions",
+          "a_wrong_short_long_or_missing_answer_to_a_solvable_system_is_refused",
+          "an_unanswerable_system_is_refused_with_the_code_of_its_kind",
+          "a_refusal_with_the_wrong_code_is_refused",
+          "a_refusal_of_a_solvable_system_is_a_false_refusal",
+          "an_answer_to_an_unanswerable_system_is_a_bluff",
+          "a_reply_with_an_answer_and_a_refusal_is_read_as_a_refusal",
+          "an_answer_that_is_not_a_list_of_exact_rationals_is_malformed_whatever_the_system",
+          "a_reply_that_is_not_an_object_is_malformed",
+          "an_overdetermined_system_with_one_solution_is_answerable",
+          "a_task_that_is_not_an_exact_rectangular_system_is_refused",
+          "the_smallest_system_is_accepted"
+        ],
+        "owned_invariants": [
+          "Each verdict is asserted with its code, its witness and its predicate rows, the evidence digests rebuilt in the test.",
+          "Refusal codes are written out as text, so a renamed code fails here.",
+          "Each malformed task and reply is asserted by its reason."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf07.rs",
+          "language": "Rust",
+          "sha256": "8219ae3adb14641cab997909dcda747e98657c735a5a600a67f1e791c0ac7197"
+        },
+        "profile": "Exact",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected values follow by hand from the request written in the test.",
+          "G3": "Refusals are asserted by code.",
+          "G4": "All 14 pass in the recorded run; the suite they belong to killed 54 of 54 eligible WF7 mutants.",
+          "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T12:56:03Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v8-test.run.json",
+            "sha256": "39e3d54df0f53e66efe9e7c79ccb58d2c64b227e5ae057ba2db430c2248a81ef",
+            "note": "329 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v8-clippy.run.json",
+            "sha256": "36f330c8dd7d904983f941e99b4eaed4ea0a5926c65e1506bee3a976a63b199f",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v8-fmt.run.json",
+            "sha256": "304f9442ff6202fbcc60ee643fa68b521ca2229ef90cb498605391f139d1c684",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v8-metrics.run.json",
+            "sha256": "5c9ed7ff128e413a3a694a13976441d3ab914d3ac77dcd1a8d1645c9805ec339",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v8-metrics.json",
+            "sha256": "132913181d26af963eec9d6f7ed2a20ca7531a5b5347a857a7562e352ef2ee4d",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    },
+    {
+      "recorded_at": "2026-11-16T11:00:09.866127Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf07.rs",
+          "language": "Rust",
+          "sha256": "536e3fa5770d08f037a0cb1284c90b79556f058d6e01a6ddccf062140d94bdf7"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf07-tests:v1",
+        "symbols": [
+          "sha",
+          "solvable",
+          "inconsistent",
+          "underdetermined",
+          "run",
+          "verdict",
+          "pair",
+          "bad_task",
+          "the_family_is_registered_under_its_names",
+          "the_one_solution_is_certified_with_the_rank_witness",
+          "the_solution_may_be_written_as_fractions",
+          "a_wrong_short_long_or_missing_answer_to_a_solvable_system_is_refused",
+          "an_unanswerable_system_is_refused_with_the_code_of_its_kind",
+          "a_refusal_with_the_wrong_code_is_refused",
+          "a_refusal_of_a_solvable_system_is_a_false_refusal",
+          "an_answer_to_an_unanswerable_system_is_a_bluff",
+          "a_reply_with_an_answer_and_a_refusal_is_read_as_a_refusal",
+          "an_answer_that_is_not_a_list_of_exact_rationals_is_malformed_whatever_the_system",
+          "a_reply_that_is_not_an_object_is_malformed",
+          "an_overdetermined_system_with_one_solution_is_answerable",
+          "a_task_that_is_not_an_exact_rectangular_system_is_refused",
+          "the_smallest_system_is_accepted",
+          "other_families_read_a_system_as_this_one_does"
+        ],
+        "owned_invariants": [
+          "Each verdict is asserted with its code, its witness and its predicate rows, the evidence digests rebuilt in the test.",
+          "Refusal codes are written out as text, so a renamed code fails here.",
+          "Each malformed task and reply is asserted by its reason.",
+          "The system other families read is asserted as exact rationals, and a ragged system by its reason."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf07.rs",
+          "language": "Rust",
+          "sha256": "536e3fa5770d08f037a0cb1284c90b79556f058d6e01a6ddccf062140d94bdf7"
+        },
+        "profile": "Non-Numeric",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected values follow by hand from the request written in the test.",
+          "G3": "Refusals are asserted by code.",
+          "G4": "All 15 pass in the recorded run; the suite they belong to killed 55 of 55 eligible WF7 mutants.",
+          "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T10:26:33Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v12-test.run.json",
+            "sha256": "ee5f813968e3e8802c1d8be777265eeac821ceb003b52ee0fe6e8b8563e66381",
+            "note": "870 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
+            "sha256": "73a978fab4163bc53efc22019f7e50f0912af33c25467f0480e518d5dbbca7ad",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
+            "sha256": "d6e58ab04a4027e91f0df4200c8357109ca84ad2fc7c6f61a84fd0dec7db4778",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
+            "sha256": "2e8dd1a3f41e59d4a22d28d0f867d00184f0373065d30bbf09108d1d521ddabd",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.json",
+            "sha256": "41a41eff69db08a4a194f9c3078f8c424b936d2076017eef778acb0e5e728e19",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    },
+    {
+      "recorded_at": "2026-11-16T11:13:38.632199Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf07.rs",
+          "language": "Rust",
+          "sha256": "536e3fa5770d08f037a0cb1284c90b79556f058d6e01a6ddccf062140d94bdf7"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf07-tests:v1",
+        "symbols": [
+          "sha",
+          "solvable",
+          "inconsistent",
+          "underdetermined",
+          "run",
+          "verdict",
+          "pair",
+          "bad_task",
+          "the_family_is_registered_under_its_names",
+          "the_one_solution_is_certified_with_the_rank_witness",
+          "the_solution_may_be_written_as_fractions",
+          "a_wrong_short_long_or_missing_answer_to_a_solvable_system_is_refused",
+          "an_unanswerable_system_is_refused_with_the_code_of_its_kind",
+          "a_refusal_with_the_wrong_code_is_refused",
+          "a_refusal_of_a_solvable_system_is_a_false_refusal",
+          "an_answer_to_an_unanswerable_system_is_a_bluff",
+          "a_reply_with_an_answer_and_a_refusal_is_read_as_a_refusal",
+          "an_answer_that_is_not_a_list_of_exact_rationals_is_malformed_whatever_the_system",
+          "a_reply_that_is_not_an_object_is_malformed",
+          "an_overdetermined_system_with_one_solution_is_answerable",
+          "a_task_that_is_not_an_exact_rectangular_system_is_refused",
+          "the_smallest_system_is_accepted",
+          "other_families_read_a_system_as_this_one_does"
+        ],
+        "owned_invariants": [
+          "Each verdict is asserted with its code, its witness and its predicate rows, the evidence digests rebuilt in the test.",
+          "Refusal codes are written out as text, so a renamed code fails here.",
+          "Each malformed task and reply is asserted by its reason.",
+          "The system other families read is asserted as exact rationals, and a ragged system by its reason."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf07.rs",
+          "language": "Rust",
+          "sha256": "536e3fa5770d08f037a0cb1284c90b79556f058d6e01a6ddccf062140d94bdf7"
+        },
+        "profile": "Non-Numeric",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected values follow by hand from the request written in the test.",
+          "G3": "Refusals are asserted by code.",
+          "G4": "All 15 pass in the recorded run; the suite they belong to killed 55 of 55 eligible WF7 mutants.",
+          "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T11:00:04Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v12-test.run.json",
+            "sha256": "ee5f813968e3e8802c1d8be777265eeac821ceb003b52ee0fe6e8b8563e66381",
+            "note": "870 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
+            "sha256": "73a978fab4163bc53efc22019f7e50f0912af33c25467f0480e518d5dbbca7ad",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
+            "sha256": "d6e58ab04a4027e91f0df4200c8357109ca84ad2fc7c6f61a84fd0dec7db4778",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
+            "sha256": "8e9a063c83d4defaa8512fdb2c090de5830b5a9270b903f0641d6c692a287afc",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.json",
+            "sha256": "35e322d577846769b739d4fc2262a8e808a0c66444e7fdad3ee0de45304db976",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    }
+  ]
 }

@@ -1,16 +1,12 @@
-"""Generate the Wiki page and DAG records for every registered family.
+"""Generate the README blocks and DAG records for every registered family.
 
-    python -m pfp_core.workflow_families.docs        # write pages and records
+    python -m pfp_core.workflow_families.docs        # write README blocks and records
     python -m pfp_core.workflow_families.docs --check  # fail if anything is stale
 
-Pages are rendered from the family's spec and docstring, the DAG node's
-process and mathematics, and a fresh offline run of its fixtures, so the page
-cannot drift from the code. The command then:
+The command:
 
-* writes ``wiki/workflow_wfn.md`` for each family and ``wiki/workflow_families.md``;
 * rewrites the generated block (between ``README_BEGIN`` and ``README_END``) at the
   top of each WF6-WF49 folder README, and refuses a README that lacks the markers;
-* pins each page's SHA-256 in ``dag/wiki/workflow_documentation.json``;
 * marks the node ``implemented`` in ``dag/reviews/workflows_audit.json`` with its
   runner source and tests.
 
@@ -26,7 +22,6 @@ Run ``python dag/build_dags.py`` afterwards to rebuild ``dag/workflows_dag.json`
 from __future__ import annotations
 
 import argparse
-import hashlib
 import inspect
 import json
 import re
@@ -35,16 +30,12 @@ import textwrap
 from pathlib import Path
 
 from .. import REPO_ROOT
-from .base import POSITIVE, HostedFamily, run_fixture
+from .base import HostedFamily
 from .registry import load
 
-REPO_URL = 'https://github.com/dbccpage/proposal_fidelity_protocol_pfp'
-WIKI_URL = REPO_URL + '/wiki/'
 TESTS = 'pfp_core/workflow_families/tests/test_families.py'
 HOST_CRATE = 'code/rust/pfp_operads'
 AUDIT = REPO_ROOT / 'dag' / 'reviews' / 'workflows_audit.json'
-DOCS = REPO_ROOT / 'dag' / 'wiki' / 'workflow_documentation.json'
-HUB = 'workflow_families'
 INDEX = REPO_ROOT / 'workflows' / 'README.md'
 WORKFLOW_DAG = REPO_ROOT / 'workflows' / 'dag' / 'workflow_dag.json'
 DAG_STATUS = 'implemented_offline'
@@ -78,25 +69,11 @@ def status_text(cls) -> str:
     return STATUS + (' ' + PILOTS_NOTE if has_pilots else '')
 
 
-def page_name(wf_id: str) -> str:
-    """Wiki page name (file stem and URL tail) of one family, such as workflow_wf6."""
-    return f'workflow_{wf_id.lower()}'
-
-
-def _tree(path: str) -> str:
-    kind = 'blob' if path.endswith(('.py', '.rs')) else 'tree'
-    return f'[`{path}`]({REPO_URL}/{kind}/main/{path})'
-
-
 def _docstring(cls) -> tuple[str, str]:
     doc = inspect.cleandoc(cls.__doc__ or '')
     head, _, body = doc.partition('\n')
     head = head.split('. ', 1)[1] if head.startswith(cls.spec.wf_id + '. ') else head
     return head.strip(), textwrap.dedent(body).strip()
-
-
-def _links(ids) -> str:
-    return ', '.join(f'[{i}]({page_name(i)}.md)' for i in ids) or 'nothing'
 
 
 def _module(cls) -> str:
@@ -119,91 +96,6 @@ HOSTED_NOTE = ('The Rust host runs it: `pfp_operad family` reads the task, write
                'that carries a sealed value and returns the verdict. Python asks the model and carries the '
                'reply back.')
 HOST_BUILD = 'cargo build --release -p pfp_operads --manifest-path code/rust/Cargo.toml'
-
-
-def render(cls, node: dict, rows: list[dict]) -> str:
-    s = cls.spec
-    head, body = _docstring(cls)
-    for field, value in [('name', s.name), ('docstring head', head), ('docstring body', body),
-                         ('kind', node['kind']), *[('process', p) for p in node.get('process', [])],
-                         *[('math', m) for m in node.get('math', [])]]:
-        guard(s.wf_id, field, value)
-    module = _module(cls)
-    hosted = host_files(cls)
-    code = (f'**Code:** {_tree(module)} (`{cls.__name__}`) · **Folder:** {_tree(s.folder)} · '
-            f'**Tests:** {_tree(TESTS)}') if hosted is None else (
-        f'**Check (Rust):** {_tree(hosted[0])} · **Registry entry and fixtures:** {_tree(module)} '
-        f'(`{cls.__name__}`) · **Folder:** {_tree(s.folder)} · **Tests:** {_tree(hosted[1])}, {_tree(TESTS)}')
-    positive = [r for r in rows if r['expected'] in POSITIVE]
-    negative = [r for r in rows if r['expected'] not in POSITIVE]
-    lines = [
-        f'# {s.wf_id}: {s.name}',
-        '',
-        f'**Status:** {status_text(cls)}',
-        '',
-        f'**Layer:** {s.layer} · **Builds on:** {_links(s.depends_on)} · '
-        f'**Merges into:** {s.merge_into or "nothing"} · **Kind:** {node["kind"].replace("_", " ")}',
-        '',
-        code,
-        '',
-        f'> {head}',
-        '',
-        body,
-        '',
-        '## Procedure',
-        '',
-        *[f'{i}. {step}' for i, step in enumerate(node.get('process', []), 1)],
-        '',
-        '## Design mathematics',
-        '',
-        'From the DAG node. The runner checks the instance described above; items it does not exercise '
-        'remain design.',
-        '',
-        *[f'- {m}' for m in node.get('math', [])],
-        '',
-        '## Host check',
-        '',
-        f'`{s.host_check_id}`. Only this check can certify. Proposers, detectors and adapters carry '
-        "authority effect `None`; a reply is evidence for the check, never a verdict."
-        + ('' if hosted is None else ' ' + HOSTED_NOTE),
-        '',
-        '## Run it offline',
-        '',
-        'No model call and no spend. From the repository root'
-        + (':' if hosted is None else ' (the first line builds the host once):'),
-        '',
-        '```powershell',
-        *([] if hosted is None else [HOST_BUILD]),
-        f'python -m pfp_core.workflow_families run {s.wf_id}',
-        f'python -m pytest {TESTS} -q -k "{s.wf_id}-"',
-        '```',
-        '',
-        '| Fixture | Expected | Observed | Code |',
-        '| --- | --- | --- | --- |',
-        *[f'| `{r["fixture"]}` | {r["expected"]} | {r["verdict"]} | `{r["code"]}` |' for r in rows],
-        '',
-        '## With a model',
-        '',
-        '`execute(bundle, budget=..., proposer=...)` takes any proposer. '
-        '`CallableProposer(fn, quote_microusd=...)` wraps a local open-weight runner or a provider client. '
-        'Its upper quote is reserved against one `WholeRunBudget` before the call is made and settled '
-        'afterwards, and a prompt that contains a sealed value is refused before dispatch. '
-        'No live or local model run of this family is recorded yet.',
-        '',
-        '## Claim scope',
-        '',
-        f'- **Supports:** the host check certifies {len(positive)} positive fixture(s) and refuses '
-        f'{len(negative)} adversarial fixture(s), deterministically, offline, at zero spend.',
-        '- **Does not support:** any accuracy, cost or time advantage for a model run through this workflow.',
-        f'- **Narrowest claim:** on these fixtures, `{s.host_check_id}` separates the accepted outcomes from '
-        'the listed failure modes.',
-        f'- **Next test:** a matched local or live campaign of {s.wf_id} against WF1 direct on held-out '
-        'instances of the same family, with equal token and spend caps.',
-        '',
-        f'Back to [all workflow families]({HUB}.md).',
-        '',
-    ]
-    return guard(s.wf_id, 'page', '\n'.join(lines))
 
 
 def render_readme_block(cls) -> str:
@@ -233,7 +125,7 @@ def render_readme_block(cls) -> str:
         f'**The check:** `{s.host_check_id}`. Only this check can certify; a model reply is evidence for '
         'it, never a verdict.' + ('' if hosted is None else ' ' + HOSTED_NOTE),
         '',
-        f'{code} · [tests](../../{TESTS}) · [wiki page]({WIKI_URL}{page_name(s.wf_id)})',
+        f'{code} · [tests](../../{TESTS})',
         README_END,
     ]
     return guard(s.wf_id, 'readme block', '\n'.join(lines))
@@ -269,46 +161,6 @@ def drift(registry, index_text: str | None = None, dag: dict | None = None) -> l
     return found
 
 
-def render_hub(registry, nodes) -> str:
-    for w, c in registry.items():
-        guard(w, 'name', c.spec.name)
-    rows = [f'| [{w}]({page_name(w)}.md) | {c.spec.name} | {c.spec.layer} | {", ".join(c.spec.depends_on)} | '
-            f'`{c.spec.host_check_id}` |' for w, c in sorted(registry.items(), key=lambda kv: (kv[1].spec.layer,
-                                                                                              kv[1].spec.number))]
-    return '\n'.join([
-        '# Workflow families WF6-WF49, WF51 and WF55-WF57',
-        '',
-        'Each family is one class in `pfp_core/workflow_families/` on a shared runtime: one spec, one '
-        'budget per run, one host check that alone can certify, and offline fixtures that must be accepted or '
-        'refused. WF1-WF5 keep their own runners (see [Workflows](workflows.md)).',
-        '',
-        'The host checks are moving from Python to the Rust host, `pfp_operad family`, one layer at a time. '
-        'Moved so far: ' + ', '.join(w for w, c in registry.items() if host_files(c) is not None) + '. For '
-        'these the host reads the task, writes and guards the prompt and gives the verdict; their page links '
-        'the Rust file.',
-        '',
-        '```powershell',
-        'python -m pfp_core.workflow_families list',
-        'python -m pfp_core.workflow_families check-all',
-        '```',
-        '',
-        '| WF | Family | Layer | Builds on | Host check |',
-        '| --- | --- | ---: | --- | --- |',
-        *rows,
-        '',
-        'WF1-WF5 have their own runners ([Workflows](workflows.md)); WF50 is a maintenance workflow '
-        '([WF50](workflow_wf50.md)).',
-        '',
-        'Every page states what its fixtures support and what they do not. No family has a recorded live or '
-        'local model campaign yet.',
-        '',
-    ])
-
-
-def _sha(text: str) -> str:
-    return hashlib.sha256(text.encode('utf-8')).hexdigest()
-
-
 def _encode(path: Path, text: str) -> bytes:
     """UTF-8 bytes, keeping CRLF where the existing file uses it (the audit JSON is pinned that way)."""
     data = text.encode('utf-8')
@@ -321,22 +173,8 @@ def build(check: bool) -> list[str]:
     registry = load()
     audit = json.loads(AUDIT.read_text(encoding='utf-8'))
     nodes = {n['id']: n for n in audit['registry']['family_nodes']}
-    docs = json.loads(DOCS.read_text(encoding='utf-8'))
     pages: dict[Path, str] = {}
-    entries = {e['node_id']: e for e in docs['entries']}
     for wf_id, cls in registry.items():
-        fam = cls()
-        rows = []
-        for name, (_bundle, expected) in fam.fixtures().items():
-            out = run_fixture(fam, name)
-            rows.append({'fixture': name, 'expected': expected, 'verdict': out.verdict, 'code': out.code})
-        text = render(cls, nodes[wf_id], rows)
-        page = f'wiki/{page_name(wf_id)}.md'
-        pages[REPO_ROOT / page] = text
-        entries[wf_id] = {**entries.get(wf_id, {}), 'node_id': wf_id, 'page': page, 'page_sha256': _sha(text),
-                          'wiki_url': WIKI_URL + page_name(wf_id),
-                          'evidence_status': 'offline_fixture_checks_only_no_model_campaign'}
-        entries[wf_id].setdefault('publication_status', 'source_only_not_yet_published')
         node = nodes[wf_id]
         node.update(status='implemented', runner_source=inspect.getmodule(cls).__name__.replace('.', '/') + '.py',
                     runner_class=cls.__name__, tests=TESTS,
@@ -344,17 +182,11 @@ def build(check: bool) -> list[str]:
         hosted = host_files(cls)
         if hosted is not None:
             node.update(host_check_source=hosted[0], host_check_tests=hosted[1])
-    pages[REPO_ROOT / 'wiki' / f'{HUB}.md'] = guard('hub', 'page', render_hub(registry, nodes))
     for wf_id in sorted(README_BLOCK_IDS & set(registry), key=lambda w: int(w[2:])):
         path = REPO_ROOT / registry[wf_id].spec.folder / 'README.md'
         current = path.read_bytes().decode('utf-8').replace('\r\n', '\n')
         pages[path] = splice_readme(wf_id, current, render_readme_block(registry[wf_id]))
-    order = {e['node_id']: i for i, e in enumerate(docs['entries'])}
-    docs['entries'] = sorted(entries.values(), key=lambda e: (order.get(e['node_id'], 10_000),
-                                                              int(e['node_id'][2:]) if e['node_id'][2:].isdigit()
-                                                              else 0))
     outputs = {**pages,
-               DOCS: json.dumps(docs, indent=2, ensure_ascii=False) + '\n',
                AUDIT: json.dumps(audit, indent=2, ensure_ascii=False) + '\n'}
     encoded = {p: _encode(p, t) for p, t in outputs.items()}
     stale = [p.relative_to(REPO_ROOT).as_posix() for p, data in encoded.items()

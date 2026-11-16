@@ -14,7 +14,7 @@ The integer-sum judge and the reply-envelope checks run in that Rust program
 | `wf0004` | One miner, five simultaneous solvers and LGGR | 6 |
 | `wf0005` | Full checked PFP packet rewrite, then WF4 structure | 6 |
 
-Use [the runnable guide](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_running).
+Each folder README has the install and run commands.
 The installed console commands are `pfp-wf1` through `pfp-wf5`.
 
 Shared task custody lives in `pfp.infrastructure.workflow_runtime`; atomic

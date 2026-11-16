@@ -1,0 +1,389 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf16.rs",
+  "target_sha256": "936e16f9852a24da6e7cc21652815fb80c3796cd1c7d698a628e308b71d3aa2b",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
+  "counts": {
+    "killed": 62,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF16\",",
+      "new": "    workflow: \"WF160\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Substrate crosswalk\",",
+      "new": "    name: \"Crosswalk\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"incidence_rank_crosswalk\",",
+      "new": "    host_check: \"crosswalk\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "c may be shorter than the edges",
+      "old": ".filter(|values| values.len() == source.graph.edges().len())",
+      "new": ".filter(|values| values.len() <= source.graph.edges().len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "c may be longer than the edges",
+      "old": ".filter(|values| values.len() == source.graph.edges().len())",
+      "new": ".filter(|values| values.len() >= source.graph.edges().len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "c error reworded",
+      "old": ".ok_or(\"c must be one exact rational per edge\")?;",
+      "new": ".ok_or(\"c\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "edges error reworded",
+      "old": ".ok_or(\"edges must be a list of pairs of text\")?;",
+      "new": ".ok_or(\"edges\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "D error reworded",
+      "old": ".ok_or(\"D must be a list of rows of exact rationals\")?;",
+      "new": ".ok_or(\"D\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "one short row is enough to refuse D",
+      "old": "    if rows.iter().any(|row| row.len() != width) {",
+      "new": "    if rows.iter().all(|row| row.len() != width) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "D rows are not compared with the first",
+      "old": "    let width = rows.first().map_or(0, Vec::len);",
+      "new": "    let width = rows.last().map_or(0, Vec::len);",
+      "outcome": "killed"
+    },
+    {
+      "name": "rows error reworded",
+      "old": "return Err(\"the rows of D must have one length\".to_owned());",
+      "new": "return Err(\"rows\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "y may be shorter than the rows",
+      "old": ".filter(|data| data.len() == rows.len())",
+      "new": ".filter(|data| data.len() <= rows.len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "y may be longer than the rows",
+      "old": ".filter(|data| data.len() == rows.len())",
+      "new": ".filter(|data| data.len() >= rows.len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "y error reworded",
+      "old": ".ok_or(\"y must be one exact rational per row of D\")?;",
+      "new": ".ok_or(\"y\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "vertex_col may be any value",
+      "old": "listed.get(\"vertex_col\").filter(|map| map.is_map()),",
+      "new": "listed.get(\"vertex_col\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "edge_row may be any value",
+      "old": "listed.get(\"edge_row\").filter(|map| map.is_map()),",
+      "new": "listed.get(\"edge_row\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "maps error reworded",
+      "old": "return Err(\"vertex_col and edge_row maps required\".to_owned());",
+      "new": "return Err(\"maps\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "column error reworded",
+      "old": ".ok_or(\"column must be an exact int\")?;",
+      "new": ".ok_or(\"column\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "one edge entry too many is read",
+      "old": "let entries: Vec<(&Datum, &Datum)> = (0..task.values.len())",
+      "new": "let entries: Vec<(&Datum, &Datum)> = (0..task.values.len() + 1)",
+      "outcome": "killed"
+    },
+    {
+      "name": "one edge entry too few is read",
+      "old": "let entries: Vec<(&Datum, &Datum)> = (0..task.values.len())",
+      "new": "let entries: Vec<(&Datum, &Datum)> = (0..task.values.len().saturating_sub(1))",
+      "outcome": "killed"
+    },
+    {
+      "name": "entries are numbered from one",
+      "old": ".map(|edge| match rows.get(&edge.to_string())?.as_list()? {",
+      "new": ".map(|edge| match rows.get(&(edge + 1).to_string())?.as_list()? {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an entry may be longer than a pair",
+      "old": "            [row, sign] => Some((row, sign)),",
+      "new": "            [row, sign, ..] => Some((row, sign)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "entry error reworded",
+      "old": ".ok_or(\"edge_row entries are [row, sign]\")?;",
+      "new": ".ok_or(\"entries\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "row error reworded",
+      "old": "let row = row.as_int().ok_or(\"row must be an exact int\")?;",
+      "new": "let row = row.as_int().ok_or(\"row\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "sign error reworded",
+      "old": "let sign = sign.as_int().ok_or(\"sign must be an exact int\")?;",
+      "new": "let sign = sign.as_int().ok_or(\"sign\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a place may equal the count",
+      "old": ".map(|index| usize::try_from(index).ok().filter(|&place| place < count))",
+      "new": ".map(|index| usize::try_from(index).ok().filter(|&place| place <= count))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a place may be the count less one only",
+      "old": ".map(|index| usize::try_from(index).ok().filter(|&place| place < count))",
+      "new": ".map(|index| usize::try_from(index).ok().filter(|&place| place + 1 < count))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a place may repeat",
+      "old": "    (places.len() == count && distinct.len() == count).then_some(places)",
+      "new": "    (places.len() == count).then_some(places)",
+      "outcome": "killed"
+    },
+    {
+      "name": "places are not counted",
+      "old": "    (places.len() == count && distinct.len() == count).then_some(places)",
+      "new": "    (distinct.len() == count).then_some(places)",
+      "outcome": "killed"
+    },
+    {
+      "name": "places or distinct places are enough",
+      "old": "    (places.len() == count && distinct.len() == count).then_some(places)",
+      "new": "    (places.len() == count || distinct.len() == count).then_some(places)",
+      "outcome": "killed"
+    },
+    {
+      "name": "minus one is not a sign",
+      "old": "        sign if *sign == BigInt::from(-1) => Some(-1),",
+      "new": "        sign if *sign == BigInt::from(-2) => Some(-1),",
+      "outcome": "killed"
+    },
+    {
+      "name": "one is not a sign",
+      "old": "        sign if sign.is_one() => Some(1),",
+      "new": "        sign if !sign.is_one() => Some(1),",
+      "outcome": "killed"
+    },
+    {
+      "name": "minus one is read as one",
+      "old": "        sign if *sign == BigInt::from(-1) => Some(-1),",
+      "new": "        sign if *sign == BigInt::from(-1) => Some(1),",
+      "outcome": "killed"
+    },
+    {
+      "name": "columns are filled to the row count",
+      "old": "    let columns = filling(written.columns.iter(), task.source.names().len())?;",
+      "new": "    let columns = filling(written.columns.iter(), task.rows.len())?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "rows are filled to the vertex count",
+      "old": "    let rows = filling(written.rows.iter().map(|(row, _)| row), task.rows.len())?;",
+      "new": "    let rows = filling(written.rows.iter().map(|(row, _)| row), task.source.names().len())?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the width is the row count",
+      "old": "        let width = self.source.names().len();",
+      "new": "        let width = self.rows.len();",
+      "outcome": "killed"
+    },
+    {
+      "name": "an entry is tail less head",
+      "old": "                    i64::from(at(head) == Some(column)) - i64::from(at(tail) == Some(column));",
+      "new": "                    i64::from(at(tail) == Some(column)) - i64::from(at(head) == Some(column));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the sign is not applied to a row",
+      "old": "                Rational::from_integer(BigInt::from(i64::from(sign) * entry))",
+      "new": "                Rational::from_integer(BigInt::from(entry))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a row must differ from the image",
+      "old": "                .is_some_and(|target| image.eq(target.iter().cloned()))",
+      "new": "                .is_some_and(|target| image.ne(target.iter().cloned()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "one edge row is enough",
+      "old": "        edges.into_iter().all(|(&(tail, head), &(row, sign))| {",
+      "new": "        edges.into_iter().any(|(&(tail, head), &(row, sign))| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing row passes",
+      "old": "                .is_some_and(|target| image.eq(target.iter().cloned()))",
+      "new": "                .is_none_or(|target| image.eq(target.iter().cloned()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the sign is not applied to the data",
+      "old": "            let carried = value * Rational::from_integer(BigInt::from(sign));",
+      "new": "            let carried = value.clone();",
+      "outcome": "killed"
+    },
+    {
+      "name": "one carried edge is enough",
+      "old": "        edges.into_iter().all(|(value, &(row, sign))| {",
+      "new": "        edges.into_iter().any(|(value, &(row, sign))| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing data row passes",
+      "old": "            self.data.get(row) == Some(&carried)",
+      "new": "            self.data.get(row).is_none_or(|data| *data == carried)",
+      "outcome": "killed"
+    },
+    {
+      "name": "the graph is exact when its defect is not zero",
+      "old": "    let source = task.source.graph.defect(&task.values).is_zero();",
+      "new": "    let source = !task.source.graph.defect(&task.values).is_zero();",
+      "outcome": "killed"
+    },
+    {
+      "name": "the target is exact when ranks differ",
+      "old": "    let target = rank(&task.rows) == rank(&augmented);",
+      "new": "    let target = rank(&task.rows) != rank(&augmented);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the augmented row puts y first",
+      "old": "        .map(|(row, entry)| row.iter().cloned().chain([entry.clone()]).collect())",
+      "new": "        .map(|(row, entry)| [entry.clone()].into_iter().chain(row.iter().cloned()).collect())",
+      "outcome": "killed"
+    },
+    {
+      "name": "verdicts need not agree",
+      "old": "    checks.record(\"verdicts_identical\", source == target, &both);",
+      "new": "    checks.record(\"verdicts_identical\", true, &both);",
+      "outcome": "killed"
+    },
+    {
+      "name": "verdicts must differ",
+      "old": "    checks.record(\"verdicts_identical\", source == target, &both);",
+      "new": "    checks.record(\"verdicts_identical\", source != target, &both);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the verdict pair is written target first",
+      "old": "    let both = Datum::List(vec![Datum::Bool(source), Datum::Bool(target)]);",
+      "new": "    let both = Datum::List(vec![Datum::Bool(target), Datum::Bool(source)]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty crosswalk list is read",
+      "old": "        .filter(|listed| !listed.is_empty())\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "crosswalks error reworded",
+      "old": ".ok_or_else(|| Stop::Malformed(\"crosswalks required\".to_owned()))?;",
+      "new": ".ok_or_else(|| Stop::Malformed(\"crosswalks\".to_owned()))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a crosswalk that is not bijective ends the loop",
+      "old": "        let Some(crosswalk) = found else {\n            continue;\n        };",
+      "new": "        let Some(crosswalk) = found else {\n            break;\n        };",
+      "outcome": "killed"
+    },
+    {
+      "name": "crosswalks are numbered from one",
+      "old": "        let name = |predicate: &str| format!(\"crosswalk{number}:{predicate}\");",
+      "new": "        let name = |predicate: &str| format!(\"crosswalk{}:{predicate}\", number + 1);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a flip is a row of sign one",
+      "old": "            .filter(|(_, &(_, sign))| sign == -1)",
+      "new": "            .filter(|(_, &(_, sign))| sign == 1)",
+      "outcome": "killed"
+    },
+    {
+      "name": "the first crosswalk is compared with itself",
+      "old": "    let differ = kept.iter().skip(1).map(|later| {",
+      "new": "    let differ = kept.iter().map(|later| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the second crosswalk is skipped",
+      "old": "    let differ = kept.iter().skip(1).map(|later| {",
+      "new": "    let differ = kept.iter().skip(2).map(|later| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the last crosswalk is the one compared with",
+      "old": "            .first()\n            .map_or(&[][..], |first| first.columns.as_slice());",
+      "new": "            .last()\n            .map_or(&[][..], |first| first.columns.as_slice());",
+      "outcome": "killed"
+    },
+    {
+      "name": "vertices that agree are listed",
+      "old": "            .filter(|(_, (first, later))| first != later)",
+      "new": "            .filter(|(_, (first, later))| first == later)",
+      "outcome": "killed"
+    },
+    {
+      "name": "an exact verdict is written not exact",
+      "old": "            Datum::from(if source { \"exact\" } else { \"not_exact\" }),",
+      "new": "            Datum::from(if source { \"not_exact\" } else { \"exact\" }),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the verdict is taken from the target",
+      "old": "            Datum::from(if source { \"exact\" } else { \"not_exact\" }),",
+      "new": "            Datum::from(if target { \"exact\" } else { \"not_exact\" }),",
+      "outcome": "killed"
+    },
+    {
+      "name": "judged under another code",
+      "old": "Ok(checks.judge(\"CROSSWALK_PRESERVED\", detail))",
+      "new": "Ok(checks.judge(\"CROSSWALK_KEPT\", detail))",
+      "outcome": "killed"
+    }
+  ]
+}

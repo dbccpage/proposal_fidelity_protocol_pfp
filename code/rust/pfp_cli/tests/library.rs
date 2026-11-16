@@ -334,13 +334,11 @@ fn explain_wraps_at_78_columns_under_a_hanging_label() {
          \x20          SHA-256 digest.\n\
          \x20 Why:     Models produce digest-shaped strings that were never computed. They\n\
          \x20          pass a glance and fail any check.\n\
-         \x20 Instead: Compute digests in code. Never accept one from model output.\n\
-         \x20 Read:    https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/eis\n"
+         \x20 Instead: Compute digests in code. Never accept one from model output.\n"
     );
     for entry in pfp_cli::catalog::ENTRIES {
         let shown = pfp_cli::render_explain(entry);
-        let body = shown.lines().filter(|l| !l.contains("Read:"));
-        assert!(body.clone().all(|l| l.chars().count() <= 78), "{shown}");
+        assert!(shown.lines().all(|l| l.chars().count() <= 78), "{shown}");
     }
 }
 
@@ -401,4 +399,21 @@ fn an_unclosed_fence_gives_back_the_line_after_it() {
     let report = run_checks(&builtin_checks(), &input);
     assert_eq!(report.findings.len(), 1);
     assert_eq!(report.findings[0].line, Some(2));
+}
+
+#[test]
+fn explain_keeps_an_overlong_first_word_on_the_label_line() {
+    let long = "x".repeat(70);
+    let word: &'static str = Box::leak(long.clone().into_boxed_str());
+    let entry = pfp_cli::catalog::Entry {
+        code: "LONG",
+        short: "s",
+        what: word,
+        why: "w",
+        instead: "i",
+    };
+    assert_eq!(
+        pfp_cli::render_explain(&entry),
+        format!("LONG: s\n\n  What:    {long}\n  Why:     w\n  Instead: i\n")
+    );
 }

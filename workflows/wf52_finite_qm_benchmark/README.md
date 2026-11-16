@@ -43,5 +43,3 @@ The earlier finite-QM derivation prompt and its stage/mode design are a WF20 pil
 ## Paths in older records
 
 This folder was `dag/benchmark/` until 2026-11-13. Run records, source snapshots and their pins keep the old path, and pinned sources (`hamiltonian_artifact.py`, `qm_native_charpoly.py`, `qm_host_charpoly.py` and the other modules listed in [`source_custody.py`](source_custody.py)) still name `dag/benchmark/...` inside, because changing a byte would break their recorded SHA-256.
-
-More: [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/Workflow-QM-Benchmark)

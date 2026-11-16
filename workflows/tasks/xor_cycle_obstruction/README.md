@@ -14,5 +14,3 @@ python workflows/tasks/xor_cycle_obstruction/run.py --output-dir <scratch-dir>
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000026/`.
-
-See the wiki page `Test-Xor-Cycle-Obstruction`.

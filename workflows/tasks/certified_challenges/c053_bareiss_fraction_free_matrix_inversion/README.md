@@ -15,5 +15,3 @@ Replay-custody test for this challenge:
 Score the reference solver on the 14 public examples:
 
     python workflows/tasks/certified_challenges/c053_bareiss_fraction_free_matrix_inversion/participant_packet/runner.py --all-examples
-
-Wiki page: Test-Exact-Matrix-Inversion-Certificates.

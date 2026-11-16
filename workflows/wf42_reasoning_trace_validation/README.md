@@ -14,7 +14,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF42-"
 
 **The check:** `rational_lp_primal_dual_check`. Only this check can certify; a model reply is evidence for it, never a verdict.
 
-**Code:** [`pfp_core/workflow_families/layer5.py`](../../pfp_core/workflow_families/layer5.py) (`ReasoningTraceValidation`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf42)
+**Code:** [`pfp_core/workflow_families/layer5.py`](../../pfp_core/workflow_families/layer5.py) (`ReasoningTraceValidation`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** procedure extension. **Builds on:** [WF10](../wf10_local_to_global_obstruction_certificate/README.md), [WF21](../wf21_structural_prompt_rewriting/README.md).
@@ -46,4 +46,4 @@ Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (run_f); deep_researc
 
 Boost: when extractor collapses: CarrierFailure (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf42) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

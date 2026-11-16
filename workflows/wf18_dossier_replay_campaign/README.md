@@ -14,7 +14,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF18-"
 
 **The check:** `dossier_replay_reproduces_grades`. Only this check can certify; a model reply is evidence for it, never a verdict.
 
-**Code:** [`pfp_core/workflow_families/layer6.py`](../../pfp_core/workflow_families/layer6.py) (`DossierReplayCampaign`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf18)
+**Code:** [`pfp_core/workflow_families/layer6.py`](../../pfp_core/workflow_families/layer6.py) (`DossierReplayCampaign`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** harness gate. **Builds on:** [WF6](../wf06_dialect_sweep/README.md), [WF12](../wf12_mechanism_control_arms/README.md).
@@ -59,4 +59,4 @@ Pattern `sweep_with_shared_judge`: coder ×2 (sonnet); deep_researcher ×1 (run_
 
 Boost: when replay grade differs: stop the campaign; investigate custody before any new call (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf18) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

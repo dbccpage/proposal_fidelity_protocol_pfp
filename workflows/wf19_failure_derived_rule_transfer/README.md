@@ -14,7 +14,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF19-"
 
 **The check:** `held_out_transfer_gain`. Only this check can certify; a model reply is evidence for it, never a verdict.
 
-**Code:** [`pfp_core/workflow_families/layer7.py`](../../pfp_core/workflow_families/layer7.py) (`FailureDerivedRuleTransfer`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf19)
+**Code:** [`pfp_core/workflow_families/layer7.py`](../../pfp_core/workflow_families/layer7.py) (`FailureDerivedRuleTransfer`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** experiment design. **Builds on:** [WF12](../wf12_mechanism_control_arms/README.md), [WF14](../wf14_immune_failure_classification/README.md).
@@ -56,4 +56,4 @@ Pattern `research_cell`: deep_researcher ×1 (run_o); adversary ×1 (run_f); cod
 
 Boost: when rule shows no gain: one revised rule from run_o; otherwise the rule is retired (limit 1).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf19) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)
