@@ -1,0 +1,204 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf35.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf35.rs",
+      "language": "Rust",
+      "sha256": "6ed33a884e8edbf0cf1daaa702239a3a06f2686cf27a5ffeb2fe229981efce73"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf35:v1",
+    "symbols": [
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task is items, a nonempty list of weighted digraphs, and arms, a list of at least two objects each with its own text channel. An arm may hold checker_pin and budget. A task that is not of this form is refused before anything is asked.",
+      "arms_share_fixed_checker is recorded first: every arm's checker_pin is the pin of the grader as it is now. arms_share_budget is recorded second: every arm's budget has the same canonical form, a missing budget being null. If either fails the run ends there, refused as ARMS_NOT_MATCHED, with nothing asked.",
+      "Otherwise each arm in turn is asked each item, in order, under the stage channel:position. The prompt is the default prompt for the item with the arm's channel added, so it carries no statement and no reply of another arm.",
+      "A reply stands when its text, graded by the one grader on the item, is HOST_CERTIFIED or TYPED_REFUSAL. A missing reply, a reply that is not an object and a reply with no text do not stand.",
+      "accept_set_depends_only_on_bytes holds when no reply claims an accepted other than the boolean the grader gave it. The replies that do are listed as channel:position.",
+      "All held, the comparison is certified as CHANNELS_COMPARED with the number of replies that stood for each channel, and the discordant items of the first two arms: those the first arm's reply stood for and the second's did not, and the other way round."
+    ],
+    "boundaries": [
+      "A comparison says which replies were certificates for these items under one grader. It does not say which channel is better in general.",
+      "Only the first two arms are paired; every arm is counted alone.",
+      "The host does not see how an arm made its reply, so a claim about the channel is the arm's word."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf35.rs",
+      "language": "Rust",
+      "sha256": "6ed33a884e8edbf0cf1daaa702239a3a06f2686cf27a5ffeb2fe229981efce73"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: counts are exact integers, a budget is compared by its canonical form, and every grade is the exact grader's. Not B: tested on examples, not proven.",
+      "G3": "Each unreadable part of a task has its own reason, mismatched arms and a claim the grader does not give are their own refusals, and a missing reply is refused naming the stage. No panicking unwrap or expect, and no index. Not B: panic-freedom is tested, not proven.",
+      "G4": "23 WF35 tests assert the registry entry, channels compared on one checker with each predicate and its evidence, arms that used another checker or another budget refused before anything is asked, a budget compared by its canonical form and every arm held to it, a channel that claims an acceptance the grader does not give and only the boolean it gave being honest, every claim listed with its channel and item, a parallel edge violation a mask accepts, a reply with no text or no reply at all, a reply that stands as a cycle or a potential, the discordant pairs for the first two arms and counts for the rest, missing and extra replies, each part of a task, channels that differ only in case, and no prompt that carries a reply or a claim. One mutant is recorded as demonstrably equivalent with its justification in the report. Mutation campaign R = 100/100. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 10, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T22:06:04Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v15-test.run.json",
+        "sha256": "961d394a63c16d206ba212c2f0e771539928f3b958cf63472c35089adc791aa9",
+        "note": "1219 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-clippy.run.json",
+        "sha256": "fe8e4f5bab606fb274fa7fd77441f236d1ef7ab99e2dceb702d6f8ebc1887d08",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-fmt.run.json",
+        "sha256": "fcd4bbf1b7bc812fa56575170d36f18bd3fe6e6e5f73b5be845584264e93a3e1",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-metrics.run.json",
+        "sha256": "e4c24e720d1823e3d047da11b130f1d5d4a45bb021b6b929fc72bb7f1377e61a",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-metrics.json",
+        "sha256": "e204ef1d998e58a6f5b13694279c83863b493ca88e21fcdc395014191976e4f2",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 100,
+      "survived": 0,
+      "demonstrably_equivalent": 1,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf35.mutation.json",
+        "sha256": "f57007fb65931660f74d451bc27c577235957217f0b06bebe5a9a6c6abfd9f3a",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 101 mutants"
+      }
+    }
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T22:06:06.724528Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf35.rs",
+          "language": "Rust",
+          "sha256": "6ed33a884e8edbf0cf1daaa702239a3a06f2686cf27a5ffeb2fe229981efce73"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf35:v1",
+        "symbols": [
+          "FAMILY"
+        ],
+        "owned_invariants": [
+          "The task is items, a nonempty list of weighted digraphs, and arms, a list of at least two objects each with its own text channel. An arm may hold checker_pin and budget. A task that is not of this form is refused before anything is asked.",
+          "arms_share_fixed_checker is recorded first: every arm's checker_pin is the pin of the grader as it is now. arms_share_budget is recorded second: every arm's budget has the same canonical form, a missing budget being null. If either fails the run ends there, refused as ARMS_NOT_MATCHED, with nothing asked.",
+          "Otherwise each arm in turn is asked each item, in order, under the stage channel:position. The prompt is the default prompt for the item with the arm's channel added, so it carries no statement and no reply of another arm.",
+          "A reply stands when its text, graded by the one grader on the item, is HOST_CERTIFIED or TYPED_REFUSAL. A missing reply, a reply that is not an object and a reply with no text do not stand.",
+          "accept_set_depends_only_on_bytes holds when no reply claims an accepted other than the boolean the grader gave it. The replies that do are listed as channel:position.",
+          "All held, the comparison is certified as CHANNELS_COMPARED with the number of replies that stood for each channel, and the discordant items of the first two arms: those the first arm's reply stood for and the second's did not, and the other way round."
+        ],
+        "boundaries": [
+          "A comparison says which replies were certificates for these items under one grader. It does not say which channel is better in general.",
+          "Only the first two arms are paired; every arm is counted alone.",
+          "The host does not see how an arm made its reply, so a claim about the channel is the arm's word."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf35.rs",
+          "language": "Rust",
+          "sha256": "6ed33a884e8edbf0cf1daaa702239a3a06f2686cf27a5ffeb2fe229981efce73"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Exact: counts are exact integers, a budget is compared by its canonical form, and every grade is the exact grader's. Not B: tested on examples, not proven.",
+          "G3": "Each unreadable part of a task has its own reason, mismatched arms and a claim the grader does not give are their own refusals, and a missing reply is refused naming the stage. No panicking unwrap or expect, and no index. Not B: panic-freedom is tested, not proven.",
+          "G4": "23 WF35 tests assert the registry entry, channels compared on one checker with each predicate and its evidence, arms that used another checker or another budget refused before anything is asked, a budget compared by its canonical form and every arm held to it, a channel that claims an acceptance the grader does not give and only the boolean it gave being honest, every claim listed with its channel and item, a parallel edge violation a mask accepts, a reply with no text or no reply at all, a reply that stands as a cycle or a potential, the discordant pairs for the first two arms and counts for the rest, missing and extra replies, each part of a task, channels that differ only in case, and no prompt that carries a reply or a claim. One mutant is recorded as demonstrably equivalent with its justification in the report. Mutation campaign R = 100/100. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 10, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T22:05:53Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v15-test.run.json",
+            "sha256": "961d394a63c16d206ba212c2f0e771539928f3b958cf63472c35089adc791aa9",
+            "note": "1219 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-clippy.run.json",
+            "sha256": "fe8e4f5bab606fb274fa7fd77441f236d1ef7ab99e2dceb702d6f8ebc1887d08",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-fmt.run.json",
+            "sha256": "fcd4bbf1b7bc812fa56575170d36f18bd3fe6e6e5f73b5be845584264e93a3e1",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-metrics.run.json",
+            "sha256": "e4c24e720d1823e3d047da11b130f1d5d4a45bb021b6b929fc72bb7f1377e61a",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-metrics.json",
+            "sha256": "e204ef1d998e58a6f5b13694279c83863b493ca88e21fcdc395014191976e4f2",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 100,
+          "survived": 0,
+          "demonstrably_equivalent": 1,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-wf35.mutation.json",
+            "sha256": "f57007fb65931660f74d451bc27c577235957217f0b06bebe5a9a6c6abfd9f3a",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 101 mutants"
+          }
+        }
+      }
+    }
+  ]
+}

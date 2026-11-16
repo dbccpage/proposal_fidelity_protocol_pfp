@@ -8,7 +8,6 @@ from ``pfp_core.immunity`` over candidate detector rules.
 """
 from __future__ import annotations
 
-import inspect
 import json
 from collections.abc import Mapping, Sequence
 from fractions import Fraction
@@ -16,18 +15,16 @@ from typing import Any
 
 from eis.domain.value_objects import DetectorRule
 
-from ..fidelity import HostOracleContext, sha256_hex
+from ..fidelity import sha256_hex
 from ..immunity import HOLD, HOST_OBSERVERS, AntibodyRegistry, decide, host_danger, screen_rules, signal1
 from ..operad_ledger import record_failure
 from .base import (
     CERTIFIED,
     REFUSED,
     TYPED_REFUSAL,
-    Session,
-    Verdict,
+    HostedFamily,
     WorkflowFamily,
     as_fraction,
-    as_int,
     digest,
     judge,
     refused,
@@ -274,45 +271,10 @@ class ImmuneFailureClassification(WorkflowFamily):
 
 # ---------------------------------------------------------------- dossier replay
 
-def grade_cycle_duality(item: Mapping[str, Any], raw: str) -> str:
-    """Grade one weighted-digraph reply: a feasible potential or a negative cycle (Farkas duality).
-
-    ``phi[v] - phi[u] <= w(u, v)`` for every edge certifies feasibility; a closed
-    walk of negative total weight certifies that no potential exists. One of the
-    two always exists, so a correct reply is always gradeable.
-    """
-    n = as_int(item['n'], 'n')
-    edges = [(as_int(u, 'u'), as_int(v, 'v'), as_fraction(c, 'w')) for u, v, c in item['edges']]
-    lightest: dict[tuple[int, int], Fraction] = {}  # parallel edges: a closed walk may take the lightest
-    for u, v, c in edges:
-        lightest[u, v] = min(c, lightest.get((u, v), c))
-    try:
-        obj = json.loads(raw)
-    except ValueError:
-        return REFUSED
-    if isinstance(obj, dict) and isinstance(obj.get('potential'), list) and len(obj['potential']) == n:
-        try:
-            phi = [as_fraction(x, 'phi') for x in obj['potential']]
-        except ValueError:
-            return REFUSED
-        if not all(0 <= u < n and 0 <= v < n for u, v, _ in edges):
-            return REFUSED
-        return CERTIFIED if all(phi[v] - phi[u] <= c for u, v, c in edges) else REFUSED
-    cyc = obj.get('negative_cycle') if isinstance(obj, dict) else None
-    if isinstance(cyc, list) and len(cyc) >= 2 and all(type(x) is int for x in cyc):
-        steps = list(zip(cyc, [*cyc[1:], cyc[0]], strict=True))
-        if all(s in lightest for s in steps) and sum(lightest[s] for s in steps) < 0:
-            return TYPED_REFUSAL
-    return REFUSED
-
-
-def source_pin(fn: Any) -> str:
-    """SHA-256 of a grader's source text with LF line endings: stable across Python versions and checkouts."""
-    src = inspect.getsource(fn).replace('\r\n', '\n').replace('\r', '\n')
-    return sha256_bytes(src.encode('utf-8'))
-
-
-GRADERS = {'cycle_duality': grade_cycle_duality}
+# SHA-256 of ``code/rust/pfp_operads/src/families/duality.rs`` with LF line endings: the grader
+# the Rust host runs. Editing that file changes it, and ``test_the_duality_pin_is_the_rust_source``
+# fails until this line says so.
+GRADER_PIN = '1826acc6396ecf8afe6ece7bedd0e65db8d52abb95911b8970f409c70ba83a52'
 
 
 def dossier_cell(cell_id: str, item: Mapping[str, Any], raw: str, grade: str) -> dict[str, Any]:
@@ -321,46 +283,16 @@ def dossier_cell(cell_id: str, item: Mapping[str, Any], raw: str, grade: str) ->
 
 
 @register
-class DossierReplayCampaign(WorkflowFamily):
+class DossierReplayCampaign(HostedFamily):
     """WF18. Replay a frozen campaign dossier with zero model calls; every grade must reproduce.
 
     Each cell stores its input, the raw reply bytes and their SHA-256 values; the
-    dossier pins the grader source. The host checks each digest and the pin,
+    dossier pins the grader source. The Rust host checks each digest and the pin,
     regrades every stored reply with the weighted-cycle duality grader, and
     refuses any drifted byte, drifted pin or grade that does not reproduce.
     """
     spec = spec_from('WF18', 'Dossier replay campaign', 6, ['WF6', 'WF12'], None,
                      'dossier_replay_reproduces_grades', 'wf18_dossier_replay_campaign')
-
-    def validate(self, task):
-        d = task.get('dossier')
-        require(isinstance(d, Mapping) and isinstance(d.get('cells'), list) and d['cells'], 'dossier cells required')
-        require(isinstance(d.get('source_pins'), Mapping) and d.get('grader') in GRADERS, 'grader and pins required')
-        return task
-
-    def run(self, session: Session, host: HostOracleContext) -> Verdict:
-        d = session.task['dossier']
-        grader = GRADERS[d['grader']]
-        pin_ok = host.record('source_pin_matches', d['source_pins'].get(d['grader']) == source_pin(grader),
-                             d['grader'])
-        drift, regrades = [], {}
-        for cell in d['cells']:
-            raw = cell.get('raw_reply')
-            require(isinstance(raw, str), 'raw_reply must be stored text')
-            if sha256_bytes(raw.encode('utf-8')) != cell.get('raw_reply_sha256'):
-                drift.append(f"{cell['cell_id']}:raw_reply")
-            if digest(cell.get('input')) != cell.get('input_sha256'):
-                drift.append(f"{cell['cell_id']}:input")
-            regrades[cell['cell_id']] = grader(cell['input'], raw)
-        host.record('stored_bytes_match_digests', not drift, str(drift))
-        mismatched = sorted(k for k, c in zip(regrades, d['cells'], strict=True) if c['grade'] != regrades[k])
-        host.record('every_grade_reproduces', not mismatched, str(mismatched))
-        host.record('zero_model_calls', not session.transcript, str(len(session.transcript)))
-        if not pin_ok:
-            return refused('SOURCE_PIN_DRIFT')
-        if drift:
-            return refused('STORED_BYTES_DRIFTED', drift=drift)
-        return judge(host, 'REPLAY_REPRODUCED', cells=len(regrades), mismatched=mismatched)
 
     def fixtures(self):
         feasible = {'n': 3, 'edges': [[0, 1, 2], [1, 2, -1], [0, 2, 3], [2, 0, 1]]}
@@ -368,7 +300,7 @@ class DossierReplayCampaign(WorkflowFamily):
         cells = [dossier_cell('c1', feasible, '{"potential": [0, 2, 1]}', CERTIFIED),
                  dossier_cell('c2', negative, '{"negative_cycle": [0, 1, 2]}', TYPED_REFUSAL),
                  dossier_cell('c3', feasible, '{"potential": [0, 0, 0]}', REFUSED)]
-        pins = {'cycle_duality': source_pin(grade_cycle_duality)}
+        pins = {'cycle_duality': GRADER_PIN}
 
         def case(cs, p=pins):
             return {'task': {'statement': 'Replay the frozen dossier.',
@@ -388,11 +320,11 @@ class DossierReplayCampaign(WorkflowFamily):
 # ---------------------------------------------------------------- channel comparison
 
 @register
-class ProposalChannelComparison(WorkflowFamily):
+class ProposalChannelComparison(HostedFamily):
     """WF35. Compare proposal channels under one fixed host check; acceptance depends only on reply bytes.
 
     Each arm (prompt, grammar mask, logit mask, ...) answers the same weighted
-    digraph items. The host grades every reply with the one pinned duality
+    digraph items. The Rust host grades every reply with the one pinned duality
     grader, ignores any acceptance a channel reports for itself, and reports
     per-arm accepts and discordant pairs. It refuses arms with different
     checkers or budgets and any channel whose self-reported accept set differs.
@@ -400,50 +332,13 @@ class ProposalChannelComparison(WorkflowFamily):
     spec = spec_from('WF35', 'Proposal-channel comparison', 6, ['WF6', 'WF12'], None,
                      'channel_blind_fixed_oracle', 'wf35_proposal_channel_comparison')
 
-    def validate(self, task):
-        require(isinstance(task.get('items'), list) and task['items'], 'items required')
-        require(isinstance(task.get('arms'), list) and len(task['arms']) >= 2, 'at least two arms')
-        require(all(isinstance(a, Mapping) and isinstance(a.get('channel'), str) for a in task['arms']), 'arm channel')
-        return task
-
-    def run(self, session: Session, host: HostOracleContext) -> Verdict:
-        task = session.task
-        arms, items = task['arms'], task['items']
-        pin = source_pin(grade_cycle_duality)
-        same_checker = all(a.get('checker_pin') == pin for a in arms)
-        same_budget = len({digest(a.get('budget')) for a in arms}) == 1
-        host.record('arms_share_fixed_checker', same_checker, str([a.get('checker_pin') == pin for a in arms]))
-        host.record('arms_share_budget', same_budget, digest([a.get('budget') for a in arms]))
-        if not (same_checker and same_budget):
-            return refused('ARMS_NOT_MATCHED')
-        table: dict[str, list[bool]] = {}
-        label_dependent = []
-        for arm in arms:
-            row = []
-            for k, item in enumerate(items):
-                reply = session.ask(f"{arm['channel']}:{k}", self.prompt({**item, 'channel': arm['channel']}))
-                content = reply.content if reply is not None else {}
-                raw = content.get('text') if isinstance(content, Mapping) else None
-                grade = grade_cycle_duality(item, raw) if isinstance(raw, str) else REFUSED
-                ok = grade in (CERTIFIED, TYPED_REFUSAL)
-                if isinstance(content, Mapping) and 'accepted' in content and content['accepted'] is not ok:
-                    label_dependent.append(f"{arm['channel']}:{k}")
-                row.append(ok)
-            table[arm['channel']] = row
-        host.record('accept_set_depends_only_on_bytes', not label_dependent, str(label_dependent))
-        a, b = (table[x['channel']] for x in arms[:2])
-        return judge(host, 'CHANNELS_COMPARED', accepts={c: sum(r) for c, r in table.items()},
-                     discordant={'first_only': sum(x and not y for x, y in zip(a, b, strict=True)),
-                                 'second_only': sum(y and not x for x, y in zip(a, b, strict=True))})
-
     def fixtures(self):
         items = [{'n': 3, 'edges': [[0, 1, 2], [1, 2, -1], [0, 2, 3]]},
                  {'n': 3, 'edges': [[0, 1, 1], [1, 2, -3], [2, 0, 1]]}]
-        pin = source_pin(grade_cycle_duality)
         budget = {'max_output_tokens': 256, 'cap_microusd': 1}
 
         def arm(channel, **over):
-            return {'channel': channel, 'checker_pin': pin, 'budget': budget, **over}
+            return {'channel': channel, 'checker_pin': GRADER_PIN, 'budget': budget, **over}
         replies = [{'text': '{"potential": [0, 2, 1]}'}, {'text': '{"potential": [0, 0, 0]}'},
                    {'text': '{"potential": [0, 2, 1]}', 'accepted': True},
                    {'text': '{"negative_cycle": [0, 1, 2]}', 'accepted': True}]

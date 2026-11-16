@@ -1,0 +1,210 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/duality.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/duality.rs",
+      "language": "Rust",
+      "sha256": "1826acc6396ecf8afe6ece7bedd0e65db8d52abb95911b8970f409c70ba83a52"
+    },
+    "contract_urn": "urn:pfp-operads:families-duality:v1",
+    "symbols": [
+      "Item",
+      "Grade",
+      "grade",
+      "pin"
+    ],
+    "owned_invariants": [
+      "An item is a weighted digraph: n, an exact integer of any size, and edges, a list of [u, v, w] with integer ends and w an exact rational. An item that is not of this form is read as an error with a reason.",
+      "A reply is the text of one JSON object. A reply that is not one, or that repeats a key or writes NaN, is refused.",
+      "When potential is a list of n entries, the reply is graded as a potential: every entry must be an exact rational, every edge end must be a number from 0 to n-1, and phi[v] - phi[u] must be at most w on every edge. All of that is HOST_CERTIFIED. Otherwise the grade is REFUSED, and a cycle that comes with it is not read.",
+      "When potential is missing or is not a list of n entries, negative_cycle is read: at least two integers, each step a listed edge (the lightest of any parallel edges) with the last step back to the first, and the weights adding to less than zero. That is TYPED_REFUSAL. Anything else is REFUSED.",
+      "A grade stands when it is HOST_CERTIFIED or TYPED_REFUSAL. The grades are named HOST_CERTIFIED, TYPED_REFUSAL and REFUSED, as the stored dossiers name them.",
+      "pin is the SHA-256 of this file's own text with every line ending read as a line feed."
+    ],
+    "boundaries": [
+      "A grade says the reply is a certificate for this graph, not that the model found it by reasoning.",
+      "A rational is an integer or p/q, with no space, plus sign, point or exponent; a decimal or a padded number is refused.",
+      "The pin changes with any edit of this file, comments included, and a dossier or an arm that pinned the old text is then refused."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/duality.rs",
+      "language": "Rust",
+      "sha256": "1826acc6396ecf8afe6ece7bedd0e65db8d52abb95911b8970f409c70ba83a52"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: vertices, ends and weights are exact integers and rationals of any size, sums of weights are exact, and no float is read. Potentials, cycles and the pin are worked by hand or rebuilt in the tests. Not B: tested on examples, not proven; the hash library is trusted.",
+      "G3": "An item that cannot be read gives its reason, and a reply that cannot be graded is REFUSED rather than a failure. No panicking unwrap or expect, and no index. Not B: panic-freedom is tested, not proven.",
+      "G4": "27 tests assert a feasible potential certified, a potential that breaks one edge, an edge that holds with equality, the direction of an edge, a negative closed walk as a typed refusal and one that does not add up to less than zero, a walk that must follow edges and close, the lightest of parallel edges taken for a walk and every one of them held for a potential, a potential of another length read as a walk would be, a rational that is not written as an integer or p over q, an end that is not a vertex, a graph with no vertices, a number of vertices of any size, text that is not one object, the grade names, and the pin as the digest of the file with unix line endings. 6 mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 64/64. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 6, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T22:06:04Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v15-test.run.json",
+        "sha256": "961d394a63c16d206ba212c2f0e771539928f3b958cf63472c35089adc791aa9",
+        "note": "1219 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-clippy.run.json",
+        "sha256": "fe8e4f5bab606fb274fa7fd77441f236d1ef7ab99e2dceb702d6f8ebc1887d08",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-fmt.run.json",
+        "sha256": "fcd4bbf1b7bc812fa56575170d36f18bd3fe6e6e5f73b5be845584264e93a3e1",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-metrics.run.json",
+        "sha256": "e4c24e720d1823e3d047da11b130f1d5d4a45bb021b6b929fc72bb7f1377e61a",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-metrics.json",
+        "sha256": "e204ef1d998e58a6f5b13694279c83863b493ca88e21fcdc395014191976e4f2",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 64,
+      "survived": 0,
+      "demonstrably_equivalent": 6,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-families-duality.mutation.json",
+        "sha256": "1455c9d8a18d8d07f9b99fef88dc449b3e2e62ca02f9a65119e6c07d9a6e167a",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 70 mutants"
+      }
+    }
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T22:06:06.039900Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/duality.rs",
+          "language": "Rust",
+          "sha256": "1826acc6396ecf8afe6ece7bedd0e65db8d52abb95911b8970f409c70ba83a52"
+        },
+        "contract_urn": "urn:pfp-operads:families-duality:v1",
+        "symbols": [
+          "Item",
+          "Grade",
+          "grade",
+          "pin"
+        ],
+        "owned_invariants": [
+          "An item is a weighted digraph: n, an exact integer of any size, and edges, a list of [u, v, w] with integer ends and w an exact rational. An item that is not of this form is read as an error with a reason.",
+          "A reply is the text of one JSON object. A reply that is not one, or that repeats a key or writes NaN, is refused.",
+          "When potential is a list of n entries, the reply is graded as a potential: every entry must be an exact rational, every edge end must be a number from 0 to n-1, and phi[v] - phi[u] must be at most w on every edge. All of that is HOST_CERTIFIED. Otherwise the grade is REFUSED, and a cycle that comes with it is not read.",
+          "When potential is missing or is not a list of n entries, negative_cycle is read: at least two integers, each step a listed edge (the lightest of any parallel edges) with the last step back to the first, and the weights adding to less than zero. That is TYPED_REFUSAL. Anything else is REFUSED.",
+          "A grade stands when it is HOST_CERTIFIED or TYPED_REFUSAL. The grades are named HOST_CERTIFIED, TYPED_REFUSAL and REFUSED, as the stored dossiers name them.",
+          "pin is the SHA-256 of this file's own text with every line ending read as a line feed."
+        ],
+        "boundaries": [
+          "A grade says the reply is a certificate for this graph, not that the model found it by reasoning.",
+          "A rational is an integer or p/q, with no space, plus sign, point or exponent; a decimal or a padded number is refused.",
+          "The pin changes with any edit of this file, comments included, and a dossier or an arm that pinned the old text is then refused."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/duality.rs",
+          "language": "Rust",
+          "sha256": "1826acc6396ecf8afe6ece7bedd0e65db8d52abb95911b8970f409c70ba83a52"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Exact: vertices, ends and weights are exact integers and rationals of any size, sums of weights are exact, and no float is read. Potentials, cycles and the pin are worked by hand or rebuilt in the tests. Not B: tested on examples, not proven; the hash library is trusted.",
+          "G3": "An item that cannot be read gives its reason, and a reply that cannot be graded is REFUSED rather than a failure. No panicking unwrap or expect, and no index. Not B: panic-freedom is tested, not proven.",
+          "G4": "27 tests assert a feasible potential certified, a potential that breaks one edge, an edge that holds with equality, the direction of an edge, a negative closed walk as a typed refusal and one that does not add up to less than zero, a walk that must follow edges and close, the lightest of parallel edges taken for a walk and every one of them held for a potential, a potential of another length read as a walk would be, a rational that is not written as an integer or p over q, an end that is not a vertex, a graph with no vertices, a number of vertices of any size, text that is not one object, the grade names, and the pin as the digest of the file with unix line endings. 6 mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 64/64. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 6, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T22:05:53Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v15-test.run.json",
+            "sha256": "961d394a63c16d206ba212c2f0e771539928f3b958cf63472c35089adc791aa9",
+            "note": "1219 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-clippy.run.json",
+            "sha256": "fe8e4f5bab606fb274fa7fd77441f236d1ef7ab99e2dceb702d6f8ebc1887d08",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-fmt.run.json",
+            "sha256": "fcd4bbf1b7bc812fa56575170d36f18bd3fe6e6e5f73b5be845584264e93a3e1",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-metrics.run.json",
+            "sha256": "e4c24e720d1823e3d047da11b130f1d5d4a45bb021b6b929fc72bb7f1377e61a",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-metrics.json",
+            "sha256": "e204ef1d998e58a6f5b13694279c83863b493ca88e21fcdc395014191976e4f2",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 64,
+          "survived": 0,
+          "demonstrably_equivalent": 6,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-families-duality.mutation.json",
+            "sha256": "1455c9d8a18d8d07f9b99fef88dc449b3e2e62ca02f9a65119e6c07d9a6e167a",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 70 mutants"
+          }
+        }
+      }
+    }
+  ]
+}

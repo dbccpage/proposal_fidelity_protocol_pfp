@@ -72,6 +72,8 @@ fn the_host_lists_its_families_in_workflow_order() {
              "host_check": "incidence_rank_crosswalk"},
             {"workflow": "WF17", "name": "Witnessed-difference programme",
              "host_check": "hml_separator_bisimulation_check"},
+            {"workflow": "WF18", "name": "Dossier replay campaign",
+             "host_check": "dossier_replay_reproduces_grades"},
             {"workflow": "WF20", "name": "Derivation loop with lift grants",
              "host_check": "structural_lift_grant_loop"},
             {"workflow": "WF21", "name": "Structural prompt rewriting",
@@ -96,6 +98,8 @@ fn the_host_lists_its_families_in_workflow_order() {
              "host_check": "per_claim_independent_checkers"},
             {"workflow": "WF33", "name": "Recursive re-entry with shared fuel",
              "host_check": "shared_fuel_parent_bound_reentry"},
+            {"workflow": "WF35", "name": "Proposal-channel comparison",
+             "host_check": "channel_blind_fixed_oracle"},
             {"workflow": "WF36", "name": "Guarded staged slot materialisation",
              "host_check": "exact_cochain_check"},
             {"workflow": "WF38", "name": "Diagnostic-trace proposal selection",
@@ -120,7 +124,7 @@ fn the_host_lists_its_families_in_workflow_order() {
              "host_check": "dual_checker_mutation_suite"},
         ]})
     );
-    assert_eq!(FAMILIES.len(), 33);
+    assert_eq!(FAMILIES.len(), 35);
 }
 
 #[test]
