@@ -1061,7 +1061,7 @@ def _act_governance(ctx):
     ctx.carrier_degree = 1 if ctx.act1_narrative.get("carrier_status") == "DECLARED" else None
     ctx.letter_tape = _letter_tape(ctx.dda_steps_to_write)
     ctx.governance_bundle = resolve_governance_bundle(
-        repo_root=Path(__file__).resolve().parents[2],
+        repo_root=Path(__file__).resolve().parents[3],
         task_properties={
             "objective": ctx.objective,
             "task_key": ctx.run_key,

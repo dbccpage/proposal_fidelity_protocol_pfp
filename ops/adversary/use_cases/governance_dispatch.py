@@ -87,7 +87,7 @@ def resolve_governance_bundle(
     Returns:
         A list of exactly 4 dictionary elements in canonical order.
     """
-    root = repo_root if repo_root is not None else Path(__file__).resolve().parents[2]
+    root = repo_root if repo_root is not None else Path(__file__).resolve().parents[3]
     props = task_properties or {}
 
     objective = str(props.get("objective", "")).lower()
@@ -179,7 +179,7 @@ def verify_governance_bundle(
             )
         )
 
-    root = repo_root if repo_root is not None else Path(__file__).resolve().parents[2]
+    root = repo_root if repo_root is not None else Path(__file__).resolve().parents[3]
     sources = dict(GOVERNANCE_SOURCE_BINDINGS_V1)
     for idx, (elem, expected_id) in enumerate(zip(bundle, expected_skills)):
         if not isinstance(elem, dict):

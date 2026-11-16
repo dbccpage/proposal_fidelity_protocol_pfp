@@ -60,7 +60,8 @@ from pfp.domain.value_objects.seat_turn import SeatTurnReplyV1
 from pfp.infrastructure.task_turn import PfpTurnRefusal, complete_task_turn
 
 from . import caller_feedback as cf
-from .immunity import host_danger
+
+host_danger = cf.host_danger
 
 
 def _sha256_ref(data: bytes) -> str:
@@ -533,6 +534,7 @@ def _build_remote_pythonpath(target_repo: Path) -> str:
     candidates = [
         target_repo,
         target_repo / "ops",
+        target_repo / "workflows" / "wf52_finite_qm_benchmark",
         target_repo / "src",
         target_repo / "packages",
     ]
@@ -541,16 +543,36 @@ def _build_remote_pythonpath(target_repo: Path) -> str:
 
 
 _REMOTE_PROBE_SNIPPET = (
-    "import importlib, json, sys\n"
+    "import importlib, importlib.util, json, os, pathlib, sys\n"
+    "target_root = pathlib.Path(os.environ['PFP_WAVE4_TARGET_ROOT']).resolve()\n"
+    "errors = []\n"
     "for mod_name in ('pfp_core.wave4_parity_harness', 'omega_engine.wave4_parity_harness'):\n"
     "    try:\n"
     "        mod = importlib.import_module(mod_name)\n"
-    "        print(json.dumps(mod.run_local_wave4_probe(), sort_keys=True))\n"
-    "        sys.exit(0)\n"
-    "    except ImportError:\n"
-    "        continue\n"
+    "        mod_file = pathlib.Path(getattr(mod, '__file__', '')).resolve()\n"
+    "        if mod_file.is_relative_to(target_root):\n"
+    "            print(json.dumps(mod.run_local_wave4_probe(), sort_keys=True))\n"
+    "            sys.exit(0)\n"
+    "    except ImportError as exc:\n"
+    "        errors.append(f'{mod_name}:{exc}')\n"
+    "for cf_name in ('pfp_core.caller_feedback', 'omega_engine.caller_feedback'):\n"
+    "    try:\n"
+    "        cf_mod = importlib.import_module(cf_name)\n"
+    "        cf_file = pathlib.Path(getattr(cf_mod, '__file__', '')).resolve()\n"
+    "        if cf_file.is_relative_to(target_root) and hasattr(cf_mod, 'screen_caller_turn'):\n"
+    "            pkg = cf_mod.__package__ or cf_name.rsplit('.', 1)[0]\n"
+    "            h_name = f'{pkg}.wave4_parity_harness'\n"
+    "            spec = importlib.util.spec_from_file_location(h_name, os.environ['PFP_WAVE4_HARNESS_FILE'])\n"
+    "            h_mod = importlib.util.module_from_spec(spec)\n"
+    "            sys.modules[h_name] = h_mod\n"
+    "            spec.loader.exec_module(h_mod)\n"
+    "            print(json.dumps(h_mod.run_local_wave4_probe(), sort_keys=True))\n"
+    "            sys.exit(0)\n"
+    "        errors.append(f'{cf_name}:outside_target:{cf_file}')\n"
+    "    except ImportError as exc:\n"
+    "        errors.append(f'{cf_name}:{exc}')\n"
     "print(json.dumps({'parity_status': 'TARGET_NOT_READY', "
-    "'reason': 'SCREEN_CALLER_TURN_OR_WAVE4_HARNESS_ABSENT'}))\n"
+    "'reason': 'SCREEN_CALLER_TURN_OR_WAVE4_HARNESS_ABSENT', 'details': errors}))\n"
     "sys.exit(2)\n"
 )
 
@@ -573,6 +595,9 @@ def compare_against_repo(
         }
     env = dict(os.environ)
     env["PYTHONPATH"] = _build_remote_pythonpath(repo_path)
+    env["PFP_WAVE4_TARGET_ROOT"] = str(repo_path.resolve())
+    env["CORE_INTELLIGENCE_ROOT"] = str(repo_path.resolve())
+    env["PFP_WAVE4_HARNESS_FILE"] = str(Path(__file__).resolve())
     env["PYTHONDONTWRITEBYTECODE"] = "1"
     env["CORE_CREDENTIAL_DISCOVERY"] = "off"
     exe = python_executable or sys.executable

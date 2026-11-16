@@ -541,6 +541,82 @@ def screen_caller_turn(
     )
 
 
+def list_provisional_review_queue(
+    store: BoundImmuneStoreV1,
+) -> tuple[dict[str, Any], ...]:
+    """Return sorted PROVISIONAL antibodies awaiting external operator admission."""
+    if type(store) is not BoundImmuneStoreV1:
+        raise TypeError("store must be an exact BoundImmuneStoreV1")
+    entries = store.catalog.load_catalog().get("antibodies", {})
+    queued = [
+        dict(entries[ab_id])
+        for ab_id in sorted(entries)
+        if entries[ab_id].get("pharmacy_status") == PharmacyStatus.PROVISIONAL.value
+        and not entries[ab_id].get("revoked")
+        and not entries[ab_id].get("suspended")
+    ]
+    return tuple(queued)
+
+
+def bind_strand_genome_to_immune_store(
+    strand: Any,
+    store: BoundImmuneStoreV1,
+    lineage: CallerLineageContextV1,
+    *,
+    self_panel: Sequence[str] | None = None,
+) -> Any:
+    """Bind a Wave 2 ``StrandGenomeV1`` to scoped admitted EIS rules and constraints."""
+    from .outer_loop_v1rc import StrandGenomeV1  # noqa: PLC0415
+
+    if not isinstance(strand, StrandGenomeV1):
+        raise TypeError("strand must be a StrandGenomeV1")
+    if type(store) is not BoundImmuneStoreV1:
+        raise TypeError("store must be an exact BoundImmuneStoreV1")
+    if type(lineage) is not CallerLineageContextV1:
+        raise TypeError("lineage must be an exact CallerLineageContextV1")
+
+    scoped_records, _receipt_ids = store.antibodies_for_scope(lineage, self_panel=self_panel)
+    merged_rules = list(strand.admitted_rules)
+    known_rule_ids = {r.rule_id for r in merged_rules}
+    merged_constraints = list(strand.constraints)
+    known_constraints = set(merged_constraints)
+    merged_rc_map = dict(strand.rule_constraints)
+
+    for rec in scoped_records:
+        rule_id = str(rec["antibody_id"])
+        if rule_id not in known_rule_ids:
+            merged_rules.append(
+                DetectorRule(
+                    rule_id=rule_id,
+                    target_epitope=str(rec.get("failure_class", rule_id)),
+                    match_pattern=str(rec.get("target_pattern", "")),
+                )
+            )
+            known_rule_ids.add(rule_id)
+        raw_clause = str(
+            rec.get("guidance_text") or rec.get("description") or f"Block {rule_id}"
+        )
+        clause = " ".join(raw_clause.splitlines()).strip() or f"Block {rule_id}"
+        if clause not in known_constraints:
+            merged_constraints.append(clause)
+            known_constraints.add(clause)
+        merged_rc_map.setdefault(rule_id, clause)
+
+    return StrandGenomeV1(
+        genome_id=f"{strand.genome_id}__eis",
+        base_prompt=strand.base_prompt,
+        admitted_rules=tuple(merged_rules),
+        constraints=tuple(merged_constraints),
+        rule_constraints=merged_rc_map,
+        typed_ops=strand.typed_ops,
+        normalizer_ids=strand.normalizer_ids,
+        parent_genome_id=strand.genome_id,
+        ledger_head=strand.ledger_head,
+        is_baseline=False,
+        authority_effect="None",
+    )
+
+
 __all__ = [
     "BoundImmuneStoreV1",
     "CallerLineageContextV1",
@@ -551,8 +627,10 @@ __all__ = [
     "ImmuneScreenVerdictV1",
     "PASS",
     "ThymusScreenReceiptV1",
+    "bind_strand_genome_to_immune_store",
     "default_clean_self_panel",
     "host_danger",
+    "list_provisional_review_queue",
     "promote_antibody_scope",
     "screen_antibody_with_thymus",
     "screen_caller_turn",
