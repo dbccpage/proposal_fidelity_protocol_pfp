@@ -85,4 +85,4 @@ A model that names the wrong operation is caught even when its answer is right,
 and probes catch an operation that agrees on the task's values by coincidence.
 Not measured yet.
 
-More: [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf56) · [machine-readable entry](../../dag/reviews/workflows_audit.json)
+More: [machine-readable entry](../../dag/reviews/workflows_audit.json)

@@ -8,8 +8,7 @@ Run them all from the repository root:
 
     python -m pytest workflows/tasks -q
 
-Each folder's wiki page explains what it shows and what a failure means; the
-[Test Catalog](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/test_catalog) lists them all.
+Each folder's README explains what it shows and how to run it.
 These folders were at the top of `workflows/` (and before that in `demos/`)
 until 2026-11-06.
 

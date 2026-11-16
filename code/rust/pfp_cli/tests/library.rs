@@ -334,13 +334,11 @@ fn explain_wraps_at_78_columns_under_a_hanging_label() {
          \x20          SHA-256 digest.\n\
          \x20 Why:     Models produce digest-shaped strings that were never computed. They\n\
          \x20          pass a glance and fail any check.\n\
-         \x20 Instead: Compute digests in code. Never accept one from model output.\n\
-         \x20 Read:    https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/eis\n"
+         \x20 Instead: Compute digests in code. Never accept one from model output.\n"
     );
     for entry in pfp_cli::catalog::ENTRIES {
         let shown = pfp_cli::render_explain(entry);
-        let body = shown.lines().filter(|l| !l.contains("Read:"));
-        assert!(body.clone().all(|l| l.chars().count() <= 78), "{shown}");
+        assert!(shown.lines().all(|l| l.chars().count() <= 78), "{shown}");
     }
 }
 

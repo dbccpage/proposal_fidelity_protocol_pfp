@@ -14,7 +14,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF16-"
 
 **The check:** `incidence_rank_crosswalk`. Only this check can certify; a model reply is evidence for it, never a verdict.
 
-**Code:** [`pfp_core/workflow_families/layer4.py`](../../pfp_core/workflow_families/layer4.py) (`SubstrateCrosswalk`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf16)
+**Code:** [`pfp_core/workflow_families/layer4.py`](../../pfp_core/workflow_families/layer4.py) (`SubstrateCrosswalk`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** task preset. **Builds on:** [WF5](../wf05_checked_rewrite/README.md), [WF10](../wf10_local_to_global_obstruction_certificate/README.md).
@@ -47,4 +47,4 @@ Pattern `research_cell`: coder ×1 (sonnet); deep_researcher ×1 (run_o); advers
 
 Boost: when Lean or table check fails: run_o repairs the encoding from the error (limit 2).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf16) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

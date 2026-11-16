@@ -15,7 +15,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF25-"
 
 **The check:** `cycle_residual_preserving_decimation`. Only this check can certify; a model reply is evidence for it, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
-**Check (Rust):** [`code/rust/pfp_operads/src/families/wf25.rs`](../../code/rust/pfp_operads/src/families/wf25.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer3.py`](../../pfp_core/workflow_families/layer3.py) (`HierarchicalDecimation`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf25)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf25.rs`](../../code/rust/pfp_operads/src/families/wf25.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer3.py`](../../pfp_core/workflow_families/layer3.py) (`HierarchicalDecimation`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** procedure extension. **Builds on:** [WF24](../wf24_pinned_token_operational_scratchpad/README.md).
@@ -47,4 +47,4 @@ Pattern `solo`: coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker ×
 
 Boost: when token ceiling reached: split into macro-blocks and rerun once (limit 1).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf25) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

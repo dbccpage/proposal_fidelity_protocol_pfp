@@ -14,7 +14,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF6-"
 
 **The check:** `dialect_query_preservation_sweep`. Only this check can certify; a model reply is evidence for it, never a verdict.
 
-**Code:** [`pfp_core/workflow_families/layer4.py`](../../pfp_core/workflow_families/layer4.py) (`DialectSweep`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf6)
+**Code:** [`pfp_core/workflow_families/layer4.py`](../../pfp_core/workflow_families/layer4.py) (`DialectSweep`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** experiment design. **Builds on:** [WF5](../wf05_checked_rewrite/README.md).
@@ -65,4 +65,4 @@ Boost: when a dialect fails preservation: run_o proposes a corrected rewrite fro
 | channel | free, null, carrier filter, grammar mask | 0/8 for all on a 0.5B model | live | P027 T1 |
 | gauge and relabel twins | 8-16 invariance controls per challenge | — | offline | F c011, c051 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf6) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

@@ -19,4 +19,4 @@ Use a checker directly:
     python -I workflows/tasks/calibration_task_bank/tasks/review_graph_claims/check.py --detail answer.json
 
 Exit status 0 means pass, 1 means fail. Without `--detail` the checker prints
-only `{"pass": true|false}`. Wiki page: Test-Calibration-Task-Bank.
+only `{"pass": true|false}`. 

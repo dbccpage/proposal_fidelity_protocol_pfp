@@ -15,7 +15,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF10-"
 
 **The check:** `cochain_gluing_or_cycle_obstruction`. Only this check can certify; a model reply is evidence for it, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
-**Check (Rust):** [`code/rust/pfp_operads/src/families/wf10.rs`](../../code/rust/pfp_operads/src/families/wf10.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer3.py`](../../pfp_core/workflow_families/layer3.py) (`ObstructionCertificate`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf10)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf10.rs`](../../code/rust/pfp_operads/src/families/wf10.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer3.py`](../../pfp_core/workflow_families/layer3.py) (`ObstructionCertificate`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** task preset. **Builds on:** [WF4](../wf04_five_agents_lggr/README.md), [WF9](../wf09_bounded_check_and_repair/README.md).
@@ -64,4 +64,4 @@ Boost: when local checks pass but the global check fails: run_o receives the cob
 | local tolerance | tau 1/10 vs 1/5 on a hexagon | holonomy 3/5 vs bound 6/5 | code | P003(rep) Cor 3.3 |
 | extractor carrier | claim, citation, tool-trace, proof-obligation or reasoning-step graph | — | code | P033 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf10) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

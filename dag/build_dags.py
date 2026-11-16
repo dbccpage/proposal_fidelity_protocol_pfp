@@ -368,26 +368,6 @@ def main():
             node['observed_run_snapshots']=observations
             node['results_source']='workflows/wf52_finite_qm_benchmark/results_summary.json'
             node['evaluated']=all(row.get('score') is not None for row in observations)
-    documentation=read('wiki/workflow_documentation.json',{})
-    documented={entry['node_id']:entry for entry in documentation.get('entries',[])}
-    if len(documented)!=len(documentation.get('entries',[])):
-        raise ValueError('Duplicate workflow documentation mapping')
-    required={node['id'] for node in wnodes if node.get('runnable') is True
-              or node.get('kind')=='executable_benchmark_control'
-              or node.get('status')=='implemented'}
-    if required-set(documented):
-        raise ValueError('Implemented workflows need Wiki entries: '+str(sorted(required-set(documented))))
-    if set(documented)-{node['id'] for node in wnodes}:
-        raise ValueError('Wiki entry references an unknown workflow')
-    for node in wnodes:
-        if node['id'] not in documented: continue
-        entry=documented[node['id']]
-        page=(ROOT/entry['page']).resolve()
-        if not page.is_relative_to((ROOT/'wiki').resolve()) or page.suffix!='.md':
-            raise ValueError('Invalid workflow Wiki source path')
-        if hashlib.sha256(page.read_bytes()).hexdigest()!=entry['page_sha256']:
-            raise ValueError('Workflow Wiki source changed; refresh documentation mapping: '+entry['page'])
-        node['wiki_documentation']=entry
     wf={**common,'benchmark':read('../workflows/wf52_finite_qm_benchmark/commitment.json',{}),
         'nodes':wnodes,'edges':wedges,
         'existing_nested_components':registry.get('component_nodes',[]),
@@ -409,7 +389,6 @@ def main():
                       'private_evaluator':'separate trusted process after outputs are frozen; no key in prompts or retrieval'},
         'executable_control_documentation':'workflows/wf52_finite_qm_benchmark/live_runner.md',
         'executable_adaptation_documentation':'workflows/wf52_finite_qm_benchmark/rational_panel.md',
-        'workflow_wiki_documentation':documentation,
         'remaining_work':['Finish existing workflow/source audit','Complete ten distinct research-agent reports' if len(ideas)<10 else 'Review all ten research reports and their independent source claims','Bind remaining candidate adapters to concrete schemas/checkers; design enumeration and one bounded adaptation are not admission of the entire registry','Repair observed workflow failures and test useful mathematical checks beyond the rational-only panel','Repeat matched-resource comparisons before claiming an accuracy/cost/time advantage']}
     wf['graph_validation']=validate(wnodes,wedges)
     write('workflows_dag.json',wf)

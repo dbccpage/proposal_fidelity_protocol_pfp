@@ -14,5 +14,3 @@ python workflows/tasks/checkerboard_paths/run.py --output-dir <scratch-dir>
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000043/`.
-
-See the wiki page `Test-Checkerboard-Paths`.

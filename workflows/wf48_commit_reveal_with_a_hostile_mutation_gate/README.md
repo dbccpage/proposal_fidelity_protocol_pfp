@@ -14,7 +14,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF48-"
 
 **The check:** `dual_checker_mutation_suite`. Only this check can certify; a model reply is evidence for it, never a verdict.
 
-**Code:** [`pfp_core/workflow_families/layer5.py`](../../pfp_core/workflow_families/layer5.py) (`CommitRevealMutationGate`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf48)
+**Code:** [`pfp_core/workflow_families/layer5.py`](../../pfp_core/workflow_families/layer5.py) (`CommitRevealMutationGate`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** harness gate. **Builds on:** [WF11](../wf11_dual_certificate_synthesis/README.md), [WF23](../wf23_judge_packet_custody_audit/README.md).
@@ -46,4 +46,4 @@ Pattern `red_team_pair`: coder ×1 (sonnet); adversary ×1 (run_f); host_checker
 
 Boost: when mutant survives: block the checker (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf48) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

@@ -15,5 +15,3 @@ Run from the repository root:
     python -m pytest workflows/tasks/provider_reply_guard -q
 
 Expected: `45 passed`.
-
-Wiki pages: Test-Provider-Byte-Ceilings, Test-Strict-Provider-Reply-JSON.

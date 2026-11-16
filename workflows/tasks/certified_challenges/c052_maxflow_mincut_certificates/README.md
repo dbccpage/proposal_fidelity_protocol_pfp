@@ -12,5 +12,3 @@ Expected: `2 passed`.
 Score the reference solver on the 14 public examples:
 
     python workflows/tasks/certified_challenges/c052_maxflow_mincut_certificates/participant_packet/runner.py --all-examples
-
-Wiki page: Test-Max-Flow-Min-Cut-Certificates.

@@ -14,5 +14,3 @@ python workflows/tasks/role_submission_comparison/run.py --output-dir <scratch-d
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000035/`.
-
-See the wiki page `Test-Role-Submission-Comparison`.

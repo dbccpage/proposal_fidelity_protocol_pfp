@@ -6,8 +6,6 @@
 
 ## Run it
 
-Step-by-step guide: [Workflow-WF2 on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf2). Install: [Workflow-Running](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_running).
-
 Offline, from the repository root after `pip install ".[workflows]"` (fixture replies: no model call, no cost):
 
 ```bash
@@ -56,4 +54,4 @@ Boost: when missing slot: none on the base path (limit 0).
 | --- | --- | --- | --- | --- |
 | arm | unstaged vs staged vs no-model oracle | oracle 100% | live | P027 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf2) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

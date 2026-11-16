@@ -14,5 +14,3 @@ python workflows/tasks/rewrite_normal_form_loss/run.py --output-dir <scratch-dir
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000030/`.
-
-See the wiki page `Test-Rewrite-Normal-Form-Loss`.

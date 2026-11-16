@@ -14,5 +14,3 @@ python workflows/tasks/lp_certificates/run.py --output-dir <scratch-dir>
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000027/`.
-
-See the wiki page `Test-LP-Certificates`.

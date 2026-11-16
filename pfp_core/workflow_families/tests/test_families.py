@@ -94,17 +94,16 @@ def test_canonical_rejects_floats_as_fractions():
     assert base.as_fraction('1/2', 'x') == base.Fraction(1, 2)
 
 
-def test_wiki_pages_and_dag_records_are_current():
+def test_readme_blocks_and_dag_records_are_current():
     from pfp_core.workflow_families import docs
     assert docs.build(check=True) == []
 
 
-def test_a_private_name_in_a_source_field_is_refused(audit_nodes):
+def test_a_private_name_in_a_source_field_is_refused():
     from pfp_core.workflow_families import docs
     private = 'run it on the ' + 'om' + 'ega' + '_engine host'
-    node = {**audit_nodes['WF7'], 'process': ['Freeze the task', private]}
     with pytest.raises(ValueError, match=r"WF7: field 'process'"):
-        docs.render(REGISTRY['WF7'], node, [])
+        docs.guard('WF7', 'process', private)
     with pytest.raises(ValueError, match='readme'):
         docs.guard('WF7', 'readme block', 'see the ' + 'wo' + 'land gate')
     # The Greek letter as a math symbol is not a name.

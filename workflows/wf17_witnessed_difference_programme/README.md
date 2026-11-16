@@ -14,7 +14,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF17-"
 
 **The check:** `hml_separator_bisimulation_check`. Only this check can certify; a model reply is evidence for it, never a verdict.
 
-**Code:** [`pfp_core/workflow_families/layer4.py`](../../pfp_core/workflow_families/layer4.py) (`WitnessedDifferenceProgramme`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf17)
+**Code:** [`pfp_core/workflow_families/layer4.py`](../../pfp_core/workflow_families/layer4.py) (`WitnessedDifferenceProgramme`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** task preset. **Builds on:** [WF10](../wf10_local_to_global_obstruction_certificate/README.md), [WF11](../wf11_dual_certificate_synthesis/README.md).
@@ -48,4 +48,4 @@ Pattern `research_cell`: deep_researcher ×2 (run_o); adversary ×1 (run_f); cod
 
 Boost: when countermodel found: claim is narrowed or withdrawn; run_o restates it once (limit 1).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf17) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

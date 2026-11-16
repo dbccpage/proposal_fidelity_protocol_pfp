@@ -15,7 +15,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF47-"
 
 **The check:** `sign_gauge_checkpoint_chain`. Only this check can certify; a model reply is evidence for it, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
-**Check (Rust):** [`code/rust/pfp_operads/src/families/wf47.rs`](../../code/rust/pfp_operads/src/families/wf47.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer3.py`](../../pfp_core/workflow_families/layer3.py) (`ResumableFrontierSearch`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf47)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf47.rs`](../../code/rust/pfp_operads/src/families/wf47.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer3.py`](../../pfp_core/workflow_families/layer3.py) (`ResumableFrontierSearch`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** procedure extension. **Builds on:** [WF9](../wf09_bounded_check_and_repair/README.md).
@@ -46,4 +46,4 @@ Pattern `relay`: coder ×1 (sonnet); host_checker ×1 (none).
 
 Boost: when none: unknown is a lawful result (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf47) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

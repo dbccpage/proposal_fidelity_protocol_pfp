@@ -15,7 +15,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF20-"
 
 **The check:** `structural_lift_grant_loop`. Only this check can certify; a model reply is evidence for it, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
-**Check (Rust):** [`code/rust/pfp_operads/src/families/wf20.rs`](../../code/rust/pfp_operads/src/families/wf20.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer8.py`](../../pfp_core/workflow_families/layer8.py) (`DerivationLoopWithLiftGrants`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf20)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf20.rs`](../../code/rust/pfp_operads/src/families/wf20.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer8.py`](../../pfp_core/workflow_families/layer8.py) (`DerivationLoopWithLiftGrants`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** procedure extension. **Builds on:** [WF9](../wf09_bounded_check_and_repair/README.md), [WF10](../wf10_local_to_global_obstruction_certificate/README.md), [WF19](../wf19_failure_derived_rule_transfer/README.md).
@@ -66,4 +66,4 @@ Pattern `research_cell`: deep_researcher ×1 (run_o); adversary ×1 (run_f); cod
 
 Boost: when witness check fails twice: next loop starts from the adversary's counterexample (limit 1).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf20) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)
