@@ -1,0 +1,202 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf21.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf21.rs",
+      "language": "Rust",
+      "sha256": "99e991a8d6e035927284bc8292243e1bd3031d08b3066f6130ae5542084527cc"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf21:v1",
+    "symbols": [
+      "FENCES",
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task is a statement with two fences, the question between <<Q>> and <</Q>> and the output format between <<OUT>> and <</OUT>>, each once; and matrix, a square list of rows of exact rationals. A task the host cannot read is refused before anything is asked. The sealed part holds answer_key, an exact rational; a run without one is refused as malformed before anything is asked.",
+      "The rewrite is asked for first. Its reply is {edits: [{lhs, rhs, at}, ...]}: lhs, not empty, stands in the statement at byte offset at, and rhs replaces it. A negative at, or one that puts the match past the end, is no match.",
+      "The host records, in order, and refuses at the first to fail: matches_exact (NO_MATCH), match_injective, sorted by position, no match starts before the one before it ends (OVERLAPPING_MATCHES), edits_outside_fences, no match shares a byte with a fence (EDIT_INSIDE_FENCE), protected_bytes_unchanged, each fenced text occurs once in the result, with the names of those that do not (QUESTION_NOT_PRESERVED), and no_answer_key_leak, no sealed value in the result and the key does not occur in it as text (ANSWER_KEY_LEAK).",
+      "The rewritten text is put to the model as the stage solve, whose reply is {answer: rational}. The host records answer_key_consistent (the determinant of the matrix equals the sealed key) and answer_exact (the answer equals the determinant), and certifies REWRITE_CERTIFIED with the SHA-256 of the rewritten text."
+    ],
+    "boundaries": [
+      "A certified rewrite says the edits kept the fences and did not carry the key, not that the rewritten text is as hard, or as easy, as the original.",
+      "The key is looked for as text and as a sealed value; a paraphrase or an encoding of it is not found.",
+      "Positions are byte offsets. An edit that cuts a multi-byte character is applied to the bytes, and the text is read back with the replacement character."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf21.rs",
+      "language": "Rust",
+      "sha256": "99e991a8d6e035927284bc8292243e1bd3031d08b3066f6130ae5542084527cc"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: the determinant is computed by elimination over the rationals and compared exactly with the key and the answer, and offsets and lengths are exact integers in bytes. Determinants of matrices up to three by three, singular ones and ones that need a row swap among them, are worked by hand in the tests. Not B: tested on examples, not proven.",
+      "G3": "Each unreadable part of a task, a sealed part and a rewrite has its own reason, checked in a stated order, and each failing predicate is its own refusal. No unwrap or expect. The index is in the elimination, over the rows of a square matrix the task read has checked, and in the pairs windows(2) gives. Not B: panic-freedom is tested, not proven.",
+      "G4": "30 WF21 tests assert the registry entry and its fences, a rewrite outside the fences solved and certified, the rewrite asked first and the rewritten text as the next prompt, an empty rewrite, adjacent matches and matches beside a fence, matches in any order, offsets in bytes, a match that is not where it says and a position too large to count, overlapping matches, an edit in a fence, a fence carried twice, the key named, found as text and found as a sealed value, a wrong answer and a key that is not the determinant, an answer in any exact form, the determinant of every kind of square matrix, each malformed rewrite and answer by its reason, a missing reply, a task the host cannot read and a sealed part without a usable key. Two mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 110/110. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 11, cognitive complexity is not measured for Rust, nesting 2; ceiling B, recorded B."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T15:22:10Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v13-test.run.json",
+        "sha256": "e95f7cbb61ec569653c33c43224a08a2dd50d966fadd2ffb10683ec9251899fb",
+        "note": "975 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-clippy.run.json",
+        "sha256": "9f3bb56911bdd12f7b66947930bf454026cdc5a5079549d88ce90dbe884870bd",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-fmt.run.json",
+        "sha256": "e211f169bda4dde79d3c9eb5aaabec93f90b2eba08ad48d08389558e8796d830",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-metrics.run.json",
+        "sha256": "1f073e9074334349e9fcb471b80bb4860fd71373d3593bc902d8fd4e46fd4f2d",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-metrics.json",
+        "sha256": "f1e599a1782ed3478232245d33bf04cab5f389770a614a7f1840bc53ca8a9209",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 110,
+      "survived": 0,
+      "demonstrably_equivalent": 2,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf21.mutation.json",
+        "sha256": "5420714fef5c1f1c0a2054a4ad3737b174f7ace5d2fc29d79111e677a8cf43de",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 112 mutants"
+      }
+    }
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T15:22:12.404195Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf21.rs",
+          "language": "Rust",
+          "sha256": "99e991a8d6e035927284bc8292243e1bd3031d08b3066f6130ae5542084527cc"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf21:v1",
+        "symbols": [
+          "FENCES",
+          "FAMILY"
+        ],
+        "owned_invariants": [
+          "The task is a statement with two fences, the question between <<Q>> and <</Q>> and the output format between <<OUT>> and <</OUT>>, each once; and matrix, a square list of rows of exact rationals. A task the host cannot read is refused before anything is asked. The sealed part holds answer_key, an exact rational; a run without one is refused as malformed before anything is asked.",
+          "The rewrite is asked for first. Its reply is {edits: [{lhs, rhs, at}, ...]}: lhs, not empty, stands in the statement at byte offset at, and rhs replaces it. A negative at, or one that puts the match past the end, is no match.",
+          "The host records, in order, and refuses at the first to fail: matches_exact (NO_MATCH), match_injective, sorted by position, no match starts before the one before it ends (OVERLAPPING_MATCHES), edits_outside_fences, no match shares a byte with a fence (EDIT_INSIDE_FENCE), protected_bytes_unchanged, each fenced text occurs once in the result, with the names of those that do not (QUESTION_NOT_PRESERVED), and no_answer_key_leak, no sealed value in the result and the key does not occur in it as text (ANSWER_KEY_LEAK).",
+          "The rewritten text is put to the model as the stage solve, whose reply is {answer: rational}. The host records answer_key_consistent (the determinant of the matrix equals the sealed key) and answer_exact (the answer equals the determinant), and certifies REWRITE_CERTIFIED with the SHA-256 of the rewritten text."
+        ],
+        "boundaries": [
+          "A certified rewrite says the edits kept the fences and did not carry the key, not that the rewritten text is as hard, or as easy, as the original.",
+          "The key is looked for as text and as a sealed value; a paraphrase or an encoding of it is not found.",
+          "Positions are byte offsets. An edit that cuts a multi-byte character is applied to the bytes, and the text is read back with the replacement character."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf21.rs",
+          "language": "Rust",
+          "sha256": "99e991a8d6e035927284bc8292243e1bd3031d08b3066f6130ae5542084527cc"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "B"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Exact: the determinant is computed by elimination over the rationals and compared exactly with the key and the answer, and offsets and lengths are exact integers in bytes. Determinants of matrices up to three by three, singular ones and ones that need a row swap among them, are worked by hand in the tests. Not B: tested on examples, not proven.",
+          "G3": "Each unreadable part of a task, a sealed part and a rewrite has its own reason, checked in a stated order, and each failing predicate is its own refusal. No unwrap or expect. The index is in the elimination, over the rows of a square matrix the task read has checked, and in the pairs windows(2) gives. Not B: panic-freedom is tested, not proven.",
+          "G4": "30 WF21 tests assert the registry entry and its fences, a rewrite outside the fences solved and certified, the rewrite asked first and the rewritten text as the next prompt, an empty rewrite, adjacent matches and matches beside a fence, matches in any order, offsets in bytes, a match that is not where it says and a position too large to count, overlapping matches, an edit in a fence, a fence carried twice, the key named, found as text and found as a sealed value, a wrong answer and a key that is not the determinant, an answer in any exact form, the determinant of every kind of square matrix, each malformed rewrite and answer by its reason, a missing reply, a task the host cannot read and a sealed part without a usable key. Two mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 110/110. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 11, cognitive complexity is not measured for Rust, nesting 2; ceiling B, recorded B."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T15:21:51Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v13-test.run.json",
+            "sha256": "e95f7cbb61ec569653c33c43224a08a2dd50d966fadd2ffb10683ec9251899fb",
+            "note": "975 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-clippy.run.json",
+            "sha256": "9f3bb56911bdd12f7b66947930bf454026cdc5a5079549d88ce90dbe884870bd",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-fmt.run.json",
+            "sha256": "e211f169bda4dde79d3c9eb5aaabec93f90b2eba08ad48d08389558e8796d830",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-metrics.run.json",
+            "sha256": "3d0d04aa70736844f559fe2cc2e31648805123b08f79c8920fc4b9897d7983b6",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-metrics.json",
+            "sha256": "c78a4942b6937a2e0ef6b7ed4d2023b2a34259f868a263849f076536dcfd44d8",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 110,
+          "survived": 0,
+          "demonstrably_equivalent": 2,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-wf21.mutation.json",
+            "sha256": "5420714fef5c1f1c0a2054a4ad3737b174f7ace5d2fc29d79111e677a8cf43de",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 112 mutants"
+          }
+        }
+      }
+    }
+  ]
+}

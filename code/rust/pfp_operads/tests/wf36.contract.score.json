@@ -1,0 +1,123 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf36.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf36.rs",
+      "language": "Rust",
+      "sha256": "8428f515813a82f75eeb8c77dc1174f27d8c2b5491b7335de7291d7c4cd74830"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf36-tests:v1",
+    "symbols": [
+      "sha",
+      "task",
+      "good",
+      "near",
+      "phi",
+      "request",
+      "all",
+      "run_task",
+      "run",
+      "turn",
+      "bad_task",
+      "outcomes",
+      "malformed",
+      "the_registry_names_the_family",
+      "a_fill_with_a_zero_syndrome_and_its_potential_are_certified",
+      "a_second_fill_is_asked_with_the_syndrome_of_the_first",
+      "the_second_stage_is_asked_with_the_filled_values",
+      "the_evidence_of_each_predicate_is_what_it_looked_at",
+      "a_fill_that_stays_red_after_the_retry_is_refused_with_every_syndrome",
+      "a_third_reply_after_two_red_fills_is_not_accepted",
+      "a_potential_that_drifts_from_the_slots_leaves_a_residual",
+      "an_abstention_is_a_typed_refusal_when_no_fill_exists",
+      "an_abstention_when_a_fill_exists_is_refused",
+      "the_second_reply_may_abstain_too",
+      "only_true_abstains",
+      "a_guard_that_leaves_a_cycle_out_is_refused_with_a_witness_it_misses",
+      "a_guard_that_lists_a_row_twice_misses_the_other_row",
+      "a_guard_that_leaves_every_row_out_is_refused_with_the_witness_of_the_first",
+      "a_guard_in_any_order_with_repeats_is_complete",
+      "another_graph_is_read_with_its_own_cycles",
+      "a_graph_without_cycles_has_an_empty_syndrome",
+      "a_task_with_no_slots_is_filled_by_an_empty_object_and_cannot_abstain_truthfully",
+      "a_missing_reply_stops_the_run_naming_the_stage",
+      "a_fill_must_name_every_slot_and_no_other_edge",
+      "every_slot_must_be_an_exact_integer",
+      "a_potential_is_one_exact_integer_per_vertex",
+      "a_task_must_be_readable_before_anything_is_asked",
+      "a_task_with_no_values_key_is_refused",
+      "values_and_slots_may_be_integers_of_any_size"
+    ],
+    "owned_invariants": [
+      "Cycle matrices, syndromes and ranks are worked by hand for each graph written in a test.",
+      "A true and a false abstention, a guard that leaves a cycle out and a fill that stays red are each asserted with the syndromes and ranks in the report.",
+      "Each unreadable task, fill and potential is asserted by its reason, and a missing reply by the stage it names."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf36.rs",
+      "language": "Rust",
+      "sha256": "8428f515813a82f75eeb8c77dc1174f27d8c2b5491b7335de7291d7c4cd74830"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 26 pass in the recorded run; the suite they belong to killed 95 of 95 eligible WF36 mutants.",
+      "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T17:36:31Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v14-test.run.json",
+        "sha256": "17ef478d1b74ab70cad46eaa772ca4e18327699ee8511ea6c9add106152e0213",
+        "note": "1145 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-clippy.run.json",
+        "sha256": "516525b28043fa1053b02b8c542e2b8eca12d687623187f8467c7159f8bb86fe",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-fmt.run.json",
+        "sha256": "a85094698679cc852f3b9040802cdb56d57909c3b9b0a95fe5d56892b53ad0e9",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.run.json",
+        "sha256": "070d448da3bce97bffdcb2c8095d7c52d792ea634bc321ba3b4af64b3b9576b0",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.json",
+        "sha256": "7533090aaa56c6585bb5e4ac4c61603e7dd6ba63ce6e31c95b1ee49b5bf6a97a",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

@@ -56,12 +56,16 @@ fn the_host_lists_its_families_in_workflow_order() {
             {"workflow": "WF6", "name": "Dialect sweep",
              "host_check": "dialect_query_preservation_sweep"},
             {"workflow": "WF7", "name": "Typed refusal", "host_check": "typed_refusal_rank_test"},
+            {"workflow": "WF8", "name": "Staged sealed packets",
+             "host_check": "stage_seal_chain_recompute"},
             {"workflow": "WF9", "name": "Bounded check-and-repair",
              "host_check": "xor_cycle_minimal_repair"},
             {"workflow": "WF10", "name": "Local-to-global obstruction certificate",
              "host_check": "cochain_gluing_or_cycle_obstruction"},
             {"workflow": "WF11", "name": "Dual-certificate synthesis",
              "host_check": "lp_dual_and_farkas_certificate"},
+            {"workflow": "WF12", "name": "Mechanism-control arms",
+             "host_check": "integer_rank_difference_certificate"},
             {"workflow": "WF13", "name": "Exact-domain capsule battery",
              "host_check": "per_domain_registered_checker"},
             {"workflow": "WF16", "name": "Substrate crosswalk",
@@ -70,6 +74,10 @@ fn the_host_lists_its_families_in_workflow_order() {
              "host_check": "hml_separator_bisimulation_check"},
             {"workflow": "WF20", "name": "Derivation loop with lift grants",
              "host_check": "structural_lift_grant_loop"},
+            {"workflow": "WF21", "name": "Structural prompt rewriting",
+             "host_check": "fenced_rewrite_exact_judge"},
+            {"workflow": "WF23", "name": "Judge-packet custody audit",
+             "host_check": "judge_packet_custody_audit"},
             {"workflow": "WF24", "name": "Pinned-token operational scratchpad",
              "host_check": "dual_holonomy_checkers"},
             {"workflow": "WF25", "name": "Hierarchical decimation",
@@ -88,10 +96,18 @@ fn the_host_lists_its_families_in_workflow_order() {
              "host_check": "per_claim_independent_checkers"},
             {"workflow": "WF33", "name": "Recursive re-entry with shared fuel",
              "host_check": "shared_fuel_parent_bound_reentry"},
+            {"workflow": "WF36", "name": "Guarded staged slot materialisation",
+             "host_check": "exact_cochain_check"},
             {"workflow": "WF38", "name": "Diagnostic-trace proposal selection",
              "host_check": "host_recomputed_defect_ranking"},
+            {"workflow": "WF39", "name": "Authority firewall gate",
+             "host_check": "authority_guard_vector"},
             {"workflow": "WF40", "name": "Restart boundary after exhausted repair",
              "host_check": "cochain_trichotomy_boundary"},
+            {"workflow": "WF42", "name": "Reasoning-trace validation",
+             "host_check": "rational_lp_primal_dual_check"},
+            {"workflow": "WF43", "name": "Gate-honesty and answer-free leak audit",
+             "host_check": "answer_free_probe_replay"},
             {"workflow": "WF44", "name": "Exact certificate presets",
              "host_check": "exact_certificate_presets"},
             {"workflow": "WF45", "name": "Finite terminal selector and plenitude test",
@@ -100,9 +116,11 @@ fn the_host_lists_its_families_in_workflow_order() {
              "host_check": "glued_trace_global_evaluator"},
             {"workflow": "WF47", "name": "Resumable bounded frontier search",
              "host_check": "sign_gauge_checkpoint_chain"},
+            {"workflow": "WF48", "name": "Commit-reveal with a hostile mutation gate",
+             "host_check": "dual_checker_mutation_suite"},
         ]})
     );
-    assert_eq!(FAMILIES.len(), 24);
+    assert_eq!(FAMILIES.len(), 33);
 }
 
 #[test]
@@ -258,12 +276,12 @@ fn a_request_that_is_not_the_request_shape_is_refused() {
 
 #[test]
 fn a_family_this_host_does_not_check_is_refused_by_name() {
-    let request = json!({"workflow": "WF8", "task": task()}).to_string();
+    let request = json!({"workflow": "WF99", "task": task()}).to_string();
     assert_eq!(
         refusal(next(&request)),
         (
             "UNKNOWN_WORKFLOW",
-            "this host checks no family named WF8".to_owned()
+            "this host checks no family named WF99".to_owned()
         )
     );
     assert_eq!(refusal(judge(&request)).0, "UNKNOWN_WORKFLOW");

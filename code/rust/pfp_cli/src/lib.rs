@@ -119,7 +119,6 @@ pub fn render_explain(entry: &catalog::Entry) -> String {
     ] {
         out.push_str(&wrap(&format!("{label}:"), text));
     }
-    out.push_str(&format!("  Read:    {}\n", catalog::wiki_url(entry.wiki)));
     out
 }
 

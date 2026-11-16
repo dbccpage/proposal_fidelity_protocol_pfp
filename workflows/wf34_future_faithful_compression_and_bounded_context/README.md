@@ -14,7 +14,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF34-"
 
 **The check:** `continuation_verdict_equality`. Only this check can certify; a model reply is evidence for it, never a verdict.
 
-**Code:** [`pfp_core/workflow_families/layer8.py`](../../pfp_core/workflow_families/layer8.py) (`FutureFaithfulCompression`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf34)
+**Code:** [`pfp_core/workflow_families/layer8.py`](../../pfp_core/workflow_families/layer8.py) (`FutureFaithfulCompression`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** procedure extension. **Builds on:** [WF8](../wf08_staged_sealed_packets/README.md), [WF22](../wf22_certified_cost_ladder/README.md).
@@ -46,4 +46,4 @@ Pattern `relay`: coder ×1 (sonnet); deep_researcher ×1 (run_o); host_checker �
 
 Boost: when dropped reference: refuse (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf34) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

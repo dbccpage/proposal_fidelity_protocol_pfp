@@ -1,0 +1,102 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf48.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf48.rs",
+      "language": "Rust",
+      "sha256": "9c93244c2a5bdbe4f2f9f5762b05f2b7d871719bbdc614e1c3ff8ececf776c61"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf48:v1",
+    "symbols": [
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task is a public cochain, edges and c, a judge_manifest that names two checkers, and manifest_commitment, text. The sealed part may hold manifest_salt, text. A task that is not of this form is refused before anything is asked.",
+      "manifest_commitment_matches is recorded first: manifest_commitment is the SHA-256 of the salt, a zero byte and the canonical form of the whole manifest. two_independent_registered_checkers is recorded second: the manifest names two different checkers and both are registered. If either fails the run ends there, refused under the name of the first that failed.",
+      "The three registered checkers are residual.v1, tree_integration.v1 and length_only.v1. Each takes a potential. residual.v1 accepts when the cochain less the potential's coboundary is zero. tree_integration.v1 accepts when every cycle of the cochain sums to zero and the potential agrees with the integral of the cochain along a spanning forest, up to the value at vertex 0. length_only.v1 accepts a potential with a value for each vertex and checks nothing else.",
+      "The proposer is asked for a commitment alone, then for the reveal, an artifact (a list of exact integers) and the salt it used. reveal_matches_commitment holds when the SHA-256 of the salt, a zero byte and the canonical form of the artifact is the commitment given. A reveal that does not match is refused as ARTIFACT_CHANGED_AFTER_COMMIT.",
+      "For each checker, in the order of the manifest, NAME:accepts_artifact_and_gauge holds when it accepts the artifact and the artifact with every entry raised by three, and NAME:kills_every_mutant when it rejects every mutant: each entry raised by one and lowered by one, each unequal neighbouring pair swapped, and the artifact with its last entry left off. All held, the run is certified as COMMIT_REVEAL_CERTIFIED with kills, the number rejected out of the number tried for each checker."
+    ],
+    "boundaries": [
+      "A certified run says the committed artifact survived two checkers and that every hostile edit of it was rejected by both. It does not say the checkers are right about anything but this cochain.",
+      "The salt is kept sealed. A salt in a prompt refuses the run as a sealed leak.",
+      "length_only.v1 is registered so that a weak checker can be named and refused. A manifest that names it cannot be certified."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf48.rs",
+      "language": "Rust",
+      "sha256": "9c93244c2a5bdbe4f2f9f5762b05f2b7d871719bbdc614e1c3ff8ececf776c61"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "C"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: the cochain, the potential and the mutants are exact integers of any size, the residual and the integral are worked over the rationals, and the commitments are SHA-256 digests the tests rebuild themselves. Not B: tested on examples, not proven; the hash library is trusted.",
+      "G3": "Each unreadable part of a task, a sealed part and a reply has its own reason, each failed predicate is its own refusal, and a missing reply is refused naming the stage. No unwrap or expect, and no index. Not B: panic-freedom is tested, not proven.",
+      "G4": "30 WF48 tests assert the registry entry, a committed artifact that both checkers hold to certified, the commit and the reveal asked in turn with the commitment between, an artifact shifted by a constant, a reveal that is not what was committed or uses another salt, the commitment as the salt, a zero byte and the artifact, an artifact that is not the potential, one of the wrong length, a checker that only counts values, the mutants as the bumps, the unequal swaps and the truncation, a tree checker on an inexact cochain, the checkers judged in the order of the manifest, a manifest swapped after it was committed, committed under another salt or without one, the whole manifest committed, a manifest that needs two different registered checkers, each malformed reply by its reason, a run that loses a reply and the sealed salt never put in a prompt. 9 mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 104/104. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 20, cognitive complexity is not measured for Rust, nesting 2; ceiling C, recorded C."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T17:36:31Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v14-test.run.json",
+        "sha256": "17ef478d1b74ab70cad46eaa772ca4e18327699ee8511ea6c9add106152e0213",
+        "note": "1145 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-clippy.run.json",
+        "sha256": "516525b28043fa1053b02b8c542e2b8eca12d687623187f8467c7159f8bb86fe",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-fmt.run.json",
+        "sha256": "a85094698679cc852f3b9040802cdb56d57909c3b9b0a95fe5d56892b53ad0e9",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.run.json",
+        "sha256": "070d448da3bce97bffdcb2c8095d7c52d792ea634bc321ba3b4af64b3b9576b0",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.json",
+        "sha256": "7533090aaa56c6585bb5e4ac4c61603e7dd6ba63ce6e31c95b1ee49b5bf6a97a",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 104,
+      "survived": 0,
+      "demonstrably_equivalent": 9,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf48.mutation.json",
+        "sha256": "b83834003bf3901587b6a422ae616adcc1d1e531648eeb425547722f115819cf",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 113 mutants"
+      }
+    }
+  },
+  "history": []
+}

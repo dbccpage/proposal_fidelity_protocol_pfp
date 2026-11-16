@@ -15,7 +15,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF7-"
 
 **The check:** `typed_refusal_rank_test`. Only this check can certify; a model reply is evidence for it, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
-**Check (Rust):** [`code/rust/pfp_operads/src/families/wf07.rs`](../../code/rust/pfp_operads/src/families/wf07.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer1.py`](../../pfp_core/workflow_families/layer1.py) (`TypedRefusal`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf7)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf07.rs`](../../code/rust/pfp_operads/src/families/wf07.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer1.py`](../../pfp_core/workflow_families/layer1.py) (`TypedRefusal`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** procedure extension. **Builds on:** [WF1](../wf01_typed_answer/README.md).
@@ -63,4 +63,4 @@ Boost: when bluff detected: run_f adds the variant to the negative-control bank;
 | terminal taxonomy | ResolvedExact / ClosedResidual / OpenResidual / CoherentUpTo(N) / BudgetUnknown | — | code | P004(role) |
 | critic channel | keyword match vs typed JSON block | keyword mode gave false blocks and passes | offline | P009 App A.2 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf7) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

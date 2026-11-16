@@ -1,0 +1,691 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf21.rs",
+  "target_sha256": "99e991a8d6e035927284bc8292243e1bd3031d08b3066f6130ae5542084527cc",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf21",
+  "counts": {
+    "killed": 110,
+    "survived": 0,
+    "demonstrably_equivalent": 2,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF21\",",
+      "new": "    workflow: \"WF21b\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Structural prompt rewriting\",",
+      "new": "    name: \"Structural Prompt Rewriting\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"fenced_rewrite_exact_judge\",",
+      "new": "    host_check: \"fenced_rewrite\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "question begin mark changed",
+      "old": "        begin: \"<<Q>>\",",
+      "new": "        begin: \"<<q>>\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "question end mark changed",
+      "old": "        end: \"<</Q>>\",",
+      "new": "        end: \"<<Q>>\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "question fence renamed",
+      "old": "        name: \"question\",",
+      "new": "        name: \"ask\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "output begin mark changed",
+      "old": "        begin: \"<<OUT>>\",",
+      "new": "        begin: \"<<out>>\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "output end mark changed",
+      "old": "        end: \"<</OUT>>\",",
+      "new": "        end: \"<<OUT>>\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "output fence renamed",
+      "old": "        name: \"output\",",
+      "new": "        name: \"format\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "determinant starts at zero",
+      "old": "    let mut out = Rational::one();",
+      "new": "    let mut out = Rational::zero();",
+      "outcome": "killed"
+    },
+    {
+      "name": "pivot sought in a zero entry",
+      "old": "(column..rows.len()).find(|&row| !rows[row][column].is_zero())",
+      "new": "(column..rows.len()).find(|&row| rows[row][column].is_zero())",
+      "outcome": "killed"
+    },
+    {
+      "name": "pivot sought below the column",
+      "old": "(column..rows.len()).find(|&row| !rows[row][column].is_zero())",
+      "new": "(column + 1..rows.len()).find(|&row| !rows[row][column].is_zero())",
+      "outcome": "killed"
+    },
+    {
+      "name": "singular matrix has determinant one",
+      "old": "            return Rational::zero();",
+      "new": "            return Rational::one();",
+      "outcome": "killed"
+    },
+    {
+      "name": "rows swapped when the pivot is in place",
+      "old": "        if pivot != column {",
+      "new": "        if pivot == column {",
+      "outcome": "killed"
+    },
+    {
+      "name": "row swap keeps the sign",
+      "old": "            out = -out;",
+      "new": "            out = out + Rational::zero();",
+      "outcome": "killed"
+    },
+    {
+      "name": "pivots added",
+      "old": "        out *= &top[column];",
+      "new": "        out += &top[column];",
+      "outcome": "killed"
+    },
+    {
+      "name": "pivot left out",
+      "old": "        out *= &top[column];",
+      "new": "        out *= Rational::one();",
+      "outcome": "killed"
+    },
+    {
+      "name": "elimination includes the pivot row",
+      "old": "        for lower in &mut rows[column + 1..] {",
+      "new": "        for lower in &mut rows[column..] {",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "the pivot row is cloned before the loop and later pivots are sought in later rows only, so clearing the pivot row after its use changes no value read afterwards"
+    },
+    {
+      "name": "elimination stops short",
+      "old": "        for lower in &mut rows[column + 1..] {",
+      "new": "        for lower in &mut rows[column + 1..column + 1] {",
+      "outcome": "killed"
+    },
+    {
+      "name": "factor inverted",
+      "old": "            let factor = &lower[column] / &top[column];",
+      "new": "            let factor = &top[column] / &lower[column];",
+      "outcome": "killed"
+    },
+    {
+      "name": "elimination adds",
+      "old": "                *entry -= &factor * above;",
+      "new": "                *entry += &factor * above;",
+      "outcome": "killed"
+    },
+    {
+      "name": "matrix read from another key",
+      "old": "        .get(\"matrix\")",
+      "new": "        .get(\"A\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "rows may be longer than the matrix",
+      "old": "    rows.filter(|rows| rows.iter().all(|row| row.len() == rows.len()))",
+      "new": "    rows.filter(|rows| rows.iter().all(|row| row.len() >= rows.len()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "rows may be shorter than the matrix",
+      "old": "    rows.filter(|rows| rows.iter().all(|row| row.len() == rows.len()))",
+      "new": "    rows.filter(|rows| rows.iter().all(|row| row.len() <= rows.len()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "shape not checked",
+      "old": "    rows.filter(|rows| rows.iter().all(|row| row.len() == rows.len()))",
+      "new": "    rows.filter(|_| true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "matrix reason changed",
+      "old": "\"matrix must be square, with exact rationals\"",
+      "new": "\"matrix\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "statement read from another key",
+      "old": "        .get(\"statement\")\n        .and_then(Datum::as_text)\n        .ok_or(\"statement must be text\")?;",
+      "new": "        .get(\"prompt\")\n        .and_then(Datum::as_text)\n        .ok_or(\"statement must be text\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "statement reason changed",
+      "old": ".ok_or(\"statement must be text\")?;",
+      "new": ".ok_or(\"statement\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "determinant of the matrix not read",
+      "old": "        determinant: det(&square(task)?),",
+      "new": "        determinant: det(&square(task).unwrap_or_default()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "key read from another key",
+      "old": "    let given = sealed.get(\"answer_key\").ok_or(\"answer_key required\")?;",
+      "new": "    let given = sealed.get(\"key\").ok_or(\"answer_key required\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing key reason changed",
+      "old": ".ok_or(\"answer_key required\")?;",
+      "new": ".ok_or(\"key\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "key reason changed",
+      "old": ".ok_or(\"answer_key must be an exact rational\")?,",
+      "new": ".ok_or(\"key\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "key text altered",
+      "old": "            Datum::Text(text) => text.clone(),",
+      "new": "            Datum::Text(text) => format!(\"{text}x\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "key text empty",
+      "old": "            other => other.canonical(),",
+      "new": "            _ => String::new(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "validation accepts everything",
+      "old": "    rewrite(task).map(|_| ())",
+      "new": "    rewrite(task).map(|_| ()).or(Ok(()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "edit lhs key changed",
+      "old": "        .get(\"lhs\")\n        .and_then(Datum::as_text)\n        .filter(|lhs| !lhs.is_empty());",
+      "new": "        .get(\"from\")\n        .and_then(Datum::as_text)\n        .filter(|lhs| !lhs.is_empty());",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty lhs accepted",
+      "old": "        .filter(|lhs| !lhs.is_empty());",
+      "new": "        .filter(|_| true);",
+      "outcome": "killed"
+    },
+    {
+      "name": "edit rhs key changed",
+      "old": "    let rhs = item.get(\"rhs\").and_then(Datum::as_text);",
+      "new": "    let rhs = item.get(\"to\").and_then(Datum::as_text);",
+      "outcome": "killed"
+    },
+    {
+      "name": "edit shape reason changed",
+      "old": "\"edits are {lhs, rhs, at}\"",
+      "new": "\"edit\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "edit position key changed",
+      "old": "        .get(\"at\")\n        .and_then(Datum::as_int)",
+      "new": "        .get(\"pos\")\n        .and_then(Datum::as_int)",
+      "outcome": "killed"
+    },
+    {
+      "name": "edit position reason changed",
+      "old": "\"at must be an exact int\"",
+      "new": "\"at\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "negative position read as its size",
+      "old": "Ok(usize::try_from(at).ok().and_then(|start| {",
+      "new": "Ok(usize::try_from(at.magnitude()).ok().and_then(|start| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "position past the machine range clamps",
+      "old": "Ok(usize::try_from(at).ok().and_then(|start| {",
+      "new": "Ok(Some(usize::try_from(at).unwrap_or(usize::MAX)).and_then(|start| {",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "a position beyond the range becomes the largest position, and the largest position plus the length of a match, which is not empty, overflows, which is no match too"
+    },
+    {
+      "name": "edit end saturates",
+      "old": "            end: start.checked_add(lhs.len())?,",
+      "new": "            end: start.saturating_add(lhs.len()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "edit end ignores the match length",
+      "old": "            end: start.checked_add(lhs.len())?,",
+      "new": "            end: start.checked_add(1)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "edit lhs kept as the rhs",
+      "old": "            lhs: lhs.as_bytes().to_vec(),",
+      "new": "            lhs: rhs.as_bytes().to_vec(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "edit rhs kept as the lhs",
+      "old": "            rhs: rhs.as_bytes().to_vec(),",
+      "new": "            rhs: lhs.as_bytes().to_vec(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "edits key changed",
+      "old": "        .get(\"edits\")\n        .and_then(Datum::as_list)",
+      "new": "        .get(\"rewrites\")\n        .and_then(Datum::as_list)",
+      "outcome": "killed"
+    },
+    {
+      "name": "edits reason changed",
+      "old": "\"edits list required\"",
+      "new": "\"edits\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "some edit counted is enough",
+      "old": "    let counted = read.iter().all(Option::is_some);",
+      "new": "    let counted = read.iter().any(Option::is_some);",
+      "outcome": "killed"
+    },
+    {
+      "name": "edits never uncounted",
+      "old": "    let counted = read.iter().all(Option::is_some);",
+      "new": "    let counted = true;",
+      "outcome": "killed"
+    },
+    {
+      "name": "edits left in reply order",
+      "old": "    kept.sort();\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "text before an edit read to its end",
+      "old": "        out.extend_from_slice(data.get(from..edit.start).unwrap_or_default());",
+      "new": "        out.extend_from_slice(data.get(from..edit.end).unwrap_or_default());",
+      "outcome": "killed"
+    },
+    {
+      "name": "text before an edit left out",
+      "old": "        out.extend_from_slice(data.get(from..edit.start).unwrap_or_default());",
+      "new": "        out.extend_from_slice(b\"\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "edit applies the lhs",
+      "old": "        out.extend_from_slice(&edit.rhs);",
+      "new": "        out.extend_from_slice(&edit.lhs);",
+      "outcome": "killed"
+    },
+    {
+      "name": "edit applies nothing",
+      "old": "        out.extend_from_slice(&edit.rhs);",
+      "new": "        out.extend_from_slice(b\"\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "next text starts at the edit start",
+      "old": "        from = edit.end;",
+      "new": "        from = edit.start;",
+      "outcome": "killed"
+    },
+    {
+      "name": "text after the edits left out",
+      "old": "    out.extend_from_slice(data.get(from..).unwrap_or_default());",
+      "new": "    out.extend_from_slice(b\"\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "pairs written the other way",
+      "old": "            .map(|edit| Datum::from(vec![edit.start, edit.end]))",
+      "new": "            .map(|edit| Datum::from(vec![edit.end, edit.start]))",
+      "outcome": "killed"
+    },
+    {
+      "name": "matches counted from an uncounted reply",
+      "old": "    let exact = counted\n        && edits",
+      "new": "    let exact = counted\n        || edits",
+      "outcome": "killed"
+    },
+    {
+      "name": "matches predicate renamed",
+      "old": "    if !checks.record(\"matches_exact\", exact, &pairs(&edits)) {",
+      "new": "    if !checks.record(\"matches\", exact, &pairs(&edits)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "matches predicate recorded without evidence",
+      "old": "    if !checks.record(\"matches_exact\", exact, &pairs(&edits)) {",
+      "new": "    if !checks.record(\"matches_exact\", exact, &Datum::Null) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "matches predicate always held",
+      "old": "    if !checks.record(\"matches_exact\", exact, &pairs(&edits)) {",
+      "new": "    if !checks.record(\"matches_exact\", true, &pairs(&edits)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "match refusal code changed",
+      "old": "        return Ok(Rewritten::Refused(refused(\"NO_MATCH\", Datum::map([]))));",
+      "new": "        return Ok(Rewritten::Refused(refused(\"MISMATCH\", Datum::map([]))));",
+      "outcome": "killed"
+    },
+    {
+      "name": "match compared to the rhs",
+      "old": "            .all(|edit| data.get(edit.start..edit.end) == Some(edit.lhs.as_slice()));",
+      "new": "            .all(|edit| data.get(edit.start..edit.end) == Some(edit.rhs.as_slice()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "match not compared",
+      "old": "            .all(|edit| data.get(edit.start..edit.end) == Some(edit.lhs.as_slice()));",
+      "new": "            .all(|edit| data.get(edit.start..edit.end).is_some());",
+      "outcome": "killed"
+    },
+    {
+      "name": "adjacent matches overlap",
+      "old": "    let disjoint = edits.windows(2).all(|both| both[0].end <= both[1].start);",
+      "new": "    let disjoint = edits.windows(2).all(|both| both[0].end < both[1].start);",
+      "outcome": "killed"
+    },
+    {
+      "name": "overlapping matches may touch the next",
+      "old": "    let disjoint = edits.windows(2).all(|both| both[0].end <= both[1].start);",
+      "new": "    let disjoint = edits.windows(2).all(|both| both[0].start <= both[1].start);",
+      "outcome": "killed"
+    },
+    {
+      "name": "disjoint compared to the next end",
+      "old": "    let disjoint = edits.windows(2).all(|both| both[0].end <= both[1].start);",
+      "new": "    let disjoint = edits.windows(2).all(|both| both[0].end <= both[1].end);",
+      "outcome": "killed"
+    },
+    {
+      "name": "injective predicate renamed",
+      "old": "    if !checks.record(\"match_injective\", disjoint, &pairs(&edits)) {",
+      "new": "    if !checks.record(\"injective\", disjoint, &pairs(&edits)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "injective predicate always held",
+      "old": "    if !checks.record(\"match_injective\", disjoint, &pairs(&edits)) {",
+      "new": "    if !checks.record(\"match_injective\", true, &pairs(&edits)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "injective refusal code changed",
+      "old": "            \"OVERLAPPING_MATCHES\",",
+      "new": "            \"OVERLAP\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "edit inside a fence allowed",
+      "old": "    let outside = !edits.iter().any(|edit| {",
+      "new": "    let outside = edits.iter().any(|edit| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only the first fence guarded",
+      "old": "        plan.fences\n            .iter()\n            .any(|fence| fence.touches(edit.start, edit.end))",
+      "new": "        plan.fences\n            .iter()\n            .take(1)\n            .any(|fence| fence.touches(edit.start, edit.end))",
+      "outcome": "killed"
+    },
+    {
+      "name": "only the last fence guarded",
+      "old": "        plan.fences\n            .iter()\n            .any(|fence| fence.touches(edit.start, edit.end))",
+      "new": "        plan.fences\n            .iter()\n            .skip(1)\n            .any(|fence| fence.touches(edit.start, edit.end))",
+      "outcome": "killed"
+    },
+    {
+      "name": "fence touched by the start only",
+      "old": "            .any(|fence| fence.touches(edit.start, edit.end))",
+      "new": "            .any(|fence| fence.touches(edit.start, edit.start + 1))",
+      "outcome": "killed"
+    },
+    {
+      "name": "outside predicate renamed",
+      "old": "    if !checks.record(\"edits_outside_fences\", outside, &pairs(&edits)) {",
+      "new": "    if !checks.record(\"outside\", outside, &pairs(&edits)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "outside predicate always held",
+      "old": "    if !checks.record(\"edits_outside_fences\", outside, &pairs(&edits)) {",
+      "new": "    if !checks.record(\"edits_outside_fences\", true, &pairs(&edits)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "outside refusal code changed",
+      "old": "            \"EDIT_INSIDE_FENCE\",",
+      "new": "            \"EDIT_IN_FENCE\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "fences lost when kept",
+      "old": "        .filter(|fence| !fence.kept_by(&text))",
+      "new": "        .filter(|fence| fence.kept_by(&text))",
+      "outcome": "killed"
+    },
+    {
+      "name": "fence names dropped",
+      "old": "        .map(|fence| fence.name)",
+      "new": "        .map(|_| \"fence\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "protected predicate renamed",
+      "old": "        \"protected_bytes_unchanged\",",
+      "new": "        \"protected\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "protected predicate always held",
+      "old": "        lost.is_empty(),\n        &Datum::text(&text),",
+      "new": "        true,\n        &Datum::text(&text),",
+      "outcome": "killed"
+    },
+    {
+      "name": "protected predicate recorded without evidence",
+      "old": "        &Datum::text(&text),\n    ) {",
+      "new": "        &Datum::Null,\n    ) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "violations renamed",
+      "old": "        let detail = Datum::map([(\"violations\", Datum::from(lost))]);",
+      "new": "        let detail = Datum::map([(\"lost\", Datum::from(lost))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "violations left out",
+      "old": "        let detail = Datum::map([(\"violations\", Datum::from(lost))]);",
+      "new": "        let detail = Datum::map([]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "protected refusal code changed",
+      "old": "            \"QUESTION_NOT_PRESERVED\",",
+      "new": "            \"FENCE_LOST\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "leak needs both",
+      "old": "    let leaked = Guard::new(run.sealed).leaks(&text) || text.contains(&key.text);",
+      "new": "    let leaked = Guard::new(run.sealed).leaks(&text) && text.contains(&key.text);",
+      "outcome": "killed"
+    },
+    {
+      "name": "leak by sealed values only",
+      "old": "    let leaked = Guard::new(run.sealed).leaks(&text) || text.contains(&key.text);",
+      "new": "    let leaked = Guard::new(run.sealed).leaks(&text);",
+      "outcome": "killed"
+    },
+    {
+      "name": "leak by the key only",
+      "old": "    let leaked = Guard::new(run.sealed).leaks(&text) || text.contains(&key.text);",
+      "new": "    let leaked = text.contains(&key.text);",
+      "outcome": "killed"
+    },
+    {
+      "name": "leak looked for in the statement",
+      "old": "    let leaked = Guard::new(run.sealed).leaks(&text) || text.contains(&key.text);",
+      "new": "    let leaked = Guard::new(run.sealed).leaks(&plan.statement) || text.contains(&key.text);",
+      "outcome": "killed"
+    },
+    {
+      "name": "leak predicate renamed",
+      "old": "    if !checks.record(\"no_answer_key_leak\", !leaked, &Datum::Null) {",
+      "new": "    if !checks.record(\"no_leak\", !leaked, &Datum::Null) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "leak predicate inverted",
+      "old": "    if !checks.record(\"no_answer_key_leak\", !leaked, &Datum::Null) {",
+      "new": "    if !checks.record(\"no_answer_key_leak\", leaked, &Datum::Null) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "leak refusal code changed",
+      "old": "            \"ANSWER_KEY_LEAK\",",
+      "new": "            \"KEY_LEAK\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "rewrite stage renamed",
+      "old": "    let Some(reply) = run.ask(\"rewrite\", run.prompt())? else {",
+      "new": "    let Some(reply) = run.ask(\"edit\", run.prompt())? else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "rewrite stage not asked the prompt",
+      "old": "    let Some(reply) = run.ask(\"rewrite\", run.prompt())? else {",
+      "new": "    let Some(reply) = run.ask(\"rewrite\", String::new())? else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "solve stage renamed",
+      "old": "    let Some(answer) = run.ask(\"solve\", text.clone())? else {",
+      "new": "    let Some(answer) = run.ask(\"answer\", text.clone())? else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "solve stage asked the original prompt",
+      "old": "    let Some(answer) = run.ask(\"solve\", text.clone())? else {",
+      "new": "    let Some(answer) = run.ask(\"solve\", run.prompt())? else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "solve stage asked the statement",
+      "old": "    let Some(answer) = run.ask(\"solve\", text.clone())? else {",
+      "new": "    let Some(answer) = run.ask(\"solve\", plan.statement.clone())? else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer key changed",
+      "old": "        .get(\"answer\")\n        .and_then(rational)",
+      "new": "        .get(\"value\")\n        .and_then(rational)",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer reason changed",
+      "old": "\"answer must be an exact rational\"",
+      "new": "\"answer\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "consistency predicate renamed",
+      "old": "        \"answer_key_consistent\",",
+      "new": "        \"key_consistent\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "consistency predicate inverted",
+      "old": "        plan.determinant == key.value,",
+      "new": "        plan.determinant != key.value,",
+      "outcome": "killed"
+    },
+    {
+      "name": "consistency predicate always held",
+      "old": "        plan.determinant == key.value,",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "exactness predicate renamed",
+      "old": "    checks.record(\"answer_exact\", value == plan.determinant, answer);",
+      "new": "    checks.record(\"exact\", value == plan.determinant, answer);",
+      "outcome": "killed"
+    },
+    {
+      "name": "exactness compared with the key",
+      "old": "    checks.record(\"answer_exact\", value == plan.determinant, answer);",
+      "new": "    checks.record(\"answer_exact\", value == key.value, answer);",
+      "outcome": "killed"
+    },
+    {
+      "name": "exactness inverted",
+      "old": "    checks.record(\"answer_exact\", value == plan.determinant, answer);",
+      "new": "    checks.record(\"answer_exact\", value != plan.determinant, answer);",
+      "outcome": "killed"
+    },
+    {
+      "name": "exactness recorded without evidence",
+      "old": "    checks.record(\"answer_exact\", value == plan.determinant, answer);",
+      "new": "    checks.record(\"answer_exact\", value == plan.determinant, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "certified under another code",
+      "old": "    Ok(checks.judge(\"REWRITE_CERTIFIED\", detail))",
+      "new": "    Ok(checks.judge(\"CERTIFIED\", detail))",
+      "outcome": "killed"
+    },
+    {
+      "name": "certified hash of the statement",
+      "old": "    let detail = Datum::map([(\"rewritten_sha256\", Datum::text(sha256_hex(&text)))]);",
+      "new": "    let detail = Datum::map([(\"rewritten_sha256\", Datum::text(sha256_hex(&plan.statement)))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "certified hash renamed",
+      "old": "    let detail = Datum::map([(\"rewritten_sha256\", Datum::text(sha256_hex(&text)))]);",
+      "new": "    let detail = Datum::map([(\"sha256\", Datum::text(sha256_hex(&text)))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "certified hash left out",
+      "old": "    let detail = Datum::map([(\"rewritten_sha256\", Datum::text(sha256_hex(&text)))]);",
+      "new": "    let detail = Datum::map([]);",
+      "outcome": "killed"
+    }
+  ]
+}

@@ -196,7 +196,7 @@ fn explain_lists_and_details_every_detector() {
         let code = code.as_str().expect("string");
         let detail = pfp(Path::new(CORPUS), &["explain", &code.to_lowercase()]);
         assert_eq!(detail.status.code(), Some(0), "no explain entry for {code}");
-        assert!(stdout(&detail).contains("/wiki/"));
+        assert!(stdout(&detail).starts_with(&format!("{code}: ")), "{code}");
     }
 }
 

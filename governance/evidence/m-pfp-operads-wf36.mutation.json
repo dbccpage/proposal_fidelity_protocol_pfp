@@ -1,0 +1,629 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf36.rs",
+  "target_sha256": "3a51bea00eb3d2d28b147e9efc19127c0153aa79676beb58e01e588659634030",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf36",
+  "counts": {
+    "killed": 95,
+    "survived": 0,
+    "demonstrably_equivalent": 6,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "cycle sign lost",
+      "old": "            for &(edge, sign) in cycle {\n                row[edge] += i64::from(sign);",
+      "new": "            for &(edge, _sign) in cycle {\n                row[edge] += 1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "cycle sign reversed",
+      "old": "row[edge] += i64::from(sign);",
+      "new": "row[edge] -= i64::from(sign);",
+      "outcome": "killed"
+    },
+    {
+      "name": "null read as a value",
+      "old": "        Datum::Null => Some(None),",
+      "new": "        Datum::Null => Some(Some(BigInt::zero())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "null read as invalid",
+      "old": "        Datum::Null => Some(None),",
+      "new": "        Datum::Null => None,",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-integers read as slots",
+      "old": "        other => other.as_int().map(|number| Some(number.clone())),",
+      "new": "        other => Some(other.as_int().cloned()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "value count unchecked",
+      "old": "        .filter(|values| values.len() == named.graph.edges().len())\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "value count at most the edges",
+      "old": "        .filter(|values| values.len() == named.graph.edges().len())",
+      "new": "        .filter(|values| values.len() <= named.graph.edges().len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "absent guard is empty",
+      "old": "        None => Some((0..cycles.len()).collect()),",
+      "new": "        None => Some(Vec::new()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "absent guard is the first row",
+      "old": "        None => Some((0..cycles.len()).collect()),",
+      "new": "        None => Some((0..1).collect()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "guard rows read against the edges",
+      "old": "        Some(listed) => cochain::indices(listed, cycles.len()),",
+      "new": "        Some(listed) => cochain::indices(listed, named.graph.edges().len()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "guard rows reason changed",
+      "old": "ok_or(\"guard_rows must be rows of the cycle matrix\")",
+      "new": "ok_or(\"\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "values reason changed",
+      "old": "ok_or(\"values must be one exact integer or null per edge\")",
+      "new": "ok_or(\"\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "syndrome adds",
+      "old": "            .map(|(sign, value)| sign * value)\n            .sum()\n    };\n    rows.iter().map(dot).collect()",
+      "new": "            .map(|(sign, value)| sign + value)\n            .sum()\n    };\n    rows.iter().map(dot).collect()",
+      "outcome": "killed"
+    },
+    {
+      "name": "syndrome takes the signs",
+      "old": "            .map(|(sign, value)| sign * value)\n            .sum()\n    };\n    rows.iter().map(dot).collect()",
+      "new": "            .map(|(sign, _)| sign.clone())\n            .sum()\n    };\n    rows.iter().map(dot).collect()",
+      "outcome": "killed"
+    },
+    {
+      "name": "syndrome leaves out the last row",
+      "old": "    rows.iter().map(dot).collect()",
+      "new": "    rows.iter().take(rows.len().saturating_sub(1)).map(dot).collect()",
+      "outcome": "killed"
+    },
+    {
+      "name": "open slots are the fixed edges",
+      "old": "        .filter(|&edge| slots.values[edge].is_none())\n        .collect();\n    let fixed",
+      "new": "        .filter(|&edge| slots.values[edge].is_some())\n        .collect();\n    let fixed",
+      "outcome": "killed"
+    },
+    {
+      "name": "fixed values taken as ones",
+      "old": "        .map(|value| value.clone().unwrap_or_default())",
+      "new": "        .map(|value| value.clone().unwrap_or(BigInt::from(1)))",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "The value used for an open edge only adds a combination of the slot columns to the augmented column, so the rank of the augmented matrix, and the rank test, do not change."
+    },
+    {
+      "name": "fixed values dropped",
+      "old": "        .map(|value| value.clone().unwrap_or_default())",
+      "new": "        .map(|_| BigInt::zero())",
+      "outcome": "killed"
+    },
+    {
+      "name": "slot columns read from the first edge",
+      "old": "open.iter().map(|&edge| row[edge].clone()).collect()",
+      "new": "open.iter().map(|_| row[0].clone()).collect()",
+      "outcome": "killed"
+    },
+    {
+      "name": "left over taken with the wrong sign",
+      "old": "row.iter().cloned().chain([-left]).collect()",
+      "new": "row.iter().cloned().chain([left]).collect()",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "Negating the augmented column does not change the rank of the matrix, so the rank test gives the same answer with either sign."
+    },
+    {
+      "name": "left over dropped",
+      "old": "row.iter().cloned().chain([-left]).collect()",
+      "new": "row.iter().cloned().chain([BigInt::zero()]).collect()",
+      "outcome": "killed"
+    },
+    {
+      "name": "left over product is a sum",
+      "old": "                .map(|(sign, value)| sign * value)\n                .sum();\n            row.iter()",
+      "new": "                .map(|(sign, value)| sign + value)\n                .sum();\n            row.iter()",
+      "outcome": "killed"
+    },
+    {
+      "name": "ranks swapped",
+      "old": "        rank(&rationals_of(&columns)),\n        rank(&rationals_of(&augmented)),",
+      "new": "        rank(&rationals_of(&augmented)),\n        rank(&rationals_of(&columns)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "ranks are both the columns",
+      "old": "        rank(&rationals_of(&columns)),\n        rank(&rationals_of(&augmented)),",
+      "new": "        rank(&rationals_of(&columns)),\n        rank(&rationals_of(&columns)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "rank detail key renamed",
+      "old": "(\"rank_S_slots\", Datum::from(ranks.0)),",
+      "new": "(\"rank_S\", Datum::from(ranks.0)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "rank detail augmented key renamed",
+      "old": "(\"rank_augmented\", Datum::from(ranks.1)),",
+      "new": "(\"rank_aug\", Datum::from(ranks.1)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "rank detail swapped",
+      "old": "(\"rank_S_slots\", Datum::from(ranks.0)),\n        (\"rank_augmented\", Datum::from(ranks.1)),",
+      "new": "(\"rank_S_slots\", Datum::from(ranks.1)),\n        (\"rank_augmented\", Datum::from(ranks.0)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "guard with every row missed is complete",
+      "old": "    let missed = (0..slots.cycles.len()).find(|row| !guard_rows.contains(row))?;",
+      "new": "    let missed = (0..slots.cycles.len()).find(|row| guard_rows.contains(row))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "last missed row taken",
+      "old": "    let missed = (0..slots.cycles.len()).find(|row| !guard_rows.contains(row))?;",
+      "new": "    let missed = (0..slots.cycles.len()).rfind(|row| !guard_rows.contains(row))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "chord of the first row taken",
+      "old": "    let chord = *slots.named.graph.forest().chords.get(missed)?;",
+      "new": "    let chord = *slots.named.graph.forest().chords.first()?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness set to two",
+      "old": "    *witness.get_mut(chord)? = BigInt::from(1);",
+      "new": "    *witness.get_mut(chord)? = BigInt::from(2);",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness set to zero",
+      "old": "    *witness.get_mut(chord)? = BigInt::from(1);",
+      "new": "    *witness.get_mut(chord)? = BigInt::zero();",
+      "outcome": "killed"
+    },
+    {
+      "name": "guarded rows taken from the full matrix",
+      "old": "        .filter_map(|&row| slots.cycles.get(row).cloned())\n        .collect();\n    Some(refused(",
+      "new": "        .filter_map(|_| slots.cycles.first().cloned())\n        .collect();\n    Some(refused(",
+      "outcome": "killed"
+    },
+    {
+      "name": "guard syndrome of the full matrix",
+      "old": "(\"guard_syndrome\", numbers(&syndrome(&guarded, &witness))),",
+      "new": "(\"guard_syndrome\", numbers(&syndrome(&slots.cycles, &witness))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "full syndrome of the guard",
+      "old": "(\"full_syndrome\", numbers(&syndrome(&slots.cycles, &witness))),",
+      "new": "(\"full_syndrome\", numbers(&syndrome(&guarded, &witness))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "partial guard code renamed",
+      "old": "        \"PARTIAL_GUARD\",\n        Datum::map([\n            (\"kernel_witness\"",
+      "new": "        \"GUARD_PARTIAL\",\n        Datum::map([\n            (\"kernel_witness\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness key renamed",
+      "old": "(\"kernel_witness\", numbers(&witness)),",
+      "new": "(\"witness\", numbers(&witness)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "slots map need not be exact",
+      "old": "        entries.len() == keys.len() && keys.iter().all(|key| entries.contains_key(key))",
+      "new": "        keys.iter().all(|key| entries.contains_key(key))",
+      "outcome": "killed"
+    },
+    {
+      "name": "slots map may miss keys",
+      "old": "        entries.len() == keys.len() && keys.iter().all(|key| entries.contains_key(key))",
+      "new": "        entries.len() == keys.len()",
+      "outcome": "killed"
+    },
+    {
+      "name": "slots map may miss one key",
+      "old": "        entries.len() == keys.len() && keys.iter().all(|key| entries.contains_key(key))",
+      "new": "        entries.len() == keys.len() && keys.iter().any(|key| entries.contains_key(key))",
+      "outcome": "killed"
+    },
+    {
+      "name": "slots map or",
+      "old": "        entries.len() == keys.len() && keys.iter().all(|key| entries.contains_key(key))",
+      "new": "        entries.len() == keys.len() || keys.iter().all(|key| entries.contains_key(key))",
+      "outcome": "killed"
+    },
+    {
+      "name": "slots reason changed",
+      "old": "Stop::Malformed(\"one slot per null edge\".to_owned())",
+      "new": "Stop::Malformed(String::new())",
+      "outcome": "killed"
+    },
+    {
+      "name": "slot reason changed",
+      "old": "Stop::Malformed(\"slot must be an exact int\".to_owned())",
+      "new": "Stop::Malformed(String::new())",
+      "outcome": "killed"
+    },
+    {
+      "name": "fixed values overwritten by slots",
+      "old": "            Some(value) => Ok(value.clone()),",
+      "new": "            Some(_) => Ok(BigInt::zero()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "slot keys by the position among slots",
+      "old": "                .get(&edge.to_string())",
+      "new": "                .get(&(edge + 1).to_string())",
+      "outcome": "killed"
+    },
+    {
+      "name": "first stage asks once",
+      "old": "    for attempt in 0..2 {",
+      "new": "    for attempt in 0..1 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "first stage asks three times",
+      "old": "    for attempt in 0..2 {",
+      "new": "    for attempt in 0..3 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage named without the attempt",
+      "old": "format!(\"stage1:{attempt}\")",
+      "new": "format!(\"stage1\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing reply carries another code",
+      "old": "            return Ok(Stage::Ended(refused(NO_REPLY, detail)));",
+      "new": "            return Ok(Stage::Ended(refused(\"BAD_REQUEST\", detail)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing reply names no stage",
+      "old": "let detail = Datum::map([(\"stage\", Datum::text(stage))]);",
+      "new": "let detail = Datum::map([(\"stage\", Datum::text(\"stage1\"))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "reply need not be an object",
+      "old": "        let reply = object(reply, &stage)?;",
+      "new": "        let reply = reply;",
+      "outcome": "killed"
+    },
+    {
+      "name": "abstention read from any value",
+      "old": "        if matches!(reply.get(\"abstain\"), Some(Datum::Bool(true))) {",
+      "new": "        if matches!(reply.get(\"abstain\"), Some(_)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "abstention read from false",
+      "old": "        if matches!(reply.get(\"abstain\"), Some(Datum::Bool(true))) {",
+      "new": "        if matches!(reply.get(\"abstain\"), Some(Datum::Bool(false))) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "abstention key renamed",
+      "old": "reply.get(\"abstain\")",
+      "new": "reply.get(\"abstains\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "fillable when the ranks differ",
+      "old": "            let fillable = ranks.0 == ranks.1;",
+      "new": "            let fillable = ranks.0 != ranks.1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "fillable when the slots have rank",
+      "old": "            let fillable = ranks.0 == ranks.1;",
+      "new": "            let fillable = ranks.0 <= ranks.1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "abstention always right",
+      "old": "                \"abstention_matches_rank_test\",\n                !fillable,",
+      "new": "                \"abstention_matches_rank_test\",\n                true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "abstention right when fillable",
+      "old": "                \"abstention_matches_rank_test\",\n                !fillable,",
+      "new": "                \"abstention_matches_rank_test\",\n                fillable,",
+      "outcome": "killed"
+    },
+    {
+      "name": "false abstention code renamed",
+      "old": "                    \"FALSE_ABSTENTION\",",
+      "new": "                    \"WRONG_ABSTENTION\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "false abstention without ranks",
+      "old": "                    \"FALSE_ABSTENTION\",\n                    rank_detail(ranks),",
+      "new": "                    \"FALSE_ABSTENTION\",\n                    Datum::map([]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "true abstention code renamed",
+      "old": "                \"ABSTAIN_NOT_MATERIALISABLE\",",
+      "new": "                \"ABSTAIN_MATERIALISABLE\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "true abstention without ranks",
+      "old": "            let detail = rank_detail(ranks);\n            return Ok(Stage::Ended(typed_refusal(",
+      "new": "            let detail = Datum::map([]);\n            return Ok(Stage::Ended(typed_refusal(",
+      "outcome": "killed"
+    },
+    {
+      "name": "syndrome taken of the fixed values",
+      "old": "        syndromes.push(syndrome(&slots.cycles, &last));",
+      "new": "        syndromes.push(syndrome(&slots.cycles, &vec![BigInt::zero(); last.len()]));",
+      "outcome": "killed"
+    },
+    {
+      "name": "syndrome taken of the guard",
+      "old": "        syndromes.push(syndrome(&slots.cycles, &last));",
+      "new": "        syndromes.push(syndrome(&slots.cycles[..slots.guard.len().min(slots.cycles.len())], &last));",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "The fundamental cycles are independent, each with a chord of its own, so a guard of full rank lists every row and has at least as many entries as there are rows. The guard is complete by the time a fill is read, so the slice is the whole matrix."
+    },
+    {
+      "name": "green when one entry is zero",
+      "old": "        let green = syndromes\n            .last()\n            .is_some_and(|row| row.iter().all(Zero::is_zero));\n        if green {\n            break;",
+      "new": "        let green = syndromes\n            .last()\n            .is_some_and(|row| row.iter().any(Zero::is_zero));\n        if green {\n            break;",
+      "outcome": "killed"
+    },
+    {
+      "name": "never stops at a green fill",
+      "old": "        if green {\n            break;",
+      "new": "        if green && false {\n            break;",
+      "outcome": "killed"
+    },
+    {
+      "name": "stops at a red fill",
+      "old": "        if green {\n            break;",
+      "new": "        if !green {\n            break;",
+      "outcome": "killed"
+    },
+    {
+      "name": "retry shows the first syndrome only",
+      "old": "numbers(syndromes.last().map_or(&[][..], Vec::as_slice))",
+      "new": "numbers(syndromes.first().map_or(&[][..], Vec::as_slice))",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "The retry prompt is built after the first reply, when the first and the last syndrome are the same one. The one built after the second reply is never sent."
+    },
+    {
+      "name": "retry shows no syndrome",
+      "old": "numbers(syndromes.last().map_or(&[][..], Vec::as_slice))",
+      "new": "numbers(&[])",
+      "outcome": "killed"
+    },
+    {
+      "name": "retry prompt without the task",
+      "old": "format!(\"{}\\nGuard syndrome: {}\", run.prompt(), shown.canonical())",
+      "new": "format!(\"\\nGuard syndrome: {}\", shown.canonical())",
+      "outcome": "killed"
+    },
+    {
+      "name": "retry prompt without the label",
+      "old": "format!(\"{}\\nGuard syndrome: {}\", run.prompt(), shown.canonical())",
+      "new": "format!(\"{}\\n{}\", run.prompt(), shown.canonical())",
+      "outcome": "killed"
+    },
+    {
+      "name": "retry prompt grows",
+      "old": "prompt = format!(\"{}\\nGuard syndrome: {}\", run.prompt(), shown.canonical());",
+      "new": "prompt = format!(\"{}\\nGuard syndrome: {}\", prompt, shown.canonical());",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "The prompt is the default prompt when it is first extended, after the first reply, and the one extended after the second reply is never sent."
+    },
+    {
+      "name": "after retry a zero entry is green",
+      "old": "    let green = syndromes\n        .last()\n        .is_some_and(|row| row.iter().all(Zero::is_zero));\n    let evidence",
+      "new": "    let green = syndromes\n        .last()\n        .is_some_and(|row| row.iter().any(Zero::is_zero));\n    let evidence",
+      "outcome": "killed"
+    },
+    {
+      "name": "after retry the first fill counts",
+      "old": "    let green = syndromes\n        .last()\n        .is_some_and(|row| row.iter().all(Zero::is_zero));\n    let evidence",
+      "new": "    let green = syndromes\n        .first()\n        .is_some_and(|row| row.iter().all(Zero::is_zero));\n    let evidence",
+      "outcome": "killed"
+    },
+    {
+      "name": "red evidence dropped",
+      "old": "    let evidence = list_of(&syndromes);",
+      "new": "    let evidence = Datum::List(Vec::new());",
+      "outcome": "killed"
+    },
+    {
+      "name": "red refusal code renamed",
+      "old": "\"GUARD_RED_AFTER_RETRY\"",
+      "new": "\"GUARD_RED\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "red refusal key renamed",
+      "old": "let detail = Datum::map([(\"syndromes\", evidence)]);",
+      "new": "let detail = Datum::map([(\"syndrome\", evidence)]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the last fill is not the one kept",
+      "old": "    Ok(Stage::Filled(last, syndromes))",
+      "new": "    Ok(Stage::Filled(Vec::new(), syndromes))",
+      "outcome": "killed"
+    },
+    {
+      "name": "guard always complete",
+      "old": "    let complete = rank(&guarded) == rank(&rationals_of(&slots.cycles));",
+      "new": "    let complete = true;",
+      "outcome": "killed"
+    },
+    {
+      "name": "guard complete when it has any rank",
+      "old": "    let complete = rank(&guarded) == rank(&rationals_of(&slots.cycles));",
+      "new": "    let complete = rank(&guarded) > 0;",
+      "outcome": "killed"
+    },
+    {
+      "name": "guard rows listed in full",
+      "old": "        guard_rows\n            .iter()\n            .copied()\n            .map(BigInt::from)\n            .collect::<Vec<_>>(),",
+      "new": "        (0..slots.cycles.len())\n            .map(BigInt::from)\n            .collect::<Vec<_>>(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "partial guard falls back to another code",
+      "old": "refused(\"PARTIAL_GUARD\", Datum::map([]))",
+      "new": "refused(\"BAD_REQUEST\", Datum::map([]))",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "The fallback cannot be reached. A guard whose rank is short leaves a row out, every row has the chord of its own cycle, and every chord is an edge, so the witness is always found."
+    },
+    {
+      "name": "stage 2 prompt without the slots",
+      "old": "format!(\"{}\\nSlots: {}\", run.prompt(), numbers(&c).canonical())",
+      "new": "format!(\"{}\\nSlots: \", run.prompt())",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage 2 prompt without the task",
+      "old": "format!(\"{}\\nSlots: {}\", run.prompt(), numbers(&c).canonical())",
+      "new": "format!(\"\\nSlots: {}\", numbers(&c).canonical())",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage 2 renamed",
+      "old": "run.ask(\"stage2\", prompt)?",
+      "new": "run.ask(\"stage_2\", prompt)?",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage 2 missing reply carries another code",
+      "old": "        return Ok(refused(\n            NO_REPLY,\n            Datum::map([(\"stage\", Datum::from(\"stage2\"))]),",
+      "new": "        return Ok(refused(\n            \"BAD_REQUEST\",\n            Datum::map([(\"stage\", Datum::from(\"stage2\"))]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage 2 missing reply names no stage",
+      "old": "Datum::map([(\"stage\", Datum::from(\"stage2\"))]),",
+      "new": "Datum::map([(\"stage\", Datum::from(\"stage1\"))]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage 2 reply need not be an object",
+      "old": "let reply = object(reply, \"stage2\")?;",
+      "new": "let reply = reply;",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential key renamed",
+      "old": ".get(\"potential\")\n        .filter(|listed| integers(listed).is_some());",
+      "new": ".get(\"phi\")\n        .filter(|listed| integers(listed).is_some());",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential need not be integers",
+      "old": "        .filter(|listed| integers(listed).is_some());",
+      "new": "        .filter(|_| true);",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential length unchecked",
+      "old": "        .filter(|given| given.map(<[Datum]>::len) == Some(vertices));",
+      "new": "        .filter(|_| true);",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential at most the vertices",
+      "old": "        .filter(|given| given.map(<[Datum]>::len) == Some(vertices));",
+      "new": "        .filter(|given| given.map(<[Datum]>::len) <= Some(vertices));",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential check inverted",
+      "old": "        given.is_some(),\n        \"potential needs one integer per vertex 0..n-1\",",
+      "new": "        given.is_none(),\n        \"potential needs one integer per vertex 0..n-1\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential reason changed",
+      "old": "\"potential needs one integer per vertex 0..n-1\"",
+      "new": "\"\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "one zero residual is enough",
+      "old": "        residual.iter().all(Zero::is_zero),\n        &numbers(&residual),",
+      "new": "        residual.iter().any(Zero::is_zero),\n        &numbers(&residual),",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual not integral",
+      "old": "        .map(|entry| entry.numer().clone())",
+      "new": "        .map(|entry| entry.denom().clone())",
+      "outcome": "killed"
+    },
+    {
+      "name": "one syndrome is a retry",
+      "old": "    let code = if syndromes.len() == 1 {",
+      "new": "    let code = if syndromes.len() == 2 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "materialised after retry code renamed",
+      "old": "\"MATERIALISED_AFTER_RETRY\"",
+      "new": "\"MATERIALISED_RETRY\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "materialised code renamed",
+      "old": "        \"MATERIALISED\"\n    } else {",
+      "new": "        \"MATERIALISED_FIRST\"\n    } else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "verdict syndromes dropped",
+      "old": "        (\"syndromes\", list_of(&syndromes)),\n        (\"residual\", numbers(&residual)),",
+      "new": "        (\"syndromes\", Datum::List(Vec::new())),\n        (\"residual\", numbers(&residual)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "verdict residual dropped",
+      "old": "        (\"residual\", numbers(&residual)),\n    ]);\n    Ok(checks.judge(code, detail))",
+      "new": "        (\"residual\", Datum::List(Vec::new())),\n    ]);\n    Ok(checks.judge(code, detail))",
+      "outcome": "killed"
+    }
+  ]
+}

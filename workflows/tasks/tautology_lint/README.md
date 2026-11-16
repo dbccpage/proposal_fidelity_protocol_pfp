@@ -11,4 +11,3 @@ Run from the repository root:
 Expected: `4 passed`.
 
 Files: `tautology_lint.py` (the scanner), `test_tautology_lint.py` (its tests).
-Wiki page: Test-Tautological-Assertion-Lint.

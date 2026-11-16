@@ -2,10 +2,10 @@
   "schema": "pfp.lexical-mutation-report.v1",
   "AuthorityEffect": "None",
   "target": "code/rust/pfp_operads/src/families.rs",
-  "target_sha256": "d3a6cee5cefb5a6369510cd15e6be46ebeaf154839c5b32a8b8e4a68615b6658",
-  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test families --test wf07 --test wf09 --test wf10 --test wf11 --test wf13 --test wf20 --test wf24 --test wf25 --test wf26 --test wf27 --test wf30 --test wf31 --test wf32 --test wf33 --test wf38 --test wf40 --test wf45 --test wf46 --test wf47 --test wf06 --test wf16 --test wf17 --test wf29 --test wf44 --test labelled",
+  "target_sha256": "73e1b320ed0064b0ba18a372cc0cfd10b63a583c16ed526ce89ff46d210c7961",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test families",
   "counts": {
-    "killed": 137,
+    "killed": 159,
     "survived": 0,
     "demonstrably_equivalent": 1,
     "invalid": 0,
@@ -634,6 +634,12 @@
       "outcome": "killed"
     },
     {
+      "name": "registry loses wf08",
+      "old": "    &wf08::FAMILY,\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
       "name": "registry loses wf09",
       "old": "    &wf09::FAMILY,\n",
       "new": "",
@@ -672,6 +678,18 @@
     {
       "name": "registry loses wf20",
       "old": "    &wf20::FAMILY,\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry loses wf21",
+      "old": "    &wf21::FAMILY,\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry loses wf23",
+      "old": "    &wf23::FAMILY,\n",
       "new": "",
       "outcome": "killed"
     },
@@ -766,9 +784,45 @@
       "outcome": "killed"
     },
     {
+      "name": "registry loses wf12",
+      "old": "    &wf12::FAMILY,\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry loses wf36",
+      "old": "    &wf36::FAMILY,\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry loses wf39",
+      "old": "    &wf39::FAMILY,\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry loses wf42",
+      "old": "    &wf42::FAMILY,\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry loses wf43",
+      "old": "    &wf43::FAMILY,\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry loses wf48",
+      "old": "    &wf48::FAMILY,\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
       "name": "registry out of order",
-      "old": "    &wf07::FAMILY,\n    &wf09::FAMILY,\n",
-      "new": "    &wf09::FAMILY,\n    &wf07::FAMILY,\n",
+      "old": "    &wf07::FAMILY,\n    &wf08::FAMILY,\n",
+      "new": "    &wf08::FAMILY,\n    &wf07::FAMILY,\n",
       "outcome": "killed"
     },
     {
@@ -790,9 +844,87 @@
       "outcome": "killed"
     },
     {
+      "name": "registry puts WF8 after WF9",
+      "old": "    &wf08::FAMILY,\n    &wf09::FAMILY,\n",
+      "new": "    &wf09::FAMILY,\n    &wf08::FAMILY,\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry puts WF21 after WF23",
+      "old": "    &wf21::FAMILY,\n    &wf23::FAMILY,\n",
+      "new": "    &wf23::FAMILY,\n    &wf21::FAMILY,\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry puts WF23 after WF24",
+      "old": "    &wf23::FAMILY,\n    &wf24::FAMILY,\n",
+      "new": "    &wf24::FAMILY,\n    &wf23::FAMILY,\n",
+      "outcome": "killed"
+    },
+    {
       "name": "registry puts WF44 after WF45",
       "old": "    &wf44::FAMILY,\n    &wf45::FAMILY,\n",
       "new": "    &wf45::FAMILY,\n    &wf44::FAMILY,\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry puts WF11 after WF12",
+      "old": "    &wf11::FAMILY,\n    &wf12::FAMILY,\n",
+      "new": "    &wf12::FAMILY,\n    &wf11::FAMILY,\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry puts WF12 after WF13",
+      "old": "    &wf12::FAMILY,\n    &wf13::FAMILY,\n",
+      "new": "    &wf13::FAMILY,\n    &wf12::FAMILY,\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry puts WF33 after WF36",
+      "old": "    &wf33::FAMILY,\n    &wf36::FAMILY,\n",
+      "new": "    &wf36::FAMILY,\n    &wf33::FAMILY,\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry puts WF36 after WF38",
+      "old": "    &wf36::FAMILY,\n    &wf38::FAMILY,\n",
+      "new": "    &wf38::FAMILY,\n    &wf36::FAMILY,\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry puts WF38 after WF39",
+      "old": "    &wf38::FAMILY,\n    &wf39::FAMILY,\n",
+      "new": "    &wf39::FAMILY,\n    &wf38::FAMILY,\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry puts WF39 after WF40",
+      "old": "    &wf39::FAMILY,\n    &wf40::FAMILY,\n",
+      "new": "    &wf40::FAMILY,\n    &wf39::FAMILY,\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry puts WF40 after WF42",
+      "old": "    &wf40::FAMILY,\n    &wf42::FAMILY,\n",
+      "new": "    &wf42::FAMILY,\n    &wf40::FAMILY,\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry puts WF42 after WF43",
+      "old": "    &wf42::FAMILY,\n    &wf43::FAMILY,\n",
+      "new": "    &wf43::FAMILY,\n    &wf42::FAMILY,\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry puts WF43 after WF44",
+      "old": "    &wf43::FAMILY,\n    &wf44::FAMILY,\n",
+      "new": "    &wf44::FAMILY,\n    &wf43::FAMILY,\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "registry puts WF47 after WF48",
+      "old": "    &wf47::FAMILY,\n    &wf48::FAMILY,\n",
+      "new": "    &wf48::FAMILY,\n    &wf47::FAMILY,\n",
       "outcome": "killed"
     },
     {
@@ -843,5 +975,6 @@
       "new": "        verdict: REFUSED,\n        code: code.to_owned(),\n        detail,\n        obligations: vec![String::new()],",
       "outcome": "killed"
     }
-  ]
+  ],
+  "rerun_test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test families --test wf07 --test wf09 --test wf10 --test wf11 --test wf13 --test wf20 --test wf24 --test wf25 --test wf26 --test wf27 --test wf30 --test wf31 --test wf32 --test wf33 --test wf38 --test wf40 --test wf45 --test wf46 --test wf47 --test wf06 --test wf16 --test wf17 --test wf29 --test wf44 --test labelled --test wf08 --test wf21 --test wf23 --test fence --test wf12 --test wf36 --test wf39 --test wf42 --test wf43 --test wf48"
 }

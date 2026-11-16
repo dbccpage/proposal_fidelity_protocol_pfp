@@ -29,7 +29,6 @@ import hashlib
 import json
 from pathlib import Path
 
-from pfp.domain.value_objects.seat_turn import SeatTurnReplyV1
 from adversary.infrastructure.native import DefaultNativeOperationPort
 from adversary.profile.profile_loader import load_adversary_council_profile
 from adversary.runtime import build_adversary_runtime
@@ -48,6 +47,9 @@ from adversary.stage.infrastructure.pharmacy_writer import (
     filesystem_text_writer,
 )
 from adversary.use_cases.bout_service import execute_7act_adversary_bout
+from operations.domain.rop.result import Ok
+
+from pfp.domain.value_objects.seat_turn import SeatTurnReplyV1
 
 DEFECTIVE_CODE = (
     "class OrderDomainService:\n"
@@ -68,6 +70,11 @@ CLEAN_CODE = (
 CLEAN_BYTES = CLEAN_CODE.encode("utf-8")
 
 
+class _AcceptingHost:
+    def execute_host_request(self, _request_bytes: bytes):
+        return Ok(b'{"status":"ACCEPTED"}')
+
+
 def _make_packet(task_key: str, objective: str) -> WorkPacketV1:
     return WorkPacketV1(
         task_key=task_key,
@@ -80,7 +87,7 @@ def _make_packet(task_key: str, objective: str) -> WorkPacketV1:
     )
 
 
-def test_run_u_closed_loop_cemetery_and_antibody_blocking(tmp_path: Path) -> None:
+def test_run_u_closed_loop_cemetery_and_antibody_blocking(tmp_path: Path) -> None:  # noqa: PLR0915
     """Full closed-loop test: g=1 kills & buries defect, g=2 blocks identical candidate before token spend."""
     out_dir = tmp_path / "_intelligence" / "_adversary"
     _, _, profile, _, _ = load_adversary_council_profile()
@@ -88,7 +95,7 @@ def test_run_u_closed_loop_cemetery_and_antibody_blocking(tmp_path: Path) -> Non
     # =========================================================================
     # GENERATION g=1: Deliberate Defect Injected, Killed, and Buried
     # =========================================================================
-    rt_g1 = build_adversary_runtime(output_dir=tmp_path / "_intelligence", fixture_mode=False)
+    rt_g1 = build_adversary_runtime(output_dir=tmp_path / "_intelligence", fixture_mode=False, host=_AcceptingHost())
 
     canned_g1 = {
         # Gauge Breaker proposes the defective code in Act III
@@ -112,7 +119,8 @@ def test_run_u_closed_loop_cemetery_and_antibody_blocking(tmp_path: Path) -> Non
             reply_text=(
                 "Fatal clean architecture defect: domain layer imports infrastructure directly.\n"
                 "```critique\n"
-                '{"blocking": true, "challenge_kind": "FatalDefect", "counterexample": "OrderDomainService directly imports RawSocketDatabase"}\n'
+                '{"blocking": true, "challenge_kind": "FatalDefect", '
+                '"counterexample": "OrderDomainService directly imports RawSocketDatabase"}\n'
                 "```"
             ),
             machine_fields={"DISPOSITION": "KILL", "AUTHORITY_EFFECT": "None"},
@@ -126,7 +134,13 @@ def test_run_u_closed_loop_cemetery_and_antibody_blocking(tmp_path: Path) -> Non
     object.__setattr__(rt_g1, "seat_port", turn_adapter_g1)
 
     packet_g1 = _make_packet("run_u_g1_run", "Refactor OrderDomainService with pure domain isolation")
-    res_g1 = execute_7act_adversary_bout(profile, rt_g1, packet_g1, output_dir=out_dir, native_support=DefaultNativeOperationPort())
+    res_g1 = execute_7act_adversary_bout(
+        profile,
+        rt_g1,
+        packet_g1,
+        output_dir=out_dir,
+        native_support=DefaultNativeOperationPort(),
+    )
 
     # Bout completes with zero surviving candidates (candidate was killed by Defect Hunter)
     assert res_g1.is_ok, f"Expected bout to complete without crash: {res_g1.unwrap_err()}"
@@ -164,7 +178,7 @@ def test_run_u_closed_loop_cemetery_and_antibody_blocking(tmp_path: Path) -> Non
     # GENERATION g=2: Identical Defect Blocked at Act IV Primal Dual Sandbox Gate
     # =========================================================================
     # Fresh runtime instantiated — cemetery contains g=1 headstone
-    rt_g2 = build_adversary_runtime(output_dir=tmp_path / "_intelligence", fixture_mode=False)
+    rt_g2 = build_adversary_runtime(output_dir=tmp_path / "_intelligence", fixture_mode=False, host=_AcceptingHost())
 
     canned_g2 = {
         # Gauge Breaker proposes the IDENTICAL defective payload in generation g=2
@@ -196,7 +210,13 @@ def test_run_u_closed_loop_cemetery_and_antibody_blocking(tmp_path: Path) -> Non
     object.__setattr__(rt_g2, "seat_port", turn_adapter_g2)
 
     packet_g2 = _make_packet("run_u_g2_run", "Refactor OrderDomainService with pure domain isolation")
-    res_g2 = execute_7act_adversary_bout(profile, rt_g2, packet_g2, output_dir=out_dir, native_support=DefaultNativeOperationPort())
+    res_g2 = execute_7act_adversary_bout(
+        profile,
+        rt_g2,
+        packet_g2,
+        output_dir=out_dir,
+        native_support=DefaultNativeOperationPort(),
+    )
 
     # In g=2, the bout must be REFUSED at the Act IV Sandbox gate
     assert res_g2.is_err, "Expected bout to be refused due to cemetery regression"
@@ -262,7 +282,7 @@ def test_run_u_armed_antibody_blocking_mutation(tmp_path: Path) -> None:
     )
     mutated_bytes = mutated_code.encode("utf-8")
 
-    rt = build_adversary_runtime(output_dir=tmp_path / "_intelligence", fixture_mode=False)
+    rt = build_adversary_runtime(output_dir=tmp_path / "_intelligence", fixture_mode=False, host=_AcceptingHost())
 
     canned = {
         ("act2_panel_debate", "seat_gauge_breaker"): SeatTurnReplyV1(
@@ -313,7 +333,7 @@ def test_run_u_clean_candidate_passes_sandbox_gate(tmp_path: Path) -> None:
     )
     assert cemetery_adapter.record_headstone(dummy_hs).is_ok
 
-    rt = build_adversary_runtime(output_dir=tmp_path / "_intelligence", fixture_mode=False)
+    rt = build_adversary_runtime(output_dir=tmp_path / "_intelligence", fixture_mode=False, host=_AcceptingHost())
 
     canned = {
         ("act2_panel_debate", "seat_gauge_breaker"): SeatTurnReplyV1(
@@ -345,7 +365,13 @@ def test_run_u_clean_candidate_passes_sandbox_gate(tmp_path: Path) -> None:
     object.__setattr__(rt, "seat_port", turn_adapter)
 
     packet = _make_packet("run_u_clean_run", "Decoupled Clean Architecture implementation")
-    res = execute_7act_adversary_bout(profile, rt, packet, output_dir=out_dir, native_support=DefaultNativeOperationPort())
+    res = execute_7act_adversary_bout(
+        profile,
+        rt,
+        packet,
+        output_dir=out_dir,
+        native_support=DefaultNativeOperationPort(),
+    )
 
     assert res.is_ok, f"Expected clean candidate to pass all 7 acts: {res.unwrap_err()}"
     receipt = res.unwrap()
@@ -371,7 +397,7 @@ def test_run_u_cemetery_defense_ablation(tmp_path: Path) -> None:
     )
     assert cemetery_adapter.record_headstone(hs).is_ok
 
-    rt = build_adversary_runtime(output_dir=tmp_path / "_intelligence", fixture_mode=False)
+    rt = build_adversary_runtime(output_dir=tmp_path / "_intelligence", fixture_mode=False, host=_AcceptingHost())
 
     canned = {
         ("act2_panel_debate", "seat_gauge_breaker"): SeatTurnReplyV1(

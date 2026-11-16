@@ -15,7 +15,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF45-"
 
 **The check:** `finite_survivor_set_verifier`. Only this check can certify; a model reply is evidence for it, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
-**Check (Rust):** [`code/rust/pfp_operads/src/families/wf45.rs`](../../code/rust/pfp_operads/src/families/wf45.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer2.py`](../../pfp_core/workflow_families/layer2.py) (`FiniteTerminalSelector`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf45)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf45.rs`](../../code/rust/pfp_operads/src/families/wf45.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer2.py`](../../pfp_core/workflow_families/layer2.py) (`FiniteTerminalSelector`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** procedure extension. **Builds on:** [WF7](../wf07_typed_refusal/README.md).
@@ -47,4 +47,4 @@ Pattern `solo`: coder ×1 (sonnet); adversary ×1 (run_f); host_checker ×1 (non
 
 Boost: when none: typed verdict (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf45) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

@@ -15,7 +15,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF11-"
 
 **The check:** `lp_dual_and_farkas_certificate`. Only this check can certify; a model reply is evidence for it, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
-**Check (Rust):** [`code/rust/pfp_operads/src/families/wf11.rs`](../../code/rust/pfp_operads/src/families/wf11.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer3.py`](../../pfp_core/workflow_families/layer3.py) (`DualCertificateSynthesis`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf11)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf11.rs`](../../code/rust/pfp_operads/src/families/wf11.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer3.py`](../../pfp_core/workflow_families/layer3.py) (`DualCertificateSynthesis`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** task preset. **Builds on:** [WF3](../wf03_mine_then_solve/README.md), [WF9](../wf09_bounded_check_and_repair/README.md).
@@ -68,4 +68,4 @@ Boost: when a certificate is rejected on public cases: run_o reads the rejected 
 | norm family | p=1 simplex, p=2 Hodge, p=inf Chebyshev, interior p, Schatten-1 | only p in {1, 2, inf} certified exactly | code | P002(l1); P003(l1) |
 | mutation suites | C011, C012, C022, C031 | 150-188 mutants, all rejected by both checkers | offline | F §9.1; P021 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf11) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

@@ -1,0 +1,210 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf08.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf08.rs",
+      "language": "Rust",
+      "sha256": "e8c4de3d237c618de43654f1b1a967950b6d3f0eb84be84974842f8b1b7e47a8"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf08:v1",
+    "symbols": [
+      "QUESTION",
+      "STAGES",
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task is a statement with its question between <<Q>> and <</Q>>, and A and b as WF7 reads them, with exactly one solution. A task the host cannot read, whose system has no unique solution, or whose statement does not have the question fence once, is refused before anything is asked.",
+      "Three stages are asked in order, eliminate, solve and residual, under the stages stage:<name>. The prompt of each stage after the first carries the packet before it.",
+      "A reply is a packet {stage, carry, payload, prev, seal}. The chain starts at the SHA-256 of the task in canonical form, and each link is the SHA-256 of the head before it, written in hex, followed by the packet's payload in canonical form.",
+      "For each packet the host records stage_named, fence_intact (carry holds the fenced question exactly once), chain_linked (prev is the head before the packet), seal_matches (seal is the head after it) and recomputed, as <stage>:<predicate>, in that order. The first to fail refuses the run as STAGE_MISNAMED, FENCE_VIOLATED, CHAIN_BROKEN, SEAL_MISMATCH or STAGE_RECOMPUTE_MISMATCH, with the stage and the number of stages sealed so far.",
+      "recomputed compares the payload, with every number as p/q in lowest terms, to what the host works out: the reduced row echelon form of [A | b], its solution, and A x - b.",
+      "A stage with no packet is refused as STAGE_MISSING. A packet that lacks a field, or a payload that holds anything but lists, objects and exact rationals, is malformed. After the last stage the host records answer_is_unique_solution and final_residual_zero, and certifies SEALED_PIPELINE with the number of stages and the final head of the chain."
+    ],
+    "boundaries": [
+      "A sealed pipeline says the packets are intact and recomputed, not that a model reasoned through them.",
+      "carry is checked against the question fence only; the rest of it may be anything.",
+      "The chain is a hash chain from the task, not a signature. It shows order and integrity.",
+      "answer_is_unique_solution and final_residual_zero follow from the recompute once it has passed. They are recorded to name the end of the pipeline, not to add a check."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf08.rs",
+      "language": "Rust",
+      "sha256": "e8c4de3d237c618de43654f1b1a967950b6d3f0eb84be84974842f8b1b7e47a8"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: payloads are compared as exact rationals in lowest terms, so 2/4 and 1/2 are one value, and the reduced form, the solution and the residual are worked by hand in the tests. Chain heads are SHA-256 digests the tests rebuild themselves. Not B: tested on examples, not proven; the hash library is trusted.",
+      "G3": "Each failing predicate has its own code with the stage and the number sealed, and a missing packet, a packet that is not one and a payload that is not exact each have their own refusal. No unwrap or expect, and no index. Not B: panic-freedom is tested, not proven.",
+      "G4": "20 WF8 tests assert the registry entry, an honest run with every predicate in order, the previous packet shown in each prompt after the first, the same rationals written another way, an overdetermined system, a carry that holds more than the question, a packet edited after it was sealed, a broken link found before the seal, a dropped question, a stage that is misnamed, sealed but wrong, or of another shape, every predicate recorded after one fails, the first failure naming the refusal, a missing packet, each malformed reply and payload, a task the host cannot stage, and a single unknown. 7 mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 100/100. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 9, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T15:22:10Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v13-test.run.json",
+        "sha256": "e95f7cbb61ec569653c33c43224a08a2dd50d966fadd2ffb10683ec9251899fb",
+        "note": "975 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-clippy.run.json",
+        "sha256": "9f3bb56911bdd12f7b66947930bf454026cdc5a5079549d88ce90dbe884870bd",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-fmt.run.json",
+        "sha256": "e211f169bda4dde79d3c9eb5aaabec93f90b2eba08ad48d08389558e8796d830",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-metrics.run.json",
+        "sha256": "1f073e9074334349e9fcb471b80bb4860fd71373d3593bc902d8fd4e46fd4f2d",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v13-metrics.json",
+        "sha256": "f1e599a1782ed3478232245d33bf04cab5f389770a614a7f1840bc53ca8a9209",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 100,
+      "survived": 0,
+      "demonstrably_equivalent": 7,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf08.mutation.json",
+        "sha256": "f64db29e3f451e260da4a5824d1091a3b0c97c4df97b4815475a4fabeb7a69a7",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 107 mutants"
+      }
+    }
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T15:22:12.023594Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf08.rs",
+          "language": "Rust",
+          "sha256": "e8c4de3d237c618de43654f1b1a967950b6d3f0eb84be84974842f8b1b7e47a8"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf08:v1",
+        "symbols": [
+          "QUESTION",
+          "STAGES",
+          "FAMILY"
+        ],
+        "owned_invariants": [
+          "The task is a statement with its question between <<Q>> and <</Q>>, and A and b as WF7 reads them, with exactly one solution. A task the host cannot read, whose system has no unique solution, or whose statement does not have the question fence once, is refused before anything is asked.",
+          "Three stages are asked in order, eliminate, solve and residual, under the stages stage:<name>. The prompt of each stage after the first carries the packet before it.",
+          "A reply is a packet {stage, carry, payload, prev, seal}. The chain starts at the SHA-256 of the task in canonical form, and each link is the SHA-256 of the head before it, written in hex, followed by the packet's payload in canonical form.",
+          "For each packet the host records stage_named, fence_intact (carry holds the fenced question exactly once), chain_linked (prev is the head before the packet), seal_matches (seal is the head after it) and recomputed, as <stage>:<predicate>, in that order. The first to fail refuses the run as STAGE_MISNAMED, FENCE_VIOLATED, CHAIN_BROKEN, SEAL_MISMATCH or STAGE_RECOMPUTE_MISMATCH, with the stage and the number of stages sealed so far.",
+          "recomputed compares the payload, with every number as p/q in lowest terms, to what the host works out: the reduced row echelon form of [A | b], its solution, and A x - b.",
+          "A stage with no packet is refused as STAGE_MISSING. A packet that lacks a field, or a payload that holds anything but lists, objects and exact rationals, is malformed. After the last stage the host records answer_is_unique_solution and final_residual_zero, and certifies SEALED_PIPELINE with the number of stages and the final head of the chain."
+        ],
+        "boundaries": [
+          "A sealed pipeline says the packets are intact and recomputed, not that a model reasoned through them.",
+          "carry is checked against the question fence only; the rest of it may be anything.",
+          "The chain is a hash chain from the task, not a signature. It shows order and integrity.",
+          "answer_is_unique_solution and final_residual_zero follow from the recompute once it has passed. They are recorded to name the end of the pipeline, not to add a check."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf08.rs",
+          "language": "Rust",
+          "sha256": "e8c4de3d237c618de43654f1b1a967950b6d3f0eb84be84974842f8b1b7e47a8"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Exact: payloads are compared as exact rationals in lowest terms, so 2/4 and 1/2 are one value, and the reduced form, the solution and the residual are worked by hand in the tests. Chain heads are SHA-256 digests the tests rebuild themselves. Not B: tested on examples, not proven; the hash library is trusted.",
+          "G3": "Each failing predicate has its own code with the stage and the number sealed, and a missing packet, a packet that is not one and a payload that is not exact each have their own refusal. No unwrap or expect, and no index. Not B: panic-freedom is tested, not proven.",
+          "G4": "20 WF8 tests assert the registry entry, an honest run with every predicate in order, the previous packet shown in each prompt after the first, the same rationals written another way, an overdetermined system, a carry that holds more than the question, a packet edited after it was sealed, a broken link found before the seal, a dropped question, a stage that is misnamed, sealed but wrong, or of another shape, every predicate recorded after one fails, the first failure naming the refusal, a missing packet, each malformed reply and payload, a task the host cannot stage, and a single unknown. 7 mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 100/100. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 9, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T15:21:51Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v13-test.run.json",
+            "sha256": "e95f7cbb61ec569653c33c43224a08a2dd50d966fadd2ffb10683ec9251899fb",
+            "note": "975 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-clippy.run.json",
+            "sha256": "9f3bb56911bdd12f7b66947930bf454026cdc5a5079549d88ce90dbe884870bd",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-fmt.run.json",
+            "sha256": "e211f169bda4dde79d3c9eb5aaabec93f90b2eba08ad48d08389558e8796d830",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-metrics.run.json",
+            "sha256": "3d0d04aa70736844f559fe2cc2e31648805123b08f79c8920fc4b9897d7983b6",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v13-metrics.json",
+            "sha256": "c78a4942b6937a2e0ef6b7ed4d2023b2a34259f868a263849f076536dcfd44d8",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 100,
+          "survived": 0,
+          "demonstrably_equivalent": 7,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-wf08.mutation.json",
+            "sha256": "f64db29e3f451e260da4a5824d1091a3b0c97c4df97b4815475a4fabeb7a69a7",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 107 mutants"
+          }
+        }
+      }
+    }
+  ]
+}

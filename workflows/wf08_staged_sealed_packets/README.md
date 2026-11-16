@@ -5,16 +5,17 @@
 
 **Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet. The pilots/ folder holds data from earlier model experiments run with an older harness; they are records, not runs of this runner.
 
-**Run it offline** (no model call, no spend), from the repository root:
+**Run it offline** (no model call, no spend), from the repository root. The first line builds the Rust host once:
 
 ```powershell
+cargo build --release -p pfp_operads --manifest-path code/rust/Cargo.toml
 python -m pfp_core.workflow_families run WF8
 python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF8-"
 ```
 
-**The check:** `stage_seal_chain_recompute`. Only this check can certify; a model reply is evidence for it, never a verdict.
+**The check:** `stage_seal_chain_recompute`. Only this check can certify; a model reply is evidence for it, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
-**Code:** [`pfp_core/workflow_families/layer4.py`](../../pfp_core/workflow_families/layer4.py) (`StagedSealedPackets`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf8)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf08.rs`](../../code/rust/pfp_operads/src/families/wf08.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer4.py`](../../pfp_core/workflow_families/layer4.py) (`StagedSealedPackets`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** procedure extension. **Builds on:** [WF2](../wf02_full_slots/README.md), [WF5](../wf05_checked_rewrite/README.md).
@@ -54,4 +55,4 @@ Boost: when a stage receipt fails: rerun that stage once with run_o and the rece
 | stage interface | diagnostic-equal vs endpoint-state-equal | — | code | P026 §5, §8 |
 | stage count and slots | 1-turn vs 2-turn; 3 vs 4 slots; guard retry 2 | gpt-4o-mini: 5/8, 3/8, 5/8; guarded 5 admitted, 3 abstained | live | P027 T2 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf8) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

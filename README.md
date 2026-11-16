@@ -12,25 +12,22 @@ You can specify what a model must produce, which operations may compose, what a
 rewrite must preserve, how an independent host will check the result, how much
 an experiment may spend, and which evidence the next attempt may reuse.
 
-**Start here:** [System guides](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki)
-· [Workflow chooser](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflows)
+**Start here:** [Workflow index](workflows/README.md)
 · [Run a local example](#try-a-local-example)
 · [Mathematical capabilities](#mathematics-and-formal-verification)
 · [Atlas](atlas/README.md)
-
-Known gaps in PFP, PCIV, EIS and operads are listed in the [gap report](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/gap_report).
 
 ## What the systems do
 
 | System | Capabilities in this repository | Explore |
 | --- | --- | --- |
 | **PFP protocol and runtime** | Prepare typed prompts and replies; bind a proposal to its task, input and attempt; apply independent checkers; run bounded stages and research loops; retain actual replies, refusals and replay evidence. | [Runtime layers](pfp/) · [Prompt assembly](pfp/use_cases/pfp_prompt.py) · [Proposal checking](pfp/use_cases/pfp_proposal.py) · [Bounded loops](pfp/use_cases/pfp_derivation_loops.py) |
-| **Operads and capability composition** | Describe operations with ordered typed ports; pin sources, schemas and validators; compile compatible operation occurrences into candidate workflows; build skill catalogues and check tool/effect ceilings. | [Operads](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/operads) · [Workflow compiler](operads/application/typed_workflow_compiler.py) · [Full port contracts](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/operads_typed_workflows) |
-| **Epistemic Immune System (EIS)** | Match known failure patterns; require an independent host damage signal before immune suppression; screen candidate detectors against clean examples; track admission, regulation and retirement of guards. | [EIS guide](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/eis) · [Two-signal gate](eis/domain/danger_gate.py) · [Negative selection](eis/domain/thymus.py) |
-| **Prompt Civilization (PCIV)** | Track prompt genomes and execution lineage; mutate around protected spans; compare fitness with exact Pareto selection; evaluate experimental changes on paired selection/confirmation data; retain custody and causal-taint records. | [PCIV guide](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/pciv) · [Mutation](pciv/use_cases/forge.py) · [Fitness](pciv/use_cases/fitness.py) · [Experimental selection](pciv/use_cases/research_selection.py) |
-| **Adversarial execution and global checking** | Coordinate role panels, provider turns, shared accounting and retained evidence; compare local checks with global requirements through Local Green, Global Red (LGGR) diagnostics. | [Execution sources](ops/adversary/) · [Role-panel guide](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/steering#running-the-local-swarm) · [LGGR adapter](ops/adversary/infrastructure/lggr_adapter.py) |
-| **Representations and checked rewriting** | Work with prompt/operation trees, S(n), MSS-N and PFP packets; declare a protected query and decoder; check representation changes, witnesses, finite repairs and typed refusals. | [Rewriting guides](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/rewriting) · [Packet grammar](pfp/domain/tower/grammar.py) · [WDP/DDC](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/rewriting_wdp_ddc) |
-| **Proposal-channel experiments** | Study prompt geometry, bounded context profiles, token masking, attention interventions and activation steering, with host checking after the intervention. | [Steering catalogue](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/steering) · [Local model adapters](pfp/infrastructure/adapters/decode_controls/) |
+| **Operads and capability composition** | Describe operations with ordered typed ports; pin sources, schemas and validators; compile compatible operation occurrences into candidate workflows; build skill catalogues and check tool/effect ceilings. | [Operads](operads/) · [Workflow compiler](operads/application/typed_workflow_compiler.py) · [Full port contracts](operads/documentation/typed_workflow_v1.md) |
+| **Epistemic Immune System (EIS)** | Match known failure patterns; require an independent host damage signal before immune suppression; screen candidate detectors against clean examples; track admission, regulation and retirement of guards. | [EIS sources](eis/) · [Two-signal gate](eis/domain/danger_gate.py) · [Negative selection](eis/domain/thymus.py) |
+| **Prompt Civilization (PCIV)** | Track prompt genomes and execution lineage; mutate around protected spans; compare fitness with exact Pareto selection; evaluate experimental changes on paired selection/confirmation data; retain custody and causal-taint records. | [PCIV guide](pciv/documentation/README.md) · [Mutation](pciv/use_cases/forge.py) · [Fitness](pciv/use_cases/fitness.py) · [Experimental selection](pciv/use_cases/research_selection.py) |
+| **Adversarial execution and global checking** | Coordinate role panels, provider turns, shared accounting and retained evidence; compare local checks with global requirements through Local Green, Global Red (LGGR) diagnostics. | [Execution sources](ops/adversary/) · [LGGR adapter](ops/adversary/infrastructure/lggr_adapter.py) |
+| **Representations and checked rewriting** | Work with prompt/operation trees, S(n), MSS-N and PFP packets; declare a protected query and decoder; check representation changes, witnesses, finite repairs and typed refusals. | [Packet grammar](pfp/domain/tower/grammar.py) |
+| **Proposal-channel experiments** | Study prompt geometry, bounded context profiles, token masking, attention interventions and activation steering, with host checking after the intervention. | [Local model adapters](pfp/infrastructure/adapters/decode_controls/) |
 | **Product tools and interfaces** | Inspect prompt/reply risks, seal and replay packets, inspect capability catalogues and export MCP tool definitions; run exact graph scenarios through a CLI, local web interface or Windows application. | [Native CLI](code/rust/pfp_cli/README.md) · [PFP Lab](pfp_lab/README.md) · [Windows app](csharp/README.md) |
 
 These components have separate owners and explicit integration boundaries. Their
@@ -58,7 +55,7 @@ composable and reusable:
    declared experimental conditions.
 
 Each workflow chooses the mechanisms it needs. For a concrete integration,
-the [bounded code-repair study](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/operads_bounded_repair)
+the [host-tested patch repair workflow](workflows/wf57_host_tested_patch_repair/README.md)
 captures a source snapshot, checks a baseline, applies a supplied patch in a
 separate working copy, checks it again, and records observations through immune
 and genealogy service interfaces. Missing services remain visible in its record.
@@ -80,8 +77,8 @@ conditions. It includes:
 
 The [50 challenge packages, C011–C060](workflows/tasks/certified_challenges/)
 provide problem statements, witness formats, reference implementations and
-checker tests. The [test catalogue](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/test_catalog)
-explains individual examples and their limitations. Two direct entry points are
+checker tests. Each package README states its example and its limitations.
+Two direct entry points are
 [exact LP with dual certificates](workflows/tasks/certified_challenges/c051_exact_lp_solver_with_duals/README.md)
 and [discrete Hodge decomposition](workflows/tasks/certified_challenges/c014_discrete_hodge_decomposition/challenge.md).
 
@@ -147,13 +144,12 @@ catalogue tools as MCP definitions. See the [CLI command reference](code/rust/pf
 
 The [standalone automated runners](pfp/workflows/README.md) are available on
 `main`, with each workflow in its own named package. Follow the
-[tested installation/run/replay guide](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_running)
-or the [repository runbook](workflows/library/README.md). The migration evidence
+[repository runbook](workflows/library/README.md). The migration evidence
 records 201 offline tests and 27 installation checks, with an offline CI run.
 The shared historical seed baseline, failed attempts and original budget
 records are preserved.
 
-Use the [workflow chooser](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflows)
+Use the [workflow index](workflows/README.md)
 to pick a family. Future task-specific recipes have their own versions,
 checkers and evidence; the integer-sum examples establish that finite integration.
 
@@ -168,7 +164,7 @@ checkers and evidence; the integer-sum examples establish that finite integratio
 | [`ops/`](ops/) | Execution, adversarial panels, provider/accounting adapters, governance and host infrastructure. |
 | [`code/rust/`](code/rust/), [`lean4/`](lean4/), [`csharp/`](csharp/) | Native kernels and tools, formal developments, and the Windows application. |
 | [`contracts/`](contracts/), [`governance/`](governance/README.md), [`SCORING.md`](SCORING.md) | Wire schemas, source-bound assessments and the repository acceptance policy. |
-| [`wiki/`](wiki/), [`docs/`](docs/) | User guides, subsystem references, plans and validation records. |
+| [`docs/`](docs/) | Plans, reviews and validation records. |
 
 Useful research routes include [the practitioner field manual](atlas/archive/pfp/005_pfp_practitioners_field_manual/README.md),
 [local-to-global agent composition](atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md),
@@ -204,6 +200,5 @@ byte bindings and explicit imported-source baselines. See
 [governance/README.md](governance/README.md) for the rubric, evidence records and
 assessment process.
 
-For contributions, see the [contributing guide](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/contributing).
 Licensing information is in the root [LICENSE](LICENSE), component-specific
 license files, paper packages and native workspace metadata.

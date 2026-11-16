@@ -5,13 +5,17 @@ Zero-Float Law: Uses exact rational arithmetic (fractions.Fraction).
 """
 
 from fractions import Fraction
+from pathlib import Path
+
 import pytest
 
 from pciv.domain.society import (
     AggregateFitnessVectorV1,
     MigrationPolicyV1,
     PromptCivilizationV1,
+    PromptFamilyRecordV1,
     PromptSocietyV1,
+    resolve_society_families,
 )
 
 
@@ -129,3 +133,64 @@ def test_prompt_civilization_budget_solvency_law() -> None:
             created_utc="2026-10-09T00:00:00Z",
             authority_effect="SovereignAuthorization",
         )
+
+
+def test_dangling_family_id_and_unbound_global_immune_registry_are_refused(tmp_path: Path) -> None:
+    from pciv.use_cases.immunity import resolve_civilization_immune_store
+
+    soc_id = "sha256:" + "1" * 64
+    other_soc_id = "sha256:" + "2" * 64
+    fam_id = "sha256:" + "a" * 64
+    foreign_fam_id = "sha256:" + "b" * 64
+    civ_id = "sha256:" + "c" * 64
+
+    family = PromptFamilyRecordV1(
+        family_id=fam_id,
+        society_id=soc_id,
+        root_genome_id="genome_" + "d" * 64,
+        member_genome_ids=("genome_" + "d" * 64,),
+        shared_antibody_ids=(),
+        self_panel_digest="sha256:" + "e" * 64,
+    )
+    foreign_family = PromptFamilyRecordV1(
+        family_id=foreign_fam_id,
+        society_id=other_soc_id,
+        root_genome_id="genome_" + "f" * 64,
+        member_genome_ids=("genome_" + "f" * 64,),
+        shared_antibody_ids=(),
+        self_panel_digest="sha256:" + "0" * 64,
+    )
+
+    soc_dangling = PromptSocietyV1(
+        society_id=soc_id,
+        domain_protocol="core.math:v1",
+        family_ids=(fam_id, "sha256:" + "9" * 64),
+        aggregate_fitness_vector=AggregateFitnessVectorV1("4/5", "10/1", "9/10"),
+        migration_policy=MigrationPolicyV1(5, ("core.math.*",)),
+        created_utc="2026-10-09T00:00:00Z",
+    )
+    with pytest.raises(ValueError, match="DANGLING_OR_FOREIGN_FAMILY_ID"):
+        resolve_society_families(soc_dangling, {fam_id: family})
+
+    soc_foreign = PromptSocietyV1(
+        society_id=soc_id,
+        domain_protocol="core.math:v1",
+        family_ids=(foreign_fam_id,),
+        aggregate_fitness_vector=AggregateFitnessVectorV1("4/5", "10/1", "9/10"),
+        migration_policy=MigrationPolicyV1(5, ("core.math.*",)),
+        created_utc="2026-10-09T00:00:00Z",
+    )
+    with pytest.raises(ValueError, match="DANGLING_OR_FOREIGN_FAMILY_ID"):
+        resolve_society_families(soc_foreign, {foreign_fam_id: foreign_family})
+
+    bogus_civ = PromptCivilizationV1(
+        civilization_id=civ_id,
+        society_ids=(soc_id,),
+        global_immune_registry="bogus:uri",
+        reservation_budget_pool=1000,
+        governance_epoch=0,
+        created_utc="2026-10-09T00:00:00Z",
+        authority_effect="None",
+    )
+    with pytest.raises(ValueError, match="UNBOUND_IMMUNE_REGISTRY"):
+        resolve_civilization_immune_store(bogus_civ, tmp_path)

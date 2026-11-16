@@ -1,0 +1,491 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf12.rs",
+  "target_sha256": "6ad82247180a041103a4a57098b14f746f57e8de6902e27af8c124f6b5e38fcf",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf12",
+  "counts": {
+    "killed": 79,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "arms in another order",
+      "old": "[\"baseline\", \"mechanism\", \"null_control\", \"random_control\"]",
+      "new": "[\"baseline\", \"null_control\", \"mechanism\", \"random_control\"]",
+      "outcome": "killed"
+    },
+    {
+      "name": "first pair reversed",
+      "old": "[(0, 1), (2, 1), (3, 1), (0, 2)]",
+      "new": "[(1, 0), (2, 1), (3, 1), (0, 2)]",
+      "outcome": "killed"
+    },
+    {
+      "name": "null pair reversed",
+      "old": "[(0, 1), (2, 1), (3, 1), (0, 2)]",
+      "new": "[(0, 1), (1, 2), (3, 1), (0, 2)]",
+      "outcome": "killed"
+    },
+    {
+      "name": "random pair reversed",
+      "old": "[(0, 1), (2, 1), (3, 1), (0, 2)]",
+      "new": "[(0, 1), (2, 1), (1, 3), (0, 2)]",
+      "outcome": "killed"
+    },
+    {
+      "name": "last pair against random",
+      "old": "[(0, 1), (2, 1), (3, 1), (0, 2)]",
+      "new": "[(0, 1), (2, 1), (3, 1), (0, 3)]",
+      "outcome": "killed"
+    },
+    {
+      "name": "empty item list accepted",
+      "old": "        .filter(|items| !items.is_empty())",
+      "new": "        .filter(|_| true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "only an empty item list accepted",
+      "old": "        .filter(|items| !items.is_empty())",
+      "new": "        .filter(|items| items.is_empty())",
+      "outcome": "killed"
+    },
+    {
+      "name": "items reason changed",
+      "old": "ok_or(\"items must be a nonempty list\")",
+      "new": "ok_or(\"\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "item truth is a product",
+      "old": "values.into_iter().sum::<BigInt>()",
+      "new": "values.into_iter().product::<BigInt>()",
+      "outcome": "killed"
+    },
+    {
+      "name": "item truth leaves out the first value",
+      "old": "values.into_iter().sum::<BigInt>()",
+      "new": "values.into_iter().skip(1).sum::<BigInt>()",
+      "outcome": "killed"
+    },
+    {
+      "name": "item truth is the first value",
+      "old": "values.into_iter().sum::<BigInt>()",
+      "new": "values.into_iter().take(1).sum::<BigInt>()",
+      "outcome": "killed"
+    },
+    {
+      "name": "item reason changed",
+      "old": "ok_or(\"every item needs values, a list of exact integers\")",
+      "new": "ok_or(\"\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "mechanism read from the null key",
+      "old": "mechanism: vector(task, \"mechanism_vector\")?",
+      "new": "mechanism: vector(task, \"null_control_vector\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "null read from the random key",
+      "old": "null: vector(task, \"null_control_vector\")?",
+      "new": "null: vector(task, \"random_control_vector\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "random read from the mechanism key",
+      "old": "random: vector(task, \"random_control_vector\")?",
+      "new": "random: vector(task, \"mechanism_vector\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "vector reason drops the key",
+      "old": "format!(\"{key} must be a list of exact integers\")",
+      "new": "format!(\"must be a list of exact integers\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "mechanism norm shown as the null",
+      "old": "(\"mechanism\", Datum::Int(squared_norm(&panel.mechanism))),",
+      "new": "(\"mechanism\", Datum::Int(squared_norm(&panel.null))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "random norm shown as the mechanism",
+      "old": "(\"random_control\", Datum::Int(squared_norm(&panel.random))),",
+      "new": "(\"random_control\", Datum::Int(squared_norm(&panel.mechanism))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "null length ignored",
+      "old": "            same_length(&panel.null) && panel.null.iter().all(Zero::is_zero),",
+      "new": "            panel.null.iter().all(Zero::is_zero),",
+      "outcome": "killed"
+    },
+    {
+      "name": "null needs one zero",
+      "old": "            same_length(&panel.null) && panel.null.iter().all(Zero::is_zero),",
+      "new": "            same_length(&panel.null) && panel.null.iter().any(Zero::is_zero),",
+      "outcome": "killed"
+    },
+    {
+      "name": "null length or zero",
+      "old": "            same_length(&panel.null) && panel.null.iter().all(Zero::is_zero),",
+      "new": "            same_length(&panel.null) || panel.null.iter().all(Zero::is_zero),",
+      "outcome": "killed"
+    },
+    {
+      "name": "null evidence is the mechanism",
+      "old": "            Datum::from(panel.null.clone()),",
+      "new": "            Datum::from(panel.mechanism.clone()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "random length ignored",
+      "old": "            same_length(&panel.random)\n                && squared_norm(&panel.random) == squared_norm(&panel.mechanism),",
+      "new": "            squared_norm(&panel.random) == squared_norm(&panel.mechanism),",
+      "outcome": "killed"
+    },
+    {
+      "name": "random length or norm",
+      "old": "            same_length(&panel.random)\n                && squared_norm(&panel.random) == squared_norm(&panel.mechanism),",
+      "new": "            same_length(&panel.random)\n                || squared_norm(&panel.random) == squared_norm(&panel.mechanism),",
+      "outcome": "killed"
+    },
+    {
+      "name": "random norm must differ",
+      "old": "                && squared_norm(&panel.random) == squared_norm(&panel.mechanism),",
+      "new": "                && squared_norm(&panel.random) != squared_norm(&panel.mechanism),",
+      "outcome": "killed"
+    },
+    {
+      "name": "random length checked against the null",
+      "old": "    let same_length = |other: &[BigInt]| other.len() == panel.mechanism.len();",
+      "new": "    let same_length = |other: &[BigInt]| other.len() == panel.null.len();",
+      "outcome": "killed"
+    },
+    {
+      "name": "length at most the mechanism",
+      "old": "    let same_length = |other: &[BigInt]| other.len() == panel.mechanism.len();",
+      "new": "    let same_length = |other: &[BigInt]| other.len() <= panel.mechanism.len();",
+      "outcome": "killed"
+    },
+    {
+      "name": "random may equal the mechanism",
+      "old": "            panel.random != panel.mechanism,",
+      "new": "            true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "random must equal the mechanism",
+      "old": "            panel.random != panel.mechanism,",
+      "new": "            panel.random == panel.mechanism,",
+      "outcome": "killed"
+    },
+    {
+      "name": "random evidence is the mechanism",
+      "old": "            Datum::from(panel.random.clone()),",
+      "new": "            Datum::from(panel.mechanism.clone()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a failed control is not named",
+      "old": "            failed.push(name);",
+      "new": "            let _ = name;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a held control is named",
+      "old": "        if !checks.record(name, held, &evidence) {",
+      "new": "        if checks.record(name, held, &evidence) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "arm stage renamed",
+      "old": "format!(\"arm:{arm}\")",
+      "new": "format!(\"{arm}\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "arm prompt without the arm",
+      "old": "format!(\"{}\\nArm: {arm}\", run.prompt())",
+      "new": "format!(\"{}\", run.prompt())",
+      "outcome": "killed"
+    },
+    {
+      "name": "arm prompt without the task",
+      "old": "format!(\"{}\\nArm: {arm}\", run.prompt())",
+      "new": "format!(\"\\nArm: {arm}\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing arm reply carries another code",
+      "old": "                NO_REPLY,\n                Datum::map([(\"arm\", Datum::from(arm))]),",
+      "new": "                \"BAD_REQUEST\",\n                Datum::map([(\"arm\", Datum::from(arm))]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing arm reply names no arm",
+      "old": "Datum::map([(\"arm\", Datum::from(arm))]),",
+      "new": "Datum::map([(\"arm\", Datum::from(\"baseline\"))]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "arm replies read from the wrong key",
+      "old": "integers_under(object(reply, &stage)?, \"answers\")?",
+      "new": "integers_under(object(reply, &stage)?, \"values\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "arm reply need not be an object",
+      "old": "integers_under(object(reply, &stage)?, \"answers\")?",
+      "new": "integers_under(reply, \"answers\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer count unchecked",
+      "old": "            answers.len() == truth.len(),",
+      "new": "            true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer count at most the items",
+      "old": "            answers.len() == truth.len(),",
+      "new": "            answers.len() <= truth.len(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "answer count at least the items",
+      "old": "            answers.len() == truth.len(),",
+      "new": "            answers.len() >= truth.len(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "answers graded as wrong when right",
+      "old": "passes.push(answers.iter().zip(truth).map(|(a, t)| a == t).collect());",
+      "new": "passes.push(answers.iter().zip(truth).map(|(a, t)| a != t).collect());",
+      "outcome": "killed"
+    },
+    {
+      "name": "answers graded as right when wrong",
+      "old": "passes.push(answers.iter().zip(truth).map(|(a, t)| a == t).collect());",
+      "new": "passes.push(answers.iter().zip(truth).map(|(a, t)| a <= t).collect());",
+      "outcome": "killed"
+    },
+    {
+      "name": "ranks accept extra names",
+      "old": "            if entries.len() == ARMS.len() && ARMS.iter().all(|arm| entries.contains_key(*arm)) =>",
+      "new": "            if entries.len() >= ARMS.len() && ARMS.iter().all(|arm| entries.contains_key(*arm)) =>",
+      "outcome": "killed"
+    },
+    {
+      "name": "ranks accept missing names",
+      "old": "            if entries.len() == ARMS.len() && ARMS.iter().all(|arm| entries.contains_key(*arm)) =>",
+      "new": "            if entries.len() == ARMS.len() =>",
+      "outcome": "killed"
+    },
+    {
+      "name": "ranks accept any four names",
+      "old": "            if entries.len() == ARMS.len() && ARMS.iter().all(|arm| entries.contains_key(*arm)) =>",
+      "new": "            if entries.len() == ARMS.len() || ARMS.iter().all(|arm| entries.contains_key(*arm)) =>",
+      "outcome": "killed"
+    },
+    {
+      "name": "ranks accept one named arm",
+      "old": "ARMS.iter().all(|arm| entries.contains_key(*arm)) =>",
+      "new": "ARMS.iter().any(|arm| entries.contains_key(*arm)) =>",
+      "outcome": "killed"
+    },
+    {
+      "name": "ranks reason changed",
+      "old": "Stop::Malformed(\"one rank per arm\".to_owned())",
+      "new": "Stop::Malformed(String::new())",
+      "outcome": "killed"
+    },
+    {
+      "name": "rank reason changed",
+      "old": "Stop::Malformed(\"rank must be an exact int\".to_owned())",
+      "new": "Stop::Malformed(String::new())",
+      "outcome": "killed"
+    },
+    {
+      "name": "ranks read in the wrong order",
+      "old": "    ARMS.iter()\n        .map(|arm| {\n            let rank",
+      "new": "    ARMS.iter()\n        .rev()\n        .map(|arm| {\n            let rank",
+      "outcome": "killed"
+    },
+    {
+      "name": "failed controls do not stop the run",
+      "old": "    if !failed.is_empty() {",
+      "new": "    if failed.is_empty() && false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "matched controls stop the run",
+      "old": "    if !failed.is_empty() {",
+      "new": "    if failed.is_empty() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal code renamed",
+      "old": "\"CONTROLS_UNMATCHED\"",
+      "new": "\"CONTROLS_MATCHED\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal names no failed control",
+      "old": "(\"failed\", Datum::from(failed))",
+      "new": "(\"failed\", Datum::from(Vec::<&str>::new()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "refusal norms replaced",
+      "old": "(\"squared_norms\", norms)",
+      "new": "(\"squared_norms\", Datum::map([]))",
+      "outcome": "killed"
+    },
+    {
+      "name": "effect counts a loss as a gain",
+      "old": "            .map(|(before, after)| i64::from(*after) - i64::from(*before))",
+      "new": "            .map(|(before, after)| i64::from(*before) - i64::from(*after))",
+      "outcome": "killed"
+    },
+    {
+      "name": "effect adds the passes",
+      "old": "            .map(|(before, after)| i64::from(*after) - i64::from(*before))",
+      "new": "            .map(|(before, after)| i64::from(*after) + i64::from(*before))",
+      "outcome": "killed"
+    },
+    {
+      "name": "effect counts only the second",
+      "old": "            .map(|(before, after)| i64::from(*after) - i64::from(*before))",
+      "new": "            .map(|(_, after)| i64::from(*after))",
+      "outcome": "killed"
+    },
+    {
+      "name": "effect pairs the arm with itself",
+      "old": "        let paired = passes[first].iter().zip(&passes[second]);",
+      "new": "        let paired = passes[first].iter().zip(&passes[first]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "effect reads the wrong arm",
+      "old": "        let paired = passes[first].iter().zip(&passes[second]);",
+      "new": "        let paired = passes[second].iter().zip(&passes[first]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "certificate prompt without the task",
+      "old": "format!(\"{}\\nReport integer arm ranks.\", run.prompt())",
+      "new": "format!(\"\\nReport integer arm ranks.\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "certificate stage renamed",
+      "old": "run.ask(\"certificate\", prompt)?",
+      "new": "run.ask(\"ranks\", prompt)?",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing certificate carries another code",
+      "old": "        return Ok(refused(NO_REPLY, detail));",
+      "new": "        return Ok(refused(\"BAD_REQUEST\", detail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing certificate names no stage",
+      "old": "let detail = Datum::map([(\"arm\", Datum::from(\"certificate\"))]);",
+      "new": "let detail = Datum::map([(\"arm\", Datum::from(\"baseline\"))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "certificate need not be an object",
+      "old": "ranks(object(reply, \"certificate\")?)?",
+      "new": "ranks(reply)?",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual adds the rank difference",
+      "old": "total - (&ranks[second] - &ranks[first])",
+      "new": "total + (&ranks[second] - &ranks[first])",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual reverses the rank difference",
+      "old": "total - (&ranks[second] - &ranks[first])",
+      "new": "total - (&ranks[first] - &ranks[second])",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual ignores the first rank",
+      "old": "total - (&ranks[second] - &ranks[first])",
+      "new": "total - &ranks[second]",
+      "outcome": "killed"
+    },
+    {
+      "name": "one zero residual is enough",
+      "old": "        residual.iter().all(Zero::is_zero),\n        &Datum::from(residual.clone()),",
+      "new": "        residual.iter().any(Zero::is_zero),\n        &Datum::from(residual.clone()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "pair named backwards",
+      "old": "format!(\"{}->{}\", ARMS[first], ARMS[second])",
+      "new": "format!(\"{}->{}\", ARMS[second], ARMS[first])",
+      "outcome": "killed"
+    },
+    {
+      "name": "pair named with another arrow",
+      "old": "format!(\"{}->{}\", ARMS[first], ARMS[second])",
+      "new": "format!(\"{}-{}\", ARMS[first], ARMS[second])",
+      "outcome": "killed"
+    },
+    {
+      "name": "totals negated",
+      "old": "(pair_name(pair), Datum::Int(total.clone()))",
+      "new": "(pair_name(pair), Datum::Int(-total.clone()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "ranks not moved to the baseline",
+      "old": "Datum::Int(rank - &ranks[0])",
+      "new": "Datum::Int(rank.clone())",
+      "outcome": "killed"
+    },
+    {
+      "name": "ranks moved to the mechanism",
+      "old": "Datum::Int(rank - &ranks[0])",
+      "new": "Datum::Int(rank - &ranks[1])",
+      "outcome": "killed"
+    },
+    {
+      "name": "paired totals key renamed",
+      "old": "(\"paired_totals\", Datum::Map(paired.collect())),",
+      "new": "(\"totals\", Datum::Map(paired.collect())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "gauge ranks key renamed",
+      "old": "(\"gauge_fixed_ranks\", Datum::Map(moved.collect())),",
+      "new": "(\"ranks\", Datum::Map(moved.collect())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual key renamed",
+      "old": "(\"residual\", Datum::from(residual)),",
+      "new": "(\"defect\", Datum::from(residual)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "certificate code renamed",
+      "old": "checks.judge(\"ARMS_COMPARED\", detail)",
+      "new": "checks.judge(\"ARMS_COMPARE\", detail)",
+      "outcome": "killed"
+    }
+  ]
+}

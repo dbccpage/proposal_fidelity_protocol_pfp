@@ -14,5 +14,3 @@ python workflows/tasks/grammar_profiles/run.py --output-dir <scratch-dir>
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000028/`.
-
-See the wiki page `Test-Grammar-Profiles`.

@@ -14,5 +14,3 @@ python workflows/tasks/hodge_decomposition/run.py --output-dir <scratch-dir>
 ```
 
 Without `--output-dir`, results go to `workflows/pilot_output/pilot_0000042/`.
-
-See the wiki page `Test-Hodge-Decomposition`.

@@ -1,0 +1,127 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf39.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf39.rs",
+      "language": "Rust",
+      "sha256": "3b09b017c9a22e6f6016695d5ab099412a5e97dba3059ccc94da89019e5fc8c0"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf39-tests:v1",
+    "symbols": [
+      "sha",
+      "digest",
+      "task",
+      "good",
+      "bad",
+      "replay_of_good",
+      "replay_of_bad",
+      "receipt",
+      "reply",
+      "honest",
+      "with",
+      "request",
+      "run_task",
+      "run",
+      "outcomes",
+      "malformed",
+      "bad_task",
+      "the_registry_names_the_family",
+      "a_reply_that_passes_every_guard_is_certified",
+      "a_payload_may_leave_out_the_public_cochain",
+      "a_payload_that_names_another_cochain_is_not_bound_to_the_task",
+      "a_payload_with_a_field_of_its_own_is_not_bound_to_the_task",
+      "a_receipt_that_claims_authority_is_an_escalation",
+      "a_receipt_with_fields_of_its_own_names_them_in_order",
+      "a_self_certifying_receipt_is_refused_for_the_field_it_adds",
+      "a_verifier_the_task_does_not_register_is_not_replayed",
+      "a_verifier_the_task_leaves_off_its_list_is_not_replayed",
+      "a_witness_bound_to_another_payload_is_refused",
+      "the_digest_is_of_the_canonical_form_of_edges_c_and_phi",
+      "a_truthful_receipt_for_a_nonzero_defect_is_refused_for_its_defect",
+      "a_claim_that_is_not_the_replay_is_refused",
+      "a_replay_hash_that_is_not_the_replay_digest_is_refused",
+      "a_stale_nonce_is_refused",
+      "the_first_failed_guard_names_the_refusal_and_all_are_listed",
+      "the_witness_must_be_a_potential_of_exact_integers_one_to_a_vertex",
+      "a_witness_that_is_not_read_is_no_error_when_the_verifier_is_not_replayed",
+      "the_potential_is_taken_up_to_the_graph_only",
+      "the_replay_sums_the_sizes_of_the_residual",
+      "the_reply_must_carry_a_payload_and_a_receipt_that_are_objects",
+      "a_task_must_fix_a_nonce_a_verifier_list_and_a_public_cochain",
+      "a_missing_reply_stops_the_run",
+      "the_prompt_names_the_task_without_the_witness",
+      "a_second_reply_is_not_accepted"
+    ],
+    "owned_invariants": [
+      "Digests are SHA-256 the tests rebuild themselves, and the replay of each witness is worked by hand.",
+      "Each of the eight guards is asserted failing, the first two with their own refusals and the rest listed together.",
+      "Each unreadable task and reply is asserted by its reason."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf39.rs",
+      "language": "Rust",
+      "sha256": "3b09b017c9a22e6f6016695d5ab099412a5e97dba3059ccc94da89019e5fc8c0"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 26 pass in the recorded run; the suite they belong to killed 88 of 88 eligible WF39 mutants.",
+      "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T17:36:31Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v14-test.run.json",
+        "sha256": "17ef478d1b74ab70cad46eaa772ca4e18327699ee8511ea6c9add106152e0213",
+        "note": "1145 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-clippy.run.json",
+        "sha256": "516525b28043fa1053b02b8c542e2b8eca12d687623187f8467c7159f8bb86fe",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-fmt.run.json",
+        "sha256": "a85094698679cc852f3b9040802cdb56d57909c3b9b0a95fe5d56892b53ad0e9",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.run.json",
+        "sha256": "070d448da3bce97bffdcb2c8095d7c52d792ea634bc321ba3b4af64b3b9576b0",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.json",
+        "sha256": "7533090aaa56c6585bb5e4ac4c61603e7dd6ba63ce6e31c95b1ee49b5bf6a97a",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

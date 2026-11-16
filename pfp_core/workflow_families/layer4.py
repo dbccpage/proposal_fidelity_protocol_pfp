@@ -1,77 +1,18 @@
 """Layer 4 families: dialects, staged packets, crosswalks, witnesses, rewriting, custody, checkers, presets."""
 from __future__ import annotations
 
-import base64
-import re
-from collections.abc import Callable, Mapping
-from fractions import Fraction
-from typing import Any, ClassVar
+from typing import Any
 
-from ..fidelity import HostOracleContext, ProtectedContract
 from .base import (
     HostedFamily,
-    MalformedCandidateError,
-    Session,
-    Verdict,
-    WorkflowFamily,
-    as_fraction,
-    as_int,
-    canonical,
-    digest,
-    judge,
-    prompt_leaks,
-    refused,
-    require,
     spec_from,
 )
 from .exact import (
-    classify_linear,
     commitment,
-    det,
-    matvec,
-    rref,
     seal_chain,
     sha256_bytes,
 )
 from .registry import register
-
-# ---------------------------------------------------------------- shared helpers (candidates for exact.py)
-
-def jsonable(x: Any) -> Any:
-    """Fractions as ints or 'p/q' strings, tuples as lists; the inverse of ``rationals``."""
-    if isinstance(x, Fraction):
-        return x.numerator if x.denominator == 1 else f'{x.numerator}/{x.denominator}'
-    if isinstance(x, (list, tuple)):
-        return [jsonable(v) for v in x]
-    if isinstance(x, Mapping):
-        return {k: jsonable(v) for k, v in x.items()}
-    return x
-
-
-def rationals(x: Any) -> Any:
-    """Parse a JSON payload of ints and 'p/q' strings into Fractions; floats are refused."""
-    if isinstance(x, list):
-        return [rationals(v) for v in x]
-    if isinstance(x, Mapping):
-        return {k: rationals(v) for k, v in x.items()}
-    return as_fraction(x, 'value')
-
-
-def linear_task(task: Mapping[str, Any]) -> tuple[list[list[Fraction]], list[Fraction]]:
-    require(isinstance(task.get('A'), list) and task['A'] and isinstance(task.get('b'), list), 'A and b required')
-    require(all(isinstance(r, list) and len(r) == len(task['A'][0]) for r in task['A'])
-            and len(task['b']) == len(task['A']), 'A must be rectangular and match b')
-    return [[as_fraction(x, 'A') for x in row] for row in task['A']], [as_fraction(x, 'b') for x in task['b']]
-
-
-def fenced_contract(text: str, fences: list[tuple[str, str, str]]) -> ProtectedContract:
-    """A ProtectedContract with one span per ``(begin, end, name)`` marker pair."""
-    try:
-        spans = tuple(ProtectedContract.fence_markers(text, b, e, n).fences[0] for b, e, n in fences)
-    except ValueError as exc:
-        raise MalformedCandidateError(str(exc)) from exc
-    return ProtectedContract(text.encode('utf-8'), spans)
-
 
 # ---------------------------------------------------------------- WF6
 
@@ -110,94 +51,21 @@ class DialectSweep(HostedFamily):
 # ---------------------------------------------------------------- WF8
 
 def build_packets(seed: Any, stages: list[str], payloads: list[Any], carry: str) -> list[dict[str, Any]]:
-    """Honest packets for ``payloads``: each carries the fenced text and links into the seal chain."""
+    """Honest packets for ``payloads``, as a fixture: each carries the fenced text and links into the seal chain."""
     chain = seal_chain(seed, payloads)
     return [{'stage': s, 'carry': carry, 'payload': p, 'prev': chain[i], 'seal': chain[i + 1]}
             for i, (s, p) in enumerate(zip(stages, payloads, strict=True))]
 
 
-def _eliminate(task, _prev):
-    a, b = linear_task(task)
-    return rref([[*row, bi] for row, bi in zip(a, b, strict=True)])[0]
-
-
-def _solve(task, prev):
-    return [row[-1] for row in prev[:len(task['A'][0])]]
-
-
-def _residual(task, prev):
-    a, b = linear_task(task)
-    return [ax - bi for ax, bi in zip(matvec(a, prev), b, strict=True)]
-
-
 @register
-class StagedSealedPackets(WorkflowFamily):
+class StagedSealedPackets(HostedFamily):
     """WF8. Run a task as declared stages; seal each stage packet before the next stage reads it.
 
-    Stage i returns ``{stage, carry, payload, prev, seal}``. The host checks that ``carry`` holds the
-    fenced question byte for byte (ProtectedContract), that ``prev = h_{i-1}``, that
-    ``seal = H(h_{i-1} || payload)`` (exact.seal_chain over the task seed), and recomputes the stage
-    from the previous verified payload. Instance: eliminate, solve, residual for ``A x = b``.
-    Subclasses override ``stages``, ``same_payload`` and ``final_check``.
+    The Rust host checks the packets: the fenced question byte for byte, the hash chain over the task
+    seed, and each stage recomputed from the task. Instance: eliminate, solve, residual for ``A x = b``.
     """
     spec = spec_from('WF8', 'Staged sealed packets', 4, ['WF2', 'WF5'], None, 'stage_seal_chain_recompute',
                      'wf08_staged_sealed_packets')
-    fence: ClassVar[tuple[str, str, str]] = ('<<Q>>', '<</Q>>', 'question')
-    FIELDS: ClassVar[frozenset[str]] = frozenset({'stage', 'carry', 'payload', 'prev', 'seal'})
-
-    def stages(self, task) -> list[tuple[str, Callable[[Mapping[str, Any], Any], Any]]]:
-        return [('eliminate', _eliminate), ('solve', _solve), ('residual', _residual)]
-
-    def contract(self, task) -> ProtectedContract:
-        return fenced_contract(task['statement'], [self.fence])
-
-    def validate(self, task):
-        a, b = linear_task(task)
-        require(classify_linear(a, b).status == 'unique', 'the staged instance needs a unique solution')
-        self.contract(task)
-        return task
-
-    def same_payload(self, expected, got) -> bool:
-        return rationals(jsonable(expected)) == rationals(got)
-
-    def final_check(self, task, payloads, host) -> None:
-        a, b = linear_task(task)
-        host.record('answer_is_unique_solution', tuple(rationals(payloads[1])) == classify_linear(a, b).solution,
-                    canonical(payloads[1]).decode('utf-8'))
-        host.record('final_residual_zero', not any(rationals(payloads[-1])), canonical(payloads[-1]).decode('utf-8'))
-
-    def check_packet(self, task, contract, name, fn, accepted, packet, host) -> str | None:
-        """Record this stage's predicates; return the first failure code or None."""
-        require(isinstance(packet, Mapping) and set(packet) >= self.FIELDS, 'packet fields missing')
-        prev = seal_chain(task, accepted)[-1]
-        expected = fn(task, rationals(accepted[-1]) if accepted else None)
-        checks = [
-            ('stage_named', packet['stage'] == name, 'STAGE_MISNAMED'),
-            ('fence_intact', isinstance(packet['carry'], str) and not contract.violations(packet['carry']),
-             'FENCE_VIOLATED'),
-            ('chain_linked', packet['prev'] == prev, 'CHAIN_BROKEN'),
-            ('seal_matches', packet['seal'] == seal_chain(task, [*accepted, packet['payload']])[-1], 'SEAL_MISMATCH'),
-            ('recomputed', self.same_payload(expected, packet['payload']), 'STAGE_RECOMPUTE_MISMATCH'),
-        ]
-        failed = [code for key, ok, code in checks if not host.record(f'{name}:{key}', ok, canonical(packet).decode())]
-        return failed[0] if failed else None
-
-    def run(self, session: Session, host: HostOracleContext) -> Verdict:
-        task, accepted, last = session.task, [], None
-        contract = self.contract(task)
-        for name, fn in self.stages(task):
-            note = '' if last is None else '\nPrevious sealed packet: ' + canonical(last).decode('utf-8')
-            reply = session.ask(f'stage:{name}', self.prompt(task) + f'\nStage {name}.' + note)
-            if reply is None:
-                host.record(f'{name}:packet_received', False)
-                return refused('STAGE_MISSING', stage=name)
-            code = self.check_packet(task, contract, name, fn, accepted, reply.content, host)
-            if code:
-                return refused(code, stage=name, sealed_stages=len(accepted))
-            accepted.append(reply.content['payload'])
-            last = reply.content
-        self.final_check(task, accepted, host)
-        return judge(host, 'SEALED_PIPELINE', stages=len(accepted), head=seal_chain(task, accepted)[-1])
 
     def fixtures(self):
         q = '<<Q>>Solve A x = b for x with A = [[2, 1], [1, 3]], b = [3, 5].<</Q>>'
@@ -298,76 +166,14 @@ class WitnessedDifferenceProgramme(HostedFamily):
 # ---------------------------------------------------------------- WF21
 
 @register
-class StructuralPromptRewriting(WorkflowFamily):
+class StructuralPromptRewriting(HostedFamily):
     """WF21. Rewrite a prompt only outside its protected fences, then solve the rewritten prompt.
 
-    A rewrite is a list of rule applications ``{lhs, rhs, at}``: the match must be exact and the
-    matches pairwise disjoint (an injective match), and each edit goes through
-    ProtectedContract.apply_edit, which refuses any edit inside the question or output fence. The
-    result must carry each fence exactly once and no answer-key literal; only then is it dispatched
-    and the answer judged exactly (a 2x2 determinant).
+    The Rust host checks the rule applications (exact, disjoint, outside the question and output
+    fences), that each fence survives once, that no answer-key literal leaks, and the answer exactly.
     """
     spec = spec_from('WF21', 'Structural prompt rewriting', 4, ['WF5'], 'WF5', 'fenced_rewrite_exact_judge',
                      'wf21_structural_prompt_rewriting')
-    FENCES: ClassVar[list[tuple[str, str, str]]] = [('<<Q>>', '<</Q>>', 'question'),
-                                                    ('<<OUT>>', '<</OUT>>', 'output')]
-
-    def validate(self, task):
-        fenced_contract(task['statement'], self.FENCES)
-        require(isinstance(task.get('matrix'), list), 'matrix required')
-        return task
-
-    def rewrite(self, task, sealed, content, host) -> bytes | Verdict:
-        contract = fenced_contract(task['statement'], self.FENCES)
-        data = contract.task_bytes
-        require(isinstance(content, Mapping) and isinstance(content.get('edits'), list), 'edits list required')
-        edits = []
-        for e in content['edits']:
-            require(isinstance(e, Mapping) and isinstance(e.get('lhs'), str) and e['lhs']
-                    and isinstance(e.get('rhs'), str), 'edits are {lhs, rhs, at}')
-            at = as_int(e.get('at'), 'at')
-            edits.append((at, at + len(e['lhs'].encode('utf-8')), e['lhs'].encode('utf-8'), e['rhs'].encode('utf-8')))
-        edits.sort()
-        if not host.record('matches_exact', all(data[s:t] == lhs for s, t, lhs, _ in edits), str(edits)):
-            return refused('NO_MATCH')
-        disjoint = all(a[1] <= b[0] for a, b in zip(edits, edits[1:], strict=False))
-        if not host.record('match_injective', disjoint, str(edits)):
-            return refused('OVERLAPPING_MATCHES')
-        try:
-            for s, t, _, rhs in edits:
-                contract.apply_edit(s, t, rhs)
-        except PermissionError as exc:
-            host.record('edits_outside_fences', False, str(exc))
-            return refused('EDIT_INSIDE_FENCE')
-        host.record('edits_outside_fences', True, str(edits))
-        out = data
-        for s, t, _, rhs in reversed(edits):
-            out = out[:s] + rhs + out[t:]
-        if not host.record('protected_bytes_unchanged', not contract.violations(out), out.decode('utf-8')):
-            return refused('QUESTION_NOT_PRESERVED', violations=contract.violations(out))
-        text = out.decode('utf-8')
-        leaked = prompt_leaks(text, sealed) or str(sealed.get('answer_key')) in text
-        if not host.record('no_answer_key_leak', not leaked, ''):
-            return refused('ANSWER_KEY_LEAK')
-        return out
-
-    def run(self, session: Session, host: HostOracleContext) -> Verdict:
-        task, sealed = session.task, session.sealed
-        reply = session.ask('rewrite', self.prompt(task))
-        if reply is None:
-            return refused('NO_ADMISSIBLE_REPLY')
-        out = self.rewrite(task, sealed, reply.content, host)
-        if isinstance(out, Verdict):
-            return out
-        answer = session.ask('solve', out.decode('utf-8'))
-        if answer is None:
-            return refused('NO_ADMISSIBLE_REPLY')
-        require(isinstance(answer.content, Mapping), 'answer must be an object')
-        value = as_fraction(answer.content.get('answer'), 'answer')
-        truth = det([[as_fraction(x, 'matrix') for x in r] for r in task['matrix']])
-        host.record('answer_key_consistent', truth == as_fraction(sealed['answer_key'], 'answer_key'), '')
-        host.record('answer_exact', value == truth, str(value))
-        return judge(host, 'REWRITE_CERTIFIED', rewritten_sha256=sha256_bytes(out))
 
     def fixtures(self):
         st = ('Please read the task.\n<<Q>>Compute det(M) for M = [[12, 5], [7, 263]].<</Q>>\n'
@@ -403,61 +209,17 @@ def canonical_file(text: str) -> bytes:
     return text.replace('\r\n', '\n').encode('utf-8')
 
 
-def derivable_views(text: str):
-    """Participant text plus the views a reader derives trivially: reversed, unspaced, base64, hex."""
-    yield text
-    yield text[::-1]
-    yield ''.join(text.split())
-    for tok in re.findall(r'[A-Za-z0-9+/=]{4,}', text):
-        for decode in (lambda t: base64.b64decode(t, validate=True), bytes.fromhex):
-            try:
-                yield decode(tok).decode('utf-8')
-            except ValueError:
-                continue
-
-
 @register
-class JudgePacketCustodyAudit(WorkflowFamily):
+class JudgePacketCustodyAudit(HostedFamily):
     """WF23. Audit a judge run: file hashes, answer-free participant bytes, sealed checker, stdout tags.
 
-    The submission carries the participant files and the judge run record. The host hashes every
-    canonicalised file against the host-held manifest in ``sealed`` (a manifest in the reply is
-    ignored, so recomputing it after an edit proves nothing), scans participant bytes and their trivial
-    decodings for the sealed expected answer, checks the executed checker hash equals the recorded
-    hash of the sealed checker source, and checks every stdout line's keyed tag. Leaks, stale
-    checkers, edited files and forged stdout lines are refused. ``audit`` is reusable by later gates.
+    The Rust host hashes every canonicalised file against the host-held manifest in ``sealed``, scans
+    participant bytes and their trivial decodings for the sealed expected answer, checks the executed
+    checker hash against the recorded hash of the sealed checker source, and checks every stdout line's
+    keyed tag. A manifest in the reply is ignored.
     """
     spec = spec_from('WF23', 'Judge-packet custody audit', 4, ['WF11'], None, 'judge_packet_custody_audit',
                      'wf23_judge_packet_custody_audit')
-    stage = 'packet'
-
-    def audit(self, sealed, content, host) -> Verdict:
-        require(isinstance(content, Mapping) and all(isinstance(content.get(k), Mapping)
-                                                     for k in ('participant', 'run')), 'packet fields')
-        files, run = content['participant'], content['run']
-        manifest = sealed.get('manifest')
-        require(isinstance(manifest, Mapping), 'the host-held manifest is missing from the sealed packet')
-        require(all(isinstance(v, str) for v in files.values()), 'participant files are text')
-        hashes = {name: sha256_bytes(canonical_file(text)) for name, text in files.items()}
-        host.record('manifest_complete', set(manifest) == set(files), canonical(sorted(manifest)).decode())
-        host.record('file_hashes_match', all(manifest.get(n) == h for n, h in hashes.items()),
-                    canonical(hashes).decode())
-        answer = as_fraction(sealed['expected_answer'], 'expected_answer')
-        form = str(answer)
-        leaked = sorted(n for n, text in files.items() if any(form in v for v in derivable_views(text)))
-        host.record('answer_not_derivable', not leaked, str(leaked))
-        recorded = sealed['recorded_checker_sha256']
-        host.record('recorded_hash_is_checker', recorded == sha256_bytes(canonical_file(sealed['checker_source'])), '')
-        host.record('executed_checker_is_recorded', run.get('executed_checker_sha256') == recorded, '')
-        lines = run.get('stdout', [])
-        require(isinstance(lines, list) and all(isinstance(x, Mapping) for x in lines), 'stdout is a list of lines')
-        forged = [x.get('line') for x in lines if x.get('tag') != commitment(sealed['stdout_key'], x.get('line'))]
-        host.record('stdout_lines_authentic', bool(lines) and not forged, str(len(forged)))
-        return judge(host, 'CUSTODY_INTACT', participant_sha256=digest(hashes), leaked_files=leaked,
-                     forged_lines=len(forged))
-
-    def check(self, task, sealed, content, host):
-        return self.audit(sealed, content, host)
 
     def fixtures(self):
         task = {'statement': 'Submit the participant packet and the judge run record.'}

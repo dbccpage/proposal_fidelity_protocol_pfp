@@ -1,0 +1,121 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf12.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf12.rs",
+      "language": "Rust",
+      "sha256": "c6f453450e1f268add8903fd2bc30d96f5199f95d5acfb6c45e59f587b352810"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf12-tests:v1",
+    "symbols": [
+      "sha",
+      "task",
+      "arms",
+      "ranks",
+      "honest",
+      "request",
+      "all",
+      "run_task",
+      "run",
+      "turn",
+      "bad_task",
+      "outcomes",
+      "malformed",
+      "the_registry_names_the_family",
+      "matched_controls_and_ranks_that_explain_every_total_are_certified",
+      "the_evidence_of_each_predicate_is_what_it_looked_at",
+      "the_arms_are_asked_in_order_then_the_certificate",
+      "each_prompt_is_the_default_prompt_with_its_own_line_added",
+      "ranks_may_move_together_without_changing_the_verdict",
+      "an_inflated_mechanism_effect_leaves_a_residual_and_is_refused",
+      "the_residual_is_the_total_less_the_difference_of_ranks_for_each_pair",
+      "a_null_control_that_is_not_zero_is_refused_before_anything_is_asked",
+      "a_null_control_of_another_length_is_not_zero",
+      "a_random_control_with_another_norm_is_refused",
+      "a_random_control_of_another_length_is_refused_even_with_the_same_norm",
+      "a_random_control_equal_to_the_mechanism_is_refused",
+      "every_failed_control_is_named_in_the_order_recorded",
+      "an_arm_with_no_reply_stops_the_run_naming_the_arm",
+      "a_missing_certificate_stops_the_run_naming_it",
+      "an_arm_that_answers_other_items_is_malformed",
+      "an_arm_reply_must_be_an_object_with_exact_integer_answers",
+      "a_later_arm_is_read_as_strictly_as_the_first",
+      "a_certificate_needs_one_integer_rank_per_arm_and_no_other",
+      "ranks_are_exact_integers_of_any_size",
+      "a_task_must_be_readable_before_anything_is_asked",
+      "an_item_with_no_values_has_the_sum_zero",
+      "a_run_that_ends_early_cannot_be_sent_more_replies_than_it_used"
+    ],
+    "owned_invariants": [
+      "Sums, norms, paired totals and residuals are worked by hand from the answers written in each test.",
+      "Each of the three controls is asserted failing alone, and all together in the order recorded.",
+      "Each unreadable task, arm reply and certificate is asserted by its reason, and a missing reply by the arm or step it names."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf12.rs",
+      "language": "Rust",
+      "sha256": "c6f453450e1f268add8903fd2bc30d96f5199f95d5acfb6c45e59f587b352810"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 24 pass in the recorded run; the suite they belong to killed 79 of 79 eligible WF12 mutants.",
+      "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T17:36:31Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v14-test.run.json",
+        "sha256": "17ef478d1b74ab70cad46eaa772ca4e18327699ee8511ea6c9add106152e0213",
+        "note": "1145 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-clippy.run.json",
+        "sha256": "516525b28043fa1053b02b8c542e2b8eca12d687623187f8467c7159f8bb86fe",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-fmt.run.json",
+        "sha256": "a85094698679cc852f3b9040802cdb56d57909c3b9b0a95fe5d56892b53ad0e9",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.run.json",
+        "sha256": "070d448da3bce97bffdcb2c8095d7c52d792ea634bc321ba3b4af64b3b9576b0",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.json",
+        "sha256": "7533090aaa56c6585bb5e4ac4c61603e7dd6ba63ce6e31c95b1ee49b5bf6a97a",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

@@ -14,7 +14,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF15-"
 
 **The check:** `kripke_box_witness_check`. Only this check can certify; a model reply is evidence for it, never a verdict.
 
-**Code:** [`pfp_core/workflow_families/layer7.py`](../../pfp_core/workflow_families/layer7.py) (`AdversaryTribunal`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf15)
+**Code:** [`pfp_core/workflow_families/layer7.py`](../../pfp_core/workflow_families/layer7.py) (`AdversaryTribunal`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** procedure extension. **Builds on:** [WF4](../wf04_five_agents_lggr/README.md), [WF14](../wf14_immune_failure_classification/README.md).
@@ -54,4 +54,4 @@ Boost: when both submissions fail the check: one fresh run_o round per side with
 | --- | --- | --- | --- | --- |
 | role omitted | each of six roles in turn | named failure label per omission | code | P004(role) §3 |
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf15) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)

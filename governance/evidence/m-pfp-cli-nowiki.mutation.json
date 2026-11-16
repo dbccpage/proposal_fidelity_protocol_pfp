@@ -1,0 +1,164 @@
+{
+  "schema_version": "pfp.rust-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "tool": "cargo-mutants 27.1.0",
+  "command": "cargo mutants --manifest-path code/rust/pfp_cli/Cargo.toml -j 4 --timeout 60 -f src/catalog.rs -f src/lib.rs",
+  "run_record": "governance/evidence/pfp-cli-nowiki-mutants.run.json",
+  "outcome_mapping": {
+    "caught": "killed",
+    "missed": "survived",
+    "timeout": "inconclusive",
+    "unviable (does not compile)": "invalid"
+  },
+  "files": {
+    "code/rust/pfp_cli/src/lib.rs": {
+      "counts": {
+        "killed": 30
+      },
+      "sha256": "b3a03200ebfcc7eff22f0a9d489dff212f7307c684a94a97ffa1bd2965fa3bc0",
+      "mutants": [
+        {
+          "mutant": "src/lib.rs:28:5: replace render_report -> String with String::new()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:91:5: replace clean -> String with \"xyzzy\".into()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:105:5: replace count -> String with String::new()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:91:5: replace clean -> String with String::new()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:105:5: replace count -> String with \"xyzzy\".into()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:28:5: replace render_report -> String with \"xyzzy\".into()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:105:10: replace == with != in count",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:55:21: replace != with == in render_report",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:114:5: replace render_explain -> String with String::new()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:114:5: replace render_explain -> String with \"xyzzy\".into()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:127:5: replace wrap -> String with String::new()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:127:5: replace wrap -> String with \"xyzzy\".into()",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:28: replace && with || in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:19: replace > with < in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:19: replace > with == in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:48: replace > with == in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:19: replace > with >= in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:48: replace > with < in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:48: replace > with >= in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:42: replace + with - in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:42: replace + with * in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:38: replace + with - in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:133:38: replace + with * in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:137:26: replace > with == in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:137:26: replace > with < in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:137:26: replace > with >= in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:139:20: replace += with -= in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:139:20: replace += with *= in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:142:16: replace += with -= in wrap",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/lib.rs:142:16: replace += with *= in wrap",
+          "outcome": "killed"
+        }
+      ]
+    },
+    "code/rust/pfp_cli/src/catalog.rs": {
+      "counts": {
+        "invalid": 1,
+        "killed": 2
+      },
+      "sha256": "3315f1ad808b3c8d6b1a8613ebc185c17e23ca1f6811443c51aacab0ee985349",
+      "mutants": [
+        {
+          "mutant": "src/catalog.rs:160:5: replace find -> Option<&'static Entry> with Some(Box::leak(Box::new(Default::default())))",
+          "outcome": "invalid"
+        },
+        {
+          "mutant": "src/catalog.rs:160:5: replace find -> Option<&'static Entry> with None",
+          "outcome": "killed"
+        },
+        {
+          "mutant": "src/catalog.rs:161:36: replace == with != in find",
+          "outcome": "killed"
+        }
+      ]
+    }
+  }
+}

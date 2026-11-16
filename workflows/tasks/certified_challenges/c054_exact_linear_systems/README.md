@@ -15,5 +15,3 @@ Replay-custody test for this challenge:
 Score the reference solver on the 14 public examples:
 
     python workflows/tasks/certified_challenges/c054_exact_linear_systems/participant_packet/runner.py
-
-Wiki page: Test-Exact-Linear-System-Witnesses.

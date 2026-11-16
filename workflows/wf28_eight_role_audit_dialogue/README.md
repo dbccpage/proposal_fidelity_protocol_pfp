@@ -14,7 +14,7 @@ python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF28-"
 
 **The check:** `strict_l1_defect_descent`. Only this check can certify; a model reply is evidence for it, never a verdict.
 
-**Code:** [`pfp_core/workflow_families/layer8.py`](../../pfp_core/workflow_families/layer8.py) (`EightRoleAuditDialogue`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf28)
+**Code:** [`pfp_core/workflow_families/layer8.py`](../../pfp_core/workflow_families/layer8.py) (`EightRoleAuditDialogue`) · [tests](../../pfp_core/workflow_families/tests/test_families.py)
 <!-- end generated -->
 
 **Kind:** procedure extension. **Builds on:** [WF15](../wf15_adversary_tribunal/README.md).
@@ -45,4 +45,4 @@ Pattern `tribunal`: coder ×1 (sonnet); adversary ×1 (run_f); defender ×1 (run
 
 Boost: when arbiter and host disagree: host wins; record the disagreement (limit 0).
 
-More: [Workflow DAG on the wiki](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_dag#wf28) · [machine-readable entry](../dag/workflow_dag.json)
+More: [machine-readable entry](../dag/workflow_dag.json)
