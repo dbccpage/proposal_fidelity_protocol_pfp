@@ -1,0 +1,198 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "lean4/FunnelCompressionClosure.lean",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "lean4/FunnelCompressionClosure.lean",
+      "language": "Lean 4",
+      "sha256": "b3fd370a31d202ee598422a5204a58fd39de2dc98377291fa8361ab7f9195150"
+    },
+    "contract_urn": "urn:pfp:lean4:funnel-compression-closure:v1",
+    "symbols": [
+      "PFP.FunnelCompressionClosure.CostedTable",
+      "PFP.FunnelCompressionClosure.FibreCompatible",
+      "PFP.FunnelCompressionClosure.ExactQuotientWitness",
+      "PFP.FunnelCompressionClosure.exact_quotient_implies_fibre_compatible",
+      "PFP.FunnelCompressionClosure.fibre_compatible_gives_exact_quotient",
+      "PFP.FunnelCompressionClosure.exact_quotient_execWord_commutes",
+      "PFP.FunnelCompressionClosure.output_preserving_collapse_breaks_cost",
+      "PFP.FunnelCompressionClosure.stabilized_iterSplit_is_coarsest_stable",
+      "PFP.FunnelCompressionClosure.proper_splits_le_pred_card",
+      "PFP.FunnelCompressionClosure.loop_erasure_strictly_reduces_cost",
+      "PFP.FunnelCompressionClosure.paper016_route_example_costs",
+      "PFP.FunnelCompressionClosure.gluing_iff_pairwise_compatible",
+      "PFP.FunnelCompressionClosure.compatible_permitted_bijection",
+      "PFP.FunnelCompressionClosure.boolean_cycle_obstruction_and_equality_solutions",
+      "PFP.FunnelCompressionClosure.FunnelGates",
+      "PFP.FunnelCompressionClosure.runFourStageFunnel",
+      "PFP.FunnelCompressionClosure.funnel_monotone_contraction",
+      "PFP.FunnelCompressionClosure.mem_afterPareto_iff",
+      "PFP.FunnelCompressionClosure.thymus_reject_never_reaches_downstream",
+      "PFP.FunnelCompressionClosure.witness_reject_never_reaches_incumbent",
+      "PFP.FunnelCompressionClosure.funnel_authority_effect_none"
+    ],
+    "owned_invariants": [
+      "Zero declared axioms and zero sorryAx across all theorems checked by the Core Lean v4.35.0 kernel.",
+      "Exact quotient descent and reflection hold iff FibreCompatible holds on action enablement, step cost, report, and terminal labels.",
+      "Pairwise overlap compatibility is necessary and sufficient for unique global gluing over covered finite variable sets.",
+      "Four-stage funnel filtering contracts candidate cardinality monotonically, excludes Thymus and Witness rejections from downstream stages, and composes strictly to AuthorityEffect.none."
+    ],
+    "boundaries": [
+      "Theorems apply strictly to the formalized finite deterministic structures and boolean gate predicates; they do not certify stochastic model outputs, heuristic text summaries, or operating-system sandboxes."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "lean4/FunnelCompressionClosure.lean",
+      "language": "Lean 4",
+      "sha256": "b3fd370a31d202ee598422a5204a58fd39de2dc98377291fa8361ab7f9195150"
+    },
+    "profile": "Symbolic/Formal",
+    "level": "L4",
+    "level_basis": "Core Lean v4.35.0 kernel-verified formalization (zero Mathlib, zero sorryAx) of costed-table quotient necessity and sufficiency, greatest-fixed-point partition refinement, positive-cost loop erasure, finite presheaf gluing bijection, and four-stage funnel contraction with AuthorityEffect.none closure.",
+    "gates": {
+      "G1": "B",
+      "G2": "B",
+      "G3": "B",
+      "G4": "B",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect: None, explicit scope boundaries, and direct claim-to-theorem traceability for ATL-P015-001..002, ATL-P016-001..004, and the four-stage outer-loop funnel.",
+      "G2": "Symbolic/Formal profile in Core Lean v4.35.0 with total structural recursion, exact Nat/Prop/Bool definitions, zero float approximations, and #print axioms census confirming zero sorryAx and zero declared axioms.",
+      "G3": "Total functions and kernel-checked constructive proofs throughout; partial table transitions return explicit Option values and all stage authority effects compose via total inductive types.",
+      "G4": "Verified directly by the Lean v4.35.0 kernel (funnel-compression-closure-lean.run.json, exit 0) and cross-checked against Python/Lean derivation tests in tests/test_w5_v1rc_derivations.py (funnel-compression-closure-tests.run.json, exit 0).",
+      "G5": "Modular five-section layout with short tactic proofs, private helper lemmas for list filter properties, and zero compiler warnings."
+    },
+    "composite_grade": "B",
+    "score_token": "L4B",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T03:39:10Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/funnel-compression-closure-lean.run.json",
+        "sha256": "c226aef18b8825a864f980d1c7dac3de6cb7f789b56f4c730783c4c7ff61f7a6",
+        "note": "Core Lean v4.35.0 kernel check and #print axioms census"
+      },
+      {
+        "path": "governance/evidence/funnel-compression-closure-lean.log",
+        "sha256": "c49c99659239954c3f1fee91b4d5e0801badc4673372a31052b4d1f6d1b3d0d8",
+        "note": "#print axioms output confirming zero sorryAx"
+      },
+      {
+        "path": "governance/evidence/funnel-compression-closure-tests.run.json",
+        "sha256": "e382d2b801d41c44ff5705ade19ed46d0f6ff9996405301a2a8d90de13b3d94e",
+        "note": "Window 5 and v1.0rc derivation verification suite"
+      },
+      {
+        "path": "governance/evidence/funnel-compression-closure-tests.log",
+        "sha256": "01559a64653e889ab406a59759d320498768aa6912192801d701bd5fe339afaf",
+        "note": "10 passed in tests/test_w5_v1rc_derivations.py"
+      }
+    ]
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T03:39:10Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "lean4/FunnelCompressionClosure.lean",
+          "language": "Lean 4",
+          "sha256": "b3fd370a31d202ee598422a5204a58fd39de2dc98377291fa8361ab7f9195150"
+        },
+        "contract_urn": "urn:pfp:lean4:funnel-compression-closure:v1",
+        "symbols": [
+          "PFP.FunnelCompressionClosure.CostedTable",
+          "PFP.FunnelCompressionClosure.FibreCompatible",
+          "PFP.FunnelCompressionClosure.ExactQuotientWitness",
+          "PFP.FunnelCompressionClosure.exact_quotient_implies_fibre_compatible",
+          "PFP.FunnelCompressionClosure.fibre_compatible_gives_exact_quotient",
+          "PFP.FunnelCompressionClosure.exact_quotient_execWord_commutes",
+          "PFP.FunnelCompressionClosure.output_preserving_collapse_breaks_cost",
+          "PFP.FunnelCompressionClosure.stabilized_iterSplit_is_coarsest_stable",
+          "PFP.FunnelCompressionClosure.proper_splits_le_pred_card",
+          "PFP.FunnelCompressionClosure.loop_erasure_strictly_reduces_cost",
+          "PFP.FunnelCompressionClosure.paper016_route_example_costs",
+          "PFP.FunnelCompressionClosure.gluing_iff_pairwise_compatible",
+          "PFP.FunnelCompressionClosure.compatible_permitted_bijection",
+          "PFP.FunnelCompressionClosure.boolean_cycle_obstruction_and_equality_solutions",
+          "PFP.FunnelCompressionClosure.FunnelGates",
+          "PFP.FunnelCompressionClosure.runFourStageFunnel",
+          "PFP.FunnelCompressionClosure.funnel_monotone_contraction",
+          "PFP.FunnelCompressionClosure.mem_afterPareto_iff",
+          "PFP.FunnelCompressionClosure.thymus_reject_never_reaches_downstream",
+          "PFP.FunnelCompressionClosure.witness_reject_never_reaches_incumbent",
+          "PFP.FunnelCompressionClosure.funnel_authority_effect_none"
+        ],
+        "owned_invariants": [
+          "Zero declared axioms and zero sorryAx across all theorems checked by the Core Lean v4.35.0 kernel.",
+          "Exact quotient descent and reflection hold iff FibreCompatible holds on action enablement, step cost, report, and terminal labels.",
+          "Pairwise overlap compatibility is necessary and sufficient for unique global gluing over covered finite variable sets.",
+          "Four-stage funnel filtering contracts candidate cardinality monotonically, excludes Thymus and Witness rejections from downstream stages, and composes strictly to AuthorityEffect.none."
+        ],
+        "boundaries": [
+          "Theorems apply strictly to the formalized finite deterministic structures and boolean gate predicates; they do not certify stochastic model outputs, heuristic text summaries, or operating-system sandboxes."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "lean4/FunnelCompressionClosure.lean",
+          "language": "Lean 4",
+          "sha256": "b3fd370a31d202ee598422a5204a58fd39de2dc98377291fa8361ab7f9195150"
+        },
+        "profile": "Symbolic/Formal",
+        "level": "L4",
+        "level_basis": "Core Lean v4.35.0 kernel-verified formalization (zero Mathlib, zero sorryAx) of costed-table quotient necessity and sufficiency, greatest-fixed-point partition refinement, positive-cost loop erasure, finite presheaf gluing bijection, and four-stage funnel contraction with AuthorityEffect.none closure.",
+        "gates": {
+          "G1": "B",
+          "G2": "B",
+          "G3": "B",
+          "G4": "B",
+          "G5": "B"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect: None, explicit scope boundaries, and direct claim-to-theorem traceability for ATL-P015-001..002, ATL-P016-001..004, and the four-stage outer-loop funnel.",
+          "G2": "Symbolic/Formal profile in Core Lean v4.35.0 with total structural recursion, exact Nat/Prop/Bool definitions, zero float approximations, and #print axioms census confirming zero sorryAx and zero declared axioms.",
+          "G3": "Total functions and kernel-checked constructive proofs throughout; partial table transitions return explicit Option values and all stage authority effects compose via total inductive types.",
+          "G4": "Verified directly by the Lean v4.35.0 kernel (funnel-compression-closure-lean.run.json, exit 0) and cross-checked against Python/Lean derivation tests in tests/test_w5_v1rc_derivations.py (funnel-compression-closure-tests.run.json, exit 0).",
+          "G5": "Modular five-section layout with short tactic proofs, private helper lemmas for list filter properties, and zero compiler warnings."
+        },
+        "composite_grade": "B",
+        "score_token": "L4B",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T03:39:10Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/funnel-compression-closure-lean.run.json",
+            "sha256": "c226aef18b8825a864f980d1c7dac3de6cb7f789b56f4c730783c4c7ff61f7a6",
+            "note": "Core Lean v4.35.0 kernel check and #print axioms census"
+          },
+          {
+            "path": "governance/evidence/funnel-compression-closure-lean.log",
+            "sha256": "c49c99659239954c3f1fee91b4d5e0801badc4673372a31052b4d1f6d1b3d0d8",
+            "note": "#print axioms output confirming zero sorryAx"
+          },
+          {
+            "path": "governance/evidence/funnel-compression-closure-tests.run.json",
+            "sha256": "e382d2b801d41c44ff5705ade19ed46d0f6ff9996405301a2a8d90de13b3d94e",
+            "note": "Window 5 and v1.0rc derivation verification suite"
+          },
+          {
+            "path": "governance/evidence/funnel-compression-closure-tests.log",
+            "sha256": "01559a64653e889ab406a59759d320498768aa6912192801d701bd5fe339afaf",
+            "note": "10 passed in tests/test_w5_v1rc_derivations.py"
+          }
+        ]
+      }
+    }
+  ]
+}
