@@ -103,6 +103,15 @@ def test_showcase_markup_is_static_and_keeps_the_brand_out() -> None:
     assert "om" + "ega" not in blob
 
 
+def test_v1rc_gates_pytest_runs_operads_eis_and_pciv() -> None:
+    text = (REPO / ".github" / "workflows" / "pfp_v1rc_gates.yml").read_text(encoding="utf-8")
+    commands = [line for line in text.splitlines() if "-m pytest" in line]
+    trees = {"operads", "eis", "pciv"}
+    assert any(trees <= set(command.split()) for command in commands)
+    assert "The rest of eis/" not in text
+    assert "historical receipt scripts" not in text
+
+
 def test_editable_install_imports_pfp_core_without_a_path_hack() -> None:
     if sys.platform == "win32":
         python = REPO / ".venv" / "Scripts" / "python.exe"
