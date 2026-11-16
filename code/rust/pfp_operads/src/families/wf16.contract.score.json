@@ -1,0 +1,202 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf16.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf16.rs",
+      "language": "Rust",
+      "sha256": "936e16f9852a24da6e7cc21652815fb80c3796cd1c7d698a628e308b71d3aa2b"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf16:v1",
+    "symbols": [
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task is edges, a list of pairs of text; c, one exact rational per edge; D, a list of rows of exact rationals of one length; and y, one exact rational per row. A task the host cannot read is refused before anything is asked.",
+      "One question is asked, the task as written. The reply is an object with crosswalks, a nonempty list; each crosswalk has vertex_col, an exact integer per vertex name, and edge_row, a [row, sign] pair of exact integers under each edge index.",
+      "The source is exact when c is a coboundary on the graph of the edges, and the target is exact when rank D equals the rank of D with y adjoined. verdicts_identical is recorded first and passes when both are exact or both are not.",
+      "For each crosswalk k the host records, in this order, crosswalk<k>:bijective (the columns fill 0 to n-1 once each, the rows fill the rows of D once each, every sign is 1 or -1), crosswalk<k>:relations_preserved (the row of each edge is its sign times -1 at its tail and 1 at its head) and crosswalk<k>:data_transported (y at the row of each edge is its sign times c there). A crosswalk that is not bijective is not checked further and the others still are.",
+      "The run is certified as CROSSWALK_PRESERVED when every predicate passed, with the verdict exact or not_exact, the edges each crosswalk flips, and the vertices on which each later crosswalk differs from the first."
+    ],
+    "boundaries": [
+      "That the target matrix is the incidence matrix is not assumed. relations_preserved checks its rows against the graph, and verdicts_identical records whether the two verdicts agree.",
+      "Entries of vertex_col and edge_row beyond the task's vertices and edges are not looked at.",
+      "A crosswalk that is unreadable ends the run as malformed and keeps the predicates recorded before it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf16.rs",
+      "language": "Rust",
+      "sha256": "936e16f9852a24da6e7cc21652815fb80c3796cd1c7d698a628e308b71d3aa2b"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: c, D and y are exact rationals, the ranks are computed exactly, and columns, rows and signs are exact integers range-checked before use. Rows, flips and ranks are worked by hand in the tests. Not B: tested on examples, not proven.",
+      "G3": "Each unreadable part of a task and of a crosswalk has its own reason, checked in a stated order, and a crosswalk that is not bijective is a failed predicate, not an error. No unwrap or expect, and no index. Rows, columns and signs are read with get. Not B: panic-freedom is tested, not proven.",
+      "G4": "30 WF16 tests assert the registry entry, the prompt byte for byte, a crosswalk certified with its flips, a cochain that is not exact on either side, verdicts that differ between the substrates, a target made exact by y adding no rank, data that is not carried, a row that is not the signed incidence row, a matrix wider or narrower than the vertices, a loop as a zero row, the empty graph, several crosswalks each checked and compared with the first, a crosswalk that is not bijective dropped while the rest are checked, columns, rows and signs each out of range, entries beyond the graph, and each malformed reply and task by its reason. Mutation campaign R = 62/62. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 10, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T11:00:04Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v12-test.run.json",
+        "sha256": "ee5f813968e3e8802c1d8be777265eeac821ceb003b52ee0fe6e8b8563e66381",
+        "note": "870 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
+        "sha256": "73a978fab4163bc53efc22019f7e50f0912af33c25467f0480e518d5dbbca7ad",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
+        "sha256": "d6e58ab04a4027e91f0df4200c8357109ca84ad2fc7c6f61a84fd0dec7db4778",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
+        "sha256": "8e9a063c83d4defaa8512fdb2c090de5830b5a9270b903f0641d6c692a287afc",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-metrics.json",
+        "sha256": "35e322d577846769b739d4fc2262a8e808a0c66444e7fdad3ee0de45304db976",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 62,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf16.mutation.json",
+        "sha256": "19edca39e52e67b79213bcad73d3b3f4584c6054735235f68f0601d201786da9",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 62 mutants"
+      }
+    }
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T11:00:06.595579Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf16.rs",
+          "language": "Rust",
+          "sha256": "936e16f9852a24da6e7cc21652815fb80c3796cd1c7d698a628e308b71d3aa2b"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf16:v1",
+        "symbols": [
+          "FAMILY"
+        ],
+        "owned_invariants": [
+          "The task is edges, a list of pairs of text; c, one exact rational per edge; D, a list of rows of exact rationals of one length; and y, one exact rational per row. A task the host cannot read is refused before anything is asked.",
+          "One question is asked, the task as written. The reply is an object with crosswalks, a nonempty list; each crosswalk has vertex_col, an exact integer per vertex name, and edge_row, a [row, sign] pair of exact integers under each edge index.",
+          "The source is exact when c is a coboundary on the graph of the edges, and the target is exact when rank D equals the rank of D with y adjoined. verdicts_identical is recorded first and passes when both are exact or both are not.",
+          "For each crosswalk k the host records, in this order, crosswalk<k>:bijective (the columns fill 0 to n-1 once each, the rows fill the rows of D once each, every sign is 1 or -1), crosswalk<k>:relations_preserved (the row of each edge is its sign times -1 at its tail and 1 at its head) and crosswalk<k>:data_transported (y at the row of each edge is its sign times c there). A crosswalk that is not bijective is not checked further and the others still are.",
+          "The run is certified as CROSSWALK_PRESERVED when every predicate passed, with the verdict exact or not_exact, the edges each crosswalk flips, and the vertices on which each later crosswalk differs from the first."
+        ],
+        "boundaries": [
+          "That the target matrix is the incidence matrix is not assumed. relations_preserved checks its rows against the graph, and verdicts_identical records whether the two verdicts agree.",
+          "Entries of vertex_col and edge_row beyond the task's vertices and edges are not looked at.",
+          "A crosswalk that is unreadable ends the run as malformed and keeps the predicates recorded before it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf16.rs",
+          "language": "Rust",
+          "sha256": "936e16f9852a24da6e7cc21652815fb80c3796cd1c7d698a628e308b71d3aa2b"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Exact: c, D and y are exact rationals, the ranks are computed exactly, and columns, rows and signs are exact integers range-checked before use. Rows, flips and ranks are worked by hand in the tests. Not B: tested on examples, not proven.",
+          "G3": "Each unreadable part of a task and of a crosswalk has its own reason, checked in a stated order, and a crosswalk that is not bijective is a failed predicate, not an error. No unwrap or expect, and no index. Rows, columns and signs are read with get. Not B: panic-freedom is tested, not proven.",
+          "G4": "30 WF16 tests assert the registry entry, the prompt byte for byte, a crosswalk certified with its flips, a cochain that is not exact on either side, verdicts that differ between the substrates, a target made exact by y adding no rank, data that is not carried, a row that is not the signed incidence row, a matrix wider or narrower than the vertices, a loop as a zero row, the empty graph, several crosswalks each checked and compared with the first, a crosswalk that is not bijective dropped while the rest are checked, columns, rows and signs each out of range, entries beyond the graph, and each malformed reply and task by its reason. Mutation campaign R = 62/62. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 10, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T10:26:33Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v12-test.run.json",
+            "sha256": "ee5f813968e3e8802c1d8be777265eeac821ceb003b52ee0fe6e8b8563e66381",
+            "note": "870 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
+            "sha256": "73a978fab4163bc53efc22019f7e50f0912af33c25467f0480e518d5dbbca7ad",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
+            "sha256": "d6e58ab04a4027e91f0df4200c8357109ca84ad2fc7c6f61a84fd0dec7db4778",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
+            "sha256": "2e8dd1a3f41e59d4a22d28d0f867d00184f0373065d30bbf09108d1d521ddabd",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.json",
+            "sha256": "41a41eff69db08a4a194f9c3078f8c424b936d2076017eef778acb0e5e728e19",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 62,
+          "survived": 0,
+          "demonstrably_equivalent": 0,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-wf16.mutation.json",
+            "sha256": "19edca39e52e67b79213bcad73d3b3f4584c6054735235f68f0601d201786da9",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 62 mutants"
+          }
+        }
+      }
+    }
+  ]
+}

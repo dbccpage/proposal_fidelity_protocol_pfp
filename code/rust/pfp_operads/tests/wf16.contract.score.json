@@ -1,0 +1,262 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf16.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf16.rs",
+      "language": "Rust",
+      "sha256": "70fd66da2630863b231a30be7abc33d8f2d3e0381ca3a5a0f35a62196be698ca"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf16-tests:v1",
+    "symbols": [
+      "sha",
+      "request",
+      "all",
+      "run",
+      "ask",
+      "bad_task",
+      "malformed",
+      "outcomes",
+      "evidence",
+      "task",
+      "with",
+      "prompt",
+      "walk",
+      "walk_with",
+      "reply",
+      "four",
+      "not_bijective",
+      "the_family_is_registered_under_its_names",
+      "the_one_question_is_the_task_as_written",
+      "a_crosswalk_that_carries_relations_and_data_is_certified",
+      "a_cochain_that_is_not_exact_on_either_side_is_certified_as_not_exact",
+      "verdicts_that_differ_between_the_substrates_are_refused",
+      "the_target_is_exact_when_y_adds_no_rank_to_d",
+      "data_that_is_not_carried_is_refused_on_its_own",
+      "a_row_that_is_not_the_signed_incidence_row_is_refused",
+      "a_matrix_wider_or_narrower_than_the_vertices_preserves_no_relation",
+      "a_loop_is_a_zero_row_under_either_sign",
+      "rationals_are_read_exactly_on_both_sides",
+      "the_empty_graph_crosswalks_to_the_empty_matrix",
+      "pair",
+      "several_crosswalks_are_each_checked_and_compared_with_the_first",
+      "a_crosswalk_that_is_not_bijective_is_dropped_and_the_rest_are_still_checked",
+      "columns_must_fill_the_columns_once_each",
+      "rows_must_fill_the_rows_once_each",
+      "a_sign_must_be_one_or_minus_one",
+      "entries_beyond_the_vertices_and_edges_are_not_looked_at",
+      "a_reply_without_crosswalks_is_malformed_after_the_verdicts_are_compared",
+      "a_crosswalk_without_its_two_maps_is_malformed",
+      "a_column_that_is_missing_or_not_an_integer_is_malformed",
+      "an_edge_entry_that_is_missing_or_not_a_pair_is_malformed",
+      "a_row_or_a_sign_that_is_not_an_integer_is_malformed",
+      "a_malformed_crosswalk_keeps_the_predicates_recorded_before_it",
+      "a_task_whose_edges_are_not_pairs_of_text_is_refused",
+      "a_task_whose_cochain_does_not_fit_the_edges_is_refused",
+      "a_task_whose_matrix_is_not_rectangular_and_exact_is_refused",
+      "a_task_whose_vector_does_not_fit_the_rows_is_refused",
+      "the_parts_of_a_task_are_read_in_a_fixed_order",
+      "a_missing_reply_is_refused"
+    ],
+    "owned_invariants": [
+      "Rows, flips and ranks are worked by hand on a small graph and its incidence matrix.",
+      "Each of the three predicates of a crosswalk is asserted failing alone, with a crosswalk that is not bijective asserted dropped while the others are checked.",
+      "Each unreadable crosswalk and task is asserted by its reason, and the order in which a task is read."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf16.rs",
+      "language": "Rust",
+      "sha256": "70fd66da2630863b231a30be7abc33d8f2d3e0381ca3a5a0f35a62196be698ca"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 30 pass in the recorded run; the suite they belong to killed 62 of 62 eligible WF16 mutants.",
+      "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T11:00:04Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v12-test.run.json",
+        "sha256": "ee5f813968e3e8802c1d8be777265eeac821ceb003b52ee0fe6e8b8563e66381",
+        "note": "870 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
+        "sha256": "73a978fab4163bc53efc22019f7e50f0912af33c25467f0480e518d5dbbca7ad",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
+        "sha256": "d6e58ab04a4027e91f0df4200c8357109ca84ad2fc7c6f61a84fd0dec7db4778",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
+        "sha256": "8e9a063c83d4defaa8512fdb2c090de5830b5a9270b903f0641d6c692a287afc",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-metrics.json",
+        "sha256": "35e322d577846769b739d4fc2262a8e808a0c66444e7fdad3ee0de45304db976",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T11:00:08.833886Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf16.rs",
+          "language": "Rust",
+          "sha256": "70fd66da2630863b231a30be7abc33d8f2d3e0381ca3a5a0f35a62196be698ca"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf16-tests:v1",
+        "symbols": [
+          "sha",
+          "request",
+          "all",
+          "run",
+          "ask",
+          "bad_task",
+          "malformed",
+          "outcomes",
+          "evidence",
+          "task",
+          "with",
+          "prompt",
+          "walk",
+          "walk_with",
+          "reply",
+          "four",
+          "not_bijective",
+          "the_family_is_registered_under_its_names",
+          "the_one_question_is_the_task_as_written",
+          "a_crosswalk_that_carries_relations_and_data_is_certified",
+          "a_cochain_that_is_not_exact_on_either_side_is_certified_as_not_exact",
+          "verdicts_that_differ_between_the_substrates_are_refused",
+          "the_target_is_exact_when_y_adds_no_rank_to_d",
+          "data_that_is_not_carried_is_refused_on_its_own",
+          "a_row_that_is_not_the_signed_incidence_row_is_refused",
+          "a_matrix_wider_or_narrower_than_the_vertices_preserves_no_relation",
+          "a_loop_is_a_zero_row_under_either_sign",
+          "rationals_are_read_exactly_on_both_sides",
+          "the_empty_graph_crosswalks_to_the_empty_matrix",
+          "pair",
+          "several_crosswalks_are_each_checked_and_compared_with_the_first",
+          "a_crosswalk_that_is_not_bijective_is_dropped_and_the_rest_are_still_checked",
+          "columns_must_fill_the_columns_once_each",
+          "rows_must_fill_the_rows_once_each",
+          "a_sign_must_be_one_or_minus_one",
+          "entries_beyond_the_vertices_and_edges_are_not_looked_at",
+          "a_reply_without_crosswalks_is_malformed_after_the_verdicts_are_compared",
+          "a_crosswalk_without_its_two_maps_is_malformed",
+          "a_column_that_is_missing_or_not_an_integer_is_malformed",
+          "an_edge_entry_that_is_missing_or_not_a_pair_is_malformed",
+          "a_row_or_a_sign_that_is_not_an_integer_is_malformed",
+          "a_malformed_crosswalk_keeps_the_predicates_recorded_before_it",
+          "a_task_whose_edges_are_not_pairs_of_text_is_refused",
+          "a_task_whose_cochain_does_not_fit_the_edges_is_refused",
+          "a_task_whose_matrix_is_not_rectangular_and_exact_is_refused",
+          "a_task_whose_vector_does_not_fit_the_rows_is_refused",
+          "the_parts_of_a_task_are_read_in_a_fixed_order",
+          "a_missing_reply_is_refused"
+        ],
+        "owned_invariants": [
+          "Rows, flips and ranks are worked by hand on a small graph and its incidence matrix.",
+          "Each of the three predicates of a crosswalk is asserted failing alone, with a crosswalk that is not bijective asserted dropped while the others are checked.",
+          "Each unreadable crosswalk and task is asserted by its reason, and the order in which a task is read."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf16.rs",
+          "language": "Rust",
+          "sha256": "70fd66da2630863b231a30be7abc33d8f2d3e0381ca3a5a0f35a62196be698ca"
+        },
+        "profile": "Exact",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected values follow by hand from the request written in the test.",
+          "G3": "Refusals are asserted by code.",
+          "G4": "All 30 pass in the recorded run; the suite they belong to killed 62 of 62 eligible WF16 mutants.",
+          "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T10:26:33Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v12-test.run.json",
+            "sha256": "ee5f813968e3e8802c1d8be777265eeac821ceb003b52ee0fe6e8b8563e66381",
+            "note": "870 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
+            "sha256": "73a978fab4163bc53efc22019f7e50f0912af33c25467f0480e518d5dbbca7ad",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
+            "sha256": "d6e58ab04a4027e91f0df4200c8357109ca84ad2fc7c6f61a84fd0dec7db4778",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
+            "sha256": "2e8dd1a3f41e59d4a22d28d0f867d00184f0373065d30bbf09108d1d521ddabd",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.json",
+            "sha256": "41a41eff69db08a4a194f9c3078f8c424b936d2076017eef778acb0e5e728e19",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    }
+  ]
+}

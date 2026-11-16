@@ -1,0 +1,204 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf29.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf29.rs",
+      "language": "Rust",
+      "sha256": "bb4bf5b7706dda71531d9fe4e696727e43cf7ee372cd9998e1844adbfcccfd0b"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf29:v1",
+    "symbols": [
+      "MAX_DEPTH",
+      "PREDICATES",
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task is edges, a list of pairs of text; valid, a list of cases; and min_kill_rate, an exact rational. The sealed part may carry mutants, a list of cases. A case is {c, phi}: one value per edge and one per vertex name. A task the host cannot read is refused before anything is asked.",
+      "One question is asked, the task as written with the valid cases. The prompt never carries a mutant. The reply is an object with checker, a tree of and, or and not over five declared predicates, nested at most 6 deep. A name that is not declared is malformed and nothing is executed.",
+      "The predicates are c_length_matches, phi_covers_vertices, coboundary_matches, cycle_sums_zero and phi_root_zero, as defined in the module header. A predicate that cannot read what it needs from a case rejects the case, whatever the tree around it says. and and or read their parts in order and stop at the first that decides.",
+      "The host records no_false_rejection (the checker accepts every valid case) and kill_rate_meets_bar (the share of mutants it rejects is at least min_kill_rate; with no mutants the share is 0). The run is certified as CHECKER_ACCEPTED when both pass, with the kill rate as an integer or in lowest terms, the false rejections and the number of mutants."
+    ],
+    "boundaries": [
+      "A checker is data the host interprets, never code it runs.",
+      "The kill rate is a finding about the mutants held back, not about every fault a checker could miss.",
+      "The size of the task is bounded by the caller. The predicates read each case against the task's graph."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf29.rs",
+      "language": "Rust",
+      "sha256": "bb4bf5b7706dda71531d9fe4e696727e43cf7ee372cd9998e1844adbfcccfd0b"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: values are exact rationals, coboundaries and potentials are compared exactly, and the kill rate is an exact fraction of two counts. The limit is asserted as the value 6, one inside and one outside. Not B: tested on examples, not proven.",
+      "G3": "Each unreadable task part, tree and operator has its own reason, checked in a stated order, and each failing predicate is its own refusal. No unwrap or expect, and no index. A prompt that carried a sealed mutant would be refused by the sealed guard of families.rs. Not B: panic-freedom is tested, not proven.",
+      "G4": "25 WF29 tests assert the registry entry, the five declared predicates, the one question showing the valid cases and never a mutant, a checker certified with its kill rate, a rate below the bar, a rate written as an integer or in lowest terms, no mutants giving rate 0, a valid case rejected or unreadable, each predicate against values worked by hand, and and or in order, a graph with no edges having no root, each malformed reply, name and tree by its reason, the depth limit 6, and the order in which a task is read. Mutation campaign R = 78/78. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 10, cognitive complexity is not measured for Rust, nesting 3; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T11:00:04Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v12-test.run.json",
+        "sha256": "ee5f813968e3e8802c1d8be777265eeac821ceb003b52ee0fe6e8b8563e66381",
+        "note": "870 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
+        "sha256": "73a978fab4163bc53efc22019f7e50f0912af33c25467f0480e518d5dbbca7ad",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
+        "sha256": "d6e58ab04a4027e91f0df4200c8357109ca84ad2fc7c6f61a84fd0dec7db4778",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
+        "sha256": "8e9a063c83d4defaa8512fdb2c090de5830b5a9270b903f0641d6c692a287afc",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-metrics.json",
+        "sha256": "35e322d577846769b739d4fc2262a8e808a0c66444e7fdad3ee0de45304db976",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 78,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf29.mutation.json",
+        "sha256": "6b7dcaa30e8cc569ee02570ae2224d8d809a4a400246112b66e0a8c2c39b652b",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 78 mutants"
+      }
+    }
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T11:00:07.103837Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf29.rs",
+          "language": "Rust",
+          "sha256": "bb4bf5b7706dda71531d9fe4e696727e43cf7ee372cd9998e1844adbfcccfd0b"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf29:v1",
+        "symbols": [
+          "MAX_DEPTH",
+          "PREDICATES",
+          "FAMILY"
+        ],
+        "owned_invariants": [
+          "The task is edges, a list of pairs of text; valid, a list of cases; and min_kill_rate, an exact rational. The sealed part may carry mutants, a list of cases. A case is {c, phi}: one value per edge and one per vertex name. A task the host cannot read is refused before anything is asked.",
+          "One question is asked, the task as written with the valid cases. The prompt never carries a mutant. The reply is an object with checker, a tree of and, or and not over five declared predicates, nested at most 6 deep. A name that is not declared is malformed and nothing is executed.",
+          "The predicates are c_length_matches, phi_covers_vertices, coboundary_matches, cycle_sums_zero and phi_root_zero, as defined in the module header. A predicate that cannot read what it needs from a case rejects the case, whatever the tree around it says. and and or read their parts in order and stop at the first that decides.",
+          "The host records no_false_rejection (the checker accepts every valid case) and kill_rate_meets_bar (the share of mutants it rejects is at least min_kill_rate; with no mutants the share is 0). The run is certified as CHECKER_ACCEPTED when both pass, with the kill rate as an integer or in lowest terms, the false rejections and the number of mutants."
+        ],
+        "boundaries": [
+          "A checker is data the host interprets, never code it runs.",
+          "The kill rate is a finding about the mutants held back, not about every fault a checker could miss.",
+          "The size of the task is bounded by the caller. The predicates read each case against the task's graph."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf29.rs",
+          "language": "Rust",
+          "sha256": "bb4bf5b7706dda71531d9fe4e696727e43cf7ee372cd9998e1844adbfcccfd0b"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Exact: values are exact rationals, coboundaries and potentials are compared exactly, and the kill rate is an exact fraction of two counts. The limit is asserted as the value 6, one inside and one outside. Not B: tested on examples, not proven.",
+          "G3": "Each unreadable task part, tree and operator has its own reason, checked in a stated order, and each failing predicate is its own refusal. No unwrap or expect, and no index. A prompt that carried a sealed mutant would be refused by the sealed guard of families.rs. Not B: panic-freedom is tested, not proven.",
+          "G4": "25 WF29 tests assert the registry entry, the five declared predicates, the one question showing the valid cases and never a mutant, a checker certified with its kill rate, a rate below the bar, a rate written as an integer or in lowest terms, no mutants giving rate 0, a valid case rejected or unreadable, each predicate against values worked by hand, and and or in order, a graph with no edges having no root, each malformed reply, name and tree by its reason, the depth limit 6, and the order in which a task is read. Mutation campaign R = 78/78. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 10, cognitive complexity is not measured for Rust, nesting 3; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T10:26:33Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v12-test.run.json",
+            "sha256": "ee5f813968e3e8802c1d8be777265eeac821ceb003b52ee0fe6e8b8563e66381",
+            "note": "870 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
+            "sha256": "73a978fab4163bc53efc22019f7e50f0912af33c25467f0480e518d5dbbca7ad",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
+            "sha256": "d6e58ab04a4027e91f0df4200c8357109ca84ad2fc7c6f61a84fd0dec7db4778",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
+            "sha256": "2e8dd1a3f41e59d4a22d28d0f867d00184f0373065d30bbf09108d1d521ddabd",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.json",
+            "sha256": "41a41eff69db08a4a194f9c3078f8c424b936d2076017eef778acb0e5e728e19",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 78,
+          "survived": 0,
+          "demonstrably_equivalent": 0,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-wf29.mutation.json",
+            "sha256": "6b7dcaa30e8cc569ee02570ae2224d8d809a4a400246112b66e0a8c2c39b652b",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 78 mutants"
+          }
+        }
+      }
+    }
+  ]
+}

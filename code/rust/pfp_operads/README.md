@@ -169,9 +169,9 @@ patch and `[0, 0]` after it, and leaves `request.json`, `candidate.patch`,
   (`CounterfeitExactness`), broke a passing one (`BoundaryLeakage`) or did
   not fit the sources or the write set (`StructuralNonFit`). A missing tool,
   a changed source or a full disk blames no candidate.
-- **Family runs**: a workflow family (WF7, WF9, WF10, WF11, WF13, WF20, WF24,
-  WF25, WF26, WF27, WF30, WF31, WF32, WF33, WF38, WF40, WF45, WF46 and WF47
-  so far) is a walk the host owns. The request is the family's id, the
+- **Family runs**: a workflow family (WF6, WF7, WF9, WF10, WF11, WF13, WF16,
+  WF17, WF20, WF24, WF25, WF26, WF27, WF29, WF30, WF31, WF32, WF33, WF38,
+  WF40, WF44, WF45, WF46 and WF47 so far) is a walk the host owns. The request is the family's id, the
   public `task`, the `sealed` part and the `replies` received so far, each `null` or
   `{"content": ...}`. `family next` returns the stage and the exact prompt to
   send, and `family judge` returns `HOST_CERTIFIED`, `TYPED_REFUSAL` or

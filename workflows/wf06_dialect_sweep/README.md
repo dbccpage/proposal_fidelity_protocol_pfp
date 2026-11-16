@@ -5,16 +5,17 @@
 
 **Status:** runnable offline. The family runner checks its fixtures with no model call and no spend. No live or local model run of this runner is recorded yet. The pilots/ folder holds data from earlier model experiments run with an older harness; they are records, not runs of this runner.
 
-**Run it offline** (no model call, no spend), from the repository root:
+**Run it offline** (no model call, no spend), from the repository root. The first line builds the Rust host once:
 
 ```powershell
+cargo build --release -p pfp_operads --manifest-path code/rust/Cargo.toml
 python -m pfp_core.workflow_families run WF6
 python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF6-"
 ```
 
-**The check:** `dialect_query_preservation_sweep`. Only this check can certify; a model reply is evidence for it, never a verdict.
+**The check:** `dialect_query_preservation_sweep`. Only this check can certify; a model reply is evidence for it, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
-**Code:** [`pfp_core/workflow_families/layer4.py`](../../pfp_core/workflow_families/layer4.py) (`DialectSweep`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf6)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf06.rs`](../../code/rust/pfp_operads/src/families/wf06.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer4.py`](../../pfp_core/workflow_families/layer4.py) (`DialectSweep`) · [tests](../../pfp_core/workflow_families/tests/test_families.py) · [wiki page](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/wiki/workflow_wf6)
 <!-- end generated -->
 
 **Kind:** experiment design. **Builds on:** [WF5](../wf05_checked_rewrite/README.md).

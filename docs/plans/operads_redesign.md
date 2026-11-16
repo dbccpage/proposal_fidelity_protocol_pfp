@@ -165,7 +165,16 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
      decimation, WF38's recomputed ranking and WF46's glued patches. WF11
      checks a dual pair or a Farkas vector over the rationals. WF47
      recomputes every batch of a sealed, resumable search.
-   - **Next.** The remaining families of layers 4 to 8. Then the WF1-WF5 and
+   - **4e (built, offline).** The first part of layer 4: WF6, WF16, WF17,
+     WF29 and WF44. The host now has task graphs whose vertices are named by
+     text (`families/labelled.rs`) and on them WF16's crosswalk of a cochain
+     onto an incidence matrix, WF29's checker tree and WF44's three exact
+     certificate schemas. WF17 evaluates Hennessy-Milner formulas as state
+     sets and checks bisimulation certificates, and WF6 rewrites each item
+     in each dialect, keeps the dialects that preserve the query, and grades
+     every reply with WF7's check.
+   - **Next.** WF8, WF21 and WF23 (fences, seal chains and custody
+     hashing), then the families of layers 5 to 8. Then the WF1-WF5 and
      WF52-WF54 host checks, the run budget and run custody.
 5. **Retire Python `operads/`** (682 files) once nothing imports it, re-pin
    the canonical ID fixture, and score the Rust files that change.
@@ -203,8 +212,9 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
   derivation is written for them.
 - Python still validates reply schemas, routes statuses and keeps run
   custody (manifests, replay). Those move in slice 4.
-- After 4d the host checks WF7, WF9, WF10, WF11, WF13, WF20, WF24, WF25,
-  WF26, WF27, WF30, WF31, WF32, WF33, WF38, WF40, WF45, WF46 and WF47.
+- After 4e the host checks WF6, WF7, WF9, WF10, WF11, WF13, WF16, WF17,
+  WF20, WF24, WF25, WF26, WF27, WF29, WF30, WF31, WF32, WF33, WF38, WF40,
+  WF44, WF45, WF46 and WF47.
   Every other family still runs its check and its sealed-value guard in
   Python. WF6 and WF22 grade with WF7's check and so reach the host for that
   part.
@@ -286,3 +296,24 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
   old and new checks agree on random inputs (4,000 reply envelopes, 3,000
   task results, 3,000 mining replies, 3,000 L2 rechecks, 1,500 signature
   comparisons), but that is a comparison of checkers, not a model result.
+- The 4e host differs from the Python it replaces in these ways, all of
+  them stricter. A task is read before the first question, so a malformed
+  one is refused as `BAD_TASK` where Python crashed or called the first
+  reply malformed. Vertex names in WF16, WF29 and WF44 must be text. WF6
+  needs a text statement, text item ids and dialect names that are
+  distinct, dialects written for the shape of every item, and at most 64
+  questions. WF16 needs a rectangular `D`. WF17 takes at most 256
+  transitions and reads the whole formula of a witness before judging it,
+  so a malformed branch no state reaches is now refused where Python
+  skipped it; a `dia` or `box` label must be text. WF29 needs `c` to be a
+  list and `phi` an object, where Python accepted any value with a length
+  or a set of keys, and a malformed sealed mutant list is refused. Rational
+  text is read as everywhere else on the host, so `+1` and ` 1` are refused.
+  A WF29 kill rate is written as an integer or in lowest terms.
+- Old and new agree on 10,000 random runs of those five families apart from
+  those readings: 8,541 identical, 552 tasks now refused before asking, 237
+  runs on which the old check crashed or never finished (215 of them on a
+  malformed task), 289 tasks both refuse in other words, 83 replies both
+  call malformed in other words, 30 WF29 runs on which both stop because a
+  prompt would carry a sealed value, and 267 runs under the WF17 and WF29
+  readings above.

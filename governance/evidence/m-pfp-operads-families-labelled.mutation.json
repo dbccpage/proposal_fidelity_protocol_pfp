@@ -1,0 +1,155 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/labelled.rs",
+  "target_sha256": "f6cb30dbdf33cb650102a4e95416117e81778b90811de1349e3a0772e98fb439",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
+  "counts": {
+    "killed": 23,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "a pair may be longer",
+      "old": "        [from, to] => Some((from.as_text()?, to.as_text()?)),",
+      "new": "        [from, to, ..] => Some((from.as_text()?, to.as_text()?)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the ends of a pair are swapped",
+      "old": "        [from, to] => Some((from.as_text()?, to.as_text()?)),",
+      "new": "        [from, to] => Some((to.as_text()?, from.as_text()?)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "only the tail need be text",
+      "old": "        [from, to] => Some((from.as_text()?, to.as_text()?)),",
+      "new": "        [from, to] => Some((from.as_text()?, to.as_text().unwrap_or(\"\"))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "only the head need be text",
+      "old": "        [from, to] => Some((from.as_text()?, to.as_text()?)),",
+      "new": "        [from, to] => Some((from.as_text().unwrap_or(\"\"), to.as_text()?)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a list holding one bad pair is a graph",
+      "old": "    let pairs: Vec<(&str, &str)> = edges.as_list()?.iter().map(pair).collect::<Option<_>>()?;",
+      "new": "    let pairs: Vec<(&str, &str)> = edges.as_list()?.iter().filter_map(pair).collect();",
+      "outcome": "killed"
+    },
+    {
+      "name": "a name is known when it is not equal",
+      "old": "        let known = names.iter().position(|known| known == name);",
+      "new": "        let known = names.iter().position(|known| known != name);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a new name is numbered one too high",
+      "old": "            names.len() - 1\n",
+      "new": "            names.len()\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "a new name is numbered from the end",
+      "old": "            names.len() - 1\n",
+      "new": "            0\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "a new name is not recorded",
+      "old": "            names.push(name.to_owned());\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "heads are numbered before tails",
+      "old": "        .map(|(from, to)| (number(from), number(to)))",
+      "new": "        .map(|(from, to)| (number(to), number(from)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "edges are written reversed",
+      "old": "        .map(|(from, to)| (number(from), number(to)))\n        .collect();",
+      "new": "        .map(|(from, to)| (number(from), number(to)))\n        .rev()\n        .collect();",
+      "outcome": "killed"
+    },
+    {
+      "name": "the graph is built from the pairs written",
+      "old": "    let graph = Graph::of(numbered.iter().map(|(from, to)| (from, to)));",
+      "new": "    let graph = Graph::of(numbered.iter().map(|(from, _)| (from, from)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the graph has the heads as tails",
+      "old": "    let graph = Graph::of(numbered.iter().map(|(from, to)| (from, to)));",
+      "new": "    let graph = Graph::of(numbered.iter().map(|(from, to)| (to, from)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "covers wants an object",
+      "old": "        let Datum::Map(entries) = listed else {\n            return false;\n        };",
+      "new": "        let Datum::Map(entries) = listed else {\n            return true;\n        };",
+      "outcome": "killed"
+    },
+    {
+      "name": "covers allows fewer keys",
+      "old": "        entries.len() == self.names.len()\n            && self.names.iter().all(|name| entries.contains_key(name))",
+      "new": "        entries.len() <= self.names.len()\n            && self.names.iter().all(|name| entries.contains_key(name))",
+      "outcome": "killed"
+    },
+    {
+      "name": "covers allows more keys",
+      "old": "        entries.len() == self.names.len()\n            && self.names.iter().all(|name| entries.contains_key(name))",
+      "new": "        entries.len() >= self.names.len()\n            && self.names.iter().all(|name| entries.contains_key(name))",
+      "outcome": "killed"
+    },
+    {
+      "name": "covers needs one name",
+      "old": "            && self.names.iter().all(|name| entries.contains_key(name))",
+      "new": "            && self.names.iter().any(|name| entries.contains_key(name))",
+      "outcome": "killed"
+    },
+    {
+      "name": "covers needs no names",
+      "old": "        entries.len() == self.names.len()\n            && self.names.iter().all(|name| entries.contains_key(name))",
+      "new": "        entries.len() == self.names.len()",
+      "outcome": "killed"
+    },
+    {
+      "name": "covers needs the count or the names",
+      "old": "        entries.len() == self.names.len()\n            && self.names.iter().all(|name| entries.contains_key(name))",
+      "new": "        entries.len() == self.names.len()\n            || self.names.iter().all(|name| entries.contains_key(name))",
+      "outcome": "killed"
+    },
+    {
+      "name": "an entry is looked up by another name",
+      "old": "        let entry = |name: &String| listed.get(name).and_then(&read);",
+      "new": "        let entry = |name: &String| listed.get(&self.names[0]).and_then(&read);",
+      "outcome": "killed"
+    },
+    {
+      "name": "an unreadable entry is skipped",
+      "old": "        self.names.iter().map(entry).collect()",
+      "new": "        Some(self.names.iter().filter_map(entry).collect())",
+      "outcome": "killed"
+    },
+    {
+      "name": "entries come back reversed",
+      "old": "        self.names.iter().map(entry).collect()",
+      "new": "        self.names.iter().rev().map(entry).collect()",
+      "outcome": "killed"
+    },
+    {
+      "name": "a potential is read with another reading",
+      "old": "        self.by_name(listed, rational)",
+      "new": "        self.by_name(listed, |entry| entry.as_int().map(|n| Rational::from_integer(n.clone())))",
+      "outcome": "killed"
+    }
+  ]
+}

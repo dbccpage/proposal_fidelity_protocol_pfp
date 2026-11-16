@@ -1,0 +1,264 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf29.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf29.rs",
+      "language": "Rust",
+      "sha256": "7ec1e1557730760b09ff2078b3283e09f13d0f0d77b8d6a8cc218984e0a27480"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf29-tests:v1",
+    "symbols": [
+      "sha",
+      "request",
+      "run",
+      "bad_task",
+      "malformed",
+      "outcomes",
+      "evidence",
+      "case",
+      "sound",
+      "shifted",
+      "inexact",
+      "wrong_potential",
+      "short",
+      "partial",
+      "task",
+      "with",
+      "sealed",
+      "prompt",
+      "checker",
+      "definition",
+      "accepts_on",
+      "accepts",
+      "reads",
+      "the_family_is_registered_under_its_names",
+      "the_declared_predicates_are_the_five_a_checker_may_name",
+      "the_one_question_shows_the_valid_cases_and_never_the_mutants",
+      "a_checker_that_rejects_no_valid_case_and_enough_mutants_is_certified",
+      "a_kill_rate_below_the_bar_is_refused",
+      "a_kill_rate_is_written_as_an_integer_or_in_lowest_terms",
+      "with_no_mutants_the_kill_rate_is_zero",
+      "a_checker_that_rejects_a_valid_case_is_refused",
+      "a_valid_case_the_checker_cannot_read_counts_as_rejected",
+      "the_length_predicate_counts_the_entries_of_a_list",
+      "the_cover_predicate_wants_exactly_the_vertex_names_as_keys",
+      "the_coboundary_predicate_compares_c_with_the_coboundary_of_phi",
+      "the_cycle_predicate_asks_whether_c_is_a_coboundary_at_all",
+      "the_root_predicate_reads_phi_at_the_first_vertex_the_edges_name",
+      "a_graph_with_no_edges_has_no_root_to_read",
+      "and_wants_every_part_and_or_wants_one",
+      "the_parts_are_read_in_order_and_an_unreadable_one_rejects_the_case",
+      "unreadable",
+      "a_reply_without_a_checker_is_malformed",
+      "a_name_that_is_not_declared_is_malformed_and_nothing_is_executed",
+      "a_tree_that_is_not_an_operator_over_parts_is_malformed",
+      "not_takes_exactly_one_part",
+      "a_checker_nests_at_most_six_deep",
+      "a_task_is_read_in_a_fixed_order_and_refused_at_the_first_part_that_does_not_fit",
+      "each_part_of_a_task_has_one_shape",
+      "a_missing_reply_is_refused"
+    ],
+    "owned_invariants": [
+      "Each of the five predicates is asserted against values worked by hand, and and, or and not against the order they read their parts in.",
+      "The prompt is asserted never to carry a mutant, and the kill rate is asserted as an exact fraction in lowest terms.",
+      "The depth limit is written as the value 6 and asserted one inside and one outside, and each unreadable task part and tree by its reason."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf29.rs",
+      "language": "Rust",
+      "sha256": "7ec1e1557730760b09ff2078b3283e09f13d0f0d77b8d6a8cc218984e0a27480"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 25 pass in the recorded run; the suite they belong to killed 78 of 78 eligible WF29 mutants.",
+      "G5": "Measured worst cyclomatic 5, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T11:00:04Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v12-test.run.json",
+        "sha256": "ee5f813968e3e8802c1d8be777265eeac821ceb003b52ee0fe6e8b8563e66381",
+        "note": "870 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
+        "sha256": "73a978fab4163bc53efc22019f7e50f0912af33c25467f0480e518d5dbbca7ad",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
+        "sha256": "d6e58ab04a4027e91f0df4200c8357109ca84ad2fc7c6f61a84fd0dec7db4778",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
+        "sha256": "8e9a063c83d4defaa8512fdb2c090de5830b5a9270b903f0641d6c692a287afc",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-metrics.json",
+        "sha256": "35e322d577846769b739d4fc2262a8e808a0c66444e7fdad3ee0de45304db976",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T11:00:09.353409Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf29.rs",
+          "language": "Rust",
+          "sha256": "7ec1e1557730760b09ff2078b3283e09f13d0f0d77b8d6a8cc218984e0a27480"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf29-tests:v1",
+        "symbols": [
+          "sha",
+          "request",
+          "run",
+          "bad_task",
+          "malformed",
+          "outcomes",
+          "evidence",
+          "case",
+          "sound",
+          "shifted",
+          "inexact",
+          "wrong_potential",
+          "short",
+          "partial",
+          "task",
+          "with",
+          "sealed",
+          "prompt",
+          "checker",
+          "definition",
+          "accepts_on",
+          "accepts",
+          "reads",
+          "the_family_is_registered_under_its_names",
+          "the_declared_predicates_are_the_five_a_checker_may_name",
+          "the_one_question_shows_the_valid_cases_and_never_the_mutants",
+          "a_checker_that_rejects_no_valid_case_and_enough_mutants_is_certified",
+          "a_kill_rate_below_the_bar_is_refused",
+          "a_kill_rate_is_written_as_an_integer_or_in_lowest_terms",
+          "with_no_mutants_the_kill_rate_is_zero",
+          "a_checker_that_rejects_a_valid_case_is_refused",
+          "a_valid_case_the_checker_cannot_read_counts_as_rejected",
+          "the_length_predicate_counts_the_entries_of_a_list",
+          "the_cover_predicate_wants_exactly_the_vertex_names_as_keys",
+          "the_coboundary_predicate_compares_c_with_the_coboundary_of_phi",
+          "the_cycle_predicate_asks_whether_c_is_a_coboundary_at_all",
+          "the_root_predicate_reads_phi_at_the_first_vertex_the_edges_name",
+          "a_graph_with_no_edges_has_no_root_to_read",
+          "and_wants_every_part_and_or_wants_one",
+          "the_parts_are_read_in_order_and_an_unreadable_one_rejects_the_case",
+          "unreadable",
+          "a_reply_without_a_checker_is_malformed",
+          "a_name_that_is_not_declared_is_malformed_and_nothing_is_executed",
+          "a_tree_that_is_not_an_operator_over_parts_is_malformed",
+          "not_takes_exactly_one_part",
+          "a_checker_nests_at_most_six_deep",
+          "a_task_is_read_in_a_fixed_order_and_refused_at_the_first_part_that_does_not_fit",
+          "each_part_of_a_task_has_one_shape",
+          "a_missing_reply_is_refused"
+        ],
+        "owned_invariants": [
+          "Each of the five predicates is asserted against values worked by hand, and and, or and not against the order they read their parts in.",
+          "The prompt is asserted never to carry a mutant, and the kill rate is asserted as an exact fraction in lowest terms.",
+          "The depth limit is written as the value 6 and asserted one inside and one outside, and each unreadable task part and tree by its reason."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf29.rs",
+          "language": "Rust",
+          "sha256": "7ec1e1557730760b09ff2078b3283e09f13d0f0d77b8d6a8cc218984e0a27480"
+        },
+        "profile": "Exact",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected values follow by hand from the request written in the test.",
+          "G3": "Refusals are asserted by code.",
+          "G4": "All 25 pass in the recorded run; the suite they belong to killed 78 of 78 eligible WF29 mutants.",
+          "G5": "Measured worst cyclomatic 5, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T10:26:33Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v12-test.run.json",
+            "sha256": "ee5f813968e3e8802c1d8be777265eeac821ceb003b52ee0fe6e8b8563e66381",
+            "note": "870 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
+            "sha256": "73a978fab4163bc53efc22019f7e50f0912af33c25467f0480e518d5dbbca7ad",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
+            "sha256": "d6e58ab04a4027e91f0df4200c8357109ca84ad2fc7c6f61a84fd0dec7db4778",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
+            "sha256": "2e8dd1a3f41e59d4a22d28d0f867d00184f0373065d30bbf09108d1d521ddabd",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.json",
+            "sha256": "41a41eff69db08a4a194f9c3078f8c424b936d2076017eef778acb0e5e728e19",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,206 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf44.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf44.rs",
+      "language": "Rust",
+      "sha256": "e81464fff66954ab011c966b96d2e521f6aab73f7d85455d4415a82e8d1f65be"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf44:v1",
+    "symbols": [
+      "SCHEMAS",
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task names one of three schemas: coboundary_potential (edges, c), l1_dual_circulation (edges, w, and cap, which is 1 on every edge when absent) or canonical_rational (A and b as in WF7). A task the host cannot read, or that names another schema, is refused before anything is asked.",
+      "One question is asked, the task as written. The reply is an object with schema and certificate, the certificate an object.",
+      "no_float is recorded first. It fails for any number with a fraction or an exponent, and any text written like one, anywhere in the certificate, and the run is refused as FLOAT_IN_CERTIFICATE.",
+      "well_typed is recorded next. It fails unless the reply names the task's schema and the certificate has exactly the schema's fields, each of the right shape, with entries that are integers or text p/q. The run is then refused as ILL_TYPED.",
+      "Only then are the equations evaluated, each as its own predicate: coboundary_potential checks that c is the coboundary of phi on every edge; l1_dual_circulation checks that r is w plus the coboundary of f, that z is a circulation, that z is within the caps, and that the duality gap is zero; canonical_rational checks that the system has one solution, that x is it, and that every text entry is written as an integer or as p/q in lowest terms with q above 1.",
+      "The run is certified as CERTIFICATE_VALID with the schema when every predicate passed."
+    ],
+    "boundaries": [
+      "no_float is lexical. Text that only resembles a decimal is left to the type gate.",
+      "The certificate is checked against its schema's equations only. That the schema is the right question for the task is the task's to say.",
+      "A system without exactly one solution has no canonical certificate and fails unique_solution."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf44.rs",
+      "language": "Rust",
+      "sha256": "e81464fff66954ab011c966b96d2e521f6aab73f7d85455d4415a82e8d1f65be"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: every entry is an exact integer or text p/q read as an exact rational, equations and the duality gap are compared exactly, and a value is canonical only in lowest terms. Residuals, flows, caps and gaps are worked by hand in the tests. Not B: tested on examples, not proven.",
+      "G3": "Each unreadable task part has its own reason, a decimal, an ill-typed certificate and a malformed reply each have their own code, and a failing equation is its own predicate. No panicking unwrap or expect, and no index. Fields are matched by pattern and entries are read with get. Not B: panic-freedom is tested, not proven.",
+      "G4": "28 WF44 tests assert the registry entry, the prompt byte for byte, a potential certified and one that misses an edge, a primal and dual pair with no gap, residuals and flows by their size, a residual that is not w plus the coboundary of f, a flow with net flow at a vertex or beyond a cap, a gap between primal and dual, the one solution in canonical form and one not in lowest terms, a vector that is not the solution, a system without one solution, a decimal refused before the types are read, text written like a decimal and text that only resembles one, a reply that names another schema, each schema's fields, the shape of each value, and each malformed task and reply by its reason. Mutation campaign R = 97/97. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 10, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T11:00:04Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v12-test.run.json",
+        "sha256": "ee5f813968e3e8802c1d8be777265eeac821ceb003b52ee0fe6e8b8563e66381",
+        "note": "870 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
+        "sha256": "73a978fab4163bc53efc22019f7e50f0912af33c25467f0480e518d5dbbca7ad",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
+        "sha256": "d6e58ab04a4027e91f0df4200c8357109ca84ad2fc7c6f61a84fd0dec7db4778",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
+        "sha256": "8e9a063c83d4defaa8512fdb2c090de5830b5a9270b903f0641d6c692a287afc",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v12-metrics.json",
+        "sha256": "35e322d577846769b739d4fc2262a8e808a0c66444e7fdad3ee0de45304db976",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 97,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf44.mutation.json",
+        "sha256": "0dad2f37afb61c8e674695aed9a44137f8fbc843b3ce203d9ed932c01f30163e",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 97 mutants"
+      }
+    }
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T11:00:07.347115Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf44.rs",
+          "language": "Rust",
+          "sha256": "e81464fff66954ab011c966b96d2e521f6aab73f7d85455d4415a82e8d1f65be"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf44:v1",
+        "symbols": [
+          "SCHEMAS",
+          "FAMILY"
+        ],
+        "owned_invariants": [
+          "The task names one of three schemas: coboundary_potential (edges, c), l1_dual_circulation (edges, w, and cap, which is 1 on every edge when absent) or canonical_rational (A and b as in WF7). A task the host cannot read, or that names another schema, is refused before anything is asked.",
+          "One question is asked, the task as written. The reply is an object with schema and certificate, the certificate an object.",
+          "no_float is recorded first. It fails for any number with a fraction or an exponent, and any text written like one, anywhere in the certificate, and the run is refused as FLOAT_IN_CERTIFICATE.",
+          "well_typed is recorded next. It fails unless the reply names the task's schema and the certificate has exactly the schema's fields, each of the right shape, with entries that are integers or text p/q. The run is then refused as ILL_TYPED.",
+          "Only then are the equations evaluated, each as its own predicate: coboundary_potential checks that c is the coboundary of phi on every edge; l1_dual_circulation checks that r is w plus the coboundary of f, that z is a circulation, that z is within the caps, and that the duality gap is zero; canonical_rational checks that the system has one solution, that x is it, and that every text entry is written as an integer or as p/q in lowest terms with q above 1.",
+          "The run is certified as CERTIFICATE_VALID with the schema when every predicate passed."
+        ],
+        "boundaries": [
+          "no_float is lexical. Text that only resembles a decimal is left to the type gate.",
+          "The certificate is checked against its schema's equations only. That the schema is the right question for the task is the task's to say.",
+          "A system without exactly one solution has no canonical certificate and fails unique_solution."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf44.rs",
+          "language": "Rust",
+          "sha256": "e81464fff66954ab011c966b96d2e521f6aab73f7d85455d4415a82e8d1f65be"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Exact: every entry is an exact integer or text p/q read as an exact rational, equations and the duality gap are compared exactly, and a value is canonical only in lowest terms. Residuals, flows, caps and gaps are worked by hand in the tests. Not B: tested on examples, not proven.",
+          "G3": "Each unreadable task part has its own reason, a decimal, an ill-typed certificate and a malformed reply each have their own code, and a failing equation is its own predicate. No panicking unwrap or expect, and no index. Fields are matched by pattern and entries are read with get. Not B: panic-freedom is tested, not proven.",
+          "G4": "28 WF44 tests assert the registry entry, the prompt byte for byte, a potential certified and one that misses an edge, a primal and dual pair with no gap, residuals and flows by their size, a residual that is not w plus the coboundary of f, a flow with net flow at a vertex or beyond a cap, a gap between primal and dual, the one solution in canonical form and one not in lowest terms, a vector that is not the solution, a system without one solution, a decimal refused before the types are read, text written like a decimal and text that only resembles one, a reply that names another schema, each schema's fields, the shape of each value, and each malformed task and reply by its reason. Mutation campaign R = 97/97. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 10, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T10:26:33Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v12-test.run.json",
+            "sha256": "ee5f813968e3e8802c1d8be777265eeac821ceb003b52ee0fe6e8b8563e66381",
+            "note": "870 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
+            "sha256": "73a978fab4163bc53efc22019f7e50f0912af33c25467f0480e518d5dbbca7ad",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
+            "sha256": "d6e58ab04a4027e91f0df4200c8357109ca84ad2fc7c6f61a84fd0dec7db4778",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
+            "sha256": "2e8dd1a3f41e59d4a22d28d0f867d00184f0373065d30bbf09108d1d521ddabd",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.json",
+            "sha256": "41a41eff69db08a4a194f9c3078f8c424b936d2076017eef778acb0e5e728e19",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 97,
+          "survived": 0,
+          "demonstrably_equivalent": 0,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-wf44.mutation.json",
+            "sha256": "0dad2f37afb61c8e674695aed9a44137f8fbc843b3ce203d9ed932c01f30163e",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 97 mutants"
+          }
+        }
+      }
+    }
+  ]
+}
