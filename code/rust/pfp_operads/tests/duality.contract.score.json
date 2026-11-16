@@ -1,0 +1,230 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/duality.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/duality.rs",
+      "language": "Rust",
+      "sha256": "406eb8b752a7be675201a975df7cb89f2959e0dac360cb0caf99b93ecf7d47e1"
+    },
+    "contract_urn": "urn:pfp-operads:families-duality-tests:v1",
+    "symbols": [
+      "item",
+      "bad_item",
+      "graded",
+      "feasible",
+      "negative",
+      "a_potential_that_holds_on_every_edge_is_certified",
+      "a_potential_that_breaks_one_edge_is_refused",
+      "an_edge_that_holds_with_equality_holds",
+      "the_edge_runs_from_its_first_end_to_its_second",
+      "a_negative_closed_walk_is_a_typed_refusal",
+      "a_closed_walk_that_does_not_add_up_to_less_than_zero_is_refused",
+      "a_walk_must_follow_edges_and_close",
+      "a_walk_goes_round_the_cycle_more_than_once",
+      "a_walk_of_one_vertex_or_a_walk_that_is_not_integers_is_refused",
+      "a_walk_of_one_vertex_is_refused_even_on_a_negative_self_loop",
+      "a_walk_with_one_entry_that_is_not_an_integer_is_refused_whole",
+      "a_walk_takes_the_lightest_of_parallel_edges",
+      "a_potential_must_hold_on_every_one_of_parallel_edges",
+      "a_potential_of_another_length_is_read_as_a_walk_would_be",
+      "a_potential_of_the_right_length_is_graded_even_when_a_walk_comes_with_it",
+      "a_potential_entry_that_is_not_an_exact_rational_refuses_the_reply",
+      "rationals_are_written_as_integers_or_as_p_over_q",
+      "a_walk_adds_up_rational_weights",
+      "an_edge_end_that_is_not_a_vertex_refuses_the_potential",
+      "a_graph_with_no_vertices_and_no_edges_has_the_empty_potential",
+      "the_number_of_vertices_may_be_of_any_size",
+      "text_that_is_not_one_json_object_is_refused",
+      "an_object_with_neither_answer_is_refused",
+      "an_item_states_an_integer_n_and_a_list_of_edges",
+      "an_edge_is_two_integer_ends_and_an_exact_rational_weight",
+      "the_grades_are_named_as_the_stored_dossiers_name_them",
+      "the_pin_is_the_digest_of_the_graders_source_with_unix_line_endings"
+    ],
+    "owned_invariants": [
+      "Potentials, closed walks and weights are worked by hand for each graph written in a test, and the pin is rebuilt from the file with unix line endings.",
+      "A potential that breaks one edge, an edge that holds with equality, the direction of an edge and each walk that fails to follow edges, to close or to add up to less than zero are asserted by their grades.",
+      "Each rational that is not an integer or p over q, each end that is not a vertex and each reply that is not one JSON object is asserted refused."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/duality.rs",
+      "language": "Rust",
+      "sha256": "406eb8b752a7be675201a975df7cb89f2959e0dac360cb0caf99b93ecf7d47e1"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 27 pass in the recorded run; the suites that exercise the grader killed 64 of 64 eligible grader mutants.",
+      "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T22:06:04Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v15-test.run.json",
+        "sha256": "961d394a63c16d206ba212c2f0e771539928f3b958cf63472c35089adc791aa9",
+        "note": "1219 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-clippy.run.json",
+        "sha256": "fe8e4f5bab606fb274fa7fd77441f236d1ef7ab99e2dceb702d6f8ebc1887d08",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-fmt.run.json",
+        "sha256": "fcd4bbf1b7bc812fa56575170d36f18bd3fe6e6e5f73b5be845584264e93a3e1",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-metrics.run.json",
+        "sha256": "e4c24e720d1823e3d047da11b130f1d5d4a45bb021b6b929fc72bb7f1377e61a",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-metrics.json",
+        "sha256": "e204ef1d998e58a6f5b13694279c83863b493ca88e21fcdc395014191976e4f2",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T22:06:07.024912Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/duality.rs",
+          "language": "Rust",
+          "sha256": "406eb8b752a7be675201a975df7cb89f2959e0dac360cb0caf99b93ecf7d47e1"
+        },
+        "contract_urn": "urn:pfp-operads:families-duality-tests:v1",
+        "symbols": [
+          "item",
+          "bad_item",
+          "graded",
+          "feasible",
+          "negative",
+          "a_potential_that_holds_on_every_edge_is_certified",
+          "a_potential_that_breaks_one_edge_is_refused",
+          "an_edge_that_holds_with_equality_holds",
+          "the_edge_runs_from_its_first_end_to_its_second",
+          "a_negative_closed_walk_is_a_typed_refusal",
+          "a_closed_walk_that_does_not_add_up_to_less_than_zero_is_refused",
+          "a_walk_must_follow_edges_and_close",
+          "a_walk_goes_round_the_cycle_more_than_once",
+          "a_walk_of_one_vertex_or_a_walk_that_is_not_integers_is_refused",
+          "a_walk_of_one_vertex_is_refused_even_on_a_negative_self_loop",
+          "a_walk_with_one_entry_that_is_not_an_integer_is_refused_whole",
+          "a_walk_takes_the_lightest_of_parallel_edges",
+          "a_potential_must_hold_on_every_one_of_parallel_edges",
+          "a_potential_of_another_length_is_read_as_a_walk_would_be",
+          "a_potential_of_the_right_length_is_graded_even_when_a_walk_comes_with_it",
+          "a_potential_entry_that_is_not_an_exact_rational_refuses_the_reply",
+          "rationals_are_written_as_integers_or_as_p_over_q",
+          "a_walk_adds_up_rational_weights",
+          "an_edge_end_that_is_not_a_vertex_refuses_the_potential",
+          "a_graph_with_no_vertices_and_no_edges_has_the_empty_potential",
+          "the_number_of_vertices_may_be_of_any_size",
+          "text_that_is_not_one_json_object_is_refused",
+          "an_object_with_neither_answer_is_refused",
+          "an_item_states_an_integer_n_and_a_list_of_edges",
+          "an_edge_is_two_integer_ends_and_an_exact_rational_weight",
+          "the_grades_are_named_as_the_stored_dossiers_name_them",
+          "the_pin_is_the_digest_of_the_graders_source_with_unix_line_endings"
+        ],
+        "owned_invariants": [
+          "Potentials, closed walks and weights are worked by hand for each graph written in a test, and the pin is rebuilt from the file with unix line endings.",
+          "A potential that breaks one edge, an edge that holds with equality, the direction of an edge and each walk that fails to follow edges, to close or to add up to less than zero are asserted by their grades.",
+          "Each rational that is not an integer or p over q, each end that is not a vertex and each reply that is not one JSON object is asserted refused."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/duality.rs",
+          "language": "Rust",
+          "sha256": "406eb8b752a7be675201a975df7cb89f2959e0dac360cb0caf99b93ecf7d47e1"
+        },
+        "profile": "Exact",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected values follow by hand from the request written in the test.",
+          "G3": "Refusals are asserted by code.",
+          "G4": "All 27 pass in the recorded run; the suites that exercise the grader killed 64 of 64 eligible grader mutants.",
+          "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T22:05:53Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v15-test.run.json",
+            "sha256": "961d394a63c16d206ba212c2f0e771539928f3b958cf63472c35089adc791aa9",
+            "note": "1219 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-clippy.run.json",
+            "sha256": "fe8e4f5bab606fb274fa7fd77441f236d1ef7ab99e2dceb702d6f8ebc1887d08",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-fmt.run.json",
+            "sha256": "fcd4bbf1b7bc812fa56575170d36f18bd3fe6e6e5f73b5be845584264e93a3e1",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-metrics.run.json",
+            "sha256": "e4c24e720d1823e3d047da11b130f1d5d4a45bb021b6b929fc72bb7f1377e61a",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-metrics.json",
+            "sha256": "e204ef1d998e58a6f5b13694279c83863b493ca88e21fcdc395014191976e4f2",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    }
+  ]
+}

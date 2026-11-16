@@ -1,0 +1,624 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf35.rs",
+  "target_sha256": "6ed33a884e8edbf0cf1daaa702239a3a06f2686cf27a5ffeb2fe229981efce73",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf35",
+  "counts": {
+    "killed": 100,
+    "survived": 0,
+    "demonstrably_equivalent": 1,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "no items are accepted",
+      "old": "        .filter(|listed| !listed.is_empty())\n        .ok_or(\"items must be a nonempty list\")?;",
+      "new": "        .filter(|_| true)\n        .ok_or(\"items must be a nonempty list\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "only no items are accepted",
+      "old": "        .filter(|listed| !listed.is_empty())\n        .ok_or(\"items must be a nonempty list\")?;",
+      "new": "        .filter(|listed| listed.is_empty())\n        .ok_or(\"items must be a nonempty list\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "items reason emptied",
+      "old": "ok_or(\"items must be a nonempty list\")",
+      "new": "ok_or(\"\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "items are read from the arms",
+      "old": "        .get(\"items\")\n",
+      "new": "        .get(\"arms\")\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "a bad item is skipped",
+      "old": "    listed.iter().map(case).collect()",
+      "new": "    Ok(listed.iter().filter_map(|asked| case(asked).ok()).collect())",
+      "outcome": "killed"
+    },
+    {
+      "name": "a channel is read from another key",
+      "old": "    let channel = arm.get(\"channel\").and_then(Datum::as_text)?;",
+      "new": "    let channel = arm.get(\"name\").and_then(Datum::as_text)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "one arm is enough",
+      "old": "        .filter(|listed| listed.len() >= 2)",
+      "new": "        .filter(|listed| listed.len() >= 1)",
+      "outcome": "killed"
+    },
+    {
+      "name": "three arms are needed",
+      "old": "        .filter(|listed| listed.len() >= 2)",
+      "new": "        .filter(|listed| listed.len() >= 3)",
+      "outcome": "killed"
+    },
+    {
+      "name": "no arms are needed",
+      "old": "        .filter(|listed| listed.len() >= 2)",
+      "new": "        .filter(|_| true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "exactly two arms are needed",
+      "old": "        .filter(|listed| listed.len() >= 2)",
+      "new": "        .filter(|listed| listed.len() == 2)",
+      "outcome": "killed"
+    },
+    {
+      "name": "arms reason emptied",
+      "old": "ok_or(\"arms must be a list of at least two\")",
+      "new": "ok_or(\"\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "arms are read from the items",
+      "old": "        .get(\"arms\")\n",
+      "new": "        .get(\"items\")\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "channel reason emptied",
+      "old": "arms.ok_or(\"each arm needs its channel as text\")",
+      "new": "arms.ok_or(\"\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "an arm without a channel is skipped",
+      "old": "    let arms: Option<Vec<(&str, &Datum)>> = listed.iter().map(named).collect();\n    let arms = arms.ok_or(\"each arm needs its channel as text\")?;",
+      "new": "    let arms: Vec<(&str, &Datum)> = listed.iter().filter_map(named).collect();",
+      "outcome": "killed"
+    },
+    {
+      "name": "channels are not sorted",
+      "old": "    channels.sort_unstable();\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "channels are not deduplicated",
+      "old": "    channels.dedup();\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "repeated channels are accepted",
+      "old": "    if channels.len() != arms.len() {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only repeated channels are accepted",
+      "old": "    if channels.len() != arms.len() {",
+      "new": "    if channels.len() == arms.len() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "channels reason emptied",
+      "old": "return Err(\"each arm needs its own channel\".to_owned());",
+      "new": "return Err(String::new());",
+      "outcome": "killed"
+    },
+    {
+      "name": "the items are not read before the walk",
+      "old": "    items(task)?;\n    arms(task).map(|_| ())",
+      "new": "    arms(task).map(|_| ())",
+      "outcome": "killed"
+    },
+    {
+      "name": "the arms are not read before the walk",
+      "old": "    items(task)?;\n    arms(task).map(|_| ())",
+      "new": "    items(task).map(|_| ())",
+      "outcome": "killed"
+    },
+    {
+      "name": "an item is asked without its fields",
+      "old": "        Datum::Map(entries) => entries.clone(),",
+      "new": "        Datum::Map(_) => BTreeMap::new(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "an item is asked without its channel",
+      "old": "    asked.insert(\"channel\".to_owned(), Datum::text(channel));",
+      "new": "    let _ = channel;",
+      "outcome": "killed"
+    },
+    {
+      "name": "an item is asked under the wrong key",
+      "old": "    asked.insert(\"channel\".to_owned(), Datum::text(channel));",
+      "new": "    asked.insert(\"arm\".to_owned(), Datum::text(channel));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a channel is asked as nothing",
+      "old": "    asked.insert(\"channel\".to_owned(), Datum::text(channel));",
+      "new": "    asked.insert(\"channel\".to_owned(), Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the reply text is read from another key",
+      "old": "        .and_then(|reply| reply.get(\"text\"))",
+      "new": "        .and_then(|reply| reply.get(\"content\"))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a reply stands when it is refused",
+      "old": "    let stands = raw.is_some_and(|raw| duality::grade(&case.item, raw).stands());",
+      "new": "    let stands = raw.is_some_and(|raw| !duality::grade(&case.item, raw).stands());",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing reply stands",
+      "old": "    let stands = raw.is_some_and(|raw| duality::grade(&case.item, raw).stands());",
+      "new": "    let stands = raw.is_none_or(|raw| duality::grade(&case.item, raw).stands());",
+      "outcome": "killed"
+    },
+    {
+      "name": "a reply stands unchecked",
+      "old": "    let stands = raw.is_some_and(|raw| duality::grade(&case.item, raw).stands());",
+      "new": "    let stands = raw.is_some();",
+      "outcome": "killed"
+    },
+    {
+      "name": "only a certified reply stands",
+      "old": "    let stands = raw.is_some_and(|raw| duality::grade(&case.item, raw).stands());",
+      "new": "    let stands = raw.is_some_and(|raw| duality::grade(&case.item, raw) == duality::Grade::Certified);",
+      "outcome": "killed"
+    },
+    {
+      "name": "only a typed refusal stands",
+      "old": "    let stands = raw.is_some_and(|raw| duality::grade(&case.item, raw).stands());",
+      "new": "    let stands = raw.is_some_and(|raw| duality::grade(&case.item, raw) == duality::Grade::TypedRefusal);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a claim is read from another key",
+      "old": "    let claim = reply.and_then(|reply| reply.get(\"accepted\"));",
+      "new": "    let claim = reply.and_then(|reply| reply.get(\"accept\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "every claim is honest",
+      "old": "    let honest = claim.is_none_or(|claim| *claim == Datum::Bool(stands));",
+      "new": "    let honest = true;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a true claim is dishonest",
+      "old": "    let honest = claim.is_none_or(|claim| *claim == Datum::Bool(stands));",
+      "new": "    let honest = claim.is_none_or(|claim| *claim != Datum::Bool(stands));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a claim is always required",
+      "old": "    let honest = claim.is_none_or(|claim| *claim == Datum::Bool(stands));",
+      "new": "    let honest = claim.is_some_and(|claim| *claim == Datum::Bool(stands));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a claim must say it stands",
+      "old": "    let honest = claim.is_none_or(|claim| *claim == Datum::Bool(stands));",
+      "new": "    let honest = claim.is_none_or(|claim| *claim == Datum::Bool(true));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a claim must say it does not stand",
+      "old": "    let honest = claim.is_none_or(|claim| *claim == Datum::Bool(stands));",
+      "new": "    let honest = claim.is_none_or(|claim| *claim == Datum::Bool(false));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a claim is read as a number",
+      "old": "    let honest = claim.is_none_or(|claim| *claim == Datum::Bool(stands));",
+      "new": "    let honest = claim.is_none_or(|claim| claim.as_int().is_some() || *claim == Datum::Bool(stands));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a reply and its honesty are swapped",
+      "old": "    (stands, honest)\n}",
+      "new": "    (honest, stands)\n}",
+      "outcome": "killed"
+    },
+    {
+      "name": "a count counts the replies that did not stand",
+      "old": "    row.iter().filter(|stood| **stood).count()",
+      "new": "    row.iter().filter(|stood| !**stood).count()",
+      "outcome": "killed"
+    },
+    {
+      "name": "a count counts every reply",
+      "old": "    row.iter().filter(|stood| **stood).count()",
+      "new": "    row.iter().filter(|_| true).count()",
+      "outcome": "killed"
+    },
+    {
+      "name": "discord counts both standing",
+      "old": "        .filter(|(left, right)| **left && !**right)",
+      "new": "        .filter(|(left, right)| **left && **right)",
+      "outcome": "killed"
+    },
+    {
+      "name": "discord counts the second only",
+      "old": "        .filter(|(left, right)| **left && !**right)",
+      "new": "        .filter(|(left, right)| !**left && **right)",
+      "outcome": "killed"
+    },
+    {
+      "name": "discord counts either standing",
+      "old": "        .filter(|(left, right)| **left && !**right)",
+      "new": "        .filter(|(left, right)| **left || !**right)",
+      "outcome": "killed"
+    },
+    {
+      "name": "discord counts a difference",
+      "old": "        .filter(|(left, right)| **left && !**right)",
+      "new": "        .filter(|(left, right)| **left != **right)",
+      "outcome": "killed"
+    },
+    {
+      "name": "discord is compared with the first row",
+      "old": "        .zip(second)\n",
+      "new": "        .zip(first)\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "the pin is the digest of nothing",
+      "old": "    let pin = duality::pin();\n",
+      "new": "    let pin = String::new();\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "the checker is read from another key",
+      "old": ".get(\"checker_pin\").and_then(Datum::as_text) == Some(pin.as_str()))",
+      "new": ".get(\"pin\").and_then(Datum::as_text) == Some(pin.as_str()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "another checker matches",
+      "old": ".get(\"checker_pin\").and_then(Datum::as_text) == Some(pin.as_str()))",
+      "new": ".get(\"checker_pin\").and_then(Datum::as_text) != Some(pin.as_str()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing checker matches",
+      "old": ".get(\"checker_pin\").and_then(Datum::as_text) == Some(pin.as_str()))",
+      "new": ".get(\"checker_pin\").and_then(Datum::as_text).is_none_or(|text| text == pin.as_str()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing budget is a number",
+      "old": ".get(\"budget\").cloned().unwrap_or(Datum::Null))",
+      "new": ".get(\"budget\").cloned().unwrap_or(Datum::Bool(false)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a budget is read from another key",
+      "old": ".get(\"budget\").cloned().unwrap_or(Datum::Null))",
+      "new": ".get(\"cap\").cloned().unwrap_or(Datum::Null))",
+      "outcome": "killed"
+    },
+    {
+      "name": "budgets are compared with a copy of the first",
+      "old": "    let first = budgets.first().map(Datum::canonical);",
+      "new": "    let first = budgets.last().map(Datum::canonical);",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "every budget equal to the first is every budget equal to the last, because the first and the last are among the budgets compared"
+    },
+    {
+      "name": "one equal budget is enough",
+      "old": "        .all(|one| one == first);",
+      "new": "        .any(|one| one == first);",
+      "outcome": "killed"
+    },
+    {
+      "name": "no budget is equal",
+      "old": "        .all(|one| one == first);",
+      "new": "        .all(|one| one != first);",
+      "outcome": "killed"
+    },
+    {
+      "name": "budgets are compared by their pointers",
+      "old": "        .map(|budget| Some(budget.canonical()))",
+      "new": "        .map(|budget| Some(format!(\"{budget:p}\")))",
+      "outcome": "killed"
+    },
+    {
+      "name": "one pinned arm is enough",
+      "old": "    let fixed = pins.iter().all(|pinned| *pinned);",
+      "new": "    let fixed = pins.iter().any(|pinned| *pinned);",
+      "outcome": "killed"
+    },
+    {
+      "name": "an unpinned arm is fixed",
+      "old": "    let fixed = pins.iter().all(|pinned| *pinned);",
+      "new": "    let fixed = pins.iter().all(|pinned| !*pinned);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the pins are shown as the budgets",
+      "old": "    let shown = Datum::List(pins.into_iter().map(Datum::Bool).collect());",
+      "new": "    let shown = Datum::List(budgets.clone());",
+      "outcome": "killed"
+    },
+    {
+      "name": "the pins check is named another way",
+      "old": "\"arms_share_fixed_checker\"",
+      "new": "\"arms_share_fixed_checkers\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "the pins check is not recorded",
+      "old": "    checks.record(\"arms_share_fixed_checker\", fixed, &shown);\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "the pins check holds when it fails",
+      "old": "    checks.record(\"arms_share_fixed_checker\", fixed, &shown);",
+      "new": "    checks.record(\"arms_share_fixed_checker\", true, &shown);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the budget check is named another way",
+      "old": "\"arms_share_budget\"",
+      "new": "\"arms_share_budgets\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "the budget check is not recorded",
+      "old": "    checks.record(\"arms_share_budget\", same_budget, &Datum::List(budgets));\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "the budget check holds when it fails",
+      "old": "    checks.record(\"arms_share_budget\", same_budget, &Datum::List(budgets));",
+      "new": "    checks.record(\"arms_share_budget\", true, &Datum::List(budgets));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the budget check shows nothing",
+      "old": "    checks.record(\"arms_share_budget\", same_budget, &Datum::List(budgets));",
+      "new": "    checks.record(\"arms_share_budget\", same_budget, &Datum::List(Vec::new()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "either mismatch does not stop the run",
+      "old": "    if !(fixed && same_budget) {",
+      "new": "    if !(fixed || same_budget) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only one pin mismatch stops the run",
+      "old": "    if !(fixed && same_budget) {",
+      "new": "    if !fixed {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only a budget mismatch stops the run",
+      "old": "    if !(fixed && same_budget) {",
+      "new": "    if !same_budget {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a mismatch never stops the run",
+      "old": "    if !(fixed && same_budget) {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a match stops the run",
+      "old": "    if !(fixed && same_budget) {",
+      "new": "    if fixed && same_budget {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a mismatch carries another code",
+      "old": "\"ARMS_NOT_MATCHED\"",
+      "new": "\"ARM_NOT_MATCHED\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "a mismatch carries a detail",
+      "old": "return Ok(refused(\"ARMS_NOT_MATCHED\", Datum::map([])));",
+      "new": "return Ok(refused(\"ARMS_NOT_MATCHED\", Datum::map([(\"fixed\", Datum::Bool(fixed))])));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the stage names the item before the channel",
+      "old": "            let reply = run.ask(&format!(\"{channel}:{place}\"), run.prompt_for(&asked))?;",
+      "new": "            let reply = run.ask(&format!(\"{place}:{channel}\"), run.prompt_for(&asked))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the stage names the channel only",
+      "old": "            let reply = run.ask(&format!(\"{channel}:{place}\"), run.prompt_for(&asked))?;",
+      "new": "            let reply = run.ask(channel, run.prompt_for(&asked))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the prompt is the default one",
+      "old": "run.prompt_for(&asked))?;",
+      "new": "run.prompt())?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the prompt is for the item alone",
+      "old": "            let asked = question(case.asked, channel);",
+      "new": "            let asked = case.asked.clone();",
+      "outcome": "killed"
+    },
+    {
+      "name": "the prompt is for the first item",
+      "old": "            let asked = question(case.asked, channel);",
+      "new": "            let asked = question(cases[0].asked, channel);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the reply is read against the first item",
+      "old": "            let (stands, honest) = read(reply, case);",
+      "new": "            let (stands, honest) = read(reply, &cases[0]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a dishonest claim is not listed",
+      "old": "            if !honest {\n                leaning.push(format!(\"{channel}:{place}\"));",
+      "new": "            if false {\n                leaning.push(format!(\"{channel}:{place}\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "an honest claim is listed",
+      "old": "            if !honest {\n                leaning.push(format!(\"{channel}:{place}\"));",
+      "new": "            if honest {\n                leaning.push(format!(\"{channel}:{place}\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a dishonest claim is listed by item",
+      "old": "                leaning.push(format!(\"{channel}:{place}\"));",
+      "new": "                leaning.push(format!(\"{channel}\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a dishonest claim is listed place first",
+      "old": "                leaning.push(format!(\"{channel}:{place}\"));",
+      "new": "                leaning.push(format!(\"{place}:{channel}\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a row holds the claims",
+      "old": "            row.push(stands);",
+      "new": "            row.push(honest);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a row holds nothing",
+      "old": "            row.push(stands);",
+      "new": "            row.push(false);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a row holds the inverse",
+      "old": "            row.push(stands);",
+      "new": "            row.push(!stands);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the bytes check passes with claims",
+      "old": "        leaning.as_list().is_some_and(<[Datum]>::is_empty),",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "the bytes check fails without claims",
+      "old": "        leaning.as_list().is_some_and(<[Datum]>::is_empty),",
+      "new": "        leaning.as_list().is_some_and(|listed| !listed.is_empty()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the bytes check is named another way",
+      "old": "\"accept_set_depends_only_on_bytes\"",
+      "new": "\"accept_set_depends_only_on_byte\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "the bytes check shows nothing",
+      "old": "        &leaning,\n    );",
+      "new": "        &Datum::List(Vec::new()),\n    );",
+      "outcome": "killed"
+    },
+    {
+      "name": "accepts count the item places",
+      "old": "        .map(|(channel, row)| ((*channel).to_owned(), Datum::from(count(row))))",
+      "new": "        .map(|(channel, row)| ((*channel).to_owned(), Datum::from(row.len())))",
+      "outcome": "killed"
+    },
+    {
+      "name": "accepts are keyed by nothing",
+      "old": "        .map(|(channel, row)| ((*channel).to_owned(), Datum::from(count(row))))",
+      "new": "        .map(|(_, row)| (String::new(), Datum::from(count(row))))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the first two arms are the last two",
+      "old": "        [(_, first), (_, second), ..] => (first.as_slice(), second.as_slice()),",
+      "new": "        [.., (_, first), (_, second)] => (first.as_slice(), second.as_slice()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the first two arms are swapped",
+      "old": "        [(_, first), (_, second), ..] => (first.as_slice(), second.as_slice()),",
+      "new": "        [(_, second), (_, first), ..] => (first.as_slice(), second.as_slice()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the first arm is compared with itself",
+      "old": "        [(_, first), (_, second), ..] => (first.as_slice(), second.as_slice()),",
+      "new": "        [(_, first), (_, _), ..] => (first.as_slice(), first.as_slice()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "first only is the second",
+      "old": "        (\"first_only\", Datum::from(only(first, second))),",
+      "new": "        (\"first_only\", Datum::from(only(second, first))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "second only is the first",
+      "old": "        (\"second_only\", Datum::from(only(second, first))),",
+      "new": "        (\"second_only\", Datum::from(only(first, second))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the keys of the discord are swapped",
+      "old": "        (\"first_only\", Datum::from(only(first, second))),\n        (\"second_only\", Datum::from(only(second, first))),",
+      "new": "        (\"second_only\", Datum::from(only(first, second))),\n        (\"first_only\", Datum::from(only(second, first))),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the comparison carries another code",
+      "old": "\"CHANNELS_COMPARED\"",
+      "new": "\"CHANNEL_COMPARED\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "the accepts key is renamed",
+      "old": "Datum::map([(\"accepts\", Datum::Map(accepts)), (\"discordant\", discordant)]),",
+      "new": "Datum::map([(\"accept\", Datum::Map(accepts)), (\"discordant\", discordant)]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the discord key is renamed",
+      "old": "Datum::map([(\"accepts\", Datum::Map(accepts)), (\"discordant\", discordant)]),",
+      "new": "Datum::map([(\"accepts\", Datum::Map(accepts)), (\"discord\", discordant)]),",
+      "outcome": "killed"
+    }
+  ]
+}

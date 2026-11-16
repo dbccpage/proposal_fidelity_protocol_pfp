@@ -1,0 +1,246 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf35.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf35.rs",
+      "language": "Rust",
+      "sha256": "7f03f3797cb5cbf6d8bc7ea560cbfae88ab6ebf386b92ff2d83cfed03111c372"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf35-tests:v1",
+    "symbols": [
+      "sha",
+      "canonical",
+      "feasible",
+      "negative",
+      "budget",
+      "arm",
+      "task_of",
+      "task",
+      "say",
+      "claim",
+      "good",
+      "request",
+      "run_on",
+      "run",
+      "outcomes",
+      "bad_task",
+      "asked",
+      "the_registry_names_the_family",
+      "channels_on_one_grader_and_one_budget_are_compared",
+      "each_arm_is_asked_each_item_in_turn_with_the_channel_in_the_question",
+      "the_arms_channel_replaces_a_channel_an_item_names",
+      "arms_that_used_different_checkers_are_refused_before_anything_is_asked",
+      "a_checker_pin_that_is_missing_or_not_the_graders_does_not_match",
+      "arms_that_ran_under_different_budgets_are_refused_before_anything_is_asked",
+      "a_budget_is_compared_by_its_canonical_form",
+      "every_arm_is_held_to_the_same_budget_not_only_the_first_two",
+      "a_channel_that_claims_an_acceptance_the_grader_does_not_give_is_refused",
+      "only_the_boolean_the_grader_gave_is_an_honest_claim",
+      "every_claim_is_listed_with_its_channel_and_item",
+      "a_parallel_edge_violation_a_mask_accepts_is_the_channels_claim_not_the_graders",
+      "a_reply_with_no_text_or_no_reply_at_all_does_not_stand",
+      "a_reply_that_is_not_an_object_makes_no_claim",
+      "a_reply_stands_when_it_is_a_negative_cycle_or_a_feasible_potential",
+      "the_discordant_pairs_are_counted_for_the_first_two_arms_and_the_rest_are_counted_alone",
+      "the_pairs_are_counted_item_by_item",
+      "replies_that_are_missing_leave_the_run_waiting_and_extra_ones_are_not_accepted",
+      "a_task_states_its_items_and_its_arms",
+      "the_items_are_read_before_the_arms",
+      "channels_that_differ_only_in_case_are_different_channels",
+      "no_prompt_carries_a_reply_or_a_claim"
+    ],
+    "owned_invariants": [
+      "The grade of each reply is worked by hand for the graphs written in a test, and the counts of accepts and discordant pairs are worked item by item.",
+      "Each of the three predicates is asserted failing alone, and a budget is asserted compared by its canonical form for every arm.",
+      "Each unreadable task is asserted by its reason, and no prompt is asserted to carry a reply or a claim."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf35.rs",
+      "language": "Rust",
+      "sha256": "7f03f3797cb5cbf6d8bc7ea560cbfae88ab6ebf386b92ff2d83cfed03111c372"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 23 pass in the recorded run; the suite they belong to killed 100 of 100 eligible WF35 mutants.",
+      "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T22:06:04Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v15-test.run.json",
+        "sha256": "961d394a63c16d206ba212c2f0e771539928f3b958cf63472c35089adc791aa9",
+        "note": "1219 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-clippy.run.json",
+        "sha256": "fe8e4f5bab606fb274fa7fd77441f236d1ef7ab99e2dceb702d6f8ebc1887d08",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-fmt.run.json",
+        "sha256": "fcd4bbf1b7bc812fa56575170d36f18bd3fe6e6e5f73b5be845584264e93a3e1",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-metrics.run.json",
+        "sha256": "e4c24e720d1823e3d047da11b130f1d5d4a45bb021b6b929fc72bb7f1377e61a",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-metrics.json",
+        "sha256": "e204ef1d998e58a6f5b13694279c83863b493ca88e21fcdc395014191976e4f2",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T22:06:07.585387Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf35.rs",
+          "language": "Rust",
+          "sha256": "7f03f3797cb5cbf6d8bc7ea560cbfae88ab6ebf386b92ff2d83cfed03111c372"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf35-tests:v1",
+        "symbols": [
+          "sha",
+          "canonical",
+          "feasible",
+          "negative",
+          "budget",
+          "arm",
+          "task_of",
+          "task",
+          "say",
+          "claim",
+          "good",
+          "request",
+          "run_on",
+          "run",
+          "outcomes",
+          "bad_task",
+          "asked",
+          "the_registry_names_the_family",
+          "channels_on_one_grader_and_one_budget_are_compared",
+          "each_arm_is_asked_each_item_in_turn_with_the_channel_in_the_question",
+          "the_arms_channel_replaces_a_channel_an_item_names",
+          "arms_that_used_different_checkers_are_refused_before_anything_is_asked",
+          "a_checker_pin_that_is_missing_or_not_the_graders_does_not_match",
+          "arms_that_ran_under_different_budgets_are_refused_before_anything_is_asked",
+          "a_budget_is_compared_by_its_canonical_form",
+          "every_arm_is_held_to_the_same_budget_not_only_the_first_two",
+          "a_channel_that_claims_an_acceptance_the_grader_does_not_give_is_refused",
+          "only_the_boolean_the_grader_gave_is_an_honest_claim",
+          "every_claim_is_listed_with_its_channel_and_item",
+          "a_parallel_edge_violation_a_mask_accepts_is_the_channels_claim_not_the_graders",
+          "a_reply_with_no_text_or_no_reply_at_all_does_not_stand",
+          "a_reply_that_is_not_an_object_makes_no_claim",
+          "a_reply_stands_when_it_is_a_negative_cycle_or_a_feasible_potential",
+          "the_discordant_pairs_are_counted_for_the_first_two_arms_and_the_rest_are_counted_alone",
+          "the_pairs_are_counted_item_by_item",
+          "replies_that_are_missing_leave_the_run_waiting_and_extra_ones_are_not_accepted",
+          "a_task_states_its_items_and_its_arms",
+          "the_items_are_read_before_the_arms",
+          "channels_that_differ_only_in_case_are_different_channels",
+          "no_prompt_carries_a_reply_or_a_claim"
+        ],
+        "owned_invariants": [
+          "The grade of each reply is worked by hand for the graphs written in a test, and the counts of accepts and discordant pairs are worked item by item.",
+          "Each of the three predicates is asserted failing alone, and a budget is asserted compared by its canonical form for every arm.",
+          "Each unreadable task is asserted by its reason, and no prompt is asserted to carry a reply or a claim."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf35.rs",
+          "language": "Rust",
+          "sha256": "7f03f3797cb5cbf6d8bc7ea560cbfae88ab6ebf386b92ff2d83cfed03111c372"
+        },
+        "profile": "Exact",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected values follow by hand from the request written in the test.",
+          "G3": "Refusals are asserted by code.",
+          "G4": "All 23 pass in the recorded run; the suite they belong to killed 100 of 100 eligible WF35 mutants.",
+          "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T22:05:53Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v15-test.run.json",
+            "sha256": "961d394a63c16d206ba212c2f0e771539928f3b958cf63472c35089adc791aa9",
+            "note": "1219 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-clippy.run.json",
+            "sha256": "fe8e4f5bab606fb274fa7fd77441f236d1ef7ab99e2dceb702d6f8ebc1887d08",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-fmt.run.json",
+            "sha256": "fcd4bbf1b7bc812fa56575170d36f18bd3fe6e6e5f73b5be845584264e93a3e1",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-metrics.run.json",
+            "sha256": "e4c24e720d1823e3d047da11b130f1d5d4a45bb021b6b929fc72bb7f1377e61a",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-metrics.json",
+            "sha256": "e204ef1d998e58a6f5b13694279c83863b493ca88e21fcdc395014191976e4f2",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    }
+  ]
+}

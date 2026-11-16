@@ -1,0 +1,479 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf18.rs",
+  "target_sha256": "81cbf7e4fda171ec3bdd57106efb71709c81831a65033e3fb50bea23d2b87789",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf18",
+  "counts": {
+    "killed": 77,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "the grader is another name",
+      "old": "pub const GRADER: &str = \"cycle_duality\";",
+      "new": "pub const GRADER: &str = \"cycle_duality \";",
+      "outcome": "killed"
+    },
+    {
+      "name": "cell text reason emptied",
+      "old": "format!(\"a cell needs {key} as text\")",
+      "new": "String::new()",
+      "outcome": "killed"
+    },
+    {
+      "name": "cell text read from the wrong key",
+      "old": "    cell.get(key)\n        .and_then(Datum::as_text)",
+      "new": "    cell.get(\"grade\")\n        .and_then(Datum::as_text)",
+      "outcome": "killed"
+    },
+    {
+      "name": "input reason emptied",
+      "old": "ok_or(\"a cell needs its input\")",
+      "new": "ok_or(\"\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "input read from the reply",
+      "old": "datum.get(\"input\").ok_or",
+      "new": "datum.get(\"raw_reply\").ok_or",
+      "outcome": "killed"
+    },
+    {
+      "name": "id read from the grade",
+      "old": "id: text(datum, \"cell_id\")?,",
+      "new": "id: text(datum, \"grade\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "reply read from the grade",
+      "old": "raw: text(datum, \"raw_reply\")?,",
+      "new": "raw: text(datum, \"grade\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "reply digest read from the input digest",
+      "old": "raw_sha256: datum.get(\"raw_reply_sha256\")",
+      "new": "raw_sha256: datum.get(\"input_sha256\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "input digest read from the reply digest",
+      "old": "input_sha256: datum.get(\"input_sha256\")",
+      "new": "input_sha256: datum.get(\"raw_reply_sha256\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "grade read from the id",
+      "old": "grade: text(datum, \"grade\")?,",
+      "new": "grade: text(datum, \"cell_id\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "the item is read from nothing",
+      "old": "        item: Item::read(input)?,",
+      "new": "        item: Item::read(&Datum::Null)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a dossier need not be an object",
+      "old": "        .filter(|dossier| dossier.is_map())\n        .ok_or(\"dossier must be an object\")?;",
+      "new": "        .filter(|_| true)\n        .ok_or(\"dossier must be an object\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a dossier reason emptied",
+      "old": "ok_or(\"dossier must be an object\")",
+      "new": "ok_or(\"\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "pins need not be an object",
+      "old": "        .filter(|pins| pins.is_map())",
+      "new": "        .filter(|_| true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "pins reason emptied",
+      "old": "ok_or(\"source_pins must be an object\")",
+      "new": "ok_or(\"\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "pins are read from the dossier key",
+      "old": "        .get(\"source_pins\")\n",
+      "new": "        .get(\"grader\")\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "any grader is accepted",
+      "old": "    if dossier.get(\"grader\").and_then(Datum::as_text) != Some(GRADER) {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only another grader is accepted",
+      "old": "    if dossier.get(\"grader\").and_then(Datum::as_text) != Some(GRADER) {",
+      "new": "    if dossier.get(\"grader\").and_then(Datum::as_text) == Some(GRADER) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "grader reason emptied",
+      "old": "return Err(format!(\"grader must be {GRADER}\"));",
+      "new": "return Err(String::new());",
+      "outcome": "killed"
+    },
+    {
+      "name": "grader read from the pins",
+      "old": "    if dossier.get(\"grader\").and_then(Datum::as_text) != Some(GRADER) {",
+      "new": "    if dossier.get(\"source_pins\").and_then(Datum::as_text) != Some(GRADER) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "no cells are accepted",
+      "old": "        .filter(|listed| !listed.is_empty())",
+      "new": "        .filter(|_| true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "only no cells are accepted",
+      "old": "        .filter(|listed| !listed.is_empty())",
+      "new": "        .filter(|listed| listed.is_empty())",
+      "outcome": "killed"
+    },
+    {
+      "name": "cells reason emptied",
+      "old": "ok_or(\"cells must be a nonempty list\")",
+      "new": "ok_or(\"\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "cells are read from the pins",
+      "old": "        .get(\"cells\")\n",
+      "new": "        .get(\"source_pins\")\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "repeated ids are accepted",
+      "old": "    if ids.len() != cells.len() {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only repeated ids are accepted",
+      "old": "    if ids.len() != cells.len() {",
+      "new": "    if ids.len() == cells.len() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "some repeated ids are accepted",
+      "old": "    if ids.len() != cells.len() {",
+      "new": "    if ids.len() < cells.len() - 1 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "ids reason emptied",
+      "old": "return Err(\"each cell needs its own cell_id\".to_owned());",
+      "new": "return Err(String::new());",
+      "outcome": "killed"
+    },
+    {
+      "name": "a task is not read before the walk",
+      "old": "    dossier(task).map(|_| ())",
+      "new": "    Ok(())",
+      "outcome": "killed"
+    },
+    {
+      "name": "the pin is read from the grader key",
+      "old": "dossier.pins.get(GRADER).and_then(Datum::as_text) == Some(duality::pin().as_str());",
+      "new": "dossier.pins.get(\"grader\").and_then(Datum::as_text) == Some(duality::pin().as_str());",
+      "outcome": "killed"
+    },
+    {
+      "name": "any pin but the graders matches",
+      "old": "== Some(duality::pin().as_str());",
+      "new": "!= Some(duality::pin().as_str());",
+      "outcome": "killed"
+    },
+    {
+      "name": "every pin matches",
+      "old": "let pinned = dossier.pins.get(GRADER).and_then(Datum::as_text) == Some(duality::pin().as_str());",
+      "new": "let pinned = true;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the pin check shows no grader",
+      "old": "checks.record(\"source_pin_matches\", pinned, &Datum::text(GRADER));",
+      "new": "checks.record(\"source_pin_matches\", pinned, &Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the pin check is named another way",
+      "old": "\"source_pin_matches\"",
+      "new": "\"source_pin_match\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "the pin is not recorded",
+      "old": "    checks.record(\"source_pin_matches\", pinned, &Datum::text(GRADER));\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "the reply digest matches when it differs",
+      "old": "        if cell.raw_sha256 != Some(sha256_hex(cell.raw).as_str()) {",
+      "new": "        if cell.raw_sha256 == Some(sha256_hex(cell.raw).as_str()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the reply digest is never checked",
+      "old": "        if cell.raw_sha256 != Some(sha256_hex(cell.raw).as_str()) {",
+      "new": "        if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the reply digest is taken from the input",
+      "old": "        if cell.raw_sha256 != Some(sha256_hex(cell.raw).as_str()) {",
+      "new": "        if cell.raw_sha256 != Some(sha256_hex(&cell.input.canonical()).as_str()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a drifted reply is named as an input",
+      "old": "drift.push(format!(\"{}:raw_reply\", cell.id));",
+      "new": "drift.push(format!(\"{}:input\", cell.id));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a drifted reply is named without its cell",
+      "old": "drift.push(format!(\"{}:raw_reply\", cell.id));",
+      "new": "drift.push(\"raw_reply\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "the input digest matches when it differs",
+      "old": "        if cell.input_sha256 != Some(sha256_hex(&cell.input.canonical()).as_str()) {",
+      "new": "        if cell.input_sha256 == Some(sha256_hex(&cell.input.canonical()).as_str()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the input digest is never checked",
+      "old": "        if cell.input_sha256 != Some(sha256_hex(&cell.input.canonical()).as_str()) {",
+      "new": "        if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the input digest is taken from the reply",
+      "old": "        if cell.input_sha256 != Some(sha256_hex(&cell.input.canonical()).as_str()) {",
+      "new": "        if cell.input_sha256 != Some(sha256_hex(cell.raw).as_str()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a drifted input is named as a reply",
+      "old": "drift.push(format!(\"{}:input\", cell.id));",
+      "new": "drift.push(format!(\"{}:raw_reply\", cell.id));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a drifted input is named without its cell",
+      "old": "drift.push(format!(\"{}:input\", cell.id));",
+      "new": "drift.push(\"input\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "a reproduced grade is a mismatch",
+      "old": "        if duality::grade(&cell.item, cell.raw).name() != cell.grade {",
+      "new": "        if duality::grade(&cell.item, cell.raw).name() == cell.grade {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a grade is never compared",
+      "old": "        if duality::grade(&cell.item, cell.raw).name() != cell.grade {",
+      "new": "        if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the grade is compared with the id",
+      "old": "        if duality::grade(&cell.item, cell.raw).name() != cell.grade {",
+      "new": "        if duality::grade(&cell.item, cell.raw).name() != cell.id {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a mismatch is named by its grade",
+      "old": "mismatched.push(cell.id.to_owned());",
+      "new": "mismatched.push(cell.grade.to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "mismatches are not sorted",
+      "old": "    mismatched.sort();\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "the digests check is named another way",
+      "old": "\"stored_bytes_match_digests\"",
+      "new": "\"stored_bytes_match_digest\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "drift passes the digests check",
+      "old": "        drift.is_empty(),\n        &names(&drift),",
+      "new": "        !drift.is_empty(),\n        &names(&drift),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the digests check shows the mismatches",
+      "old": "        drift.is_empty(),\n        &names(&drift),",
+      "new": "        drift.is_empty(),\n        &names(&mismatched),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the digests check holds under drift",
+      "old": "        drift.is_empty(),\n        &names(&drift),",
+      "new": "        true,\n        &names(&drift),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the grades check is named another way",
+      "old": "\"every_grade_reproduces\"",
+      "new": "\"every_grade_reproduce\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "a mismatch passes the grades check",
+      "old": "        mismatched.is_empty(),\n        &names(&mismatched),",
+      "new": "        !mismatched.is_empty(),\n        &names(&mismatched),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the grades check shows the drift",
+      "old": "        mismatched.is_empty(),\n        &names(&mismatched),",
+      "new": "        mismatched.is_empty(),\n        &names(&drift),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the grades check holds under a mismatch",
+      "old": "        mismatched.is_empty(),\n        &names(&mismatched),",
+      "new": "        true,\n        &names(&mismatched),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the replay is counted as a model call",
+      "old": "checks.record(\"zero_model_calls\", true, &Datum::from(0_usize));",
+      "new": "checks.record(\"zero_model_calls\", false, &Datum::from(0_usize));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the calls are counted as one",
+      "old": "checks.record(\"zero_model_calls\", true, &Datum::from(0_usize));",
+      "new": "checks.record(\"zero_model_calls\", true, &Datum::from(1_usize));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the calls check is named another way",
+      "old": "\"zero_model_calls\"",
+      "new": "\"zero_model_call\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "the calls check is not recorded",
+      "old": "    checks.record(\"zero_model_calls\", true, &Datum::from(0_usize));\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "a held pin is refused",
+      "old": "    if !pinned {",
+      "new": "    if pinned {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a drifted pin is not refused",
+      "old": "    if !pinned {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a drifted pin carries another code",
+      "old": "\"SOURCE_PIN_DRIFT\"",
+      "new": "\"SOURCE_PIN_DRIFTED\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "a drifted pin carries a detail",
+      "old": "return Ok(refused(\"SOURCE_PIN_DRIFT\", Datum::map([])));",
+      "new": "return Ok(refused(\"SOURCE_PIN_DRIFT\", Datum::map([(\"drift\", names(&drift))])));",
+      "outcome": "killed"
+    },
+    {
+      "name": "held digests are refused",
+      "old": "    if !drift.is_empty() {",
+      "new": "    if drift.is_empty() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "drifted digests are not refused",
+      "old": "    if !drift.is_empty() {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "drifted digests carry another code",
+      "old": "\"STORED_BYTES_DRIFTED\"",
+      "new": "\"STORED_BYTE_DRIFTED\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "drifted digests name the mismatches",
+      "old": "            Datum::map([(\"drift\", names(&drift))]),",
+      "new": "            Datum::map([(\"drift\", names(&mismatched))]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "drifted digests name the wrong key",
+      "old": "            Datum::map([(\"drift\", names(&drift))]),",
+      "new": "            Datum::map([(\"drifted\", names(&drift))]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the replay carries another code",
+      "old": "\"REPLAY_REPRODUCED\"",
+      "new": "\"REPLAY_REPRODUCE\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "the replay counts no cells",
+      "old": "            (\"cells\", Datum::from(dossier.cells.len())),",
+      "new": "            (\"cells\", Datum::from(0_usize)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the replay counts the drift",
+      "old": "            (\"cells\", Datum::from(dossier.cells.len())),",
+      "new": "            (\"cells\", Datum::from(drift.len())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the replay lists the drift as mismatches",
+      "old": "            (\"mismatched\", names(&mismatched)),",
+      "new": "            (\"mismatched\", names(&drift)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the replay names the mismatches wrongly",
+      "old": "            (\"mismatched\", names(&mismatched)),",
+      "new": "            (\"mismatch\", names(&mismatched)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "names shows each name once less",
+      "old": "    Datum::List(listed.iter().cloned().map(Datum::text).collect())",
+      "new": "    Datum::List(listed.iter().skip(1).cloned().map(Datum::text).collect())",
+      "outcome": "killed"
+    }
+  ]
+}

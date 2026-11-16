@@ -1,0 +1,204 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf18.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf18.rs",
+      "language": "Rust",
+      "sha256": "81cbf7e4fda171ec3bdd57106efb71709c81831a65033e3fb50bea23d2b87789"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf18:v1",
+    "symbols": [
+      "GRADER",
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task is a dossier: grader, which must be cycle_duality, source_pins, an object, and cells, a nonempty list of cells with different cell_id values. A cell holds cell_id, input (a weighted digraph), raw_reply, raw_reply_sha256, input_sha256 and grade, all text but the input. A task that is not of this form is refused before anything is checked.",
+      "The host asks the model nothing. It records source_pin_matches (the dossier pins cycle_duality at the pin of the grader as it is now), stored_bytes_match_digests, every_grade_reproduces and zero_model_calls, in that order.",
+      "A reply and an input match their digests when raw_reply_sha256 is the SHA-256 of the reply text and input_sha256 is the SHA-256 of the canonical form of the input. The cells that do not are named as cell_id:raw_reply or cell_id:input, in the order of the cells.",
+      "A grade reproduces when the stored reply, graded on the stored input, earns the stored grade. The cells that do not are listed by name in sorted order.",
+      "A pin that does not match is refused as SOURCE_PIN_DRIFT, and after that a digest that does not match as STORED_BYTES_DRIFTED with the cells that drifted. Otherwise a grade that does not reproduce is refused under every_grade_reproduces. All held, the replay is certified as REPLAY_REPRODUCED with the number of cells and no mismatches."
+    ],
+    "boundaries": [
+      "A reproduced dossier says the stored bytes regrade to the stored grades under this grader. It does not say the replies were good, or that the run was ever made.",
+      "The pin ties a dossier to the text of the grader, so any edit of the grader refuses it.",
+      "A reply sent to a replay is not accepted: the run has no step to answer."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf18.rs",
+      "language": "Rust",
+      "sha256": "81cbf7e4fda171ec3bdd57106efb71709c81831a65033e3fb50bea23d2b87789"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: digests are SHA-256 the tests rebuild themselves, the canonical form of an input is the host's, and every grade is the exact grader's. Not B: tested on examples, not proven; the hash library is trusted.",
+      "G3": "Each unreadable part of a task has its own reason, a drifted pin and drifted bytes are their own refusals, and a stored grade that does not reproduce is refused under its predicate. No panicking unwrap or expect, and no index. Not B: panic-freedom is tested, not proven.",
+      "G4": "24 WF18 tests assert the registry entry, a dossier certified with each predicate and its evidence, a host that asks nothing and refuses a reply nobody asked for, a reply byte or an input that drifted and the cell it is named by, drift listed by cell with the reply before the input, a digest that is missing or not text, the digests as the hash of the reply text and of the canonical input, a grade that does not reproduce, the mismatches sorted, every kind of grade regraded, a parallel edge violation a grader might miss, a pin that refuses first and one that is missing or not text, pins of other graders ignored, each part of a dossier and of a cell read in order, and a dossier of one cell. Mutation campaign R = 77/77. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 8, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T22:06:04Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v15-test.run.json",
+        "sha256": "961d394a63c16d206ba212c2f0e771539928f3b958cf63472c35089adc791aa9",
+        "note": "1219 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-clippy.run.json",
+        "sha256": "fe8e4f5bab606fb274fa7fd77441f236d1ef7ab99e2dceb702d6f8ebc1887d08",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-fmt.run.json",
+        "sha256": "fcd4bbf1b7bc812fa56575170d36f18bd3fe6e6e5f73b5be845584264e93a3e1",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-metrics.run.json",
+        "sha256": "e4c24e720d1823e3d047da11b130f1d5d4a45bb021b6b929fc72bb7f1377e61a",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v15-metrics.json",
+        "sha256": "e204ef1d998e58a6f5b13694279c83863b493ca88e21fcdc395014191976e4f2",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 77,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf18.mutation.json",
+        "sha256": "38e1577977fe5637a871faaa579533a417157955704ce1b1dec7022c1292c82b",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 77 mutants"
+      }
+    }
+  },
+  "history": [
+    {
+      "recorded_at": "2026-11-16T22:06:06.329683Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf18.rs",
+          "language": "Rust",
+          "sha256": "81cbf7e4fda171ec3bdd57106efb71709c81831a65033e3fb50bea23d2b87789"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf18:v1",
+        "symbols": [
+          "GRADER",
+          "FAMILY"
+        ],
+        "owned_invariants": [
+          "The task is a dossier: grader, which must be cycle_duality, source_pins, an object, and cells, a nonempty list of cells with different cell_id values. A cell holds cell_id, input (a weighted digraph), raw_reply, raw_reply_sha256, input_sha256 and grade, all text but the input. A task that is not of this form is refused before anything is checked.",
+          "The host asks the model nothing. It records source_pin_matches (the dossier pins cycle_duality at the pin of the grader as it is now), stored_bytes_match_digests, every_grade_reproduces and zero_model_calls, in that order.",
+          "A reply and an input match their digests when raw_reply_sha256 is the SHA-256 of the reply text and input_sha256 is the SHA-256 of the canonical form of the input. The cells that do not are named as cell_id:raw_reply or cell_id:input, in the order of the cells.",
+          "A grade reproduces when the stored reply, graded on the stored input, earns the stored grade. The cells that do not are listed by name in sorted order.",
+          "A pin that does not match is refused as SOURCE_PIN_DRIFT, and after that a digest that does not match as STORED_BYTES_DRIFTED with the cells that drifted. Otherwise a grade that does not reproduce is refused under every_grade_reproduces. All held, the replay is certified as REPLAY_REPRODUCED with the number of cells and no mismatches."
+        ],
+        "boundaries": [
+          "A reproduced dossier says the stored bytes regrade to the stored grades under this grader. It does not say the replies were good, or that the run was ever made.",
+          "The pin ties a dossier to the text of the grader, so any edit of the grader refuses it.",
+          "A reply sent to a replay is not accepted: the run has no step to answer."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf18.rs",
+          "language": "Rust",
+          "sha256": "81cbf7e4fda171ec3bdd57106efb71709c81831a65033e3fb50bea23d2b87789"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Exact: digests are SHA-256 the tests rebuild themselves, the canonical form of an input is the host's, and every grade is the exact grader's. Not B: tested on examples, not proven; the hash library is trusted.",
+          "G3": "Each unreadable part of a task has its own reason, a drifted pin and drifted bytes are their own refusals, and a stored grade that does not reproduce is refused under its predicate. No panicking unwrap or expect, and no index. Not B: panic-freedom is tested, not proven.",
+          "G4": "24 WF18 tests assert the registry entry, a dossier certified with each predicate and its evidence, a host that asks nothing and refuses a reply nobody asked for, a reply byte or an input that drifted and the cell it is named by, drift listed by cell with the reply before the input, a digest that is missing or not text, the digests as the hash of the reply text and of the canonical input, a grade that does not reproduce, the mismatches sorted, every kind of grade regraded, a parallel edge violation a grader might miss, a pin that refuses first and one that is missing or not text, pins of other graders ignored, each part of a dossier and of a cell read in order, and a dossier of one cell. Mutation campaign R = 77/77. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 8, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T22:05:53Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v15-test.run.json",
+            "sha256": "961d394a63c16d206ba212c2f0e771539928f3b958cf63472c35089adc791aa9",
+            "note": "1219 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-clippy.run.json",
+            "sha256": "fe8e4f5bab606fb274fa7fd77441f236d1ef7ab99e2dceb702d6f8ebc1887d08",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-fmt.run.json",
+            "sha256": "fcd4bbf1b7bc812fa56575170d36f18bd3fe6e6e5f73b5be845584264e93a3e1",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-metrics.run.json",
+            "sha256": "e4c24e720d1823e3d047da11b130f1d5d4a45bb021b6b929fc72bb7f1377e61a",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-metrics.json",
+            "sha256": "e204ef1d998e58a6f5b13694279c83863b493ca88e21fcdc395014191976e4f2",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 77,
+          "survived": 0,
+          "demonstrably_equivalent": 0,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-wf18.mutation.json",
+            "sha256": "38e1577977fe5637a871faaa579533a417157955704ce1b1dec7022c1292c82b",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 77 mutants"
+          }
+        }
+      }
+    }
+  ]
+}

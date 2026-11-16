@@ -1,6 +1,7 @@
 """One parametrized suite for every registered workflow family."""
 from __future__ import annotations
 
+import hashlib
 import json
 
 import pytest
@@ -437,6 +438,52 @@ LAYER5_RESULTS = {
 }
 
 
+LAYER6_RESULTS = {
+    ('WF18', 'replay_reproduces_every_grade'): (
+        'REPLAY_REPRODUCED',
+        {'cells': 3, 'mismatched': []},
+    ),
+    ('WF18', 'reply_byte_drifted'): (
+        'STORED_BYTES_DRIFTED',
+        {'drift': ['c1:raw_reply']},
+    ),
+    ('WF18', 'grade_not_reproduced'): (
+        'EVERY_GRADE_REPRODUCES',
+        {'cells': 3, 'failed': ['every_grade_reproduces'], 'mismatched': ['c2']},
+    ),
+    ('WF18', 'grader_pin_drifted'): (
+        'SOURCE_PIN_DRIFT',
+        {},
+    ),
+    ('WF18', 'parallel_edge_violation_recorded_certified'): (
+        'EVERY_GRADE_REPRODUCES',
+        {'cells': 4, 'failed': ['every_grade_reproduces'], 'mismatched': ['c4']},
+    ),
+    ('WF35', 'channels_compared_on_one_checker'): (
+        'CHANNELS_COMPARED',
+        {'accepts': {'grammar_mask': 2, 'prompt': 1}, 'discordant': {'first_only': 0, 'second_only': 1}},
+    ),
+    ('WF35', 'arms_used_different_checkers'): (
+        'ARMS_NOT_MATCHED',
+        {},
+    ),
+    ('WF35', 'arms_used_different_budgets'): (
+        'ARMS_NOT_MATCHED',
+        {},
+    ),
+    ('WF35', 'channel_label_claims_acceptance'): (
+        'ACCEPT_SET_DEPENDS_ONLY_ON_BYTES',
+        {'accepts': {'grammar_mask': 1, 'prompt': 1}, 'discordant': {'first_only': 0, 'second_only': 0},
+         'failed': ['accept_set_depends_only_on_bytes']},
+    ),
+    ('WF35', 'grammar_mask_accepts_parallel_edge_violation'): (
+        'ACCEPT_SET_DEPENDS_ONLY_ON_BYTES',
+        {'accepts': {'grammar_mask': 0, 'prompt': 0}, 'discordant': {'first_only': 0, 'second_only': 0},
+         'failed': ['accept_set_depends_only_on_bytes']},
+    ),
+}
+
+
 def _findings(detail):
     """What a verdict found, without the hashes in it."""
     return {key: value for key, value in detail.items() if 'sha256' not in key and key != 'head'}
@@ -464,6 +511,25 @@ def test_the_layer_5_results_name_every_fixture_of_the_layer_5_families():
 def test_a_layer_5_fixture_ends_with_the_code_and_the_findings_its_name_says(wf_id, name):
     result = run_fixture(REGISTRY[wf_id](), name)
     assert (result.code, _findings(result.detail)) == LAYER5_RESULTS[(wf_id, name)]
+
+
+def test_the_layer_6_results_name_every_fixture_of_the_layer_6_families():
+    families = {wf_id for wf_id, _name in LAYER6_RESULTS}
+    assert families == {'WF18', 'WF35'}
+    assert set(LAYER6_RESULTS) == {(wf_id, name) for wf_id in families for name in REGISTRY[wf_id]().fixtures()}
+
+
+@pytest.mark.parametrize(('wf_id', 'name'), sorted(LAYER6_RESULTS))
+def test_a_layer_6_fixture_ends_with_the_code_and_the_findings_its_name_says(wf_id, name):
+    result = run_fixture(REGISTRY[wf_id](), name)
+    assert (result.code, _findings(result.detail)) == LAYER6_RESULTS[(wf_id, name)]
+
+
+def test_the_duality_pin_is_the_rust_source():
+    from pfp_core.workflow_families import layer6
+    source = REPO_ROOT / 'code' / 'rust' / 'pfp_operads' / 'src' / 'families' / 'duality.rs'
+    text = source.read_bytes().decode('utf-8').replace('\r\n', '\n').replace('\r', '\n')
+    assert hashlib.sha256(text.encode('utf-8')).hexdigest() == layer6.GRADER_PIN
 
 
 def test_authority_escalation_is_refused():
@@ -576,10 +642,10 @@ def test_the_rust_host_lists_every_hosted_family_under_the_registry_s_names():
     listed = operad_host.result(operad_host.call(('family', 'list')))['families']
     assert listed == [{'workflow': wf_id, 'name': cls.spec.name, 'host_check': cls.spec.host_check_id}
                       for wf_id, cls in HOSTED.items()]
-    assert set(HOSTED) == {'WF6', 'WF7', 'WF8', 'WF9', 'WF10', 'WF11', 'WF12', 'WF13', 'WF16', 'WF17', 'WF20',
-                           'WF21', 'WF23', 'WF24', 'WF25', 'WF26', 'WF27', 'WF29', 'WF30', 'WF31', 'WF32', 'WF33',
-                           'WF36', 'WF38', 'WF39', 'WF40', 'WF42', 'WF43', 'WF44', 'WF45', 'WF46', 'WF47',
-                           'WF48'}
+    assert set(HOSTED) == {'WF6', 'WF7', 'WF8', 'WF9', 'WF10', 'WF11', 'WF12', 'WF13', 'WF16', 'WF17', 'WF18',
+                           'WF20', 'WF21', 'WF23', 'WF24', 'WF25', 'WF26', 'WF27', 'WF29', 'WF30', 'WF31', 'WF32',
+                           'WF33', 'WF35', 'WF36', 'WF38', 'WF39', 'WF40', 'WF42', 'WF43', 'WF44', 'WF45', 'WF46',
+                           'WF47', 'WF48'}
 
 
 @pytest.mark.parametrize('wf_id', sorted(HOSTED))

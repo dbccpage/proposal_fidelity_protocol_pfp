@@ -25,6 +25,7 @@
 pub mod attempts;
 pub mod cochain;
 pub mod domains;
+pub mod duality;
 pub mod fence;
 pub mod labelled;
 pub mod monic;
@@ -40,6 +41,7 @@ pub mod wf12;
 pub mod wf13;
 pub mod wf16;
 pub mod wf17;
+pub mod wf18;
 pub mod wf20;
 pub mod wf21;
 pub mod wf23;
@@ -52,6 +54,7 @@ pub mod wf30;
 pub mod wf31;
 pub mod wf32;
 pub mod wf33;
+pub mod wf35;
 pub mod wf36;
 pub mod wf38;
 pub mod wf39;
@@ -116,6 +119,7 @@ pub const FAMILIES: &[&Family] = &[
     &wf13::FAMILY,
     &wf16::FAMILY,
     &wf17::FAMILY,
+    &wf18::FAMILY,
     &wf20::FAMILY,
     &wf21::FAMILY,
     &wf23::FAMILY,
@@ -128,6 +132,7 @@ pub const FAMILIES: &[&Family] = &[
     &wf31::FAMILY,
     &wf32::FAMILY,
     &wf33::FAMILY,
+    &wf35::FAMILY,
     &wf36::FAMILY,
     &wf38::FAMILY,
     &wf39::FAMILY,

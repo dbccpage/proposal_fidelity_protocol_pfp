@@ -191,8 +191,16 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
      probes against a proposed gate and WF48's commit-reveal with two
      checkers that must accept the artifact and reject every hostile edit
      of it.
-   - **Next.** The families of layers 6 to 8. Then the WF1-WF5 and WF52-WF54
-     host checks, the run budget and run custody.
+   - **4h (built, offline).** Part of layer 6: WF18 and WF35. They share one
+     weighted-digraph grader (`families/duality.rs`) whose pin is the digest
+     of its own source. WF18 replays a frozen dossier with no model call:
+     stored digests, the grader pin and every stored grade. WF35 asks each
+     arm each item, grades the bytes of every reply and ignores acceptance an
+     arm claims for itself. WF14 stays in Python until its immune checks are
+     in Rust.
+   - **Next.** WF14 and the immune domain it shares with WF15, WF19 and WF41,
+     then the rest of layers 7 and 8. Then the WF1-WF5 and WF52-WF54 host
+     checks, the run budget and run custody.
 5. **Retire Python `operads/`** (682 files) once nothing imports it, re-pin
    the canonical ID fixture, and score the Rust files that change.
 6. **Lean.** State and prove the laws for the term model, and link each
@@ -229,8 +237,8 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
   derivation is written for them.
 - Python still validates reply schemas, routes statuses and keeps run
   custody (manifests, replay). Those move in slice 4.
-- After 4g the host checks WF6 to WF13, WF16, WF17, WF20, WF21, WF23 to
-  WF27, WF29 to WF33, WF36, WF38 to WF40, WF42 to WF48.
+- After 4h the host checks WF6 to WF13, WF16 to WF18, WF20, WF21, WF23 to
+  WF27, WF29 to WF33, WF35, WF36, WF38 to WF40, WF42 to WF48.
   Every other family still runs its check and its sealed-value guard in
   Python. WF6 and WF22 grade with WF7's check and so reach the host for that
   part.
@@ -364,6 +372,20 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
   146 WF36 runs on which the first stage had no reply. No verdict, code,
   predicate or prompt differed otherwise. As before, that compares two
   checkers; it is not a model result.
+- The 4h host differs from the Python it replaces in these ways. A task is
+  read before the first question, so an item that is not `n` and a list of
+  `[u, v, w]` with integer ends and an exact rational weight is refused as
+  `BAD_TASK` where Python crashed. A reply that is not valid JSON text, or
+  that repeats a key or writes `NaN`, is refused; Python kept the last key
+  and read `NaN`. A rational in a reply is the host's strict reading (no
+  space, plus sign or point), so `" 2"` is refused where Python accepted it.
+  A WF18 grader pin is the digest of the Rust source, not of a Python
+  function, so a dossier stored under the old pin is refused as
+  `SOURCE_PIN_DRIFT`. Old and new agree on 11,000 random grades (items with
+  parallel edges, out-of-range ends, fractional weights, wrong-length
+  potentials, mixed potential and cycle replies and truncated text) except
+  the 13 replies that wrote a rational with a space in it. As before, that
+  compares two checkers; it is not a model result.
 - WF21 reads a position as a byte offset: one that is negative or too large
   to count is no match. The sealed parts of WF21 and WF23 are read by the
   host once the run starts, so a run without a usable sealed part is refused

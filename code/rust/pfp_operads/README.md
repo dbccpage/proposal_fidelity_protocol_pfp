@@ -169,9 +169,9 @@ patch and `[0, 0]` after it, and leaves `request.json`, `candidate.patch`,
   (`CounterfeitExactness`), broke a passing one (`BoundaryLeakage`) or did
   not fit the sources or the write set (`StructuralNonFit`). A missing tool,
   a changed source or a full disk blames no candidate.
-- **Family runs**: a workflow family (WF6 to WF13, WF16, WF17, WF20,
-  WF21, WF23 to WF27, WF29 to WF33, WF36, WF38 to WF40 and WF42 to WF48 so
-  far) is a walk the host owns. The request is the family's id, the
+- **Family runs**: a workflow family (WF6 to WF13, WF16 to WF18,
+  WF20, WF21, WF23 to WF27, WF29 to WF33, WF35, WF36, WF38 to WF40 and WF42
+  to WF48 so far) is a walk the host owns. The request is the family's id, the
   public `task`, the `sealed` part and the `replies` received so far, each `null` or
   `{"content": ...}`. `family next` returns the stage and the exact prompt to
   send, and `family judge` returns `HOST_CERTIFIED`, `TYPED_REFUSAL` or
@@ -247,6 +247,15 @@ patch and `[0, 0]` after it, and leaves `request.json`, `candidate.patch`,
   the sealed chain from its first record; ten custody rules are applied in a
   fixed order and the first one broken names the refusal. Numbers in a
   record are compared as exact values, so `2.0` is not `2`.
+- **Duality grading**: WF18 and WF35 grade a reply to a weighted digraph with
+  one grader (`src/families/duality.rs`): a potential with `phi[v] - phi[u] <=
+  w` on every edge is certified, a closed walk of negative weight along the
+  lightest parallel edges is a typed refusal, and anything else is refused.
+  The grader's pin is the SHA-256 of its own source with LF line endings, so
+  a stored dossier or an arm that pins it is refused as soon as the rules
+  change. WF18 asks the model nothing: it checks every stored digest and
+  regrades every stored reply. WF35 asks each arm each item, grades every
+  reply by its bytes, and ignores any acceptance an arm claims for itself.
 - **Exact numbers** in a family run: an integer is read from its digits and
   has no size limit. A number written with a fraction or an exponent is never
   an integer. A rational is an integer or the text `p/q`: an optional minus,
