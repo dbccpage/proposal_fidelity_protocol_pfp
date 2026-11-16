@@ -60,26 +60,26 @@
     "score_token": "L4C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-16T11:00:04Z",
+    "evaluation_timestamp": "2026-11-16T11:13:32Z",
     "evidence": [
       {
         "path": "governance/evidence/pfp-operads-v12-test.run.json",
-        "sha256": "ee5f813968e3e8802c1d8be777265eeac821ceb003b52ee0fe6e8b8563e66381",
+        "sha256": "c1c7e51c0eb07084391826baaecea82b3d91f3ec4782526261031f67143806c3",
         "note": "870 tests: pfp_operads and core_operad_canon, locked build."
       },
       {
         "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
-        "sha256": "73a978fab4163bc53efc22019f7e50f0912af33c25467f0480e518d5dbbca7ad",
+        "sha256": "22cbb798d2f7300f2ca3c63fbe61d6032e01c51073db01719c5fcb34ad32f60c",
         "note": "clippy with -D warnings on both crates, all targets."
       },
       {
         "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
-        "sha256": "d6e58ab04a4027e91f0df4200c8357109ca84ad2fc7c6f61a84fd0dec7db4778",
+        "sha256": "8d8806ba499f22d1ed9deae362c634aeb8f3b0118020360122555f94aa6a9913",
         "note": "rustfmt --check on both crates."
       },
       {
         "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
-        "sha256": "8e9a063c83d4defaa8512fdb2c090de5830b5a9270b903f0641d6c692a287afc",
+        "sha256": "11c4b704b504ab4496e4187cafd96b735cb563b85fcd306d5ba627c2565288fc",
         "note": "The run that measured Gate 5 structure."
       },
       {
@@ -189,6 +189,110 @@
           {
             "path": "governance/evidence/pfp-operads-v12-metrics.json",
             "sha256": "41a41eff69db08a4a194f9c3078f8c424b936d2076017eef778acb0e5e728e19",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 23,
+          "survived": 0,
+          "demonstrably_equivalent": 0,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-families-labelled.mutation.json",
+            "sha256": "ca39b8bbf304e61e84db3d95853a4da3b701742581a7dd6d27a683d023790b36",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 23 mutants"
+          }
+        }
+      }
+    },
+    {
+      "recorded_at": "2026-11-16T11:13:33.360323Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/labelled.rs",
+          "language": "Rust",
+          "sha256": "f6cb30dbdf33cb650102a4e95416117e81778b90811de1349e3a0772e98fb439"
+        },
+        "contract_urn": "urn:pfp-operads:families-labelled:v1",
+        "symbols": [
+          "Labelled",
+          "read",
+          "Labelled::names",
+          "Labelled::covers",
+          "Labelled::by_name",
+          "Labelled::potential"
+        ],
+        "owned_invariants": [
+          "read gives the graph a value denotes: a list of [u, v] pairs of text, which may be empty. Anything else gives nothing.",
+          "Vertices are numbered in the order the edges first name them, as in graph.rs, and names lists the vertex names in that order. A loop and a repeated edge are kept as written.",
+          "covers says whether a value is an object whose keys are exactly the vertex names.",
+          "by_name gives what a reader makes of the entry under each vertex name, in vertex order, and nothing when a vertex has no entry or the reader gives nothing for one. Entries under other keys are not looked at.",
+          "potential is by_name with the exact-rational reader, so a potential keyed by name comes back in the order the graph functions take."
+        ],
+        "boundaries": [
+          "Vertex names are text. A task whose vertices are numbers is read by graph.rs, not here.",
+          "The numbering follows the edges, not the sorted names. A caller that wants names in another order asks names.",
+          "What a value on the vertices means for a verdict is each family's to say."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/labelled.rs",
+          "language": "Rust",
+          "sha256": "f6cb30dbdf33cb650102a4e95416117e81778b90811de1349e3a0772e98fb439"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Exact: vertex numbers are exact integers and potentials are read as exact rationals, so 1/2 and 2/4 are one value. Numbering, covering and reading by name are asserted against values worked by hand on a graph whose names do not sort in first-named order. Not B: tested on examples, not proven.",
+          "G3": "read, by_name and potential give nothing for what they cannot read, and covers is total. No panicking unwrap or expect, and no index. The one subtraction, in read, follows a push. Not B: panic-freedom is tested, not proven.",
+          "G4": "8 tests assert the numbering by first mention, loops and repeated edges kept as written, the empty list as the graph with no vertices, edges that are not pairs of text, covering by exactly the vertex names, a potential read by name into vertex order, a missing or unreadable entry giving nothing, and any reader's results coming back in vertex order. Mutation campaign R = 23/23. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 5, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T11:00:04Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v12-test.run.json",
+            "sha256": "ee5f813968e3e8802c1d8be777265eeac821ceb003b52ee0fe6e8b8563e66381",
+            "note": "870 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
+            "sha256": "73a978fab4163bc53efc22019f7e50f0912af33c25467f0480e518d5dbbca7ad",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
+            "sha256": "d6e58ab04a4027e91f0df4200c8357109ca84ad2fc7c6f61a84fd0dec7db4778",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
+            "sha256": "8e9a063c83d4defaa8512fdb2c090de5830b5a9270b903f0641d6c692a287afc",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.json",
+            "sha256": "35e322d577846769b739d4fc2262a8e808a0c66444e7fdad3ee0de45304db976",
             "note": "Measured Gate 5 structure of every source this change touches."
           }
         ],

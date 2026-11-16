@@ -102,26 +102,26 @@
     "score_token": "L2C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-16T11:00:04Z",
+    "evaluation_timestamp": "2026-11-16T11:13:32Z",
     "evidence": [
       {
         "path": "governance/evidence/pfp-operads-v12-test.run.json",
-        "sha256": "ee5f813968e3e8802c1d8be777265eeac821ceb003b52ee0fe6e8b8563e66381",
+        "sha256": "c1c7e51c0eb07084391826baaecea82b3d91f3ec4782526261031f67143806c3",
         "note": "870 tests: pfp_operads and core_operad_canon, locked build."
       },
       {
         "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
-        "sha256": "73a978fab4163bc53efc22019f7e50f0912af33c25467f0480e518d5dbbca7ad",
+        "sha256": "22cbb798d2f7300f2ca3c63fbe61d6032e01c51073db01719c5fcb34ad32f60c",
         "note": "clippy with -D warnings on both crates, all targets."
       },
       {
         "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
-        "sha256": "d6e58ab04a4027e91f0df4200c8357109ca84ad2fc7c6f61a84fd0dec7db4778",
+        "sha256": "8d8806ba499f22d1ed9deae362c634aeb8f3b0118020360122555f94aa6a9913",
         "note": "rustfmt --check on both crates."
       },
       {
         "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
-        "sha256": "8e9a063c83d4defaa8512fdb2c090de5830b5a9270b903f0641d6c692a287afc",
+        "sha256": "11c4b704b504ab4496e4187cafd96b735cb563b85fcd306d5ba627c2565288fc",
         "note": "The run that measured Gate 5 structure."
       },
       {
@@ -260,6 +260,139 @@
           {
             "path": "governance/evidence/pfp-operads-v12-metrics.json",
             "sha256": "41a41eff69db08a4a194f9c3078f8c424b936d2076017eef778acb0e5e728e19",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    },
+    {
+      "recorded_at": "2026-11-16T11:13:38.245906Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf44.rs",
+          "language": "Rust",
+          "sha256": "76571b491a333c5a4355a7ba9e1872e49a1837c3fefe63d3dd50aaaf4160972e"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf44-tests:v1",
+        "symbols": [
+          "sha",
+          "request",
+          "all",
+          "run",
+          "ask",
+          "bad_task",
+          "malformed",
+          "outcomes",
+          "evidence",
+          "potential_task",
+          "dual_task",
+          "capped_task",
+          "linear_task",
+          "prompt",
+          "reply",
+          "certify",
+          "phi",
+          "dual",
+          "dual_with",
+          "gated",
+          "dual_outcomes",
+          "linear_outcomes",
+          "ill_typed",
+          "float",
+          "the_family_is_registered_under_its_names",
+          "the_one_question_is_the_task_as_written",
+          "a_potential_whose_coboundary_is_c_is_certified",
+          "a_potential_that_misses_an_edge_is_refused",
+          "a_primal_and_dual_pair_with_no_gap_is_certified",
+          "negative_residuals_and_flows_count_by_their_size",
+          "a_residual_that_is_not_w_plus_the_coboundary_of_f_is_refused",
+          "a_flow_with_net_flow_at_a_vertex_is_refused",
+          "a_flow_beyond_a_cap_is_refused",
+          "a_gap_between_the_primal_and_the_dual_is_refused",
+          "the_one_solution_in_canonical_form_is_certified",
+          "a_solution_that_is_right_but_not_in_lowest_terms_is_refused",
+          "a_canonical_vector_that_is_not_the_solution_is_refused",
+          "a_system_without_exactly_one_solution_has_no_canonical_certificate",
+          "a_decimal_anywhere_in_the_certificate_is_refused_before_the_types_are_read",
+          "text_written_like_a_decimal_counts_as_one",
+          "text_that_only_resembles_a_decimal_is_left_to_the_type_gate",
+          "a_reply_must_name_the_schema_of_the_task",
+          "a_certificate_has_exactly_the_fields_of_its_schema",
+          "a_value_on_the_vertices_is_an_object_with_one_entry_per_vertex",
+          "a_value_on_the_edges_or_the_unknowns_is_a_list_of_the_right_length",
+          "an_entry_is_an_integer_or_text_p_over_q",
+          "a_reply_without_a_certificate_object_is_malformed",
+          "a_task_must_name_a_registered_schema",
+          "a_graph_task_needs_text_edges_and_one_value_per_edge",
+          "caps_when_given_are_one_per_edge",
+          "a_linear_task_is_read_as_wf7_reads_it",
+          "a_missing_reply_is_refused"
+        ],
+        "owned_invariants": [
+          "Residuals, flows, caps and gaps are worked by hand, and each equation of each schema is asserted failing alone.",
+          "A decimal is asserted refused before the types are read, and text that only resembles one is asserted left to the type gate.",
+          "Each schema's fields and the shape of each value are asserted, with each unreadable task and reply by its reason."
+        ],
+        "boundaries": [
+          "Test support only; no production path imports it."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/tests/wf44.rs",
+          "language": "Rust",
+          "sha256": "76571b491a333c5a4355a7ba9e1872e49a1837c3fefe63d3dd50aaaf4160972e"
+        },
+        "profile": "Exact",
+        "level": "L2",
+        "level_basis": "Integration tests in the standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Each test name states the claim it checks.",
+          "G2": "Expected values follow by hand from the request written in the test.",
+          "G3": "Refusals are asserted by code.",
+          "G4": "All 28 pass in the recorded run; the suite they belong to killed 97 of 97 eligible WF44 mutants.",
+          "G5": "Measured worst cyclomatic 4, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T11:00:04Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v12-test.run.json",
+            "sha256": "ee5f813968e3e8802c1d8be777265eeac821ceb003b52ee0fe6e8b8563e66381",
+            "note": "870 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
+            "sha256": "73a978fab4163bc53efc22019f7e50f0912af33c25467f0480e518d5dbbca7ad",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
+            "sha256": "d6e58ab04a4027e91f0df4200c8357109ca84ad2fc7c6f61a84fd0dec7db4778",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
+            "sha256": "8e9a063c83d4defaa8512fdb2c090de5830b5a9270b903f0641d6c692a287afc",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.json",
+            "sha256": "35e322d577846769b739d4fc2262a8e808a0c66444e7fdad3ee0de45304db976",
             "note": "Measured Gate 5 structure of every source this change touches."
           }
         ],

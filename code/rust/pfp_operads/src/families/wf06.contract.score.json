@@ -57,26 +57,26 @@
     "score_token": "L4C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-16T11:00:04Z",
+    "evaluation_timestamp": "2026-11-16T11:13:32Z",
     "evidence": [
       {
         "path": "governance/evidence/pfp-operads-v12-test.run.json",
-        "sha256": "ee5f813968e3e8802c1d8be777265eeac821ceb003b52ee0fe6e8b8563e66381",
+        "sha256": "c1c7e51c0eb07084391826baaecea82b3d91f3ec4782526261031f67143806c3",
         "note": "870 tests: pfp_operads and core_operad_canon, locked build."
       },
       {
         "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
-        "sha256": "73a978fab4163bc53efc22019f7e50f0912af33c25467f0480e518d5dbbca7ad",
+        "sha256": "22cbb798d2f7300f2ca3c63fbe61d6032e01c51073db01719c5fcb34ad32f60c",
         "note": "clippy with -D warnings on both crates, all targets."
       },
       {
         "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
-        "sha256": "d6e58ab04a4027e91f0df4200c8357109ca84ad2fc7c6f61a84fd0dec7db4778",
+        "sha256": "8d8806ba499f22d1ed9deae362c634aeb8f3b0118020360122555f94aa6a9913",
         "note": "rustfmt --check on both crates."
       },
       {
         "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
-        "sha256": "8e9a063c83d4defaa8512fdb2c090de5830b5a9270b903f0641d6c692a287afc",
+        "sha256": "11c4b704b504ab4496e4187cafd96b735cb563b85fcd306d5ba627c2565288fc",
         "note": "The run that measured Gate 5 structure."
       },
       {
@@ -183,6 +183,107 @@
           {
             "path": "governance/evidence/pfp-operads-v12-metrics.json",
             "sha256": "41a41eff69db08a4a194f9c3078f8c424b936d2076017eef778acb0e5e728e19",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 111,
+          "survived": 0,
+          "demonstrably_equivalent": 0,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp-operads-wf06.mutation.json",
+            "sha256": "50cdc75cda18dc170ba3d6ed8fa2924b91ef7fee9e277c7509f6a34825904d02",
+            "note": "lexical campaign of one-line mutants, crate tests as oracle; 111 mutants"
+          }
+        }
+      }
+    },
+    {
+      "recorded_at": "2026-11-16T11:13:33.765625Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf06.rs",
+          "language": "Rust",
+          "sha256": "15d62b1769b851ac3a09804cc6a9093047e071fa82e7dcace39bc3aed726758c"
+        },
+        "contract_urn": "urn:pfp-operads:families-wf06:v1",
+        "symbols": [
+          "MAX_CAPSULES",
+          "FAMILY"
+        ],
+        "owned_invariants": [
+          "The task is a statement, text; items, each {id, A, b} with a system read as WF7 reads it; and dialects, each a text name with optional row_perm, col_perm, row_scale and b_shift. Item ids are distinct, dialect names are distinct, every dialect is written for the rows and columns of every item, and there are at most 64 questions. A task the host cannot read is refused before anything is asked.",
+          "Row i of an item as a dialect writes it is row_scale[i] times row row_perm[i] of the item with its columns taken in the order col_perm, and b_shift[i] added to its right-hand side. A part a dialect leaves out is the identity.",
+          "A dialect keeps the query when the rewritten system has the same answerability as the item and, when it has one solution, the same solution read back through col_perm. The host records dialects_preserve_query over every item and dialect, and refuses the run as DIALECT_CHANGES_QUERY with the broken pairs before anything is asked when one does not.",
+          "One question is asked per item and dialect, items first, under the stage <item>:<dialect>. It is the statement and the rewritten system. A reply is graded as WF7 grades it, and counts as accepted when WF7 certifies it or accepts it as a typed refusal.",
+          "every_capsule_graded_once fails, and the run is refused as INCOMPLETE_SWEEP with the missing pairs, when a question has no reply.",
+          "The run is certified as SWEEP_GRADED whatever the grades are. It gives the share of items accepted in each dialect, as an integer or in lowest terms, the grade of every item in every dialect, and every pair whose grade in a later dialect differs from its grade in the first, in either direction."
+        ],
+        "boundaries": [
+          "A certified sweep says the sweep was run and graded, not that the replies were right.",
+          "Grades are WF7's. The sweep adds none of its own and does not look at how a reply was reached.",
+          "A dialect that changes the query is a defect in the task, not in the model, and is refused before a question is asked."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_operads/src/families/wf06.rs",
+          "language": "Rust",
+          "sha256": "15d62b1769b851ac3a09804cc6a9093047e071fa82e7dcace39bc3aed726758c"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+          "G2": "Exact: rows, scales, shifts and solutions are exact rationals compared exactly after the read-back through col_perm; a share is an exact fraction of two counts. Rewritten systems, flips and shares are worked by hand in the tests. The limit is asserted as the value 64. Not B: tested on examples, not proven.",
+          "G3": "Each unreadable part of a task has its own reason, checked in a stated order; a dialect that changes the query and a question without a reply each have their own code with the pairs that show it. No panicking unwrap or expect, and no index. Permutations, scales and rows are read with get after their shapes were checked. Not B: panic-freedom is tested, not proven.",
+          "G4": "19 WF6 tests assert the registry entry, one question per item and dialect in order, a sweep answered rightly everywhere, a sweep certified whatever the grades with its flips in either direction, each reply graded as WF7 grades it, a question without a reply, a dialect that changes the query before anything is asked, solutions read back through the column order, scaled and shifted rows, the order in which a task is read, distinct ids and names, the limit of 64 questions, dialects that do not fit an item, and replies beyond the questions. Mutation campaign R = 111/111. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+          "G5": "Measured worst cyclomatic 10, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T11:00:04Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pfp-operads-v12-test.run.json",
+            "sha256": "ee5f813968e3e8802c1d8be777265eeac821ceb003b52ee0fe6e8b8563e66381",
+            "note": "870 tests: pfp_operads and core_operad_canon, locked build."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-clippy.run.json",
+            "sha256": "73a978fab4163bc53efc22019f7e50f0912af33c25467f0480e518d5dbbca7ad",
+            "note": "clippy with -D warnings on both crates, all targets."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-fmt.run.json",
+            "sha256": "d6e58ab04a4027e91f0df4200c8357109ca84ad2fc7c6f61a84fd0dec7db4778",
+            "note": "rustfmt --check on both crates."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.run.json",
+            "sha256": "8e9a063c83d4defaa8512fdb2c090de5830b5a9270b903f0641d6c692a287afc",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v12-metrics.json",
+            "sha256": "35e322d577846769b739d4fc2262a8e808a0c66444e7fdad3ee0de45304db976",
             "note": "Measured Gate 5 structure of every source this change touches."
           }
         ],
