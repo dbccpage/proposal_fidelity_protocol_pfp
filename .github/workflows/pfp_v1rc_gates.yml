@@ -23,7 +23,9 @@ jobs:
       - run: python -m pip install -e ".[dev,workflows]"
       - run: python -B -X utf8 -m ruff check pfp_core/ tests/
       - run: python -B -X utf8 -m pytest pfp_lab/tests/test_boundaries.py -q
-      - run: python -B -X utf8 -m pytest tests/ pfp_lab/tests pfp_core pfp_core/tests pfp_core/workflow_families/tests governance/tools/tests operads eis pciv -q
+      # Section-3 suite. Collecting all of operads/, eis/, and pciv also imports
+      # optional hosts and historical receipt scripts, which abort collection.
+      - run: python -B -X utf8 -m pytest tests/ pfp_lab/tests pfp_core/tests pfp_core/workflow_families/tests governance/tools/tests -q
       # pfp-cli is a separate workspace (package name pfp-cli). The engine manifest has no pfp_cli member.
       - run: cargo test --manifest-path code/rust/Cargo.toml -p pfp -p pfp_runtime -p pfp_operads -p pfp_immune -p core_operad_canon
       - run: cargo test --manifest-path code/rust/pfp_cli/Cargo.toml
