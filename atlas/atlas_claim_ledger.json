@@ -7516,15 +7516,21 @@
       "paper": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition",
       "dag_node": "ATL-P015-001",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PFPDOMAIN-CL16",
-          "RCT-C22",
-          "EDU-C04"
+          "AUDIT-P015-001"
         ],
-        "relation": "supports",
-        "note": "Nodes record implemented finite gluing checks and unique/ambiguous gluing distinctions; the general iff and the bijection with global solutions are not derived.",
-        "proposed_derivation_file": "dag/derivations/atl_p015_001.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P015-001, with PFPDOMAIN-CL16, RCT-C22, and EDU-C04: Over finite variable domains and scope families (S_i), a locally permitted family glues to a unique assignment on union_i S_i iff every pair agrees on S_i intersect S_j, and when the scopes cover V restriction and gluing biject global solutions with compatible families (mechanized in PFP.FunnelCompressionClosure.gluing_iff_pairwise_compatible and compatible_permitted_bijection).",
+        "partial_evidence": {
+          "nodes": [
+            "PFPDOMAIN-CL16",
+            "RCT-C22",
+            "EDU-C04"
+          ],
+          "relation": "supports",
+          "note": "Nodes record implemented finite gluing checks and unique/ambiguous gluing distinctions; the general iff and the bijection with global solutions are not derived."
+        }
       }
     },
     {
@@ -7546,13 +7552,19 @@
       "paper": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition",
       "dag_node": "ATL-P015-002",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PFPTESTS-CL020"
+          "AUDIT-P015-002"
         ],
-        "relation": "supports",
-        "note": "PFPTESTS-CL020 enumerates an inconsistent parity triangle; the equality variant with solutions (0,0,0),(1,1,1) is not recorded.",
-        "proposed_derivation_file": "dag/derivations/atl_p015_002.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P015-002, with PFPTESTS-CL020: Over Boolean variables {0, 1}^3, x = y, y = z, and z != x each have two local solutions yet zero common global solutions across all 8 triples, whereas replacing z != x with z = x yields exactly (0, 0, 0) and (1, 1, 1) (mechanized in PFP.FunnelCompressionClosure.boolean_cycle_obstruction_and_equality_solutions and verified in code/replay.py).",
+        "partial_evidence": {
+          "nodes": [
+            "PFPTESTS-CL020"
+          ],
+          "relation": "supports",
+          "note": "PFPTESTS-CL020 enumerates an inconsistent parity triangle; the equality variant with solutions (0,0,0),(1,1,1) is not recorded."
+        }
       }
     },
     {
@@ -7574,11 +7586,12 @@
       "paper": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition",
       "dag_node": "ATL-P015-003",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records this paper's reference replay.",
-        "proposed_derivation_file": "dag/derivations/atl_p015_003.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P015-003"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P015-003: code/replay.py imports only stdlib json and itertools.product, enumerates all 8 triples in {0, 1}^3, refuses the disagreeing family ((0,0),(0,0),(0,1)), decodes the compatible family ((0,0),(0,0),(0,0)) -> (0,0,0), confirms {(0,0,0),(1,1,1)} on the equality cycle, and exits offline with provider_calls = 0."
       }
     },
     {
@@ -7600,11 +7613,12 @@
       "paper": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition",
       "dag_node": "ATL-P015-004",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "Scope fence.",
-        "proposed_derivation_file": "dag/derivations/atl_p015_004.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P015-004"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P015-004: Six-stage C, R, E, I, M, T execution in operads/infrastructure/ddc_code_repair.py and ops/adversary/infrastructure/ddc_code_repair.py verifies linear port-colour wiring, run-identity transport, and fixed local check exits (mathematical_measurement='NOT_MEASURED', admission='Unadmitted', production_activation='HOLD'), which is a single-pipeline integration observation rather than a gluing theorem for stateful/effectful agents."
       }
     },
     {
@@ -7626,13 +7640,19 @@
       "paper": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost",
       "dag_node": "ATL-P016-001",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "RCT-C21"
+          "AUDIT-P016-001"
         ],
-        "relation": "narrows",
-        "note": "RCT-C21 gives report-respecting transition congruence and quotient factorization for complete Moore machines without action costs or partial enablement; the cost-and-enablement criterion is not derived.",
-        "proposed_derivation_file": "dag/derivations/atl_p016_001.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P016-001, with RCT-C21: On finite deterministic partial action tables with positive rational costs, a report q admits an exact quotient table iff states in each q-fibre share terminal labels, protected reports, and per-action enablement, enabled cost, and successor fibre, preserving legal words, reports, costs, and optimal resolution cost (mechanized in PFP.FunnelCompressionClosure Section 1).",
+        "partial_evidence": {
+          "nodes": [
+            "RCT-C21"
+          ],
+          "relation": "narrows",
+          "note": "RCT-C21 gives report-respecting transition congruence and quotient factorization for complete Moore machines without action costs or partial enablement; the cost-and-enablement criterion is not derived."
+        }
       }
     },
     {
@@ -7654,14 +7674,20 @@
       "paper": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost",
       "dag_node": "ATL-P016-002",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "RCT-C21",
-          "RDR-C01"
+          "AUDIT-P016-002"
         ],
-        "relation": "narrows",
-        "note": "Both nodes compute coarsest report-respecting stable partitions by refinement, but without the cost-labelled, partially enabled action signature.",
-        "proposed_derivation_file": "dag/derivations/atl_p016_002.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P016-002, with RCT-C21 and RDR-C01: Splitting blocks by disabled-or-(exact-cost, successor-block) signatures terminates after at most |X| - 1 proper splits at the unique coarsest stable refinement of q0 (mechanized in PFP.FunnelCompressionClosure Section 2 and verified in code/replay.py::refine).",
+        "partial_evidence": {
+          "nodes": [
+            "RCT-C21",
+            "RDR-C01"
+          ],
+          "relation": "narrows",
+          "note": "Both nodes compute coarsest report-respecting stable partitions by refinement, but without the cost-labelled, partially enabled action signature."
+        }
       }
     },
     {
@@ -7683,11 +7709,12 @@
       "paper": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost",
       "dag_node": "ATL-P016-003",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the two-state cost counterexample.",
-        "proposed_derivation_file": "dag/derivations/atl_p016_003.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P016-003"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P016-003: Identifying zero-report states a (finish cost 1) and b (finish cost 3) preserves current output 0 while violating fibre cost agreement (1 != 3) and changing operating resolution cost (mechanized in PFP.FunnelCompressionClosure.output_preserving_collapse_breaks_cost and verified in code/replay.py)."
       }
     },
     {
@@ -7709,11 +7736,12 @@
       "paper": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost",
       "dag_node": "ATL-P016-004",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node proves that positive-cost optima are simple paths; PAPER011-HISTORY-SHORTEST-PATH-BOUND gives only an upper bound from a supplied path.",
-        "proposed_derivation_file": "dag/derivations/atl_p016_004.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P016-004"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P016-004: Under strictly positive step costs on a finite deterministic partial table X, loop erasure strictly reduces cost and word length so any minimum-cost resolving word is attained by a simple path of at most |X| - 1 transitions, and in the {r, s, t} example ('next', 'finish') costs 2 against ('direct',) at 5 and ('loop', 'next', 'finish') at 3 (mechanized in PFP.FunnelCompressionClosure Section 3)."
       }
     },
     {
@@ -8139,11 +8167,12 @@
       "paper": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair",
       "dag_node": "ATL-P018-002",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node covers the C-R-E-I-M-T repair slice.",
-        "proposed_derivation_file": "dag/derivations/atl_p018_002.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P018-002"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P018-002: load_code_repair_family and CodeRepairRuntime execute C, R, E, I, M, T carrying run_key, request_digest, and candidate_id across every transition while holding source_application='NOT_PERFORMED', admission='Unadmitted', production_activation='HOLD', and authority_effect='None'."
       }
     },
     {
@@ -8165,11 +8194,12 @@
       "paper": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair",
       "dag_node": "ATL-P018-003",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the worked example.",
-        "proposed_derivation_file": "dag/derivations/atl_p018_003.md"
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P018-003"
+        ],
+        "relation": "narrows",
+        "note": "Derived in AUDIT-P018-003 (narrows ATL-P018-003 because pre-split wrapper adversary/documentation/examples/code_repair.py at commit 6d9da6fa7919ae2a8b99b704e784e5a4f422aed2 and external raw receipt pfp-paper028-ddc-20261021/run/receipt.json reside outside this split checkout): Executing tracked CodeRepairRuntime on adjust(n) (patching n - 1 to n + 1 on n >= 0 with positive check adjust(2) == 3 and control adjust(-2) == -2) moves check exits from [1, 0] to [0, 0] with outcome 'REPAIRED' and leaves the original source file byte-identical, matching docs/observed_execution.json."
       }
     },
     {
@@ -8191,11 +8221,12 @@
       "paper": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair",
       "dag_node": "ATL-P018-004",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the DDC test target coverage.",
-        "proposed_derivation_file": "dag/derivations/atl_p018_004.md"
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P018-004"
+        ],
+        "relation": "narrows",
+        "note": "Derived in AUDIT-P018-004 (narrows ATL-P018-004 because pre-split test module adversary/tests/test_ddc_code_repair.py at commit 6d9da6fa7919ae2a8b99b704e784e5a4f422aed2 resides outside this split checkout): Retained JUnit trace verification/review_learning.xml in pfp_harness_author_review_2026-10-23.zip and direct execution of CodeRepairRuntime and ddc_code_repair_v1.py (plus Rust pfp_operads::repair) verify all nine repair, ineffective, regression, source-drift, scope-refusal, missing-infrastructure, binding-failure, GIT_* sanitization, and PYTHONDONTWRITEBYTECODE=1 same-size Python edit controls."
       }
     },
     {
@@ -8217,11 +8248,12 @@
       "paper": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair",
       "dag_node": "ATL-P018-005",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "Scope fence; no node.",
-        "proposed_derivation_file": "dag/derivations/atl_p018_005.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P018-005"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P018-005: CodeRepairRequestV1 and CodeRepairRuntime require a caller-supplied patch and fixed check argv vectors with zero provider imports, zero patch generation, new_model_trials = 0, working-copy separation only (no OS sandbox), and mathematical_measurement = 'NOT_MEASURED'."
       }
     },
     {
@@ -8243,11 +8275,12 @@
       "paper": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
       "dag_node": "ATL-P019-001",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "Source attribution only.",
-        "proposed_derivation_file": "dag/derivations/atl_p019_001.md"
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P019-001"
+        ],
+        "relation": "narrows",
+        "note": "Derived in AUDIT-P019-001 (narrows ATL-P019-001 because external copyrighted PDF 2609.26457v1.pdf is not bundled in this checkout so live pypdf 6.10.0 text re-extraction requires externally supplying the 737,558-byte v1 file): Verified docs/source_manifest.json SHA-256 and 28 distinct per-page text digests and verified all 12 page-range attribution rows in docs/source_to_claim_map.md within pages 1..28."
       }
     },
     {
@@ -8269,11 +8302,12 @@
       "paper": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
       "dag_node": "ATL-P019-002",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node on campaign contracts.",
-        "proposed_derivation_file": "dag/derivations/atl_p019_002.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P019-002"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P019-002: operads/domain/autopoiesis/research.py, pciv/use_cases/research_selection.py, pfp/infrastructure/adapters/{harness_budget.py,harness_provider.py}, and frozen Woland reference_harness.py / harness_campaign.py in pfp_harness_author_review_2026-10-23.zip implement the 4-file candidate surface, 5-arm UCB1/softmax/champion-fork policy, budget integration, and parent-bound experimental re-entry (with Linux containment and paid campaign deferred)."
       }
     },
     {
@@ -8295,11 +8329,12 @@
       "paper": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
       "dag_node": "ATL-P019-003",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node on the replacement rule.",
-        "proposed_derivation_file": "dag/derivations/atl_p019_003.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P019-003"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P019-003: IncumbentDecisionV1 and pciv/use_cases/research_selection.py::decide require invariant controls, paired (task, family, repetition) evaluations, disjoint selection and confirmation occurrence IDs, strict Pareto improvement on both selection and fresh confirmation panels, and zero per-family correctness regression before incumbent replacement."
       }
     },
     {
@@ -8321,13 +8356,19 @@
       "paper": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
       "dag_node": "ATL-P019-004",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PFPTESTS-CL033"
+          "AUDIT-P019-004"
         ],
-        "relation": "supports",
-        "note": "PFPTESTS-CL033 records reserve-before-send durable accounting; the shared campaign ceiling is not stated.",
-        "proposed_derivation_file": "dag/derivations/atl_p019_004.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P019-004, with PFPTESTS-CL033: HarnessBudgetLedger and HarnessProvider route all outer and inner campaign calls through a singleton-bound SQLite ledger sharing a fixed 40,000,000 micro-USD ($40) ceiling across six PHASE_CAPS, enforcing concurrency < 2, refusing spec or foreign-budget swaps across restarts, and halting restarts on unsettled reservations.",
+        "partial_evidence": {
+          "nodes": [
+            "PFPTESTS-CL033"
+          ],
+          "relation": "supports",
+          "note": "PFPTESTS-CL033 records reserve-before-send durable accounting; the shared campaign ceiling is not stated."
+        }
       }
     },
     {
@@ -8349,14 +8390,20 @@
       "paper": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
       "dag_node": "ATL-P019-005",
       "match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PFPTESTS-CL041",
-          "PFPTESTS-CL048"
+          "AUDIT-P019-005"
         ],
-        "relation": "supports",
-        "note": "Nodes record preserved liability and distinct handling of unusable paid replies; the rejected-answer usage retention case is not stated.",
-        "proposed_derivation_file": "dag/derivations/atl_p019_005.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P019-005, with PFPTESTS-CL041 and PFPTESTS-CL048: RecordedTransport and HarnessProvider settle observed Anthropic token usage on rejected replies carrying parseable usage metadata as TYPED_REFUSAL with empty content, while replies lacking parseable usage retain pre-dispatch maximum-liability holds and block subsequent dispatch with UNRECONCILED_COST.",
+        "partial_evidence": {
+          "nodes": [
+            "PFPTESTS-CL041",
+            "PFPTESTS-CL048"
+          ],
+          "relation": "supports",
+          "note": "Nodes record preserved liability and distinct handling of unusable paid replies; the rejected-answer usage retention case is not stated."
+        }
       }
     },
     {
@@ -8378,11 +8425,12 @@
       "paper": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
       "dag_node": "ATL-P019-006",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "Not measured.",
-        "proposed_derivation_file": "dag/derivations/atl_p019_006.md"
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P019-006"
+        ],
+        "relation": "narrows",
+        "note": "Derived in AUDIT-P019-006 (narrows ATL-P019-006 to the retained NOT_RUN / NOT_MEASURED offline report because live provider calls were deferred by operator instruction): Verified campaign/report.json and replay_receipt.json record status='NOT_RUN', independent_provider_calls=0, spent_microusd=0, and status='NOT_MEASURED' across all four ablations, and verified harness_replay.py paired_analysis/holm fail-closed NOT_MEASURED reporting."
       }
     },
     {
@@ -8404,11 +8452,12 @@
       "paper": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
       "dag_node": "ATL-P019-007",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node on the frozen-report replay.",
-        "proposed_derivation_file": "dag/derivations/atl_p019_007.md"
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P019-007"
+        ],
+        "relation": "narrows",
+        "note": "Derived in AUDIT-P019-007 (narrows ATL-P019-007 to the zero-call NOT_RUN report under pre-installed host site-packages and notes the Windows CRLF vs Linux LF line ending in campaign/report.md): Verified SHA-256 archive authentication (83bd2f2d...), 3,486-file pre-replay rebuild_release.py::validate custody pass, and socket/subprocess-blocked offline replay reproducing campaign/report.json byte-for-byte independently of current main."
       }
     },
     {
@@ -8430,11 +8479,12 @@
       "paper": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
       "dag_node": "ATL-P019-008",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "Not claimed.",
-        "proposed_derivation_file": "dag/derivations/atl_p019_008.md"
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P019-008"
+        ],
+        "relation": "narrows",
+        "note": "Derived in AUDIT-P019-008 (narrows ATL-P019-008 to its explicit paper_claim_ledger.md:12 'No such evidence | Not claimed' non-claim boundary): Proved via two finite resumption-record counterexamples (dropped artifact reference breaking action enablement, and output-preserving collapse breaking finish cost 1 vs 3 in PFP.FunnelCompressionClosure.output_preserving_collapse_breaks_cost) that heuristic summaries do not satisfy FibreCompatible."
       }
     },
     {
@@ -8456,11 +8506,12 @@
       "paper": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
       "dag_node": "ATL-P019-009",
       "match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "Not claimed.",
-        "proposed_derivation_file": "dag/derivations/atl_p019_009.md"
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P019-009"
+        ],
+        "relation": "narrows",
+        "note": "Derived in AUDIT-P019-009 (narrows ATL-P019-009 to its explicit paper_claim_ledger.md:13 'No such evidence | Not claimed' non-claim boundary): Verified HarnessCandidateV1 4-file experimental edit-surface isolation, zero production-admission transitions in research_selection.py and harness_campaign.py, 0 evaluated trials in campaign/report.json, and PFP.FunnelCompressionClosure.funnel_authority_effect_none."
       }
     },
     {
@@ -24292,6 +24343,195 @@
       "area": "PFP runtime, Lab, contracts and formal sources"
     },
     {
+      "atlas_id": "ATL-D-AUDIT-P015-001",
+      "dag_node": "AUDIT-P015-001",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For any finite family of scopes (S_i) over finite variable domains (D_v), a locally permitted assignment family glues to a unique assignment on union_i S_i iff every pair agrees on S_i intersect S_j, and when union_i S_i = V restriction and gluing form mutual-inverse bijections between global solutions and pairwise-compatible locally permitted families (mechanized in PFP.FunnelCompressionClosure.gluing_iff_pairwise_compatible and compatible_permitted_bijection).",
+      "status_text": "mathematical_proof_and_formal_lean_support",
+      "paper": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P015-002",
+      "dag_node": "AUDIT-P015-002",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Over Boolean variables (x, y, z) in {0, 1}^3 on scopes (x, y), (y, z), (z, x), the local constraints x = y, y = z, and z != x each have cardinality 2 yet admit zero common global solutions across all 8 triples, whereas replacing z != x with z = x yields exactly {(0, 0, 0), (1, 1, 1)} (mechanized in PFP.FunnelCompressionClosure.boolean_cycle_obstruction_and_equality_solutions and verified in code/replay.py).",
+      "status_text": "mathematical_proof_and_formal_lean_support",
+      "paper": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P015-003",
+      "dag_node": "AUDIT-P015-003",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/code/replay.py imports only Python standard-library json and itertools.product, enumerates all 8 Boolean triples in {0, 1}^3, refuses the disagreeing local family ((0,0),(0,0),(0,1)), decodes the compatible family ((0,0),(0,0),(0,0)) -> (0,0,0), confirms {(0,0,0),(1,1,1)} on the equality cycle, and executes offline with provider_calls = 0.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P015-004",
+      "dag_node": "AUDIT-P015-004",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "A complete six-step C, R, E, I, M, T execution in operads/infrastructure/ddc_code_repair.py and ops/adversary/infrastructure/ddc_code_repair.py verifies linear port-colour wiring, single-run identity propagation, and fixed local command observations (evidence_scope='FIXED_LOCAL_COMMANDS', mathematical_measurement='NOT_MEASURED', admission='Unadmitted', production_activation='HOLD'), which is an integration observation rather than a gluing theorem for effectful agents.",
+      "status_text": "mathematical_proof_and_bounded_source_support",
+      "paper": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition",
+      "area": "Operads and skills"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P016-001",
+      "dag_node": "AUDIT-P016-001",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "On any finite deterministic partial action table with positive rational step costs, terminal labels, and protected initial report q0, a report map q admits an exact quotient table iff states in each q-fibre share terminal labels, protected reports, and per-action enablement, enabled step cost, and successor q-fibre, in which case legal words, reports, accumulated word costs, and optimal resolution costs are preserved (mechanized in PFP.FunnelCompressionClosure.exact_quotient_implies_fibre_compatible, fibre_compatible_gives_exact_quotient, exact_quotient_execWord_commutes, fibre_compatible_execWord_congr, and fibre_compatible_preserves_resolvesWithCost).",
+      "status_text": "mathematical_proof_and_formal_lean_support",
+      "paper": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P016-002",
+      "dag_node": "AUDIT-P016-002",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Iterative block splitting by disabled-or-(exact-cost, successor-block) action signatures over a finite nonempty state carrier X terminates after at most |X| - 1 proper splits at the unique coarsest stable refinement of q0 (mechanized in PFP.FunnelCompressionClosure.stable_refines_all_iterSplit, stabilized_iterSplit_is_coarsest_stable, proper_splits_le_pred_card, and distinctColorCount_le_length, and verified in code/replay.py::refine).",
+      "status_text": "mathematical_proof_and_formal_lean_support",
+      "paper": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P016-003",
+      "dag_node": "AUDIT-P016-003",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "On the three-state costed table {a, b, t} with initial report q0(a) = q0(b) = 0, q0(t) = 1 and finish transitions a -> t (cost 1) and b -> t (cost 3), identifying {a, b} preserves current output 0 but violates fibre cost agreement (1 != 3) and alters resolution cost (mechanized in PFP.FunnelCompressionClosure.output_preserving_collapse_breaks_cost and verified in code/replay.py).",
+      "status_text": "mathematical_proof_and_formal_lean_support",
+      "paper": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P016-004",
+      "dag_node": "AUDIT-P016-004",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Under strictly positive transition costs on a finite deterministic partial table X, erasing any nonempty repeated-state cycle strictly lowers both word length and total cost, so whenever a resolving word exists the minimum resolution cost is attained by a simple path of at most |X| - 1 transitions; in Paper 016's three-state table {r, s, t}, ('next', 'finish') achieves optimal cost 2 against ('direct',) at cost 5 and ('loop', 'next', 'finish') at cost 3 (mechanized in PFP.FunnelCompressionClosure.loop_erasure_strictly_reduces_cost and paper016_route_example_costs).",
+      "status_text": "mathematical_proof_and_formal_lean_support",
+      "paper": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P018-002",
+      "dag_node": "AUDIT-P018-002",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "load_code_repair_family and CodeRepairRuntime execute the ordered six-stage slice C (capture), R (observe), E (evaluate), I (incorporate), M (disposition), T (terminal) while enforcing run_key, request_digest, and candidate_id equality across every state transition and fixing source_application='NOT_PERFORMED', admission='Unadmitted', production_activation='HOLD', and authority_effect='None'.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair",
+      "area": "Operads and skills"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P018-003",
+      "dag_node": "AUDIT-P018-003",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Executing CodeRepairRuntime on Paper 018's adjust(n) fixture (patching n - 1 to n + 1 on n >= 0 with positive check adjust(2) == 3 and negative control adjust(-2) == -2) moves check return codes from [1, 0] to [0, 0] with outcome 'REPAIRED' while keeping the original source file byte-identical, corroborating docs/observed_execution.json.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P018-004",
+      "dag_node": "AUDIT-P018-004",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Retained JUnit log verification/review_learning.xml in pfp_harness_author_review_2026-10-23.zip and direct execution of CodeRepairRuntime and ddc_code_repair_v1.py verify all nine bounded DDC repair controls: REPAIRED, INEFFECTIVE, and REGRESSION outcomes, SOURCE_CHANGED drift refusal, forbidden path/patch scope refusal, missing executor/check/Git refusal, immune/lineage/state binding failure handling, GIT_* environment sanitization, and PYTHONDONTWRITEBYTECODE=1 same-size Python edit freshness.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P018-005",
+      "dag_node": "AUDIT-P018-005",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "CodeRepairRequestV1 and CodeRepairRuntime require a caller-supplied candidate_patch and fixed local check argv vectors with zero provider/network imports, zero patch synthesis, new_model_trials = 0, working-copy separation only (no OS security sandbox), and mathematical_measurement = 'NOT_MEASURED', establishing that the workflow is a supplied-candidate executor reporting no change in model accuracy, cost, or safety.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P019-001",
+      "dag_node": "AUDIT-P019-001",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "docs/source_manifest.json pins 2609.26457v1.pdf (737,558 bytes, sha256 8ba79e0ad1028e43b0a47ee06162c9b3996ec90f7990b7ec35993444e505409b, 28 pages, pypdf 6.10.0) with 28 distinct per-page text SHA-256 digests, and docs/source_to_claim_map.md maps all 12 AIDE2 mechanism rows to valid page spans within 1..28 as prior-work attribution rather than replication.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P019-002",
+      "dag_node": "AUDIT-P019-002",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "operads/domain/autopoiesis/research.py, pciv/use_cases/research_selection.py, pfp/infrastructure/adapters/{harness_budget.py,harness_provider.py}, and frozen adversary modules reference_harness.py and harness_campaign.py in pfp_harness_author_review_2026-10-23.zip implement the 4-file candidate surface, 5-arm UCB1/softmax/champion-fork reference policy, context compression preserving evidence digests, shared SQLite budget integration, and parent-bound experimental re-entry.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
+      "area": "PFP runtime, Lab, contracts and formal sources"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P019-003",
+      "dag_node": "AUDIT-P019-003",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "IncumbentDecisionV1 and pciv/use_cases/research_selection.py::decide require invariant controls, paired (task, family, repetition) receipts, disjoint selection and confirmation occurrence IDs (CONFIRMATION_NOT_FRESH), strict Pareto dominance on exact Fraction correctness then cost on both selection and fresh confirmation panels, and zero per-family correctness regression before replacing an incumbent.",
+      "status_text": "mathematical_proof_and_bounded_source_support",
+      "paper": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P019-004",
+      "dag_node": "AUDIT-P019-004",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "HarnessBudgetLedger and HarnessProvider route all outer and inner Anthropic campaign calls through a singleton-bound SQLite ledger sharing a fixed 40,000,000 micro-USD ($40) ceiling partitioned across six PHASE_CAPS ($2/$16/$10/$6/$4/$2), enforcing concurrency < 2, refusing spec or foreign-budget swaps across restarts, and halting restarts on unsettled reservations (UNRECONCILED_COST).",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
+      "area": "PFP runtime, Lab, contracts and formal sources"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P019-005",
+      "dag_node": "AUDIT-P019-005",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "RecordedTransport and HarnessProvider extract and settle observed Anthropic token usage on rejected replies carrying parseable usage metadata (recording status='TYPED_REFUSAL' and empty candidate content), whereas replies lacking parseable usage retain their pre-dispatch maximum-liability reservation and block subsequent calls with UNRECONCILED_COST or ASSIGNED_OCCURRENCE_REQUIRES_RECONCILIATION.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
+      "area": "PFP runtime, Lab, contracts and formal sources"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P019-006",
+      "dag_node": "AUDIT-P019-006",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Retained campaign/report.json and offline_followup/replay_receipt.json record status='NOT_RUN', independent_provider_calls=0, evaluated_trials=0, spent_microusd=0, empty results and transfer_comparisons, and status='NOT_MEASURED' across all four ablations under operator deferral, and harness_replay.py::paired_analysis/holm emit 'NOT_MEASURED' whenever paired measurements are absent.",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P019-007",
+      "dag_node": "AUDIT-P019-007",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "replay_review_archive.py authenticates pfp_harness_author_review_2026-10-23.zip (sha256: 83bd2f2d...) prior to extraction, passes 3,486-file pre-replay custody validation via rebuild_release.py::validate, and under socket/subprocess-blocked offline execution reproduces campaign/report.json byte-for-byte independently of current main (requiring host site-packages pydantic plus networkx or lazy-import shim, and differing on Linux in campaign/report.md solely by LF vs Windows CRLF line endings).",
+      "status_text": "bounded_source_and_local_execution_support",
+      "paper": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P019-008",
+      "dag_node": "AUDIT-P019-008",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Paper 019 paper_claim_ledger.md line 12 explicitly classifies heuristic summary preservation of arbitrary future operations as 'Not claimed' ('No such evidence'), and two finite resumption-record counterexamples (dropped artifact reference breaking action enablement, and output-preserving collapse breaking finish cost 1 vs 3 in PFP.FunnelCompressionClosure.output_preserving_collapse_breaks_cost) prove heuristic summaries violate FibreCompatible.",
+      "status_text": "mathematical_proof_and_formal_lean_support",
+      "paper": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
+      "area": "Archived papers"
+    },
+    {
+      "atlas_id": "ATL-D-AUDIT-P019-009",
+      "dag_node": "AUDIT-P019-009",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Paper 019 paper_claim_ledger.md line 13 explicitly classifies accelerating self-improvement and production admission as 'Not claimed' ('No such evidence'); HarnessCandidateV1 restricts edits to four experimental files with zero production-admission transitions, campaign/report.json records 0 evaluated trials, and PFP.FunnelCompressionClosure.funnel_authority_effect_none proves AuthorityEffect.none closure across all four outer-loop funnel stages.",
+      "status_text": "mathematical_proof_and_formal_lean_support",
+      "paper": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
+      "area": "Archived papers"
+    },
+    {
       "atlas_id": "ATL-D-AUDIT-P008-005",
       "dag_node": "AUDIT-P008-005",
       "kind": "mathematical_or_implementation_claim",
@@ -25081,22 +25321,22 @@
   ],
   "correspondence": {
     "rule": "Every derivation node in dag/derivations_dag.json (kinds other than explicit_assumption_or_obligation, paper_assessment, pinned_source_file) carries exactly one atlas_ledger_id, and every ledger row names exactly one such node.",
-    "ledger_rows": 1504,
-    "derivation_nodes": 1504,
+    "ledger_rows": 1525,
+    "derivation_nodes": 1525,
     "archive_claims": 607,
     "archive_claims_without_earlier_dag_node": 607,
-    "dag_claims": 897,
-    "dag_claims_citing_an_archive_paper": 168,
+    "dag_claims": 918,
+    "dag_claims_citing_an_archive_paper": 189,
     "dag_claims_without_archive_source": 729,
     "archive_claim_review": {
-      "matched": 222,
-      "partial": 86,
-      "gap": 299
+      "matched": 236,
+      "partial": 87,
+      "gap": 284
     },
     "non_derivation_nodes_excluded": {
-      "explicit_assumption_or_obligation": 1078,
+      "explicit_assumption_or_obligation": 1112,
       "paper_assessment": 38,
-      "pinned_source_file": 1795
+      "pinned_source_file": 1829
     },
     "atlas_md_rows_cited_in_prose": 342
   }

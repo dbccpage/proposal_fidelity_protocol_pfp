@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-11-16T00:16:15.108987+00:00",
+  "generated_at_utc": "2026-11-16T03:40:12.266661+00:00",
   "repository": "https://github.com/dbccpage/proposal_fidelity_protocol_pfp",
   "source_commit": "8050c66900899771766f33e8f5fdd200b7dd9120",
   "status": "in_progress",
@@ -257,6 +257,7 @@
     "dag/reviews/additional_w4_w1_shard_b.json",
     "dag/reviews/additional_w4_w1_shard_c.json",
     "dag/reviews/additional_w4_w1_shard_d.json",
+    "dag/reviews/additional_w5_v1rc_funnel_compression.json",
     "dag/reviews/additional_w5_w1_shard_a.json",
     "dag/reviews/additional_w5_w1_shard_b.json",
     "dag/reviews/additional_w5_w1_shard_c.json",
@@ -35061,6 +35062,391 @@
       "atlas_ledger_id": "ATL-D-AUDIT-P008-004"
     },
     {
+      "id": "AUDIT-P015-001",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "For any finite family of scopes (S_i) over finite variable domains (D_v), a locally permitted assignment family glues to a unique assignment on union_i S_i iff every pair agrees on S_i intersect S_j, and when union_i S_i = V restriction and gluing form mutual-inverse bijections between global solutions and pairwise-compatible locally permitted families (mechanized in PFP.FunnelCompressionClosure.gluing_iff_pairwise_compatible and compatible_permitted_bijection).",
+      "status": "mathematical_proof_and_formal_lean_support",
+      "dependencies": [
+        "Finite variable set V, declared finite domains D_v, and explicit allowed local relations R_i on scopes S_i.",
+        "Core Lean 4 theorems PFP.FunnelCompressionClosure.gluing_iff_pairwise_compatible and compatible_permitted_bijection in lean4/FunnelCompressionClosure.lean (zero sorryAx, zero Classical.choice)."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md",
+        "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/code/replay.py"
+      ],
+      "limits": "Applies to static finite scope families and declared value relations without hidden mutable state or side effects; uncovered variables require explicit unary domain scopes for uniqueness and nonemptiness on V.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P015-001"
+    },
+    {
+      "id": "AUDIT-P015-002",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Over Boolean variables (x, y, z) in {0, 1}^3 on scopes (x, y), (y, z), (z, x), the local constraints x = y, y = z, and z != x each have cardinality 2 yet admit zero common global solutions across all 8 triples, whereas replacing z != x with z = x yields exactly {(0, 0, 0), (1, 1, 1)} (mechanized in PFP.FunnelCompressionClosure.boolean_cycle_obstruction_and_equality_solutions and verified in code/replay.py).",
+      "status": "mathematical_proof_and_formal_lean_support",
+      "dependencies": [
+        "Boolean carrier D = {0, 1} and binary relations EQ = {(0,0),(1,1)}, NE = {(0,1),(1,0)} on the 3-cycle.",
+        "Core Lean 4 theorem PFP.FunnelCompressionClosure.boolean_cycle_obstruction_and_equality_solutions in lean4/FunnelCompressionClosure.lean."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md",
+        "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/code/replay.py"
+      ],
+      "limits": "Finite 3-variable Boolean parity/equality cycle witness only; makes no quantum-contextuality or stochastic agent-reliability claim.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P015-002"
+    },
+    {
+      "id": "AUDIT-P015-003",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/code/replay.py imports only Python standard-library json and itertools.product, enumerates all 8 Boolean triples in {0, 1}^3, refuses the disagreeing local family ((0,0),(0,0),(0,1)), decodes the compatible family ((0,0),(0,0),(0,0)) -> (0,0,0), confirms {(0,0,0),(1,1,1)} on the equality cycle, and executes offline with provider_calls = 0.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Audit-hooked offline Python execution blocking socket and child-process calls."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md",
+        "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/code/replay.py",
+        "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/replay_receipt.json",
+        "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/source_provenance.json"
+      ],
+      "limits": "Deterministic standard-library replay of the 3-variable Boolean fixture only; zero model calls and zero authority effect.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P015-003"
+    },
+    {
+      "id": "AUDIT-P015-004",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "A complete six-step C, R, E, I, M, T execution in operads/infrastructure/ddc_code_repair.py and ops/adversary/infrastructure/ddc_code_repair.py verifies linear port-colour wiring, single-run identity propagation, and fixed local command observations (evidence_scope='FIXED_LOCAL_COMMANDS', mathematical_measurement='NOT_MEASURED', admission='Unadmitted', production_activation='HOLD'), which is an integration observation rather than a gluing theorem for effectful agents.",
+      "status": "mathematical_proof_and_bounded_source_support",
+      "dependencies": [
+        "Port-colour compilation in load_code_repair_family and RepairTerminalV1 literal scope fields.",
+        "State-mutating callback counterexample showing matching State -> State port types do not imply order-independent post-condition compatibility."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md",
+        "operads/contracts/ddc_code_repair_v1.py",
+        "operads/infrastructure/ddc_code_repair.py",
+        "ops/adversary/infrastructure/ddc_code_repair.py"
+      ],
+      "limits": "Establishes the negative scope separation between single-pipeline integration traces and effectful multi-agent composition.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P015-004"
+    },
+    {
+      "id": "AUDIT-P016-001",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "On any finite deterministic partial action table with positive rational step costs, terminal labels, and protected initial report q0, a report map q admits an exact quotient table iff states in each q-fibre share terminal labels, protected reports, and per-action enablement, enabled step cost, and successor q-fibre, in which case legal words, reports, accumulated word costs, and optimal resolution costs are preserved (mechanized in PFP.FunnelCompressionClosure.exact_quotient_implies_fibre_compatible, fibre_compatible_gives_exact_quotient, exact_quotient_execWord_commutes, fibre_compatible_execWord_congr, and fibre_compatible_preserves_resolvesWithCost).",
+      "status": "mathematical_proof_and_formal_lean_support",
+      "dependencies": [
+        "Finite deterministic partial costed action table with exact rational costs on enabled transitions.",
+        "Core Lean 4 Section 1 theorems in lean4/FunnelCompressionClosure.lean (zero sorryAx, zero Classical.choice)."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md",
+        "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/code/replay.py"
+      ],
+      "limits": "Deterministic partial tables only; nondeterministic, stochastic, or hidden-state transition systems require richer observation structures.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P016-001"
+    },
+    {
+      "id": "AUDIT-P016-002",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Iterative block splitting by disabled-or-(exact-cost, successor-block) action signatures over a finite nonempty state carrier X terminates after at most |X| - 1 proper splits at the unique coarsest stable refinement of q0 (mechanized in PFP.FunnelCompressionClosure.stable_refines_all_iterSplit, stabilized_iterSplit_is_coarsest_stable, proper_splits_le_pred_card, and distinctColorCount_le_length, and verified in code/replay.py::refine).",
+      "status": "mathematical_proof_and_formal_lean_support",
+      "dependencies": [
+        "Strict block-count ascent 1 <= b_0 < b_1 < ... < b_m <= |X| on proper splits and monotone signature refinement.",
+        "Core Lean 4 Section 2 theorems in lean4/FunnelCompressionClosure.lean."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md",
+        "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/code/replay.py"
+      ],
+      "limits": "Requires an explicitly supplied finite state/action/cost table; does not certify heuristic text-summary projections.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P016-002"
+    },
+    {
+      "id": "AUDIT-P016-003",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "On the three-state costed table {a, b, t} with initial report q0(a) = q0(b) = 0, q0(t) = 1 and finish transitions a -> t (cost 1) and b -> t (cost 3), identifying {a, b} preserves current output 0 but violates fibre cost agreement (1 != 3) and alters resolution cost (mechanized in PFP.FunnelCompressionClosure.output_preserving_collapse_breaks_cost and verified in code/replay.py).",
+      "status": "mathematical_proof_and_formal_lean_support",
+      "dependencies": [
+        "Core Lean 4 theorem PFP.FunnelCompressionClosure.output_preserving_collapse_breaks_cost in lean4/FunnelCompressionClosure.lean."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md",
+        "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/code/replay.py",
+        "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/replay_receipt.json"
+      ],
+      "limits": "Finite 3-state counterexample separating current-output equivalence from future operating-cost equivalence.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P016-003"
+    },
+    {
+      "id": "AUDIT-P016-004",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Under strictly positive transition costs on a finite deterministic partial table X, erasing any nonempty repeated-state cycle strictly lowers both word length and total cost, so whenever a resolving word exists the minimum resolution cost is attained by a simple path of at most |X| - 1 transitions; in Paper 016's three-state table {r, s, t}, ('next', 'finish') achieves optimal cost 2 against ('direct',) at cost 5 and ('loop', 'next', 'finish') at cost 3 (mechanized in PFP.FunnelCompressionClosure.loop_erasure_strictly_reduces_cost and paper016_route_example_costs).",
+      "status": "mathematical_proof_and_formal_lean_support",
+      "dependencies": [
+        "Strictly positive step costs c_a(x) > 0 on every enabled transition and finite state set X.",
+        "Core Lean 4 Section 3 theorems in lean4/FunnelCompressionClosure.lean."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md",
+        "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/code/replay.py",
+        "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/replay_receipt.json",
+        "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/source_provenance.json"
+      ],
+      "limits": "Strict positivity c_a(x) > 0 is required for strict cycle-cost reduction; zero-cost cycles allow tied non-simple optima and negative-cost cycles prevent finite minimum attainment.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P016-004"
+    },
+    {
+      "id": "AUDIT-P018-002",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "load_code_repair_family and CodeRepairRuntime execute the ordered six-stage slice C (capture), R (observe), E (evaluate), I (incorporate), M (disposition), T (terminal) while enforcing run_key, request_digest, and candidate_id equality across every state transition and fixing source_application='NOT_PERFORMED', admission='Unadmitted', production_activation='HOLD', and authority_effect='None'.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Six source-bound catalog declarations ddc_code_repair_{c,r,e,i,m,t}.json and RepairStateV1/RepairTerminalV1 wire contracts."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md",
+        "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/observed_execution.json",
+        "operads/contracts/ddc_code_repair_v1.py",
+        "operads/infrastructure/ddc_code_repair.py",
+        "operads/catalog/contracts/v1/ddc_code_repair_c.json",
+        "operads/catalog/contracts/v1/ddc_code_repair_r.json",
+        "operads/catalog/contracts/v1/ddc_code_repair_e.json",
+        "operads/catalog/contracts/v1/ddc_code_repair_i.json",
+        "operads/catalog/contracts/v1/ddc_code_repair_m.json",
+        "operads/catalog/contracts/v1/ddc_code_repair_t.json",
+        "ops/adversary/infrastructure/ddc_code_repair.py"
+      ],
+      "limits": "Covers the six-letter bounded local-check repair workflow; run_native subprocess dispatch additionally requires a configured core_symbol_game host binary.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P018-002"
+    },
+    {
+      "id": "AUDIT-P018-003",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Executing CodeRepairRuntime on Paper 018's adjust(n) fixture (patching n - 1 to n + 1 on n >= 0 with positive check adjust(2) == 3 and negative control adjust(-2) == -2) moves check return codes from [1, 0] to [0, 0] with outcome 'REPAIRED' while keeping the original source file byte-identical, corroborating docs/observed_execution.json.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Tracked CodeRepairRuntime in ops/adversary/infrastructure/ddc_code_repair.py and retained summary docs/observed_execution.json.",
+        "Open obligation: Pre-split wrapper adversary/documentation/examples/code_repair.py (commit 6d9da6fa7919ae2a8b99b704e784e5a4f422aed2) and external raw receipt pfp-paper028-ddc-20261021/run/receipt.json reside outside this split checkout."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md",
+        "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/observed_execution.json",
+        "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/source_provenance.json",
+        "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/reproduction.md",
+        "operads/contracts/ddc_code_repair_v1.py",
+        "ops/adversary/infrastructure/ddc_code_repair.py"
+      ],
+      "limits": "Narrows ATL-P018-003 because pre-split adversary/documentation/examples/code_repair.py and the external raw receipt reside outside this split checkout; two finite point checks do not certify adjust(n) for all integers.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P018-003"
+    },
+    {
+      "id": "AUDIT-P018-004",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Retained JUnit log verification/review_learning.xml in pfp_harness_author_review_2026-10-23.zip and direct execution of CodeRepairRuntime and ddc_code_repair_v1.py verify all nine bounded DDC repair controls: REPAIRED, INEFFECTIVE, and REGRESSION outcomes, SOURCE_CHANGED drift refusal, forbidden path/patch scope refusal, missing executor/check/Git refusal, immune/lineage/state binding failure handling, GIT_* environment sanitization, and PYTHONDONTWRITEBYTECODE=1 same-size Python edit freshness.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Tracked runtime guards in operads/contracts/ddc_code_repair_v1.py, operads/infrastructure/ddc_code_repair.py, and ops/adversary/infrastructure/ddc_code_repair.py plus JUnit XML testcase records in pfp_harness_author_review_2026-10-23.zip.",
+        "Open obligation: Pre-split test module adversary/tests/test_ddc_code_repair.py (sha256: 1d9c86b9... at commit 6d9da6fa...) is not tracked as a standalone .py file in this split repository."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md",
+        "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/observed_execution.json",
+        "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/source_provenance.json",
+        "operads/contracts/ddc_code_repair_v1.py",
+        "operads/infrastructure/ddc_code_repair.py",
+        "ops/adversary/infrastructure/ddc_code_repair.py",
+        "atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip"
+      ],
+      "limits": "Narrows ATL-P018-004 because pre-split adversary/tests/test_ddc_code_repair.py resides outside this split checkout while its JUnit XML trace and all nine runtime mechanisms in tracked code (and Rust pfp_operads::repair) are verified directly.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P018-004"
+    },
+    {
+      "id": "AUDIT-P018-005",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "CodeRepairRequestV1 and CodeRepairRuntime require a caller-supplied candidate_patch and fixed local check argv vectors with zero provider/network imports, zero patch synthesis, new_model_trials = 0, working-copy separation only (no OS security sandbox), and mathematical_measurement = 'NOT_MEASURED', establishing that the workflow is a supplied-candidate executor reporting no change in model accuracy, cost, or safety.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "AST import audit and strict Pydantic schema inspection of ddc_code_repair_v1.py, operads/infrastructure/ddc_code_repair.py, and ops/adversary/infrastructure/ddc_code_repair.py."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md",
+        "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/observed_execution.json",
+        "operads/contracts/ddc_code_repair_v1.py",
+        "operads/infrastructure/ddc_code_repair.py",
+        "ops/adversary/infrastructure/ddc_code_repair.py"
+      ],
+      "limits": "Confirms the negative scope boundary of Paper 018 Section 6.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P018-005"
+    },
+    {
+      "id": "AUDIT-P019-001",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "docs/source_manifest.json pins 2609.26457v1.pdf (737,558 bytes, sha256 8ba79e0ad1028e43b0a47ee06162c9b3996ec90f7990b7ec35993444e505409b, 28 pages, pypdf 6.10.0) with 28 distinct per-page text SHA-256 digests, and docs/source_to_claim_map.md maps all 12 AIDE2 mechanism rows to valid page spans within 1..28 as prior-work attribution rather than replication.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Tracked SHA-256 page manifest docs/source_manifest.json and 12-row mapping docs/source_to_claim_map.md.",
+        "Open obligation: External copyrighted arXiv PDF 2609.26457v1.pdf is not distributed in this repository, and pypdf extractor versions (6.10.0 vs 6.19.0) alter extracted page text."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md",
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/docs/source_manifest.json",
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/docs/source_to_claim_map.md",
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/docs/reproduction.md"
+      ],
+      "limits": "Narrows ATL-P019-001 because external 2609.26457v1.pdf bytes are not bundled in this repository so live PDF text re-extraction requires externally supplying the pinned 737,558-byte v1 file under pypdf 6.10.0.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P019-001"
+    },
+    {
+      "id": "AUDIT-P019-002",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "operads/domain/autopoiesis/research.py, pciv/use_cases/research_selection.py, pfp/infrastructure/adapters/{harness_budget.py,harness_provider.py}, and frozen Woland modules reference_harness.py and harness_campaign.py in pfp_harness_author_review_2026-10-23.zip implement the 4-file candidate surface, 5-arm UCB1/softmax/champion-fork reference policy, context compression preserving evidence digests, shared SQLite budget integration, and parent-bound experimental re-entry.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Tracked domain/selection/budget/provider modules and SHA-256-authenticated pfp_harness_author_review_2026-10-23.zip snapshot."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md",
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
+        "operads/domain/autopoiesis/research.py",
+        "pciv/use_cases/research_selection.py",
+        "pfp/infrastructure/adapters/harness_budget.py",
+        "pfp/infrastructure/adapters/harness_provider.py",
+        "atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip"
+      ],
+      "limits": "Local contract, policy, and re-entry implementation verified; live Linux rootless container preflight and paid Anthropic trials remain deferred (NOT_RUN).",
+      "atlas_ledger_id": "ATL-D-AUDIT-P019-002"
+    },
+    {
+      "id": "AUDIT-P019-003",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "IncumbentDecisionV1 and pciv/use_cases/research_selection.py::decide require invariant controls, paired (task, family, repetition) receipts, disjoint selection and confirmation occurrence IDs (CONFIRMATION_NOT_FRESH), strict Pareto dominance on exact Fraction correctness then cost on both selection and fresh confirmation panels, and zero per-family correctness regression before replacing an incumbent.",
+      "status": "mathematical_proof_and_bounded_source_support",
+      "dependencies": [
+        "Exact Fraction correctness/cost ordering via ParetoFrontSelectorV1, per-family non-regression loop in improved(), and disjoint occurrence check in decide()."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md",
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
+        "operads/domain/autopoiesis/research.py",
+        "pciv/use_cases/research_selection.py"
+      ],
+      "limits": "Deterministic selection gate over finite paired evaluation panels; statistical power on live tasks depends on panel cardinality.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P019-003"
+    },
+    {
+      "id": "AUDIT-P019-004",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "HarnessBudgetLedger and HarnessProvider route all outer and inner Anthropic campaign calls through a singleton-bound SQLite ledger sharing a fixed 40,000,000 micro-USD ($40) ceiling partitioned across six PHASE_CAPS ($2/$16/$10/$6/$4/$2), enforcing concurrency < 2, refusing spec or foreign-budget swaps across restarts, and halting restarts on unsettled reservations (UNRECONCILED_COST).",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "SqliteBudgetLedger BEGIN IMMEDIATE serialization, campaign_binding singleton table, and PHASE_CAPS sum equality in ExperimentSpecV1."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md",
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
+        "operads/domain/autopoiesis/research.py",
+        "pfp/infrastructure/adapters/harness_budget.py",
+        "pfp/infrastructure/adapters/harness_provider.py",
+        "ops/adversary/infrastructure/providers/budget_ledger.py",
+        "atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip"
+      ],
+      "limits": "Complements PFPTESTS-CL033; verified via local SQLite persistence, restart, and multithreaded reservation tests without live billed Anthropic HTTP traffic.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P019-004"
+    },
+    {
+      "id": "AUDIT-P019-005",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "RecordedTransport and HarnessProvider extract and settle observed Anthropic token usage on rejected replies carrying parseable usage metadata (recording status='TYPED_REFUSAL' and empty candidate content), whereas replies lacking parseable usage retain their pre-dispatch maximum-liability reservation and block subsequent calls with UNRECONCILED_COST or ASSIGNED_OCCURRENCE_REQUIRES_RECONCILIATION.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "RecordedTransport.dispatch reply_bytes capture, observe_anthropic_usage validation, and HarnessProvider pending-attempt restart guard."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md",
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
+        "pfp/infrastructure/adapters/harness_provider.py",
+        "ops/adversary/infrastructure/providers/anthropic_messages.py",
+        "atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip"
+      ],
+      "limits": "Complements PFPTESTS-CL041 and PFPTESTS-CL048; verified on deterministic Anthropic wire/error fixtures, with unparseable provider failures conservatively holding maximum reserved liability until operator reconciliation.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P019-005"
+    },
+    {
+      "id": "AUDIT-P019-006",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Retained campaign/report.json and offline_followup/replay_receipt.json record status='NOT_RUN', independent_provider_calls=0, evaluated_trials=0, spent_microusd=0, empty results and transfer_comparisons, and status='NOT_MEASURED' across all four ablations under operator deferral, and harness_replay.py::paired_analysis/holm emit 'NOT_MEASURED' whenever paired measurements are absent.",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "Retained woland.harness-report.v1 JSON artifacts and deterministic Fraction sign-test/bootstrap/Holm analyzer in harness_replay.py.",
+        "Open obligation: Zero live provider calls have been executed; model completion, held-out transfer, ablations, and ignition remain unmeasured."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md",
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
+        "atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip",
+        "atlas/archive/pfp/publication/author_review_2026_10_23/offline_followup/harness_offline_followup_2026-10-23.zip"
+      ],
+      "limits": "Narrows ATL-P019-006 to the retained NOT_RUN / NOT_MEASURED offline report and statistical evaluator because the paid model campaign was deferred with zero provider calls.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P019-006"
+    },
+    {
+      "id": "AUDIT-P019-007",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "replay_review_archive.py authenticates pfp_harness_author_review_2026-10-23.zip (sha256: 83bd2f2d...) prior to extraction, passes 3,486-file pre-replay custody validation via rebuild_release.py::validate, and under socket/subprocess-blocked offline execution reproduces campaign/report.json byte-for-byte independently of current main (requiring host site-packages pydantic plus networkx or lazy-import shim, and differing on Linux in campaign/report.md solely by LF vs Windows CRLF line endings).",
+      "status": "bounded_source_and_local_execution_support",
+      "dependencies": [
+        "SHA-256 archive authentication and member safety checks in replay_review_archive.py::extract and offline replay in replay_offline.py.",
+        "Open obligation: Package initialization eagerly imports networkx via cycle_analysis.py (requiring installed site-packages per docs/reproduction.md:28), and MANIFEST.sha256 pins Windows CRLF bytes for campaign/report.md."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md",
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/docs/reproduction.md",
+        "atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip",
+        "atlas/archive/pfp/publication/author_review_2026_10_23/offline_followup/harness_offline_followup_2026-10-23.zip",
+        "atlas/archive/pfp/publication/author_review_2026_10_23/windows_review/harness_windows_review_2026-10-23.zip"
+      ],
+      "limits": "Narrows ATL-P019-007 to the zero-call NOT_RUN report under pre-installed Python dependencies and notes the Windows CRLF vs Linux LF line-ending difference in campaign/report.md.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P019-007"
+    },
+    {
+      "id": "AUDIT-P019-008",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Paper 019 paper_claim_ledger.md line 12 explicitly classifies heuristic summary preservation of arbitrary future operations as 'Not claimed' ('No such evidence'), and two finite resumption-record counterexamples (dropped artifact reference breaking action enablement, and output-preserving collapse breaking finish cost 1 vs 3 in PFP.FunnelCompressionClosure.output_preserving_collapse_breaks_cost) prove heuristic summaries violate FibreCompatible.",
+      "status": "mathematical_proof_and_formal_lean_support",
+      "dependencies": [
+        "Explicit 'No such evidence | Not claimed' ledger declaration in paper_claim_ledger.md:12.",
+        "Core Lean 4 theorems exact_quotient_implies_fibre_compatible and output_preserving_collapse_breaks_cost in lean4/FunnelCompressionClosure.lean."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md",
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
+        "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md",
+        "atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip"
+      ],
+      "limits": "Narrows ATL-P019-008 to its explicit archive non-claim status and finite counterexamples; empirical effect of compression=True vs False in reference_harness.py remains NOT_MEASURED.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P019-008"
+    },
+    {
+      "id": "AUDIT-P019-009",
+      "kind": "mathematical_or_implementation_claim",
+      "statement": "Paper 019 paper_claim_ledger.md line 13 explicitly classifies accelerating self-improvement and production admission as 'Not claimed' ('No such evidence'); HarnessCandidateV1 restricts edits to four experimental files with zero production-admission transitions, campaign/report.json records 0 evaluated trials, and PFP.FunnelCompressionClosure.funnel_authority_effect_none proves AuthorityEffect.none closure across all four outer-loop funnel stages.",
+      "status": "mathematical_proof_and_formal_lean_support",
+      "dependencies": [
+        "Explicit 'No such evidence | Not claimed' ledger declaration in paper_claim_ledger.md:13 and edit-surface/non-admission fences in operads/domain/autopoiesis/research.py and pciv/use_cases/research_selection.py.",
+        "Core Lean 4 theorem PFP.FunnelCompressionClosure.funnel_authority_effect_none in lean4/FunnelCompressionClosure.lean."
+      ],
+      "evidence": [
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md",
+        "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
+        "operads/domain/autopoiesis/research.py",
+        "pciv/use_cases/research_selection.py",
+        "atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip"
+      ],
+      "limits": "Narrows ATL-P019-009 to its explicit archive non-claim and structural non-admission boundary.",
+      "atlas_ledger_id": "ATL-D-AUDIT-P019-009"
+    },
+    {
       "id": "AUDIT-P008-005",
       "kind": "mathematical_or_implementation_claim",
       "statement": "GRADES = ('NONE', 'SYNTAX', 'COMPUTED') contains no LEAN or GATED grade; pfp/domain/tower/checks.py and pfp/infrastructure/tower_research/reach/targets.py execute positive, stage-negative, and empty/flag-only fixture checks for the bound stages, whereas current pfp/domain/tower/stage_status.py diverges from the unarchived 52cb5457 baseline by assigning COMPUTED and SYNTAX via static COMPUTED_LEVELS membership and level <= 21 without invoking CheckerBinding.run.",
@@ -42810,6 +43196,210 @@
       "id": "ASSUMPTION-183d0995b60e961f",
       "kind": "explicit_assumption_or_obligation",
       "statement": "Unbounded Python int arithmetic; fixed-width w-bit unsigned wire formats require the separate upper bound b(N) + 7 < 2^w.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-00da9019cbf298c9",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Finite variable set V, declared finite domains D_v, and explicit allowed local relations R_i on scopes S_i.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-16cf29f546dc8de5",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Core Lean 4 theorems PFP.FunnelCompressionClosure.gluing_iff_pairwise_compatible and compatible_permitted_bijection in lean4/FunnelCompressionClosure.lean (zero sorryAx, zero Classical.choice).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-7b2f3e9f280f6e1e",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Boolean carrier D = {0, 1} and binary relations EQ = {(0,0),(1,1)}, NE = {(0,1),(1,0)} on the 3-cycle.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-47058bc3b12c0511",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Core Lean 4 theorem PFP.FunnelCompressionClosure.boolean_cycle_obstruction_and_equality_solutions in lean4/FunnelCompressionClosure.lean.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-5cea0bd336a48a18",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Audit-hooked offline Python execution blocking socket and child-process calls.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-5d3a6e25051ddef8",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Port-colour compilation in load_code_repair_family and RepairTerminalV1 literal scope fields.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-3501158a4d280cab",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "State-mutating callback counterexample showing matching State -> State port types do not imply order-independent post-condition compatibility.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-ac68339a121a9e44",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Finite deterministic partial costed action table with exact rational costs on enabled transitions.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-51079108017f4586",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Core Lean 4 Section 1 theorems in lean4/FunnelCompressionClosure.lean (zero sorryAx, zero Classical.choice).",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-4be8aa303fa1e606",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Strict block-count ascent 1 <= b_0 < b_1 < ... < b_m <= |X| on proper splits and monotone signature refinement.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-574bdf6de47f3833",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Core Lean 4 Section 2 theorems in lean4/FunnelCompressionClosure.lean.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-fb562987e3b45bba",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Core Lean 4 theorem PFP.FunnelCompressionClosure.output_preserving_collapse_breaks_cost in lean4/FunnelCompressionClosure.lean.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-e0d66417d12572a3",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Strictly positive step costs c_a(x) > 0 on every enabled transition and finite state set X.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-0eb4dd199a2f3ea5",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Core Lean 4 Section 3 theorems in lean4/FunnelCompressionClosure.lean.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-59d40e8a8f8f8ace",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Six source-bound catalog declarations ddc_code_repair_{c,r,e,i,m,t}.json and RepairStateV1/RepairTerminalV1 wire contracts.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-6408de7e10ea1931",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Tracked CodeRepairRuntime in ops/adversary/infrastructure/ddc_code_repair.py and retained summary docs/observed_execution.json.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-ab80078d31f47cef",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Open obligation: Pre-split wrapper adversary/documentation/examples/code_repair.py (commit 6d9da6fa7919ae2a8b99b704e784e5a4f422aed2) and external raw receipt pfp-paper028-ddc-20261021/run/receipt.json reside outside this split checkout.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-b573de6348d094a6",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Tracked runtime guards in operads/contracts/ddc_code_repair_v1.py, operads/infrastructure/ddc_code_repair.py, and ops/adversary/infrastructure/ddc_code_repair.py plus JUnit XML testcase records in pfp_harness_author_review_2026-10-23.zip.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-3a2f55715d552b4b",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Open obligation: Pre-split test module adversary/tests/test_ddc_code_repair.py (sha256: 1d9c86b9... at commit 6d9da6fa...) is not tracked as a standalone .py file in this split repository.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-4479ff86a3f11f5b",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "AST import audit and strict Pydantic schema inspection of ddc_code_repair_v1.py, operads/infrastructure/ddc_code_repair.py, and ops/adversary/infrastructure/ddc_code_repair.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-83f9093688ce867a",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Tracked SHA-256 page manifest docs/source_manifest.json and 12-row mapping docs/source_to_claim_map.md.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-2b806f4fce7cb71e",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Open obligation: External copyrighted arXiv PDF 2609.26457v1.pdf is not distributed in this repository, and pypdf extractor versions (6.10.0 vs 6.19.0) alter extracted page text.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-b85130a0f8bf1a93",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Tracked domain/selection/budget/provider modules and SHA-256-authenticated pfp_harness_author_review_2026-10-23.zip snapshot.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-7f93883cba4dedf0",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Exact Fraction correctness/cost ordering via ParetoFrontSelectorV1, per-family non-regression loop in improved(), and disjoint occurrence check in decide().",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-f0fe12cc48f13f8e",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "SqliteBudgetLedger BEGIN IMMEDIATE serialization, campaign_binding singleton table, and PHASE_CAPS sum equality in ExperimentSpecV1.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-af9ece2890f2f3ea",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "RecordedTransport.dispatch reply_bytes capture, observe_anthropic_usage validation, and HarnessProvider pending-attempt restart guard.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-d65502cb77b4bd45",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Retained woland.harness-report.v1 JSON artifacts and deterministic Fraction sign-test/bootstrap/Holm analyzer in harness_replay.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-14cf991087dc2cd7",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Open obligation: Zero live provider calls have been executed; model completion, held-out transfer, ablations, and ignition remain unmeasured.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-2c6aa5c29a9db300",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "SHA-256 archive authentication and member safety checks in replay_review_archive.py::extract and offline replay in replay_offline.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-d21c879bc4750cf2",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Open obligation: Package initialization eagerly imports networkx via cycle_analysis.py (requiring installed site-packages per docs/reproduction.md:28), and MANIFEST.sha256 pins Windows CRLF bytes for campaign/report.md.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-8b9b350b51b85812",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Explicit 'No such evidence | Not claimed' ledger declaration in paper_claim_ledger.md:12.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-c81da3e5fa8a1427",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Core Lean 4 theorems exact_quotient_implies_fibre_compatible and output_preserving_collapse_breaks_cost in lean4/FunnelCompressionClosure.lean.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-a415dbf21a5de714",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Explicit 'No such evidence | Not claimed' ledger declaration in paper_claim_ledger.md:13 and edit-surface/non-admission fences in operads/domain/autopoiesis/research.py and pciv/use_cases/research_selection.py.",
+      "status": "requires_evidence_not_discharged_by_this_edge"
+    },
+    {
+      "id": "ASSUMPTION-f85313625a232f65",
+      "kind": "explicit_assumption_or_obligation",
+      "statement": "Core Lean 4 theorem PFP.FunnelCompressionClosure.funnel_authority_effect_none in lean4/FunnelCompressionClosure.lean.",
       "status": "requires_evidence_not_discharged_by_this_edge"
     },
     {
@@ -56711,6 +57301,244 @@
       "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
     },
     {
+      "id": "SOURCE:atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md",
+      "sha256": "45b0eb2d18577680ba44f975358931288ac490fd66340f9be67065bdfc7d1740",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/015_pfp_local_to_global_agent_composition/code/replay.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/code/replay.py",
+      "sha256": "1d26980b2dd7a1b46a738e11b25b8c72b044c810db62ea59e8fb39d2c264d91b",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/015_pfp_local_to_global_agent_composition/replay_receipt.json",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/replay_receipt.json",
+      "sha256": "3693c5bc25db5a1238be2a54d6943da972572c9ac4ca429a97d91466f0a8c918",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/015_pfp_local_to_global_agent_composition/source_provenance.json",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/source_provenance.json",
+      "sha256": "9a65a0adcfef4ef4c0d5411f6ebda1f2983d23946abee8a3b2893f193617d294",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:operads/contracts/ddc_code_repair_v1.py",
+      "kind": "pinned_source_file",
+      "path": "operads/contracts/ddc_code_repair_v1.py",
+      "sha256": "caed49839dc3f3e1e77d006ce7bb0d6865e978a0bb637b5ab0aa56205eb01532",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:operads/infrastructure/ddc_code_repair.py",
+      "kind": "pinned_source_file",
+      "path": "operads/infrastructure/ddc_code_repair.py",
+      "sha256": "9560e4f5ba91587231828451cc6b0c58bf8edd4a5166313794d6f95145029f84",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:ops/adversary/infrastructure/ddc_code_repair.py",
+      "kind": "pinned_source_file",
+      "path": "ops/adversary/infrastructure/ddc_code_repair.py",
+      "sha256": "2c732055d29c81a138fb411a07c79c763f3c39a1cd1d6e6e3aace15f828d3475",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md",
+      "sha256": "36510cce776be49fe33dc0c84f7697225e38e599739ab59d822f6ec3c046f7a1",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/code/replay.py",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/code/replay.py",
+      "sha256": "fc1e5286bf09042e964dcd6a63f54132198784980f63bbe64f656841140c7bfc",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/replay_receipt.json",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/replay_receipt.json",
+      "sha256": "0c6fff94c65b7b3a526f23f72ab8b9c49a45514346a03d15c180bcb1cefbcb33",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/source_provenance.json",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/source_provenance.json",
+      "sha256": "9a65a0adcfef4ef4c0d5411f6ebda1f2983d23946abee8a3b2893f193617d294",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md",
+      "sha256": "4701ebac5b1296b291ec642f4e808f3e2952aede0e3afcc87a08762e60175386",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/observed_execution.json",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/observed_execution.json",
+      "sha256": "96371655e71af81a87502d614de397abc1f51fe117668c63c9b6604d0a040537",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:operads/catalog/contracts/v1/ddc_code_repair_c.json",
+      "kind": "pinned_source_file",
+      "path": "operads/catalog/contracts/v1/ddc_code_repair_c.json",
+      "sha256": "c56a443ba969b088faa18d3388085bdfa6b178222b237c90822f194bfcfd280a",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:operads/catalog/contracts/v1/ddc_code_repair_r.json",
+      "kind": "pinned_source_file",
+      "path": "operads/catalog/contracts/v1/ddc_code_repair_r.json",
+      "sha256": "a03b759ccdd2f9c1f78761b5b3595d6dacccca22e627e756fa9c627bb0d6d698",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:operads/catalog/contracts/v1/ddc_code_repair_e.json",
+      "kind": "pinned_source_file",
+      "path": "operads/catalog/contracts/v1/ddc_code_repair_e.json",
+      "sha256": "4856a49673d1c5990a5ecc2426c888223a7bf10ddb065a66a50e45cc138a72ba",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:operads/catalog/contracts/v1/ddc_code_repair_i.json",
+      "kind": "pinned_source_file",
+      "path": "operads/catalog/contracts/v1/ddc_code_repair_i.json",
+      "sha256": "d7c20d41aa9fecd39dc4500d65e6de0f6a9bb8901030abffc0c2e820e9e0769e",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:operads/catalog/contracts/v1/ddc_code_repair_m.json",
+      "kind": "pinned_source_file",
+      "path": "operads/catalog/contracts/v1/ddc_code_repair_m.json",
+      "sha256": "5e90e9036c5d44d186f247a671084e9e5f489cf092a2593f4b505367101d9aec",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:operads/catalog/contracts/v1/ddc_code_repair_t.json",
+      "kind": "pinned_source_file",
+      "path": "operads/catalog/contracts/v1/ddc_code_repair_t.json",
+      "sha256": "03f309c7055b0044bc5f138c75dda7a69579b01c4e16f5c46c9c66e982aea210",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/source_provenance.json",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/source_provenance.json",
+      "sha256": "e4623b2539b24ba1e49e125b65773d7218df76718d3b50ed45add32272c4fbfa",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/reproduction.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/reproduction.md",
+      "sha256": "d58e7a22b15b150da95a85ea0c2094ab33cd77cde907c443eadaf6af0aa66b8a",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip",
+      "sha256": "83bd2f2d6452ea0a63edd915305f6290c98b00de99b975e3e01d7bf3321a9e7d",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md",
+      "sha256": "466869de585635a634580e3ed5f8893e4241645878c1bca2e7a88b8928cacae7",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
+      "sha256": "1d347fac5024001b8b0c4da5c998139bc301ffd81bda2442c2688d4697b1f08e",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/docs/source_manifest.json",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/docs/source_manifest.json",
+      "sha256": "c552ef71fd6a1b1f28776f6898a1ab8d77a09fe763fcaf78303634928276c66b",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/docs/source_to_claim_map.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/docs/source_to_claim_map.md",
+      "sha256": "b63cd9244aa74504d21c552aaf06c1b8bd7f2298d4588410e496c1e1b06fb01f",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/docs/reproduction.md",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/docs/reproduction.md",
+      "sha256": "b46a990285383eae35d2c706599dfe07d6fc61de8a997b8eb12c92d3ecc47989",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:operads/domain/autopoiesis/research.py",
+      "kind": "pinned_source_file",
+      "path": "operads/domain/autopoiesis/research.py",
+      "sha256": "4161e182fd5949d925be63716e0979e98abe0018a6863446aab83b556fa03d1b",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:pfp/infrastructure/adapters/harness_budget.py",
+      "kind": "pinned_source_file",
+      "path": "pfp/infrastructure/adapters/harness_budget.py",
+      "sha256": "53c76547b35af0d7dd8f09440d677750143ceb727857bda3ca017985a1e1583a",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:pfp/infrastructure/adapters/harness_provider.py",
+      "kind": "pinned_source_file",
+      "path": "pfp/infrastructure/adapters/harness_provider.py",
+      "sha256": "31c318ab54314afd6de70328cfc03d09092c9c0d5055a58e98134043c5046a38",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:ops/adversary/infrastructure/providers/budget_ledger.py",
+      "kind": "pinned_source_file",
+      "path": "ops/adversary/infrastructure/providers/budget_ledger.py",
+      "sha256": "e1921cbfda44e104574c73e94562280e336076f4a694232fc3320a819689f533",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:ops/adversary/infrastructure/providers/anthropic_messages.py",
+      "kind": "pinned_source_file",
+      "path": "ops/adversary/infrastructure/providers/anthropic_messages.py",
+      "sha256": "8e738dfd13da4c1f4a148ae88116108e2cc452739cc9f31b1e51a5b718285130",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/publication/author_review_2026_10_23/offline_followup/harness_offline_followup_2026-10-23.zip",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/publication/author_review_2026_10_23/offline_followup/harness_offline_followup_2026-10-23.zip",
+      "sha256": "9117563fbe7e3aa400de68bfd2fe604ff7dd144c49adde4d4eaeed1aaee97f2b",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
+      "id": "SOURCE:atlas/archive/pfp/publication/author_review_2026_10_23/windows_review/harness_windows_review_2026-10-23.zip",
+      "kind": "pinned_source_file",
+      "path": "atlas/archive/pfp/publication/author_review_2026_10_23/windows_review/harness_windows_review_2026-10-23.zip",
+      "sha256": "2c89e7a77143c5b2b1a7d35a03475fda09cecaaf29b5fb04f274b78d48165ced",
+      "assessment_scope": "Evidence for the linked scoped claim; full-file review tracked separately."
+    },
+    {
       "id": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/source_index.json",
       "kind": "pinned_source_file",
       "path": "atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/docs/source_archive/source_index.json",
@@ -65295,15 +66123,21 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PFPDOMAIN-CL16",
-          "RCT-C22",
-          "EDU-C04"
+          "AUDIT-P015-001"
         ],
-        "relation": "supports",
-        "note": "Nodes record implemented finite gluing checks and unique/ambiguous gluing distinctions; the general iff and the bijection with global solutions are not derived.",
-        "proposed_derivation_file": "dag/derivations/atl_p015_001.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P015-001, with PFPDOMAIN-CL16, RCT-C22, and EDU-C04: Over finite variable domains and scope families (S_i), a locally permitted family glues to a unique assignment on union_i S_i iff every pair agrees on S_i intersect S_j, and when the scopes cover V restriction and gluing biject global solutions with compatible families (mechanized in PFP.FunnelCompressionClosure.gluing_iff_pairwise_compatible and compatible_permitted_bijection).",
+        "partial_evidence": {
+          "nodes": [
+            "PFPDOMAIN-CL16",
+            "RCT-C22",
+            "EDU-C04"
+          ],
+          "relation": "supports",
+          "note": "Nodes record implemented finite gluing checks and unique/ambiguous gluing distinctions; the general iff and the bijection with global solutions are not derived."
+        }
       }
     },
     {
@@ -65327,13 +66161,19 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PFPTESTS-CL020"
+          "AUDIT-P015-002"
         ],
-        "relation": "supports",
-        "note": "PFPTESTS-CL020 enumerates an inconsistent parity triangle; the equality variant with solutions (0,0,0),(1,1,1) is not recorded.",
-        "proposed_derivation_file": "dag/derivations/atl_p015_002.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P015-002, with PFPTESTS-CL020: Over Boolean variables {0, 1}^3, x = y, y = z, and z != x each have two local solutions yet zero common global solutions across all 8 triples, whereas replacing z != x with z = x yields exactly (0, 0, 0) and (1, 1, 1) (mechanized in PFP.FunnelCompressionClosure.boolean_cycle_obstruction_and_equality_solutions and verified in code/replay.py).",
+        "partial_evidence": {
+          "nodes": [
+            "PFPTESTS-CL020"
+          ],
+          "relation": "supports",
+          "note": "PFPTESTS-CL020 enumerates an inconsistent parity triangle; the equality variant with solutions (0,0,0),(1,1,1) is not recorded."
+        }
       }
     },
     {
@@ -65357,11 +66197,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records this paper's reference replay.",
-        "proposed_derivation_file": "dag/derivations/atl_p015_003.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P015-003"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P015-003: code/replay.py imports only stdlib json and itertools.product, enumerates all 8 triples in {0, 1}^3, refuses the disagreeing family ((0,0),(0,0),(0,1)), decodes the compatible family ((0,0),(0,0),(0,0)) -> (0,0,0), confirms {(0,0,0),(1,1,1)} on the equality cycle, and exits offline with provider_calls = 0."
       }
     },
     {
@@ -65385,11 +66226,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "Scope fence.",
-        "proposed_derivation_file": "dag/derivations/atl_p015_004.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P015-004"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P015-004: Six-stage C, R, E, I, M, T execution in operads/infrastructure/ddc_code_repair.py and ops/adversary/infrastructure/ddc_code_repair.py verifies linear port-colour wiring, run-identity transport, and fixed local check exits (mathematical_measurement='NOT_MEASURED', admission='Unadmitted', production_activation='HOLD'), which is a single-pipeline integration observation rather than a gluing theorem for stateful/effectful agents."
       }
     },
     {
@@ -65413,13 +66255,19 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "RCT-C21"
+          "AUDIT-P016-001"
         ],
-        "relation": "narrows",
-        "note": "RCT-C21 gives report-respecting transition congruence and quotient factorization for complete Moore machines without action costs or partial enablement; the cost-and-enablement criterion is not derived.",
-        "proposed_derivation_file": "dag/derivations/atl_p016_001.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P016-001, with RCT-C21: On finite deterministic partial action tables with positive rational costs, a report q admits an exact quotient table iff states in each q-fibre share terminal labels, protected reports, and per-action enablement, enabled cost, and successor fibre, preserving legal words, reports, costs, and optimal resolution cost (mechanized in PFP.FunnelCompressionClosure Section 1).",
+        "partial_evidence": {
+          "nodes": [
+            "RCT-C21"
+          ],
+          "relation": "narrows",
+          "note": "RCT-C21 gives report-respecting transition congruence and quotient factorization for complete Moore machines without action costs or partial enablement; the cost-and-enablement criterion is not derived."
+        }
       }
     },
     {
@@ -65443,14 +66291,20 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "RCT-C21",
-          "RDR-C01"
+          "AUDIT-P016-002"
         ],
-        "relation": "narrows",
-        "note": "Both nodes compute coarsest report-respecting stable partitions by refinement, but without the cost-labelled, partially enabled action signature.",
-        "proposed_derivation_file": "dag/derivations/atl_p016_002.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P016-002, with RCT-C21 and RDR-C01: Splitting blocks by disabled-or-(exact-cost, successor-block) signatures terminates after at most |X| - 1 proper splits at the unique coarsest stable refinement of q0 (mechanized in PFP.FunnelCompressionClosure Section 2 and verified in code/replay.py::refine).",
+        "partial_evidence": {
+          "nodes": [
+            "RCT-C21",
+            "RDR-C01"
+          ],
+          "relation": "narrows",
+          "note": "Both nodes compute coarsest report-respecting stable partitions by refinement, but without the cost-labelled, partially enabled action signature."
+        }
       }
     },
     {
@@ -65474,11 +66328,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the two-state cost counterexample.",
-        "proposed_derivation_file": "dag/derivations/atl_p016_003.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P016-003"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P016-003: Identifying zero-report states a (finish cost 1) and b (finish cost 3) preserves current output 0 while violating fibre cost agreement (1 != 3) and changing operating resolution cost (mechanized in PFP.FunnelCompressionClosure.output_preserving_collapse_breaks_cost and verified in code/replay.py)."
       }
     },
     {
@@ -65502,11 +66357,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node proves that positive-cost optima are simple paths; PAPER011-HISTORY-SHORTEST-PATH-BOUND gives only an upper bound from a supplied path.",
-        "proposed_derivation_file": "dag/derivations/atl_p016_004.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P016-004"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P016-004: Under strictly positive step costs on a finite deterministic partial table X, loop erasure strictly reduces cost and word length so any minimum-cost resolving word is attained by a simple path of at most |X| - 1 transitions, and in the {r, s, t} example ('next', 'finish') costs 2 against ('direct',) at 5 and ('loop', 'next', 'finish') at 3 (mechanized in PFP.FunnelCompressionClosure Section 3)."
       }
     },
     {
@@ -65964,11 +66820,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node covers the C-R-E-I-M-T repair slice.",
-        "proposed_derivation_file": "dag/derivations/atl_p018_002.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P018-002"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P018-002: load_code_repair_family and CodeRepairRuntime execute C, R, E, I, M, T carrying run_key, request_digest, and candidate_id across every transition while holding source_application='NOT_PERFORMED', admission='Unadmitted', production_activation='HOLD', and authority_effect='None'."
       }
     },
     {
@@ -65992,11 +66849,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the worked example.",
-        "proposed_derivation_file": "dag/derivations/atl_p018_003.md"
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P018-003"
+        ],
+        "relation": "narrows",
+        "note": "Derived in AUDIT-P018-003 (narrows ATL-P018-003 because pre-split wrapper adversary/documentation/examples/code_repair.py at commit 6d9da6fa7919ae2a8b99b704e784e5a4f422aed2 and external raw receipt pfp-paper028-ddc-20261021/run/receipt.json reside outside this split checkout): Executing tracked CodeRepairRuntime on adjust(n) (patching n - 1 to n + 1 on n >= 0 with positive check adjust(2) == 3 and control adjust(-2) == -2) moves check exits from [1, 0] to [0, 0] with outcome 'REPAIRED' and leaves the original source file byte-identical, matching docs/observed_execution.json."
       }
     },
     {
@@ -66020,11 +66878,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node records the DDC test target coverage.",
-        "proposed_derivation_file": "dag/derivations/atl_p018_004.md"
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P018-004"
+        ],
+        "relation": "narrows",
+        "note": "Derived in AUDIT-P018-004 (narrows ATL-P018-004 because pre-split test module adversary/tests/test_ddc_code_repair.py at commit 6d9da6fa7919ae2a8b99b704e784e5a4f422aed2 resides outside this split checkout): Retained JUnit trace verification/review_learning.xml in pfp_harness_author_review_2026-10-23.zip and direct execution of CodeRepairRuntime and ddc_code_repair_v1.py (plus Rust pfp_operads::repair) verify all nine repair, ineffective, regression, source-drift, scope-refusal, missing-infrastructure, binding-failure, GIT_* sanitization, and PYTHONDONTWRITEBYTECODE=1 same-size Python edit controls."
       }
     },
     {
@@ -66048,11 +66907,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "Scope fence; no node.",
-        "proposed_derivation_file": "dag/derivations/atl_p018_005.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P018-005"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P018-005: CodeRepairRequestV1 and CodeRepairRuntime require a caller-supplied patch and fixed check argv vectors with zero provider imports, zero patch generation, new_model_trials = 0, working-copy separation only (no OS sandbox), and mathematical_measurement = 'NOT_MEASURED'."
       }
     },
     {
@@ -66076,11 +66936,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "Source attribution only.",
-        "proposed_derivation_file": "dag/derivations/atl_p019_001.md"
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P019-001"
+        ],
+        "relation": "narrows",
+        "note": "Derived in AUDIT-P019-001 (narrows ATL-P019-001 because external copyrighted PDF 2609.26457v1.pdf is not bundled in this checkout so live pypdf 6.10.0 text re-extraction requires externally supplying the 737,558-byte v1 file): Verified docs/source_manifest.json SHA-256 and 28 distinct per-page text digests and verified all 12 page-range attribution rows in docs/source_to_claim_map.md within pages 1..28."
       }
     },
     {
@@ -66104,11 +66965,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node on campaign contracts.",
-        "proposed_derivation_file": "dag/derivations/atl_p019_002.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P019-002"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P019-002: operads/domain/autopoiesis/research.py, pciv/use_cases/research_selection.py, pfp/infrastructure/adapters/{harness_budget.py,harness_provider.py}, and frozen Woland reference_harness.py / harness_campaign.py in pfp_harness_author_review_2026-10-23.zip implement the 4-file candidate surface, 5-arm UCB1/softmax/champion-fork policy, budget integration, and parent-bound experimental re-entry (with Linux containment and paid campaign deferred)."
       }
     },
     {
@@ -66132,11 +66994,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node on the replacement rule.",
-        "proposed_derivation_file": "dag/derivations/atl_p019_003.md"
+        "verdict": "matched",
+        "nodes": [
+          "AUDIT-P019-003"
+        ],
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P019-003: IncumbentDecisionV1 and pciv/use_cases/research_selection.py::decide require invariant controls, paired (task, family, repetition) evaluations, disjoint selection and confirmation occurrence IDs, strict Pareto improvement on both selection and fresh confirmation panels, and zero per-family correctness regression before incumbent replacement."
       }
     },
     {
@@ -66160,13 +67023,19 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PFPTESTS-CL033"
+          "AUDIT-P019-004"
         ],
-        "relation": "supports",
-        "note": "PFPTESTS-CL033 records reserve-before-send durable accounting; the shared campaign ceiling is not stated.",
-        "proposed_derivation_file": "dag/derivations/atl_p019_004.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P019-004, with PFPTESTS-CL033: HarnessBudgetLedger and HarnessProvider route all outer and inner campaign calls through a singleton-bound SQLite ledger sharing a fixed 40,000,000 micro-USD ($40) ceiling across six PHASE_CAPS, enforcing concurrency < 2, refusing spec or foreign-budget swaps across restarts, and halting restarts on unsettled reservations.",
+        "partial_evidence": {
+          "nodes": [
+            "PFPTESTS-CL033"
+          ],
+          "relation": "supports",
+          "note": "PFPTESTS-CL033 records reserve-before-send durable accounting; the shared campaign ceiling is not stated."
+        }
       }
     },
     {
@@ -66190,14 +67059,20 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "partial",
+        "verdict": "matched",
         "nodes": [
-          "PFPTESTS-CL041",
-          "PFPTESTS-CL048"
+          "AUDIT-P019-005"
         ],
-        "relation": "supports",
-        "note": "Nodes record preserved liability and distinct handling of unusable paid replies; the rejected-answer usage retention case is not stated.",
-        "proposed_derivation_file": "dag/derivations/atl_p019_005.md"
+        "relation": "states_same_claim_as",
+        "note": "Derived in AUDIT-P019-005, with PFPTESTS-CL041 and PFPTESTS-CL048: RecordedTransport and HarnessProvider settle observed Anthropic token usage on rejected replies carrying parseable usage metadata as TYPED_REFUSAL with empty content, while replies lacking parseable usage retain pre-dispatch maximum-liability holds and block subsequent dispatch with UNRECONCILED_COST.",
+        "partial_evidence": {
+          "nodes": [
+            "PFPTESTS-CL041",
+            "PFPTESTS-CL048"
+          ],
+          "relation": "supports",
+          "note": "Nodes record preserved liability and distinct handling of unusable paid replies; the rejected-answer usage retention case is not stated."
+        }
       }
     },
     {
@@ -66221,11 +67096,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "Not measured.",
-        "proposed_derivation_file": "dag/derivations/atl_p019_006.md"
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P019-006"
+        ],
+        "relation": "narrows",
+        "note": "Derived in AUDIT-P019-006 (narrows ATL-P019-006 to the retained NOT_RUN / NOT_MEASURED offline report because live provider calls were deferred by operator instruction): Verified campaign/report.json and replay_receipt.json record status='NOT_RUN', independent_provider_calls=0, spent_microusd=0, and status='NOT_MEASURED' across all four ablations, and verified harness_replay.py paired_analysis/holm fail-closed NOT_MEASURED reporting."
       }
     },
     {
@@ -66249,11 +67125,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "No node on the frozen-report replay.",
-        "proposed_derivation_file": "dag/derivations/atl_p019_007.md"
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P019-007"
+        ],
+        "relation": "narrows",
+        "note": "Derived in AUDIT-P019-007 (narrows ATL-P019-007 to the zero-call NOT_RUN report under pre-installed host site-packages and notes the Windows CRLF vs Linux LF line ending in campaign/report.md): Verified SHA-256 archive authentication (83bd2f2d...), 3,486-file pre-replay rebuild_release.py::validate custody pass, and socket/subprocess-blocked offline replay reproducing campaign/report.json byte-for-byte independently of current main."
       }
     },
     {
@@ -66277,11 +67154,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "Not claimed.",
-        "proposed_derivation_file": "dag/derivations/atl_p019_008.md"
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P019-008"
+        ],
+        "relation": "narrows",
+        "note": "Derived in AUDIT-P019-008 (narrows ATL-P019-008 to its explicit paper_claim_ledger.md:12 'No such evidence | Not claimed' non-claim boundary): Proved via two finite resumption-record counterexamples (dropped artifact reference breaking action enablement, and output-preserving collapse breaking finish cost 1 vs 3 in PFP.FunnelCompressionClosure.output_preserving_collapse_breaks_cost) that heuristic summaries do not satisfy FibreCompatible."
       }
     },
     {
@@ -66305,11 +67183,12 @@
       ],
       "limits": "Copied from the archive. The DAG records the claim and its source; it does not grade the claim.",
       "atlas_match": {
-        "verdict": "gap",
-        "nodes": [],
-        "relation": null,
-        "note": "Not claimed.",
-        "proposed_derivation_file": "dag/derivations/atl_p019_009.md"
+        "verdict": "partial",
+        "nodes": [
+          "AUDIT-P019-009"
+        ],
+        "relation": "narrows",
+        "note": "Derived in AUDIT-P019-009 (narrows ATL-P019-009 to its explicit paper_claim_ledger.md:13 'No such evidence | Not claimed' non-claim boundary): Verified HarnessCandidateV1 4-file experimental edit-surface isolation, zero production-admission transitions in research_selection.py and harness_campaign.py, 0 evaluated trials in campaign/report.json, and PFP.FunnelCompressionClosure.funnel_authority_effect_none."
       }
     },
     {
@@ -80454,6 +81333,176 @@
     {
       "from": "ASSUMPTION-183d0995b60e961f",
       "to": "AUDIT-P008-004",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-00da9019cbf298c9",
+      "to": "AUDIT-P015-001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-16cf29f546dc8de5",
+      "to": "AUDIT-P015-001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-7b2f3e9f280f6e1e",
+      "to": "AUDIT-P015-002",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-47058bc3b12c0511",
+      "to": "AUDIT-P015-002",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-5cea0bd336a48a18",
+      "to": "AUDIT-P015-003",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-5d3a6e25051ddef8",
+      "to": "AUDIT-P015-004",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-3501158a4d280cab",
+      "to": "AUDIT-P015-004",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-ac68339a121a9e44",
+      "to": "AUDIT-P016-001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-51079108017f4586",
+      "to": "AUDIT-P016-001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-4be8aa303fa1e606",
+      "to": "AUDIT-P016-002",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-574bdf6de47f3833",
+      "to": "AUDIT-P016-002",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-fb562987e3b45bba",
+      "to": "AUDIT-P016-003",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-e0d66417d12572a3",
+      "to": "AUDIT-P016-004",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-0eb4dd199a2f3ea5",
+      "to": "AUDIT-P016-004",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-59d40e8a8f8f8ace",
+      "to": "AUDIT-P018-002",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-6408de7e10ea1931",
+      "to": "AUDIT-P018-003",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-ab80078d31f47cef",
+      "to": "AUDIT-P018-003",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-b573de6348d094a6",
+      "to": "AUDIT-P018-004",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-3a2f55715d552b4b",
+      "to": "AUDIT-P018-004",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-4479ff86a3f11f5b",
+      "to": "AUDIT-P018-005",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-83f9093688ce867a",
+      "to": "AUDIT-P019-001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-2b806f4fce7cb71e",
+      "to": "AUDIT-P019-001",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-b85130a0f8bf1a93",
+      "to": "AUDIT-P019-002",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-7f93883cba4dedf0",
+      "to": "AUDIT-P019-003",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-f0fe12cc48f13f8e",
+      "to": "AUDIT-P019-004",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-af9ece2890f2f3ea",
+      "to": "AUDIT-P019-005",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-d65502cb77b4bd45",
+      "to": "AUDIT-P019-006",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-14cf991087dc2cd7",
+      "to": "AUDIT-P019-006",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-2c6aa5c29a9db300",
+      "to": "AUDIT-P019-007",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-d21c879bc4750cf2",
+      "to": "AUDIT-P019-007",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-8b9b350b51b85812",
+      "to": "AUDIT-P019-008",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-c81da3e5fa8a1427",
+      "to": "AUDIT-P019-008",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-a415dbf21a5de714",
+      "to": "AUDIT-P019-009",
+      "kind": "requires"
+    },
+    {
+      "from": "ASSUMPTION-f85313625a232f65",
+      "to": "AUDIT-P019-009",
       "kind": "requires"
     },
     {
@@ -109893,6 +110942,600 @@
       "citation": "pfp/domain/tower/registry.py"
     },
     {
+      "from": "SOURCE:atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md",
+      "to": "AUDIT-P015-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/015_pfp_local_to_global_agent_composition/code/replay.py",
+      "to": "AUDIT-P015-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/code/replay.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md",
+      "to": "AUDIT-P015-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/015_pfp_local_to_global_agent_composition/code/replay.py",
+      "to": "AUDIT-P015-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/code/replay.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md",
+      "to": "AUDIT-P015-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/015_pfp_local_to_global_agent_composition/code/replay.py",
+      "to": "AUDIT-P015-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/code/replay.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/015_pfp_local_to_global_agent_composition/replay_receipt.json",
+      "to": "AUDIT-P015-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/replay_receipt.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/015_pfp_local_to_global_agent_composition/source_provenance.json",
+      "to": "AUDIT-P015-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/source_provenance.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md",
+      "to": "AUDIT-P015-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md"
+    },
+    {
+      "from": "SOURCE:operads/contracts/ddc_code_repair_v1.py",
+      "to": "AUDIT-P015-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "operads/contracts/ddc_code_repair_v1.py"
+    },
+    {
+      "from": "SOURCE:operads/infrastructure/ddc_code_repair.py",
+      "to": "AUDIT-P015-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "operads/infrastructure/ddc_code_repair.py"
+    },
+    {
+      "from": "SOURCE:ops/adversary/infrastructure/ddc_code_repair.py",
+      "to": "AUDIT-P015-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "ops/adversary/infrastructure/ddc_code_repair.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md",
+      "to": "AUDIT-P016-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/code/replay.py",
+      "to": "AUDIT-P016-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/code/replay.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md",
+      "to": "AUDIT-P016-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/code/replay.py",
+      "to": "AUDIT-P016-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/code/replay.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md",
+      "to": "AUDIT-P016-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/code/replay.py",
+      "to": "AUDIT-P016-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/code/replay.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/replay_receipt.json",
+      "to": "AUDIT-P016-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/replay_receipt.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md",
+      "to": "AUDIT-P016-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/code/replay.py",
+      "to": "AUDIT-P016-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/code/replay.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/replay_receipt.json",
+      "to": "AUDIT-P016-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/replay_receipt.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/source_provenance.json",
+      "to": "AUDIT-P016-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/source_provenance.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md",
+      "to": "AUDIT-P018-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/observed_execution.json",
+      "to": "AUDIT-P018-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/observed_execution.json"
+    },
+    {
+      "from": "SOURCE:operads/contracts/ddc_code_repair_v1.py",
+      "to": "AUDIT-P018-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "operads/contracts/ddc_code_repair_v1.py"
+    },
+    {
+      "from": "SOURCE:operads/infrastructure/ddc_code_repair.py",
+      "to": "AUDIT-P018-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "operads/infrastructure/ddc_code_repair.py"
+    },
+    {
+      "from": "SOURCE:operads/catalog/contracts/v1/ddc_code_repair_c.json",
+      "to": "AUDIT-P018-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "operads/catalog/contracts/v1/ddc_code_repair_c.json"
+    },
+    {
+      "from": "SOURCE:operads/catalog/contracts/v1/ddc_code_repair_r.json",
+      "to": "AUDIT-P018-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "operads/catalog/contracts/v1/ddc_code_repair_r.json"
+    },
+    {
+      "from": "SOURCE:operads/catalog/contracts/v1/ddc_code_repair_e.json",
+      "to": "AUDIT-P018-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "operads/catalog/contracts/v1/ddc_code_repair_e.json"
+    },
+    {
+      "from": "SOURCE:operads/catalog/contracts/v1/ddc_code_repair_i.json",
+      "to": "AUDIT-P018-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "operads/catalog/contracts/v1/ddc_code_repair_i.json"
+    },
+    {
+      "from": "SOURCE:operads/catalog/contracts/v1/ddc_code_repair_m.json",
+      "to": "AUDIT-P018-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "operads/catalog/contracts/v1/ddc_code_repair_m.json"
+    },
+    {
+      "from": "SOURCE:operads/catalog/contracts/v1/ddc_code_repair_t.json",
+      "to": "AUDIT-P018-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "operads/catalog/contracts/v1/ddc_code_repair_t.json"
+    },
+    {
+      "from": "SOURCE:ops/adversary/infrastructure/ddc_code_repair.py",
+      "to": "AUDIT-P018-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "ops/adversary/infrastructure/ddc_code_repair.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md",
+      "to": "AUDIT-P018-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/observed_execution.json",
+      "to": "AUDIT-P018-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/observed_execution.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/source_provenance.json",
+      "to": "AUDIT-P018-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/source_provenance.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/reproduction.md",
+      "to": "AUDIT-P018-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/reproduction.md"
+    },
+    {
+      "from": "SOURCE:operads/contracts/ddc_code_repair_v1.py",
+      "to": "AUDIT-P018-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "operads/contracts/ddc_code_repair_v1.py"
+    },
+    {
+      "from": "SOURCE:ops/adversary/infrastructure/ddc_code_repair.py",
+      "to": "AUDIT-P018-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "ops/adversary/infrastructure/ddc_code_repair.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md",
+      "to": "AUDIT-P018-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/observed_execution.json",
+      "to": "AUDIT-P018-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/observed_execution.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/source_provenance.json",
+      "to": "AUDIT-P018-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/source_provenance.json"
+    },
+    {
+      "from": "SOURCE:operads/contracts/ddc_code_repair_v1.py",
+      "to": "AUDIT-P018-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "operads/contracts/ddc_code_repair_v1.py"
+    },
+    {
+      "from": "SOURCE:operads/infrastructure/ddc_code_repair.py",
+      "to": "AUDIT-P018-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "operads/infrastructure/ddc_code_repair.py"
+    },
+    {
+      "from": "SOURCE:ops/adversary/infrastructure/ddc_code_repair.py",
+      "to": "AUDIT-P018-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "ops/adversary/infrastructure/ddc_code_repair.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip",
+      "to": "AUDIT-P018-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md",
+      "to": "AUDIT-P018-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/observed_execution.json",
+      "to": "AUDIT-P018-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/docs/observed_execution.json"
+    },
+    {
+      "from": "SOURCE:operads/contracts/ddc_code_repair_v1.py",
+      "to": "AUDIT-P018-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "operads/contracts/ddc_code_repair_v1.py"
+    },
+    {
+      "from": "SOURCE:operads/infrastructure/ddc_code_repair.py",
+      "to": "AUDIT-P018-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "operads/infrastructure/ddc_code_repair.py"
+    },
+    {
+      "from": "SOURCE:ops/adversary/infrastructure/ddc_code_repair.py",
+      "to": "AUDIT-P018-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "ops/adversary/infrastructure/ddc_code_repair.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md",
+      "to": "AUDIT-P019-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
+      "to": "AUDIT-P019-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/docs/source_manifest.json",
+      "to": "AUDIT-P019-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/docs/source_manifest.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/docs/source_to_claim_map.md",
+      "to": "AUDIT-P019-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/docs/source_to_claim_map.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/docs/reproduction.md",
+      "to": "AUDIT-P019-001",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/docs/reproduction.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md",
+      "to": "AUDIT-P019-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
+      "to": "AUDIT-P019-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:operads/domain/autopoiesis/research.py",
+      "to": "AUDIT-P019-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "operads/domain/autopoiesis/research.py"
+    },
+    {
+      "from": "SOURCE:pciv/use_cases/research_selection.py",
+      "to": "AUDIT-P019-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pciv/use_cases/research_selection.py"
+    },
+    {
+      "from": "SOURCE:pfp/infrastructure/adapters/harness_budget.py",
+      "to": "AUDIT-P019-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/infrastructure/adapters/harness_budget.py"
+    },
+    {
+      "from": "SOURCE:pfp/infrastructure/adapters/harness_provider.py",
+      "to": "AUDIT-P019-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/infrastructure/adapters/harness_provider.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip",
+      "to": "AUDIT-P019-002",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md",
+      "to": "AUDIT-P019-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
+      "to": "AUDIT-P019-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:operads/domain/autopoiesis/research.py",
+      "to": "AUDIT-P019-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "operads/domain/autopoiesis/research.py"
+    },
+    {
+      "from": "SOURCE:pciv/use_cases/research_selection.py",
+      "to": "AUDIT-P019-003",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pciv/use_cases/research_selection.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md",
+      "to": "AUDIT-P019-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
+      "to": "AUDIT-P019-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:operads/domain/autopoiesis/research.py",
+      "to": "AUDIT-P019-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "operads/domain/autopoiesis/research.py"
+    },
+    {
+      "from": "SOURCE:pfp/infrastructure/adapters/harness_budget.py",
+      "to": "AUDIT-P019-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/infrastructure/adapters/harness_budget.py"
+    },
+    {
+      "from": "SOURCE:pfp/infrastructure/adapters/harness_provider.py",
+      "to": "AUDIT-P019-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/infrastructure/adapters/harness_provider.py"
+    },
+    {
+      "from": "SOURCE:ops/adversary/infrastructure/providers/budget_ledger.py",
+      "to": "AUDIT-P019-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "ops/adversary/infrastructure/providers/budget_ledger.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip",
+      "to": "AUDIT-P019-004",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md",
+      "to": "AUDIT-P019-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
+      "to": "AUDIT-P019-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:pfp/infrastructure/adapters/harness_provider.py",
+      "to": "AUDIT-P019-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pfp/infrastructure/adapters/harness_provider.py"
+    },
+    {
+      "from": "SOURCE:ops/adversary/infrastructure/providers/anthropic_messages.py",
+      "to": "AUDIT-P019-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "ops/adversary/infrastructure/providers/anthropic_messages.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip",
+      "to": "AUDIT-P019-005",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md",
+      "to": "AUDIT-P019-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
+      "to": "AUDIT-P019-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip",
+      "to": "AUDIT-P019-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/publication/author_review_2026_10_23/offline_followup/harness_offline_followup_2026-10-23.zip",
+      "to": "AUDIT-P019-006",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/publication/author_review_2026_10_23/offline_followup/harness_offline_followup_2026-10-23.zip"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md",
+      "to": "AUDIT-P019-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
+      "to": "AUDIT-P019-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/docs/reproduction.md",
+      "to": "AUDIT-P019-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/docs/reproduction.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip",
+      "to": "AUDIT-P019-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/publication/author_review_2026_10_23/offline_followup/harness_offline_followup_2026-10-23.zip",
+      "to": "AUDIT-P019-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/publication/author_review_2026_10_23/offline_followup/harness_offline_followup_2026-10-23.zip"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/publication/author_review_2026_10_23/windows_review/harness_windows_review_2026-10-23.zip",
+      "to": "AUDIT-P019-007",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/publication/author_review_2026_10_23/windows_review/harness_windows_review_2026-10-23.zip"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md",
+      "to": "AUDIT-P019-008",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
+      "to": "AUDIT-P019-008",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md",
+      "to": "AUDIT-P019-008",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip",
+      "to": "AUDIT-P019-008",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md",
+      "to": "AUDIT-P019-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper.md"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
+      "to": "AUDIT-P019-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md"
+    },
+    {
+      "from": "SOURCE:operads/domain/autopoiesis/research.py",
+      "to": "AUDIT-P019-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "operads/domain/autopoiesis/research.py"
+    },
+    {
+      "from": "SOURCE:pciv/use_cases/research_selection.py",
+      "to": "AUDIT-P019-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "pciv/use_cases/research_selection.py"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip",
+      "to": "AUDIT-P019-009",
+      "kind": "source_evidence_not_automatic_proof",
+      "citation": "atlas/archive/pfp/publication/author_review_2026_10_23/pfp_harness_author_review_2026-10-23.zip"
+    },
+    {
       "from": "SOURCE:atlas/archive/pfp/008_pfp_mssn_tower_challenges_and_retraction_benchmarks/paper.md",
       "to": "AUDIT-P008-005",
       "kind": "source_evidence_not_automatic_proof",
@@ -115116,10 +116759,16 @@
       "citation": "atlas/archive/pfp/014_pfp_recursive_reentry_and_evidence_scope/paper.md:135"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/015_pfp_local_to_global_agent_composition",
+      "from": "SOURCE:atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md",
       "to": "ATL-P015-001",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md:43"
+    },
+    {
+      "from": "AUDIT-P015-001",
+      "to": "ATL-P015-001",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "PFPDOMAIN-CL16",
@@ -115140,10 +116789,16 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/015_pfp_local_to_global_agent_composition",
+      "from": "SOURCE:atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md",
       "to": "ATL-P015-002",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md:60"
+    },
+    {
+      "from": "AUDIT-P015-002",
+      "to": "ATL-P015-002",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "PFPTESTS-CL020",
@@ -115152,22 +116807,40 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/015_pfp_local_to_global_agent_composition",
+      "from": "SOURCE:atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md",
       "to": "ATL-P015-003",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md:84"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/015_pfp_local_to_global_agent_composition",
+      "from": "AUDIT-P015-003",
+      "to": "ATL-P015-003",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md",
       "to": "ATL-P015-004",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/015_pfp_local_to_global_agent_composition/paper.md:123"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost",
+      "from": "AUDIT-P015-004",
+      "to": "ATL-P015-004",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md",
       "to": "ATL-P016-001",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md:44"
+    },
+    {
+      "from": "AUDIT-P016-001",
+      "to": "ATL-P016-001",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "RCT-C21",
@@ -115176,10 +116849,16 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost",
+      "from": "SOURCE:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md",
       "to": "ATL-P016-002",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md:65"
+    },
+    {
+      "from": "AUDIT-P016-002",
+      "to": "ATL-P016-002",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "RCT-C21",
@@ -115194,16 +116873,28 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost",
+      "from": "SOURCE:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md",
       "to": "ATL-P016-003",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md:76"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost",
+      "from": "AUDIT-P016-003",
+      "to": "ATL-P016-003",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md",
       "to": "ATL-P016-004",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/016_pfp_future_faithful_compression_and_cost/paper.md:88"
+    },
+    {
+      "from": "AUDIT-P016-004",
+      "to": "ATL-P016-004",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "PAPER:atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions",
@@ -115344,7 +117035,7 @@
       "citation": "atlas/archive/pfp/017_pfp_proposal_channels_and_internal_interventions/paper.md:1317"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair",
+      "from": "SOURCE:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md",
       "to": "ATL-P018-001",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md:43"
@@ -115356,52 +117047,100 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair",
+      "from": "SOURCE:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md",
       "to": "ATL-P018-002",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md:70"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair",
+      "from": "AUDIT-P018-002",
+      "to": "ATL-P018-002",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md",
       "to": "ATL-P018-003",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md:107"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair",
+      "from": "AUDIT-P018-003",
+      "to": "ATL-P018-003",
+      "kind": "narrows",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md",
       "to": "ATL-P018-004",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md:122"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair",
+      "from": "AUDIT-P018-004",
+      "to": "ATL-P018-004",
+      "kind": "narrows",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md",
       "to": "ATL-P018-005",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/018_pfp_operadic_composition_and_bounded_ddc_repair/paper.md:143"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
+      "from": "AUDIT-P018-005",
+      "to": "ATL-P018-005",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
       "to": "ATL-P019-001",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md:5"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
+      "from": "AUDIT-P019-001",
+      "to": "ATL-P019-001",
+      "kind": "narrows",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
       "to": "ATL-P019-002",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md:6"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
+      "from": "AUDIT-P019-002",
+      "to": "ATL-P019-002",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
       "to": "ATL-P019-003",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md:7"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
+      "from": "AUDIT-P019-003",
+      "to": "ATL-P019-003",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
       "to": "ATL-P019-004",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md:8"
+    },
+    {
+      "from": "AUDIT-P019-004",
+      "to": "ATL-P019-004",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "PFPTESTS-CL033",
@@ -115410,10 +117149,16 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
       "to": "ATL-P019-005",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md:9"
+    },
+    {
+      "from": "AUDIT-P019-005",
+      "to": "ATL-P019-005",
+      "kind": "states_same_claim_as",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "PFPTESTS-CL041",
@@ -115428,28 +117173,52 @@
       "citation": "atlas/atlas_claim_matches.json"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
       "to": "ATL-P019-006",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md:10"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
+      "from": "AUDIT-P019-006",
+      "to": "ATL-P019-006",
+      "kind": "narrows",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
       "to": "ATL-P019-007",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md:11"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
+      "from": "AUDIT-P019-007",
+      "to": "ATL-P019-007",
+      "kind": "narrows",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
       "to": "ATL-P019-008",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md:12"
     },
     {
-      "from": "PAPER:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution",
+      "from": "AUDIT-P019-008",
+      "to": "ATL-P019-008",
+      "kind": "narrows",
+      "citation": "atlas/atlas_claim_matches.json"
+    },
+    {
+      "from": "SOURCE:atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md",
       "to": "ATL-P019-009",
       "kind": "source_evidence_not_automatic_proof",
       "citation": "atlas/archive/pfp/019_pfp_evidence_bound_harness_evolution/paper_claim_ledger.md:13"
+    },
+    {
+      "from": "AUDIT-P019-009",
+      "to": "ATL-P019-009",
+      "kind": "narrows",
+      "citation": "atlas/atlas_claim_matches.json"
     },
     {
       "from": "PAPER:atlas/archive/pfp/020_pfp_frontier_research",
@@ -168858,8 +170627,8 @@
     "Audit native implementations and claimed Lean correspondence at pinned source."
   ],
   "graph_validation": {
-    "unique_nodes": 4415,
-    "edges": 5174,
+    "unique_nodes": 4504,
+    "edges": 5328,
     "acyclic": true
   }
 }
