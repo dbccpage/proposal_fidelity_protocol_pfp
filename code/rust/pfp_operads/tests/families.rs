@@ -53,6 +53,8 @@ fn the_host_lists_its_families_in_workflow_order() {
     assert_eq!(
         passed(list()),
         json!({"families": [
+            {"workflow": "WF6", "name": "Dialect sweep",
+             "host_check": "dialect_query_preservation_sweep"},
             {"workflow": "WF7", "name": "Typed refusal", "host_check": "typed_refusal_rank_test"},
             {"workflow": "WF9", "name": "Bounded check-and-repair",
              "host_check": "xor_cycle_minimal_repair"},
@@ -62,6 +64,10 @@ fn the_host_lists_its_families_in_workflow_order() {
              "host_check": "lp_dual_and_farkas_certificate"},
             {"workflow": "WF13", "name": "Exact-domain capsule battery",
              "host_check": "per_domain_registered_checker"},
+            {"workflow": "WF16", "name": "Substrate crosswalk",
+             "host_check": "incidence_rank_crosswalk"},
+            {"workflow": "WF17", "name": "Witnessed-difference programme",
+             "host_check": "hml_separator_bisimulation_check"},
             {"workflow": "WF20", "name": "Derivation loop with lift grants",
              "host_check": "structural_lift_grant_loop"},
             {"workflow": "WF24", "name": "Pinned-token operational scratchpad",
@@ -72,6 +78,8 @@ fn the_host_lists_its_families_in_workflow_order() {
              "host_check": "epitope_antibody_exact_oracle"},
             {"workflow": "WF27", "name": "Hinted retraction with a stationary-loop detector",
              "host_check": "xor_residual_gate_stationary_loop"},
+            {"workflow": "WF29", "name": "Checker synthesis scored by mutation kill rate",
+             "host_check": "mutation_kill_rate_with_valid_panel"},
             {"workflow": "WF30", "name": "Constraint-forcing anti-recitation",
              "host_check": "comparator_network_zero_one_principle"},
             {"workflow": "WF31", "name": "Multi-agent tournament with held-out cross-validation",
@@ -84,6 +92,8 @@ fn the_host_lists_its_families_in_workflow_order() {
              "host_check": "host_recomputed_defect_ranking"},
             {"workflow": "WF40", "name": "Restart boundary after exhausted repair",
              "host_check": "cochain_trichotomy_boundary"},
+            {"workflow": "WF44", "name": "Exact certificate presets",
+             "host_check": "exact_certificate_presets"},
             {"workflow": "WF45", "name": "Finite terminal selector and plenitude test",
              "host_check": "finite_survivor_set_verifier"},
             {"workflow": "WF46", "name": "Boundary sufficiency and gluing diagnostic",
@@ -92,7 +102,7 @@ fn the_host_lists_its_families_in_workflow_order() {
              "host_check": "sign_gauge_checkpoint_chain"},
         ]})
     );
-    assert_eq!(FAMILIES.len(), 19);
+    assert_eq!(FAMILIES.len(), 24);
 }
 
 #[test]

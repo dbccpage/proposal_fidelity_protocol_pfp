@@ -28,9 +28,11 @@ pub const FAMILY: Family = Family {
     walk,
 };
 
-type System = (Vec<Vec<Rational>>, Vec<Rational>);
+/// The rows of `A` and the entries of `b`.
+pub type System = (Vec<Vec<Rational>>, Vec<Rational>);
 
-fn system(task: &Datum) -> Result<System, String> {
+/// The system a task states, or what is wrong with it.
+pub fn system(task: &Datum) -> Result<System, String> {
     let rows = task
         .get("A")
         .and_then(Datum::as_list)

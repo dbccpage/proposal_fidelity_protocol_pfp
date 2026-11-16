@@ -4,14 +4,14 @@
 
 **Layer:** 4 · **Builds on:** [WF11](workflow_wf11.md) · **Merges into:** WF11 · **Kind:** task preset
 
-**Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer4.py) (`CheckerSynthesisMutationKill`) · **Folder:** [`workflows/wf29_checker_synthesis_scored_by_mutation_kill_rate`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf29_checker_synthesis_scored_by_mutation_kill_rate) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf29.rs`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/pfp_operads/src/families/wf29.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer4.py) (`CheckerSynthesisMutationKill`) · **Folder:** [`workflows/wf29_checker_synthesis_scored_by_mutation_kill_rate`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf29_checker_synthesis_scored_by_mutation_kill_rate) · **Tests:** [`code/rust/pfp_operads/tests/wf29.rs`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/pfp_operads/tests/wf29.rs), [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Score a proposed checker by its mutation kill rate, after it passes every valid case.
 
 The declared certificate is a vertex potential ``phi`` with ``delta phi = c`` on a fixed graph. The
 checker is a tree over declared predicates (never model code). The host runs it on the public
-valid panel and the sealed hostile mutants with exact.mutation_score, and certifies only a sound
-checker (zero false rejections) whose kill rate meets the declared bar.
+valid panel and the sealed hostile mutants, and certifies only a sound checker (zero false
+rejections) whose kill rate meets the declared bar.
 
 ## Procedure
 
@@ -27,13 +27,14 @@ From the DAG node. The runner checks the instance described above; items it does
 
 ## Host check
 
-`mutation_kill_rate_with_valid_panel`. Only this check can certify. Proposers, detectors and adapters carry authority effect `None`; a reply is evidence for the check, never a verdict.
+`mutation_kill_rate_with_valid_panel`. Only this check can certify. Proposers, detectors and adapters carry authority effect `None`; a reply is evidence for the check, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
 ## Run it offline
 
-No model call and no spend. From the repository root:
+No model call and no spend. From the repository root (the first line builds the host once):
 
 ```powershell
+cargo build --release -p pfp_operads --manifest-path code/rust/Cargo.toml
 python -m pfp_core.workflow_families run WF29
 python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF29-"
 ```

@@ -4,7 +4,7 @@
 
 **Layer:** 4 · **Builds on:** [WF5](workflow_wf5.md), [WF10](workflow_wf10.md) · **Merges into:** WF5 · **Kind:** task preset
 
-**Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer4.py) (`SubstrateCrosswalk`) · **Folder:** [`workflows/wf16_substrate_crosswalk`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf16_substrate_crosswalk) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf16.rs`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/pfp_operads/src/families/wf16.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer4.py) (`SubstrateCrosswalk`) · **Folder:** [`workflows/wf16_substrate_crosswalk`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf16_substrate_crosswalk) · **Tests:** [`code/rust/pfp_operads/tests/wf16.rs`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/pfp_operads/tests/wf16.rs), [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Map one finite task between two substrates and require the same host verdict in both.
 
@@ -30,13 +30,14 @@ From the DAG node. The runner checks the instance described above; items it does
 
 ## Host check
 
-`incidence_rank_crosswalk`. Only this check can certify. Proposers, detectors and adapters carry authority effect `None`; a reply is evidence for the check, never a verdict.
+`incidence_rank_crosswalk`. Only this check can certify. Proposers, detectors and adapters carry authority effect `None`; a reply is evidence for the check, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
 ## Run it offline
 
-No model call and no spend. From the repository root:
+No model call and no spend. From the repository root (the first line builds the host once):
 
 ```powershell
+cargo build --release -p pfp_operads --manifest-path code/rust/Cargo.toml
 python -m pfp_core.workflow_families run WF16
 python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF16-"
 ```

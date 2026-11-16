@@ -1,0 +1,611 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf17.rs",
+  "target_sha256": "550cf3738b4fed9029ec23ada61d5927fdc2a09d45192fe912d01a42c940e584",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
+  "counts": {
+    "killed": 99,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "transition ceiling raised",
+      "old": "pub const MAX_TRANSITIONS: usize = 256;",
+      "new": "pub const MAX_TRANSITIONS: usize = 257;",
+      "outcome": "killed"
+    },
+    {
+      "name": "transition ceiling lowered",
+      "old": "pub const MAX_TRANSITIONS: usize = 256;",
+      "new": "pub const MAX_TRANSITIONS: usize = 255;",
+      "outcome": "killed"
+    },
+    {
+      "name": "depth ceiling raised",
+      "old": "pub const MAX_DEPTH: usize = 12;",
+      "new": "pub const MAX_DEPTH: usize = 13;",
+      "outcome": "killed"
+    },
+    {
+      "name": "depth ceiling lowered",
+      "old": "pub const MAX_DEPTH: usize = 12;",
+      "new": "pub const MAX_DEPTH: usize = 11;",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF17\",",
+      "new": "    workflow: \"WF170\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Witnessed-difference programme\",",
+      "new": "    name: \"Programme\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"hml_separator_bisimulation_check\",",
+      "new": "    host_check: \"hml\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "a triple may be longer",
+      "old": "        [from, label, to] => Some((from.as_text()?, label.as_text()?, to.as_text()?)),",
+      "new": "        [from, label, to, ..] => Some((from.as_text()?, label.as_text()?, to.as_text()?)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the ends of a move are swapped",
+      "old": "        [from, label, to] => Some((from.as_text()?, label.as_text()?, to.as_text()?)),",
+      "new": "        [from, label, to] => Some((to.as_text()?, label.as_text()?, from.as_text()?)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "transitions error reworded",
+      "old": ".ok_or(\"transitions must be a list of [state, label, state] in text\")?;",
+      "new": ".ok_or(\"transitions\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the ceiling is excluded",
+      "old": "    if moves.len() > MAX_TRANSITIONS {",
+      "new": "    if moves.len() >= MAX_TRANSITIONS {",
+      "outcome": "killed"
+    },
+    {
+      "name": "ceiling error reworded",
+      "old": "return Err(format!(\"at most {MAX_TRANSITIONS} transitions\"));",
+      "new": "return Err(\"ceiling\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "only tails are declared states",
+      "old": "    let states = moves.iter().flat_map(|&(from, _, to)| [from, to]).collect();",
+      "new": "    let states = moves.iter().flat_map(|&(from, _, _)| [from]).collect();",
+      "outcome": "killed"
+    },
+    {
+      "name": "only heads are declared states",
+      "old": "    let states = moves.iter().flat_map(|&(from, _, to)| [from, to]).collect();",
+      "new": "    let states = moves.iter().flat_map(|&(_, _, to)| [to]).collect();",
+      "outcome": "killed"
+    },
+    {
+      "name": "a formula nests one deeper before it is too deep",
+      "old": "    if depth > MAX_DEPTH {\n        return Err(\"formula too deep\".to_owned());",
+      "new": "    if depth >= MAX_DEPTH {\n        return Err(\"formula too deep\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "depth error reworded",
+      "old": "return Err(\"formula too deep\".to_owned());",
+      "new": "return Err(\"deep\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "a part is read at the same depth",
+      "old": "    formula(part, depth + 1).map(Box::new)",
+      "new": "    formula(part, depth).map(Box::new)",
+      "outcome": "killed"
+    },
+    {
+      "name": "tt is false",
+      "old": "            \"tt\" => Ok(Formula::Constant(true)),",
+      "new": "            \"tt\" => Ok(Formula::Constant(false)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "ff is true",
+      "old": "            \"ff\" => Ok(Formula::Constant(false)),",
+      "new": "            \"ff\" => Ok(Formula::Constant(true)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a constant error reworded",
+      "old": "            _ => Err(unknown(written)),\n        };",
+      "new": "            _ => Err(\"constant\".to_owned()),\n        };",
+      "outcome": "killed"
+    },
+    {
+      "name": "unknown error reworded",
+      "old": "    format!(\"unknown formula {}\", written.canonical())",
+      "new": "    format!(\"unknown {}\", written.canonical())",
+      "outcome": "killed"
+    },
+    {
+      "name": "not takes any parts",
+      "old": "        [part] => Ok(Formula::Not(inner(part, depth)?)),",
+      "new": "        [part, ..] => Ok(Formula::Not(inner(part, depth)?)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "not error reworded",
+      "old": "        _ => Err(\"not takes one formula\".to_owned()),",
+      "new": "        _ => Err(\"not\".to_owned()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "and and or take any parts",
+      "old": "    let [left, right] = arguments else {\n        return Err(format!(\"{operator} takes two arguments\"));\n    };\n    let (left, right) = (inner(left, depth)?, inner(right, depth)?);",
+      "new": "    let [left, right, ..] = arguments else {\n        return Err(format!(\"{operator} takes two arguments\"));\n    };\n    let (left, right) = (inner(left, depth)?, inner(right, depth)?);",
+      "outcome": "killed"
+    },
+    {
+      "name": "and and or parts are read right first",
+      "old": "    let (left, right) = (inner(left, depth)?, inner(right, depth)?);",
+      "new": "    let (right, left) = (inner(right, depth)?, inner(left, depth)?);",
+      "outcome": "killed"
+    },
+    {
+      "name": "and is read as or",
+      "old": "        \"and\" => Formula::And(left, right),",
+      "new": "        \"and\" => Formula::Or(left, right),",
+      "outcome": "killed"
+    },
+    {
+      "name": "or is read as and",
+      "old": "        _ => Formula::Or(left, right),",
+      "new": "        _ => Formula::And(left, right),",
+      "outcome": "killed"
+    },
+    {
+      "name": "joined error reworded",
+      "old": "        return Err(format!(\"{operator} takes two arguments\"));\n    };\n    let (left",
+      "new": "        return Err(\"two\".to_owned());\n    };\n    let (left",
+      "outcome": "killed"
+    },
+    {
+      "name": "dia and box take any parts",
+      "old": "    let [label, part] = arguments else {",
+      "new": "    let [label, part, ..] = arguments else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a label may be any value",
+      "old": "        .ok_or(format!(\"the label of {operator} must be text\"))?;",
+      "new": "        .unwrap_or(\"\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "the label is read after the part",
+      "old": "    let label = label\n        .as_text()\n        .ok_or(format!(\"the label of {operator} must be text\"))?;\n    let part = inner(part, depth)?;",
+      "new": "    let part = inner(part, depth)?;\n    let label = label\n        .as_text()\n        .ok_or(format!(\"the label of {operator} must be text\"))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "dia is read as box",
+      "old": "        \"dia\" => Formula::Some(label, part),",
+      "new": "        \"dia\" => Formula::Every(label, part),",
+      "outcome": "killed"
+    },
+    {
+      "name": "box is read as dia",
+      "old": "        _ => Formula::Every(label, part),",
+      "new": "        _ => Formula::Some(label, part),",
+      "outcome": "killed"
+    },
+    {
+      "name": "modal error reworded",
+      "old": "    let [label, part] = arguments else {\n        return Err(format!(\"{operator} takes two arguments\"));",
+      "new": "    let [label, part] = arguments else {\n        return Err(\"modal\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "a formula that is not text or a list is a constant",
+      "old": "    let parts = written.as_list().and_then(|parts| parts.split_first());",
+      "new": "    let parts = written.as_list().and_then(|parts| parts.split_first()).or(Some((&Datum::Null, &[])));",
+      "outcome": "killed"
+    },
+    {
+      "name": "and with or share a reading",
+      "old": "        \"and\" | \"or\" => joined(operator, arguments, depth),",
+      "new": "        \"and\" | \"or\" | \"not\" => joined(operator, arguments, depth),",
+      "outcome": "killed"
+    },
+    {
+      "name": "not is checked as a pair",
+      "old": "        \"not\" => negation(arguments, depth),",
+      "new": "        \"not\" => joined(operator, arguments, depth),",
+      "outcome": "killed"
+    },
+    {
+      "name": "every move of a label is not needed for dia",
+      "old": "            let moves = self.moves.iter().filter(|(_, taken, _)| *taken == label);",
+      "new": "            let moves = self.moves.iter().filter(|(_, taken, _)| *taken != label);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a move leads where the formula does not hold",
+      "old": "                .filter(|(_, _, to)| target.contains(to) == wanted)",
+      "new": "                .filter(|(_, _, to)| target.contains(to) != wanted)",
+      "outcome": "killed"
+    },
+    {
+      "name": "moves are collected by their target",
+      "old": "                .map(|&(from, _, _)| from)",
+      "new": "                .map(|&(_, _, to)| to)",
+      "outcome": "killed"
+    },
+    {
+      "name": "tt holds nowhere",
+      "old": "            Formula::Constant(true) => self.states.clone(),",
+      "new": "            Formula::Constant(true) => BTreeSet::new(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "ff holds everywhere",
+      "old": "            Formula::Constant(false) => BTreeSet::new(),",
+      "new": "            Formula::Constant(false) => self.states.clone(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "not holds where its part holds",
+      "old": "            Formula::Not(part) => &self.states - &self.holds(part),",
+      "new": "            Formula::Not(part) => self.holds(part),",
+      "outcome": "killed"
+    },
+    {
+      "name": "and is a union",
+      "old": "            Formula::And(left, right) => &self.holds(left) & &self.holds(right),",
+      "new": "            Formula::And(left, right) => &self.holds(left) | &self.holds(right),",
+      "outcome": "killed"
+    },
+    {
+      "name": "or is an intersection",
+      "old": "            Formula::Or(left, right) => &self.holds(left) | &self.holds(right),",
+      "new": "            Formula::Or(left, right) => &self.holds(left) & &self.holds(right),",
+      "outcome": "killed"
+    },
+    {
+      "name": "dia asks for a move that fails the part",
+      "old": "            Formula::Some(label, part) => moved(label, &self.holds(part), true),",
+      "new": "            Formula::Some(label, part) => moved(label, &self.holds(part), false),",
+      "outcome": "killed"
+    },
+    {
+      "name": "box asks for a move that holds",
+      "old": "            Formula::Every(label, part) => &self.states - &moved(label, &self.holds(part), false),",
+      "new": "            Formula::Every(label, part) => &self.states - &moved(label, &self.holds(part), true),",
+      "outcome": "killed"
+    },
+    {
+      "name": "box holds only where a move leads",
+      "old": "            Formula::Every(label, part) => &self.states - &moved(label, &self.holds(part), false),",
+      "new": "            Formula::Every(label, part) => moved(label, &self.holds(part), true),",
+      "outcome": "killed"
+    },
+    {
+      "name": "moves out of the other end",
+      "old": "        self.moves.iter().filter(move |(from, _, _)| *from == state)",
+      "new": "        self.moves.iter().filter(move |(_, _, to)| *to == state)",
+      "outcome": "killed"
+    },
+    {
+      "name": "one pair is enough for a bisimulation",
+      "old": "        relation.iter().all(|&(left, right)| {",
+      "new": "        relation.iter().any(|&(left, right)| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "one move is enough going forth",
+      "old": "            let forth = self.from(left).all(|(_, label, next)| {",
+      "new": "            let forth = self.from(left).any(|(_, label, next)| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "one move is enough going back",
+      "old": "            let back = self.from(right).all(|(_, label, next)| {",
+      "new": "            let back = self.from(right).any(|(_, label, next)| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a move may be matched under any label",
+      "old": "                    taken == label && relation.contains(&(*next, *other))",
+      "new": "                    relation.contains(&(*next, *other))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a move may be matched into any pair going forth",
+      "old": "                    taken == label && relation.contains(&(*next, *other))",
+      "new": "                    taken == label",
+      "outcome": "killed"
+    },
+    {
+      "name": "a move may be matched into any pair going back",
+      "old": "                    taken == label && relation.contains(&(*other, *next))",
+      "new": "                    taken == label",
+      "outcome": "killed"
+    },
+    {
+      "name": "a move may be matched under any label going back",
+      "old": "                    taken == label && relation.contains(&(*other, *next))",
+      "new": "                    relation.contains(&(*other, *next))",
+      "outcome": "killed"
+    },
+    {
+      "name": "going back looks at the pair the wrong way",
+      "old": "                    taken == label && relation.contains(&(*other, *next))",
+      "new": "                    taken == label && relation.contains(&(*next, *other))",
+      "outcome": "killed"
+    },
+    {
+      "name": "going forth looks at the pair the wrong way",
+      "old": "                    taken == label && relation.contains(&(*next, *other))",
+      "new": "                    taken == label && relation.contains(&(*other, *next))",
+      "outcome": "killed"
+    },
+    {
+      "name": "forth is matched from the wrong state",
+      "old": "                self.from(right).any(matched)\n            });\n            let back",
+      "new": "                self.from(left).any(matched)\n            });\n            let back",
+      "outcome": "killed"
+    },
+    {
+      "name": "back is matched from the wrong state",
+      "old": "                self.from(left).any(matched)\n            });\n            forth",
+      "new": "                self.from(right).any(matched)\n            });\n            forth",
+      "outcome": "killed"
+    },
+    {
+      "name": "only forth is needed",
+      "old": "            forth && back",
+      "new": "            forth",
+      "outcome": "killed"
+    },
+    {
+      "name": "only back is needed",
+      "old": "            forth && back",
+      "new": "            back",
+      "outcome": "killed"
+    },
+    {
+      "name": "forth or back is enough",
+      "old": "            forth && back",
+      "new": "            forth || back",
+      "outcome": "killed"
+    },
+    {
+      "name": "a certificate pair may be longer",
+      "old": "            [left, right] => Some((left.as_text()?, right.as_text()?)),",
+      "new": "            [left, right, ..] => Some((left.as_text()?, right.as_text()?)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a certificate may repeat a pair",
+      "old": "        (relation.len() == certificate.len() && relation.iter().all(known)).then_some(relation)",
+      "new": "        (relation.iter().all(known)).then_some(relation)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a certificate may name other states",
+      "old": "        (relation.len() == certificate.len() && relation.iter().all(known)).then_some(relation)",
+      "new": "        (relation.len() == certificate.len()).then_some(relation)",
+      "outcome": "killed"
+    },
+    {
+      "name": "one declared pair is enough",
+      "old": "        (relation.len() == certificate.len() && relation.iter().all(known)).then_some(relation)",
+      "new": "        (relation.len() == certificate.len() && relation.iter().any(known)).then_some(relation)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a pair is declared when either state is",
+      "old": "            self.states.contains(left) && self.states.contains(right)",
+      "new": "            self.states.contains(left) || self.states.contains(right)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a pair is declared by its first state only",
+      "old": "            self.states.contains(left) && self.states.contains(right)",
+      "new": "            self.states.contains(left)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a pair is declared by its second state only",
+      "old": "            self.states.contains(left) && self.states.contains(right)",
+      "new": "            self.states.contains(right)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a claim of no kind is a difference",
+      "old": "        _ => return Err(\"claim kind\".to_owned()),",
+      "new": "        _ => true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "claim kind error reworded",
+      "old": "        _ => return Err(\"claim kind\".to_owned()),",
+      "new": "        _ => return Err(\"kind\".to_owned()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "difference and equivalence are swapped",
+      "old": "        Some(\"difference\") => true,\n        Some(\"equivalence\") => false,",
+      "new": "        Some(\"difference\") => false,\n        Some(\"equivalence\") => true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "claims are numbered from one",
+      "old": "    let name = |predicate: &str| format!(\"claim{number}:{predicate}\");",
+      "new": "    let name = |predicate: &str| format!(\"claim{}:{predicate}\", number + 1);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a state is declared when it names no state",
+      "old": "        named.filter(|state| system.states.contains(state))",
+      "new": "        named",
+      "outcome": "killed"
+    },
+    {
+      "name": "one declared state is enough",
+      "old": "    let ends = state(\"left\").zip(state(\"right\"));",
+      "new": "    let ends = state(\"left\").or(state(\"right\")).zip(Some(\"\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "both sides are the left one",
+      "old": "    let ends = state(\"left\").zip(state(\"right\"));",
+      "new": "    let ends = state(\"left\").zip(state(\"left\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the sides are swapped",
+      "old": "    let ends = state(\"left\").zip(state(\"right\"));",
+      "new": "    let ends = state(\"right\").zip(state(\"left\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "an undeclared state does not stop the claim",
+      "old": "    let Some((left, right)) = ends else {\n        return Ok(());\n    };",
+      "new": "    let Some((left, right)) = ends else {\n        return Err(\"undeclared\".to_owned());\n    };",
+      "outcome": "killed"
+    },
+    {
+      "name": "a witness may be absent",
+      "old": "        checks.record(&name(\"witnessed\"), witness.is_some(), claim);\n        let Some(witness) = witness else {",
+      "new": "        checks.record(&name(\"witnessed\"), true, claim);\n        let Some(witness) = witness else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an unwitnessed difference goes on",
+      "old": "        let Some(witness) = witness else {\n            return Ok(());\n        };",
+      "new": "        let Some(witness) = witness else {\n            return Err(\"no witness\".to_owned());\n        };",
+      "outcome": "killed"
+    },
+    {
+      "name": "the witness is read from another key",
+      "old": "        let witness = claim.get(\"witness\");",
+      "new": "        let witness = claim.get(\"formula\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "the formula is read at the first depth below",
+      "old": "        let holds = system.holds(&formula(witness, 0)?);",
+      "new": "        let holds = system.holds(&formula(witness, 1)?);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a formula that holds at both states separates",
+      "old": "        let separates = holds.contains(left) != holds.contains(right);",
+      "new": "        let separates = holds.contains(left) == holds.contains(right);",
+      "outcome": "killed"
+    },
+    {
+      "name": "holding at the left state is enough",
+      "old": "        let separates = holds.contains(left) != holds.contains(right);",
+      "new": "        let separates = holds.contains(left);",
+      "outcome": "killed"
+    },
+    {
+      "name": "holding at the right state is enough",
+      "old": "        let separates = holds.contains(left) != holds.contains(right);",
+      "new": "        let separates = holds.contains(right);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a formula that holds at either state separates",
+      "old": "        let separates = holds.contains(left) != holds.contains(right);",
+      "new": "        let separates = holds.contains(left) || holds.contains(right);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a certificate is read from another key",
+      "old": "    let certificate = claim.get(\"certificate\").and_then(Datum::as_list);",
+      "new": "    let certificate = claim.get(\"relation\").and_then(Datum::as_list);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a certificate may be absent",
+      "old": "    checks.record(&name(\"witnessed\"), certificate.is_some(), claim);\n    let Some(certificate)",
+      "new": "    checks.record(&name(\"witnessed\"), true, claim);\n    let Some(certificate)",
+      "outcome": "killed"
+    },
+    {
+      "name": "an uncertified equivalence goes on",
+      "old": "    let Some(certificate) = certificate else {\n        return Ok(());\n    };",
+      "new": "    let Some(certificate) = certificate else {\n        return Err(\"no certificate\".to_owned());\n    };",
+      "outcome": "killed"
+    },
+    {
+      "name": "the claimed pair need not be in the certificate",
+      "old": "        relation.contains(&(left, right)) && system.is_bisimulation(&relation)",
+      "new": "        system.is_bisimulation(&relation)",
+      "outcome": "killed"
+    },
+    {
+      "name": "the claimed pair is all that is needed",
+      "old": "        relation.contains(&(left, right)) && system.is_bisimulation(&relation)",
+      "new": "        relation.contains(&(left, right))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the claimed pair is looked up reversed",
+      "old": "        relation.contains(&(left, right)) && system.is_bisimulation(&relation)",
+      "new": "        relation.contains(&(right, left)) && system.is_bisimulation(&relation)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a certificate or a pair is enough",
+      "old": "        relation.contains(&(left, right)) && system.is_bisimulation(&relation)",
+      "new": "        relation.contains(&(left, right)) || system.is_bisimulation(&relation)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a witness error is skipped",
+      "old": "        let holds = system.holds(&formula(witness, 0)?);",
+      "new": "        let Ok(parsed) = formula(witness, 0) else {\n            return Ok(());\n        };\n        let holds = system.holds(&parsed);",
+      "outcome": "killed"
+    },
+    {
+      "name": "claims may be empty",
+      "old": "        .filter(|claims| !claims.is_empty())\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "claims error reworded",
+      "old": ".ok_or_else(|| Stop::Malformed(\"claims required\".to_owned()))?;",
+      "new": ".ok_or_else(|| Stop::Malformed(\"claims\".to_owned()))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the claim count is one more",
+      "old": "    let detail = Datum::map([(\"claims\", Datum::from(claims.len()))]);",
+      "new": "    let detail = Datum::map([(\"claims\", Datum::from(claims.len() + 1))]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "judged under another code",
+      "old": "Ok(checks.judge(\"CLAIMS_WITNESSED\", detail))",
+      "new": "Ok(checks.judge(\"CLAIMS_KEPT\", detail))",
+      "outcome": "killed"
+    }
+  ]
+}

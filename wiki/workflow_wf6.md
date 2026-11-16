@@ -4,14 +4,14 @@
 
 **Layer:** 4 · **Builds on:** [WF5](workflow_wf5.md) · **Merges into:** Sweep · **Kind:** experiment design
 
-**Code:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer4.py) (`DialectSweep`) · **Folder:** [`workflows/wf06_dialect_sweep`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf06_dialect_sweep) · **Tests:** [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
+**Check (Rust):** [`code/rust/pfp_operads/src/families/wf06.rs`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/pfp_operads/src/families/wf06.rs) · **Registry entry and fixtures:** [`pfp_core/workflow_families/layer4.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/layer4.py) (`DialectSweep`) · **Folder:** [`workflows/wf06_dialect_sweep`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/workflows/wf06_dialect_sweep) · **Tests:** [`code/rust/pfp_operads/tests/wf06.rs`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/code/rust/pfp_operads/tests/wf06.rs), [`pfp_core/workflow_families/tests/test_families.py`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/pfp_core/workflow_families/tests/test_families.py)
 
 > Pose each seed item in k query-preserving dialects and grade every reply with one checker.
 
-Items are linear systems ``A x = b``. A dialect permutes and scales rows and renames variables;
-the host checks ``decode(rho_k(s)) = q(s)`` (same rank-test status, same decoded solution) before
-anything is dispatched, then grades each capsule with the WF7 checker and reports acceptance per
-dialect, item by item. A dialect that changes the query or an incomplete sweep is refused.
+Items are linear systems ``A x = b``. A dialect permutes and scales rows and renames variables.
+The host checks that each dialect keeps the rank-test status and the decoded solution before
+anything is dispatched, then grades each reply as WF7 does and reports acceptance per dialect,
+item by item. A dialect that changes the query or an incomplete sweep is refused.
 
 ## Procedure
 
@@ -31,13 +31,14 @@ From the DAG node. The runner checks the instance described above; items it does
 
 ## Host check
 
-`dialect_query_preservation_sweep`. Only this check can certify. Proposers, detectors and adapters carry authority effect `None`; a reply is evidence for the check, never a verdict.
+`dialect_query_preservation_sweep`. Only this check can certify. Proposers, detectors and adapters carry authority effect `None`; a reply is evidence for the check, never a verdict. The Rust host runs it: `pfp_operad family` reads the task, writes the prompt, refuses a prompt that carries a sealed value and returns the verdict. Python asks the model and carries the reply back.
 
 ## Run it offline
 
-No model call and no spend. From the repository root:
+No model call and no spend. From the repository root (the first line builds the host once):
 
 ```powershell
+cargo build --release -p pfp_operads --manifest-path code/rust/Cargo.toml
 python -m pfp_core.workflow_families run WF6
 python -m pytest pfp_core/workflow_families/tests/test_families.py -q -k "WF6-"
 ```

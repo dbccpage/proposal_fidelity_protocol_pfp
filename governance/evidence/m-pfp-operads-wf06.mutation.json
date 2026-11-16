@@ -1,0 +1,683 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf06.rs",
+  "target_sha256": "15d62b1769b851ac3a09804cc6a9093047e071fa82e7dcace39bc3aed726758c",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads",
+  "counts": {
+    "killed": 111,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "capsule ceiling raised",
+      "old": "pub const MAX_CAPSULES: usize = 64;",
+      "new": "pub const MAX_CAPSULES: usize = 65;",
+      "outcome": "killed"
+    },
+    {
+      "name": "capsule ceiling lowered",
+      "old": "pub const MAX_CAPSULES: usize = 64;",
+      "new": "pub const MAX_CAPSULES: usize = 63;",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another id",
+      "old": "    workflow: \"WF6\",",
+      "new": "    workflow: \"WF60\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another name",
+      "old": "    name: \"Dialect sweep\",",
+      "new": "    name: \"Sweep\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered under another check",
+      "old": "    host_check: \"dialect_query_preservation_sweep\",",
+      "new": "    host_check: \"sweep\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "a permutation key is absent when it is not a list",
+      "old": "        .and_then(|places| places.iter().map(Datum::as_count).collect());",
+      "new": "        .and_then(|places| places.iter().filter_map(Datum::as_count).collect::<Vec<_>>().into());",
+      "outcome": "killed"
+    },
+    {
+      "name": "a permutation may repeat a place",
+      "old": "        seen.len() == places.len() && places.iter().all(|&place| place < places.len())",
+      "new": "        places.iter().all(|&place| place < places.len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "a permutation may leave its range",
+      "old": "        seen.len() == places.len() && places.iter().all(|&place| place < places.len())",
+      "new": "        seen.len() == places.len()",
+      "outcome": "killed"
+    },
+    {
+      "name": "a permutation may reach its length",
+      "old": "        seen.len() == places.len() && places.iter().all(|&place| place < places.len())",
+      "new": "        seen.len() == places.len() && places.iter().all(|&place| place <= places.len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "a permutation needs one of the two",
+      "old": "        seen.len() == places.len() && places.iter().all(|&place| place < places.len())",
+      "new": "        seen.len() == places.len() || places.iter().all(|&place| place < places.len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "permutation error reworded",
+      "old": "        .ok_or(format!(\"{key} must be a permutation\"))",
+      "new": "        .ok_or(\"permutation\".to_owned())",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing permutation is an error",
+      "old": "    let Some(listed) = dialect.get(key) else {\n        return Ok(None);\n    };\n    let places",
+      "new": "    let Some(listed) = dialect.get(key) else {\n        return Err(\"missing\".to_owned());\n    };\n    let places",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing scalar list is an error",
+      "old": "    let Some(listed) = dialect.get(key) else {\n        return Ok(None);\n    };\n    rationals(listed)",
+      "new": "    let Some(listed) = dialect.get(key) else {\n        return Err(\"missing\".to_owned());\n    };\n    rationals(listed)",
+      "outcome": "killed"
+    },
+    {
+      "name": "scalar error reworded",
+      "old": "        .ok_or(format!(\"{key} must be a list of exact rationals\"))",
+      "new": "        .ok_or(\"scalars\".to_owned())",
+      "outcome": "killed"
+    },
+    {
+      "name": "a dialect name is read from another key",
+      "old": "            .get(\"name\")",
+      "new": "            .get(\"title\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "dialect name error reworded",
+      "old": "            .ok_or(\"every dialect needs a text name\")?,",
+      "new": "            .ok_or(\"name\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "row_perm is read as col_perm",
+      "old": "        row_perm: permutation(listed, \"row_perm\")?,",
+      "new": "        row_perm: permutation(listed, \"col_perm\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "col_perm is read as row_perm",
+      "old": "        col_perm: permutation(listed, \"col_perm\")?,",
+      "new": "        col_perm: permutation(listed, \"row_perm\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "row_scale is read as b_shift",
+      "old": "        row_scale: scalars(listed, \"row_scale\")?,",
+      "new": "        row_scale: scalars(listed, \"b_shift\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "b_shift is read as row_scale",
+      "old": "        b_shift: scalars(listed, \"b_shift\")?,",
+      "new": "        b_shift: scalars(listed, \"row_scale\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "an item id is read from another key",
+      "old": "        .get(\"id\")",
+      "new": "        .get(\"name\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "item id error reworded",
+      "old": "        .ok_or(\"every item needs a text id\")?;",
+      "new": "        .ok_or(\"id\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "names repeat freely",
+      "old": "    names.into_iter().all(|name| seen.insert(name))",
+      "new": "    names.into_iter().any(|name| seen.insert(name))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a place without a permutation is the next one",
+      "old": "    listed.copied().unwrap_or(at)",
+      "new": "    listed.copied().unwrap_or(at + 1)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a place without a permutation is the first",
+      "old": "    listed.copied().unwrap_or(at)",
+      "new": "    listed.copied().unwrap_or(0)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a place is always its own",
+      "old": "    listed.copied().unwrap_or(at)",
+      "new": "    at",
+      "outcome": "killed"
+    },
+    {
+      "name": "an entry without a list is the default for the rest only",
+      "old": "    listed.cloned().unwrap_or(default)",
+      "new": "    listed.cloned().unwrap_or(Rational::zero())",
+      "outcome": "killed"
+    },
+    {
+      "name": "an entry beyond a list is the default",
+      "old": "    listed.cloned().unwrap_or(default)",
+      "new": "    listed.cloned().unwrap_or_else(Rational::one)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a dialect need not fit the rows",
+      "old": "        sized(self.row_perm.as_ref().map(Vec::len), rows)\n",
+      "new": "        sized(self.row_perm.as_ref().map(Vec::len), columns)\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "a dialect need not fit the columns",
+      "old": "            && sized(self.col_perm.as_ref().map(Vec::len), columns)\n",
+      "new": "            && sized(self.col_perm.as_ref().map(Vec::len), rows)\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "row_scale is sized against the columns",
+      "old": "            && sized(self.row_scale.as_ref().map(Vec::len), rows)\n",
+      "new": "            && sized(self.row_scale.as_ref().map(Vec::len), columns)\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "b_shift is sized against the columns",
+      "old": "            && sized(self.b_shift.as_ref().map(Vec::len), rows)\n",
+      "new": "            && sized(self.b_shift.as_ref().map(Vec::len), columns)\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "a dialect fits when any size does",
+      "old": "        sized(self.row_perm.as_ref().map(Vec::len), rows)\n            && sized",
+      "new": "        sized(self.row_perm.as_ref().map(Vec::len), rows)\n            || sized",
+      "outcome": "killed"
+    },
+    {
+      "name": "sizes may be shorter",
+      "old": "        let sized = |listed: Option<usize>, size: usize| listed.is_none_or(|length| length == size);",
+      "new": "        let sized = |listed: Option<usize>, size: usize| listed.is_none_or(|length| length <= size);",
+      "outcome": "killed"
+    },
+    {
+      "name": "an absent list does not fit",
+      "old": "        let sized = |listed: Option<usize>, size: usize| listed.is_none_or(|length| length == size);",
+      "new": "        let sized = |listed: Option<usize>, size: usize| listed.is_some_and(|length| length == size);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the default scale is zero",
+      "old": "        let scale = entry(&self.row_scale, at, Rational::one());",
+      "new": "        let scale = entry(&self.row_scale, at, Rational::zero());",
+      "outcome": "killed"
+    },
+    {
+      "name": "the default shift is one",
+      "old": "        let shift = entry(&self.b_shift, at, Rational::zero());",
+      "new": "        let shift = entry(&self.b_shift, at, Rational::one());",
+      "outcome": "killed"
+    },
+    {
+      "name": "the scale is read at the source row",
+      "old": "        let scale = entry(&self.row_scale, at, Rational::one());",
+      "new": "        let scale = entry(&self.row_scale, place(&self.row_perm, at), Rational::one());",
+      "outcome": "killed"
+    },
+    {
+      "name": "the shift is read at the source row",
+      "old": "        let shift = entry(&self.b_shift, at, Rational::zero());",
+      "new": "        let shift = entry(&self.b_shift, place(&self.row_perm, at), Rational::zero());",
+      "outcome": "killed"
+    },
+    {
+      "name": "the source row is the place itself",
+      "old": "        let source = place(&self.row_perm, at);",
+      "new": "        let source = at;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a row is read from the column order",
+      "old": "        let source = place(&self.row_perm, at);",
+      "new": "        let source = place(&self.col_perm, at);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a row beyond the item is empty and not the row itself",
+      "old": "        let row = item.rows.get(source).map_or(&[][..], Vec::as_slice);",
+      "new": "        let row = item.rows.get(at).map_or(&[][..], Vec::as_slice);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the columns are not permuted",
+      "old": "        let taken = (0..row.len()).filter_map(|column| row.get(place(&self.col_perm, column)));",
+      "new": "        let taken = (0..row.len()).filter_map(|column| row.get(column));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the columns are permuted by the row order",
+      "old": "        let taken = (0..row.len()).filter_map(|column| row.get(place(&self.col_perm, column)));",
+      "new": "        let taken = (0..row.len()).filter_map(|column| row.get(place(&self.row_perm, column)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a row is shortened",
+      "old": "        let taken = (0..row.len()).filter_map(|column| row.get(place(&self.col_perm, column)));",
+      "new": "        let taken = (0..row.len().saturating_sub(1)).filter_map(|column| row.get(place(&self.col_perm, column)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the bound of another row is taken",
+      "old": "        let bound = item.right.get(source).cloned().unwrap_or_default();",
+      "new": "        let bound = item.right.get(at).cloned().unwrap_or_default();",
+      "outcome": "killed"
+    },
+    {
+      "name": "the entries are not scaled",
+      "old": "            taken.map(|entry| &scale * entry).collect(),",
+      "new": "            taken.cloned().collect(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the entries are shifted",
+      "old": "            taken.map(|entry| &scale * entry).collect(),",
+      "new": "            taken.map(|entry| &scale * entry + &shift).collect(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the bound is not scaled",
+      "old": "            scale * bound + shift,",
+      "new": "            bound + shift,",
+      "outcome": "killed"
+    },
+    {
+      "name": "the bound is not shifted",
+      "old": "            scale * bound + shift,",
+      "new": "            scale * bound,",
+      "outcome": "killed"
+    },
+    {
+      "name": "the shift is scaled",
+      "old": "            scale * bound + shift,",
+      "new": "            scale * (bound + shift),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the shift is subtracted",
+      "old": "            scale * bound + shift,",
+      "new": "            scale * bound - shift,",
+      "outcome": "killed"
+    },
+    {
+      "name": "the solution is not decoded",
+      "old": "            Solvability::Unique(solution) => Solvability::Unique(self.decoded(solution)),",
+      "new": "            Solvability::Unique(solution) => Solvability::Unique(solution),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the solution is decoded by the row order",
+      "old": "        for (column, value) in solution.into_iter().enumerate() {\n            if let Some(slot) = decoded.get_mut(place(&self.col_perm, column)) {",
+      "new": "        for (column, value) in solution.into_iter().enumerate() {\n            if let Some(slot) = decoded.get_mut(place(&self.row_perm, column)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the solution is decoded backwards",
+      "old": "            if let Some(slot) = decoded.get_mut(place(&self.col_perm, column)) {\n                *slot = value;",
+      "new": "            if let Some(slot) = decoded.get_mut(column) {\n                *slot = value;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the decoded solution is empty",
+      "old": "        let mut decoded = vec![Rational::zero(); solution.len()];",
+      "new": "        let mut decoded = vec![Rational::zero(); 0];",
+      "outcome": "killed"
+    },
+    {
+      "name": "the query is kept when it changes",
+      "old": "            kept: posed == seed,",
+      "new": "            kept: posed != seed,",
+      "outcome": "killed"
+    },
+    {
+      "name": "the query is always kept",
+      "old": "            kept: posed == seed,",
+      "new": "            kept: true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "the seed is the rewritten system",
+      "old": "        let seed = classify_linear(&item.rows, &item.right).solvability;",
+      "new": "        let seed = classify_linear(&rows, &right).solvability;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the statement is read from another key",
+      "old": "        .get(\"statement\")",
+      "new": "        .get(\"question\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "statement error reworded",
+      "old": "        .ok_or(\"statement must be text\")?;",
+      "new": "        .ok_or(\"statement\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty list is allowed",
+      "old": "        list.filter(|list| !list.is_empty())",
+      "new": "        list",
+      "outcome": "killed"
+    },
+    {
+      "name": "listed error reworded",
+      "old": "            .ok_or(format!(\"{key} required\"))",
+      "new": "            .ok_or(\"required\".to_owned())",
+      "outcome": "killed"
+    },
+    {
+      "name": "items are read from the dialects",
+      "old": "    let items: Vec<Item> = listed(\"items\")?",
+      "new": "    let items: Vec<Item> = listed(\"dialects\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "dialects are read from the items",
+      "old": "    let dialects: Vec<Dialect> = listed(\"dialects\")?",
+      "new": "    let dialects: Vec<Dialect> = listed(\"items\")?",
+      "outcome": "killed"
+    },
+    {
+      "name": "item ids may repeat",
+      "old": "    if !distinct(items.iter().map(|item| item.id)) {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "dialect names may repeat",
+      "old": "    if !distinct(dialects.iter().map(|dialect| dialect.name)) {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "ids and names are compared the wrong way",
+      "old": "    if !distinct(items.iter().map(|item| item.id)) {",
+      "new": "    if distinct(items.iter().map(|item| item.id)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the ceiling is excluded",
+      "old": "    if items.len().saturating_mul(dialects.len()) > MAX_CAPSULES {",
+      "new": "    if items.len().saturating_mul(dialects.len()) >= MAX_CAPSULES {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the ceiling counts items only",
+      "old": "    if items.len().saturating_mul(dialects.len()) > MAX_CAPSULES {",
+      "new": "    if items.len() > MAX_CAPSULES {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the ceiling counts a sum",
+      "old": "    if items.len().saturating_mul(dialects.len()) > MAX_CAPSULES {",
+      "new": "    if items.len().saturating_add(dialects.len()) > MAX_CAPSULES {",
+      "outcome": "killed"
+    },
+    {
+      "name": "ceiling error reworded",
+      "old": "        return Err(format!(\"at most {MAX_CAPSULES} questions\"));",
+      "new": "        return Err(\"ceiling\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "one item fitting is enough",
+      "old": "    let fit = items.iter().all(|item| {",
+      "new": "    let fit = items.iter().any(|item| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "one dialect fitting is enough",
+      "old": "        dialects.iter().all(fits)",
+      "new": "        dialects.iter().any(fits)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a dialect fits the rows as columns",
+      "old": "        let fits = |dialect: &Dialect| dialect.fits(item.rows.len(), columns);",
+      "new": "        let fits = |dialect: &Dialect| dialect.fits(columns, item.rows.len());",
+      "outcome": "killed"
+    },
+    {
+      "name": "fit error reworded",
+      "old": "        return Err(\"every dialect must fit the rows and columns of every item\".to_owned());",
+      "new": "        return Err(\"fit\".to_owned());",
+      "outcome": "killed"
+    },
+    {
+      "name": "a whole share is written as text",
+      "old": "    if value.is_integer() {\n        Datum::Int(value.numer().clone())",
+      "new": "    if false {\n        Datum::Int(value.numer().clone())",
+      "outcome": "killed"
+    },
+    {
+      "name": "a fraction is written upside down",
+      "old": "        Datum::text(format!(\"{}/{}\", value.numer(), value.denom()))",
+      "new": "        Datum::text(format!(\"{}/{}\", value.denom(), value.numer()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a pair is written dialect first",
+      "old": "    Datum::List(vec![Datum::from(item), Datum::from(dialect)])",
+      "new": "    Datum::List(vec![Datum::from(dialect), Datum::from(item)])",
+      "outcome": "killed"
+    },
+    {
+      "name": "a reply is accepted when WF7 refuses it",
+      "old": "    graded.is_ok_and(|verdict| [CERTIFIED, TYPED_REFUSAL].contains(&verdict.verdict))",
+      "new": "    graded.is_ok_and(|verdict| [CERTIFIED].contains(&verdict.verdict))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a typed refusal is not accepted",
+      "old": "    graded.is_ok_and(|verdict| [CERTIFIED, TYPED_REFUSAL].contains(&verdict.verdict))",
+      "new": "    graded.is_ok_and(|verdict| [TYPED_REFUSAL].contains(&verdict.verdict))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a malformed reply is accepted",
+      "old": "    graded.is_ok_and(|verdict| [CERTIFIED, TYPED_REFUSAL].contains(&verdict.verdict))",
+      "new": "    graded.map_or(true, |verdict| [CERTIFIED, TYPED_REFUSAL].contains(&verdict.verdict))",
+      "outcome": "killed"
+    },
+    {
+      "name": "every verdict is accepted",
+      "old": "    graded.is_ok_and(|verdict| [CERTIFIED, TYPED_REFUSAL].contains(&verdict.verdict))",
+      "new": "    graded.is_ok()",
+      "outcome": "killed"
+    },
+    {
+      "name": "a pose is cut from the dialect before asking",
+      "old": "    let capsules: Vec<Vec<Capsule>> = sweep.items.iter().map(posed).collect();",
+      "new": "    let capsules: Vec<Vec<Capsule>> = sweep.items.iter().take(1).map(posed).collect();",
+      "outcome": "killed"
+    },
+    {
+      "name": "broken pairs are those that are kept",
+      "old": "        .filter(|(_, _, capsule)| !capsule.kept)",
+      "new": "        .filter(|(_, _, capsule)| capsule.kept)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a broken dialect is not recorded",
+      "old": "        broken == Datum::List(Vec::new()),",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "dialects_preserve_query records the wrong list",
+      "old": "        &broken,\n    ) {",
+      "new": "        &Datum::Null,\n    ) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a broken dialect has another code",
+      "old": "            \"DIALECT_CHANGES_QUERY\",",
+      "new": "            \"BROKEN\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "the broken list is not detailed",
+      "old": "            Datum::map([(\"broken\", broken)]),",
+      "new": "            Datum::map([(\"broken\", Datum::List(Vec::new()))]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the matrix is written as scaled but not rows",
+      "old": "        let matrix = matrix.map(|row| Datum::List(row.iter().map(plain).collect()));",
+      "new": "        let matrix = matrix.map(|row| Datum::List(row.iter().rev().map(plain).collect()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the right-hand side is written reversed",
+      "old": "            (\"b\", Datum::List(capsule.right.iter().map(plain).collect())),",
+      "new": "            (\"b\", Datum::List(capsule.right.iter().rev().map(plain).collect())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the prompt is the system alone",
+      "old": "        let prompt = format!(\"{}\\n{}\", sweep.statement, system.canonical());",
+      "new": "        let prompt = system.canonical();",
+      "outcome": "killed"
+    },
+    {
+      "name": "the prompt has the statement last",
+      "old": "        let prompt = format!(\"{}\\n{}\", sweep.statement, system.canonical());",
+      "new": "        let prompt = format!(\"{}\\n{}\", system.canonical(), sweep.statement);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the stage is the dialect first",
+      "old": "        let reply = run.ask(&format!(\"{item}:{dialect}\"), prompt)?;",
+      "new": "        let reply = run.ask(&format!(\"{dialect}:{item}\"), prompt)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing reply is graded wrong",
+      "old": "        grades.push((item, dialect, reply.map(|reply| accepted(&system, reply))));",
+      "new": "        grades.push((item, dialect, Some(reply.is_some_and(|reply| accepted(&system, reply)))));",
+      "outcome": "killed"
+    },
+    {
+      "name": "every reply is accepted",
+      "old": "        grades.push((item, dialect, reply.map(|reply| accepted(&system, reply))));",
+      "new": "        grades.push((item, dialect, reply.map(|_| true)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "every reply is graded wrong",
+      "old": "        grades.push((item, dialect, reply.map(|reply| accepted(&system, reply))));",
+      "new": "        grades.push((item, dialect, reply.map(|reply| !accepted(&system, reply))));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the replies that are present are missing",
+      "old": "    let missing = grades.iter().filter(|(_, _, grade)| grade.is_none());",
+      "new": "    let missing = grades.iter().filter(|(_, _, grade)| grade.is_some());",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing reply does not refuse",
+      "old": "        missing == Datum::List(Vec::new()),",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "an incomplete sweep has another code",
+      "old": "            \"INCOMPLETE_SWEEP\",",
+      "new": "            \"INCOMPLETE\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "the missing list is not detailed",
+      "old": "            Datum::map([(\"missing\", missing)]),",
+      "new": "            Datum::map([(\"missing\", Datum::List(Vec::new()))]),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a grade is looked up by the wrong dialect",
+      "old": "        let found = grades.iter().find(|(i, d, _)| *i == item && *d == dialect);",
+      "new": "        let found = grades.iter().find(|(i, _, _)| *i == item);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a grade is looked up by the wrong item",
+      "old": "        let found = grades.iter().find(|(i, d, _)| *i == item && *d == dialect);",
+      "new": "        let found = grades.iter().find(|(_, d, _)| *d == dialect);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a grade is the opposite",
+      "old": "        found.and_then(|(_, _, grade)| *grade) == Some(true)",
+      "new": "        found.and_then(|(_, _, grade)| *grade) == Some(false)",
+      "outcome": "killed"
+    },
+    {
+      "name": "the share is over the dialects",
+      "old": "        let share = Rational::new(BigInt::from(hits.count()), BigInt::from(sweep.items.len()));",
+      "new": "        let share = Rational::new(BigInt::from(hits.count()), BigInt::from(sweep.dialects.len()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the share is of the items missed",
+      "old": "            .filter(|item| grade(item.id, dialect.name));",
+      "new": "            .filter(|item| !grade(item.id, dialect.name));",
+      "outcome": "killed"
+    },
+    {
+      "name": "the first dialect is the last",
+      "old": "    let first = sweep.dialects.first().map_or(\"\", |dialect| dialect.name);",
+      "new": "    let first = sweep.dialects.last().map_or(\"\", |dialect| dialect.name);",
+      "outcome": "killed"
+    },
+    {
+      "name": "the first dialect is compared with itself",
+      "old": "        let later = sweep.dialects.iter().skip(1);",
+      "new": "        let later = sweep.dialects.iter();",
+      "outcome": "killed"
+    },
+    {
+      "name": "the second dialect is skipped",
+      "old": "        let later = sweep.dialects.iter().skip(1);",
+      "new": "        let later = sweep.dialects.iter().skip(2);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a flip is a grade that agrees",
+      "old": "            later.filter(move |dialect| grade(item.id, dialect.name) != grade(item.id, first));",
+      "new": "            later.filter(move |dialect| grade(item.id, dialect.name) == grade(item.id, first));",
+      "outcome": "killed"
+    },
+    {
+      "name": "judged under another code",
+      "old": "Ok(checks.judge(\"SWEEP_GRADED\", detail))",
+      "new": "Ok(checks.judge(\"SWEEP_KEPT\", detail))",
+      "outcome": "killed"
+    }
+  ]
+}
