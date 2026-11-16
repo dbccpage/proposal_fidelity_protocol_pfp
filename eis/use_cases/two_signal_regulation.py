@@ -15,12 +15,14 @@ or paid API calls are referenced or accessed.
 from __future__ import annotations
 
 import hmac
+import importlib.util
 import json
 import re
 import secrets
 from collections.abc import Sequence
 from dataclasses import dataclass, replace
 from datetime import datetime
+from pathlib import Path
 
 # Domain imports
 from eis.domain.danger_signals import (
@@ -52,14 +54,37 @@ from eis.domain.value_objects import (
     Signal2Danger,
 )
 
-# Benchmark wire normalizer
 try:
-    from dag.benchmark import charpoly_wire
+    from dag.benchmark import charpoly_wire as _dag_charpoly_wire
 except ImportError:
-    try:
-        import charpoly_wire
-    except ImportError:
-        charpoly_wire = None  # type: ignore[assignment]
+    _dag_charpoly_wire = None
+
+
+def _load_charpoly_wire():
+    """Load the shipped wire normalizer.
+
+    The old ``dag.benchmark`` path is absent in this checkout. The WF52 module
+    is loaded by file path so a missing package init does not drop normalization.
+    """
+    if _dag_charpoly_wire is not None:
+        return _dag_charpoly_wire
+    source = (
+        Path(__file__).resolve().parents[2]
+        / "workflows"
+        / "wf52_finite_qm_benchmark"
+        / "charpoly_wire.py"
+    )
+    if not source.is_file():
+        return None
+    spec = importlib.util.spec_from_file_location("_pfp_charpoly_wire", source)
+    if spec is None or spec.loader is None:
+        return None
+    loaded = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(loaded)
+    return loaded
+
+
+charpoly_wire = _load_charpoly_wire()
 
 
 # ============================================================================

@@ -87,7 +87,7 @@ def _run_lean(source: str, theorem: str, timeout_seconds: int) -> tuple[bool, tu
             env = {k: os.environ[k] for k in ("SystemRoot", "WINDIR") if k in os.environ}
             env.update(HOME=scratch, USERPROFILE=scratch, TEMP=scratch, TMP=scratch,
                        TMPDIR=scratch, PATH=str(binary.parent), LEAN_PATH="")
-            proc = subprocess.run(
+            proc = subprocess.run(  # noqa: S603
                 [str(binary), src_path.name], cwd=scratch, env=env, stdin=subprocess.DEVNULL,
                 capture_output=True, text=True, encoding="utf-8", errors="strict",
                 timeout=timeout_seconds, check=False,
@@ -289,8 +289,10 @@ class Tier2FalsificationReportV1:
         object.__setattr__(self, "withheld_without_replay", withheld)
         if kf + kt + kp + len(surv) + len(withheld) != t1:
             raise ValueError(
-                f"TIER2_CONSERVATION_ERROR: killed_by_falsifier({kf}) + killed_by_thymus({kt}) + "
-                f"killed_by_pciv_bloat({kp}) + survivors({len(surv)}) + withheld({len(withheld)}) != tier1_input_count({t1})"
+                "TIER2_CONSERVATION_ERROR: "
+                f"killed_by_falsifier({kf}) + killed_by_thymus({kt}) + "
+                f"killed_by_pciv_bloat({kp}) + survivors({len(surv)}) + "
+                f"withheld({len(withheld)}) != tier1_input_count({t1})"
             )
         _require_exact_int(self.total_generated_before_quotient, "total_generated_before_quotient", minimum=0)
         object.__setattr__(self, "verified_lean4_proposals", tuple(self.verified_lean4_proposals))
@@ -1112,7 +1114,10 @@ def route_tier3_fable_derivations(
             dag_node_id=None,
             dag_derivation_path=None,
             atlas_claim_id=None,
-            prose_summary="The supplied sum-list operation agrees with the Rust judge and the Lean sum on four integer fixtures. AuthorityEffect: None.",
+            prose_summary=(
+                "The supplied sum-list operation agrees with the Rust judge "
+                "and the Lean sum on four integer fixtures. AuthorityEffect: None."
+            ),
         ))
     return tuple(packets)
 

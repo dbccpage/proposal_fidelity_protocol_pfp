@@ -6,7 +6,8 @@ from dataclasses import replace
 from fractions import Fraction
 
 import pytest
-import torch
+
+torch = pytest.importorskip("torch")
 
 from eis.domain.value_objects import DetectorRule
 from pciv.domain.causal_witness import seal_causal_witness

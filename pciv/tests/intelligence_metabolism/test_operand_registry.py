@@ -35,11 +35,7 @@ def filter_promoted_operands(
 
 def test_operand_registry_loading_and_promotion_filter():
     repo_root = Path(__file__).resolve().parents[3]
-    primary_path = repo_root / ".agents" / "skill_operads" / "operand_registry.json"
-    legacy_path = (
-        repo_root / "operations" / "skill_operad" / "json" / "operand_registry.json"
-    )
-    registry_path = primary_path if primary_path.is_file() else legacy_path
+    registry_path = repo_root / "ops" / "operations" / "skill_operad" / "json" / "operand_registry.json"
     assert registry_path.is_file(), f"registry missing at {registry_path}"
 
     data = json.loads(registry_path.read_text(encoding="utf-8"))

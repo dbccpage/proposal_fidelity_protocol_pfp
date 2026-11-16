@@ -44,6 +44,22 @@ from typing import Any
 import pytest
 
 _REPO_ROOT = Path(__file__).resolve().parents[1]
+# Parent of the commit that removed the education curriculum tree from this checkout.
+_EDU_TREE_REMOVAL = "0aa967c4dfa285495b47da3e15f48575d6980fbf"
+
+
+def _education_blob_text(relative: str) -> str:
+    """Return a curriculum file from the commit before it left this worktree."""
+    assert not (_REPO_ROOT / relative).exists()
+    return subprocess.check_output(
+        ["git", "cat-file", "blob", f"{_EDU_TREE_REMOVAL}^:{relative}"],
+        cwd=_REPO_ROOT,
+        text=True,
+        encoding="utf-8",
+        errors="strict",
+    )
+
+
 _PFP009_ROOT = (
     _REPO_ROOT
     / "atlas"
@@ -417,9 +433,9 @@ class TestTerminalizerPolicyHeaderCustody:
         v01_review = json.loads(
             (_PFP009_ROOT / "docs" / "v01_review_2026_10_02.json").read_text(encoding="utf-8")
         )
-        curriculum_lines = (
-            _REPO_ROOT / "education" / "004_oepfp" / "levels" / "meta_03_symbol_game_proof_ledger.md"
-        ).read_text(encoding="utf-8").splitlines()
+        curriculum_lines = _education_blob_text(
+            "education/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md"
+        ).splitlines()
         lean_readme_lines = (_REPO_ROOT / "lean4" / "README.md").read_text(encoding="utf-8").splitlines()
 
         assert "52cb5457f6c485ba548cfd292f6012a941ed22cf" in paper_lines[107]

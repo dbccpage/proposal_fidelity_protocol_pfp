@@ -16,5 +16,6 @@ lean_lib «SymbolGameKernel» where
     `TypedPacketShadow,
     `FidelityAdequacy,
     `LiftPatchSemantics,
-    `OperationTreeFold
+    `OperationTreeFold,
+    `FunnelCompressionClosure
   ]

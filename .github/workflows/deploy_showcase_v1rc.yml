@@ -1,0 +1,104 @@
+name: deploy showcase v1rc
+
+on:
+  push:
+    branches: [main]
+    tags: ["v1.0.0-rc1"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  guest-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble the static guest bundle
+        run: |
+          mkdir -p _site
+          cp pfp_lab/web/static/index.html pfp_lab/web/static/app.js pfp_lab/web/static/app.css _site/
+          cp docs/GUEST_SHOWCASE_V1RC.md _site/GUEST_SHOWCASE_V1RC.md
+          (cd _site && sha256sum index.html app.js app.css GUEST_SHOWCASE_V1RC.md > SHA256SUMS)
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - uses: actions/upload-artifact@v4
+        with:
+          name: guest-site
+          path: _site
+
+  pfp-cli:
+    if: github.ref == 'refs/tags/v1.0.0-rc1'
+    name: pfp (${{ matrix.target }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - { os: ubuntu-latest, target: x86_64-unknown-linux-musl, exe: pfp }
+          - { os: macos-latest, target: aarch64-apple-darwin, exe: pfp }
+          - { os: macos-latest, target: x86_64-apple-darwin, exe: pfp }
+          - { os: windows-latest, target: x86_64-pc-windows-msvc, exe: pfp.exe }
+    defaults:
+      run:
+        shell: bash
+        working-directory: code/rust/pfp_cli
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            code/rust/pfp_cli
+            code/rust/core_prompt_civilization
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+      - if: matrix.target == 'x86_64-unknown-linux-musl'
+        run: sudo apt-get update && sudo apt-get install -y musl-tools
+      - run: cargo build --locked --release --target ${{ matrix.target }}
+      - name: Package
+        run: |
+          name="pfp-v1.0.0-rc1-${{ matrix.target }}"
+          mkdir "$name"
+          cp "target/${{ matrix.target }}/release/${{ matrix.exe }}" README.md ../../../LICENSE "$name/"
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            7z a "$name.zip" "$name" >/dev/null && echo "ASSET=$name.zip" >> "$GITHUB_ENV"
+          else
+            tar czf "$name.tar.gz" "$name" && echo "ASSET=$name.tar.gz" >> "$GITHUB_ENV"
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.target }}
+          path: code/rust/pfp_cli/${{ env.ASSET }}
+
+  release-binaries:
+    if: github.ref == 'refs/tags/v1.0.0-rc1'
+    needs: pfp-cli
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - run: cd dist && sha256sum * > SHA256SUMS
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/* --draft --repo "$GITHUB_REPOSITORY" --title "omegaengine_pfp_v1.0rc" --notes "Guest CLI binaries for tag v1.0.0-rc1. Verify downloads against SHA256SUMS. AuthorityEffect: None."
+
+  deploy:
+    needs: guest-site
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

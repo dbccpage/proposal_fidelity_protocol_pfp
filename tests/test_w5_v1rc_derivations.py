@@ -121,12 +121,15 @@ def _load_module(name: str, path: Path) -> Any:
 
 
 def _lake_exe() -> str:
+    """Return the Elan shim. The toolchain `lake` rejects the `+` selector."""
+    home = Path.home() / ".elan" / "bin"
+    for name in ("lake.exe", "lake"):
+        candidate = home / name
+        if candidate.is_file():
+            return str(candidate)
     found = shutil.which("lake")
-    if found:
-        return found
-    elan_lake = Path.home() / ".elan/bin/lake"
-    assert elan_lake.is_file(), "lake executable not found"
-    return str(elan_lake)
+    assert found, "lake executable not found"
+    return found
 
 
 def _hex64(tag: str) -> str:
@@ -842,6 +845,7 @@ def test_p019_006_to_009_not_run_report_offline_replay_and_nonclaims(tmp_path: P
     nx_shim.mkdir()
     (nx_shim / "networkx.py").write_text("class DiGraph: pass\nclass Graph: pass\n", encoding="utf-8")
     deps = sorted({p for p in [*site.getsitepackages(), site.getusersitepackages(), str(nx_shim)] if Path(p).is_dir()})
+    # Deflate envelopes differ across zlib builds. validate still checks member hashes.
     child_script = (
         "import json, pathlib, runpy, sys\n"
         "pkg = pathlib.Path(sys.argv[1])\n"
