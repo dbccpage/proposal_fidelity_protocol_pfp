@@ -1,8 +1,8 @@
-# Build Task: Implement EIS Caller Feedback Loop in Omega Engine (`anomalon` / `omega_engine`)
+# Build Task: Implement the EIS Caller Feedback Loop in the Core Engine
 
 AuthorityEffect: None.
 
-Implement today, not as research or design exploration. Port the working EIS caller-feedback architecture built in `proposal_fidelity_protocol_pfp` (branch `feat/eis-caller-feedback-loop`, PR link attached by caller) directly into `omega_engine`, starting with the failing integration test suite, implementing Steps 1-7, building Rust crates with `cargo build -j 1`, and returning all suites green.
+Implement today, not as research or design exploration. Port the working EIS caller-feedback architecture built in `proposal_fidelity_protocol_pfp` (branch `feat/eis-caller-feedback-loop`, PR link attached by caller) directly into the core engine, starting with the failing integration test suite, implementing Steps 1-7, building Rust crates with `cargo build -j 1`, and returning all suites green.
 
 ## Non-Negotiable Constraints
 1. Preserve `AuthorityEffect: None` across all new models, receipts, stores, and gates.
@@ -11,13 +11,13 @@ Implement today, not as research or design exploration. Port the working EIS cal
 4. Do not build a second pharmacy store beside `eis/antibodies/` (`oeeis`) and `AntibodyRegistry`. All callers read/write the shared catalog + projection store + JSONL Lamarckian lineage ledger resolved from one root.
 5. Claim hygiene: never use unhedged hype words (`proves`, `guarantees`, `mathematically verifies`, `fundamentally`, `true intelligence`, `impossible`, `universal`, `flawless`, `perfectly`, `clearly`, `obviously`, `simply`, `merely`, `weaponized`) in code, tests, docs, or summaries.
 
-## Estate Mapping (`proposal_fidelity_protocol_pfp` -> `omega_engine`)
-Locate the corresponding packages in `omega_engine` before editing:
+## Estate Mapping (`proposal_fidelity_protocol_pfp` -> the core engine)
+Locate the corresponding packages in the core engine before editing:
 - `pfp_core/immunity.py`, `pfp_core/caller_feedback.py` -> core PFP immunity & shared caller-feedback boundary (`screen_caller_turn`, `BoundImmuneStoreV1`, `CallerLineageContextV1`, `ImmuneScreenRequestV1`, `ImmuneScreenVerdictV1`, `ThymusScreenReceiptV1`, `screen_antibody_with_thymus`, `promote_antibody_scope`).
-- `eis/domain/*`, `eis/use_cases/antibody_admission.py` -> `omega_engine` EIS / `oeeis` pharmacy domain and admission use case (`pharmacy_models.py`, `pharmacy_catalog.py`, `pharmacy_seeder.py`, `antibody_admission.py`).
-- `pciv/domain/*`, `pciv/use_cases/*` -> `omega_engine` Prompt Civilization / `prompt_civ` domain & use cases (`models.py`, `society.py`, `lamarckian.py`, `custody.py`, `immunity.py`, `lamarckian_loop.py`).
+- `eis/domain/*`, `eis/use_cases/antibody_admission.py` -> the core engine EIS / `oeeis` pharmacy domain and admission use case (`pharmacy_models.py`, `pharmacy_catalog.py`, `pharmacy_seeder.py`, `antibody_admission.py`).
+- `pciv/domain/*`, `pciv/use_cases/*` -> the core engine Prompt Civilization / `prompt_civ` domain & use cases (`models.py`, `society.py`, `lamarckian.py`, `custody.py`, `immunity.py`, `lamarckian_loop.py`).
 - `pfp/infrastructure/task_turn.py` -> single-seat / wild turn facade (`complete_task_turn`).
-- `ops/adversary/use_cases/act_helpers.py`, `ops/adversary/use_cases/bout_service.py`, `ops/adversary/roles/scenes.yaml` -> Woland / adversary swarm 7-act bout Act III sieve (`execute_act3_epistemic_sieve`, `execute_7act_adversary_bout`, `_act_sandbox`, `AdversarySwarmService`, `create_adversary_circuit_runner`).
+- `ops/adversary/use_cases/act_helpers.py`, `ops/adversary/use_cases/bout_service.py`, `ops/adversary/roles/scenes.yaml` -> adversary swarm 7-act bout Act III sieve (`execute_act3_epistemic_sieve`, `execute_7act_adversary_bout`, `_act_sandbox`, `AdversarySwarmService`, `create_adversary_circuit_runner`).
 
 ## Phase 0: Red-First Integration Suite
 Author `tests/integration/test_eis_caller_feedback_loop.py` (5 tests) FIRST and run it in RED state against the current tree before production edits:
@@ -83,7 +83,7 @@ Author `tests/integration/test_eis_caller_feedback_loop.py` (5 tests) FIRST and 
 - Extend `complete_task_turn` to accept `immune_store=None`, `lineage=None`, `model_id=None`, `scaffold_digest="task_turn_v1"`, `precedent_set_digest="none"`.
 - Build/bind `CallerLineageContextV1` via `ensure_caller_prompt_genome` when `lineage is None`, construct `host_danger` on host judge failure, call `screen_caller_turn(...)`, record reproduced failure into `store` if host failed and `not store.read_only`, and refuse with `PfpTurnRefusal` carrying `checked["immune_verdict"]` when disposition is `HOLD_OR_REPAIR` or host check failed.
 
-### Step 6: Adversary Swarm Act III Sieve & Bout Wiring (`ops/adversary` / `woland`)
+### Step 6: Adversary Swarm Act III Sieve & Bout Wiring (`ops/adversary`)
 - Replace synthetic "PASS if any candidate exists" in `execute_act3_epistemic_sieve` with `Act3SieveResultV1`:
   - Calls module-level `screen_caller_turn` when `immune_store is not None` for each candidate, using `host_danger_probe` for Signal 2.
   - Holds candidates with disposition `"HOLD_OR_REPAIR"`, writes `CemeteryHeadstoneV1`, records reproduced failure when host danger fired on a writable store.

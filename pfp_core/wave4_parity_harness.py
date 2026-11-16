@@ -1,4 +1,4 @@
-"""Wave 4 head-to-head parity harness for PFP vs. Anomalon EIS caller feedback.
+"""Wave 4 head-to-head parity harness for PFP vs. the core engine EIS caller feedback.
 
 Runs four deterministic offline probes against bounded synthetic packets and
 compares the emitted metric vectors against an external target repository once
@@ -546,7 +546,8 @@ _REMOTE_PROBE_SNIPPET = (
     "import importlib, importlib.util, json, os, pathlib, sys\n"
     "target_root = pathlib.Path(os.environ['PFP_WAVE4_TARGET_ROOT']).resolve()\n"
     "errors = []\n"
-    "for mod_name in ('pfp_core.wave4_parity_harness', 'omega_engine.wave4_parity_harness'):\n"
+    "packages = ['pfp_core'] + [p for p in [os.environ.get('PFP_WAVE4_TARGET_PACKAGE', '')] if p]\n"
+    "for mod_name in [f'{p}.wave4_parity_harness' for p in packages]:\n"
     "    try:\n"
     "        mod = importlib.import_module(mod_name)\n"
     "        mod_file = pathlib.Path(getattr(mod, '__file__', '')).resolve()\n"
@@ -555,7 +556,7 @@ _REMOTE_PROBE_SNIPPET = (
     "            sys.exit(0)\n"
     "    except ImportError as exc:\n"
     "        errors.append(f'{mod_name}:{exc}')\n"
-    "for cf_name in ('pfp_core.caller_feedback', 'omega_engine.caller_feedback'):\n"
+    "for cf_name in [f'{p}.caller_feedback' for p in packages]:\n"
     "    try:\n"
     "        cf_mod = importlib.import_module(cf_name)\n"
     "        cf_file = pathlib.Path(getattr(cf_mod, '__file__', '')).resolve()\n"
@@ -582,7 +583,11 @@ def compare_against_repo(
     *,
     python_executable: str | None = None,
 ) -> dict[str, Any]:
-    """Compare local Wave 4 metrics against another repo checkout once its seam lands."""
+    """Compare local Wave 4 metrics against another repo checkout once its seam lands.
+
+    The probe looks for ``pfp_core`` in the target checkout, then for the package
+    named by ``PFP_WAVE4_TARGET_PACKAGE`` when that variable is set.
+    """
     pfp_report = run_local_wave4_probe()
     repo_path = Path(target_repo)
     if not repo_path.is_dir():

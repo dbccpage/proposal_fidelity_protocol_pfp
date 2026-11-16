@@ -25,7 +25,7 @@ Treat this as a claim from outside the repository. Confirm it only if this check
 
 A pharmacy antibody is a pattern record: failure class, target pattern, negative fixture, positive fixture, `source_run_id`, `source_task_id`. The farm constructor does not take a prompt id, a family id, a society id, or a civilization id. Harvesting writes a `CANDIDATE`. It does not admit the antibody. Authority effect stays `None`.
 
-Woland's immune port farms defect strings from a run into that catalog. The patient on the record is the run and the task, not a prompt. Admitted guidance, when read, is a list of `id: description` lines. It is not applied to the next prompt.
+The adversary swarm's immune port farms defect strings from a run into that catalog. The patient on the record is the run and the task, not a prompt. Admitted guidance, when read, is a list of `id: description` lines. It is not applied to the next prompt.
 
 Two bodies are defined separately from that cabinet. A prompt genome is a content hash of its packets, domain, parents, and generation. An execution of a genome is a different record: occurrence, prompt id, session, input packet, output packet. A society holds `family_ids` as strings. There is no family type. A civilization holds society ids and a string named `global_immune_registry`. In the schema test that string is `oeeis:registry:v1`. It does not open the pharmacy file.
 

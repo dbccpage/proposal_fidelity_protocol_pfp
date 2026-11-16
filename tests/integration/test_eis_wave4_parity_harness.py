@@ -95,7 +95,7 @@ def test_wave4_vector_comparison_detects_match_mismatch_and_unready_target(
     assert mismatched["parity_status"] == "MISMATCH"
     assert any("clean_panel_false_positives" in item for item in mismatched["mismatches"])
 
-    empty_repo = tmp_path / "unready_anomalon"
+    empty_repo = tmp_path / "unready_target"
     empty_repo.mkdir()
     unready = compare_against_repo(empty_repo)
     assert unready["parity_status"] == "TARGET_NOT_READY"

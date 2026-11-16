@@ -1,4 +1,4 @@
-# EIS Feedback Into the Calling Swarm: Implementation Study & PFP <-> Anomalon Roadmap
+# EIS Feedback Into the Calling Swarm: Implementation Study and Core Engine Roadmap
 
 AuthorityEffect: None.
 
@@ -36,9 +36,9 @@ PR #134 (`feat/eis-caller-feedback-loop`, commit `6b20865053f2175f685ab1488655d5
 10. **What happens to a detector that fires on healthy prompts?**
     Both admission (`admit_antibody_by_operator` / `publish_admission`) and load-time scoping (`BoundImmuneStoreV1.antibodies_for_scope` and `promote_antibody_scope`) run `screen_antibody_with_thymus` (`pfp_core/caller_feedback.py`). Any match against `self_panel` retires the record (`PharmacyStatus.RETIRED`), revokes it in `GlobalCustodyRegistryV1`, and excludes it before screening a caller.
 
-## 3. PFP <-> Anomalon (`omega_engine`) Development & Matching Roadmap
+## 3. PFP and Core Engine Development & Matching Roadmap
 
-To keep `proposal_fidelity_protocol_pfp` and `anomalon/omega_engine` synchronized for head-to-head comparison once `omega_engine` finishes porting PR #134 (via `docs/prompts/omega_engine_eis_caller_feedback_implementation_prompt.md`):
+To keep `proposal_fidelity_protocol_pfp` and the private engine repository synchronized for head-to-head comparison once the core engine finishes porting PR #134 (via `docs/prompts/core_engine_eis_caller_feedback_implementation_prompt.md`):
 
 ### Wave 1 — Parity Lock on Shared Caller Feedback (PR #134 Baseline)
 - **Scope**: Shared `screen_caller_turn` across wild single-seat turns and Act III swarm sieves; byte-bound `LearningEvidencePreimageV1`; operator-gated `admit_antibody_by_operator`; bounded hop `1..10` Lamarckian inheritance and `verify_lineage_cure`.
@@ -46,13 +46,13 @@ To keep `proposal_fidelity_protocol_pfp` and `anomalon/omega_engine` synchronize
 
 ### Wave 2 — Outer-Loop & Funnel Coupling (`pfp_core/outer_loop_v1rc.py`, `pfp_core/funnel_v1rc.py`)
 - **Goal**: Pass `BoundImmuneStoreV1` and `CallerLineageContextV1` through outer-loop compression funnels (`outer_loop_v1rc.py` / `funnel_v1rc.py`) so verified strand survivors inherit admitted `prompt_line` / `family` antibodies and undergo `verify_lineage_cure` before adoption.
-- **Note**: Offline fallback on `route_tier3_fable_derivations` when `pfp_immune` is absent stays on `release/omegaengine-pfp-v1.0rc` unless needed on `main`.
+- **Note**: Offline fallback on `route_tier3_fable_derivations` when `pfp_immune` is absent stays on the v1.0rc release branch unless needed on `main`.
 
 ### Wave 3 — Multi-Model Provisional Diversity & Operator Review Queue
 - **Goal**: Feed real multi-seat `model_id`, `scaffold_digest`, `precedent_set_digest`, and `lineage_root` values into `AntibodyRegistry.observe` so only cross-root failures reach `"provisional"` and surface for external `HumanAntiSkillAdmissionDecisionV1` sign-off.
 
-### Wave 4 — Head-to-Head PFP vs. Anomalon A/B Benchmark
-- **Protocol**: Replay identical defect packets, clean `self_panel` regressions, and 12-generation lineage chains in both PFP and Anomalon using matched Rust binaries (`pfp` + `pfp_immune`), comparing:
+### Wave 4 — Head-to-Head PFP vs. Core Engine A/B Benchmark
+- **Protocol**: Replay identical defect packets, clean `self_panel` regressions, and 12-generation lineage chains in both PFP and the core engine using matched Rust binaries (`pfp` + `pfp_immune`), comparing:
   1. Act III hold rate and pre-Act-IV token savings on known defect classes;
   2. False-positive rate on `self_panel` (target: `0`);
   3. Relapse burial + taint consistency vs. clean child adoption;
