@@ -14,6 +14,25 @@ from pathlib import Path
 import pytest
 
 
+def _core_symbol_game_available() -> bool:
+    """The Act III bout loads its council through the native core_symbol_game host.
+
+    That crate is not in this repository, so CI cannot build it; these tests run
+    wherever CORE_SYMBOL_GAME_HOST or a local build provides the binary.
+    """
+    from operating_system.adapters.rust_host.ffi import locate_host_binary
+
+    import pfp_core  # noqa: F401  (puts ops/ on sys.path)
+
+    return locate_host_binary(binary_name="core_symbol_game").is_ok
+
+
+requires_core_symbol_game = pytest.mark.skipif(
+    not _core_symbol_game_available(),
+    reason="native core_symbol_game host binary not built (set CORE_SYMBOL_GAME_HOST)",
+)
+
+
 def _sha256_ref(data: bytes) -> str:
     return "sha256:" + hashlib.sha256(data).hexdigest()
 
@@ -768,6 +787,7 @@ def _run_bout_with_unsafe_token(tmp_path: Path, store, bad_code: str):
     )
 
 
+@requires_core_symbol_game
 def test_wild_complete_task_turn_and_act3_swarm_bout_call_same_screen_caller_turn_on_single_pharmacy_store(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,

@@ -8,10 +8,31 @@ from __future__ import annotations
 import shutil
 from pathlib import Path
 
+import pytest
+
 from pfp_core.wave4_parity_harness import (
     compare_against_repo,
     compare_wave4_vectors,
     run_local_wave4_probe,
+)
+
+
+def _core_symbol_game_available() -> bool:
+    """The Act III bout loads its council through the native core_symbol_game host.
+
+    That crate is not in this repository, so CI cannot build it; these tests run
+    wherever CORE_SYMBOL_GAME_HOST or a local build provides the binary.
+    """
+    from operating_system.adapters.rust_host.ffi import locate_host_binary
+
+    import pfp_core  # noqa: F401  (puts ops/ on sys.path)
+
+    return locate_host_binary(binary_name="core_symbol_game").is_ok
+
+
+requires_core_symbol_game = pytest.mark.skipif(
+    not _core_symbol_game_available(),
+    reason="native core_symbol_game host binary not built (set CORE_SYMBOL_GAME_HOST)",
 )
 
 
@@ -45,6 +66,7 @@ def _stage_target_repo_without_harness(source_root: Path, dest_root: Path) -> No
     (dest_root / "ops" / "governance").mkdir(parents=True, exist_ok=True)
 
 
+@requires_core_symbol_game
 def test_wave4_local_probe_emits_expected_four_scenario_metrics(tmp_path: Path) -> None:
     report = run_local_wave4_probe(work_dir=tmp_path)
     assert report["authority_effect"] == "None"
@@ -76,6 +98,7 @@ def test_wave4_local_probe_emits_expected_four_scenario_metrics(tmp_path: Path) 
     assert s4["active_at_hop_12"] is False
 
 
+@requires_core_symbol_game
 def test_wave4_vector_comparison_detects_match_mismatch_and_unready_target(
     tmp_path: Path,
 ) -> None:
@@ -101,6 +124,7 @@ def test_wave4_vector_comparison_detects_match_mismatch_and_unready_target(
     assert unready["parity_status"] == "TARGET_NOT_READY"
 
 
+@requires_core_symbol_game
 def test_wave4_compare_against_repo_runs_when_target_lacks_harness_file(
     tmp_path: Path,
 ) -> None:
