@@ -7,9 +7,10 @@ and a receipt-shaped string alone cannot change custody. AuthorityEffect: None.
 import hashlib
 import json
 import sqlite3
+from collections.abc import Mapping, Sequence
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any, Mapping, Protocol, Sequence
+from typing import Any, Protocol
 
 from ..domain.models import CustodyTier, PromptGenomeV1, PromptViewV1, ProtectedSpanV1
 
@@ -159,7 +160,12 @@ class PromptCustodyLedgerV1:
     def apply(self, genome: PromptGenomeV1, receipt: PromptReviewReceiptV1) -> PromptViewV1:
         if receipt.prompt_id != genome.prompt_id or receipt.authority_effect != "None":
             raise ValueError("REVIEW_SUBJECT_MISMATCH")
-        if not receipt.decision_id or not receipt.actor_id or not receipt.external_receipt or self.verifier.verify(receipt) is not True:
+        if (
+            not receipt.decision_id
+            or not receipt.actor_id
+            or not receipt.external_receipt
+            or self.verifier.verify(receipt) is not True
+        ):
             raise PermissionError("EXTERNAL_REVIEW_NOT_AUTHENTICATED")
         with self.connection:
             # Reserve the writer before reading custody; two simultaneous hosts

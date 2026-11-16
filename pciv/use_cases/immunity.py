@@ -5,9 +5,10 @@ AuthorityEffect: None.
 
 from __future__ import annotations
 
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Mapping, Sequence, Set, Tuple
+from typing import Any
 
 
 class ImmunityPropagationEngineV1:
@@ -19,10 +20,10 @@ class ImmunityPropagationEngineV1:
     def propagate_backward(
         self,
         *,
-        acquisition: Dict[str, Any],
+        acquisition: dict[str, Any],
         current_prompt_id: str,
         pretend_as_new_origin: bool = False,
-    ) -> List[str]:
+    ) -> list[str]:
         if pretend_as_new_origin:
             raise ValueError(
                 "HORIZON_RESET_PROHIBITED: Relaying child prompt cannot re-originate backward propagation"
@@ -35,19 +36,19 @@ class DAGHopDistanceCalculatorV1:
 
     def calculate_shortest_hop_distance(
         self,
-        graph_edges: Sequence[Tuple[str, str]],
+        graph_edges: Sequence[tuple[str, str]],
         start: str,
         target: str,
     ) -> int:
         if start == target:
             return 0
 
-        adj: Dict[str, List[str]] = {}
+        adj: dict[str, list[str]] = {}
         for u, v in graph_edges:
             adj.setdefault(u, []).append(v)
 
-        queue: List[Tuple[str, int]] = [(start, 0)]
-        visited: Set[str] = {start}
+        queue: list[tuple[str, int]] = [(start, 0)]
+        visited: set[str] = {start}
 
         while queue:
             curr, dist = queue.pop(0)
@@ -65,8 +66,8 @@ class ArmedRepertoireManagerV1:
     """Manages armed antibody cache and invalidates stale entries on custody transitions."""
 
     def __init__(self) -> None:
-        self._armed: Dict[str, Set[str]] = {}
-        self._revoked_rules: Set[str] = set()
+        self._armed: dict[str, set[str]] = {}
+        self._revoked_rules: set[str] = set()
 
     def arm_antibody(self, prompt_id: str, rule_id: str) -> None:
         self._armed.setdefault(prompt_id, set()).add(rule_id)
@@ -81,7 +82,7 @@ class ArmedRepertoireManagerV1:
         if new_custody.lower() in ("revoked", "suspended", "retired"):
             self._revoked_rules.add(rule_id)
 
-    def get_armed_repertoire(self, prompt_id: str, ledger_revision: int) -> Set[str]:
+    def get_armed_repertoire(self, prompt_id: str, ledger_revision: int) -> set[str]:
         armed = self._armed.get(prompt_id, set())
         return {r for r in armed if r not in self._revoked_rules}
 
@@ -90,8 +91,8 @@ class GlobalCustodyRegistryV1:
     """Global custody registry enforcing universal disarming upon rule revocation."""
 
     def __init__(self) -> None:
-        self._bindings: Dict[str, Set[str]] = {}
-        self._revoked_rules: Set[str] = set()
+        self._bindings: dict[str, set[str]] = {}
+        self._revoked_rules: set[str] = set()
 
     def bind_antibody(self, prompt_id: str, rule_id: str) -> None:
         self._bindings.setdefault(prompt_id, set()).add(rule_id)
@@ -116,7 +117,7 @@ class LineageTaintEngineV1:
 
     def __init__(self, policy: TaintPolicyV1 | None = None) -> None:
         self.policy = policy or TaintPolicyV1()
-        self._tainted_nodes: Set[str] = set()
+        self._tainted_nodes: set[str] = set()
 
     def mark_tainted(self, node_id: str) -> None:
         self._tainted_nodes.add(node_id)
@@ -124,7 +125,7 @@ class LineageTaintEngineV1:
     def is_tainted(self, node_id: str) -> bool:
         return node_id in self._tainted_nodes
 
-    def propagate_taint(self, edges: Sequence[Tuple[str, str]]) -> None:
+    def propagate_taint(self, edges: Sequence[tuple[str, str]]) -> None:
         # edges are (parent, child)
         if self.policy.rule == "OR":
             for parent, child in edges:
@@ -144,15 +145,15 @@ def resolve_civilization_immune_store(
     societies: Mapping[str, Any] | None = None,
 ) -> Any:
     """Resolve a civilization registry string (e.g. ``oeeis:registry:v1``) to the shared pharmacy store."""
-    from eis.domain.pharmacy_catalog import PharmacyCatalogRepository
-    from eis.infrastructure.pharmacy_writer import (
+    from eis.domain.pharmacy_catalog import PharmacyCatalogRepository  # noqa: PLC0415
+    from eis.infrastructure.pharmacy_writer import (  # noqa: PLC0415
         filesystem_byte_writer,
         filesystem_catalog_bytes,
     )
-    from pciv.domain.society import resolve_society_families
-    from pciv.use_cases.lamarckian_loop import LamarckianReceiptStore
-    from pfp_core.caller_feedback import BoundImmuneStoreV1
-    from pfp_core.immunity import AntibodyRegistry
+    from pciv.domain.society import resolve_society_families  # noqa: PLC0415
+    from pciv.use_cases.lamarckian_loop import LamarckianReceiptStore  # noqa: PLC0415
+    from pfp_core.caller_feedback import BoundImmuneStoreV1  # noqa: PLC0415
+    from pfp_core.immunity import AntibodyRegistry  # noqa: PLC0415
 
     root = Path(repo_root)
     if civ is not None:

@@ -28,13 +28,6 @@ from pathlib import Path
 from types import SimpleNamespace
 from typing import Any
 
-from governance.domain.ingress.limits import (
-    MAX_ADMITTED_TEXT_BYTES,
-    REFUSAL_TEXT_TOO_LARGE,
-    check_text_bytes,
-)
-from governance.domain.intelligence_community import canonical_intelligence_route
-from operations.domain.rop.result import Err, Ok, Refusal, Result
 from adversary.domain.estate_ports import AntiSkillDecisionV1, AntiSkillGatePort
 from adversary.domain.intelligence_digestion import IntelligenceCollectionPort
 from adversary.domain.native import NativeOperationPort
@@ -48,6 +41,13 @@ from adversary.stage.domain import (
     SwarmProfileV1,
     WorkPacketV1,
 )
+from governance.domain.ingress.limits import (
+    MAX_ADMITTED_TEXT_BYTES,
+    REFUSAL_TEXT_TOO_LARGE,
+    check_text_bytes,
+)
+from governance.domain.intelligence_community import canonical_intelligence_route
+from operations.domain.rop.result import Err, Ok, Refusal, Result
 
 from ..domain.bout_journal import (
     BOUT_STARTED,

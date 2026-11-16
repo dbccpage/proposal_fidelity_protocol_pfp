@@ -14,13 +14,14 @@ Zero-Float Law: Uses exact rational arithmetic (fractions.Fraction).
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 import datetime
-from fractions import Fraction
 import hashlib
 import json
 import re
-from typing import Any, Mapping
+from collections.abc import Mapping
+from dataclasses import dataclass
+from fractions import Fraction
+from typing import Any
 
 SHA256_PREFIXED_PATTERN = re.compile(r"^sha256:[0-9a-f]{64}$")
 SHA256_HEX_PATTERN = re.compile(r"^[0-9a-f]{64}$")
@@ -80,7 +81,7 @@ class CochainResidualV1:
         phi1: Fraction | int | str = 0,
         gamma2: Fraction | int | str = 0,
         xi: Fraction | int | str = 0,
-    ) -> "CochainResidualV1":
+    ) -> CochainResidualV1:
         return cls(
             phi1=_format_fraction(phi1),
             gamma2=_format_fraction(gamma2),
@@ -91,7 +92,7 @@ class CochainResidualV1:
         return {"phi1": self.phi1, "gamma2": self.gamma2, "xi": self.xi}
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "CochainResidualV1":
+    def from_dict(cls, data: Mapping[str, Any]) -> CochainResidualV1:
         return cls(
             phi1=str(data["phi1"]),
             gamma2=str(data["gamma2"]),
@@ -178,7 +179,8 @@ class LamarckianMutationReceiptV1:
         expected_weight = self.calculate_attenuation_weight(self.hop_distance)
         if self.attenuation_weight != expected_weight:
             raise ValueError(
-                f"ATTENUATION_WEIGHT_MISMATCH: expected {expected_weight} for hop {self.hop_distance}, got {self.attenuation_weight}"
+                f"ATTENUATION_WEIGHT_MISMATCH: expected {expected_weight} for hop "
+                f"{self.hop_distance}, got {self.attenuation_weight}"
             )
 
         self.cochain_residual.validate()
@@ -201,12 +203,12 @@ class LamarckianMutationReceiptV1:
         hop_distance: int = 1,
         attenuation_weight: str | None = None,
         created_utc: str | None = None,
-    ) -> "LamarckianMutationReceiptV1":
+    ) -> LamarckianMutationReceiptV1:
         """Factory creating and sealing an authentic LamarckianMutationReceiptV1."""
         if attenuation_weight is None:
             attenuation_weight = cls.calculate_attenuation_weight(hop_distance)
         if created_utc is None:
-            created_utc = datetime.datetime.now(datetime.timezone.utc).isoformat()
+            created_utc = datetime.datetime.now(datetime.UTC).isoformat()
 
         # Compute receipt_id from canonical payload
         payload = {
@@ -255,7 +257,7 @@ class LamarckianMutationReceiptV1:
         }
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "LamarckianMutationReceiptV1":
+    def from_dict(cls, data: Mapping[str, Any]) -> LamarckianMutationReceiptV1:
         """Instantiate and validate from wire dictionary."""
         residual = CochainResidualV1.from_dict(data["cochain_residual"])
         receipt = cls(
@@ -285,8 +287,6 @@ class ReproducedFailureCaseV1:
     authority_effect: str = "None"
 
     def __post_init__(self) -> None:
-        import re as _re
-
         if type(self.case_id) is not str or not self.case_id.strip():
             raise ValueError("REPRODUCED_CASE_ID_REQUIRED")
         if type(self.prompt_utf8_bytes) is not bytes or not self.prompt_utf8_bytes:
@@ -300,7 +300,7 @@ class ReproducedFailureCaseV1:
             if isinstance(self.witness_sha256, str)
             else ""
         )
-        if not _re.fullmatch(r"[0-9a-f]{64}", hex_part):
+        if not re.fullmatch(r"[0-9a-f]{64}", hex_part):
             raise ValueError(f"REPRODUCED_CASE_WITNESS_INVALID:{self.witness_sha256!r}")
         if self.authority_effect != "None":
             raise ValueError("AUTHORITY_EFFECT_MUST_BE_NONE")
@@ -324,8 +324,6 @@ class LineageCureReceiptV1:
     authority_effect: str = "None"
 
     def __post_init__(self) -> None:
-        import re as _re
-
         for attr in (
             "receipt_id",
             "parent_genome_id",
@@ -334,7 +332,7 @@ class LineageCureReceiptV1:
             "child_checker_receipt_sha256",
         ):
             val = getattr(self, attr)
-            if type(val) is not str or not _re.fullmatch(r"sha256:[0-9a-f]{64}", val):
+            if type(val) is not str or not re.fullmatch(r"sha256:[0-9a-f]{64}", val):
                 raise ValueError(f"INVALID_CURE_SHA256_REF:{attr}:{val!r}")
         if type(self.antibody_id) is not str or not self.antibody_id.strip():
             raise ValueError("INVALID_CURE_ANTIBODY_ID")
@@ -365,11 +363,8 @@ class LineageCureReceiptV1:
         host_failure_reproduced: bool,
         child_checker_receipt_sha256: str,
         cure_status: str,
-    ) -> "LineageCureReceiptV1":
+    ) -> LineageCureReceiptV1:
         """Create a content-addressed lineage cure receipt."""
-        import hashlib as _hashlib
-        import json as _json
-
         payload = {
             "antibody_fired_on_parent_failure": antibody_fired_on_parent_failure,
             "antibody_id": antibody_id,
@@ -383,10 +378,10 @@ class LineageCureReceiptV1:
             "lamarckian_receipt_id": lamarckian_receipt_id,
             "parent_genome_id": parent_genome_id,
         }
-        raw = _json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode(
+        raw = json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode(
             "utf-8"
         )
-        receipt_id = "sha256:" + _hashlib.sha256(raw).hexdigest()
+        receipt_id = "sha256:" + hashlib.sha256(raw).hexdigest()
         return cls(
             receipt_id=receipt_id,
             parent_genome_id=parent_genome_id,

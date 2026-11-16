@@ -5,11 +5,12 @@ AuthorityEffect: None.
 
 from __future__ import annotations
 
-from dataclasses import fields
 import hashlib
-from pathlib import Path
 import re
-from typing import Any, Callable, Dict, List, Mapping, Optional, Sequence
+from collections.abc import Callable, Mapping, Sequence
+from dataclasses import fields
+from pathlib import Path
+from typing import Any
 
 from .pharmacy_catalog import PharmacyCatalogRepository
 from .pharmacy_models import (
@@ -40,8 +41,8 @@ class PharmacySeeder:
 
     def __init__(
         self,
-        repo_root: Optional[Path] = None,
-        repository: Optional[PharmacyCatalogRepository] = None,
+        repo_root: Path | None = None,
+        repository: PharmacyCatalogRepository | None = None,
         *,
         byte_writer: Callable[[Path, bytes], None] | None = None,
         byte_source: CatalogByteSource | None = None,
@@ -62,12 +63,12 @@ class PharmacySeeder:
         #: Ids skipped because they are on the retirement register. Recorded
         #: rather than silently dropped: a refusal nobody can see is the same
         #: shape of problem as the phantom it refuses.
-        self.refused_retired: List[str] = []
+        self.refused_retired: list[str] = []
         #: Ids observed again after a human judgement (admitted or rejected); their
         #: records are left untouched rather than rewritten as candidates.
-        self.preserved_judged: List[str] = []
+        self.preserved_judged: list[str] = []
 
-    def get_antibody_path(self, antibody_id: str, status: Optional[str] = None) -> Path:
+    def get_antibody_path(self, antibody_id: str, status: str | None = None) -> Path:
         return self.repository.get_antibody_path(antibody_id, status)
 
     def farm_antibodies_from_defects(
@@ -76,14 +77,14 @@ class PharmacySeeder:
         *,
         run_id: str,
         task_id: str,
-    ) -> List[Antibody]:
-        farmed: List[Antibody] = []
+    ) -> list[Antibody]:
+        farmed: list[Antibody] = []
         self.refused_retired = []
         self.preserved_judged = []
         existing_catalog = self.repository.load_catalog()
         # Include repeated observations in this input; consulting only the
         # original on-disk snapshot loses every duplicate after the first.
-        observed_counts: Dict[str, int] = {}
+        observed_counts: dict[str, int] = {}
 
         for defect in defects:
             clean_defect = defect.strip()
@@ -100,7 +101,7 @@ class PharmacySeeder:
                 existing_catalog.get("antibodies", {}).get(antibody_id, {}).get("times_seen", 0),
             )
             evidence = hashlib.sha256(
-                f"{antibody_id}:{clean_defect}:{run_id}:{task_id}".encode("utf-8")
+                f"{antibody_id}:{clean_defect}:{run_id}:{task_id}".encode()
             ).hexdigest()
 
             # A retired antibody guards against a defect that never existed.
@@ -150,7 +151,7 @@ class PharmacySeeder:
     def _save_individual_antibody(self, antibody: Antibody) -> Path:
         return self.repository.save_antibody(antibody)
 
-    def load_catalog(self) -> Dict[str, Any]:
+    def load_catalog(self) -> dict[str, Any]:
         return self.repository.load_catalog()
 
     def _update_catalog(
@@ -158,7 +159,7 @@ class PharmacySeeder:
     ) -> None:
         self.repository.update_catalog(new_antibodies, run_id=run_id, task_id=task_id)
 
-    def record_reproduced_failure(
+    def record_reproduced_failure(  # noqa: PLR0912, PLR0915
         self,
         *,
         prompt_id: str,
@@ -220,7 +221,7 @@ def _antibody_from_record(record: Mapping[str, Any]) -> Antibody:
     return Antibody(**filtered)
 
 
-def record_reproduced_failure(
+def record_reproduced_failure(  # noqa: PLR0912, PLR0915
     *,
     prompt_id: str,
     preimage: LearningEvidencePreimageV1,
@@ -278,7 +279,7 @@ def record_reproduced_failure(
         else preimage.candidate_reply_bytes.decode("utf-8", errors="replace")
     )
     resolved_guidance = guidance_text or description or template.description
-    scope_dict: Dict[str, Any] = {
+    scope_dict: dict[str, Any] = {
         "domain": scope_level,
         "prompt_id": prompt_id,
     }

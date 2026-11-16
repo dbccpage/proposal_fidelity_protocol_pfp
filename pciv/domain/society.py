@@ -9,19 +9,19 @@ Zero-Float Law: Uses exact rational arithmetic (fractions.Fraction).
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
-from fractions import Fraction
 import hashlib
 import json
 import re
-from typing import Mapping, Sequence
+from collections.abc import Mapping
+from dataclasses import asdict, dataclass
+from fractions import Fraction
 
 SHA256_PATTERN = re.compile(r"^sha256:[0-9a-f]{64}$")
 RATIONAL_PATTERN = re.compile(r"^-?[0-9]+/[1-9][0-9]*$")
 
 
 def _scope_covers(scope: str, target: str) -> bool:
-    if scope == "*" or scope == target:
+    if scope in {"*", target}:
         return True
     if scope.endswith(".*"):
         stem = scope[:-2]

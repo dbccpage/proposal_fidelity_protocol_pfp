@@ -22,28 +22,30 @@ AuthorityEffect: None.
 from __future__ import annotations
 
 import ast
-from dataclasses import dataclass
 import datetime
 import hashlib
 import json
 import re
 from collections.abc import Callable, Mapping, Sequence
+from dataclasses import dataclass
 from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
 from eis.domain.pharmacy_models import LearningEvidencePreimageV1
-from operations.domain.rop.result import Err, Ok, Refusal, Result
 from pciv.use_cases.custody import ensure_caller_prompt_genome
 from pciv.use_cases.immunity import resolve_civilization_immune_store
 from pfp.domain.value_objects.seat_turn import SeatTurnRequestV1
 from pfp_core.caller_feedback import (
     HOLD as _IMMUNE_HOLD,
+)
+from pfp_core.caller_feedback import (
     CallerLineageContextV1,
     ImmuneScreenRequestV1,
     ImmuneScreenVerdictV1,
     screen_caller_turn,
 )
+
 from adversary.domain.evidence import (
     CRITIQUE_REPLY_CONTRACT,
     CandidateCheckV1,
@@ -84,6 +86,7 @@ from adversary.use_cases.cemetery_regression import (
     AdmittedAntibodyReader,
     screen_known_regressions,
 )
+from operations.domain.rop.result import Err, Ok, Refusal, Result
 
 _LOCUS = "adversary.use_cases.act_helpers"
 

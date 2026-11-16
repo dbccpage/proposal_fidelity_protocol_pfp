@@ -1,8 +1,8 @@
 """Real prepare/check boundaries, without provider calls."""
 
 import base64
-from hashlib import sha256
 import json
+from hashlib import sha256
 
 import pytest
 
@@ -145,9 +145,10 @@ def test_pre_dispatch_provider_refusal_has_no_reply_to_retain():
 
 @pytest.mark.parametrize("invalid_unicode", [False, True])
 def test_unknown_cost_checks_actual_completion_and_retains_distinct_provider_wire(tmp_path, invalid_unicode):
-    from pfp.infrastructure.estimated_gateway import EstimatedBudgetGateway
     from adversary.domain.providers.types import CandidateRequest, Provider, ProviderConfigError
     from adversary.infrastructure.providers.gateway import unbudgeted_gateway
+
+    from pfp.infrastructure.estimated_gateway import EstimatedBudgetGateway
 
     sent = []
 
@@ -227,6 +228,7 @@ def test_wild_task_turn_screens_against_pharmacy_and_records_reproduced_failure_
     tmp_path,
 ):
     from adversary.domain.providers.types import CandidateRequest, CandidateResponse
+
     from pciv.use_cases.immunity import resolve_civilization_immune_store
 
     store = resolve_civilization_immune_store(None, tmp_path, read_only=False)

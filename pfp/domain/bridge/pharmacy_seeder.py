@@ -28,7 +28,7 @@ try:
     from eis.domain.pharmacy_templates import (
         ANTIBODY_TEMPLATES as DEFAULT_ANTIBODY_TEMPLATES,
     )
-except Exception as exc:
+except Exception as exc:  # noqa: BLE001
     _unavailable_reason = f"pharmacy bridge unavailable: {type(exc).__name__}: {exc}"
 
     class _UnavailableComponent:

@@ -7,11 +7,11 @@ the actual submitted bytes. Shape-only prose is explicitly unverified.
 from __future__ import annotations
 
 import base64
+import json
+import re
 from dataclasses import dataclass, field, replace
 from hashlib import sha256
-import json
 from pathlib import Path
-import re
 
 from pfp.domain.contracts.pfp_runtime import (
     PfpPrompt,
@@ -21,7 +21,6 @@ from pfp.domain.contracts.pfp_runtime import (
 from pfp.use_cases.pfp_prompt import PreparePfpTaskTurnUseCase, task_input_sha256
 from pfp.use_cases.pfp_proposal import CheckPfpTaskTurnUseCase
 
-
 _UNSETTLED_ATTEMPT_STATES = frozenset({
     "CompletedCostUnknown",
     "CompletedOverEstimatedBudget",
@@ -30,7 +29,7 @@ _UNSETTLED_ATTEMPT_STATES = frozenset({
 })
 
 
-class PfpTurnRefusal(ValueError):
+class PfpTurnRefusal(ValueError):  # noqa: N818
     def __init__(self, checked: dict, *, candidate=None, budget_receipt=None,
                  attempt_state: str | None = None):
         self.checked = checked
@@ -102,18 +101,29 @@ def prepare_task_turn(*, system: str, user: str, task_id: str, attempt_id: str,
     return PreparedTaskTurn(task, prompt, checker_id)
 
 
-def complete_task_turn(gateway, request, *, task_id: str, attempt_id: str,
-    provider=None, model=None, answer_schema=None, checker_id="shape-only-v1",
-    judges=(), require_checker: bool = False,
-    immune_store=None, lineage=None,
+def complete_task_turn(  # noqa: PLR0915
+    gateway,
+    request,
+    *,
+    task_id: str,
+    attempt_id: str,
+    provider=None,
+    model=None,
+    answer_schema=None,
+    checker_id="shape-only-v1",
+    judges=(),
+    require_checker: bool = False,
+    immune_store=None,
+    lineage=None,
     model_id: str | None = None,
     scaffold_digest: str = "task_turn_v1",
-    precedent_set_digest: str = "none"):
+    precedent_set_digest: str = "none",
+):
     """Compatibility facade for existing complete(request)->(candidate, receipt) ports."""
-    import pfp_core.caller_feedback as cf
-    from eis.domain.pharmacy_models import LearningEvidencePreimageV1
-    from pciv.use_cases.custody import ensure_caller_prompt_genome
-    from pciv.use_cases.immunity import resolve_civilization_immune_store
+    import pfp_core.caller_feedback as cf  # noqa: PLC0415
+    from eis.domain.pharmacy_models import LearningEvidencePreimageV1  # noqa: PLC0415
+    from pciv.use_cases.custody import ensure_caller_prompt_genome  # noqa: PLC0415
+    from pciv.use_cases.immunity import resolve_civilization_immune_store  # noqa: PLC0415
 
     user = request.user
     if request.messages:
@@ -211,9 +221,10 @@ def complete_task_turn(gateway, request, *, task_id: str, attempt_id: str,
             checker_id=checker_id,
             checker_output_bytes=checker_bytes,
         )
-        raw_pat = (judge_reasons[0] if judge_reasons else str(checked.get("reason") or checked.get("failure_class") or "TASK_FAILURE"))[:80]
+        default_reason = str(checked.get("reason") or checked.get("failure_class") or "TASK_FAILURE")
+        raw_pat = (judge_reasons[0] if judge_reasons else default_reason)[:80]
         safe_pat = re.escape(raw_pat.strip() or "TASK_FAILURE")
-        try:
+        try:  # noqa: SIM105
             store.record_failure(
                 lineage=caller_lineage,
                 preimage=preimage,

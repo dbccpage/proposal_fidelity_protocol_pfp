@@ -1,38 +1,38 @@
 from __future__ import annotations
 
 import base64
-from dataclasses import asdict, dataclass, field
-from datetime import datetime, timezone
-from enum import Enum
 import hashlib
 import json
-from typing import Any, Dict, Tuple
+from dataclasses import asdict, dataclass, field
+from datetime import UTC, datetime
+from enum import Enum
+from typing import Any
 
 
-class ConstraintType(str, Enum):
+class ConstraintType(str, Enum):  # noqa: UP042
     PROJECT_OUT = "ProjectOut"
     RESTRAIN = "Restrain"
     ENFORCE = "Enforce"
 
 
-class Operatorizability(str, Enum):
+class Operatorizability(str, Enum):  # noqa: UP042
     REPAIRABLE = "repairable"
     FATAL = "fatal"
 
 
-class RuntimeAction(str, Enum):
+class RuntimeAction(str, Enum):  # noqa: UP042
     REPAIR = "repair"
     ABORT = "abort"
 
 
-class Severity(str, Enum):
+class Severity(str, Enum):  # noqa: UP042
     P0 = "P0"
     P1 = "P1"
     P2 = "P2"
     P3 = "P3"
 
 
-class PharmacyStatus(str, Enum):
+class PharmacyStatus(str, Enum):  # noqa: UP042
     CANDIDATE = "candidate"
     PROVISIONAL = "provisional"
     ADMITTED = "admitted"
@@ -57,7 +57,7 @@ class LearningEvidencePreimageV1:
     prompt_utf8_bytes: bytes
     candidate_reply_bytes: bytes
     failure_class: str
-    failed_predicates: Tuple[str, ...]
+    failed_predicates: tuple[str, ...]
     checker_id: str
     checker_output_bytes: bytes
     authority_effect: str = "None"
@@ -123,7 +123,7 @@ class Antibody:
     evidence_sha256: str = ""
     pharmacy_status: str = "candidate"
     authority_effect: str = "None"
-    created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    created_at: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
     source_run_id: str = ""
     source_task_id: str = ""
     scope: dict[str, Any] | None = None
@@ -196,7 +196,7 @@ class Antibody:
         guidance_text: str = "",
         scope: dict[str, Any] | None = None,
         rule_sha256: str = "",
-    ) -> "Antibody":
+    ) -> Antibody:
         """Build an antibody harvested from an observed defect.
 
         **There is no `pharmacy_status` parameter.** That is the whole point:
@@ -236,5 +236,5 @@ class Antibody:
             authority_effect="None",
         )
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return asdict(self)

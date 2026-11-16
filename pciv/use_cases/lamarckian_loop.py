@@ -1,7 +1,7 @@
 """Lamarckian Retro-Inheritance Loop Service (NF-02).
 
 Orchestrates the Lamarckian feedback cycle:
-T_loop = <P_0, G_g> -> [Adversary Dialectic] -> Artifact A -> [PFP Measurement] -> Defect Witness W -> [Thymus] -> Antibody alpha -> [Forge] -> G_{g+1}
+T_loop = <P_0, G_g> -> [Adversary] -> Artifact A -> [PFP] -> Witness W -> [Thymus] -> alpha -> [Forge] -> G_{g+1}
 
 Enforces:
 - Rule 1: Protected Core Invariance (Core(G_{g+1}) == Core(G_g)).
@@ -21,10 +21,11 @@ from __future__ import annotations
 
 import hashlib
 import json
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from fractions import Fraction
 from pathlib import Path
-from typing import Any, Dict, List, Mapping, NoReturn, Optional, Sequence
+from typing import Any, NoReturn
 
 from ..domain.lamarckian import (
     SHA256_HEX_PATTERN,
@@ -89,7 +90,7 @@ def _integer_boundary(matrix: object) -> list[list[int]]:
     return converted
 
 
-class UnmeasuredCurvatureRefusal(Exception):
+class UnmeasuredCurvatureRefusal(Exception):  # noqa: N818
     """Refuse to publish a curvature triple when gamma2 and xi are unmeasured.
 
     The profile residual is not published as phi1. gamma2 and xi stay None.
@@ -103,7 +104,7 @@ class UnmeasuredCurvatureRefusal(Exception):
         self,
         *,
         witness_sha256: str,
-        obstructions: List[str],
+        obstructions: list[str],
     ) -> None:
         self.gamma2 = None
         self.xi = None
@@ -132,7 +133,7 @@ class LamarckianLoopService:
 
     def __init__(
         self,
-        mutation_engine: Optional[PromptMutationEngineV1] = None,
+        mutation_engine: PromptMutationEngineV1 | None = None,
     ) -> None:
         self.mutation_engine = mutation_engine or PromptMutationEngineV1()
 
@@ -147,9 +148,9 @@ class LamarckianLoopService:
         cochain_residual: CochainResidualV1,
         antibody_id: str,
         guidance_text: str,
-        edit_start_byte: Optional[int] = None,
-        edit_end_byte: Optional[int] = None,
-        origin_generation: Optional[int] = None,
+        edit_start_byte: int | None = None,
+        edit_end_byte: int | None = None,
+        origin_generation: int | None = None,
     ) -> LamarckianLoopResultV1:
         """Execute one Lamarckian retro-inheritance step with fail-closed invariant enforcement."""
         # 1. Validate witness identifier syntax; authentication belongs to the caller.
@@ -184,10 +185,11 @@ class LamarckianLoopService:
             f"\n\n# --- LAMARCKIAN IMMUNE GUIDANCE [hop={hop_distance}, weight={attenuation_weight}] ---\n"
             f"# Antibody: {antibody_id}\n"
             f"# Witness SHA256: {falsification_witness_sha256}\n"
-            f"# Cochain Residual: Phi1={cochain_residual.phi1}, Gamma2={cochain_residual.gamma2}, Xi={cochain_residual.xi}\n"
+            f"# Cochain Residual: Phi1={cochain_residual.phi1}, "
+            f"Gamma2={cochain_residual.gamma2}, Xi={cochain_residual.xi}\n"
             f"{guidance_text}\n"
             f"# --------------------------------------------------------------------------------------\n"
-        ).encode("utf-8")
+        ).encode()
 
         # Determine target edit slice
         if edit_start_byte is None:
@@ -245,7 +247,7 @@ class LamarckianLoopService:
 
     @staticmethod
     def extract_cochain_from_ast(
-        sources: Dict[str, str],
+        sources: dict[str, str],
     ) -> NoReturn:
         """Read an AST dependency complex and refuse an unmeasured curvature triple.
 
@@ -253,11 +255,11 @@ class LamarckianLoopService:
         continue. Its residual is not published as phi1. Gamma2 and xi are
         not measured, so no ``CochainResidualV1`` is published.
         """
-        from pfp.domain.ast_cochain.ast_dependency_complex import (
+        from pfp.domain.ast_cochain.ast_dependency_complex import (  # noqa: PLC0415
             DEFAULT_LAYER_RANKS,
             DependencyComplexBuilder,
         )
-        from pfp.domain.ast_cochain.ast_source_parser import (
+        from pfp.domain.ast_cochain.ast_source_parser import (  # noqa: PLC0415
             PythonSourceParser,
         )
 
@@ -268,7 +270,7 @@ class LamarckianLoopService:
 
         obstructions = list(complex_.defect_descriptions)
         defect_bytes = (
-            f"{len(obstructions)}:{','.join(sorted(obstructions))}".encode("utf-8")
+            f"{len(obstructions)}:{','.join(sorted(obstructions))}".encode()
         )
         witness_sha256 = hashlib.sha256(defect_bytes).hexdigest()
 
@@ -339,7 +341,7 @@ def spawn_antibody_constrained_child(
     origin_generation: int | None = None,
 ) -> tuple[PromptGenomeV1, bytes, LamarckianMutationReceiptV1]:
     """Derive a child prompt constrained by an admitted antibody and append its receipt."""
-    from .custody import ensure_caller_prompt_genome
+    from .custody import ensure_caller_prompt_genome  # noqa: PLC0415
 
     ab_id = _extract_antibody_field(antibody, "antibody_id")
     status_raw = _extract_antibody_field(antibody, "pharmacy_status")
@@ -475,7 +477,7 @@ def verify_lineage_cure(
     taint_engine: Any | None = None,
 ) -> LineageCureReceiptV1:
     """Test whether a mutated child genome cured its parent's reproduced failure or relapsed."""
-    import pfp_core.caller_feedback as cf
+    import pfp_core.caller_feedback as cf  # noqa: PLC0415
 
     mutation_receipt.validate()
     if (
@@ -525,7 +527,7 @@ def verify_lineage_cure(
     if child_host_danger is not None:
         receipt_material = (
             f"{child_host_danger.observer_id}:{child_host_danger.danger_type}:{child_host_danger.evidence_digest}"
-        ).encode("utf-8")
+        ).encode()
     else:
         receipt_material = child_reply_bytes + (
             b":held_out_pass" if held_out_passed else b":held_out_fail"
@@ -535,7 +537,7 @@ def verify_lineage_cure(
     relapsed = host_failure_reproduced or child_signal1_fired or (not antibody_fired_on_parent)
     if relapsed:
         if cemetery is not None:
-            from adversary.stage.domain.genealogy import CemeteryHeadstoneV1
+            from adversary.stage.domain.genealogy import CemeteryHeadstoneV1  # noqa: PLC0415
 
             cemetery.record_headstone(
                 CemeteryHeadstoneV1(

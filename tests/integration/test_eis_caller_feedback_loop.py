@@ -18,6 +18,71 @@ def _sha256_ref(data: bytes) -> str:
     return "sha256:" + hashlib.sha256(data).hexdigest()
 
 
+def _seed_and_admit_test_antibody(
+    store,
+    *,
+    prompt_id: str,
+    prompt_bytes: bytes,
+    reply_bytes: bytes,
+    failure_class: str,
+    failed_predicates: tuple[str, ...],
+    checker_output_bytes: bytes,
+    target_pattern: str,
+    positive_fixture: str,
+    negative_fixture: str,
+    scope_level: str = "prompt_line",
+    admission_scope: str = "prompt_line",
+    decision_id: str,
+    run_id: str,
+    task_id: str,
+    guidance_text: str = "",
+):
+    from eis.domain.external_admission import HumanAntiSkillAdmissionDecisionV1
+    from eis.domain.pharmacy_models import LearningEvidencePreimageV1
+    from eis.domain.pharmacy_search import rule_content_bytes
+    from eis.domain.pharmacy_seeder import record_reproduced_failure
+    from eis.use_cases.antibody_admission import admit_antibody_by_operator
+
+    preimage = LearningEvidencePreimageV1(
+        prompt_id=prompt_id,
+        prompt_utf8_bytes=prompt_bytes,
+        candidate_reply_bytes=reply_bytes,
+        failure_class=failure_class,
+        failed_predicates=failed_predicates,
+        checker_id="host.public_smoke",
+        checker_output_bytes=checker_output_bytes,
+    )
+    ab = record_reproduced_failure(
+        prompt_id=prompt_id,
+        preimage=preimage,
+        target_pattern=target_pattern,
+        positive_fixture=positive_fixture,
+        negative_fixture=negative_fixture,
+        guidance_text=guidance_text,
+        run_id=run_id,
+        task_id=task_id,
+        scope_level=scope_level,
+        producer_actor="proposer_seat",
+        repository=store.catalog,
+        registry=store.registry,
+    )
+    saved_rec = store.catalog.load_catalog()["antibodies"][ab.antibody_id]
+    rule_digest = "sha256:" + hashlib.sha256(rule_content_bytes(saved_rec)).hexdigest()
+    admit_antibody_by_operator(
+        ab.antibody_id,
+        HumanAntiSkillAdmissionDecisionV1(
+            decision_id=decision_id,
+            issuer="human_reviewer_1",
+            rule_bytes_sha256=rule_digest,
+            scope=admission_scope,
+            receipt_sha256=_sha256_ref(decision_id.encode("utf-8")),
+        ),
+        catalog=store.catalog,
+        self_panel=(positive_fixture,),
+    )
+    return ab
+
+
 def test_pharmacy_write_without_prompt_id_or_evidence_preimage_is_refused(tmp_path: Path) -> None:
     """Collection must bind prompt_id and full prompt/reply/checker byte preimage."""
     from eis.domain.pharmacy_catalog import PharmacyCatalogRepository
@@ -190,6 +255,7 @@ def test_act3_sieve_flips_disposition_to_hold_on_active_antibody_with_host_dange
     """Act III sieve must change disposition to HOLD when an admitted antibody + host danger fire."""
     from adversary.stage.domain import AUTHORITY_EFFECT_NONE, CandidateProposalV1, WorkPacketV1
     from adversary.use_cases.act_helpers import execute_act3_epistemic_sieve
+
     from eis.domain.external_admission import HumanAntiSkillAdmissionDecisionV1
     from eis.domain.pharmacy_models import LearningEvidencePreimageV1
     from eis.domain.pharmacy_search import rule_content_bytes
@@ -475,11 +541,7 @@ def test_autoimmune_antibody_matching_self_panel_is_purged_before_holding_strang
 def test_child_genome_relapsing_on_parent_failure_is_buried_and_tainted(tmp_path: Path) -> None:
     """A child prompt is adopted only after the antibody fires on parent failure and child cure passes."""
     from adversary.stage.infrastructure.default_adapters import FileCemeteryAdapter
-    from eis.domain.external_admission import HumanAntiSkillAdmissionDecisionV1
-    from eis.domain.pharmacy_models import LearningEvidencePreimageV1
-    from eis.domain.pharmacy_search import rule_content_bytes
-    from eis.domain.pharmacy_seeder import record_reproduced_failure
-    from eis.use_cases.antibody_admission import admit_antibody_by_operator
+
     from pciv.domain.lamarckian import (
         CochainResidualV1,
         ReproducedFailureCaseV1,
@@ -507,41 +569,21 @@ def test_child_genome_relapsing_on_parent_failure_is_buried_and_tainted(tmp_path
     witness_sha = hashlib.sha256(b"host_witness_float_001").hexdigest()
 
     store = resolve_civilization_immune_store(None, tmp_path, read_only=False)
-    preimage = LearningEvidencePreimageV1(
+    ab = _seed_and_admit_test_antibody(
+        store,
         prompt_id=parent_genome.prompt_id,
-        prompt_utf8_bytes=parent_bytes,
-        candidate_reply_bytes=failing_parent_reply,
+        prompt_bytes=parent_bytes,
+        reply_bytes=failing_parent_reply,
         failure_class="CounterfeitExactness",
         failed_predicates=("exact_ratio_required",),
-        checker_id="host.public_smoke",
         checker_output_bytes=b'{"passed":false,"reason":"UNSAFE_FLOAT_CAST"}',
-    )
-    ab = record_reproduced_failure(
-        prompt_id=parent_genome.prompt_id,
-        preimage=preimage,
         target_pattern=r"UNSAFE_FLOAT_CAST|float\(",
         positive_fixture="from fractions import Fraction\ndef answer():\n    return Fraction(1, 4)\n",
         negative_fixture=failing_parent_reply.decode("utf-8"),
         guidance_text="Use exact Fraction arithmetic instead of float casts.",
         run_id="run_lineage_1",
         task_id="task_lineage",
-        producer_actor="proposer_seat",
-        repository=store.catalog,
-        registry=store.registry,
-    )
-    saved_rec = store.catalog.load_catalog()["antibodies"][ab.antibody_id]
-    rule_digest = "sha256:" + hashlib.sha256(rule_content_bytes(saved_rec)).hexdigest()
-    admit_antibody_by_operator(
-        ab.antibody_id,
-        HumanAntiSkillAdmissionDecisionV1(
-            decision_id="dec_lineage_001",
-            issuer="human_reviewer_1",
-            rule_bytes_sha256=rule_digest,
-            scope="prompt_line",
-            receipt_sha256=_sha256_ref(b"signed_lineage_001"),
-        ),
-        catalog=store.catalog,
-        self_panel=("from fractions import Fraction\ndef answer():\n    return Fraction(1, 4)\n",),
+        decision_id="dec_lineage_001",
     )
 
     child_genome, child_bytes, lamarckian_receipt = spawn_antibody_constrained_child(
@@ -649,72 +691,116 @@ def test_child_genome_relapsing_on_parent_failure_is_buried_and_tainted(tmp_path
     assert cure_receipt.host_failure_reproduced is False
 
 
-def test_wild_complete_task_turn_and_act3_swarm_bout_call_same_screen_caller_turn_on_single_pharmacy_store(
-    tmp_path: Path,
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    """Wild complete_task_turn and Act III 7-act bout must invoke the same screen_caller_turn on one pharmacy store."""
-    import pfp_core.caller_feedback as cf
+def _run_bout_with_unsafe_token(tmp_path: Path, store, bad_code: str):
     from adversary.domain.evidence import CandidateCheckV1, CheckerVerdict
     from adversary.domain.ports import CandidateCheckerPort
-    from adversary.domain.providers.types import CandidateRequest, CandidateResponse
     from adversary.infrastructure.native import DefaultNativeOperationPort
     from adversary.profile.profile_loader import load_adversary_council_profile
     from adversary.runtime import build_adversary_runtime
     from adversary.stage.domain import WorkPacketV1
     from adversary.stage.infrastructure.default_adapters import FixtureAgentTurnAdapter
-    from adversary.use_cases import act_helpers
     from adversary.use_cases.bout_service import execute_7act_adversary_bout
-    from eis.domain.external_admission import HumanAntiSkillAdmissionDecisionV1
-    from eis.domain.pharmacy_models import LearningEvidencePreimageV1
-    from eis.domain.pharmacy_search import rule_content_bytes
-    from eis.domain.pharmacy_seeder import record_reproduced_failure
-    from eis.use_cases.antibody_admission import admit_antibody_by_operator
     from operations.domain.rop.result import Ok
+
     from pfp.domain.value_objects.seat_turn import SeatTurnReplyV1
-    from pfp.infrastructure import task_turn
-    from pfp.infrastructure.task_turn import PfpTurnRefusal, complete_task_turn
+
+    class _AcceptingHost:
+        def execute_host_request(self, request_bytes: bytes):
+            return Ok(b'{"status":"ACCEPTED"}')
+
+    class _RejectingChecker(CandidateCheckerPort):
+        def check_candidate(
+            self,
+            *,
+            run_key: str,
+            objective: str,
+            candidate_id: str,
+            candidate_bytes: bytes,
+            carrier_context=None,
+        ):
+            receipt_bytes = b'{"passed":false,"reason":"UNSAFE_BYPASS_TOKEN rejected"}'
+            return Ok(
+                CandidateCheckV1(
+                    verdict=CheckerVerdict.REJECTED,
+                    candidate_id=candidate_id,
+                    candidate_content_sha256=_sha256_ref(candidate_bytes),
+                    checker_id="host.public_smoke",
+                    checker_receipt_sha256=_sha256_ref(receipt_bytes),
+                    checker_receipt_bytes=receipt_bytes,
+                    reason="UNSAFE_BYPASS_TOKEN rejected",
+                )
+            )
+
+    _, _, profile, _, _ = load_adversary_council_profile()
+    rt = build_adversary_runtime(
+        output_dir=tmp_path / "_intelligence",
+        fixture_mode=False,
+        host=_AcceptingHost(),
+    )
+    canned = {
+        ("act2_panel_debate", "seat_gauge_breaker"): SeatTurnReplyV1(
+            reply_text=bad_code,
+            machine_fields={"AUTHORITY_EFFECT": "None"},
+            residual_colour="Open",
+            authority_effect="None",
+            raw_bytes=bad_code.encode("utf-8"),
+        ),
+    }
+    object.__setattr__(rt, "seat_port", FixtureAgentTurnAdapter(canned_replies=canned))
+    packet = WorkPacketV1(
+        task_key="bout_shared_screen_01",
+        scene_id="act1_perception",
+        objective="Generate safe function without bypass tokens",
+        input_artifact_refs=(),
+        acceptance_criteria=("Zero bypass tokens",),
+        budget_units=25,
+        evaluator_epoch_id=_sha256_ref(b"shared_epoch_1"),
+    )
+    return execute_7act_adversary_bout(
+        profile,
+        rt,
+        packet,
+        output_dir=tmp_path / "_intelligence" / "_adversary",
+        repo_root=tmp_path,
+        candidate_checker=_RejectingChecker(),
+        immune_store=store,
+        native_support=DefaultNativeOperationPort(),
+    )
+
+
+def test_wild_complete_task_turn_and_act3_swarm_bout_call_same_screen_caller_turn_on_single_pharmacy_store(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Wild complete_task_turn and Act III 7-act bout must invoke the same screen_caller_turn on one pharmacy store."""
+    from adversary.domain.providers.types import CandidateRequest, CandidateResponse
+    from adversary.use_cases import act_helpers
+
+    import pfp_core.caller_feedback as cf
     from pciv.use_cases.custody import ensure_caller_prompt_genome
     from pciv.use_cases.immunity import resolve_civilization_immune_store
+    from pfp.infrastructure import task_turn
+    from pfp.infrastructure.task_turn import PfpTurnRefusal, complete_task_turn
 
     store = resolve_civilization_immune_store(None, tmp_path, read_only=False)
     seed_prompt = b"Seed exact prompt."
     seed_genome = ensure_caller_prompt_genome(seed_prompt, {"domain": "pfp.shared"})
-    preimage = LearningEvidencePreimageV1(
+    ab = _seed_and_admit_test_antibody(
+        store,
         prompt_id=seed_genome.prompt_id,
-        prompt_utf8_bytes=seed_prompt,
-        candidate_reply_bytes=b"UNSAFE_BYPASS_TOKEN",
+        prompt_bytes=seed_prompt,
+        reply_bytes=b"UNSAFE_BYPASS_TOKEN",
         failure_class="BoundaryBypass",
         failed_predicates=("forbid_bypass_token",),
-        checker_id="host.public_smoke",
         checker_output_bytes=b'{"passed":false,"reason":"UNSAFE_BYPASS_TOKEN rejected"}',
-    )
-    ab = record_reproduced_failure(
-        prompt_id=seed_genome.prompt_id,
-        preimage=preimage,
         target_pattern="UNSAFE_BYPASS_TOKEN",
         positive_fixture="def safe_impl():\n    return 42\n",
         negative_fixture="UNSAFE_BYPASS_TOKEN",
+        scope_level="civilization",
+        admission_scope="global",
+        decision_id="dec_shared_001",
         run_id="run_shared_seed",
         task_id="task_shared_seed",
-        scope_level="civilization",
-        producer_actor="proposer_seat",
-        repository=store.catalog,
-        registry=store.registry,
-    )
-    saved_rec = store.catalog.load_catalog()["antibodies"][ab.antibody_id]
-    rule_digest = "sha256:" + hashlib.sha256(rule_content_bytes(saved_rec)).hexdigest()
-    admit_antibody_by_operator(
-        ab.antibody_id,
-        HumanAntiSkillAdmissionDecisionV1(
-            decision_id="dec_shared_001",
-            issuer="human_reviewer_1",
-            rule_bytes_sha256=rule_digest,
-            scope="global",
-            receipt_sha256=_sha256_ref(b"signed_shared_001"),
-        ),
-        catalog=store.catalog,
-        self_panel=("def safe_impl():\n    return 42\n",),
     )
 
     spy_calls: list[tuple[Path, str, tuple[str, ...], str]] = []
@@ -732,7 +818,6 @@ def test_wild_complete_task_turn_and_act3_swarm_bout_call_same_screen_caller_tur
     if hasattr(task_turn, "screen_caller_turn"):
         monkeypatch.setattr(task_turn, "screen_caller_turn", _spied_screen)
 
-    # Path 1: Wild no-swarm call through complete_task_turn.
     class WildGateway:
         def complete(self, request, **_options):
             public = json.loads(request.user)
@@ -769,79 +854,14 @@ def test_wild_complete_task_turn_and_act3_swarm_bout_call_same_screen_caller_tur
     assert spy_calls[0][1] == "HOLD_OR_REPAIR"
     assert ab.antibody_id in spy_calls[0][2]
     assert wild_exc.value.checked["immune_verdict"]["disposition"] == "HOLD_OR_REPAIR"
-    # Verify wild failure recorded against the wild prompt_id in the single catalog (no swarm seats needed).
     catalog_after_wild = json.loads(store.catalog.catalog_file.read_text(encoding="utf-8"))
-    wild_prompt_id = spy_calls[0][3]
     assert any(
-        entry.get("source_prompt_id") == wild_prompt_id
+        entry.get("source_prompt_id") == spy_calls[0][3]
         for entry in catalog_after_wild["antibodies"].values()
     )
 
-    # Path 2: Full 7-act Adversary Swarm bout calling Act III sieve against the same store.
-    _, _, profile, _, _ = load_adversary_council_profile()
-
-    class _AcceptingHost:
-        def execute_host_request(self, request_bytes: bytes):
-            return Ok(b'{"status":"ACCEPTED"}')
-
-    rt = build_adversary_runtime(
-        output_dir=tmp_path / "_intelligence",
-        fixture_mode=False,
-        host=_AcceptingHost(),
-    )
-    bad_code = "def swarm_bad():\n    return UNSAFE_BYPASS_TOKEN\n"
-    canned = {
-        ("act2_panel_debate", "seat_gauge_breaker"): SeatTurnReplyV1(
-            reply_text=bad_code,
-            machine_fields={"AUTHORITY_EFFECT": "None"},
-            residual_colour="Open",
-            authority_effect="None",
-            raw_bytes=bad_code.encode("utf-8"),
-        ),
-    }
-    object.__setattr__(rt, "seat_port", FixtureAgentTurnAdapter(canned_replies=canned))
-
-    class RejectingChecker(CandidateCheckerPort):
-        def check_candidate(
-            self,
-            *,
-            run_key: str,
-            objective: str,
-            candidate_id: str,
-            candidate_bytes: bytes,
-            carrier_context=None,
-        ):
-            receipt_bytes = b'{"passed":false,"reason":"UNSAFE_BYPASS_TOKEN rejected"}'
-            return Ok(
-                CandidateCheckV1(
-                    verdict=CheckerVerdict.REJECTED,
-                    candidate_id=candidate_id,
-                    candidate_content_sha256=_sha256_ref(candidate_bytes),
-                    checker_id="host.public_smoke",
-                    checker_receipt_sha256=_sha256_ref(receipt_bytes),
-                    checker_receipt_bytes=receipt_bytes,
-                    reason="UNSAFE_BYPASS_TOKEN rejected",
-                )
-            )
-
-    packet = WorkPacketV1(
-        task_key="bout_shared_screen_01",
-        scene_id="act1_perception",
-        objective="Generate safe function without bypass tokens",
-        input_artifact_refs=(),
-        acceptance_criteria=("Zero bypass tokens",),
-        budget_units=25,
-        evaluator_epoch_id=_sha256_ref(b"shared_epoch_1"),
-    )
-    bout_res = execute_7act_adversary_bout(
-        profile,
-        rt,
-        packet,
-        output_dir=tmp_path / "_intelligence" / "_adversary",
-        repo_root=tmp_path,
-        candidate_checker=RejectingChecker(),
-        immune_store=store,
-        native_support=DefaultNativeOperationPort(),
+    bout_res = _run_bout_with_unsafe_token(
+        tmp_path, store, "def swarm_bad():\n    return UNSAFE_BYPASS_TOKEN\n"
     )
     assert bout_res.is_err
     assert bout_res.unwrap_err().code == "ACT3_IMMUNE_SIEVE_HOLD"

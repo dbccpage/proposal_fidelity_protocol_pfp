@@ -9,12 +9,13 @@ import importlib
 from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
+    from pfp.controllers.pfp_controller import PfpController
+
     from .code_change_controller import CodeChangeController
     from .prompt_controller import PromptController
     from .symbol_game_controller import SymbolGameController
     from .symbol_game_engine import SymbolGameEngine
     from .turn_controller import TurnController
-    from pfp.controllers.pfp_controller import PfpController
 
 _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     'CodeChangeController': ('.code_change_controller', 'CodeChangeController'),
@@ -25,7 +26,14 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     'PfpController': ('pfp.controllers.pfp_controller', 'PfpController'),
 }
 
-__all__ = list(_LAZY_IMPORTS.keys())
+__all__ = [
+    "CodeChangeController",
+    "PfpController",
+    "PromptController",
+    "SymbolGameController",
+    "SymbolGameEngine",
+    "TurnController",
+]
 
 
 def __getattr__(name: str) -> Any:

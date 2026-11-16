@@ -10,7 +10,6 @@ import json
 import sys
 from pathlib import Path
 from types import SimpleNamespace
-from typing import List, Optional
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -82,8 +81,16 @@ def build_parser() -> argparse.ArgumentParser:
     seed_p.add_argument("--max-provider-calls", type=int, help="Explicit live call limit (1-8)")
     seed_p.add_argument("--max-output-tokens", type=int, help="Explicit live output token limit (1-3000)")
     seed_budget = seed_p.add_mutually_exclusive_group()
-    seed_budget.add_argument("--max-cost-microusd", type=int, help="Hard financial limit; requires transport liability support")
-    seed_budget.add_argument("--max-estimated-cost-microusd", type=int, help="Estimated financial limit; not a hard provider liability cap")
+    seed_budget.add_argument(
+        "--max-cost-microusd",
+        type=int,
+        help="Hard financial limit; requires transport liability support",
+    )
+    seed_budget.add_argument(
+        "--max-estimated-cost-microusd",
+        type=int,
+        help="Estimated financial limit; not a hard provider liability cap",
+    )
     seed_p.add_argument("--env-file", type=Path)
 
     check_p = subparsers.add_parser(
@@ -100,13 +107,13 @@ def build_parser() -> argparse.ArgumentParser:
     check_task.add_argument("reply", type=Path)
     check_task.add_argument("--attempt", required=True)
 
-    from .parser import register_source_bound_checker_subparser
+    from .parser import register_source_bound_checker_subparser  # noqa: PLC0415
 
     register_source_bound_checker_subparser(subparsers)
     return parser
 
 
-def main(argv: Optional[List[str]] = None) -> int:
+def main(argv: list[str] | None = None) -> int:  # noqa: PLR0911, PLR0912, PLR0915
     parser = build_parser()
     args = parser.parse_args(argv)
     if args.command == "code-change-check-source-bound":
@@ -116,7 +123,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     if args.command in ("prepare-task", "check-task"):
         return _task_command(args)
 
-    from ...controllers.pfp_controller import PfpController
+    from ...controllers.pfp_controller import PfpController  # noqa: PLC0415
 
     controller = PfpController()
 
@@ -126,7 +133,8 @@ def main(argv: Optional[List[str]] = None) -> int:
             receipt = res.unwrap()
             label = "PASS" if receipt.all_passed else "FAIL"
             print(
-                f"{label}: Demo {receipt.demo_id} executed with terminal status {receipt.terminal_status} (all_passed={receipt.all_passed})"
+                f"{label}: Demo {receipt.demo_id} terminated as {receipt.terminal_status} "
+                f"(all_passed={receipt.all_passed})"
             )
             print(f"Receipt SHA256: {receipt.receipt_sha256}")
             for check in receipt.checks:
@@ -134,34 +142,32 @@ def main(argv: Optional[List[str]] = None) -> int:
                     detail = check.error_message or check.observed or "Check did not pass"
                     print(f"  {check.name}: {detail}")
             return 0 if receipt.all_passed else 2
-        else:
-            err = res.unwrap_err()
-            print(
-                f"FAIL: Demo {args.demo_id} failed: {err.message} (code: {err.code})",
-                file=sys.stderr,
-            )
-            return 1
+        err = res.unwrap_err()
+        print(
+            f"FAIL: Demo {args.demo_id} failed: {err.message} (code: {err.code})",
+            file=sys.stderr,
+        )
+        return 1
 
-    elif args.command == "verify-contracts":
+    if args.command == "verify-contracts":
         res = controller.verify_normal_forms()
         if res.is_ok:
             receipts = res.unwrap()
             print(f"PASS: Received {len(receipts)} normal-form verification receipts.")
             return 0
-        else:
-            err = res.unwrap_err()
-            print(f"REFUSED: {err.code.value}: {err.message}", file=sys.stderr)
-            print(
-                "For structural catalog checks only, run: python -m "
-                "pfp.entrypoints.cli.pfp_normal_forms audit-contracts",
-                file=sys.stderr,
-            )
-            return 1
+        err = res.unwrap_err()
+        print(f"REFUSED: {err.code.value}: {err.message}", file=sys.stderr)
+        print(
+            "For structural catalog checks only, run: python -m "
+            "pfp.entrypoints.cli.pfp_normal_forms audit-contracts",
+            file=sys.stderr,
+        )
+        return 1
 
-    elif args.command == "evaluate-gates":
+    if args.command == "evaluate-gates":
         state = {}
         if args.state_json:
-            with open(args.state_json, "r", encoding="utf-8") as f:
+            with open(args.state_json, encoding="utf-8") as f:
                 state = json.load(f)
         res = controller.evaluate_gates(args.candidate_id, state)
         if res.is_ok:
@@ -169,15 +175,14 @@ def main(argv: Optional[List[str]] = None) -> int:
             print(f"Status: {receipt.terminal_disposition} (all_passed={receipt.all_passed})")
             print(f"Receipt SHA256: {receipt.receipt_sha256}")
             return 0 if receipt.all_passed else 2
-        else:
-            err = res.unwrap_err()
-            print(f"FAIL: Gate evaluation failed: {err.message}", file=sys.stderr)
-            return 1
+        err = res.unwrap_err()
+        print(f"FAIL: Gate evaluation failed: {err.message}", file=sys.stderr)
+        return 1
 
-    elif args.command == "assemble":
+    if args.command == "assemble":
         seed = {}
         if args.seed_json:
-            with open(args.seed_json, "r", encoding="utf-8") as f:
+            with open(args.seed_json, encoding="utf-8") as f:
                 seed = json.load(f)
         res = controller.assemble_prompt(args.demo_id, args.stage, seed)
         if res.is_ok:
@@ -190,12 +195,11 @@ def main(argv: Optional[List[str]] = None) -> int:
                 print(f"User SHA256: {packet.user_sha256}")
                 print(f"Schema SHA256: {packet.schema_sha256}")
             return 0
-        else:
-            err = res.unwrap_err()
-            print(f"FAIL: Assembly failed: {err.message}", file=sys.stderr)
-            return 1
+        err = res.unwrap_err()
+        print(f"FAIL: Assembly failed: {err.message}", file=sys.stderr)
+        return 1
 
-    elif args.command == "run-pilot-suite":
+    if args.command == "run-pilot-suite":
         res = controller.run_pilot_suite(
             args.pilot_dir,
             model=args.model,
@@ -214,19 +218,18 @@ def main(argv: Optional[List[str]] = None) -> int:
                 row["is_correct"] for row in summary["tests"]
             )
             return 0 if all_accepted else 2
-        else:
-            err = res.unwrap_err()
-            print(f"FAIL: Pilot suite failed: {err.message}", file=sys.stderr)
-            return 1
+        err = res.unwrap_err()
+        print(f"FAIL: Pilot suite failed: {err.message}", file=sys.stderr)
+        return 1
 
     return 0
 
 
 def _task_command(args) -> int:
-    from ...domain.contracts.pfp_runtime import PfpPromptTemplate, PfpTaskPrompt
-    from ...domain.pfp_ingress import strict_json
-    from ...use_cases.pfp_prompt import PreparePfpTaskTurnUseCase
-    from ...use_cases.pfp_proposal import CheckPfpTaskTurnUseCase
+    from ...domain.contracts.pfp_runtime import PfpPromptTemplate, PfpTaskPrompt  # noqa: PLC0415
+    from ...domain.pfp_ingress import strict_json  # noqa: PLC0415
+    from ...use_cases.pfp_prompt import PreparePfpTaskTurnUseCase  # noqa: PLC0415
+    from ...use_cases.pfp_proposal import CheckPfpTaskTurnUseCase  # noqa: PLC0415
 
     try:
         data = strict_json(args.task.read_bytes().decode("utf-8"))
@@ -264,19 +267,20 @@ def _task_command(args) -> int:
         return 2
 
 
-def _seed_command(args, parser) -> int:
-    from dataclasses import asdict
-    from hashlib import sha256
-    from uuid import uuid4
+def _seed_command(args, parser) -> int:  # noqa: PLR0912, PLR0915
+    from dataclasses import asdict  # noqa: PLC0415
+    from hashlib import sha256  # noqa: PLC0415
+    from uuid import uuid4  # noqa: PLC0415
 
-    from pfp.infrastructure.pilot_runners.mssn_checks import evaluate_seed_response
-    from pfp.infrastructure.pilot_runners.seed_checks import seed_candidate_schema
+    from adversary.domain.providers.types import ProviderConfigError  # noqa: PLC0415
 
-    from ...infrastructure.pilot_runner import load_seed_catalog
-    from ...infrastructure.providers import OfflineDeterministicPfpProvider, SeedHostVerifier
-    from ...infrastructure.storage import PfpFileSystemStorageAdapter
-    from ...use_cases.execute_stage_pipeline import ExecuteStagePipelineUseCase
-    from adversary.domain.providers.types import ProviderConfigError
+    from pfp.infrastructure.pilot_runners.mssn_checks import evaluate_seed_response  # noqa: PLC0415
+    from pfp.infrastructure.pilot_runners.seed_checks import seed_candidate_schema  # noqa: PLC0415
+
+    from ...infrastructure.pilot_runner import load_seed_catalog  # noqa: PLC0415
+    from ...infrastructure.providers import OfflineDeterministicPfpProvider, SeedHostVerifier  # noqa: PLC0415
+    from ...infrastructure.storage import PfpFileSystemStorageAdapter  # noqa: PLC0415
+    from ...use_cases.execute_stage_pipeline import ExecuteStagePipelineUseCase  # noqa: PLC0415
 
     provider = None
     try:
@@ -308,7 +312,7 @@ def _seed_command(args, parser) -> int:
             json.loads(args.mode_inputs.read_bytes()) if args.mode_inputs else {}
         )
         if args.model or args.replay:
-            from ...infrastructure.adapters.pfp_campaign import (
+            from ...infrastructure.adapters.pfp_campaign import (  # noqa: PLC0415
                 PfpPipelineProviderAdapter,
                 write_new,
             )
@@ -323,7 +327,9 @@ def _seed_command(args, parser) -> int:
                 config = recorded
                 provider = PfpPipelineProviderAdapter(output, config["model"], replay=True)
             else:
-                from ...infrastructure.estimated_gateway import create_accounted_openrouter_gateway
+                from ...infrastructure.estimated_gateway import (  # noqa: PLC0415
+                    create_accounted_openrouter_gateway,
+                )
 
                 if args.max_provider_calls is None or not 1 <= args.max_provider_calls <= 8:
                     raise ValueError("LIVE_STAGE_CALL_LIMIT_REQUIRED_1_TO_8")
@@ -333,7 +339,11 @@ def _seed_command(args, parser) -> int:
                 if cap is None or not 0 < cap <= 50000:
                     raise ValueError("LIVE_FINANCIAL_LIMIT_REQUIRED_1_TO_50000")
                 accounting = output.with_name(output.name + ".budget.sqlite3")
-                if output.exists() or accounting.exists() or accounting.with_name(accounting.name + ".replies").exists():
+                if (
+                    output.exists()
+                    or accounting.exists()
+                    or accounting.with_name(accounting.name + ".replies").exists()
+                ):
                     raise ValueError("LIVE_OUTPUT_AND_ACCOUNTING_MUST_BE_NEW")
                 config.update(schema="pfp.numbered-seed-config.v2", timeout=args.timeout,
                     max_provider_calls=args.max_provider_calls, max_output_tokens=args.max_output_tokens,

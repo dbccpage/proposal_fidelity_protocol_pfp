@@ -6,6 +6,7 @@ Zero-Float Law: Uses exact rational arithmetic (fractions.Fraction).
 
 from fractions import Fraction
 from pathlib import Path
+
 import pytest
 
 from pciv.domain.society import (

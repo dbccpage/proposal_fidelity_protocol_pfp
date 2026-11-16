@@ -10,19 +10,21 @@ AuthorityEffect: None.
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field
-from functools import lru_cache
 import hashlib
 import json
+import re
+from collections.abc import Callable, Mapping, Sequence
+from dataclasses import asdict, dataclass, field
+from functools import lru_cache
 from pathlib import Path
-from typing import Any, Callable, Mapping, Sequence
+from typing import Any
 
 from eis.domain.pharmacy_catalog import PharmacyCatalogRepository
 from eis.domain.pharmacy_models import (
+    VALID_ANTIBODY_SCOPES,
     Antibody,
     LearningEvidencePreimageV1,
     PharmacyStatus,
-    VALID_ANTIBODY_SCOPES,
 )
 from eis.domain.pharmacy_seeder import record_reproduced_failure
 from eis.domain.safe_pattern import UnsafePatternRefusal, compile_safe_pattern
@@ -62,8 +64,8 @@ def default_clean_self_panel() -> tuple[str, ...]:
                 content = row.get("content")
                 if isinstance(content, str) and content:
                     entries.append(content)
-        except Exception:
-            pass
+        except (OSError, UnicodeDecodeError, ValueError, TypeError) as _exc:
+            _ = _exc
     return tuple(dict.fromkeys(entries))
 
 
@@ -190,7 +192,7 @@ def _screen_antibody_cached(
 
     try:
         compiled = compile_safe_pattern(pattern)
-    except (UnsafePatternRefusal, Exception) as exc:
+    except (UnsafePatternRefusal, re.error, ValueError, TypeError) as exc:
         rationale = f"UNSAFE_PATTERN: {exc}"
         rec_digest = "sha256:" + hashlib.sha256(
             json.dumps(
@@ -330,11 +332,11 @@ class BoundImmuneStoreV1:
         if scope_level == "society":
             return lineage.society_id is not None and rec.get("society_id") == lineage.society_id
         if scope_level == "family":
-            if lineage.family_id is None:
-                return False
-            family_obj = self.family_index.get(lineage.family_id)
+            family_obj = self.family_index.get(lineage.family_id or "")
             shared = tuple(getattr(family_obj, "shared_antibody_ids", ()))
-            return rec.get("family_id") == lineage.family_id or ab_id in shared
+            return lineage.family_id is not None and (
+                rec.get("family_id") == lineage.family_id or ab_id in shared
+            )
         if scope_level == "prompt_line":
             return rec.get("source_prompt_id") == lineage.prompt_id or ab_id in lineage_ab_ids
         return False
@@ -345,7 +347,7 @@ class BoundImmuneStoreV1:
         *,
         self_panel: Sequence[str] | None = None,
     ) -> tuple[tuple[dict[str, Any], ...], tuple[str, ...]]:
-        from pciv.use_cases.lamarckian_loop import load_active_lineage_antibodies
+        from pciv.use_cases.lamarckian_loop import load_active_lineage_antibodies  # noqa: PLC0415
 
         catalog = self.catalog.load_catalog()
         entries = catalog.get("antibodies", {})

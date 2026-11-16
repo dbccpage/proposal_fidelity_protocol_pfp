@@ -9,8 +9,9 @@ admission.
 
 from __future__ import annotations
 
+from collections.abc import Mapping, Sequence
 from dataclasses import asdict
-from typing import Any, Mapping, Protocol, Sequence
+from typing import Any, Protocol
 
 from eis.domain.external_admission import (
     AdmissionError,
@@ -71,7 +72,7 @@ def admit_antibody_by_operator(
     self_panel: Sequence[str] | None = None,
 ) -> dict[str, Any]:
     """Screen an antibody via Thymus + fixture polarity, then persist operator admission."""
-    from pfp_core.caller_feedback import screen_antibody_with_thymus
+    from pfp_core.caller_feedback import screen_antibody_with_thymus  # noqa: PLC0415
 
     loaded = catalog.load_catalog()
     entries = loaded.get("antibodies", {})
