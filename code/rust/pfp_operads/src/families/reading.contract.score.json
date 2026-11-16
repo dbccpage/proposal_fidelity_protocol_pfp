@@ -1,0 +1,103 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/reading.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/reading.rs",
+      "language": "Rust",
+      "sha256": "f11f4cf15231b4faf9a9ad04321a95df62bef9acefa3a253d452b1ed3b950f20"
+    },
+    "contract_urn": "urn:pfp-operads:families-reading:v1",
+    "symbols": [
+      "integers",
+      "object",
+      "integers_under",
+      "squared_norm"
+    ],
+    "owned_invariants": [
+      "integers reads a list whose every entry is an exact integer as those integers. A decimal, a boolean, text, a nested list, or a value that is not a list is read as nothing.",
+      "object gives back a reply that is an object. Any other reply stops the run as a malformed candidate, with the stage in the reason.",
+      "integers_under reads the list of exact integers under a key of a reply. A missing key, or anything under it that is not such a list, stops the run as a malformed candidate, with the key in the reason.",
+      "squared_norm is the sum of the squares of a list as an exact integer of any size. The empty list has norm zero."
+    ],
+    "boundaries": [
+      "A reading says what a reply holds, not that it is right. Each family judges what it reads.",
+      "The reasons are words for a person. No family's refusal code depends on them."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/reading.rs",
+      "language": "Rust",
+      "sha256": "f11f4cf15231b4faf9a9ad04321a95df62bef9acefa3a253d452b1ed3b950f20"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: integers are of any size, a decimal or a boolean is never one, and the norm is an exact integer. Not B: tested on examples, not proven.",
+      "G3": "A reading either gives the value or says what was wrong, so a walk can stop the run as malformed with the reason. No unwrap or expect, and no index. Not B: panic-freedom is tested, not proven.",
+      "G4": "It has no test file of its own: the WF12, WF36, WF39, WF42 and WF48 tests read every reply through it and assert a decimal, a boolean, text, a nested list, a missing key and a reply that is not an object, each refused with its reason, and a squared norm worked by hand. Mutation campaign R = 11/11. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 2, cognitive complexity is not measured for Rust, nesting 0; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T17:36:31Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v14-test.run.json",
+        "sha256": "17ef478d1b74ab70cad46eaa772ca4e18327699ee8511ea6c9add106152e0213",
+        "note": "1145 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-clippy.run.json",
+        "sha256": "516525b28043fa1053b02b8c542e2b8eca12d687623187f8467c7159f8bb86fe",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-fmt.run.json",
+        "sha256": "a85094698679cc852f3b9040802cdb56d57909c3b9b0a95fe5d56892b53ad0e9",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.run.json",
+        "sha256": "070d448da3bce97bffdcb2c8095d7c52d792ea634bc321ba3b4af64b3b9576b0",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.json",
+        "sha256": "7533090aaa56c6585bb5e4ac4c61603e7dd6ba63ce6e31c95b1ee49b5bf6a97a",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 11,
+      "survived": 0,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-families-reading.mutation.json",
+        "sha256": "f9cb269f895c92634f4eaf41b89806ea72f63133cdba147869a98f16b226ec2d",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 11 mutants"
+      }
+    }
+  },
+  "history": []
+}

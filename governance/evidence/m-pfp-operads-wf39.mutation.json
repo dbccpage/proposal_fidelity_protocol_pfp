@@ -1,0 +1,545 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf39.rs",
+  "target_sha256": "213b91c8a8bf8ddfeeb010dad1bbee907f793265f0f9b934e08e1a881467c88d",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf39",
+  "counts": {
+    "killed": 88,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "verifier renamed",
+      "old": "pub const VERIFIER: &str = \"exact.cochain_residual.v1\";",
+      "new": "pub const VERIFIER: &str = \"exact.cochain_residual.v2\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "payload may name a nonce",
+      "old": "const PAYLOAD_FIELDS: [&str; 3] = [\"edges\", \"c\", \"phi\"];",
+      "new": "const PAYLOAD_FIELDS: [&str; 3] = [\"edges\", \"c\", \"nonce\"];",
+      "outcome": "killed"
+    },
+    {
+      "name": "payload fields renamed",
+      "old": "[\"edges\", \"c\", \"phi\"]",
+      "new": "[\"edges\", \"c\", \"phis\"]",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipt may not name a nonce",
+      "old": "    \"claimed\",\n    \"nonce\",\n];",
+      "new": "    \"claimed\",\n    \"nonces\",\n];",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipt may not name the verifier",
+      "old": "    \"verifier_id\",\n    \"payload_sha256\",",
+      "new": "    \"verifier\",\n    \"payload_sha256\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipt may not name the replay hash",
+      "old": "    \"replay_sha256\",\n    \"claimed\",",
+      "new": "    \"replay\",\n    \"claimed\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipt may not name the payload hash",
+      "old": "    \"payload_sha256\",\n    \"replay_sha256\",",
+      "new": "    \"payload\",\n    \"replay_sha256\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "authority effect renamed",
+      "old": "const NO_AUTHORITY: &str = \"None\";",
+      "new": "const NO_AUTHORITY: &str = \"none\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "nonce may be any value",
+      "old": "    let nonce = task.get(\"nonce\").filter(|nonce| nonce.as_text().is_some());",
+      "new": "    let nonce = task.get(\"nonce\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "nonce reason changed",
+      "old": "        nonce: nonce.ok_or(\"nonce and registered_verifiers required\")?,",
+      "new": "        nonce: nonce.ok_or(\"\")?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "registered reason changed",
+      "old": "        .ok_or(\"nonce and registered_verifiers required\")?;\n    let named",
+      "new": "        .ok_or(\"\")?;\n    let named",
+      "outcome": "killed"
+    },
+    {
+      "name": "c length unchecked",
+      "old": "        .filter(|c| c.len() == named.graph.edges().len())\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "c length at most the edges",
+      "old": "        .filter(|c| c.len() == named.graph.edges().len())",
+      "new": "        .filter(|c| c.len() <= named.graph.edges().len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "c reason changed",
+      "old": "ok_or(\"c must be one exact integer per edge\")",
+      "new": "ok_or(\"\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "the verifier is always registered",
+      "old": "            .any(|entry| entry.as_text() == Some(VERIFIER)),",
+      "new": "            .any(|_| true),",
+      "outcome": "killed"
+    },
+    {
+      "name": "every entry must be the verifier",
+      "old": "            .any(|entry| entry.as_text() == Some(VERIFIER)),",
+      "new": "            .all(|entry| entry.as_text() == Some(VERIFIER)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the verifier is never registered",
+      "old": "            .any(|entry| entry.as_text() == Some(VERIFIER)),",
+      "new": "            .any(|entry| entry.as_text() == Some(\"\")),",
+      "outcome": "killed"
+    },
+    {
+      "name": "phi read as a list of anything",
+      "old": "    let potential = integers(phi)\n        .ok_or_else(|| Stop::Malformed(\"phi must be a list of exact integers\".to_owned()))?;",
+      "new": "    let potential = integers(phi).unwrap_or_default();",
+      "outcome": "killed"
+    },
+    {
+      "name": "phi reason changed",
+      "old": "Stop::Malformed(\"phi must be a list of exact integers\".to_owned())",
+      "new": "Stop::Malformed(String::new())",
+      "outcome": "killed"
+    },
+    {
+      "name": "phi length unchecked",
+      "old": "        potential.len() == gate.named.graph.names().len(),",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "phi at most the vertices",
+      "old": "        potential.len() == gate.named.graph.names().len(),",
+      "new": "        potential.len() <= gate.named.graph.names().len(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "phi length reason changed",
+      "old": "\"phi needs one integer per vertex 0..n-1\"",
+      "new": "\"\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual taken the other way",
+      "old": "        .residual(&values, &by_vertex)\n        .iter()\n        .map(|entry| entry.numer().clone())",
+      "new": "        .residual(&values, &by_vertex)\n        .iter()\n        .map(|entry| -entry.numer().clone())",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual denominators reported",
+      "old": "        .map(|entry| entry.numer().clone())\n        .collect();\n    let defect",
+      "new": "        .map(|entry| entry.denom().clone())\n        .collect();\n    let defect",
+      "outcome": "killed"
+    },
+    {
+      "name": "defect not absolute",
+      "old": "residual.iter().map(Signed::abs).sum();",
+      "new": "residual.iter().cloned().sum();",
+      "outcome": "killed"
+    },
+    {
+      "name": "defect is the largest entry",
+      "old": "let defect: BigInt = residual.iter().map(Signed::abs).sum();",
+      "new": "let defect: BigInt = residual.iter().map(Signed::abs).max().unwrap_or_default();",
+      "outcome": "killed"
+    },
+    {
+      "name": "replay key renamed",
+      "old": "        (\"residual\", Datum::from(residual)),\n        (\"defect\", Datum::Int(defect)),",
+      "new": "        (\"residuals\", Datum::from(residual)),\n        (\"defect\", Datum::Int(defect)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "replay defect key renamed",
+      "old": "(\"defect\", Datum::Int(defect)),",
+      "new": "(\"defects\", Datum::Int(defect)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "text read from the wrong key",
+      "old": "    object.get(key).and_then(Datum::as_text)",
+      "new": "    object.get(\"nonce\").and_then(Datum::as_text)",
+      "outcome": "killed"
+    },
+    {
+      "name": "the run asks nothing",
+      "old": "    let Some(reply) = run.ask(\"solve\", run.prompt())? else {",
+      "new": "    let Some(reply) = run.ask(\"solve\", String::new())? else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage renamed",
+      "old": "run.ask(\"solve\", run.prompt())?",
+      "new": "run.ask(\"replay\", run.prompt())?",
+      "outcome": "killed"
+    },
+    {
+      "name": "payload need not be an object",
+      "old": "        (Some(payload), Some(receipt)) if payload.is_map() && receipt.is_map() => {",
+      "new": "        (Some(payload), Some(receipt)) if receipt.is_map() => {",
+      "outcome": "killed"
+    },
+    {
+      "name": "receipt need not be an object",
+      "old": "        (Some(payload), Some(receipt)) if payload.is_map() && receipt.is_map() => {",
+      "new": "        (Some(payload), Some(receipt)) if payload.is_map() => {",
+      "outcome": "killed"
+    },
+    {
+      "name": "payload or receipt object",
+      "old": "        (Some(payload), Some(receipt)) if payload.is_map() && receipt.is_map() => {",
+      "new": "        (Some(payload), Some(receipt)) if payload.is_map() || receipt.is_map() => {",
+      "outcome": "killed"
+    },
+    {
+      "name": "payload and receipt reason changed",
+      "old": "\"payload and receipt objects required\".to_owned()",
+      "new": "\"\".to_owned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing phi is a list",
+      "old": "let phi = payload.get(\"phi\").cloned().unwrap_or(Datum::Null);",
+      "new": "let phi = payload.get(\"phi\").cloned().unwrap_or(Datum::List(Vec::new()));",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness names the payload edges",
+      "old": "            run.task.get(\"edges\").cloned().unwrap_or(Datum::Null),\n        ),",
+      "new": "            payload.get(\"edges\").cloned().unwrap_or(Datum::Null),\n        ),",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness names the payload values",
+      "old": "(\"c\", run.task.get(\"c\").cloned().unwrap_or(Datum::Null)),",
+      "new": "(\"c\", payload.get(\"c\").cloned().unwrap_or(Datum::Null)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness leaves out phi",
+      "old": "        (\"phi\", phi.clone()),\n    ]);",
+      "new": "        (\"phi\", Datum::Null),\n    ]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "public fields unchecked",
+      "old": "            .is_none_or(|given| Some(given) == run.task.get(key))",
+      "new": "            .is_none_or(|_| true)",
+      "outcome": "killed"
+    },
+    {
+      "name": "public fields required",
+      "old": "            .is_none_or(|given| Some(given) == run.task.get(key))",
+      "new": "            .is_some_and(|given| Some(given) == run.task.get(key))",
+      "outcome": "killed"
+    },
+    {
+      "name": "public fields may differ",
+      "old": "            .is_none_or(|given| Some(given) == run.task.get(key))",
+      "new": "            .is_none_or(|given| Some(given) != run.task.get(key))",
+      "outcome": "killed"
+    },
+    {
+      "name": "payload names unchecked",
+      "old": "            .all(|key| PAYLOAD_FIELDS.contains(&key.as_str())),",
+      "new": "            .all(|_| true),",
+      "outcome": "killed"
+    },
+    {
+      "name": "payload names any",
+      "old": "            .all(|key| PAYLOAD_FIELDS.contains(&key.as_str())),",
+      "new": "            .any(|key| PAYLOAD_FIELDS.contains(&key.as_str())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "edges not checked",
+      "old": "        named_only && public(\"edges\") && public(\"c\"),",
+      "new": "        named_only && public(\"c\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "values not checked",
+      "old": "        named_only && public(\"edges\") && public(\"c\"),",
+      "new": "        named_only && public(\"edges\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "either public field is enough",
+      "old": "        named_only && public(\"edges\") && public(\"c\"),",
+      "new": "        named_only && (public(\"edges\") || public(\"c\")),",
+      "outcome": "killed"
+    },
+    {
+      "name": "names or public fields",
+      "old": "        named_only && public(\"edges\") && public(\"c\"),",
+      "new": "        named_only || (public(\"edges\") && public(\"c\")),",
+      "outcome": "killed"
+    },
+    {
+      "name": "bound check inverted",
+      "old": "    if !checks.record(\n        \"payload_bound_to_task\",",
+      "new": "    if checks.record(\n        \"payload_bound_to_task\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "bound refusal code renamed",
+      "old": "\"PAYLOAD_NOT_BOUND_TO_TASK\"",
+      "new": "\"PAYLOAD_UNBOUND\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "bound refusal names another guard",
+      "old": "names(&[\"payload_bound_to_task\"])",
+      "new": "names(&[\"authority\"])",
+      "outcome": "killed"
+    },
+    {
+      "name": "bound refusal key renamed",
+      "old": "(\"residual_evidence\", names(&[\"payload_bound_to_task\"]))",
+      "new": "(\"evidence\", names(&[\"payload_bound_to_task\"]))",
+      "outcome": "killed"
+    },
+    {
+      "name": "extra fields are the allowed ones",
+      "old": "            .filter(|key| !RECEIPT_FIELDS.contains(&key.as_str()))",
+      "new": "            .filter(|key| RECEIPT_FIELDS.contains(&key.as_str()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "extra fields not listed",
+      "old": "            .filter(|key| !RECEIPT_FIELDS.contains(&key.as_str()))\n            .map(|key| Datum::text(key.clone()))",
+      "new": "            .filter(|key| !RECEIPT_FIELDS.contains(&key.as_str()))\n            .map(|_| Datum::text(String::new()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "missing effect is text",
+      "old": "        .get(\"authority_effect\")\n        .cloned()\n        .unwrap_or(Datum::Null);",
+      "new": "        .get(\"authority_effect\")\n        .cloned()\n        .unwrap_or(Datum::text(\"None\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "effect key renamed",
+      "old": "        .get(\"authority_effect\")\n        .cloned()",
+      "new": "        .get(\"effect\")\n        .cloned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "extra fields ignored",
+      "old": "    let none = effect.as_text() == Some(NO_AUTHORITY) && extra.is_empty();",
+      "new": "    let none = effect.as_text() == Some(NO_AUTHORITY);",
+      "outcome": "killed"
+    },
+    {
+      "name": "effect ignored",
+      "old": "    let none = effect.as_text() == Some(NO_AUTHORITY) && extra.is_empty();",
+      "new": "    let none = extra.is_empty();",
+      "outcome": "killed"
+    },
+    {
+      "name": "effect or extra",
+      "old": "    let none = effect.as_text() == Some(NO_AUTHORITY) && extra.is_empty();",
+      "new": "    let none = effect.as_text() == Some(NO_AUTHORITY) || extra.is_empty();",
+      "outcome": "killed"
+    },
+    {
+      "name": "authority check inverted",
+      "old": "    if !checks.record(\"authority_effect_none\", none, &evidence) {",
+      "new": "    if checks.record(\"authority_effect_none\", none, &evidence) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "authority evidence swapped",
+      "old": "        (\"effect\", effect.clone()),\n        (\"extra\", Datum::List(extra.clone())),",
+      "new": "        (\"effect\", Datum::Null),\n        (\"extra\", Datum::List(extra.clone())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "authority refusal code renamed",
+      "old": "\"AUTHORITY_ESCALATION\"",
+      "new": "\"AUTHORITY_ESCALATED\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "authority refusal names no fields",
+      "old": "(\"escalating_fields\", Datum::List(extra)),",
+      "new": "(\"escalating_fields\", Datum::List(Vec::new())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "authority refusal names another guard",
+      "old": "names(&[\"authority\"])",
+      "new": "names(&[\"authority_effect_none\"])",
+      "outcome": "killed"
+    },
+    {
+      "name": "verifier read from the wrong key",
+      "old": "receipt.get(\"verifier_id\").cloned().unwrap_or(Datum::Null);",
+      "new": "receipt.get(\"verifier\").cloned().unwrap_or(Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "verifier need not be named",
+      "old": "    let registered = verifier.as_text() == Some(VERIFIER) && gate.registers_verifier;",
+      "new": "    let registered = gate.registers_verifier;",
+      "outcome": "killed"
+    },
+    {
+      "name": "verifier need not be registered",
+      "old": "    let registered = verifier.as_text() == Some(VERIFIER) && gate.registers_verifier;",
+      "new": "    let registered = verifier.as_text() == Some(VERIFIER);",
+      "outcome": "killed"
+    },
+    {
+      "name": "verifier named or registered",
+      "old": "    let registered = verifier.as_text() == Some(VERIFIER) && gate.registers_verifier;",
+      "new": "    let registered = verifier.as_text() == Some(VERIFIER) || gate.registers_verifier;",
+      "outcome": "killed"
+    },
+    {
+      "name": "payload hash of the receipt",
+      "old": "        text(receipt, \"payload_sha256\") == Some(sha256_hex(&witnessed.canonical()).as_str());",
+      "new": "        text(receipt, \"replay_sha256\") == Some(sha256_hex(&witnessed.canonical()).as_str());",
+      "outcome": "killed"
+    },
+    {
+      "name": "payload hash of the payload",
+      "old": "Some(sha256_hex(&witnessed.canonical()).as_str());\n    checks.record(\"witness_bound_to_payload\"",
+      "new": "Some(sha256_hex(&payload.canonical()).as_str());\n    checks.record(\"witness_bound_to_payload\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "replay only when registered is dropped",
+      "old": "    let replayed = if registered {\n        Some(replay(&gate, &phi)?)\n    } else {\n        None\n    };",
+      "new": "    let replayed = Some(replay(&gate, &phi)?);",
+      "outcome": "killed"
+    },
+    {
+      "name": "replay never taken",
+      "old": "    let replayed = if registered {\n        Some(replay(&gate, &phi)?)\n    } else {\n        None\n    };",
+      "new": "    let replayed: Option<Datum> = None;",
+      "outcome": "killed"
+    },
+    {
+      "name": "replay taken when unregistered",
+      "old": "    let replayed = if registered {\n        Some(replay(&gate, &phi)?)\n    } else {\n        None\n    };",
+      "new": "    let replayed = if !registered {\n        Some(replay(&gate, &phi)?)\n    } else {\n        None\n    };",
+      "outcome": "killed"
+    },
+    {
+      "name": "replay of the payload hash",
+      "old": "        text(receipt, \"replay_sha256\") == Some(sha256_hex(&done.canonical()).as_str())",
+      "new": "        text(receipt, \"payload_sha256\") == Some(sha256_hex(&done.canonical()).as_str())",
+      "outcome": "killed"
+    },
+    {
+      "name": "replay hash of the witness",
+      "old": "        text(receipt, \"replay_sha256\") == Some(sha256_hex(&done.canonical()).as_str())",
+      "new": "        text(receipt, \"replay_sha256\") == Some(sha256_hex(&witnessed.canonical()).as_str())",
+      "outcome": "killed"
+    },
+    {
+      "name": "replay hash always holds",
+      "old": "    let replay_hash = replayed.as_ref().is_some_and(|done| {",
+      "new": "    let replay_hash = replayed.as_ref().is_none_or(|done| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "claimed read from the wrong key",
+      "old": "        .is_some_and(|done| receipt.get(\"claimed\") == Some(done));",
+      "new": "        .is_some_and(|done| receipt.get(\"claim\") == Some(done));",
+      "outcome": "killed"
+    },
+    {
+      "name": "claim always matches",
+      "old": "        .is_some_and(|done| receipt.get(\"claimed\") == Some(done));",
+      "new": "        .is_none_or(|done| receipt.get(\"claimed\") == Some(done));",
+      "outcome": "killed"
+    },
+    {
+      "name": "claim differs",
+      "old": "        .is_some_and(|done| receipt.get(\"claimed\") == Some(done));",
+      "new": "        .is_some_and(|done| receipt.get(\"claimed\") != Some(done));",
+      "outcome": "killed"
+    },
+    {
+      "name": "defect read from the residual",
+      "old": "        .and_then(|done| done.get(\"defect\"))",
+      "new": "        .and_then(|done| done.get(\"residual\"))",
+      "outcome": "killed"
+    },
+    {
+      "name": "defect read as a list",
+      "old": "        .and_then(Datum::as_int)\n        .is_some_and(Zero::is_zero);",
+      "new": "        .and_then(Datum::as_int)\n        .is_none_or(Zero::is_zero);",
+      "outcome": "killed"
+    },
+    {
+      "name": "nonce read from the wrong key",
+      "old": "receipt.get(\"nonce\").cloned().unwrap_or(Datum::Null);",
+      "new": "receipt.get(\"nonces\").cloned().unwrap_or(Datum::Null);",
+      "outcome": "killed"
+    },
+    {
+      "name": "nonce differs",
+      "old": "    checks.record(\"fresh_nonce\", &nonce == gate.nonce, &nonce);",
+      "new": "    checks.record(\"fresh_nonce\", &nonce != gate.nonce, &nonce);",
+      "outcome": "killed"
+    },
+    {
+      "name": "nonce always fresh",
+      "old": "    checks.record(\"fresh_nonce\", &nonce == gate.nonce, &nonce);",
+      "new": "    checks.record(\"fresh_nonce\", true, &nonce);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a missing nonce reads as the task nonce",
+      "old": "receipt.get(\"nonce\").cloned().unwrap_or(Datum::Null);",
+      "new": "receipt.get(\"nonce\").cloned().unwrap_or(gate.nonce.clone());",
+      "outcome": "killed"
+    },
+    {
+      "name": "failed guards not named",
+      "old": "    let failed = Datum::from(checks.failed());",
+      "new": "    let failed = Datum::List(Vec::new());",
+      "outcome": "killed"
+    },
+    {
+      "name": "certified code renamed",
+      "old": "        \"ALL_GUARDS_PASS\",",
+      "new": "        \"ALL_GUARDS_PASSED\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "detail key renamed",
+      "old": "        Datum::map([(\"residual_evidence\", failed)]),",
+      "new": "        Datum::map([(\"evidence\", failed)]),",
+      "outcome": "killed"
+    }
+  ]
+}

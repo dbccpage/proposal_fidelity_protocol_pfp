@@ -1,0 +1,103 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf36.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf36.rs",
+      "language": "Rust",
+      "sha256": "3a51bea00eb3d2d28b147e9efc19127c0153aa79676beb58e01e588659634030"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf36:v1",
+    "symbols": [
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task is edges, a nonempty list of pairs of integers on the vertices 0 to n-1, values, one exact integer or null for each edge, and optionally guard_rows, integers that each name a row of the cycle matrix S, which has one row for each fundamental cycle of the graph. A task that is not of this form is refused before anything is asked.",
+      "guard_complete is recorded first: the guard rows, by default every row, have the rank of S. A guard that does not is refused as PARTIAL_GUARD with a kernel_witness, the unit vector of the chord of the first row the guard leaves out, and the syndrome of that vector under the guard and under S.",
+      "The first stage is asked up to twice, as stage1:0 and stage1:1, for {slots: {edge: integer}} naming each null edge by its index and no other edge. The syndrome S c of the filled cochain is the verdict. The second ask carries the first syndrome in its prompt, after the line Guard syndrome:.",
+      "A reply with abstain true is judged by the rank test. abstention_matches_rank_test holds when the rank of the slot columns of S differs from the rank with the column of what the fixed values leave over. A false abstention is refused as FALSE_ABSTENTION. A true one is the typed refusal ABSTAIN_NOT_MATERIALISABLE. Both carry the two ranks.",
+      "guard_green_within_one_retry holds when the syndrome of the first fill is zero, or of the second. Otherwise the run is refused as GUARD_RED_AFTER_RETRY with every syndrome. A step with no reply is refused as NO_ADMISSIBLE_REPLY, naming the stage.",
+      "The second stage is asked with the filled values and answers {potential: [integer, ...]}, one exact integer for each vertex. stage2_potential_explains_slots holds when the coboundary of the potential is the filled cochain. The run is certified as MATERIALISED after one fill and MATERIALISED_AFTER_RETRY after two, with the syndromes and the residual."
+    ],
+    "boundaries": [
+      "A materialisation says the filled values close every cycle and that the potential explains them. It does not say the fill is the only one: any exact integers that close every cycle are accepted.",
+      "Slots are filled with integers. A task whose slots can be filled only with a fraction has no fill.",
+      "The guard is checked for rank only. A guard that is complete says nothing about the values."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf36.rs",
+      "language": "Rust",
+      "sha256": "3a51bea00eb3d2d28b147e9efc19127c0153aa79676beb58e01e588659634030"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: slots, syndromes and the potential are exact integers of any size, and the rank test is a rank over the rationals. Cycle matrices, syndromes and ranks are worked by hand in the tests. Not B: tested on examples, not proven.",
+      "G3": "Each unreadable part of a task, a reply and a potential has its own reason, each failed predicate is its own refusal, and a missing reply is refused naming the stage. No unwrap or expect. The index is by an edge the graph produced, in a row or a list of values of one entry for each edge. A task whose values are not one for each edge is refused before any index is made. Not B: panic-freedom is tested, not proven.",
+      "G4": "26 WF36 tests assert the registry entry, a first fill certified with its potential, a second fill asked with the syndrome of the first, the second stage asked with the filled values, a fill that stays red with every syndrome, a third reply not accepted, a potential that drifts from the slots, an abstention that is true, false or in the second reply, a guard that leaves a cycle out with its witness, a guard that lists a row twice or in any order, another graph, a graph without cycles, a task with no slots, a missing reply naming the stage, a fill that must name every slot, each malformed reply by its reason, integers of any size and a task the host cannot read. 6 mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 95/95. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 12, cognitive complexity is not measured for Rust, nesting 2; ceiling B, recorded B."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T17:36:31Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v14-test.run.json",
+        "sha256": "17ef478d1b74ab70cad46eaa772ca4e18327699ee8511ea6c9add106152e0213",
+        "note": "1145 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-clippy.run.json",
+        "sha256": "516525b28043fa1053b02b8c542e2b8eca12d687623187f8467c7159f8bb86fe",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-fmt.run.json",
+        "sha256": "a85094698679cc852f3b9040802cdb56d57909c3b9b0a95fe5d56892b53ad0e9",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.run.json",
+        "sha256": "070d448da3bce97bffdcb2c8095d7c52d792ea634bc321ba3b4af64b3b9576b0",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.json",
+        "sha256": "7533090aaa56c6585bb5e4ac4c61603e7dd6ba63ce6e31c95b1ee49b5bf6a97a",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 95,
+      "survived": 0,
+      "demonstrably_equivalent": 6,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf36.mutation.json",
+        "sha256": "b6baf0dab4dffc5d4ab89871e1b6e461bf1d61979f18320ef6c8b9ade3979a38",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 101 mutants"
+      }
+    }
+  },
+  "history": []
+}

@@ -259,6 +259,184 @@ LAYER4_RESULTS = {
 }
 
 
+LAYER5_RESULTS = {
+    ('WF12', 'gauge_shifted_ranks_certified'): (
+        'ARMS_COMPARED',
+        {'gauge_fixed_ranks': {'baseline': 0, 'mechanism': 2, 'null_control': -1, 'random_control': 1},
+         'paired_totals': {'baseline->mechanism': 2,
+                           'baseline->null_control': -1,
+                           'null_control->mechanism': 3,
+                           'random_control->mechanism': 1},
+         'residual': [0, 0, 0, 0]},
+    ),
+    ('WF12', 'inflated_mechanism_effect'): (
+        'RANK_DIFFERENCES_MATCH_PAIRED_TOTALS',
+        {'failed': ['rank_differences_match_paired_totals'],
+         'gauge_fixed_ranks': {'baseline': 0, 'mechanism': 4, 'null_control': -1, 'random_control': 1},
+         'paired_totals': {'baseline->mechanism': 2,
+                           'baseline->null_control': -1,
+                           'null_control->mechanism': 3,
+                           'random_control->mechanism': 1},
+         'residual': [-2, -2, -2, 0]},
+    ),
+    ('WF12', 'random_control_norm_differs'): (
+        'CONTROLS_UNMATCHED',
+        {'failed': ['random_norm_matches_mechanism'],
+         'squared_norms': {'mechanism': 25, 'random_control': 3}},
+    ),
+    ('WF12', 'arm_on_different_items'): (
+        'MALFORMED_CANDIDATE',
+        {'reason': 'every arm must answer the same items'},
+    ),
+    ('WF36', 'materialised_first_try'): (
+        'MATERIALISED',
+        {'residual': [0, 0, 0, 0, 0], 'syndromes': [[0, 0]]},
+    ),
+    ('WF36', 'repaired_from_shared_syndrome'): (
+        'MATERIALISED_AFTER_RETRY',
+        {'residual': [0, 0, 0, 0, 0], 'syndromes': [[0, 1], [0, 0]]},
+    ),
+    ('WF36', 'abstain_on_closed_nonexact_cycle'): (
+        'ABSTAIN_NOT_MATERIALISABLE',
+        {'rank_S_slots': 1, 'rank_augmented': 2},
+    ),
+    ('WF36', 'partial_guard_false_green'): (
+        'PARTIAL_GUARD',
+        {'full_syndrome': [0, 1], 'guard_syndrome': [0], 'kernel_witness': [0, 0, 0, 1, 0]},
+    ),
+    ('WF36', 'lazy_false_abstention'): (
+        'FALSE_ABSTENTION',
+        {'rank_S_slots': 2, 'rank_augmented': 2},
+    ),
+    ('WF36', 'guard_red_after_retry'): (
+        'GUARD_RED_AFTER_RETRY',
+        {'syndromes': [[0, 1], [0, 1]]},
+    ),
+    ('WF36', 'stage2_drifts_from_slots'): (
+        'STAGE2_POTENTIAL_EXPLAINS_SLOTS',
+        {'failed': ['stage2_potential_explains_slots'],
+         'residual': [0, 0, 0, -1, 1],
+         'syndromes': [[0, 0]]},
+    ),
+    ('WF39', 'all_guards_pass'): (
+        'ALL_GUARDS_PASS',
+        {'residual_evidence': []},
+    ),
+    ('WF39', 'self_certifying_receipt'): (
+        'AUTHORITY_ESCALATION',
+        {'escalating_fields': ['verdict'], 'residual_evidence': ['authority']},
+    ),
+    ('WF39', 'authority_escalation'): (
+        'AUTHORITY_ESCALATION',
+        {'escalating_fields': [], 'residual_evidence': ['authority']},
+    ),
+    ('WF39', 'stale_nonce'): (
+        'FRESH_NONCE',
+        {'failed': ['fresh_nonce'], 'residual_evidence': ['fresh_nonce']},
+    ),
+    ('WF39', 'truthful_nonzero_defect'): (
+        'ZERO_DEFECT',
+        {'failed': ['zero_defect'], 'residual_evidence': ['zero_defect']},
+    ),
+    ('WF39', 'trivial_self_chosen_payload'): (
+        'PAYLOAD_NOT_BOUND_TO_TASK',
+        {'residual_evidence': ['payload_bound_to_task']},
+    ),
+    ('WF39', 'witness_bound_to_other_payload'): (
+        'WITNESS_BOUND_TO_PAYLOAD',
+        {'failed': ['witness_bound_to_payload', 'replay_match', 'zero_defect'],
+         'residual_evidence': ['witness_bound_to_payload', 'replay_match', 'zero_defect']},
+    ),
+    ('WF42', 'consistent_trace'): (
+        'TRACE_VALID',
+        {'Phi': 0, 'dual': [0, 0]},
+    ),
+    ('WF42', 'three_claim_cycle_obstructed'): (
+        'TRACE_OBSTRUCTED',
+        {'Phi': 1, 'dual': [1, 1, 1]},
+    ),
+    ('WF42', 'conclusion_contradicts_steps'): (
+        'CONCLUSION_MATCHES_STEPS',
+        {'Phi': 0, 'dual': [0, 0], 'failed': ['conclusion_matches_steps']},
+    ),
+    ('WF42', 'hidden_obstruction'): (
+        'HIDDEN_OBSTRUCTION',
+        {'Phi': 1, 'dual': [1, 1, 1]},
+    ),
+    ('WF42', 'non_minimal_correction'): (
+        'PRIMAL_EQUALS_DUAL',
+        {'Phi': 1, 'dual': [1, 1, 1], 'failed': ['primal_equals_dual']},
+    ),
+    ('WF42', 'unextractable_step'): (
+        'MALFORMED_CANDIDATE',
+        {'reason': 'extractor cannot parse step "b exceeds a by one"'},
+    ),
+    ('WF43', 'honest_gate'): (
+        'GATE_HONEST',
+        {'leaked': {}, 'probes': 11},
+    ),
+    ('WF43', 'keyword_adjudication'): (
+        'NO_ANSWER_FREE_REPLY_PASSES',
+        {'failed': ['no_answer_free_reply_passes', 'accepts_true_solution', 'gate_verifies_task'],
+         'leaked': {'constant_verdict': ['keyword'],
+                    'keyword_bait': ['keyword'],
+                    'templated_receipt': ['keyword']},
+         'probes': 11},
+    ),
+    ('WF43', 'receipt_or_answer'): (
+        'NO_ANSWER_FREE_REPLY_PASSES',
+        {'failed': ['no_answer_free_reply_passes', 'gate_verifies_task'],
+         'leaked': {'templated_receipt': ['has_field']},
+         'probes': 11},
+    ),
+    ('WF43', 'input_replacement_gate'): (
+        'NO_ANSWER_FREE_REPLY_PASSES',
+        {'failed': ['no_answer_free_reply_passes', 'accepts_true_solution', 'gate_verifies_task'],
+         'leaked': {'input_replacement': ['solves_own']},
+         'probes': 11},
+    ),
+    ('WF43', 'constant_reject_gate'): (
+        'ACCEPTS_TRUE_SOLUTION',
+        {'failed': ['accepts_true_solution', 'gate_verifies_task'], 'leaked': {}, 'probes': 11},
+    ),
+    ('WF43', 'slash_keyword_gate'): (
+        'NO_ANSWER_FREE_REPLY_PASSES',
+        {'failed': ['no_answer_free_reply_passes', 'gate_verifies_task'],
+         'leaked': {'wrong_answer_0': ['has_field', 'keyword'],
+                    'wrong_answer_1': ['has_field', 'keyword'],
+                    'wrong_answer_2': ['has_field', 'keyword'],
+                    'wrong_answer_3': ['has_field', 'keyword'],
+                    'wrong_answer_4': ['has_field', 'keyword']},
+         'probes': 11},
+    ),
+    ('WF48', 'committed_and_both_checkers_kill'): (
+        'COMMIT_REVEAL_CERTIFIED',
+        {'kills': {'residual.v1': '12/12', 'tree_integration.v1': '12/12'}},
+    ),
+    ('WF48', 'artifact_changed_after_commit'): (
+        'ARTIFACT_CHANGED_AFTER_COMMIT',
+        {},
+    ),
+    ('WF48', 'weak_checker_lets_mutant_survive'): (
+        'LENGTH_ONLY.V1:KILLS_EVERY_MUTANT',
+        {'failed': ['length_only.v1:kills_every_mutant'],
+         'kills': {'length_only.v1': '1/12', 'residual.v1': '12/12'}},
+    ),
+    ('WF48', 'committed_wrong_artifact'): (
+        'RESIDUAL.V1:ACCEPTS_ARTIFACT_AND_GAUGE',
+        {'failed': ['residual.v1:accepts_artifact_and_gauge',
+                    'residual.v1:kills_every_mutant',
+                    'tree_integration.v1:accepts_artifact_and_gauge',
+                    'tree_integration.v1:kills_every_mutant'],
+         'kills': {'residual.v1': '11/12', 'tree_integration.v1': '11/12'}},
+    ),
+    ('WF48', 'manifest_swapped_after_commit'): (
+        'MANIFEST_COMMITMENT_MATCHES',
+        {'failed': ['manifest_commitment_matches']},
+    ),
+}
+
+
 def _findings(detail):
     """What a verdict found, without the hashes in it."""
     return {key: value for key, value in detail.items() if 'sha256' not in key and key != 'head'}
@@ -274,6 +452,18 @@ def test_the_layer_4_results_name_every_fixture_of_the_layer_4_families():
 def test_a_layer_4_fixture_ends_with_the_code_and_the_findings_its_name_says(wf_id, name):
     result = run_fixture(REGISTRY[wf_id](), name)
     assert (result.code, _findings(result.detail)) == LAYER4_RESULTS[(wf_id, name)]
+
+
+def test_the_layer_5_results_name_every_fixture_of_the_layer_5_families():
+    families = {wf_id for wf_id, _name in LAYER5_RESULTS}
+    assert families == {'WF12', 'WF36', 'WF39', 'WF42', 'WF43', 'WF48'}
+    assert set(LAYER5_RESULTS) == {(wf_id, name) for wf_id in families for name in REGISTRY[wf_id]().fixtures()}
+
+
+@pytest.mark.parametrize(('wf_id', 'name'), sorted(LAYER5_RESULTS))
+def test_a_layer_5_fixture_ends_with_the_code_and_the_findings_its_name_says(wf_id, name):
+    result = run_fixture(REGISTRY[wf_id](), name)
+    assert (result.code, _findings(result.detail)) == LAYER5_RESULTS[(wf_id, name)]
 
 
 def test_authority_escalation_is_refused():
@@ -386,9 +576,10 @@ def test_the_rust_host_lists_every_hosted_family_under_the_registry_s_names():
     listed = operad_host.result(operad_host.call(('family', 'list')))['families']
     assert listed == [{'workflow': wf_id, 'name': cls.spec.name, 'host_check': cls.spec.host_check_id}
                       for wf_id, cls in HOSTED.items()]
-    assert set(HOSTED) == {'WF6', 'WF7', 'WF8', 'WF9', 'WF10', 'WF11', 'WF13', 'WF16', 'WF17', 'WF20', 'WF21',
-                           'WF23', 'WF24', 'WF25', 'WF26', 'WF27', 'WF29', 'WF30', 'WF31', 'WF32', 'WF33', 'WF38',
-                           'WF40', 'WF44', 'WF45', 'WF46', 'WF47'}
+    assert set(HOSTED) == {'WF6', 'WF7', 'WF8', 'WF9', 'WF10', 'WF11', 'WF12', 'WF13', 'WF16', 'WF17', 'WF20',
+                           'WF21', 'WF23', 'WF24', 'WF25', 'WF26', 'WF27', 'WF29', 'WF30', 'WF31', 'WF32', 'WF33',
+                           'WF36', 'WF38', 'WF39', 'WF40', 'WF42', 'WF43', 'WF44', 'WF45', 'WF46', 'WF47',
+                           'WF48'}
 
 
 @pytest.mark.parametrize('wf_id', sorted(HOSTED))

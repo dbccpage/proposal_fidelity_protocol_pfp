@@ -28,6 +28,7 @@ pub mod domains;
 pub mod fence;
 pub mod labelled;
 pub mod monic;
+pub mod reading;
 pub mod sealed;
 pub mod wf06;
 pub mod wf07;
@@ -35,6 +36,7 @@ pub mod wf08;
 pub mod wf09;
 pub mod wf10;
 pub mod wf11;
+pub mod wf12;
 pub mod wf13;
 pub mod wf16;
 pub mod wf17;
@@ -50,12 +52,17 @@ pub mod wf30;
 pub mod wf31;
 pub mod wf32;
 pub mod wf33;
+pub mod wf36;
 pub mod wf38;
+pub mod wf39;
 pub mod wf40;
+pub mod wf42;
+pub mod wf43;
 pub mod wf44;
 pub mod wf45;
 pub mod wf46;
 pub mod wf47;
+pub mod wf48;
 pub mod xor;
 
 use serde::{Deserialize, Serialize};
@@ -105,6 +112,7 @@ pub const FAMILIES: &[&Family] = &[
     &wf09::FAMILY,
     &wf10::FAMILY,
     &wf11::FAMILY,
+    &wf12::FAMILY,
     &wf13::FAMILY,
     &wf16::FAMILY,
     &wf17::FAMILY,
@@ -120,12 +128,17 @@ pub const FAMILIES: &[&Family] = &[
     &wf31::FAMILY,
     &wf32::FAMILY,
     &wf33::FAMILY,
+    &wf36::FAMILY,
     &wf38::FAMILY,
+    &wf39::FAMILY,
     &wf40::FAMILY,
+    &wf42::FAMILY,
+    &wf43::FAMILY,
     &wf44::FAMILY,
     &wf45::FAMILY,
     &wf46::FAMILY,
     &wf47::FAMILY,
+    &wf48::FAMILY,
 ];
 
 /// A question the host wants put to the model.

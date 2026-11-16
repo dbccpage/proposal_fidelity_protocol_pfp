@@ -1,0 +1,102 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf43.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf43.rs",
+      "language": "Rust",
+      "sha256": "58a876711d9fc44aa89e29f5a738387284bcd4322c9d9fd0a9289fd0e2b64243"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf43:v1",
+    "symbols": [
+      "OPERATIONS",
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task is a linear system A x = b with exactly one solution. A task that is not is refused before anything is asked.",
+      "The reply is {gate: {mode, checks}}: mode is all or any, and checks is a nonempty list of checks. A check is a list that starts with solves_task, solves_own, has_field, field_equals or keyword, and goes on with its arguments. A gate that is not of this form is malformed, and it is read whole before any probe is replayed.",
+      "The host replays the gate on these probes, in order: an empty object, a constant verdict, a constant refusal, a templated receipt, keyword bait, wrong answers in the same p/q form as the right one (each coordinate off by one, every coordinate off by one, the negative of the answer, every coordinate off by a half), and an input replacement. It records no_answer_free_reply_passes, accepts_true_solution and gate_verifies_task in that order.",
+      "Under all the gate passes a reply when every check does, and under any when one does. A check with the wrong number of arguments, a field name that is a list or an object, or an answer that is not a list of exact rationals does not pass. A field name that is not text names no field.",
+      "gate_verifies_task holds when, under all, some check is solves_task, and under any, every check is. All three held, the gate is certified as GATE_HONEST with the probes that leaked and the number of probes. Otherwise it is refused under the name of the first failed predicate."
+    ],
+    "boundaries": [
+      "The probes are a fixed set. A gate that is honest on them can still pass a reply they do not cover.",
+      "The operations see only the reply and the task, never a model."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf43.rs",
+      "language": "Rust",
+      "sha256": "58a876711d9fc44aa89e29f5a738387284bcd4322c9d9fd0a9289fd0e2b64243"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: the answer is read as exact rationals and tested by multiplying A x, and the wrong answers are off by exact amounts. The probes for the two-unknown example are listed in the tests. Not B: tested on examples, not proven.",
+      "G3": "Each unreadable task and gate has its own reason, each failed predicate is its own refusal with the probes that leaked, and a missing reply is refused without a predicate. No unwrap or expect, and no index. Not B: panic-freedom is tested, not proven.",
+      "G4": "28 WF43 tests assert the registry entry, a gate that checks the task and leaks nothing certified, one check that solves the task enough under either mode, a gate that adjudicates by keyword, one that accepts a receipt or an answer, one that checks the reply's own system, one that rejects everything, a keyword every answer in the right form has, the operations that held listed each time, a gate that verifies the task only under any, a check with the wrong number of arguments, a field named by a list, an object or something else, a field a reply lacks, a keyword looked for in text or in the canonical form of a field, field_equals with a value of any kind, probes that depend on the answer, the wrong answers in the same form, a task that must have one solution, each malformed gate by its reason and the gate read whole before any probe. Four mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 112/112. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 11, cognitive complexity is not measured for Rust, nesting 3; ceiling B, recorded B."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T17:36:31Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v14-test.run.json",
+        "sha256": "17ef478d1b74ab70cad46eaa772ca4e18327699ee8511ea6c9add106152e0213",
+        "note": "1145 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-clippy.run.json",
+        "sha256": "516525b28043fa1053b02b8c542e2b8eca12d687623187f8467c7159f8bb86fe",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-fmt.run.json",
+        "sha256": "a85094698679cc852f3b9040802cdb56d57909c3b9b0a95fe5d56892b53ad0e9",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.run.json",
+        "sha256": "070d448da3bce97bffdcb2c8095d7c52d792ea634bc321ba3b4af64b3b9576b0",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.json",
+        "sha256": "7533090aaa56c6585bb5e4ac4c61603e7dd6ba63ce6e31c95b1ee49b5bf6a97a",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 112,
+      "survived": 0,
+      "demonstrably_equivalent": 4,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf43.mutation.json",
+        "sha256": "b71e76666b0c09bc5cb80fe4f07183b89a9ab1bdc869b4357d4e0e4be34c1b88",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 116 mutants"
+      }
+    }
+  },
+  "history": []
+}

@@ -180,7 +180,18 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
      chain and recomputed, and WF23's custody audit of a judge packet (file
      hashes, the answer in no view of a file, the sealed checker, keyed tags
      on every output line).
-   - **Next.** The families of layers 5 to 8. Then the WF1-WF5 and WF52-WF54
+   - **4g (built, offline).** Layer 5: WF12, WF36, WF39, WF42, WF43 and
+     WF48. The host now reads a reply as a list of exact integers or an
+     object in one place (`families/reading.rs`), and on it WF12's paired
+     effects of four arms and their rank certificate, WF36's guarded staged
+     slot filling (guard rank, abstention by rank test, one retry on the
+     syndrome), WF39's authority guard vector over a payload and a receipt,
+     WF42's trace validation (the largest circulation of the claim graph
+     against the correction or the potential), WF43's replay of answer-free
+     probes against a proposed gate and WF48's commit-reveal with two
+     checkers that must accept the artifact and reject every hostile edit
+     of it.
+   - **Next.** The families of layers 6 to 8. Then the WF1-WF5 and WF52-WF54
      host checks, the run budget and run custody.
 5. **Retire Python `operads/`** (682 files) once nothing imports it, re-pin
    the canonical ID fixture, and score the Rust files that change.
@@ -218,8 +229,8 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
   derivation is written for them.
 - Python still validates reply schemas, routes statuses and keeps run
   custody (manifests, replay). Those move in slice 4.
-- After 4f the host checks WF6 to WF11, WF13, WF16, WF17, WF20, WF21, WF23
-  to WF27, WF29 to WF33, WF38, WF40, WF44, WF45, WF46 and WF47.
+- After 4g the host checks WF6 to WF13, WF16, WF17, WF20, WF21, WF23 to
+  WF27, WF29 to WF33, WF36, WF38 to WF40, WF42 to WF48.
   Every other family still runs its check and its sealed-value guard in
   Python. WF6 and WF22 grade with WF7's check and so reach the host for that
   part.
@@ -332,6 +343,27 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
   malformed in other words. No verdict, code, predicate, stage or prompt
   differed. Another 6,000 random runs of WF23 alone were identical. As
   before, that compares two checkers; it is not a model result.
+- The 4g host differs from the Python it replaces in these ways. A task
+  is read before the first question, so a malformed one is refused as
+  `BAD_TASK` where Python crashed or called the first reply malformed:
+  WF12 items need integer `values`; WF36 edges must be pairs on the vertices
+  `0` to `n-1`, `values` one integer or `null` per edge and `guard_rows` rows
+  of the cycle matrix; WF39 needs `c` to be one integer per edge on a graph
+  of that kind; WF43 needs a rectangular `A` and `b` with one solution; WF48
+  needs a manifest with checkers, a commitment and `c`. A WF48 sealed salt
+  that is not text stops the run as malformed. A WF36 first stage that gets
+  no reply ends as `NO_ADMISSIBLE_REPLY` naming the stage, where Python
+  refused it as `GUARD_RED_AFTER_RETRY`. A WF42 step value is ASCII digits.
+  WF43 reads a non-text field as its canonical JSON, where Python used
+  `str()`, and a field name that is not text names no field. WF39 and WF43
+  compare values by exact type, so `1`, `1.0` and `true` are three values.
+  Old and new agree on 9,000 random runs of those six families (1,500
+  each) apart from those readings: 7,636 identical, 297 tasks now refused
+  before asking, 232 tasks both refuse in other words, 594 replies both
+  call malformed in other words, 95 runs on which the old check crashed and
+  146 WF36 runs on which the first stage had no reply. No verdict, code,
+  predicate or prompt differed otherwise. As before, that compares two
+  checkers; it is not a model result.
 - WF21 reads a position as a byte offset: one that is negative or too large
   to count is no match. The sealed parts of WF21 and WF23 are read by the
   host once the run starts, so a run without a usable sealed part is refused

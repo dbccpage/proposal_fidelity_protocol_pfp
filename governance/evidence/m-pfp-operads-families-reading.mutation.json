@@ -1,0 +1,83 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/reading.rs",
+  "target_sha256": "f11f4cf15231b4faf9a9ad04321a95df62bef9acefa3a253d452b1ed3b950f20",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf12 --test wf36 --test wf39 --test wf42 --test wf48",
+  "counts": {
+    "killed": 11,
+    "survived": 0,
+    "demonstrably_equivalent": 0,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "non-integer entries read as zero",
+      "old": "        .map(|entry| entry.as_int().cloned())\n        .collect()",
+      "new": "        .map(|entry| Some(entry.as_int().cloned().unwrap_or_default()))\n        .collect()",
+      "outcome": "killed"
+    },
+    {
+      "name": "non-list reads as empty",
+      "old": "        .as_list()?\n        .iter()",
+      "new": "        .as_list()\n        .unwrap_or(&[])\n        .iter()",
+      "outcome": "killed"
+    },
+    {
+      "name": "object check off",
+      "old": "    require(reply.is_map(), &format!(\"{stage} reply must be an object\"))?;",
+      "new": "    require(true, &format!(\"{stage} reply must be an object\"))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "object check inverted",
+      "old": "    require(reply.is_map(), &format!(\"{stage} reply must be an object\"))?;",
+      "new": "    require(!reply.is_map(), &format!(\"{stage} reply must be an object\"))?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "object reason drops the stage",
+      "old": "format!(\"{stage} reply must be an object\")",
+      "new": "format!(\"reply must be an object\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "integers under the wrong key",
+      "old": "        .get(key)\n        .and_then(integers)",
+      "new": "        .get(\"answers\")\n        .and_then(integers)",
+      "outcome": "killed"
+    },
+    {
+      "name": "integers under any key",
+      "old": "        .and_then(integers)\n        .ok_or_else(|| Stop::Malformed(format!(\"{key} must",
+      "new": "        .and_then(|found| integers(found).or(Some(Vec::new())))\n        .ok_or_else(|| Stop::Malformed(format!(\"{key} must",
+      "outcome": "killed"
+    },
+    {
+      "name": "integers under reason drops the key",
+      "old": "format!(\"{key} must be a list of exact integers\")",
+      "new": "format!(\"must be a list of exact integers\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "norm of the sum",
+      "old": "    values.iter().map(|value| value * value).sum()",
+      "new": "    values.iter().map(|value| value + value).sum()",
+      "outcome": "killed"
+    },
+    {
+      "name": "norm of the entries",
+      "old": "    values.iter().map(|value| value * value).sum()",
+      "new": "    values.iter().map(|value| value.clone()).sum()",
+      "outcome": "killed"
+    },
+    {
+      "name": "norm leaves out the first",
+      "old": "    values.iter().map(|value| value * value).sum()",
+      "new": "    values.iter().skip(1).map(|value| value * value).sum()",
+      "outcome": "killed"
+    }
+  ]
+}

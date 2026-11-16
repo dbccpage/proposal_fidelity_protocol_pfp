@@ -1,0 +1,132 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf48.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf48.rs",
+      "language": "Rust",
+      "sha256": "086e137555300d98431a7469fe46d01fb99f9c591b5134b968a58034582cfcf1"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf48-tests:v1",
+    "symbols": [
+      "sha",
+      "commit",
+      "manifest",
+      "standard",
+      "task_with",
+      "task",
+      "sealed",
+      "phi",
+      "committed",
+      "revealed",
+      "request",
+      "run_with",
+      "run_task",
+      "run",
+      "outcomes",
+      "malformed",
+      "bad_task",
+      "the_registry_names_the_family",
+      "a_committed_artifact_that_both_checkers_hold_to_is_certified",
+      "the_commit_and_the_reveal_are_asked_in_turn_with_the_commitment_between",
+      "task_on",
+      "the_residual_lets_each_part_of_a_graph_float_and_the_tree_integral_does_not",
+      "a_checker_that_only_counts_values_counts_the_vertices_and_not_the_edges",
+      "a_graph_with_one_vertex_has_its_potential_read_at_that_vertex",
+      "an_artifact_shifted_by_a_constant_is_the_same_potential",
+      "a_reveal_that_is_not_what_was_committed_is_refused",
+      "the_reveal_must_use_the_salt_that_was_committed_with",
+      "the_commitment_is_a_zero_byte_between_the_salt_and_the_artifact",
+      "an_artifact_that_is_not_the_potential_is_refused_by_both_checkers",
+      "only_the_mutant_that_lowers_a_wrong_entry_back_to_the_potential_is_accepted",
+      "a_potential_of_the_wrong_length_is_rejected_whatever_it_holds",
+      "a_checker_that_only_counts_values_lets_every_mutant_but_one_live",
+      "the_mutants_are_the_bumps_the_unequal_swaps_and_the_truncation",
+      "a_tree_checker_that_sees_an_inexact_cochain_rejects_what_the_tree_fits",
+      "the_checkers_are_judged_in_the_order_the_manifest_gives_them",
+      "a_manifest_that_was_swapped_after_it_was_committed_is_refused_before_anything_is_asked",
+      "a_manifest_committed_under_another_salt_does_not_match",
+      "a_manifest_committed_without_a_salt_matches_a_run_with_none",
+      "the_whole_manifest_is_committed_not_only_its_checkers",
+      "a_manifest_needs_two_different_registered_checkers",
+      "both_manifest_failures_are_listed_and_the_first_names_the_refusal",
+      "the_three_registered_checkers_are_the_pairs_a_manifest_may_name",
+      "the_commit_reply_must_be_an_object_with_a_commitment_that_is_text",
+      "the_reveal_must_be_an_object_with_an_artifact_of_integers_and_a_salt",
+      "a_run_that_loses_a_reply_says_which_step",
+      "a_task_must_commit_a_manifest_and_state_a_cochain",
+      "a_second_reply_after_the_reveal_is_not_accepted",
+      "the_sealed_salt_is_never_put_in_a_prompt"
+    ],
+    "owned_invariants": [
+      "Commitments are SHA-256 digests the tests rebuild themselves, and the kills of each checker are asserted as a count over the mutants.",
+      "Each of the five predicates and the commitment of the manifest is asserted failing alone, and a manifest swapped, or committed under another salt, is asserted refused before anything is asked.",
+      "Each unreadable reply and task is asserted by its reason, and the sealed salt is asserted never to appear in a prompt."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf48.rs",
+      "language": "Rust",
+      "sha256": "086e137555300d98431a7469fe46d01fb99f9c591b5134b968a58034582cfcf1"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 30 pass in the recorded run; the suite they belong to killed 104 of 104 eligible WF48 mutants.",
+      "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T17:36:31Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v14-test.run.json",
+        "sha256": "17ef478d1b74ab70cad46eaa772ca4e18327699ee8511ea6c9add106152e0213",
+        "note": "1145 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-clippy.run.json",
+        "sha256": "516525b28043fa1053b02b8c542e2b8eca12d687623187f8467c7159f8bb86fe",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-fmt.run.json",
+        "sha256": "a85094698679cc852f3b9040802cdb56d57909c3b9b0a95fe5d56892b53ad0e9",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.run.json",
+        "sha256": "070d448da3bce97bffdcb2c8095d7c52d792ea634bc321ba3b4af64b3b9576b0",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.json",
+        "sha256": "7533090aaa56c6585bb5e4ac4c61603e7dd6ba63ce6e31c95b1ee49b5bf6a97a",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

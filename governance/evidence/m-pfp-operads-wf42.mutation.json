@@ -1,0 +1,713 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/wf42.rs",
+  "target_sha256": "7f4c9aecd6e8292f26f2b069dbbe3e9bc6dc05c87745bd5c0fd1c21d6d044e7b",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test wf42",
+  "counts": {
+    "killed": 109,
+    "survived": 0,
+    "demonstrably_equivalent": 6,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "step label dropped",
+      "old": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "new": "Regex::new(r\"^\\s*([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "outcome": "killed"
+    },
+    {
+      "name": "step label required",
+      "old": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "new": "Regex::new(r\"^\\s*(?:\\w+:\\s*)([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "outcome": "killed"
+    },
+    {
+      "name": "step label may be anything",
+      "old": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "new": "Regex::new(r\"^\\s*(?:.+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "outcome": "killed"
+    },
+    {
+      "name": "step start not anchored",
+      "old": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "new": "Regex::new(r\"\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "outcome": "killed"
+    },
+    {
+      "name": "step end not anchored",
+      "old": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "new": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*\").ok()",
+      "outcome": "killed"
+    },
+    {
+      "name": "step leading space refused",
+      "old": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "new": "Regex::new(r\"^(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "outcome": "killed"
+    },
+    {
+      "name": "step trailing space refused",
+      "old": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "new": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)$\").ok()",
+      "outcome": "killed"
+    },
+    {
+      "name": "step space around the minus refused",
+      "old": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "new": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)-([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "outcome": "killed"
+    },
+    {
+      "name": "step space around the equals refused",
+      "old": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "new": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)=(-?[0-9]+)\\s*$\").ok()",
+      "outcome": "killed"
+    },
+    {
+      "name": "step first name may start with anything",
+      "old": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "new": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?(\\w+)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "outcome": "killed"
+    },
+    {
+      "name": "step second name may start with anything",
+      "old": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "new": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*(\\w+)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "outcome": "killed"
+    },
+    {
+      "name": "step names are one letter",
+      "old": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "new": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z])\\s*-\\s*([a-z])\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "outcome": "killed"
+    },
+    {
+      "name": "step value has no sign",
+      "old": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "new": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*([0-9]+)\\s*$\").ok()",
+      "outcome": "killed"
+    },
+    {
+      "name": "step value is one digit",
+      "old": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "new": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9])\\s*$\").ok()",
+      "outcome": "killed"
+    },
+    {
+      "name": "step value may be empty",
+      "old": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "new": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]*)\\s*$\").ok()",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "A step with no digits matches the looser pattern, but its value then fails to parse as an integer, so the step is refused with the same reason."
+    },
+    {
+      "name": "step value may be a decimal",
+      "old": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9]+)\\s*$\").ok()",
+      "new": "Regex::new(r\"^\\s*(?:\\w+:\\s*)?([a-z]\\w*)\\s*-\\s*([a-z]\\w*)\\s*=\\s*(-?[0-9.]+)\\s*$\").ok()",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "Text with a point in it matches the looser pattern, but it does not parse as an integer, so the step is refused with the same reason."
+    },
+    {
+      "name": "claim steps must be strings reason changed",
+      "old": "Stop::Malformed(\"trace steps must be strings\".to_owned())",
+      "new": "Stop::Malformed(String::new())",
+      "outcome": "killed"
+    },
+    {
+      "name": "claim head and tail swapped",
+      "old": "        let head = found.get(1)?.as_str().to_owned();\n        let tail = found.get(2)?.as_str().to_owned();",
+      "new": "        let head = found.get(2)?.as_str().to_owned();\n        let tail = found.get(1)?.as_str().to_owned();",
+      "outcome": "killed"
+    },
+    {
+      "name": "claim value negated",
+      "old": "        let value = found.get(3)?.as_str().parse().ok()?;",
+      "new": "        let value = found.get(3)?.as_str().parse().ok().map(|value: BigInt| -value)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "claim reason changed",
+      "old": "format!(\"extractor cannot parse step {text:?}\")",
+      "new": "format!(\"extractor cannot parse step\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "trace limit is seven",
+      "old": "pub const LIMIT: usize = 8;",
+      "new": "pub const LIMIT: usize = 7;",
+      "outcome": "killed"
+    },
+    {
+      "name": "trace limit is nine",
+      "old": "pub const LIMIT: usize = 8;",
+      "new": "pub const LIMIT: usize = 9;",
+      "outcome": "killed"
+    },
+    {
+      "name": "trace limit unchecked",
+      "old": "    require(edges.len() <= LIMIT, \"trace graphs are limited to 8 claims\")?;",
+      "new": "    require(true, \"trace graphs are limited to 8 claims\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "trace limit exclusive",
+      "old": "    require(edges.len() <= LIMIT, \"trace graphs are limited to 8 claims\")?;",
+      "new": "    require(edges.len() < LIMIT, \"trace graphs are limited to 8 claims\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "trace limit reason changed",
+      "old": "\"trace graphs are limited to 8 claims\"",
+      "new": "\"\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "circulations tried in another order",
+      "old": "                [-1, 0, 1].map(|step| {",
+      "new": "                [1, 0, -1].map(|step| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "circulations without a zero entry",
+      "old": "                [-1, 0, 1].map(|step| {",
+      "new": "                [-1, 1, 1].map(|step| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "circulations without a negative entry",
+      "old": "                [-1, 0, 1].map(|step| {",
+      "new": "                [0, 0, 1].map(|step| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "circulations without a positive entry",
+      "old": "                [-1, 0, 1].map(|step| {",
+      "new": "                [-1, 0, 0].map(|step| {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only the empty circulation tried",
+      "old": "    for _ in edges {\n        candidates",
+      "new": "    for _ in 0..0 {\n        candidates",
+      "outcome": "killed"
+    },
+    {
+      "name": "best starts above zero",
+      "old": "    let mut best = BigInt::zero();",
+      "new": "    let mut best = BigInt::from(-1);",
+      "outcome": "killed"
+    },
+    {
+      "name": "first circulation is not zero",
+      "old": "    let mut found = vec![0; edges.len()];",
+      "new": "    let mut found = vec![1; edges.len()];",
+      "outcome": "killed"
+    },
+    {
+      "name": "net starts from the vertices",
+      "old": "        let mut net = vec![0_i64; graph.names().len()];",
+      "new": "        let mut net = vec![0_i64; graph.names().len() + 1];",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "The extra entry is never changed by an edge and stays zero, so the test that every entry is zero is unchanged."
+    },
+    {
+      "name": "flow leaves the tail",
+      "old": "                *slot -= i64::from(step);\n            }\n            if let Some(slot) = net.get_mut(to) {",
+      "new": "                *slot += i64::from(step);\n            }\n            if let Some(slot) = net.get_mut(to) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "flow enters the head",
+      "old": "            if let Some(slot) = net.get_mut(to) {\n                *slot += i64::from(step);",
+      "new": "            if let Some(slot) = net.get_mut(to) {\n                *slot -= i64::from(step);",
+      "outcome": "killed"
+    },
+    {
+      "name": "flow leaves nothing",
+      "old": "                *slot -= i64::from(step);",
+      "new": "                *slot -= 0;",
+      "outcome": "killed"
+    },
+    {
+      "name": "flow enters nothing",
+      "old": "                *slot += i64::from(step);",
+      "new": "                *slot += 0;",
+      "outcome": "killed"
+    },
+    {
+      "name": "worth is the sum of the signs",
+      "old": "            .map(|(&step, value)| BigInt::from(step) * value)",
+      "new": "            .map(|(&step, value)| BigInt::from(step) + value)",
+      "outcome": "killed"
+    },
+    {
+      "name": "worth ignores the sign",
+      "old": "            .map(|(&step, value)| BigInt::from(step) * value)",
+      "new": "            .map(|(&step, value)| BigInt::from(step.abs()) * value)",
+      "outcome": "killed"
+    },
+    {
+      "name": "worth is the values",
+      "old": "            .map(|(&step, value)| BigInt::from(step) * value)",
+      "new": "            .map(|(&step, value)| BigInt::from(step * step) * value)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a circulation needs one balanced vertex",
+      "old": "        if net.iter().all(|at| *at == 0) && worth > best {",
+      "new": "        if net.iter().any(|at| *at == 0) && worth > best {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a circulation need not be balanced",
+      "old": "        if net.iter().all(|at| *at == 0) && worth > best {",
+      "new": "        if worth > best {",
+      "outcome": "killed"
+    },
+    {
+      "name": "balanced or worth",
+      "old": "        if net.iter().all(|at| *at == 0) && worth > best {",
+      "new": "        if net.iter().all(|at| *at == 0) || worth > best {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a tie replaces the best",
+      "old": "        if net.iter().all(|at| *at == 0) && worth > best {",
+      "new": "        if net.iter().all(|at| *at == 0) && worth >= best {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a tie... lower worth wins",
+      "old": "        if net.iter().all(|at| *at == 0) && worth > best {",
+      "new": "        if net.iter().all(|at| *at == 0) && worth < best {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a worse circulation kept",
+      "old": "            best = worth;\n            found = flow;",
+      "new": "            best = worth;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the best is not recorded",
+      "old": "            best = worth;\n            found = flow;",
+      "new": "            found = flow;",
+      "outcome": "killed"
+    },
+    {
+      "name": "rationals of the values",
+      "old": "    values.iter().cloned().map(Rational::from_integer).collect()",
+      "new": "    values.iter().cloned().map(|value| Rational::from_integer(value + 1)).collect()",
+      "outcome": "killed"
+    },
+    {
+      "name": "root stops at the first vertex",
+      "old": "    while let Some(Some((above, _, _))) = forest.parent.get(vertex) {\n        vertex = *above;\n    }",
+      "new": "    if let Some(Some((above, _, _))) = forest.parent.get(vertex) {\n        vertex = *above;\n    }",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness phi dropped",
+      "old": "        (\"Phi\", Datum::Int(phi.clone())),",
+      "new": "        (\"Phi\", Datum::Int(BigInt::zero())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness key renamed",
+      "old": "        (\"Phi\", Datum::Int(phi.clone())),",
+      "new": "        (\"phi\", Datum::Int(phi.clone())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness dual key renamed",
+      "old": "        (\"dual\", Datum::List(flow.collect())),",
+      "new": "        (\"flow\", Datum::List(flow.collect())),",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness flow negated",
+      "old": "    let flow = flow.iter().map(|&step| Datum::Int(BigInt::from(step)));",
+      "new": "    let flow = flow.iter().map(|&step| Datum::Int(BigInt::from(-step)));",
+      "outcome": "killed"
+    },
+    {
+      "name": "correction key renamed",
+      "old": "        .get(\"correction\")\n        .and_then(integers)",
+      "new": "        .get(\"corrections\")\n        .and_then(integers)",
+      "outcome": "killed"
+    },
+    {
+      "name": "correction reason changed",
+      "old": "Stop::Malformed(\"correction must be a list of exact integers\".to_owned())",
+      "new": "Stop::Malformed(String::new())",
+      "outcome": "killed"
+    },
+    {
+      "name": "correction count unchecked",
+      "old": "    require(correction.len() == values.len(), \"one correction per step\")?;",
+      "new": "    require(true, \"one correction per step\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "correction count at most the steps",
+      "old": "    require(correction.len() == values.len(), \"one correction per step\")?;",
+      "new": "    require(correction.len() <= values.len(), \"one correction per step\")?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "correction reason one changed",
+      "old": "\"one correction per step\"",
+      "new": "\"\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "correction added to the steps",
+      "old": "        .map(|(value, change)| value - change)",
+      "new": "        .map(|(value, change)| value + change)",
+      "outcome": "killed"
+    },
+    {
+      "name": "correction not applied",
+      "old": "        .map(|(value, change)| value - change)",
+      "new": "        .map(|(value, _)| value.clone())",
+      "outcome": "killed"
+    },
+    {
+      "name": "closing check inverted",
+      "old": "        graph.defect(&rationals_of(&corrected)).is_zero(),",
+      "new": "        !graph.defect(&rationals_of(&corrected)).is_zero(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "closing check always holds",
+      "old": "        graph.defect(&rationals_of(&corrected)).is_zero(),",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "closing check of the uncorrected steps",
+      "old": "        graph.defect(&rationals_of(&corrected)).is_zero(),",
+      "new": "        graph.defect(&rationals_of(values)).is_zero(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "correction size is a signed sum",
+      "old": "    let size: BigInt = correction.iter().map(Signed::abs).sum();",
+      "new": "    let size: BigInt = correction.iter().cloned().sum();",
+      "outcome": "killed"
+    },
+    {
+      "name": "correction size is the largest",
+      "old": "    let size: BigInt = correction.iter().map(Signed::abs).sum();",
+      "new": "    let size: BigInt = correction.iter().map(Signed::abs).max().unwrap_or_default();",
+      "outcome": "killed"
+    },
+    {
+      "name": "correction size at most Phi",
+      "old": "    checks.record(\"primal_equals_dual\", size == *phi, &witness);",
+      "new": "    checks.record(\"primal_equals_dual\", size <= *phi, &witness);",
+      "outcome": "killed"
+    },
+    {
+      "name": "correction size at least Phi",
+      "old": "    checks.record(\"primal_equals_dual\", size == *phi, &witness);",
+      "new": "    checks.record(\"primal_equals_dual\", size >= *phi, &witness);",
+      "outcome": "killed"
+    },
+    {
+      "name": "correction size always Phi",
+      "old": "    checks.record(\"primal_equals_dual\", size == *phi, &witness);",
+      "new": "    checks.record(\"primal_equals_dual\", true, &witness);",
+      "outcome": "killed"
+    },
+    {
+      "name": "obstruction stands when a check failed",
+      "old": "    if checks.certified() {\n        Ok(typed_refusal(\"TRACE_OBSTRUCTED\", witness))",
+      "new": "    if !checks.certified() {\n        Ok(typed_refusal(\"TRACE_OBSTRUCTED\", witness))",
+      "outcome": "killed"
+    },
+    {
+      "name": "obstruction always stands",
+      "old": "    if checks.certified() {\n        Ok(typed_refusal(\"TRACE_OBSTRUCTED\", witness))",
+      "new": "    if true {\n        Ok(typed_refusal(\"TRACE_OBSTRUCTED\", witness))",
+      "outcome": "killed"
+    },
+    {
+      "name": "obstruction code renamed",
+      "old": "\"TRACE_OBSTRUCTED\"",
+      "new": "\"TRACE_OBSTRUCT\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "obstruction is a refusal",
+      "old": "        Ok(typed_refusal(\"TRACE_OBSTRUCTED\", witness))",
+      "new": "        Ok(refused(\"TRACE_OBSTRUCTED\", witness))",
+      "outcome": "killed"
+    },
+    {
+      "name": "failed obstruction code renamed",
+      "old": "        Ok(checks.judge(CERTIFIED_CODE, witness))\n    }\n}\n\n/// The steps are a coboundary",
+      "new": "        Ok(checks.judge(\"TRACE_OBSTRUCTED\", witness))\n    }\n}\n\n/// The steps are a coboundary",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "The failed checks refuse under the name of the first that failed, so the code passed to judge is not used on this branch."
+    },
+    {
+      "name": "potential key renamed",
+      "old": "    let given = reply.get(\"potential\").filter(|given| given.is_map());",
+      "new": "    let given = reply.get(\"phi\").filter(|given| given.is_map());",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential need not be an object",
+      "old": "    let given = reply.get(\"potential\").filter(|given| given.is_map());",
+      "new": "    let given = reply.get(\"potential\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential object reason changed",
+      "old": "Stop::Malformed(\"potential object required\".to_owned())",
+      "new": "Stop::Malformed(String::new())",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential entries read as zero",
+      "old": "        .by_name(given, |entry| entry.as_int().cloned())",
+      "new": "        .by_name(given, |entry| Some(entry.as_int().cloned().unwrap_or_default()))",
+      "outcome": "killed"
+    },
+    {
+      "name": "potential reason changed",
+      "old": "Stop::Malformed(\"potential must be an exact int\".to_owned())",
+      "new": "Stop::Malformed(String::new())",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual swapped",
+      "old": "        .residual(&rationals_of(values), &rationals_of(&potential));",
+      "new": "        .residual(&rationals_of(&potential), &rationals_of(values));",
+      "outcome": "killed"
+    },
+    {
+      "name": "residual one zero is enough",
+      "old": "        residual.iter().all(Zero::is_zero),\n        &Datum::from(potential.clone()),",
+      "new": "        residual.iter().any(Zero::is_zero),\n        &Datum::from(potential.clone()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "conclusion key renamed",
+      "old": "claim(reply.get(\"conclusion\"))?",
+      "new": "claim(reply.get(\"conclusions\"))?",
+      "outcome": "killed"
+    },
+    {
+      "name": "conclusion names looked up from the wrong end",
+      "old": "    let ends = place(&conclusion.tail).zip(place(&conclusion.head));",
+      "new": "    let ends = place(&conclusion.head).zip(place(&conclusion.tail));",
+      "outcome": "killed"
+    },
+    {
+      "name": "conclusion needs one known name",
+      "old": "    let ends = place(&conclusion.tail).zip(place(&conclusion.head));",
+      "new": "    let ends = place(&conclusion.tail).or(place(&conclusion.head)).zip(Some(0));",
+      "outcome": "killed"
+    },
+    {
+      "name": "every conclusion is forced",
+      "old": "    let joined = ends.filter(|&(tail, head)| root(&forest, tail) == root(&forest, head));",
+      "new": "    let joined = ends;",
+      "outcome": "killed"
+    },
+    {
+      "name": "conclusion forced when roots differ",
+      "old": "    let joined = ends.filter(|&(tail, head)| root(&forest, tail) == root(&forest, head));",
+      "new": "    let joined = ends.filter(|&(tail, head)| root(&forest, tail) != root(&forest, head));",
+      "outcome": "killed"
+    },
+    {
+      "name": "conclusion forced by the vertices",
+      "old": "    let joined = ends.filter(|&(tail, head)| root(&forest, tail) == root(&forest, head));",
+      "new": "    let joined = ends.filter(|&(tail, head)| tail == head);",
+      "outcome": "killed"
+    },
+    {
+      "name": "forced evidence swapped",
+      "old": "        Datum::text(conclusion.head.clone()),\n        Datum::text(conclusion.tail.clone()),\n    ]);\n    checks.record(\"conclusion_forced_by_steps\"",
+      "new": "        Datum::text(conclusion.tail.clone()),\n        Datum::text(conclusion.head.clone()),\n    ]);\n    checks.record(\"conclusion_forced_by_steps\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "conclusion difference taken from the tail",
+      "old": "        joined.and_then(|(tail, head)| Some(potential.get(head)? - potential.get(tail)?));",
+      "new": "        joined.and_then(|(tail, head)| Some(potential.get(tail)? - potential.get(head)?));",
+      "outcome": "killed"
+    },
+    {
+      "name": "conclusion difference is a sum",
+      "old": "        joined.and_then(|(tail, head)| Some(potential.get(head)? - potential.get(tail)?));",
+      "new": "        joined.and_then(|(tail, head)| Some(potential.get(head)? + potential.get(tail)?));",
+      "outcome": "killed"
+    },
+    {
+      "name": "conclusion value unchecked",
+      "old": "    let matches = difference.is_some_and(|difference| difference == conclusion.value);",
+      "new": "    let matches = difference.is_some();",
+      "outcome": "killed"
+    },
+    {
+      "name": "conclusion value must differ",
+      "old": "    let matches = difference.is_some_and(|difference| difference == conclusion.value);",
+      "new": "    let matches = difference.is_some_and(|difference| difference != conclusion.value);",
+      "outcome": "killed"
+    },
+    {
+      "name": "conclusion matches without a difference",
+      "old": "    let matches = difference.is_some_and(|difference| difference == conclusion.value);",
+      "new": "    let matches = difference.is_none_or(|difference| difference == conclusion.value);",
+      "outcome": "killed"
+    },
+    {
+      "name": "said value dropped",
+      "old": "        Datum::Int(conclusion.value),\n    ]);",
+      "new": "        Datum::Int(BigInt::zero()),\n    ]);",
+      "outcome": "killed"
+    },
+    {
+      "name": "said names swapped",
+      "old": "        Datum::text(conclusion.head),\n        Datum::text(conclusion.tail),\n        Datum::Int",
+      "new": "        Datum::text(conclusion.tail),\n        Datum::text(conclusion.head),\n        Datum::Int",
+      "outcome": "killed"
+    },
+    {
+      "name": "valid code renamed",
+      "old": "checks.judge(\"TRACE_VALID\", witness)",
+      "new": "checks.judge(\"TRACE_VALIDATED\", witness)",
+      "outcome": "killed"
+    },
+    {
+      "name": "stage renamed",
+      "old": "run.ask(\"solve\", run.prompt())?",
+      "new": "run.ask(\"trace\", run.prompt())?",
+      "outcome": "killed"
+    },
+    {
+      "name": "trace key renamed",
+      "old": "reply.get(\"trace\").and_then(Datum::as_list)",
+      "new": "reply.get(\"steps\").and_then(Datum::as_list)",
+      "outcome": "killed"
+    },
+    {
+      "name": "trace reason changed",
+      "old": "Stop::Malformed(\"trace list required\".to_owned())",
+      "new": "Stop::Malformed(String::new())",
+      "outcome": "killed"
+    },
+    {
+      "name": "status key renamed",
+      "old": "reply.get(\"status\").and_then(Datum::as_text)",
+      "new": "reply.get(\"state\").and_then(Datum::as_text)",
+      "outcome": "killed"
+    },
+    {
+      "name": "any status accepted",
+      "old": "    let status = status.filter(|status| matches!(*status, \"CONSISTENT\" | \"OBSTRUCTED\"));",
+      "new": "    let status = status.filter(|_| true);",
+      "outcome": "killed"
+    },
+    {
+      "name": "consistent status refused",
+      "old": "    let status = status.filter(|status| matches!(*status, \"CONSISTENT\" | \"OBSTRUCTED\"));",
+      "new": "    let status = status.filter(|status| matches!(*status, \"OBSTRUCTED\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "obstructed status refused",
+      "old": "    let status = status.filter(|status| matches!(*status, \"CONSISTENT\" | \"OBSTRUCTED\"));",
+      "new": "    let status = status.filter(|status| matches!(*status, \"CONSISTENT\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "status reason changed",
+      "old": "Stop::Malformed(\"status must be CONSISTENT or OBSTRUCTED\".to_owned())",
+      "new": "Stop::Malformed(String::new())",
+      "outcome": "killed"
+    },
+    {
+      "name": "steps given as the head first",
+      "old": "                    Datum::text(step.tail.clone()),\n                    Datum::text(step.head.clone()),",
+      "new": "                    Datum::text(step.head.clone()),\n                    Datum::text(step.tail.clone()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "graph reason changed",
+      "old": "Stop::Malformed(\"trace steps must name a graph\".to_owned())",
+      "new": "Stop::Malformed(String::new())",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "The edges are built here as a list of text pairs, which labelled::read always reads, so the refusal cannot be reached."
+    },
+    {
+      "name": "obstruction is any Phi",
+      "old": "    let obstruction = phi.is_positive();",
+      "new": "    let obstruction = !phi.is_zero();",
+      "equivalent": "Phi starts at zero and is replaced only by a larger value, so it is never negative: positive and nonzero are the same test.",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "obstruction is never",
+      "old": "    let obstruction = phi.is_positive();",
+      "new": "    let obstruction = false;",
+      "outcome": "killed"
+    },
+    {
+      "name": "obstruction is always",
+      "old": "    let obstruction = phi.is_positive();",
+      "new": "    let obstruction = true;",
+      "outcome": "killed"
+    },
+    {
+      "name": "status test inverted",
+      "old": "        (status == \"OBSTRUCTED\") == obstruction,",
+      "new": "        (status == \"OBSTRUCTED\") != obstruction,",
+      "outcome": "killed"
+    },
+    {
+      "name": "status test always holds",
+      "old": "        (status == \"OBSTRUCTED\") == obstruction,",
+      "new": "        true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "status test one-sided",
+      "old": "        (status == \"OBSTRUCTED\") == obstruction,",
+      "new": "        (status == \"OBSTRUCTED\") || !obstruction,",
+      "outcome": "killed"
+    },
+    {
+      "name": "hidden obstruction code renamed",
+      "old": "            \"HIDDEN_OBSTRUCTION\"",
+      "new": "            \"OBSTRUCTION_HIDDEN\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "false obstruction code renamed",
+      "old": "            \"FALSE_OBSTRUCTION\"",
+      "new": "            \"OBSTRUCTION_FALSE\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "branches swapped",
+      "old": "    if obstruction {\n        obstructed(reply, &named.graph, &values, &phi, witness, checks)",
+      "new": "    if !obstruction {\n        obstructed(reply, &named.graph, &values, &phi, witness, checks)",
+      "outcome": "killed"
+    },
+    {
+      "name": "hidden and false codes swapped",
+      "old": "        let code = if obstruction {",
+      "new": "        let code = if !obstruction {",
+      "outcome": "killed"
+    }
+  ]
+}

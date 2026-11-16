@@ -1,0 +1,131 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf42.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf42.rs",
+      "language": "Rust",
+      "sha256": "b7d0f0e80bb1b38aa27975670058aebc5c18432fdb8480e2dbeadbd55c5fc817"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf42-tests:v1",
+    "symbols": [
+      "sha",
+      "task",
+      "chain",
+      "cycle",
+      "potential",
+      "consistent",
+      "obstructed",
+      "request",
+      "run",
+      "outcomes",
+      "malformed",
+      "the_registry_names_the_family",
+      "a_consistent_trace_with_its_potential_and_conclusion_is_certified",
+      "the_prompt_is_the_family_prompt_for_the_task",
+      "an_obstructed_trace_with_a_minimal_correction_is_a_typed_refusal",
+      "any_minimal_correction_that_closes_the_cycle_will_do",
+      "a_correction_is_sized_by_adding_up_its_entries",
+      "a_correction_that_is_too_large_is_refused_by_its_size",
+      "a_correction_that_leaves_the_cycle_open_is_refused_by_its_cycle",
+      "an_obstruction_the_status_hides_is_refused_with_its_circulation",
+      "an_obstruction_claimed_where_there_is_none_is_refused",
+      "a_potential_that_does_not_explain_the_steps_is_refused",
+      "a_conclusion_the_steps_contradict_is_refused",
+      "a_conclusion_is_read_from_the_second_name_to_the_first",
+      "a_conclusion_joining_names_the_steps_do_not_join_is_not_forced",
+      "a_conclusion_naming_a_new_vertex_is_not_forced",
+      "a_conclusion_about_one_name_says_it_differs_from_itself_by_zero",
+      "the_extra_entries_of_a_potential_and_a_reply_are_ignored",
+      "an_obstructed_reply_needs_no_potential_or_conclusion",
+      "the_first_of_several_best_circulations_is_reported",
+      "parallel_steps_that_disagree_are_an_obstruction",
+      "parallel_steps_that_agree_are_consistent",
+      "a_step_that_names_one_vertex_twice_is_a_loop",
+      "an_obstruction_in_one_part_of_the_trace_is_found",
+      "the_steps_may_hold_integers_of_any_size",
+      "a_trace_of_eight_steps_is_read_and_one_of_nine_is_not",
+      "a_trace_of_no_steps_has_nothing_to_conclude_from",
+      "a_step_is_a_pair_of_lowercase_names_and_a_whole_number",
+      "a_step_that_is_not_text_stops_the_run",
+      "the_reply_must_be_an_object_with_a_trace_and_a_status",
+      "the_trace_is_checked_before_the_status_and_the_status_before_the_steps",
+      "a_correction_must_be_one_exact_integer_for_each_step",
+      "a_potential_must_give_an_exact_integer_for_every_name",
+      "a_conclusion_must_be_a_readable_step",
+      "the_potential_is_read_before_the_conclusion",
+      "a_missing_reply_stops_the_run",
+      "a_second_reply_is_not_accepted"
+    ],
+    "owned_invariants": [
+      "Circulations, Phi, corrections and potentials are worked by hand for each trace written in a test.",
+      "Each predicate is asserted failing alone, and a step is asserted by the form it must have.",
+      "Each unreadable reply, correction, potential and conclusion is asserted by its reason, in the order the host reads them."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf42.rs",
+      "language": "Rust",
+      "sha256": "b7d0f0e80bb1b38aa27975670058aebc5c18432fdb8480e2dbeadbd55c5fc817"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 36 pass in the recorded run; the suite they belong to killed 109 of 109 eligible WF42 mutants.",
+      "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 1; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-16T17:36:31Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v14-test.run.json",
+        "sha256": "17ef478d1b74ab70cad46eaa772ca4e18327699ee8511ea6c9add106152e0213",
+        "note": "1145 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-clippy.run.json",
+        "sha256": "516525b28043fa1053b02b8c542e2b8eca12d687623187f8467c7159f8bb86fe",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-fmt.run.json",
+        "sha256": "a85094698679cc852f3b9040802cdb56d57909c3b9b0a95fe5d56892b53ad0e9",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.run.json",
+        "sha256": "070d448da3bce97bffdcb2c8095d7c52d792ea634bc321ba3b4af64b3b9576b0",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v14-metrics.json",
+        "sha256": "7533090aaa56c6585bb5e4ac4c61603e7dd6ba63ce6e31c95b1ee49b5bf6a97a",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}
