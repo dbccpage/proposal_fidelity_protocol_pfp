@@ -5881,19 +5881,13 @@
     },
     {
       "atlas_id": "ATL-P008-005",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "Grading-basis statement; no derivation node.",
-      "proposed_derivation": {
-        "title": "Stage grade basis",
-        "claim": "Stage grades derive from executed syntax or checker fixtures, not level number.",
-        "hypotheses": [
-          "stage_status.py"
-        ],
-        "derivation": "Source-inspect stage_status.py and confirm each grade is computed from a recorded execution/fixture outcome.",
-        "obligations": []
-      }
+      "verdict": "partial",
+      "nodes": [
+        "AUDIT-P008-005"
+      ],
+      "relation": "narrows",
+      "note": "Derived in AUDIT-P008-005, with PFPDOMAIN-F055: GRADES=('NONE', 'SYNTAX', 'COMPUTED') excludes LEAN and GATED with 6/20/75 partition across stages 0..100 and pfp/domain/tower/checks.py plus reach/targets.py execute positive, stage-negative, and empty/flag-only fixture checks, whereas historical stage_status.py at 52cb5457 is outside this checkout and active pfp/domain/tower/stage_status.py dispatches statically via COMPUTED_LEVELS membership and level<=21 without invoking CheckerBinding.run.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P008-006",
@@ -5931,73 +5925,43 @@
     },
     {
       "atlas_id": "ATL-P008-009",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the evidence resolver's historical/active split.",
-      "proposed_derivation": {
-        "title": "Resolver no-fallback",
-        "claim": "Historical reads resolve from pinned Git blobs, active reads from v2 package resources, and a miss in one never falls back to the other.",
-        "hypotheses": [
-          "resolver.py"
-        ],
-        "derivation": "Replay the focused tests plus one control per direction removing the target resource; expect refusal, not fallback.",
-        "obligations": [
-          "Optional digest must be supplied for hash comparison"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P008-009"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P008-009: LevelEngineEvidenceResolver.read_bytes resolves v1 strictly from 40-hex pinned Git blobs (HISTORICAL_BYTES_UNAVAILABLE on miss) and v2 strictly from v2 package resources (ACTIVE_RESOURCE_UNAVAILABLE on miss) with bidirectional non-fallback and working-tree isolation; SHA-256 comparison (EVIDENCE_DIGEST_MISMATCH) executes when optional sha256 is supplied.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P008-010",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the runner's VERIFIED-on-missing-receipt behaviour.",
-      "proposed_derivation": {
-        "title": "150/150 label insufficiency",
-        "claim": "The historical runner can label a case VERIFIED when its receipt is missing or an exception occurs, so 150/150 does not imply 150 successful executions.",
-        "hypotheses": [
-          "run_150_tests_suite.py"
-        ],
-        "derivation": "Source-inspect the branches assigning VERIFIED; exhibit one input path (missing receipt) reaching VERIFIED.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P008-010"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P008-010: Retained Paper 008 Section 8 audit, c005_working_report.md (10 live queries), and test_c005_bakeoff.py counterexample specifications document that unarchived run_150_tests_suite.py at 52cb5457 mapped missing-receipt and exception branches to VERIFIED; across N=150 cases, C(152,2)=11,476 non-failing outcome triples yield PASSED+VERIFIED=150 versus 1 triple (150,0,0) under fail-closed PASSED/NOT_RUN/FAILED accounting.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P008-011",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the challenge census partition.",
-      "proposed_derivation": {
-        "title": "Challenge census partition",
-        "claim": "At a623568e: C011-C050 (40) delivered with two checker modules, C001 and C005 call for model measurements, C002-C004 and C006-C010 (8) are specifications only; C051 is delivered outside the range.",
-        "hypotheses": [
-          "Tree of commit a623568e"
-        ],
-        "derivation": "List each challenge folder and classify by presence of solver package and checker modules; check 40+2+8=50.",
-        "obligations": [
-          "Membership only; receipts and test content not evaluated"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P008-011"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P008-011: Retained historical_census_inventory.json and challenge_census.md at commit a623568eb0f853b968bc419bf06dfc6af256ab02 partition C001-C050 disjointly into 40 Category A solver/dual-checker packages (C011-C050), 2 Category B model-measurement entries (C001, C005), and 8 Category C specification blobs (C002-C004, C006-C010) (40+2+8=50), with C051 outside range under f_program_synthesis and explicit membership-only test/receipt caveats (C047 print-only AST, C048-C051 zero test files, C014 invalidated receipt, C015-C020 and C045-C051 no retained receipt).",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P008-012",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the retained mutation-suite results.",
-      "proposed_derivation": {
-        "title": "Mutation suite rejection",
-        "claim": "Retained September 28 runs show C011, C021, C031 suites rejecting 40, 40 and 45 mutation files, with C011/C031 dual-checker and C031 reference tests passing.",
-        "hypotheses": [
-          "Retained author test outputs"
-        ],
-        "derivation": "Recount rejected mutation files per suite from retained logs; optionally rerun.",
-        "obligations": [
-          "Untested failure modes remain"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P008-012"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P008-012: Historical commit a623568eb0f853b968bc419bf06dfc6af256ab02 census and retained September 28 author runs record 40, 40, and 45 rejected mutation files across C011, C021, and C031 (41, 41, and 47 pytest items plus 5 C011 dual-checker and 9 C031 reference-solver tests), while active reruns reject 40, 51 (40 original + 11 added), and 45 mutations with untested failure modes remaining open.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P008-013",
@@ -6021,37 +5985,23 @@
     },
     {
       "atlas_id": "ATL-P008-015",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the absence of a C001 measurement.",
-      "proposed_derivation": {
-        "title": "C001 measurement absence",
-        "claim": "C001 has no retained measurement; its McNemar module runs on a synthetic 200-case fixture with injected failures.",
-        "hypotheses": [
-          "C001 folder"
-        ],
-        "derivation": "Search the folder for run receipts; inspect the module to confirm synthetic generation.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P008-015"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P008-015: C001 retains zero empirical scoring receipts or trace logs across historical_census_inventory.json and the active repository (pipeline.json digests UNSET; 200-case GPU sweep listed under next_test_needed), while mcnemar_arms_evaluation.py runs deterministically on 200 generated cases with 80 modulo-5 injected Arm A failures (chi2 = 80, p = 2^-79).",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P008-016",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the K4 trace outcomes.",
-      "proposed_derivation": {
-        "title": "K4 trace outcomes",
-        "claim": "In eight K4 traces the correct repair appears exactly in the scratchpad and hinted conditions; baseline/masked runs end at Phi1 = 8, 6 (Qwen) and 5, 7 (Llama).",
-        "hypotheses": [
-          "Eight archived traces with matching SHA-256"
-        ],
-        "derivation": "Verify trace digests, then extract proposals and replay terminal Phi1 per trace.",
-        "obligations": [
-          "n=1 per cell; no stored final post-move result"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P008-016"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P008-016: All eight archived K4 traces (n = 1 per cell) match source_index.json byte, SHA-256, and Git blob digests; exact weighted L1 Phi1 replay matches 100% of embedded prefix logs, confirming tree-preserving coboundary repair appears in assisted scratchpad and hinted runs while unassisted baseline and partially_masked runs end at Phi1 = 8, 6 (Qwen) and 5, 7 (Llama) with no stored post-move host field on the final raw row.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P008-017",
@@ -6075,22 +6025,13 @@
     },
     {
       "atlas_id": "ATL-P008-019",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the offline runner's isolation and stub match counts.",
-      "proposed_derivation": {
-        "title": "Offline runner isolation",
-        "claim": "Offline mode opens no socket, reads no credential file, writes only outside the package, and the stub matches 3, 6, 3, 6 of 6 verdicts across conditions.",
-        "hypotheses": [
-          "Package runner",
-          "Offline flag"
-        ],
-        "derivation": "Replay the four named tests with socket and file-open hooks; count stub matches per condition.",
-        "obligations": [
-          "No model is measured"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P008-019"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P008-019: Hooked offline replay of retraction_benchmark_runner.py confirms zero socket calls, zero credential file reads, output writes restricted outside PACKAGE_ROOT (in-package paths refused with exit code 2), and 3, 6, 3, 6 of 6 verdict matches across baseline, hinted, scratchpad, and exact_oracle via OfflineStubClient \"gap=\" substring matching and host certificates without model measurement.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P008-020",
@@ -6128,91 +6069,53 @@
     },
     {
       "atlas_id": "ATL-P009-003",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node reviews the SemioticAudit fixture.",
-      "proposed_derivation": {
-        "title": "Semiotic fixture scope check",
-        "claim": "SemioticAudit compares two supplied strings only.",
-        "hypotheses": [
-          "pinned fixture source"
-        ],
-        "derivation": "Read the source and run the named test with an equal and a drifted string pair.",
-        "obligations": [
-          "No semantic equivalence decision"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P009-003"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P009-003: SemioticAudit.is_drift_detected compares self.signified != self.interpretant only, leaving self.signifier unread, parsing no source code, and making no semantic equivalence decision.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P009-004",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node reviews the StagnationRecord fixture.",
-      "proposed_derivation": {
-        "title": "Stagnation fixture scope check",
-        "claim": "StagnationRecord checks a supplied count, gauge flag and score.",
-        "hypotheses": [
-          "pinned fixture source"
-        ],
-        "derivation": "Source read plus a test varying each field independently.",
-        "obligations": []
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P009-004"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P009-004: StagnationRecord.should_trigger_review evaluates consecutive_stagnant_rounds >= threshold_rounds and locked_gauge and current_defect_norm > Fraction(0, 1) over supplied fields without inspecting search history, computing defect norms, or licensing a gauge break.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P009-005",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node reviews evaluate_terminal_reality_gate.",
-      "proposed_derivation": {
-        "title": "Toy verdict function scope check",
-        "claim": "The verdict function branches only on supplied scores and flags.",
-        "hypotheses": [
-          "pinned source"
-        ],
-        "derivation": "Enumerate the branch table over the supplied inputs and confirm no score is computed.",
-        "obligations": [
-          "Flag provenance unverified"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P009-005"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P009-005: evaluate_terminal_reality_gate routes 36 sign/boolean cells over supplied (phi1, gamma2, semiotic_clean, unbudgeted_debt) into 33 REFUSE, 2 PASS_TO_MASTER (including unbudgeted_debt=True when phi1 == gamma2 == 0 and semiotic_clean=True), and 1 OPEN_RESIDUAL without computing scores or checking flag provenance.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P009-006",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node reviews the Level15 proposal non-authority theorem.",
-      "proposed_derivation": {
-        "title": "Proposal constructors are not terminal",
-        "claim": "Under the Lean definitions, proposal constructors are distinct from the terminal constructor.",
-        "hypotheses": [
-          "Lean inductive definitions"
-        ],
-        "derivation": "Constructor disjointness (no-confusion); confirm by source read and fresh build.",
-        "obligations": [
-          "Runtime correspondence"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P009-006"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P009-006: Under Level15AuthorityCalculus.lean (built out-of-tree on Lean 4.35.0 with zero axioms), MSSN.Level15.StateKind constructor disjointness separates proposal constructors (.proposal, .candidateTrace) from .terminalAuthority, while runtime correspondence remains a separate implementation obligation.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P009-007",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node reviews the self-critique non-verification theorem.",
-      "proposed_derivation": {
-        "title": "Self-critique fails the independence predicate",
-        "claim": "A state compared with itself has equal hashes, so the unequal-hash independence predicate fails.",
-        "hypotheses": [
-          "Lean definition of independence as unequal hashes"
-        ],
-        "derivation": "Reflexivity of equality contradicts the predicate; source read and fresh build.",
-        "obligations": [
-          "No statistical independence claim"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P009-007"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P009-007: Source inspection of Level15AuthorityCalculus.lean and a fresh out-of-tree lake build under leanprover/lean4:v4.35.0 confirm that isIndependentVerifier compares gen.paramHash != ver.paramHash and theorem2_self_critique_non_verification refutes isIndependentVerifier gen gen via rfl with zero axioms, while distinct hashes carry no statistical-independence claim across models.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P009-008",
@@ -6226,21 +6129,13 @@
     },
     {
       "atlas_id": "ATL-P009-009",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node inspects the external TerminalizerPolicy header.",
-      "proposed_derivation": {
-        "title": "Header warning check",
-        "claim": "The pinned TerminalizerPolicy.lean header states its declarations were not typechecked.",
-        "hypotheses": [
-          "external file at the pinned commit"
-        ],
-        "derivation": "Fetch the pinned blob and read the header comment.",
-        "obligations": [
-          "File is outside this package"
-        ]
-      }
+      "verdict": "partial",
+      "nodes": [
+        "AUDIT-P009-009"
+      ],
+      "relation": "narrows",
+      "note": "Derived in AUDIT-P009-009: Confirmed exclusion of TerminalizerPolicy.lean from both Paper 009 and top-level lean4/ Lake targets (with lean4/README.md recording that TerminalizerPolicy has no grade because its build did not complete and completion_supplement.md recording package exclusion), and cross-checked tracked attestations in paper.md, paper_claim_ledger.md, and meta_03_symbol_game_proof_ledger.md regarding external 52cb5457f6c485ba548cfd292f6012a941ed22cf:lean4/TerminalizerPolicy.lean (raw external blob remains outside this split checkout).",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P009-010",
@@ -6278,146 +6173,89 @@
     },
     {
       "atlas_id": "ATL-P009-013",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node recounts the retained replay receipt refusing all ten proposals.",
-      "proposed_derivation": {
-        "title": "Retained replay recount",
-        "claim": "The stored replay receipt refuses all 10 recorded proposals, including the 4 obstruction claims.",
-        "hypotheses": [
-          "receipt at the pinned hash"
-        ],
-        "derivation": "Verify the receipt hash, then count refusal verdicts per record.",
-        "obligations": [
-          "Checker revision not pinned; no fresh replay"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P009-013"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P009-013: Verified LF Git-blob digests of demo2_r7_adversarial_debate_receipt.json (41256258...) and demo2_r7_adversarial_debate_1790210039.jsonl (329e2922...) against provenance.json and recounted all 10 replay trials in current_replay_statuses (5 Refused_UnverifiedInvolution_InvalidWitness and 1 Refused_AM_FSP_2_NullXi across the 6 sign-free claims plus 4 Refused_UnverifiedObstruction across the 4 obstruction claims, 10/10 with current_replay_admitted == false), noting that the later checker revision is unpinned and not freshly re-executed.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P009-014",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No derivation node records this falsifier replay of the audited gate.",
-      "proposed_derivation": {
-        "title": "Gate falsifier replay",
-        "claim": "At the audited commit the gate authorizes a triangle with cochain (1,1,1), cycle sum 3, because the lifted carrier zeros the cochain.",
-        "hypotheses": [
-          "repository checkout at the audited commit"
-        ],
-        "derivation": "Run the falsifier replay F1 at the pinned commit and read the cited lines.",
-        "obligations": [
-          "Needs the pinned external checkout"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P009-014"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P009-014: Verified exact rational cycle-sum invariance (cycle_sum(1, 1, 1) = 3 under all vertex potentials vs 0 after zero replacement) via triangle_cycle_sum.py, confirmed from retained adversary_gate_falsifiers.json and replay_adversary_gate_falsifiers.py that external commit 30609de2c3928238715375a9bac608256fa381d8 zeroed the lifted cochain ([3.0, 0.0] -> [0.0] -> [0.0, 0.0]) and emitted AUTHORIZED, and verified on current ops/adversary/ modules that Act IV preserves (1, 1, 1), refuses lowering lifts (ADVERSARY_LIFT_LOWERED_OBSTRUCTION), and blocks authorization (historical 30609de2 Git object remains external to this split checkout).",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P009-015",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No derivation node records this falsifier replay of the audited gate.",
-      "proposed_derivation": {
-        "title": "Gate falsifier replay",
-        "claim": "At the audited commit a critique blocks exactly when its text contains DEFECT or FLAW.",
-        "hypotheses": [
-          "repository checkout at the audited commit"
-        ],
-        "derivation": "Run replays F2a and F2b and read the cited line.",
-        "obligations": [
-          "Needs the pinned external checkout"
-        ]
-      }
+      "verdict": "partial",
+      "nodes": [
+        "AUDIT-P009-015"
+      ],
+      "relation": "narrows",
+      "note": "Derived in AUDIT-P009-015 (narrows ATL-P009-015 because external commit 30609de2c3928238715375a9bac608256fa381d8:adversary/use_cases/act_helpers.py line 642 resides outside this split checkout and neither F2a nor F2b probes 'FLAW'): Verified exact rational cycle-sum residual subtract((1, 1, 1), edge_differences((0, 1, 2))) == (0, 0, 3) (cycle_sum == 3 != 0) via triangle_cycle_sum.py, confirmed from retained adversary_gate_falsifiers.json and replay_adversary_gate_falsifiers.py that F2a failed to block while F2b ('No defect found; the certificate checks.') blocked, and verified on active ops/adversary/ and core_adversary modules plus all 50 critique vectors in python_evidence_parsers_v1.json that prose-only replies block as MALFORMED and structured fenced JSON critiques ignore prose keywords.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P009-016",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No derivation node records this falsifier replay of the audited gate.",
-      "proposed_derivation": {
-        "title": "Gate falsifier replay",
-        "claim": "With no critique the evidence reference is the run-key hash and the receipt reports annihilation and norm bounds as constants.",
-        "hypotheses": [
-          "repository checkout at the audited commit"
-        ],
-        "derivation": "Run replay F3 with an unbalanced witness and read the cited lines.",
-        "obligations": [
-          "Needs the pinned external checkout"
-        ]
-      }
+      "verdict": "partial",
+      "nodes": [
+        "AUDIT-P009-016"
+      ],
+      "relation": "narrows",
+      "note": "Derived in AUDIT-P009-016 (narrows ATL-P009-016 because external commit 30609de2c3928238715375a9bac608256fa381d8:adversary/use_cases/act_helpers.py lines 917-932 and 1008-1015 resides outside this split checkout so hardcoded-constant status across all paths rests on secondary Paper 009 attestations): Confirmed from retained adversary_gate_falsifiers.json (F3) and replay_adversary_gate_falsifiers.py that Act VII with no critique cited sha256('f3') (625e0f64...) and emitted annihilates_coboundary: true and norm_bounded: true on the unbalanced single-edge witness {'(0, 1)': '1'} (<eta, df> = 1 != 0 for f = (0, 1, 0)), and verified on active ops/adversary/ and core_adversary Act VII code that OBSTRUCTION_NON_VANISHING_RECEIPT omits both constant flags and is stored and cited by canonical JSON SHA-256 digest when Phi1 > 0 (while noting the remaining [epoch_id] fallback when no receipts exist on NOT_MEASURED runs).",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P009-017",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No derivation node records this falsifier replay of the audited gate.",
-      "proposed_derivation": {
-        "title": "Gate falsifier replay",
-        "claim": "The C012 challenge gate copy writes a full-agreement narrative for a refused run with no cases.",
-        "hypotheses": [
-          "repository checkout at the audited commit"
-        ],
-        "derivation": "Run replay F4 and grep the fixed sentence across the 36 copies.",
-        "obligations": [
-          "Needs the pinned external checkout"
-        ]
-      }
+      "verdict": "partial",
+      "nodes": [
+        "AUDIT-P009-017"
+      ],
+      "relation": "narrows",
+      "note": "Derived in AUDIT-P009-017 (narrows ATL-P009-017 because external commit 30609de2c3928238715375a9bac608256fa381d8 and the 36 historical challenge gate copies reside outside this split checkout and retained probe F4 checks four novella substring booleans and projected step payloads rather than raw 'verified repairs' / 'repaired coboundary' prose): Confirmed from adversary_gate_falsifiers.json (F4), replay_adversary_gate_falsifiers.py, and test_review_counts.py that calling generate_c011_novella and generate_c011_dda_steps on the C012 gate copy for a REFUSE run with 0 cases, 0 passed, and 5 defects satisfied '100% concordance across all cases', 'Total inference budget respected', 'zero duality gap on all 46 judge cases', 'C011', step_D [{'algorithm': 'exact_rational_simplex'}], and step_E [{'status': 'repaired'}], corroborated by tracked C011 (46 cases) vs C012 (68 cases) judge manifests and remediated zero-case REFERENCE_SELF_INCONSISTENT handling in commit_reveal_c051.py.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P009-018",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node reviews the corrected gate commits.",
-      "proposed_derivation": {
-        "title": "Corrected gate review",
-        "claim": "After the fixes, lifts carry the input cochain, lowering lifts are refused, unparsable critiques block, and AUTHORIZED requires a digest-bound ACCEPTED verdict.",
-        "hypotheses": [
-          "pinned correction commits"
-        ],
-        "derivation": "Rerun F1-F4 against the corrected code and the cited test files; each falsifier must now be rejected.",
-        "obligations": [
-          "Passing counts are historical"
-        ]
-      }
+      "verdict": "partial",
+      "nodes": [
+        "AUDIT-P009-018"
+      ],
+      "relation": "narrows",
+      "note": "Derived in AUDIT-P009-018 (narrows ATL-P009-018 because external fix commits a054c8ce17c3025ac5518aaeef29096a299519bb and e6fbc15cf011121597a82a1d199626063bedf7c0, the 36 historical challenge gate copies, and the pre-split 66- and 44-test suites reside outside this split checkout): Verified by direct inspection and execution across active ops/adversary/, code/rust/core_adversary/, all 93 vectors in python_evidence_parsers_v1.json, and commit_reveal_c051.py that Act IV transports the input cochain and bout_service refuses lowering lifts (ADVERSARY_LIFT_LOWERED_OBSTRUCTION), fenced JSON critique parsing blocks malformed replies, obstruction and Regge receipts omit constant witness flags and are stored/cited by canonical JSON SHA-256 digest, AUTHORIZED requires a candidate- and receipt-digest-bound ACCEPTED CandidateCheckV1 with NON_BLOCKING critique and live seats, and reference runs emit REFERENCE_SELF_CONSISTENT or REFERENCE_SELF_INCONSISTENT under GATE_SCOPE = REFERENCE_SOLVER_SELF_CHECK.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P010-001",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No derivation node records the source inspection of the five filter stages or the absence of a benchmark run.",
-      "proposed_derivation": {
-        "title": "Initial-draft filter stages are unmeasured",
-        "claim": "The five prompt-filter stages in the initial-draft package are elementary predicates and no benchmark run, runner or receipt for their effect sizes is retained.",
-        "hypotheses": [
-          "Package folder at commit 35e3d7ba"
-        ],
-        "derivation": "Finite check: read the five stage functions in paper.md and the test module, classify each as a fixed predicate; grep the repository history for any runner, results file or receipt referencing the filter benchmark and record that only copies of the initial-draft paper match.",
-        "obligations": [
-          "A negative repository search is bounded to the searched history and file types"
-        ]
-      }
+      "verdict": "partial",
+      "nodes": [
+        "AUDIT-P010-001"
+      ],
+      "relation": "narrows",
+      "note": "Derived in AUDIT-P010-001: Zero runs, runners, or receipts (and zero copies of removed test_010_adversarial_refusals_and_decimation.py) exist across Paper 010, dag/file_inventory.json, and the 266-commit ancestry of source_commit 78bc23b35 for the withdrawn five-stage prompt-filter benchmark; tracked Paper 010 Section 1, PFP10-00, and changelog records classify those five initial-draft stages at external commit 35e3d7ba2e0e20904d17a79cc395980f50a1a0f1 as unmeasured elementary predicates (raw external blob outside this split checkout), while pfp/domain/biochem and pfp/domain/ensemble are AST-isolated from Paper 010 with distinct exact-rational contracts and no recorded Paper 010 runs.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P010-002",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER010-FINITE-GROUP-ADMISSION"
+        "AUDIT-P010-002"
       ],
-      "relation": "supports",
-      "note": "The node certifies S3 and Q8 as groups but does not state nonabelianness, the orders, or the single involution of Q8.",
-      "proposed_derivation": {
-        "title": "Package S3 and Q8 tables",
-        "claim": "The package tables are groups of orders 6 and 8, both nonabelian, and Q8 has exactly one element of order 2.",
-        "hypotheses": [
-          "Admitted package tables"
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P010-002, with PAPER010-FINITE-GROUP-ADMISSION: symmetric_group_s3() and quaternion_group_q8() in code/holonomy.py construct validated non-abelian finite groups of orders 6 and 8 with element-order spectra [1, 2, 2, 2, 3, 3] and [1, 2, 4, 4, 4, 4, 4, 4], 18/36 and 40/64 commuting pairs, unique order-2 involution \"-e\" in Q8, 6 isomorphisms from C017 case S3 onto symmetric_group_s3(), and exact equality between base_13 Q8 and quaternion_group_q8().",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PAPER010-FINITE-GROUP-ADMISSION"
         ],
-        "derivation": "Exhaustive finite check: count elements; exhibit $g,h$ with $gh\\neq hg$ in each; compute the order of every element of Q8 and confirm only $-1$ satisfies $g^2=e, g\\neq e$.",
-        "obligations": []
+        "relation": "supports",
+        "note": "The node certifies S3 and Q8 as groups but does not state nonabelianness, the orders, or the single involution of Q8."
       }
     },
     {
@@ -6432,75 +6270,50 @@
     },
     {
       "atlas_id": "ATL-P010-004",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records lattice shape admission or the torus minimum of three rows and columns.",
-      "proposed_derivation": {
-        "title": "Lattice shape admission",
-        "claim": "The lattice constructor refuses non-integer or too-small sizes, and periodic lattices require at least three rows and three columns.",
-        "hypotheses": [
-          "holonomy.py lattice constructor"
-        ],
-        "derivation": "Finite check: enumerate sizes $0..3$ and non-integer values for open and periodic lattices and confirm refusal exactly below the stated minima; a size-2 periodic coordinate identifies the forward and reverse edge between two vertices, which motivates the bound of three.",
-        "obligations": [
-          "Implementation-level only; no general input fuzzing"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P010-004"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P010-004: Lattice.__post_init__ in code/holonomy.py enforces exact type(rows) is int, type(cols) is int, and type(periodic) is bool and enforces sharp bounds rows, cols >= 2 (open) and rows, cols >= 3 (periodic torus), where >= 3 prevents length-2 periodic wraparound edges from colliding with reversed interior endpoint pairs.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P010-005",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "The fixture-admission node checks that the five retained fixtures are consistent; it does not record loader refusal of inconsistent link lists.",
-      "proposed_derivation": {
-        "title": "Link-list refusal",
-        "claim": "The loader refuses a link list with an inverse mismatch, a missing direction or an edge outside the lattice.",
-        "hypotheses": [
-          "Admitted group and lattice"
-        ],
-        "derivation": "Finite check: from a valid fixture produce one mutation of each kind and confirm a typed refusal for each, with the unmutated fixture still admitted.",
-        "obligations": [
-          "Mutation set is finite, not an exhaustive malformed-input proof"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P010-005"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P010-005: connection_from_directed_links in code/holonomy.py enforces six validation guards refusing malformed keys/vertices, canonicalized alias duplicates, non-string or unknown group elements, missing forward or reverse directions, inverse mismatches U_{vu} != U_{uv}^{-1}, and out-of-lattice edges via the exact len(parsed) == 2 * len(links) cardinality invariant.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P010-006",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER010-WITNESS-ACCEPTANCE"
+        "AUDIT-P010-006"
       ],
-      "relation": "supports",
-      "note": "The node relies on rotation and reversal of plaquettes having matching ordered products but does not state the inversion and conjugation identities.",
-      "proposed_derivation": {
-        "title": "Plaquette orientation identities",
-        "claim": "For a plaquette word $U=u_1u_2u_3u_4$, reversal gives $U^{-1}$ and a cyclic start shift gives $u_1^{-1}Uu_1$.",
-        "hypotheses": [
-          "Any group"
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P010-006, with PAPER010-WITNESS-ACCEPTANCE: Under reversed-edge inversion U_{vu} = U_{uv}^{-1} in any group, reversing a plaquette at its basepoint inverts its product (W_rev = W^{-1}), shifting its starting vertex by k steps conjugates W by the prefix transport P_k (W^{(k)} = P_k^{-1} W P_k), and both S_3 and Q_8 realize non-self-inverse plaquette products W != W^{-1}.",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PAPER010-WITNESS-ACCEPTANCE"
         ],
-        "derivation": "Reversal traverses links backwards: $(u_1u_2u_3u_4)^{-1}=u_4^{-1}u_3^{-1}u_2^{-1}u_1^{-1}$. Starting at the second vertex gives $u_2u_3u_4u_1=u_1^{-1}(u_1u_2u_3u_4)u_1$. Finite witness: some $U\\neq U^{-1}$ in $S_3$ and $Q_8$.",
-        "obligations": []
+        "relation": "supports",
+        "note": "The node relies on rotation and reversal of plaquettes having matching ordered products but does not state the inversion and conjugation identities."
       }
     },
     {
       "atlas_id": "ATL-P010-007",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No paper-010 node states the gauge-conjugation law for plaquette products; RFA-CL023 concerns a different implementation.",
-      "proposed_derivation": {
-        "title": "Gauge covariance of plaquette products",
-        "claim": "Under $u_{xy}\\mapsto g_x u_{xy} g_y^{-1}$ the plaquette product based at $x_0$ becomes $g_{x_0} U g_{x_0}^{-1}$.",
-        "hypotheses": [
-          "Any group; links oriented with $u_{yx}=u_{xy}^{-1}$"
-        ],
-        "derivation": "Telescoping: $\\prod_i g_{x_i}u_{x_ix_{i+1}}g_{x_{i+1}}^{-1}=g_{x_0}(\\prod_i u_{x_ix_{i+1}})g_{x_4}^{-1}$ with $x_4=x_0$.",
-        "obligations": [
-          "Implementation agreement checked only on finite tests"
-        ]
-      }
+      "verdict": "matched",
+      "nodes": [
+        "AUDIT-P010-007"
+      ],
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P010-007: Under U'_{uv} = g_u U_{uv} g_v^{-1} and reversed-edge inversion U_{vu} = U_{uv}^{-1} in any group, intermediate vertex gauge factors cancel along each plaquette boundary so that W'_{r,c} = g_{v_0} W_{r,c} g_{v_0}^{-1} at first vertex v_0 = (r, c), preserving local flatness W_{r,c} = e iff W'_{r,c} = e.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P010-008",
@@ -6536,20 +6349,19 @@
     },
     {
       "atlas_id": "ATL-P010-011",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER010-RECTANGULAR-HOLONOMY-CLASSIFIER"
+        "AUDIT-P010-011"
       ],
-      "relation": "supports",
-      "note": "The classifier covers non-identity plaquettes witnessing non-flatness but not the count of exactly two affected plaquettes.",
-      "proposed_derivation": {
-        "title": "Single interior defect",
-        "claim": "Setting one interior link to $g\\neq e$ and all others to $e$ makes exactly the two plaquettes containing that link non-flat.",
-        "hypotheses": [
-          "Open or periodic rectangular lattice; link not on the boundary"
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P010-011, with PAPER010-RECTANGULAR-HOLONOMY-CLASSIFIER: Setting one non-boundary positive link to a != e and all remaining positive links to e on an admissible open or periodic rectangular lattice gives NOT_FLAT with nonflat_plaquettes == 2 carrying products a and a^{-1}, contrasted with open-boundary 1-plaquette defects and torus surface cancellation into [G, G].",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PAPER010-RECTANGULAR-HOLONOMY-CLASSIFIER"
         ],
-        "derivation": "An interior edge lies in exactly two plaquettes; each has product conjugate to $g^{\\pm1}\\neq e$, every other plaquette has four identity links.",
-        "obligations": []
+        "relation": "supports",
+        "note": "The classifier covers non-identity plaquettes witnessing non-flatness but not the count of exactly two affected plaquettes."
       }
     },
     {
@@ -6564,20 +6376,19 @@
     },
     {
       "atlas_id": "ATL-P010-013",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER010-RECTANGULAR-HOLONOMY-CLASSIFIER"
+        "AUDIT-P010-013"
       ],
-      "relation": "supports",
-      "note": "The node gives commuting cycles as necessary for flatness; the converse on the seam family and the commutator value are not stated.",
-      "proposed_derivation": {
-        "title": "Seam-pair flatness criterion",
-        "claim": "On the $3\\times4$ torus with seam links $a,b$ and all others $e$, the connection is flat iff $ab=ba$, and the seam-corner plaquette product is $bab^{-1}a^{-1}$.",
-        "hypotheses": [
-          "Finite groups $S_3$, $Q_8$"
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P010-013, with PAPER010-RECTANGULAR-HOLONOMY-CLASSIFIER: Across all 36 S_3 x S_3 and 64 Q_8 x Q_8 3x4 torus seam connections U^{(a,b)}, all 11 non-corner plaquettes cancel to e and corner plaquette P_{2,3} evaluates to b a b^{-1} a^{-1}, giving flatness iff ab = ba (18 in S_3^2, 40 in Q_8^2) with flat cycle products (a, b) conjugated simultaneously by g_{(0,0)} after any gauge transformation.",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PAPER010-RECTANGULAR-HOLONOMY-CLASSIFIER"
         ],
-        "derivation": "Only the corner plaquette contains both seam links; its product is $bab^{-1}a^{-1}$, which is $e$ iff $ab=ba$; plaquettes with one seam link contain it twice with opposite orientation. Exhaust all $36+64$ pairs.",
-        "obligations": []
+        "relation": "supports",
+        "note": "The node gives commuting cycles as necessary for flatness; the converse on the seam family and the commutator value are not stated."
       }
     },
     {
@@ -6612,75 +6423,64 @@
     },
     {
       "atlas_id": "ATL-P010-017",
-      "verdict": "gap",
-      "nodes": [],
-      "relation": null,
-      "note": "No node records the byte-copy and CRLF digest check of the c017 data against the judge manifest.",
-      "proposed_derivation": {
-        "title": "C017 case custody",
-        "claim": "Each of the five files in code/data/c017 is byte-identical to its retained challenge case and its CRLF digest equals the judge manifest entry.",
-        "hypotheses": [
-          "Retained challenge folder and manifest"
-        ],
-        "derivation": "Finite check: compute SHA-256 of each file raw and with LF converted to CRLF, compare with provenance.json and the manifest.",
-        "obligations": [
-          "Custody of the manifest itself is assumed"
-        ]
-      }
+      "verdict": "partial",
+      "nodes": [
+        "AUDIT-P010-017"
+      ],
+      "relation": "narrows",
+      "note": "Derived in AUDIT-P010-017 (narrows ATL-P010-017 because pre-split commit 3d3492f20d839a3c032bbf15eb803733b12599fe holding the historical CRLF judge manifest resides outside this split checkout while in-repo judge_packet/manifest.json was regenerated on 2026-09-29 with CRLF_TO_LF): Stored as LF blobs in Git HEAD and the deposit ZIP, the five files in code/data/c017/ (pois_01, base_01, base_02, base_03, base_13) are byte-identical to the retained C017 challenge fixtures, with LF SHA-256 digests matching provenance.json['cases'][i]['sha256'], MANIFEST.sha256, SHA256SUMS, and CRLF_TO_LF-regenerated judge_packet/manifest.json, and LF-to-CRLF digests matching provenance.json['cases'][i]['judge_manifest_sha256_crlf'] and core.autocrlf=true working-tree inventory bytes.",
+      "proposed_derivation": null
     },
     {
       "atlas_id": "ATL-P010-018",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER010-DATA-LOCAL-VERSUS-GLOBAL-HOLONOMY",
-        "PAPER010-REPLAY-AND-RECOUNT-CEILING"
+        "AUDIT-P010-018"
       ],
-      "relation": "supports",
-      "note": "Plaquette products and the five-case replay are covered; lattice sizes, plaquette counts and skippable counts in Table 1 are not stated.",
-      "proposed_derivation": {
-        "title": "Table 1 recount",
-        "claim": "For each of the five cases the host verdict, lattice size, plaquette count and count of four-identity plaquettes equal Table 1 and the harness expected verdict.",
-        "hypotheses": [
-          "Five retained cases"
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P010-018, with PAPER010-DATA-LOCAL-VERSUS-GLOBAL-HOLONOMY and PAPER010-REPLAY-AND-RECOUNT-CEILING: Across pois_01, base_01, base_02, base_03, and base_13, holonomy.py and replay_c017.py reproduce every Table 1 lattice size and boundary mode (3x3 open, 3x4 open, 4x5 open, 5x6 periodic, 4x5 open), non-identity positive link ratio (1/12, 1/17, 28/31, 11/60, 1/31; total 42/151), plaquette count (4, 6, 12, 30, 12; total 64), skippable four-identity plaquette count (3, 5, 0, 20, 11; total 39), and host verdict identically with or without four-identity skipping, matching harness_expected_verdict across all 25 retained model_claims.json entries under PURE_GAUGE -> FLAT_TRIVIAL.",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PAPER010-DATA-LOCAL-VERSUS-GLOBAL-HOLONOMY",
+          "PAPER010-REPLAY-AND-RECOUNT-CEILING"
         ],
-        "derivation": "Finite check: load each case, run the classifier, count plaquettes and four-identity plaquettes, compare with Table 1 and the expected-verdict field.",
-        "obligations": []
+        "relation": "supports",
+        "note": "Plaquette products and the five-case replay are covered; lattice sizes, plaquette counts and skippable counts in Table 1 are not stated."
       }
     },
     {
       "atlas_id": "ATL-P010-019",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER010-DATA-LOCAL-VERSUS-GLOBAL-HOLONOMY"
+        "AUDIT-P010-019"
       ],
-      "relation": "supports",
-      "note": "The node states base_03 seam cycles r and r2 and 30 identity products, but not that 10 of 30 plaquettes contain a non-identity link.",
-      "proposed_derivation": {
-        "title": "base_03 link census",
-        "claim": "In base_03 exactly 10 of 30 plaquettes contain a non-identity link.",
-        "hypotheses": [
-          "Retained base_03"
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P010-019, with PAPER010-DATA-LOCAL-VERSUS-GLOBAL-HOLONOMY: In base_03.json (5x6 periodic S3 torus), 49 interior positive links equal 'e' and 11 seam positive links carry 'r' (5 column-seam) or 'r2' (6 row-seam), giving cycle holonomies A = 'r' and B = 'r2' and partitioning the 30 plaquettes into 20 four-identity interior plaquettes and 10 seam-incident plaquettes (4 column-seam, 5 row-seam, 1 corner P_4,5) containing a non-identity link.",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PAPER010-DATA-LOCAL-VERSUS-GLOBAL-HOLONOMY"
         ],
-        "derivation": "Finite count over the 30 plaquettes.",
-        "obligations": []
+        "relation": "supports",
+        "note": "The node states base_03 seam cycles r and r2 and 30 identity products, but not that 10 of 30 plaquettes contain a non-identity link."
       }
     },
     {
       "atlas_id": "ATL-P010-020",
-      "verdict": "partial",
+      "verdict": "matched",
       "nodes": [
-        "PAPER010-DATA-FINITE-GROUP-AND-LATTICE-ADMISSION"
+        "AUDIT-P010-020"
       ],
-      "relation": "supports",
-      "note": "The node admits the case tables as groups but does not identify them with the permutation group or the package Q8 table.",
-      "proposed_derivation": {
-        "title": "Case group identification",
-        "claim": "The case S3 table has exactly six isomorphisms to the permutation group on three points, and the case Q8 table equals the package table.",
-        "hypotheses": [
-          "Admitted tables"
+      "relation": "states_same_claim_as",
+      "note": "Derived in AUDIT-P010-020, with PAPER010-DATA-FINITE-GROUP-AND-LATTICE-ADMISSION: The shared 6-element S3 group table in pois_01, base_01, base_02, and base_03 admits 6 group isomorphisms onto symmetric_group_s3() among all 720 bijections, and the 8-element Q8 group in base_13 equals quaternion_group_q8() entrywise across all 64 products and 8 inverses (with 24 automorphisms and 0 isomorphisms to C2, C3, V4, C6, S3, or D4).",
+      "proposed_derivation": null,
+      "partial_evidence": {
+        "nodes": [
+          "PAPER010-DATA-FINITE-GROUP-AND-LATTICE-ADMISSION"
         ],
-        "derivation": "Enumerate all bijections fixing the identity and test the homomorphism law; $|\\mathrm{Aut}(S_3)|=6$ gives six isomorphisms. Compare Q8 tables entrywise.",
-        "obligations": []
+        "relation": "supports",
+        "note": "The node admits the case tables as groups but does not identify them with the permutation group or the package Q8 table."
       }
     },
     {
