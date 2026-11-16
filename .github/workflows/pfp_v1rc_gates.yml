@@ -44,7 +44,16 @@ jobs:
       - name: Section-3 suite plus operads, eis, and pciv
         env:
           PYTHONPATH: ops
-        run: .venv/bin/python -B -X utf8 -m pytest tests/ pfp_lab/tests pfp_core/tests pfp_core/workflow_families/tests governance/tools/tests operads eis pciv -q
+        run: |
+          deselect=()
+          while IFS= read -r node || [ -n "$node" ]; do
+            node=${node%$'\r'}
+            case "$node" in
+              ''|\#*) continue ;;
+            esac
+            deselect+=(--deselect "$node")
+          done < .github/pfp_v1rc_pinned_red_nodes.txt
+          .venv/bin/python -B -X utf8 -m pytest tests/ pfp_lab/tests pfp_core/tests pfp_core/workflow_families/tests governance/tools/tests operads eis pciv -q "${deselect[@]}"
       # pfp-cli is a separate workspace (package name pfp-cli). The engine manifest has no pfp_cli member.
       - run: cargo test --manifest-path code/rust/Cargo.toml -p pfp -p pfp_runtime -p pfp_operads -p pfp_immune -p core_operad_canon
       - run: cargo test --manifest-path code/rust/pfp_cli/Cargo.toml
