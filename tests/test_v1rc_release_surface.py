@@ -5,6 +5,7 @@ AuthorityEffect: None.
 
 from __future__ import annotations
 
+import json
 import os
 import subprocess
 import sys
@@ -77,6 +78,18 @@ def test_six_arm_receipt_keeps_the_null_and_uses_exact_fractions() -> None:
         assert report["claim_hygiene"][key]
     second = run_six_arm_offline_campaign()
     assert second["digest"] == report["digest"]
+
+
+def test_checked_in_six_arm_receipt_matches_the_shipped_call() -> None:
+    from pfp_core.release_surface_v1rc import run_six_arm_offline_campaign
+
+    path = REPO / "governance" / "evidence" / "six_arm_offline_campaign_v1rc.json"
+    stored = json.loads(path.read_text(encoding="utf-8"))
+    fresh = run_six_arm_offline_campaign()
+    assert stored == fresh
+    assert stored["comparisons"]["arm6_minus_arm3"]["accuracy_delta"] == "0"
+    assert stored["provider_calls"] == 0
+    assert stored["claim_hygiene"]["does_not_support"]
 
 
 def test_showcase_replay_performs_no_provider_call() -> None:
