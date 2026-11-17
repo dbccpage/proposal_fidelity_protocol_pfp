@@ -1,0 +1,880 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/immune.rs",
+  "target_sha256": "aa0875abdffc0db2322f525ddc7d701f177ee4776ac20e2a9302fb143ee92538",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test immune --test wf14",
+  "counts": {
+    "killed": 138,
+    "survived": 0,
+    "demonstrably_equivalent": 5,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "host observer host.ast_parse renamed",
+      "old": "    \"host.ast_parse\",",
+      "new": "    \"host.ast_parsed\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "host observer host.contract_check renamed",
+      "old": "    \"host.contract_check\",",
+      "new": "    \"host.contract_checks\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "host observer host.public_smoke renamed",
+      "old": "    \"host.public_smoke\",",
+      "new": "    \"host.public_smokes\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "host observer host.transition_table renamed",
+      "old": "    \"host.transition_table\",",
+      "new": "    \"host.transition_tables\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "forbidden observer MODEL renamed",
+      "old": "[\"MODEL\", \"LLM\", \"AGENT\", \"DETECTOR\", \"MATCHER\"]",
+      "new": "[\"MODELS\", \"LLM\", \"AGENT\", \"DETECTOR\", \"MATCHER\"]",
+      "outcome": "killed"
+    },
+    {
+      "name": "forbidden observer LLM renamed",
+      "old": "[\"MODEL\", \"LLM\", \"AGENT\", \"DETECTOR\", \"MATCHER\"]",
+      "new": "[\"MODEL\", \"LLMS\", \"AGENT\", \"DETECTOR\", \"MATCHER\"]",
+      "outcome": "killed"
+    },
+    {
+      "name": "forbidden observer AGENT renamed",
+      "old": "[\"MODEL\", \"LLM\", \"AGENT\", \"DETECTOR\", \"MATCHER\"]",
+      "new": "[\"MODEL\", \"LLM\", \"AGENTS\", \"DETECTOR\", \"MATCHER\"]",
+      "outcome": "killed"
+    },
+    {
+      "name": "forbidden observer DETECTOR renamed",
+      "old": "[\"MODEL\", \"LLM\", \"AGENT\", \"DETECTOR\", \"MATCHER\"]",
+      "new": "[\"MODEL\", \"LLM\", \"AGENT\", \"DETECTORS\", \"MATCHER\"]",
+      "outcome": "killed"
+    },
+    {
+      "name": "forbidden observer MATCHER renamed",
+      "old": "[\"MODEL\", \"LLM\", \"AGENT\", \"DETECTOR\", \"MATCHER\"]",
+      "new": "[\"MODEL\", \"LLM\", \"AGENT\", \"DETECTOR\", \"MATCHERS\"]",
+      "outcome": "killed"
+    },
+    {
+      "name": "danger kind REPLAY_FAILURE renamed",
+      "old": "    \"REPLAY_FAILURE\",\n",
+      "new": "    \"REPLAY_FAILURES\",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "danger kind PROTECTED_FIELD_VIOLATION renamed",
+      "old": "    \"PROTECTED_FIELD_VIOLATION\",\n",
+      "new": "    \"PROTECTED_FIELD_VIOLATIONS\",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "danger kind MANIFEST_CONTAMINATION renamed",
+      "old": "    \"MANIFEST_CONTAMINATION\",\n",
+      "new": "    \"MANIFEST_CONTAMINATIONS\",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "danger kind MALFORMED_PAYLOAD renamed",
+      "old": "    \"MALFORMED_PAYLOAD\",\n",
+      "new": "    \"MALFORMED_PAYLOADS\",\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "the matcher is renamed",
+      "old": "pub const MATCHER: &str = \"regex\";",
+      "new": "pub const MATCHER: &str = \"regexp\";",
+      "outcome": "killed"
+    },
+    {
+      "name": "the support budget is one higher",
+      "old": "pub const SUPPORT_BUDGET: usize = 32;",
+      "new": "pub const SUPPORT_BUDGET: usize = 33;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the support budget is one lower",
+      "old": "pub const SUPPORT_BUDGET: usize = 32;",
+      "new": "pub const SUPPORT_BUDGET: usize = 31;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the support needed is two",
+      "old": "pub const SUPPORT_NEEDED: usize = 3;",
+      "new": "pub const SUPPORT_NEEDED: usize = 2;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the support needed is four",
+      "old": "pub const SUPPORT_NEEDED: usize = 3;",
+      "new": "pub const SUPPORT_NEEDED: usize = 4;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the screen kills only when every text matches",
+      "old": "Ok(compiled) if panel.iter().any(|text| compiled.find(text).is_some()) => {",
+      "new": "Ok(compiled) if panel.iter().all(|text| compiled.find(text).is_some()) => {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the screen kills a rule that matches nothing",
+      "old": "Ok(compiled) if panel.iter().any(|text| compiled.find(text).is_some()) => {",
+      "new": "Ok(compiled) if panel.iter().any(|text| compiled.find(text).is_none()) => {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the screen kills nothing by match",
+      "old": "Ok(compiled) if panel.iter().any(|text| compiled.find(text).is_some()) => {",
+      "new": "Ok(compiled) if false => {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a refused pattern is not killed",
+      "old": "Err(Rejected::Refused(_)) => Ok(Fate::Killed),",
+      "new": "Err(Rejected::Refused(_)) => Err(String::new()),",
+      "outcome": "killed"
+    },
+    {
+      "name": "an unread pattern is killed",
+      "old": "            Err(Rejected::Unread(what)) => Err(format!(\n                \"rule {}: the pattern uses {what}, which the host does not read\",\n                rule.id\n            )),",
+      "new": "            Err(Rejected::Unread(_)) => Ok(Fate::Killed),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the unread message drops the reason",
+      "old": "\"rule {}: the pattern uses {what}, which the host does not read\",",
+      "new": "\"rule {}: unread\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "the unread message names the epitope",
+      "old": "                rule.id\n            ))",
+      "new": "                rule.epitope\n            ))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the match names the epitope as detector",
+      "old": "        detector: rule.id.clone(),",
+      "new": "        detector: rule.epitope.clone(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the match names the id as epitope",
+      "old": "        epitope: rule.epitope.clone(),\n        text: hit.text,",
+      "new": "        epitope: rule.id.clone(),\n        text: hit.text,",
+      "outcome": "killed"
+    },
+    {
+      "name": "the match has no text",
+      "old": "        text: hit.text,",
+      "new": "        text: String::new(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the match has no offset",
+      "old": "        offset: hit.start,",
+      "new": "        offset: 0,",
+      "outcome": "killed"
+    },
+    {
+      "name": "the danger digest has no prefix",
+      "old": "            digest: format!(\"sha256:{}\", sha256_hex(evidence)),",
+      "new": "            digest: sha256_hex(evidence),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the danger digests nothing",
+      "old": "            digest: format!(\"sha256:{}\", sha256_hex(evidence)),",
+      "new": "            digest: format!(\"sha256:{}\", sha256_hex(\"\")),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the danger has a span",
+      "old": "            spans: Vec::new(),",
+      "new": "            spans: vec![(0, 1)],",
+      "outcome": "killed"
+    },
+    {
+      "name": "the danger has no kind",
+      "old": "            kind: kind.to_owned(),",
+      "new": "            kind: String::new(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the danger has no observer",
+      "old": "            observer: observer.to_owned(),",
+      "new": "            observer: String::new(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the json string is not quoted",
+      "old": "    let mut out = String::from(\"\\\"\");",
+      "new": "    let mut out = String::new();",
+      "outcome": "killed"
+    },
+    {
+      "name": "the json string is not closed",
+      "old": "    out.push('\"');\n    out\n",
+      "new": "    out\n",
+      "outcome": "killed"
+    },
+    {
+      "name": "a quote is not escaped",
+      "old": "            '\"' => out.push_str(\"\\\\\\\"\"),",
+      "new": "            '\"' => out.push('\"'),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a backslash is not escaped",
+      "old": "            '\\\\' => out.push_str(\"\\\\\\\\\"),",
+      "new": "            '\\\\' => out.push('\\\\'),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a newline is not escaped",
+      "old": "            '\\n' => out.push_str(\"\\\\n\"),",
+      "new": "            '\\n' => out.push('\\n'),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a return is not escaped",
+      "old": "            '\\r' => out.push_str(\"\\\\r\"),",
+      "new": "            '\\r' => out.push('\\r'),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a tab is not escaped",
+      "old": "            '\\t' => out.push_str(\"\\\\t\"),",
+      "new": "            '\\t' => out.push('\\t'),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a backspace is not escaped",
+      "old": "            '\\u{8}' => out.push_str(\"\\\\b\"),",
+      "new": "            '\\u{8}' => out.push_str(\"\\\\u0008\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a form feed is not escaped",
+      "old": "            '\\u{c}' => out.push_str(\"\\\\f\"),",
+      "new": "            '\\u{c}' => out.push_str(\"\\\\u000c\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the tilde is escaped",
+      "old": "            ' '..='~' => out.push(point),",
+      "new": "            ' '..'~' => out.push(point),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the space is escaped",
+      "old": "            ' '..='~' => out.push(point),",
+      "new": "            '!'..='~' => out.push(point),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a unit is not padded",
+      "old": "out.push_str(&format!(\"\\\\u{unit:04x}\"));",
+      "new": "out.push_str(&format!(\"\\\\u{unit:x}\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a unit is upper case",
+      "old": "out.push_str(&format!(\"\\\\u{unit:04x}\"));",
+      "new": "out.push_str(&format!(\"\\\\u{unit:04X}\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "matches are not sorted",
+      "old": "    rows.sort_unstable();\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "matches sort by text first",
+      "old": "        .map(|one| (one.epitope.as_str(), one.text.as_str(), one.offset))",
+      "new": "        .map(|one| (one.text.as_str(), one.epitope.as_str(), one.offset))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a match row swaps its strings",
+      "old": "format!(\"[{},{},{offset}]\", json_ascii(epitope), json_ascii(text))",
+      "new": "format!(\"[{},{},{offset}]\", json_ascii(text), json_ascii(epitope))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a match row is spaced",
+      "old": "format!(\"[{},{},{offset}]\", json_ascii(epitope), json_ascii(text))",
+      "new": "format!(\"[{}, {}, {offset}]\", json_ascii(epitope), json_ascii(text))",
+      "outcome": "killed"
+    },
+    {
+      "name": "match rows are spaced",
+      "old": "format!(\"[{}]\", rows.join(\",\"))",
+      "new": "format!(\"[{}]\", rows.join(\", \"))",
+      "outcome": "killed"
+    },
+    {
+      "name": "match rows are not bracketed",
+      "old": "format!(\"[{}]\", rows.join(\",\"))",
+      "new": "format!(\"{}\", rows.join(\",\"))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the match digest has no prefix",
+      "old": "    format!(\"sha256:{}\", sha256_hex(&format!(\"[{}]\", rows.join(\",\"))))",
+      "new": "    sha256_hex(&format!(\"[{}]\", rows.join(\",\")))",
+      "outcome": "killed"
+    },
+    {
+      "name": "an observer keeps its case",
+      "old": "    name.trim_matches(is_space).to_lowercase()",
+      "new": "    name.trim_matches(is_space).to_owned()",
+      "outcome": "killed"
+    },
+    {
+      "name": "an observer keeps its space",
+      "old": "    name.trim_matches(is_space).to_lowercase()",
+      "new": "    name.to_lowercase()",
+      "outcome": "killed"
+    },
+    {
+      "name": "an observer is trimmed of letters",
+      "old": "    name.trim_matches(is_space).to_lowercase()",
+      "new": "    name.trim_matches(|c: char| is_space(c) || c == 'x').to_lowercase()",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty observer is witnessed",
+      "old": "    if observer.is_empty() {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only an empty observer is unwitnessed",
+      "old": "    if observer.is_empty() {",
+      "new": "    if !observer.is_empty() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the unwitnessed code is renamed",
+      "old": "return Some(\"UNWITNESSED_DANGER_SIGNAL\");\n    }\n    if FORBIDDEN",
+      "new": "return Some(\"UNWITNESSED\");\n    }\n    if FORBIDDEN",
+      "outcome": "killed"
+    },
+    {
+      "name": "a forbidden observer is no collapse",
+      "old": "        .any(|name| trimmed(name) == observer)",
+      "new": "        .any(|name| trimmed(name) != observer)",
+      "outcome": "killed"
+    },
+    {
+      "name": "the matcher is no collapse",
+      "old": "        || observer == trimmed(MATCHER)",
+      "new": "        && observer == trimmed(MATCHER)",
+      "outcome": "killed"
+    },
+    {
+      "name": "anything but the matcher collapses",
+      "old": "        || observer == trimmed(MATCHER)",
+      "new": "        || observer != trimmed(MATCHER)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a forbidden observer is another code",
+      "old": "        || observer == trimmed(MATCHER)\n    {\n        return Some(\"TWO_SIGNAL_COLLAPSE\");",
+      "new": "        || observer == trimmed(MATCHER)\n    {\n        return Some(\"UNWITNESSED_DANGER_SIGNAL\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "every kind is registered",
+      "old": "    if !DANGER_KINDS.contains(&danger.kind.as_str()) {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only a registered kind is unregistered",
+      "old": "    if !DANGER_KINDS.contains(&danger.kind.as_str()) {",
+      "new": "    if DANGER_KINDS.contains(&danger.kind.as_str()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the unregistered code is renamed",
+      "old": "return Some(\"UNREGISTERED_DANGER_KIND\");",
+      "new": "return Some(\"UNREGISTERED\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "an equal digest is no collapse",
+      "old": "    if !matches.is_empty() && danger.digest == signal1_digest(matches) {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a different digest collapses",
+      "old": "    if !matches.is_empty() && danger.digest == signal1_digest(matches) {",
+      "new": "    if !matches.is_empty() && danger.digest != signal1_digest(matches) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an equal digest collapses with any match",
+      "old": "    if !matches.is_empty() && danger.digest == signal1_digest(matches) {",
+      "new": "    if !matches.is_empty() || danger.digest == signal1_digest(matches) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a match stops at its first character",
+      "old": "        let stop = one.offset + one.text.chars().count().max(1);",
+      "new": "        let stop = one.offset + 1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a match is measured in bytes",
+      "old": "        let stop = one.offset + one.text.chars().count().max(1);",
+      "new": "        let stop = one.offset + one.text.len().max(1);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a match ends before its last character",
+      "old": "        let stop = one.offset + one.text.chars().count().max(1);",
+      "new": "        let stop = one.offset + one.text.chars().count().max(1) - 1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a match overlaps when it starts at the end",
+      "old": "            .any(|(low, high)| one.offset < *high && *low < stop)",
+      "new": "            .any(|(low, high)| one.offset <= *high && *low < stop)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a match overlaps when it ends at the start",
+      "old": "            .any(|(low, high)| one.offset < *high && *low < stop)",
+      "new": "            .any(|(low, high)| one.offset < *high && *low <= stop)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a match overlaps when either end does",
+      "old": "            .any(|(low, high)| one.offset < *high && *low < stop)",
+      "new": "            .any(|(low, high)| one.offset < *high || *low < stop)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a match overlaps nothing",
+      "old": "            .any(|(low, high)| one.offset < *high && *low < stop)",
+      "new": "            .any(|(low, high)| one.offset > *high && *low < stop)",
+      "outcome": "killed"
+    },
+    {
+      "name": "an overlap is no collapse",
+      "old": "    inside.then_some(\"TWO_SIGNAL_COLLAPSE\")",
+      "new": "    (!inside).then_some(\"TWO_SIGNAL_COLLAPSE\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "an overlap is another code",
+      "old": "    inside.then_some(\"TWO_SIGNAL_COLLAPSE\")",
+      "new": "    inside.then_some(\"UNWITNESSED_DANGER_SIGNAL\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "pass is named another way",
+      "old": "            Disposition::Pass => \"PASS\",",
+      "new": "            Disposition::Pass => \"PASSED\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "diagnostic is named another way",
+      "old": "            Disposition::Diagnostic => \"DIAGNOSTIC_OR_NORMALIZE\",",
+      "new": "            Disposition::Diagnostic => \"DIAGNOSTIC\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "hold is named another way",
+      "old": "            Disposition::Hold => \"HOLD_OR_REPAIR\",",
+      "new": "            Disposition::Hold => \"HOLD\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "a match is none",
+      "old": "    let matched = !matches.is_empty();",
+      "new": "    let matched = matches.is_empty();",
+      "outcome": "killed"
+    },
+    {
+      "name": "no danger with a match passes",
+      "old": "        let disposition = if matched {\n            Disposition::Diagnostic\n        } else {\n            Disposition::Pass\n        };",
+      "new": "        let disposition = if matched {\n            Disposition::Pass\n        } else {\n            Disposition::Diagnostic\n        };",
+      "outcome": "killed"
+    },
+    {
+      "name": "no danger holds",
+      "old": "        let disposition = if matched {\n            Disposition::Diagnostic\n        } else {\n            Disposition::Pass\n        };\n        return decided(disposition, None);",
+      "new": "        let disposition = if matched {\n            Disposition::Diagnostic\n        } else {\n            Disposition::Pass\n        };\n        return decided(disposition, Some(\"NO_DANGER\"));",
+      "outcome": "killed"
+    },
+    {
+      "name": "every observer is admitted",
+      "old": "    if !observers.contains(&danger.observer.as_str()) {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only an admitted observer is ignored",
+      "old": "    if !observers.contains(&danger.observer.as_str()) {",
+      "new": "    if observers.contains(&danger.observer.as_str()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an ignored observer is held",
+      "old": "decided(Disposition::Diagnostic, Some(\"TWO_SIGNAL_COLLAPSE\"))",
+      "new": "decided(Disposition::Hold, Some(\"TWO_SIGNAL_COLLAPSE\"))",
+      "outcome": "killed"
+    },
+    {
+      "name": "an ignored observer collapses without a match",
+      "old": "decided(Disposition::Pass, Some(\"UNWITNESSED_DANGER_SIGNAL\"))",
+      "new": "decided(Disposition::Pass, Some(\"TWO_SIGNAL_COLLAPSE\"))",
+      "outcome": "killed"
+    },
+    {
+      "name": "an ignored observer has no code without a match",
+      "old": "decided(Disposition::Pass, Some(\"UNWITNESSED_DANGER_SIGNAL\"))",
+      "new": "decided(Disposition::Pass, None)",
+      "outcome": "killed"
+    },
+    {
+      "name": "an ignored observer has no code with a match",
+      "old": "decided(Disposition::Diagnostic, Some(\"TWO_SIGNAL_COLLAPSE\"))",
+      "new": "decided(Disposition::Diagnostic, None)",
+      "outcome": "killed"
+    },
+    {
+      "name": "an ignored observer with a match is another code",
+      "old": "decided(Disposition::Diagnostic, Some(\"TWO_SIGNAL_COLLAPSE\"))",
+      "new": "decided(Disposition::Diagnostic, Some(\"UNWITNESSED_DANGER_SIGNAL\"))",
+      "outcome": "killed"
+    },
+    {
+      "name": "an ignored observer is judged by the wrong match",
+      "old": "        return if matched {\n            decided(Disposition::Diagnostic",
+      "new": "        return if !matched {\n            decided(Disposition::Diagnostic",
+      "outcome": "killed"
+    },
+    {
+      "name": "independence is judged without a match",
+      "old": "    let code = if matched {\n        collapse(matches, danger)",
+      "new": "    let code = if !matched {\n        collapse(matches, danger)",
+      "outcome": "killed"
+    },
+    {
+      "name": "independence is always judged",
+      "old": "    let code = if matched {\n        collapse(matches, danger)\n    } else {\n        None\n    };",
+      "new": "    let code = collapse(matches, danger);",
+      "outcome": "killed"
+    },
+    {
+      "name": "a hold is a pass",
+      "old": "    decided(Disposition::Hold, code)",
+      "new": "    decided(Disposition::Pass, code)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a hold is a diagnostic",
+      "old": "    decided(Disposition::Hold, code)",
+      "new": "    decided(Disposition::Diagnostic, code)",
+      "outcome": "killed"
+    },
+    {
+      "name": "an occurrence repeats when empty",
+      "old": "        if !one.occurrence.is_empty() && !occurrences.insert(&one.occurrence) {",
+      "new": "        if one.occurrence.is_empty() && !occurrences.insert(&one.occurrence) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an occurrence repeats when empty or repeated",
+      "old": "        if !one.occurrence.is_empty() && !occurrences.insert(&one.occurrence) {",
+      "new": "        if !one.occurrence.is_empty() || !occurrences.insert(&one.occurrence) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty occurrence repeats",
+      "old": "        if !one.occurrence.is_empty() && !occurrences.insert(&one.occurrence) {",
+      "new": "        if !occurrences.insert(&one.occurrence) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeated occurrence counts",
+      "old": "        if !one.occurrence.is_empty() && !occurrences.insert(&one.occurrence) {",
+      "new": "        if false && !occurrences.insert(&one.occurrence) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeated key set counts",
+      "old": "        if keys.insert(&one.keys) {",
+      "new": "        if true {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only a repeated key set counts",
+      "old": "        if keys.insert(&one.keys) {",
+      "new": "        if !keys.insert(&one.keys) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty key conflicts",
+      "old": "        .any(|(one, other)| !one.is_empty() && one == other)",
+      "new": "        .any(|(one, other)| one == other)",
+      "outcome": "killed"
+    },
+    {
+      "name": "only an empty key conflicts",
+      "old": "        .any(|(one, other)| !one.is_empty() && one == other)",
+      "new": "        .any(|(one, other)| one.is_empty() && one == other)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a differing key conflicts",
+      "old": "        .any(|(one, other)| !one.is_empty() && one == other)",
+      "new": "        .any(|(one, other)| !one.is_empty() && one != other)",
+      "outcome": "killed"
+    },
+    {
+      "name": "any key conflicts",
+      "old": "        .any(|(one, other)| !one.is_empty() && one == other)",
+      "new": "        .any(|(one, other)| !one.is_empty() || one == other)",
+      "outcome": "killed"
+    },
+    {
+      "name": "every key must agree to conflict",
+      "old": "        .any(|(one, other)| !one.is_empty() && one == other)",
+      "new": "        .all(|(one, other)| !one.is_empty() && one == other)",
+      "outcome": "killed"
+    },
+    {
+      "name": "the bound prunes a tie",
+      "old": "    if count + mask.count_ones() as usize <= best {",
+      "new": "    if count + (mask.count_ones() as usize) < best {",
+      "equivalent": "the bound only prunes branches that cannot beat the best so far; pruning a tie or not leaves the maximum unchanged, which the brute-force comparison in the tests confirms.",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "the bound prunes a larger set",
+      "old": "    if count + mask.count_ones() as usize <= best {",
+      "new": "    if count + mask.count_ones() as usize <= best + 1 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the bound ignores the count",
+      "old": "    if count + mask.count_ones() as usize <= best {",
+      "new": "    if mask.count_ones() as usize <= best {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the bound ignores the mask",
+      "old": "    if count + mask.count_ones() as usize <= best {",
+      "new": "    if count <= best {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty mask ends nothing",
+      "old": "    if mask == 0 {",
+      "new": "    if mask == 1 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty mask gives the best",
+      "old": "        return best.max(count);",
+      "new": "        return best;",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty mask gives the count",
+      "old": "        return best.max(count);",
+      "new": "        return count;",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "the bound check above returns the best when the count cannot exceed it, so an empty mask is reached only when the count exceeds the best, and the larger of the two is the count."
+    },
+    {
+      "name": "the pivot is the highest node",
+      "old": "    let pivot = mask.trailing_zeros() as usize;",
+      "new": "    let pivot = 63 - mask.leading_zeros() as usize;",
+      "equivalent": "any node of the mask is a valid pivot for the include/exclude split, so the maximum is the same; only the search order differs.",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "the pivot stays in the rest",
+      "old": "    let rest = mask & !(1 << pivot);",
+      "new": "    let rest = mask & (1 << pivot);",
+      "outcome": "killed"
+    },
+    {
+      "name": "taking a node keeps its neighbours",
+      "old": "    let with = independent(edges, rest & !edges[pivot], count + 1, best);",
+      "new": "    let with = independent(edges, rest, count + 1, best);",
+      "outcome": "killed"
+    },
+    {
+      "name": "taking a node removes the wrong nodes",
+      "old": "    let with = independent(edges, rest & !edges[pivot], count + 1, best);",
+      "new": "    let with = independent(edges, rest & edges[pivot], count + 1, best);",
+      "outcome": "killed"
+    },
+    {
+      "name": "taking a node adds nothing",
+      "old": "    let with = independent(edges, rest & !edges[pivot], count + 1, best);",
+      "new": "    let with = independent(edges, rest & !edges[pivot], count, best);",
+      "outcome": "killed"
+    },
+    {
+      "name": "leaving a node forgets the taken branch",
+      "old": "    independent(edges, rest, count, with)",
+      "new": "    independent(edges, rest, count, best)",
+      "outcome": "killed"
+    },
+    {
+      "name": "leaving a node counts it",
+      "old": "    independent(edges, rest, count, with)",
+      "new": "    independent(edges, rest, count + 1, with)",
+      "outcome": "killed"
+    },
+    {
+      "name": "the support budget is exclusive",
+      "old": "    if nodes.len() > SUPPORT_BUDGET {",
+      "new": "    if nodes.len() >= SUPPORT_BUDGET {",
+      "outcome": "killed"
+    },
+    {
+      "name": "no budget",
+      "old": "    if nodes.len() > SUPPORT_BUDGET {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a node conflicts with itself",
+      "old": "                .filter(|(other, one)| *other != place && conflict(node, one))",
+      "new": "                .filter(|(other, one)| conflict(node, one))",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "the independent-set search clears the pivot from the remaining nodes before it reads the pivot edges, so an edge from a node to itself is never followed."
+    },
+    {
+      "name": "only a node conflicts with itself",
+      "old": "                .filter(|(other, one)| *other != place && conflict(node, one))",
+      "new": "                .filter(|(other, one)| *other == place && conflict(node, one))",
+      "outcome": "killed"
+    },
+    {
+      "name": "every node conflicts",
+      "old": "                .filter(|(other, one)| *other != place && conflict(node, one))",
+      "new": "                .filter(|(other, one)| *other != place || conflict(node, one))",
+      "outcome": "killed"
+    },
+    {
+      "name": "no node conflicts",
+      "old": "                .filter(|(other, one)| *other != place && conflict(node, one))",
+      "new": "                .filter(|(other, one)| *other != place && !conflict(node, one))",
+      "outcome": "killed"
+    },
+    {
+      "name": "an edge is its own place",
+      "old": "                .fold(0, |mask, (other, _)| mask | 1 << other)",
+      "new": "                .fold(0, |mask, (other, _)| mask | 1 << place)",
+      "outcome": "killed"
+    },
+    {
+      "name": "an edge is an intersection",
+      "old": "                .fold(0, |mask, (other, _)| mask | 1 << other)",
+      "new": "                .fold(0, |mask, (other, _)| mask & 1 << other)",
+      "outcome": "killed"
+    },
+    {
+      "name": "edges are joined by exclusive or",
+      "old": "                .fold(0, |mask, (other, _)| mask | 1 << other)",
+      "new": "                .fold(0, |mask, (other, _)| mask ^ 1 << other)",
+      "equivalent": "each other node is folded in once, so a bit is never set twice and exclusive or equals or.",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "the full mask is one bit short",
+      "old": "        u64::MAX >> (64 - nodes.len())",
+      "new": "        u64::MAX >> (63 - nodes.len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "the full mask is one bit long",
+      "old": "        u64::MAX >> (64 - nodes.len())",
+      "new": "        u64::MAX >> (65 - nodes.len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty set has a full mask",
+      "old": "    let all = if nodes.is_empty() {\n        0\n    } else {",
+      "new": "    let all = if nodes.is_empty() {\n        1\n    } else {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the search starts with a node counted",
+      "old": "    Some(independent(&edges, all, 0, 0))",
+      "new": "    Some(independent(&edges, all, 1, 0))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the search starts with a bound",
+      "old": "    Some(independent(&edges, all, 0, 0))",
+      "new": "    Some(independent(&edges, all, 0, 1))",
+      "outcome": "killed"
+    },
+    {
+      "name": "the support is its largest node",
+      "old": "    Some(independent(&edges, all, 0, 0))",
+      "new": "    Some(nodes.len())",
+      "outcome": "killed"
+    },
+    {
+      "name": "three are not provisional",
+      "old": "        Some(count) if count >= SUPPORT_NEEDED => \"Provisional\",",
+      "new": "        Some(count) if count > SUPPORT_NEEDED => \"Provisional\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "two are provisional",
+      "old": "        Some(count) if count >= SUPPORT_NEEDED => \"Provisional\",",
+      "new": "        Some(count) if count >= SUPPORT_NEEDED - 1 => \"Provisional\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "too few are provisional",
+      "old": "        Some(count) if count >= SUPPORT_NEEDED => \"Provisional\",",
+      "new": "        Some(count) if count <= SUPPORT_NEEDED => \"Provisional\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "provisional is named another way",
+      "old": "\"Provisional\"",
+      "new": "\"Provisioned\"",
+      "outcome": "killed"
+    },
+    {
+      "name": "candidate is named another way",
+      "old": "        _ => \"Candidate\",",
+      "new": "        _ => \"Cand\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "an unbounded set is provisional",
+      "old": "        _ => \"Candidate\",",
+      "new": "        None => \"Provisional\",\n        _ => \"Candidate\",",
+      "outcome": "killed"
+    }
+  ]
+}

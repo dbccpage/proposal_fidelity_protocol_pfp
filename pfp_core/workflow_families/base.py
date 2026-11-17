@@ -43,6 +43,7 @@ from typing import Any, ClassVar, Protocol
 from pfp.infrastructure import operad_host
 
 from ..fidelity import HostOracleContext, WholeRunBudget, sha256_hex
+from ..operad_ledger import record_failure
 
 AUTHORITY_NONE = 'None'
 CERTIFIED = 'HOST_CERTIFIED'
@@ -401,7 +402,9 @@ class HostedFamily(WorkflowFamily):
     The host (``pfp_operad family``) reads the task, writes each prompt, refuses one
     that carries a sealed value, and gives the verdict with the predicates it recorded.
     This class asks the model what the host says to ask and carries each reply back.
-    It checks nothing. A subclass sets ``spec`` and ``fixtures``.
+    It checks nothing. A subclass sets ``spec`` and ``fixtures``. When the host's detail
+    carries ``ledger_failures`` (only for a task that names a ``ledger_path``), this class
+    appends those entries to that ledger file and leaves them out of the verdict.
     """
 
     def _host(self, action: str, task: Mapping[str, Any], sealed: Mapping[str, Any], replies: list) -> dict:
@@ -421,7 +424,14 @@ class HostedFamily(WorkflowFamily):
             host.certified_predicates[row['name']] = row['passed']
             host.evidence[row['name']] = row['evidence_sha256']
         host.uncertified_obligations = tuple(report['uncertified_obligations'])
-        return Verdict(report['verdict'], report['code'], report['detail'])
+        detail = dict(report['detail'])
+        self._append_to_ledger(task, detail.pop('ledger_failures', ()))
+        return Verdict(report['verdict'], report['code'], detail)
+
+    def _append_to_ledger(self, task: Mapping[str, Any], entries: Iterable[Mapping[str, str]]) -> None:
+        """Move the failure entries the host chose to the ledger file the task names."""
+        for entry in entries:
+            record_failure(task['ledger_path'], workflow=self.spec.wf_id, run=task.get('run_id', 'run'), **entry)
 
     def validate(self, task: Mapping[str, Any]) -> Mapping[str, Any]:
         """The host reads the task and refuses a malformed one before any proposal."""

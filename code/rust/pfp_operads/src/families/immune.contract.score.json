@@ -1,0 +1,120 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/immune.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/immune.rs",
+      "language": "Rust",
+      "sha256": "aa0875abdffc0db2322f525ddc7d701f177ee4776ac20e2a9302fb143ee92538"
+    },
+    "contract_urn": "urn:pfp-operads:families-immune:v1",
+    "symbols": [
+      "HOST_OBSERVERS",
+      "FORBIDDEN_OBSERVERS",
+      "DANGER_KINDS",
+      "MATCHER",
+      "SUPPORT_BUDGET",
+      "SUPPORT_NEEDED",
+      "Rule",
+      "Fate",
+      "screen",
+      "Match",
+      "signal1",
+      "Danger",
+      "signal1_digest",
+      "Disposition",
+      "Decision",
+      "decide",
+      "Observation",
+      "support",
+      "custody"
+    ],
+    "owned_invariants": [
+      "screen kills a rule whose pattern is refused or matches any text of a panel of clean texts, and admits the rest with their compiled pattern. A pattern the host does not read is an error that names the rule.",
+      "A rule's match in a text (Signal 1) carries the rule's id, its epitope, the matched text and the character offset. The digest of a set of matches is Python's: rows of epitope, text and offset, sorted, written as JSON with every character outside ASCII escaped.",
+      "decide gives PASS, DIAGNOSTIC_OR_NORMALIZE or HOLD_OR_REPAIR from the matches and the danger a host check observed (Signal 2). A danger counts only from an observer the caller admits; from another it is ignored and the code says why. A signal that is not independent of the matches is named as UNWITNESSED_DANGER_SIGNAL, TWO_SIGNAL_COLLAPSE or UNREGISTERED_DANGER_KIND.",
+      "Observers are compared after trimming white space and lowercasing. A model, an LLM, an agent, a detector or the matcher itself may never be the observer; neither may a danger whose digest is the digest of the matches or whose spans hold a match.",
+      "support is the size of the largest set of observations none of which shares a model, scaffold, precedent set or lineage root with another, over the observations that remain once a repeated occurrence or a repeated set of keys is dropped, computed exactly for at most 32 of them. custody is Provisional with a support of three and Candidate otherwise."
+    ],
+    "boundaries": [
+      "Observer names are compared by lowercase, where Python case-folds; the two differ at a few characters such as the German sharp s.",
+      "Independence here is the correlation keys the caller supplies; the module does not see how an observation was made.",
+      "Agreement with Python is shown on hand-computed tables and random observations checked against every subset, not proven."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/immune.rs",
+      "language": "Rust",
+      "sha256": "aa0875abdffc0db2322f525ddc7d701f177ee4776ac20e2a9302fb143ee92538"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: counts are exact integers, the support is the exact maximum over at most 32 nodes, and the digests are SHA-256 over text the tests rebuild from Python's. Not B: tested on examples and random observations, not proven; the hash library is trusted.",
+      "G3": "A pattern the host cannot read and a disposition that cannot be judged are typed, and a signal that is not independent is refused with its code. No panicking unwrap or expect, and no index. Not B: panic-freedom is tested, not proven.",
+      "G4": "27 tests assert the thymus killing a rule that matches any panel text or that the pattern admission refuses, a pattern the host does not read named with its rule, the match with its own id, epitope and offset, digests Python computed for matches, in any order and with text outside ASCII or with control characters, each disposition of the table, a danger from an observer the caller does not admit, each way a signal is not independent, the registered names and limits, the support on chains, shared keys of every kind and empty keys, repeated occurrences, more observations than the budget, and the support on random observations against trying every subset. Five mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 138/138. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 11, cognitive complexity is not measured for Rust, nesting 3; ceiling B, recorded B."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-17T00:19:06Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v16-test.run.json",
+        "sha256": "974d1ca60772be8a8a2620951efb0243500ce32bb4f596f07e1b191b300b26ff",
+        "note": "1291 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v16-clippy.run.json",
+        "sha256": "73eddccb2cbed3e3b2468863eb021182cc78a28150563f47dd10c33c63b36995",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v16-fmt.run.json",
+        "sha256": "4c4d615842bf99a3099dae488b5822df774c4dd7b26e1ede7e05b9d280eead88",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v16-metrics.run.json",
+        "sha256": "475454af240bd51f05764449a4399e5d585f09ea23ec3cb75f1b586dcf5bf0f2",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v16-metrics.json",
+        "sha256": "988df26061c93ac3c6bbd8d6f8e72d6f3054758fe216da5c37a2e66ec73a3b95",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 138,
+      "survived": 0,
+      "demonstrably_equivalent": 5,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-families-immune.mutation.json",
+        "sha256": "0a0244106011435c3f66bd4b796a1cc8832edda17912b52de61cbf3bbd82cd47",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 143 mutants"
+      }
+    }
+  },
+  "history": []
+}

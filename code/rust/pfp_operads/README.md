@@ -169,7 +169,7 @@ patch and `[0, 0]` after it, and leaves `request.json`, `candidate.patch`,
   (`CounterfeitExactness`), broke a passing one (`BoundaryLeakage`) or did
   not fit the sources or the write set (`StructuralNonFit`). A missing tool,
   a changed source or a full disk blames no candidate.
-- **Family runs**: a workflow family (WF6 to WF13, WF16 to WF18,
+- **Family runs**: a workflow family (WF6 to WF14, WF16 to WF18,
   WF20, WF21, WF23 to WF27, WF29 to WF33, WF35, WF36, WF38 to WF40 and WF42
   to WF48 so far) is a walk the host owns. The request is the family's id, the
   public `task`, the `sealed` part and the `replies` received so far, each `null` or
@@ -256,6 +256,19 @@ patch and `[0, 0]` after it, and leaves `request.json`, `candidate.patch`,
   change. WF18 asks the model nothing: it checks every stored digest and
   regrades every stored reply. WF35 asks each arm each item, grades every
   reply by its bytes, and ignores any acceptance an arm claims for itself.
+- **Immune checks**: WF14 admits a detector rule only when two independent
+  signals hold it, and the shared parts live in `src/families/immune.rs` and
+  `src/families/pattern.rs`. A rule is a pattern in the bounded dialect of
+  Python's `re` (at most 256 characters; every repeat bounded by 64; at most
+  256 in product over repeats and branches; no backreference, nested repeat,
+  repeated alternation or empty match). The host reads the pattern itself and
+  matches a pattern it writes from that reading. Syntax it does not read
+  (anchors, lookaround, possessive repeats, octal escapes) stops the run.
+  A rule that matches any text of the sealed clean panel is killed; a rule is
+  admitted when the host's own contract check flags a failure the rule
+  matches, the two signals are independent and the epitope is the one named.
+  An antibody is `Provisional` only with three observations that share no
+  model, scaffold, precedent or lineage.
 - **Exact numbers** in a family run: an integer is read from its digits and
   has no size limit. A number written with a fraction or an exponent is never
   an integer. A rational is an integer or the text `p/q`: an optional minus,

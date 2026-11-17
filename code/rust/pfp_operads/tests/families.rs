@@ -68,6 +68,8 @@ fn the_host_lists_its_families_in_workflow_order() {
              "host_check": "integer_rank_difference_certificate"},
             {"workflow": "WF13", "name": "Exact-domain capsule battery",
              "host_check": "per_domain_registered_checker"},
+            {"workflow": "WF14", "name": "Immune failure classification",
+             "host_check": "thymus_two_signal_admission"},
             {"workflow": "WF16", "name": "Substrate crosswalk",
              "host_check": "incidence_rank_crosswalk"},
             {"workflow": "WF17", "name": "Witnessed-difference programme",
@@ -124,7 +126,7 @@ fn the_host_lists_its_families_in_workflow_order() {
              "host_check": "dual_checker_mutation_suite"},
         ]})
     );
-    assert_eq!(FAMILIES.len(), 35);
+    assert_eq!(FAMILIES.len(), 36);
 }
 
 #[test]

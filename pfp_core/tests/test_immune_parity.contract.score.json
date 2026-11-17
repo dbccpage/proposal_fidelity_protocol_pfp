@@ -1,0 +1,89 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "pfp_core/tests/test_immune_parity.py",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp_core/tests/test_immune_parity.py",
+      "language": "Python",
+      "sha256": "cfc26692dacdd0e2bc67300dc90dbc3278a4fa40e67ca94d347c498d9cf256ea"
+    },
+    "contract_urn": "urn:pfp-core:tests-test_immune_parity-py:v1",
+    "symbols": [
+      "test_screen_clean_candidates_admitted",
+      "test_screen_autoimmune_candidates_purged",
+      "test_decide_quadrant_matrix",
+      "test_decide_exact_rational_fractions",
+      "test_taint_dag_propagation",
+      "test_taint_cycle_refusal",
+      "test_select_reserve_partition_and_rational_ordering",
+      "test_as_rational_exact_integers_and_validation",
+      "test_civilization_select_governed_by_host_binary",
+      "test_host_exceptions_propagate_without_silent_swallowing",
+      "test_exclusion_consensus_and_falsifier_ordering",
+      "test_wf14_with_ledger_records_failures",
+      "test_wf19_with_ledger_records_trials_and_admissions",
+      "test_wf41_with_ledger_records_candidate_trial_admission",
+      "test_wf51_with_ledger_records_branch_drop_failure",
+      "test_offline_fallback_mode"
+    ],
+    "owned_invariants": [
+      "The pfp_immune host binary and the Python fallback are run side by side on the same inputs for screen, decide, taint, select and exclusion, and their outcomes compared.",
+      "Operad ledger recording is exercised across WF14, WF19, WF41 and WF51, and a WF14 run that names a ledger is asserted to record its failures in it."
+    ],
+    "boundaries": [
+      "Offline fixtures only; fixtures are not live model trials."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp_core/tests/test_immune_parity.py",
+      "language": "Python",
+      "sha256": "cfc26692dacdd0e2bc67300dc90dbc3278a4fa40e67ca94d347c498d9cf256ea"
+    },
+    "profile": "Non-Numeric",
+    "level": "L2",
+    "level_basis": "L2 verification support: explicit fixtures and finite negative controls with source-bound outcomes.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "D",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected outcomes follow from the inputs written in the test.",
+      "G3": "Refusals are asserted by the host's code or the raised error.",
+      "G4": "D: executed regression and negative controls are source-bound. No implementation-mutation campaign was run on these bytes, so no mutation ratio is claimed. This is an explicit verification deficit, not an unassessed pass.",
+      "G5": "Measured worst cyclomatic 11, cognitive 1, nesting 2; ceiling B, recorded B."
+    },
+    "composite_grade": "D",
+    "score_token": "L2D",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-17T00:19:06Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/operad-host-workflow-tests-v16.run.json",
+        "sha256": "32c51e3d7da386e9effb1db7dd29ed69293213a0e348c0eed0f40391f501aa1e",
+        "note": "870 offline tests (pfp/workflows, pfp_core/workflow_families, exclusions) against the release build of pfp_operad 0.11.0; exact source inputs bound. No live model performance claim."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v16-metrics.run.json",
+        "sha256": "475454af240bd51f05764449a4399e5d585f09ea23ec3cb75f1b586dcf5bf0f2",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v16-metrics.json",
+        "sha256": "988df26061c93ac3c6bbd8d6f8e72d6f3054758fe216da5c37a2e66ec73a3b95",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

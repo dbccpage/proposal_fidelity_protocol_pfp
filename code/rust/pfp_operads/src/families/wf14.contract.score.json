@@ -1,0 +1,103 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/wf14.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf14.rs",
+      "language": "Rust",
+      "sha256": "f5eedfb6fe42a12ca4f0f40b0814edd3347e665d6fab7b05e3e10fac30b9184a"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf14:v1",
+    "symbols": [
+      "OBSERVER",
+      "DANGER",
+      "FAMILY"
+    ],
+    "owned_invariants": [
+      "The task is failures, a nonempty list of entries with text, roots (exact rationals) and optionally id and provenance (text model, scaffold, precedent and lineage), and self_panel_sha256, text. The sealed part is self_panel, a nonempty list of clean entries of the same form. A task or a panel that is not of this form is refused before anything is asked.",
+      "The host asks for rules once, a nonempty list of rule_id (text or an integer, unique), target_epitope (one of the five) and pattern (not blank). It records self_panel_sealed (the panel digests to the seal; otherwise the run ends refused as SELF_PANEL_SEAL_BROKEN), self_panel_clean, no_autoimmune_rule and every_rule_two_signal_admitted, in that order.",
+      "A rule the thymus kills is KILLED_BY_THYMUS. A surviving rule is checked on each failure it matches, in order: a clean failure is DIAGNOSTIC_ONLY, a signal that is not independent has the code of the decision, and a failure of another epitope is EPITOPE_MISMATCH. A rule that matches nothing is UNMATCHED and one that held on every match is ADMITTED.",
+      "All held, the rules are certified as RULES_ADMITTED with each rule's status, the number of failures under each epitope and the custody of each epitope observed. When the task names a ledger_path, the detail also lists the ledger entries to write, in rule id order: thymus_kill for a killed rule and rule_rejected for any other that was not admitted."
+    ],
+    "boundaries": [
+      "A certified verdict says the rules were admitted over these failures and this panel. It does not say they detect a failure the panel does not show.",
+      "The host does not write the ledger; the caller appends the entries it returns.",
+      "A pattern the host does not read stops the run as malformed, where Python would have run it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/wf14.rs",
+      "language": "Rust",
+      "sha256": "f5eedfb6fe42a12ca4f0f40b0814edd3347e665d6fab7b05e3e10fac30b9184a"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "Exact: roots are exact rationals, polynomials are expanded over unbounded integers, digests are SHA-256 the tests rebuild, and the custody is the exact support. Not B: tested on examples, not proven; the hash library is trusted.",
+      "G3": "Each unreadable part of a task, a panel or a rule has its own reason, a forged seal is its own refusal, and a pattern outside the subset is a killed rule. No panicking unwrap or expect, and no index. Not B: panic-freedom is tested, not proven.",
+      "G4": "32 WF14 tests assert the registry entry, rules admitted with each predicate and its evidence, one question that leaves the sealed panel out and a prompt that is never handed out with a panel text, a rule that matches a clean panel text killed, a pattern outside the subset killed, a match on a clean failure as diagnostic only, a wrong epitope as a mismatch, a rule that matches nothing, the first failure that does not hold ending a rule's check, a danger whose evidence is what the rule matched, a forged seal, a panel that is not clean, each unreadable part of a task, a panel and a rule, ids that repeat and integer ids, the statuses in id order, each failure sorted by the monic classifier, custody for three failures that share no provenance and for those that share each key, failures without an id or provenance, and the ledger entries for each kind of rule that was not admitted. Two mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 130/130. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 13, cognitive complexity is not measured for Rust, nesting 2; ceiling B, recorded B."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-17T00:19:06Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v16-test.run.json",
+        "sha256": "974d1ca60772be8a8a2620951efb0243500ce32bb4f596f07e1b191b300b26ff",
+        "note": "1291 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v16-clippy.run.json",
+        "sha256": "73eddccb2cbed3e3b2468863eb021182cc78a28150563f47dd10c33c63b36995",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v16-fmt.run.json",
+        "sha256": "4c4d615842bf99a3099dae488b5822df774c4dd7b26e1ede7e05b9d280eead88",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v16-metrics.run.json",
+        "sha256": "475454af240bd51f05764449a4399e5d585f09ea23ec3cb75f1b586dcf5bf0f2",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v16-metrics.json",
+        "sha256": "988df26061c93ac3c6bbd8d6f8e72d6f3054758fe216da5c37a2e66ec73a3b95",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 130,
+      "survived": 0,
+      "demonstrably_equivalent": 2,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-wf14.mutation.json",
+        "sha256": "ddd4d53012fe6abbe9196bacf7314c471a18d3ff7dad3c7c6d0f9612119c0aa2",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 132 mutants"
+      }
+    }
+  },
+  "history": []
+}

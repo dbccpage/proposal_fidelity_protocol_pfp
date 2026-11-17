@@ -1,0 +1,138 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/tests/wf14.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf14.rs",
+      "language": "Rust",
+      "sha256": "721ff0be24a8dbffa45c9a15602d82258074314156cfff57f2d7fb0ab064d7a6"
+    },
+    "contract_urn": "urn:pfp-operads:families-wf14-tests:v1",
+    "symbols": [
+      "sha",
+      "canonical",
+      "coefficients",
+      "panel",
+      "provenance",
+      "failures",
+      "task_of",
+      "task",
+      "sealed",
+      "rule",
+      "good",
+      "request",
+      "run_with",
+      "run",
+      "outcomes",
+      "statuses",
+      "bad_task",
+      "malformed",
+      "bad_rules",
+      "the_registry_names_the_family",
+      "rules_that_two_independent_signals_hold_are_admitted",
+      "each_predicate_is_recorded_over_what_it_looked_at",
+      "one_step_is_asked_and_it_leaves_the_sealed_panel_out",
+      "a_prompt_with_a_sealed_panel_text_is_never_handed_out",
+      "a_rule_that_matches_a_clean_panel_text_is_killed_and_the_run_is_refused",
+      "a_pattern_outside_the_bounded_subset_is_killed_before_it_can_match",
+      "a_match_on_a_failure_that_is_clean_is_only_diagnostic",
+      "a_danger_whose_evidence_is_what_the_rule_matched_is_one_signal_not_two",
+      "a_rule_that_names_the_wrong_epitope_is_a_mismatch",
+      "a_rule_that_matches_no_failure_is_unmatched",
+      "the_first_failure_a_rule_matches_that_does_not_hold_ends_its_check",
+      "a_forged_seal_ends_the_run_before_anything_is_admitted",
+      "a_self_panel_with_a_text_that_is_not_clean_fails_its_predicate_but_the_run_goes_on",
+      "a_missing_reply_is_refused_as_such",
+      "a_reply_that_is_not_an_object_or_has_no_rules_is_malformed",
+      "a_rule_needs_a_known_epitope_an_id_and_a_pattern",
+      "rule_ids_are_unique_and_an_integer_id_stands_for_its_digits",
+      "a_pattern_the_host_does_not_read_stops_the_run_and_names_the_rule",
+      "the_statuses_are_listed_in_the_order_of_the_rule_ids",
+      "a_task_names_its_failures_and_its_seal",
+      "a_failure_needs_its_text_and_exact_roots_and_may_name_an_id_and_its_provenance",
+      "roots_may_be_empty_and_may_be_fractions",
+      "the_sealed_panel_is_a_nonempty_list_of_texts_with_roots_and_is_read_before_anything_is_asked",
+      "each_failure_is_sorted_into_its_epitope_by_the_monic_classifier",
+      "noncanonical",
+      "custody",
+      "three_failures_that_share_no_provenance_make_an_epitope_provisional",
+      "a_failure_without_provenance_or_an_id_still_counts_once_under_its_position",
+      "a_clean_failure_is_not_an_observation",
+      "ledger_task",
+      "rules_that_were_not_admitted_come_with_the_ledger_entries_to_write",
+      "a_ledger_is_named_only_by_a_nonempty_text_and_admitted_rules_leave_no_entry",
+      "a_run_ends_with_the_one_reply_it_asked_for",
+      "an_alternation_python_reads_as_a_set_matches_like_the_set_and_a_group_is_a_group"
+    ],
+    "owned_invariants": [
+      "Digests are SHA-256 the tests rebuild themselves, and the polynomials and the status of each rule are worked by hand for the failures written in a test.",
+      "Each predicate and each status is asserted failing alone, and a forged seal is asserted to end the run before any rule is admitted.",
+      "Each unreadable task, panel, reply and rule is asserted by its reason, and the ledger entries are asserted for each kind of rule that was not admitted."
+    ],
+    "boundaries": [
+      "Test support only; no production path imports it."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/tests/wf14.rs",
+      "language": "Rust",
+      "sha256": "721ff0be24a8dbffa45c9a15602d82258074314156cfff57f2d7fb0ab064d7a6"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "Integration tests in the standard cargo layout.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected values follow by hand from the request written in the test.",
+      "G3": "Refusals are asserted by code.",
+      "G4": "All 32 pass in the recorded run; the suite they belong to killed 130 of 130 eligible WF14 mutants.",
+      "G5": "Measured worst cyclomatic 3, cognitive complexity is not measured for Rust, nesting 2; ceiling A+, recorded A."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-17T00:19:06Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v16-test.run.json",
+        "sha256": "974d1ca60772be8a8a2620951efb0243500ce32bb4f596f07e1b191b300b26ff",
+        "note": "1291 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v16-clippy.run.json",
+        "sha256": "73eddccb2cbed3e3b2468863eb021182cc78a28150563f47dd10c33c63b36995",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v16-fmt.run.json",
+        "sha256": "4c4d615842bf99a3099dae488b5822df774c4dd7b26e1ede7e05b9d280eead88",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v16-metrics.run.json",
+        "sha256": "475454af240bd51f05764449a4399e5d585f09ea23ec3cb75f1b586dcf5bf0f2",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v16-metrics.json",
+        "sha256": "988df26061c93ac3c6bbd8d6f8e72d6f3054758fe216da5c37a2e66ec73a3b95",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}
