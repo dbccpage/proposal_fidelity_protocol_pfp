@@ -1,0 +1,120 @@
+# Section Template - Education Engine
+# This template defines the strict YAML frontmatter schema for section files.
+# All section files should include this frontmatter at the beginning.
+
+# =============================================================================
+# REQUIRED FIELDS
+# =============================================================================
+
+# File type - determines how the content is processed
+# Values: section, master_outline, handout, reference, social_hooks
+type: section
+
+# Lesson number - extracted from filename or directory
+# Example: 1 for "lesson_001"
+lesson: 1
+
+# Section number - the XX in "NNN.XX_topic_name.md"
+# Example: 6 for "001.06_why_triangles_are_rigid.md"
+section: 6
+
+# Section title - human-readable title
+# Should match the H1 title in the content (without the "N.XX" prefix)
+title: "Why Triangles Are Rigid"
+
+# =============================================================================
+# OPTIONAL FIELDS (Highly Recommended)
+# =============================================================================
+
+# Part number within the lesson (Roman numeral converted to integer)
+# Part I = 1, Part II = 2, etc.
+part: 1
+
+# Part title - the descriptive name of the part
+# Example: "Foundations", "The Math of the Turn"
+part_title: "Foundations"
+
+# Estimated duration in minutes
+# Parsed from "~N minutes" in content metadata
+duration_minutes: 15
+
+# One-line summary (TL;DR) of the section
+# Should capture the core insight in one sentence
+tldr: "Triangles are rigid because SSS uniqueness - three fixed lengths form a unique shape."
+
+# =============================================================================
+# OPTIONAL FIELDS (Extended Metadata)
+# =============================================================================
+
+# Learning objectives for this section
+# List of specific skills or knowledge the reader should gain
+learning_objectives:
+  - "Understand why triangles lock"
+  - "Compare triangle rigidity vs quadrilateral flexibility"
+  - "Connect SSS uniqueness to physical stability"
+
+# Prerequisites - section codes that should be read first
+# Use format "NNN.XX" matching section_code field
+prerequisites:
+  - "001.01"
+  - "001.05"
+
+# References - external sources or related materials
+references:
+  - title: "Euclid's Elements, Book I"
+    type: historical
+  - title: "Physics of Structures"
+    type: supplementary
+
+# Tags for content discovery
+tags:
+  - geometry
+  - rigidity
+  - triangles
+  - SSS
+
+# =============================================================================
+# COMPUTED FIELDS (Set by importer, not in source files)
+# =============================================================================
+
+# section_code: "001.06"  # Generated from lesson + section
+# source_file: "001.06_why_triangles_are_rigid.md"  # Original filename
+# source_hash: "abc123..."  # SHA-256 of content for change detection
+# next_section_code: "001.07"  # Parsed from "Next:" link
+# prev_section_code: "001.05"  # Inferred from section number
+
+# =============================================================================
+# FILE TYPE VARIATIONS
+# =============================================================================
+
+# For master_outline files:
+# ---
+# type: master_outline
+# lesson: 1
+# title: "Lesson 1 Master Outline"
+# learning_objectives: [...]
+# key_formulas: [...]
+# lexicon: [...]
+# one_minute_summary: "..."
+
+# For handout files:
+# ---
+# type: handout
+# lesson: 1
+# title: "Lesson 1 Handout"
+# big_idea: "..."
+# key_concepts: [...]
+
+# For reference files:
+# ---
+# type: reference
+# lesson: 1
+# title: "Conventions and Reference"
+# notation: {...}
+
+# For social_hooks files:
+# ---
+# type: social_hooks
+# lesson: 1
+# title: "Social Hooks"
+# hooks: [...]
