@@ -5,6 +5,8 @@ AuthorityEffect: None.
 
 from __future__ import annotations
 
+import builtins
+import json
 import os
 import subprocess
 import sys
@@ -14,6 +16,67 @@ from pathlib import Path
 import pytest
 
 REPO = Path(__file__).resolve().parents[1]
+
+
+def test_fixture_estate_seal_installs_when_the_container_imports() -> None:
+    import conftest as root_conftest
+
+    assert root_conftest._install_fixture_estate_seal.done is True
+
+
+def test_dev_extra_names_receipt_ledger_and_admission_imports() -> None:
+    import tomllib
+
+    manifest = tomllib.loads((REPO / "pyproject.toml").read_text(encoding="utf-8"))
+    dev = manifest["project"]["optional-dependencies"]["dev"]
+    names = {item.split("==", 1)[0].split(">=", 1)[0].lower() for item in dev}
+    assert "blake3" in names
+    assert "cryptography" in names
+
+
+def test_preloaded_host_module_still_refuses_optional_native_budget() -> None:
+    from adversary.infrastructure.providers.rust_budget import (
+        NativeBudgetUnavailable,
+        RustBudgetRuntime,
+    )
+    from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+
+    import conftest as root_conftest
+
+    assert RustSymbolGameHost is not None
+    assert "operating_system.adapters.rust_host.ffi" in sys.modules
+    dropped = root_conftest._drop_cached_operating_system_modules()
+    sys.modules["operating_system"] = None
+    try:
+        assert "operating_system.adapters.rust_host.ffi" not in sys.modules
+        with pytest.raises(NativeBudgetUnavailable, match="NATIVE_BUDGET_UNAVAILABLE"):
+            RustBudgetRuntime().invoke("state")
+    finally:
+        sys.modules.pop("operating_system", None)
+        root_conftest._restore_operating_system_modules(dropped)
+
+
+def test_fixture_estate_seal_stays_off_when_the_container_import_fails(monkeypatch) -> None:
+    import conftest as root_conftest
+
+    seal = root_conftest._install_fixture_estate_seal
+    previous = bool(getattr(seal, "done", False))
+    seal.done = False
+    real_import = builtins.__import__
+
+    def _blocked(name, global_ns=None, local_ns=None, fromlist=(), level=0):
+        if name == "operads.infrastructure.bootstrap":
+            raise ImportError("absent host: operads.infrastructure.bootstrap")
+        return real_import(name, global_ns, local_ns, fromlist, level)
+
+    monkeypatch.setattr(builtins, "__import__", _blocked)
+    installed = True
+    try:
+        seal()
+        installed = bool(getattr(seal, "done", False))
+    finally:
+        seal.done = previous
+    assert installed is False
 
 
 def test_ddc_parser_imports_canon_letters_and_refuses_unknown_colour() -> None:
@@ -79,6 +142,18 @@ def test_six_arm_receipt_keeps_the_null_and_uses_exact_fractions() -> None:
     assert second["digest"] == report["digest"]
 
 
+def test_checked_in_six_arm_receipt_matches_the_shipped_call() -> None:
+    from pfp_core.release_surface_v1rc import run_six_arm_offline_campaign
+
+    path = REPO / "governance" / "evidence" / "six_arm_offline_campaign_v1rc.json"
+    stored = json.loads(path.read_text(encoding="utf-8"))
+    fresh = run_six_arm_offline_campaign()
+    assert stored == fresh
+    assert stored["comparisons"]["arm6_minus_arm3"]["accuracy_delta"] == "0"
+    assert stored["provider_calls"] == 0
+    assert stored["claim_hygiene"]["does_not_support"]
+
+
 def test_showcase_replay_performs_no_provider_call() -> None:
     from pfp_core.release_surface_v1rc import replay_guest_showcase
 
@@ -101,6 +176,109 @@ def test_showcase_markup_is_static_and_keeps_the_brand_out() -> None:
     assert "module.exports" not in script
     blob = (html + script).lower()
     assert "om" + "ega" not in blob
+
+
+_PINNED_RED_FENCE = """\
+operads/skill_operad/skill_compiler/tests/test_skill_listing.py::test_the_live_tree_passes
+operads/skill_operad/skill_compiler/tests/test_skill_listing.py::test_every_live_ext_stub_is_hidden_from_the_model
+operads/skill_operad/tests/test_dispatch_resolution.py::DispatchResolutionTests::test_declared_license_with_reconciled_colours_resolves
+operads/skill_operad/tests/test_domain_clean_arch.py::UseCaseIntegrationTests::test_validate_operad_use_case
+operads/skill_operad/tests/test_honesty.py::ResidualHonestyLive::test_live_repo_classifies_legacy_rows_without_upgrading_them
+operads/skill_operad/tests/test_honesty.py::HighTrafficSpoe::test_meta_chain_typed
+operads/skill_operad/tests/test_span_operands_and_composition_judging.py::test_composition_gate1_colour_type_soundness
+operads/skill_operad/tests/test_span_operands_and_composition_judging.py::test_composition_gate2_arity_and_slot_bounds
+operads/skill_operad/tests/test_span_operands_and_composition_judging.py::test_composition_gate5_agent_capability_slice_licensing
+operads/tests/architecture/test_clean_architecture_ast_boundaries.py::CleanArchitectureBoundaryTests::test_cross_context_imports_are_caught_in_source
+operads/tests/ddc_execution/test_operad_composition_fail_open.py::test_the_validator_passes_on_the_real_registry
+operads/tests/ddc_execution/test_operad_composition_fail_open.py::test_a_refused_composition_fails_the_gate
+operads/tests/ddc_execution/test_operad_composition_fail_open.py::test_an_unmodified_copy_still_passes
+operads/tests/integration/test_benchmark_burst_load.py::TestBenchmarkBurstLoad::test_sustained_100_plus_request_burst_load
+operads/tests/integration/test_outbox_transaction_atomicity.py::TestOutboxTransactionAtomicity::test_handler_refuses_an_unreadable_skill_instead_of_skipping_it
+operads/tests/integration/test_structurebench_production_bundle_contract.py::test_actual_native_persistence_is_fully_measured_and_hash_bound
+operads/tests/integration/test_structurebench_production_bundle_contract.py::test_native_persisted_missing_terminal_binding_is_held_not_satisfied[phi_1]
+operads/tests/integration/test_structurebench_production_bundle_contract.py::test_native_persisted_missing_terminal_binding_is_held_not_satisfied[gamma_2]
+operads/tests/integration/test_structurebench_production_bundle_contract.py::test_native_persisted_missing_terminal_binding_is_held_not_satisfied[lean4_proof_hash]
+operads/tests/integration/test_structurebench_production_bundle_contract.py::test_native_persisted_missing_terminal_binding_is_held_not_satisfied[terminal_verdict]
+operads/tests/integration/test_structurebench_production_bundle_contract.py::test_native_non_pass_verdict_remains_not_applicable
+operads/tests/integration/test_structurebench_production_bundle_contract.py::test_cross_run_receipt_transplant_cannot_bind_another_candidate
+operads/tests/integration/test_structurebench_production_bundle_contract.py::test_native_single_ddc_and_uts_are_required_and_bound[missing]
+operads/tests/integration/test_structurebench_production_bundle_contract.py::test_native_single_ddc_and_uts_are_required_and_bound[changed_bytes]
+operads/tests/integration/test_structurebench_production_bundle_contract.py::test_native_single_ddc_and_uts_are_required_and_bound[changed_uts_bytes]
+operads/tests/integration/test_structurebench_production_bundle_contract.py::test_native_duplicate_terminal_token_is_malformed_not_satisfied
+operads/tests/integration/test_structurebench_production_bundle_contract.py::test_observed_failure_feedback_stays_candidate_and_correlates_to_source_run
+operads/tests/integration/test_structurebench_production_bundle_contract.py::test_historical_ddc_copy_with_matching_changed_digest_still_refuses
+operads/tests/unit/test_governance_digest.py::GovernanceDigestTests::test_checked_in_repairs_match_a_stored_fingerprint
+operads/tests/unit/test_governance_digest.py::GovernanceDigestTests::test_missing_repair_target_fails_closed_as_anchor_changed
+operads/tests/unit/test_governance_digest_refactor_branches.py::GovernanceDigestRefactorBranchTests::test_owner_coverage_separates_table_gap_registered_repair_and_unknown_language
+eis/tests/unit/test_immune_system.py::TestEpistemicImmuneSystem::test_antimorphism_immune_bench_and_phagocytic_regenerator
+eis/tests/unit/test_pharmacy_candidate_by_default.py::test_each_retired_id_is_reproduced_by_its_recorded_defect
+eis/tests/unit/test_pharmacy_candidate_by_default.py::test_the_three_phantoms_cannot_be_farmed_again
+eis/tests/unit/test_thymus_evaluation_error.py::test_invalid_pattern_surfaces_evaluation_error
+eis/tests/architecture/test_clean_architecture_ast_boundaries.py::CleanArchitectureBoundaryTests::test_use_cases_never_import_infrastructure
+operads/tests/unit/test_operad_type_registry.py::test_the_checked_in_registry_matches_every_source
+"""
+
+
+def _pytest_commands(workflow_text: str) -> list[str]:
+    return [line for line in workflow_text.splitlines() if "-m pytest" in line]
+
+
+def test_v1rc_gates_pytest_runs_operads_eis_and_pciv() -> None:
+    text = (REPO / ".github" / "workflows" / "pfp_v1rc_gates.yml").read_text(encoding="utf-8")
+    trees = {"operads", "eis", "pciv"}
+    assert any(trees <= set(command.split()) for command in _pytest_commands(text))
+    assert "The rest of eis/" not in text
+    assert "historical receipt scripts" not in text
+
+
+def test_v1rc_gates_deselect_pinned_red_operads_and_eis_nodes() -> None:
+    text = (REPO / ".github" / "workflows" / "pfp_v1rc_gates.yml").read_text(encoding="utf-8")
+    fence = REPO / ".github" / "pfp_v1rc_pinned_red_nodes.txt"
+    assert ".github/pfp_v1rc_pinned_red_nodes.txt" in text
+    assert "--deselect" in text
+    listed = [
+        line.strip()
+        for line in fence.read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    ]
+    expected = [line for line in _PINNED_RED_FENCE.splitlines() if line]
+    assert listed == expected
+    assert len(listed) == 37
+    assert all(node.startswith(("operads/", "eis/")) for node in listed)
+
+
+def test_absent_host_projection_nodes_run_when_the_named_path_exists() -> None:
+    import conftest as root_conftest
+
+    rows = [
+        line.strip().split("\t")
+        for line in (REPO / ".github" / "pfp_v1rc_absent_host_nodes.txt").read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    ]
+    assert rows
+    assert len(rows) == 52
+    for node, relative in rows:
+        reason = root_conftest._host_absence_reason(node)
+        if (REPO / relative).exists():
+            assert reason is None
+        else:
+            assert reason == f"{relative} is absent"
+        hidden = root_conftest._host_absence_reason(node + "[case]")
+        assert hidden == reason
+
+
+def test_a_missing_projection_path_is_named_in_the_skip_reason() -> None:
+    import conftest as root_conftest
+
+    loader = root_conftest._absent_host_rows
+    previous = getattr(loader, "rows", None)
+    node = "operads/tests/unit/test_prompt_hierarchy.py::test_load_pfp_research_04_prompt_node"
+    loader.rows = ((node, "not-a-projection"),)
+    try:
+        assert root_conftest._host_absence_reason(node) == "not-a-projection is absent"
+        assert root_conftest._host_absence_reason(node + "[case]") == "not-a-projection is absent"
+    finally:
+        loader.rows = previous
 
 
 def test_editable_install_imports_pfp_core_without_a_path_hack() -> None:

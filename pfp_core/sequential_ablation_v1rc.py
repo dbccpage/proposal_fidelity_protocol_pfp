@@ -25,20 +25,27 @@ import json
 import math
 import os
 import re
+import sys
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field
 from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
+# arm_yardstick is a flat module under workflows/tasks/yardstick. outer_loop_v1rc
+# appends that directory, but this module imports the yardstick before that import runs.
+_YARDSTICK = Path(__file__).resolve().parent.parent / "workflows" / "tasks" / "yardstick"
+if str(_YARDSTICK) not in sys.path:
+    sys.path.append(str(_YARDSTICK))
+
 import hamiltonian_artifact as wf52_hamiltonian  # noqa: E402
 from arm_yardstick import mcnemar_exact, wilson_interval  # noqa: E402
 
 from eis.domain.value_objects import REGEX_MATCHER_ID, DetectorRule  # noqa: E402
 from pciv.use_cases.fitness import ComparativeClaimAuditorV1, ParetoFrontSelectorV1  # noqa: E402
-from pfp_core import immunity, operad_ledger, operad_pipe
-from pfp_core.fidelity import MAX_RUN_MICROUSD, WholeRunBudget, sha256_hex
-from pfp_core.outer_loop_v1rc import (
+from pfp_core import immunity, operad_ledger, operad_pipe  # noqa: E402
+from pfp_core.fidelity import MAX_RUN_MICROUSD, WholeRunBudget, sha256_hex  # noqa: E402
+from pfp_core.outer_loop_v1rc import (  # noqa: E402
     AUTHORITY_NONE,
     BUILTIN_NORMALIZERS,
     PROMOTE_ACCURACY,

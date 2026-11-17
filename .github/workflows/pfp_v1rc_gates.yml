@@ -35,14 +35,25 @@ jobs:
       - name: Build host binaries and Lean roots before pytest
         run: |
           cargo build --release --manifest-path code/rust/Cargo.toml -p pfp_operads -p pfp_immune
+          cargo build --release --manifest-path code/rust/Cargo.toml -p pfp --bin pfp
           lake --dir lean4 build
           test -x "$HOME/.elan/toolchains/leanprover--lean4---v4.35.0/bin/lean"
           lake --dir lean4 env lean lean4/FunnelCompressionClosure.lean
       - run: .venv/bin/python -B -X utf8 -m ruff check pfp_core/ tests/
       - run: .venv/bin/python -B -X utf8 -m pytest pfp_lab/tests/test_boundaries.py -q
-      # Section-3 suite plus the two-signal EIS file. The rest of eis/ and the
-      # operads/ and pciv trees import optional hosts and historical receipt scripts.
-      - run: .venv/bin/python -B -X utf8 -m pytest tests/ pfp_lab/tests pfp_core/tests pfp_core/workflow_families/tests governance/tools/tests eis/tests/unit/test_two_signal_regulation.py -q
+      - name: Section-3 suite plus operads, eis, and pciv
+        env:
+          PYTHONPATH: ops
+        run: |
+          deselect=()
+          while IFS= read -r node || [ -n "$node" ]; do
+            node=${node%$'\r'}
+            case "$node" in
+              ''|\#*) continue ;;
+            esac
+            deselect+=(--deselect "$node")
+          done < .github/pfp_v1rc_pinned_red_nodes.txt
+          .venv/bin/python -B -X utf8 -m pytest tests/ pfp_lab/tests pfp_core/tests pfp_core/workflow_families/tests governance/tools/tests operads eis pciv -q "${deselect[@]}"
       # pfp-cli is a separate workspace (package name pfp-cli). The engine manifest has no pfp_cli member.
       - run: cargo test --manifest-path code/rust/Cargo.toml -p pfp -p pfp_runtime -p pfp_operads -p pfp_immune -p core_operad_canon
       - run: cargo test --manifest-path code/rust/pfp_cli/Cargo.toml
