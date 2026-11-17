@@ -388,6 +388,53 @@ def _host_absence_reason(nodeid: str) -> str | None:
     return None
 
 
+def _seal_markdown_estate(workspace_root: Path) -> None:
+    """Write a capability catalog for every skill file under a temporary estate.
+
+    The filesystem reader lists skills from the sealed catalog. An empty
+    package_resources tuple keeps the markdown parser on the fixture path.
+    This does not write a catalog for the repository root.
+    """
+    from operads.domain.capability_catalog_v1 import (  # noqa: PLC0415
+        SkillCapabilityV1,
+        encode_capability_catalog,
+        seal_capability_catalog,
+    )
+
+    skills_root = workspace_root / ".agents" / "skills"
+    files = sorted(path for path in skills_root.glob("*/SKILL.md") if path.is_file())
+    skills: list[SkillCapabilityV1] = []
+    for path in files:
+        skill_id = path.parent.name
+        raw = path.read_bytes()
+        skills.append(
+            SkillCapabilityV1(
+                skill_id=skill_id,
+                name=skill_id,
+                description=f"Fixture skill {skill_id}",
+                source_path=f"skills/{skill_id}/SKILL.md",
+                source_digest=hashlib.sha256(raw).hexdigest(),
+                source_colours=("Code",),
+                target_colour="Receipt",
+                arity=1,
+                residual_effect="recorded",
+                invocation="discipline",
+                invocation_explicit=False,
+                families=(skill_id,),
+                declared_dependencies=(),
+                declared_triggers=(),
+                package_resources=(),
+            )
+        )
+    catalog = seal_capability_catalog(
+        skills=tuple(sorted(skills, key=lambda item: item.skill_id)),
+        agents=(),
+    )
+    destination = workspace_root / ".agents" / "skill_operads" / "capability_catalog.v1.json"
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_bytes(encode_capability_catalog(catalog))
+
+
 def _seal_fixture_estate_if_needed(root: Path) -> None:
     """Write a catalog for a temporary estate that already has skill markdown.
 
@@ -407,11 +454,7 @@ def _seal_fixture_estate_if_needed(root: Path) -> None:
     if not skills.is_dir() or any(path.is_file() for path in catalogs):
         return
     if any(skills.glob("*/SKILL.md")):
-        from operads.tests.integration.estate_catalog_seal import (  # noqa: PLC0415
-            seal_markdown_estate,
-        )
-
-        seal_markdown_estate(root)
+        _seal_markdown_estate(root)
 
 
 def _install_fixture_estate_seal() -> None:
