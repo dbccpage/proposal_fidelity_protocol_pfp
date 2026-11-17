@@ -7,7 +7,7 @@
     "artifact": {
       "path": "pfp_core/workflow_families/layer6.py",
       "language": "Python",
-      "sha256": "e41c05fa0f08ab500d1ea5315335169c2205f6bca36c82b2e1f4c9751b0e2669"
+      "sha256": "c79d0779837c48f4e258eff3e0b35d461796931fffdbb2fd4bc65a4ec995d1dc"
     },
     "contract_urn": "urn:pfp-core:workflow-families-layer6-py:v1",
     "symbols": [
@@ -27,6 +27,7 @@
       "text",
       "SELF_PANEL",
       "_prov",
+      "sample_failures",
       "ImmuneFailureClassification",
       "GRADER_PIN",
       "dossier_cell",
@@ -34,15 +35,15 @@
       "ProposalChannelComparison"
     ],
     "owned_invariants": [
-      "DossierReplayCampaign (WF18) and ProposalChannelComparison (WF35) are HostedFamily classes. Each holds its id, name and host check and fixtures that run through the Rust host. Neither makes a verdict, a comparison or a count.",
+      "ImmuneFailureClassification (WF14), DossierReplayCampaign (WF18) and ProposalChannelComparison (WF35) are HostedFamily classes. Each holds its id, name and host check and fixtures that run through the Rust host. None makes a verdict, a comparison or a count.",
       "GRADER_PIN is the SHA-256 of code/rust/pfp_operads/src/families/duality.rs with line endings read as line feeds. A test fails when that file changes and this line does not.",
       "dossier_cell builds one stored cell for a fixture: the input and the reply with their SHA-256 digests, and the grade the fixture says it earned. It judges nothing.",
-      "ImmuneFailureClassification (WF14) and the helpers classify_reply, build_rules, admit_rules, classify_failures, antibody_support and require_items are the Python immune domain that WF15, WF19, WF26 and WF41 import. They are unchanged by this slice and are replaced when the immune checks move to the host."
+      "sample_failures gives the failures the WF14 fixtures and the layer 7 fixtures share. The helpers classify_reply, build_rules, admit_rules, classify_failures, antibody_support and require_items are the Python immune domain that WF15, WF19, WF26 and WF41 import. They are unchanged by this slice and are replaced when those families move to the host."
     ],
     "boundaries": [
       "A hosted family used without the host binary gives no verdict; it raises the host's error.",
       "Fixtures are offline examples, not live model trials.",
-      "WF14 and its helpers still check in Python; the Rust host does not check them yet."
+      "The immune helpers still check in Python for the families that import them; the Rust host does not check those families yet."
     ]
   },
   "score": {
@@ -51,11 +52,11 @@
     "artifact": {
       "path": "pfp_core/workflow_families/layer6.py",
       "language": "Python",
-      "sha256": "e41c05fa0f08ab500d1ea5315335169c2205f6bca36c82b2e1f4c9751b0e2669"
+      "sha256": "c79d0779837c48f4e258eff3e0b35d461796931fffdbb2fd4bc65a4ec995d1dc"
     },
     "profile": "Exact",
     "level": "L4",
-    "level_basis": "The layer 6 families. WF18 and WF35 hold a spec and fixtures only and take every verdict from the Rust host. WF14 and the immune helpers its successors import still check in Python until slice 4i.",
+    "level_basis": "The layer 6 families. WF14, WF18 and WF35 hold a spec and fixtures only and take every verdict from the Rust host. The immune helpers that layer 7 imports still check in Python until those families move.",
     "gates": {
       "G1": "C",
       "G2": "C",
@@ -65,45 +66,45 @@
     },
     "basis": {
       "G1": "The module docstring states the role; the contract binds AuthorityEffect None and names every exported symbol. Not B: no requirement-to-symbol trace beyond docs/plans/operads_redesign.md.",
-      "G2": "Exact: fixture values are integers or exact text, the pin is written out in full, and the immune code reads rationals with Fraction and refuses floats. Every verdict of WF18 and WF35 is the host's. Not B: tested on examples, not proven.",
+      "G2": "Exact: fixture values are integers or exact text, the pin is written out in full, and the immune code reads rationals with Fraction and refuses floats. Every verdict of WF14, WF18 and WF35 is the host's. Not B: tested on examples, not proven.",
       "G3": "The hosted families take their refusals from the host. The immune code refuses a malformed reply or rule as a typed candidate error. Not B: no closed table of error codes for this module.",
-      "G4": "The 565 tests of pfp_core/workflow_families/tests/test_families.py run the fixtures of every family, the hosted ones through the Rust host, and assert the registry, the host's own listing of hosted families, that a hosted family holds no check, the refusal of a malformed task and of a sealed value, that each of the 10 layer 6 fixtures ends with the code and the findings its name says, and that the pin in this module is the digest of the Rust grader; the 864-test run covers the rest of the workflow suite. 86 mutants survived. 35 are in WF18 and WF35 and each changes an integer written inside fixture data, so the changed fixture still ends with the same code and findings. 51 are in WF14 and the immune helpers this slice does not change (fixture and failure data and a few branches of the helpers); they are replaced in slice 4i. Not B: one generated campaign against test_families.py alone, no property tests. Mutation campaign R = 123/209.",
+      "G4": "The 571 tests of pfp_core/workflow_families/tests/test_families.py run the fixtures of every family, the hosted ones through the Rust host, and assert the registry, the host's own listing of hosted families, that a hosted family holds no check, the refusal of a malformed task and of a sealed value, that each of the 15 layer 6 fixtures ends with the code and the findings its name says, and that the pin in this module is the digest of the Rust grader; the 870-test run covers the rest of the workflow suite. 74 mutants survived. 18 are in the immune helpers that layer 7 still imports (the polynomial and reply reading, rule building, the two-signal loop, the epitope count and the antibody count): branches and counts the fixtures of layers 6 and 7 do not tell apart, which are replaced when those families move to the Rust host. 20 change an integer or a digest in the WF14 fixture data (the sample failures and the forged seal case), so the changed fixture still ends with the same code and findings. 36 change an integer or a pin in the WF18 and WF35 fixture data, with the same result. Not B: one generated campaign against test_families.py alone, no property tests. Mutation campaign R = 124/198. Mutation campaign R = 124/198.",
       "G5": "Measured worst cyclomatic 14, cognitive 29, nesting 3; ceiling D, recorded D."
     },
     "composite_grade": "D",
     "score_token": "L4D",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-16T22:06:04Z",
+    "evaluation_timestamp": "2026-11-17T00:19:06Z",
     "evidence": [
       {
-        "path": "governance/evidence/operad-host-workflow-tests-v15.run.json",
-        "sha256": "50169dfe19dcea3e5fa711be36857a957467a92987895c9d054ea38495ff8e36",
-        "note": "864 offline tests (pfp/workflows, pfp_core/workflow_families, exclusions) against the release build of pfp_operad 0.11.0; exact source inputs bound. No live model performance claim."
+        "path": "governance/evidence/operad-host-workflow-tests-v16.run.json",
+        "sha256": "32c51e3d7da386e9effb1db7dd29ed69293213a0e348c0eed0f40391f501aa1e",
+        "note": "870 offline tests (pfp/workflows, pfp_core/workflow_families, exclusions) against the release build of pfp_operad 0.11.0; exact source inputs bound. No live model performance claim."
       },
       {
-        "path": "governance/evidence/pfp-operads-v15-metrics.run.json",
-        "sha256": "e4c24e720d1823e3d047da11b130f1d5d4a45bb021b6b929fc72bb7f1377e61a",
+        "path": "governance/evidence/pfp-operads-v16-metrics.run.json",
+        "sha256": "475454af240bd51f05764449a4399e5d585f09ea23ec3cb75f1b586dcf5bf0f2",
         "note": "The run that measured Gate 5 structure."
       },
       {
-        "path": "governance/evidence/pfp-operads-v15-metrics.json",
-        "sha256": "e204ef1d998e58a6f5b13694279c83863b493ca88e21fcdc395014191976e4f2",
+        "path": "governance/evidence/pfp-operads-v16-metrics.json",
+        "sha256": "988df26061c93ac3c6bbd8d6f8e72d6f3054758fe216da5c37a2e66ec73a3b95",
         "note": "Measured Gate 5 structure of every source this change touches."
       }
     ],
     "mutation_accounting": {
-      "killed": 123,
-      "survived": 86,
+      "killed": 124,
+      "survived": 74,
       "demonstrably_equivalent": 0,
       "invalid": 0,
       "inconclusive": 0,
       "unrun": 0,
-      "conservative_ratio": 0.5885167464114832,
+      "conservative_ratio": 0.6262626262626263,
       "report": {
         "path": "governance/evidence/m-workflow-families-layer6-py.mutation.json",
-        "sha256": "1cfc4f80747e6d42b2414060b45798025b1e96dc396312e6203b0e0a5553410d",
-        "note": "AST campaign, governance.tools.mutation, pytest as oracle; 209 mutants"
+        "sha256": "2f608bcd95c78a06420f3394ea95a044f6a146afd7e3be1bfa4aba51ec70b42a",
+        "note": "AST campaign, governance.tools.mutation, pytest as oracle; 198 mutants"
       }
     }
   },
@@ -183,6 +184,114 @@
         "is_complete": true,
         "grade_ceiling": "A",
         "evaluation_timestamp": "2026-11-16T22:05:53Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/operad-host-workflow-tests-v15.run.json",
+            "sha256": "50169dfe19dcea3e5fa711be36857a957467a92987895c9d054ea38495ff8e36",
+            "note": "864 offline tests (pfp/workflows, pfp_core/workflow_families, exclusions) against the release build of pfp_operad 0.11.0; exact source inputs bound. No live model performance claim."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-metrics.run.json",
+            "sha256": "e4c24e720d1823e3d047da11b130f1d5d4a45bb021b6b929fc72bb7f1377e61a",
+            "note": "The run that measured Gate 5 structure."
+          },
+          {
+            "path": "governance/evidence/pfp-operads-v15-metrics.json",
+            "sha256": "e204ef1d998e58a6f5b13694279c83863b493ca88e21fcdc395014191976e4f2",
+            "note": "Measured Gate 5 structure of every source this change touches."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 123,
+          "survived": 86,
+          "demonstrably_equivalent": 0,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 0.5885167464114832,
+          "report": {
+            "path": "governance/evidence/m-workflow-families-layer6-py.mutation.json",
+            "sha256": "1cfc4f80747e6d42b2414060b45798025b1e96dc396312e6203b0e0a5553410d",
+            "note": "AST campaign, governance.tools.mutation, pytest as oracle; 209 mutants"
+          }
+        }
+      }
+    },
+    {
+      "recorded_at": "2026-11-17T00:19:09.850044Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "pfp_core/workflow_families/layer6.py",
+          "language": "Python",
+          "sha256": "e41c05fa0f08ab500d1ea5315335169c2205f6bca36c82b2e1f4c9751b0e2669"
+        },
+        "contract_urn": "urn:pfp-core:workflow-families-layer6-py:v1",
+        "symbols": [
+          "EPITOPES",
+          "CLEAN",
+          "HOST_OBSERVER",
+          "DANGER_KIND",
+          "poly_from_roots",
+          "canonical_rational",
+          "classify_reply",
+          "_parse_coefficients",
+          "build_rules",
+          "admit_rules",
+          "classify_failures",
+          "antibody_support",
+          "require_items",
+          "text",
+          "SELF_PANEL",
+          "_prov",
+          "ImmuneFailureClassification",
+          "GRADER_PIN",
+          "dossier_cell",
+          "DossierReplayCampaign",
+          "ProposalChannelComparison"
+        ],
+        "owned_invariants": [
+          "DossierReplayCampaign (WF18) and ProposalChannelComparison (WF35) are HostedFamily classes. Each holds its id, name and host check and fixtures that run through the Rust host. Neither makes a verdict, a comparison or a count.",
+          "GRADER_PIN is the SHA-256 of code/rust/pfp_operads/src/families/duality.rs with line endings read as line feeds. A test fails when that file changes and this line does not.",
+          "dossier_cell builds one stored cell for a fixture: the input and the reply with their SHA-256 digests, and the grade the fixture says it earned. It judges nothing.",
+          "ImmuneFailureClassification (WF14) and the helpers classify_reply, build_rules, admit_rules, classify_failures, antibody_support and require_items are the Python immune domain that WF15, WF19, WF26 and WF41 import. They are unchanged by this slice and are replaced when the immune checks move to the host."
+        ],
+        "boundaries": [
+          "A hosted family used without the host binary gives no verdict; it raises the host's error.",
+          "Fixtures are offline examples, not live model trials.",
+          "WF14 and its helpers still check in Python; the Rust host does not check them yet."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "pfp_core/workflow_families/layer6.py",
+          "language": "Python",
+          "sha256": "e41c05fa0f08ab500d1ea5315335169c2205f6bca36c82b2e1f4c9751b0e2669"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "The layer 6 families. WF18 and WF35 hold a spec and fixtures only and take every verdict from the Rust host. WF14 and the immune helpers its successors import still check in Python until slice 4i.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "D",
+          "G5": "D"
+        },
+        "basis": {
+          "G1": "The module docstring states the role; the contract binds AuthorityEffect None and names every exported symbol. Not B: no requirement-to-symbol trace beyond docs/plans/operads_redesign.md.",
+          "G2": "Exact: fixture values are integers or exact text, the pin is written out in full, and the immune code reads rationals with Fraction and refuses floats. Every verdict of WF18 and WF35 is the host's. Not B: tested on examples, not proven.",
+          "G3": "The hosted families take their refusals from the host. The immune code refuses a malformed reply or rule as a typed candidate error. Not B: no closed table of error codes for this module.",
+          "G4": "The 565 tests of pfp_core/workflow_families/tests/test_families.py run the fixtures of every family, the hosted ones through the Rust host, and assert the registry, the host's own listing of hosted families, that a hosted family holds no check, the refusal of a malformed task and of a sealed value, that each of the 10 layer 6 fixtures ends with the code and the findings its name says, and that the pin in this module is the digest of the Rust grader; the 864-test run covers the rest of the workflow suite. 86 mutants survived. 35 are in WF18 and WF35 and each changes an integer written inside fixture data, so the changed fixture still ends with the same code and findings. 51 are in WF14 and the immune helpers this slice does not change (fixture and failure data and a few branches of the helpers); they are replaced in slice 4i. Not B: one generated campaign against test_families.py alone, no property tests. Mutation campaign R = 123/209.",
+          "G5": "Measured worst cyclomatic 14, cognitive 29, nesting 3; ceiling D, recorded D."
+        },
+        "composite_grade": "D",
+        "score_token": "L4D",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-16T22:06:04Z",
         "evidence": [
           {
             "path": "governance/evidence/operad-host-workflow-tests-v15.run.json",

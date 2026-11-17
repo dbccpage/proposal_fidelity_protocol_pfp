@@ -39,7 +39,7 @@ from pfp_core.immunity import (
     screen_rules as py_screen_rules,
 )
 from pfp_core.operad_ledger import OperadLedgerAdapter
-from pfp_core.workflow_families.layer6 import ImmuneFailureClassification
+from pfp_core.workflow_families.layer6 import ImmuneFailureClassification, sample_failures
 from pfp_core.workflow_families.layer7 import (
     DetectorAdequacyTwoSignal,
     ExclusionHypothesisRetest,
@@ -381,7 +381,7 @@ def test_wf14_with_ledger_records_failures(require_host):
         ]
         task = {
             "statement": "Propose detector rules.",
-            "failures": wf.failures(),
+            "failures": sample_failures(),
             "self_panel_sha256": "digest",
             "ledger_path": str(ledger_file),
             "run_id": "test_run_wf14",

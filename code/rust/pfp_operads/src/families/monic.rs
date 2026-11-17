@@ -40,16 +40,43 @@ pub const EPITOPES: [&str; 5] = [
     "WRONG_VALUE",
 ];
 
-/// A number as text in some notation the host does not take as canonical: a fraction of digit
-/// strings, or digits with an optional point and exponent, with an optional sign and spaces
-/// round it.
+/// A number as text in some notation the host does not take as canonical, as Python's
+/// `Fraction` reads it: optional white space and a sign, then digits (single underscores may
+/// join digit groups) with an optional `/` and denominator (white space may surround the `/`),
+/// or an optional point, decimals and exponent, or a point first. The denominator, the one
+/// capture, must not be zero. Digits are the Unicode decimal digits and have their own values, so
+/// a denominator written with the Arabic-Indic zero is zero.
 static LOOSE: LazyLock<Option<Regex>> = LazyLock::new(|| {
-    Regex::new(concat!(
-        r"^[ \t\n\r]*[-+]?(?:[0-9]+/0*[1-9][0-9]*",
-        r"|(?:[0-9]+\.?[0-9]*|\.[0-9]+)(?:[eE][-+]?[0-9]+)?)[ \t\n\r]*$"
+    let digits = r"\d+(?:_\d+)*";
+    let space = r"[\s\x1c-\x1f]";
+    Regex::new(&format!(
+        r"^{space}*[-+]?(?:{digits}(?:{space}*/{space}*({digits})|(?:\.(?:{digits})?)?(?:[eE][-+]?{digits})?)|\.{digits}(?:[eE][-+]?{digits})?){space}*$"
     ))
     .ok()
 });
+
+/// One Unicode decimal digit, as a text.
+static DECIMAL: LazyLock<Option<Regex>> = LazyLock::new(|| Regex::new(r"^\p{Nd}$").ok());
+
+fn is_decimal(code: u32) -> bool {
+    char::from_u32(code).is_some_and(|digit| {
+        DECIMAL
+            .as_ref()
+            .is_some_and(|decimal| decimal.is_match(digit.encode_utf8(&mut [0; 4])))
+    })
+}
+
+/// The value of a Unicode decimal digit. The digits of a script are encoded in runs of ten in
+/// ascending order from zero, so a digit's value is its place in the unbroken run that ends at it,
+/// modulo ten. A character that is no digit, such as the underscore of a digit group, has the
+/// value zero.
+fn digit_value(digit: char) -> u32 {
+    let mut start = digit as u32;
+    while start > 0 && is_decimal(start - 1) {
+        start -= 1;
+    }
+    (digit as u32 - start) % 10
+}
 
 /// The roots a task states: a nonempty list of exact rationals.
 pub fn roots(task: &Datum) -> Result<Vec<Rational>, String> {
@@ -85,7 +112,13 @@ fn coefficient(written: &Datum) -> Result<Option<Rational>, ()> {
         Datum::Text(text) => {
             let canonical =
                 rational(written).filter(|value| !value.is_integer() && *text == show(value));
-            let numeric = LOOSE.as_ref().is_some_and(|loose| loose.is_match(text));
+            let numeric = LOOSE.as_ref().is_some_and(|loose| {
+                loose.captures(text).is_some_and(|found| {
+                    found.get(1).is_none_or(|bottom| {
+                        bottom.as_str().chars().any(|digit| digit_value(digit) != 0)
+                    })
+                })
+            });
             if canonical.is_some() || numeric {
                 Ok(canonical)
             } else {

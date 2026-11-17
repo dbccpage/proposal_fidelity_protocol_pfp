@@ -198,9 +198,27 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
      arm each item, grades the bytes of every reply and ignores acceptance an
      arm claims for itself. WF14 stays in Python until its immune checks are
      in Rust.
-   - **Next.** WF14 and the immune domain it shares with WF15, WF19 and WF41,
-     then the rest of layers 7 and 8. Then the WF1-WF5 and WF52-WF54 host
-     checks, the run budget and run custody.
+   - **4i (built, offline).** The rest of layer 6: WF14, with the immune
+     domain it shares with WF15, WF19 and WF41. `families/pattern.rs` reads the
+     bounded detector-pattern dialect itself (the Python `re` syntax, the
+     admission rule of `eis/domain/safe_pattern.py`, and a match on a pattern
+     the host writes from what it read, so the matcher never sees the model's
+     text). `families/immune.rs` holds thymic screening of rules against a
+     sealed clean panel, the two-signal disposition (`decide`, with the
+     observers the caller admits), the antibody support computed exactly over
+     at most 32 observations, and the custody it gives. `families/wf14.rs`
+     checks the rules a model writes for a set of failures: the sealed panel
+     is read and its digest checked before the first question, a rule that
+     matches the clean panel is killed, a rule is admitted only on a failure
+     the host's own contract check also flags, and the epitope it names must
+     be the failure's. The caller writes the ledger entries the host returns.
+     The monic classifier in `families/monic.rs` now reads a coefficient as
+     Python 3.13 `Fraction` does (digit groups with `_`, whitespace around
+     `/`, `U+001C` to `U+001F` as space, digits of any script, and a zero
+     denominator in any script as no number).
+   - **Next.** WF15, WF19 and WF41 on the same immune domain, then the rest of
+     layers 7 and 8. Then the WF1-WF5 and WF52-WF54 host checks, the run
+     budget and run custody.
 5. **Retire Python `operads/`** (682 files) once nothing imports it, re-pin
    the canonical ID fixture, and score the Rust files that change.
 6. **Lean.** State and prove the laws for the term model, and link each
@@ -237,7 +255,7 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
   derivation is written for them.
 - Python still validates reply schemas, routes statuses and keeps run
   custody (manifests, replay). Those move in slice 4.
-- After 4h the host checks WF6 to WF13, WF16 to WF18, WF20, WF21, WF23 to
+- After 4i the host checks WF6 to WF14, WF16 to WF18, WF20, WF21, WF23 to
   WF27, WF29 to WF33, WF35, WF36, WF38 to WF40, WF42 to WF48.
   Every other family still runs its check and its sealed-value guard in
   Python. WF6 and WF22 grade with WF7's check and so reach the host for that
@@ -391,3 +409,21 @@ Gap numbers are from [`dag/operad_coverage.md`](../../dag/operad_coverage.md).
   host once the run starts, so a run without a usable sealed part is refused
   as malformed before anything is asked. WF8 and WF21 share the fence
   reading in `families/fence.rs`.
+- The 4i host differs from the Python it replaces in these ways. A failure's
+  roots are exact rationals, its `id` and provenance values are text, and a
+  rule id is text or an integer. A failure text with a repeated JSON key is
+  `MALFORMED_JSON`. The panel is read and checked before the first question,
+  so a broken seal never costs a model call. A pattern that uses syntax the
+  host has no reading for stops the run as malformed instead of being
+  guessed: anchors and word boundaries (`^ $ \A \Z \b \B`), groups other
+  than `(...)` and `(?:...)`, possessive repeats, octal and `\N{}` escapes,
+  surrogate escapes and repeat counts of 4,294,967,295 or more. `\w` and `\s`
+  follow the Rust `regex` tables, and a reference to a group that does not
+  exist is refused as a backreference where Python calls it a syntax error.
+  A compiled pattern over 16 MiB is refused. The monic reading above also
+  changes WF14's own classification: a coefficient such as `1 /2` or `1_0/3`
+  is a rational in another notation, as Python 3.13 reads it, and is no
+  longer malformed. Old and new agree on 36,000 random patterns (admission,
+  refusal code and first match), 50,000 random classifications and 10,500
+  random WF14 runs, apart from those readings. As before, that compares two
+  checkers; it is not a model result.

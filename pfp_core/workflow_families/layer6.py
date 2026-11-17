@@ -15,19 +15,14 @@ from typing import Any
 
 from eis.domain.value_objects import DetectorRule
 
-from ..fidelity import sha256_hex
 from ..immunity import HOLD, HOST_OBSERVERS, AntibodyRegistry, decide, host_danger, screen_rules, signal1
-from ..operad_ledger import record_failure
 from .base import (
     CERTIFIED,
     REFUSED,
     TYPED_REFUSAL,
     HostedFamily,
-    WorkflowFamily,
     as_fraction,
     digest,
-    judge,
-    refused,
     require,
     spec_from,
 )
@@ -179,75 +174,36 @@ def _prov(k: int) -> dict[str, str]:
     return {'model': f'm{k}', 'scaffold': f's{k}', 'precedent': f'p{k}', 'lineage': f'l{k}'}
 
 
+def sample_failures() -> list[dict[str, Any]]:
+    """Seven refused replies: one clean, the rest each with a different epitope."""
+    return [
+        {'id': 'f1', 'roots': [2, 3], 'text': text([1, '-5/1', 6]), 'provenance': _prov(1)},
+        {'id': 'f2', 'roots': [1, 4], 'text': text([1, '-5/1', 4]), 'provenance': _prov(2)},
+        {'id': 'f3', 'roots': [0, 5], 'text': text([1, '-5/1', 0]), 'provenance': _prov(3)},
+        {'id': 'f4', 'roots': [1, 3], 'text': text([2, -8, 6]), 'provenance': _prov(4)},
+        {'id': 'f5', 'roots': [1, 2], 'text': "{'coefficients': [1, -3, 2]}", 'provenance': _prov(5)},
+        {'id': 'f6', 'roots': [1, 5], 'text': text([1, 6, 5]), 'provenance': _prov(6)},
+        {'id': 'f7', 'roots': [2, 4], 'text': text([1, -6, 8]), 'provenance': {'model': 'self-report'}},
+    ]
+
+
 @register
-class ImmuneFailureClassification(WorkflowFamily):
+class ImmuneFailureClassification(HostedFamily):
     """WF14. Classify refused runs into epitopes and admit detector rules only on two signals.
 
     Domain: replies giving the monic polynomial with stated rational roots. The
-    host verifies the seal on its self panel of clean replies, kills any rule
+    Rust host verifies the seal on its self panel of clean replies, kills any rule
     that fires on that panel, and admits a surviving rule only when each failure
     it matches carries an allowlisted host danger signal of the rule's epitope.
     It refuses autoimmune rules, pattern-only matches and mislabelled epitopes.
+    The host returns the ledger entries for the rules it did not admit, and this
+    class appends them to the task's ``ledger_path``.
     """
     spec = spec_from('WF14', 'Immune failure classification', 6, ['WF7', 'WF12'], None,
                      'thymus_two_signal_admission', 'wf14_immune_failure_classification')
 
-    def validate(self, task):
-        require_items(task.get('failures'), 'failures')
-        require(isinstance(task.get('self_panel_sha256'), str), 'self panel seal required')
-        return task
-
-    def check(self, task, sealed, content, host):
-        panel = require_items(sealed.get('self_panel'), 'self_panel')
-        require(isinstance(content, Mapping), 'reply must be an object')
-        if not host.record('self_panel_sealed', digest(panel) == task['self_panel_sha256'], digest(panel)):
-            return refused('SELF_PANEL_SEAL_BROKEN')
-        host.record('self_panel_clean', all(classify_reply(s['text'], s['roots']) == CLEAN for s in panel),
-                    str(len(panel)))
-        report = admit_rules(content.get('rules'), [s['text'] for s in panel], task['failures'])
-        status = report['status']
-        host.record('no_autoimmune_rule', report['killed'] == 0, str(status))
-        host.record('every_rule_two_signal_admitted', all(v == 'ADMITTED' for v in status.values()), str(status))
-        ledger_path = task.get('ledger_path')
-        if ledger_path:
-            for rule_id, rule_status in status.items():
-                if rule_status == 'KILLED_BY_THYMUS':
-                    record_failure(
-                        ledger_path,
-                        failure_id=f"thymus_kill:{rule_id}",
-                        workflow="WF14",
-                        run=task.get('run_id', 'run'),
-                        failure_class="BoundaryLeakage",
-                        ddc_trace="CRM",
-                        evidence_sha256=sha256_hex(f"KILLED_BY_THYMUS:{rule_id}"),
-                    )
-                elif rule_status != 'ADMITTED':
-                    record_failure(
-                        ledger_path,
-                        failure_id=f"rule_rejected:{rule_id}",
-                        workflow="WF14",
-                        run=task.get('run_id', 'run'),
-                        failure_class="StructuralNonFit",
-                        ddc_trace="CRM",
-                        evidence_sha256=sha256_hex(f"{rule_status}:{rule_id}"),
-                    )
-        return judge(host, 'RULES_ADMITTED', rules=status, epitopes=classify_failures(task['failures']),
-                     antibodies=antibody_support(task['failures']))
-
-    @staticmethod
-    def failures() -> list[dict[str, Any]]:
-        return [
-            {'id': 'f1', 'roots': [2, 3], 'text': text([1, '-5/1', 6]), 'provenance': _prov(1)},
-            {'id': 'f2', 'roots': [1, 4], 'text': text([1, '-5/1', 4]), 'provenance': _prov(2)},
-            {'id': 'f3', 'roots': [0, 5], 'text': text([1, '-5/1', 0]), 'provenance': _prov(3)},
-            {'id': 'f4', 'roots': [1, 3], 'text': text([2, -8, 6]), 'provenance': _prov(4)},
-            {'id': 'f5', 'roots': [1, 2], 'text': "{'coefficients': [1, -3, 2]}", 'provenance': _prov(5)},
-            {'id': 'f6', 'roots': [1, 5], 'text': text([1, 6, 5]), 'provenance': _prov(6)},
-            {'id': 'f7', 'roots': [2, 4], 'text': text([1, -6, 8]), 'provenance': {'model': 'self-report'}},
-        ]
-
     def fixtures(self):
-        task = {'statement': 'Propose detector rules for the observed failures.', 'failures': self.failures(),
+        task = {'statement': 'Propose detector rules for the observed failures.', 'failures': sample_failures(),
                 'self_panel_sha256': digest(SELF_PANEL)}
         sealed = {'self_panel': SELF_PANEL}
         good = [{'rule_id': 'denominator_one', 'target_epitope': 'RATIONAL_NONCANONICAL', 'pattern': '/1"'},
