@@ -13,7 +13,7 @@ Family H (single-shot L2): 10 exact discrete Hodge splits. Three arms:
 
 The system message (the typed answer contract) is identical across the arms of a family, so the
 arms differ only in how the problem is presented. Run from the PFP repository root:
-    python workflows/experiments/p1_rewrite_ab/build_tasks.py
+    python experiments/p1_rewrite_ab/build_tasks.py
 """
 
 from __future__ import annotations

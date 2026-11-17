@@ -3,8 +3,13 @@
 Standard library only. Every call is sent once and never retried.
 
 Ledger: append-only JSONL, one `intent` line before the send and one `result` line after it.
-A (task, arm) that already has a result is skipped. One that has an intent but no result was
-interrupted, so whether the provider received it is unknown. It is held, never resent.
+Every record is bound to its request: the SHA-256 of the exact request body, which covers the
+system message, the arm's text, the model, the effort and the token limit. A result is bound to
+the intent before it for the same (task, arm). A (task, arm) whose bound result matches the
+current request is skipped. One with a matching intent but no result was interrupted, so whether
+the provider received it is unknown. It is held, never resent. If the ledger holds any record for
+a (task, arm) under a different request, for example an older kit version that reused the task
+ids, the run is refused before anything is sent: use a new ledger for a new kit version.
 
 Costs are integer nano-USD from the reply's own usage, at the prices passed on the command line
 (micro-USD per token, an integer or p/q). A hard cap in micro-USD stops the run before a call
@@ -13,7 +18,7 @@ max_completion_tokens of output.
 
 The key is read only from OPENAI_API_KEY in --env-file. It is never printed or written.
 
-    python run.py --env-file ..\\..\\..\\.env --confirm-live 750000
+    python run.py --env-file C:\\path\\to\\.env --confirm-live 750000
     python run.py --dry-run          # no network; the reply is the expected answer
 """
 
@@ -118,6 +123,47 @@ def load_ledger(path: Path) -> list[dict]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
 
 
+class LedgerMismatch(SystemExit):
+    """A ledger record that is not bound to the request the current task file would send."""
+
+
+def ledger_index(records: list[dict]) -> tuple[dict[tuple[str, str], set[str]], set[tuple[str, str, str]],
+                                               dict[tuple[str, str, str], dict]]:
+    """Bind each result to the latest intent before it with the same (task_id, arm).
+
+    Returns the request hashes seen per (task_id, arm), the intents and the results, both keyed by
+    (task_id, arm, request_sha256). A result with no intent before it, or one whose own
+    request_sha256 disagrees with that intent, is refused.
+    """
+    last: dict[tuple[str, str], str] = {}
+    seen: dict[tuple[str, str], set[str]] = {}
+    intents: set[tuple[str, str, str]] = set()
+    results: dict[tuple[str, str, str], dict] = {}
+    for r in records:
+        key = (r["task_id"], r["arm"])
+        if r["kind"] == "intent":
+            last[key] = r["request_sha256"]
+            seen.setdefault(key, set()).add(r["request_sha256"])
+            intents.add((*key, r["request_sha256"]))
+        elif r["kind"] == "result":
+            if key not in last:
+                raise LedgerMismatch(f"LEDGER_ORPHAN_RESULT: {key[0]}|{key[1]} has no intent before it")
+            bound = last[key]
+            if r.get("request_sha256", bound) != bound:
+                raise LedgerMismatch(f"LEDGER_RESULT_UNBOUND: {key[0]}|{key[1]} result names another request")
+            results[(*key, bound)] = r
+    return seen, intents, results
+
+
+def request_sha(task: dict, arm: str, model: str, effort: str | None) -> str:
+    return sha(json.dumps(request_body(task, arm, model, effort)).encode("utf-8"))
+
+
+def mismatches(seen: dict[tuple[str, str], set[str]], wanted: dict[tuple[str, str], str]) -> list[str]:
+    """(task, arm) pairs the ledger holds under a request other than the one wanted."""
+    return sorted(f"{k[0]}|{k[1]}" for k, want in wanted.items() if seen.get(k, {want}) != {want})
+
+
 def append(path: Path, record: dict) -> None:
     with path.open("ab") as fh:
         fh.write((json.dumps(record, sort_keys=True) + "\n").encode("utf-8"))
@@ -128,9 +174,14 @@ def run(tasks: list[dict], ledger: Path, send: Sender, *, model: str, effort: st
         p_in: Fraction, p_out: Fraction, cap_micro: int, limit: int | None = None,
         tasks_sha256: str = "") -> dict:
     records = load_ledger(ledger)
-    done = {(r["task_id"], r["arm"]) for r in records if r["kind"] == "result"}
-    intents = {(r["task_id"], r["arm"]) for r in records if r["kind"] == "intent"}
-    held = intents - done
+    seen, intents, results = ledger_index(records)
+    wanted = {(t["task_id"], arm): request_sha(t, arm, model, effort) for t in tasks for arm in t["arms"]}
+    bad = mismatches(seen, wanted)
+    if bad:
+        raise LedgerMismatch(f"LEDGER_REQUEST_MISMATCH: {len(bad)} (task, arm) pairs in {ledger} were "
+                             f"sent as another request, first {bad[0]}; use a new ledger")
+    done = {k for k, want in wanted.items() if (*k, want) in results}
+    held = {k for k, want in wanted.items() if (*k, want) in intents} - done
     spent = sum(r.get("cost_nano_usd", 0) for r in records if r["kind"] == "result")
     sent = 0
     stop = None
@@ -172,7 +223,7 @@ def run(tasks: list[dict], ledger: Path, send: Sender, *, model: str, effort: st
             cost = nano(p_in, t_in) + nano(p_out, t_out) if usage else bound
             spent += cost
             append(ledger, {"kind": "result", "task_id": task["task_id"], "arm": arm,
-                            "status": status, "error": error, "truncated": truncated,
+                            "request_sha256": sha(data), "status": status, "error": error, "truncated": truncated,
                             "reply": raw.decode("utf-8", errors="replace"),
                             "reply_sha256": sha(raw), "prompt_tokens": t_in,
                             "completion_tokens": t_out, "cost_nano_usd": cost,

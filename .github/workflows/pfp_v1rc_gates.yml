@@ -41,6 +41,9 @@ jobs:
           lake --dir lean4 env lean lean4/FunnelCompressionClosure.lean
       - run: .venv/bin/python -B -X utf8 -m ruff check pfp_core/ tests/
       - run: .venv/bin/python -B -X utf8 -m pytest pfp_lab/tests/test_boundaries.py -q
+      # Lab kits live outside every governed root, so this step is their test gate.
+      - name: Experiment kits (offline, no model calls)
+        run: .venv/bin/python -B -X utf8 -m pytest experiments -q
       - name: Section-3 suite plus operads, eis, and pciv
         env:
           PYTHONPATH: ops
