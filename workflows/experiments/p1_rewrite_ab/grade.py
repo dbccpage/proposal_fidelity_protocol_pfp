@@ -34,7 +34,8 @@ INT = re.compile(r"-?(0|[1-9][0-9]*)")
 RAT = re.compile(r"-?(0|[1-9][0-9]*)(/[1-9][0-9]*)?")
 PAIRS = {
     "S": [("plain", "prose"), ("wf5", "prose"), ("fenced", "prose"), ("wf5", "plain")],
-    "H": [("wire", "prose"), ("wire_qed", "wire"), ("wire_qed", "prose")],
+    "H": [("wire", "prose"), ("wire_qed", "wire"), ("wire_qed", "prose"),
+          ("tier_s_qed", "wire_qed"), ("tier_s_qed", "prose")],
 }
 GRADES = ("CORRECT", "PULLED", "WRONG", "MALFORMED", "TRUNCATED", "NO_REPLY", "NOT_RUN")
 INT_FIELDS = ("b0", "b1", "euler_characteristic")
@@ -159,8 +160,10 @@ def grade_all(tasks: list[dict], ledger: list[dict]) -> dict:
     for family, comparisons in PAIRS.items():
         fam = [t for t in tasks if t["family"] == family]
         for a, b_arm in comparisons:
-            both = [t for t in fam if grades[(t["task_id"], a)] != "NOT_RUN"
-                    and grades[(t["task_id"], b_arm)] != "NOT_RUN"]
+            both = [t for t in fam if grades.get((t["task_id"], a), "NOT_RUN") != "NOT_RUN"
+                    and grades.get((t["task_id"], b_arm), "NOT_RUN") != "NOT_RUN"]
+            if not both:
+                continue
             b = sum(grades[(t["task_id"], a)] == "CORRECT" and grades[(t["task_id"], b_arm)] != "CORRECT"
                     for t in both)
             c = sum(grades[(t["task_id"], b_arm)] == "CORRECT" and grades[(t["task_id"], a)] != "CORRECT"
@@ -178,14 +181,34 @@ def grade_all(tasks: list[dict], ledger: list[dict]) -> dict:
             "grades": {f"{t}|{a}": g for (t, a), g in sorted(grades.items())}}
 
 
+def merge_tasks(task_lists: list[list[dict]]) -> list[dict]:
+    """Union the arms of tasks that share a task_id (for example tasks.jsonl and tasks_tier_s.jsonl)."""
+    merged: dict[str, dict] = {}
+    for rows in task_lists:
+        for t in rows:
+            if t["task_id"] in merged:
+                base = merged[t["task_id"]]
+                if base["expected"] != t["expected"] or base["system"] != t["system"]:
+                    raise SystemExit(f"TASK_CONFLICT: {t['task_id']} differs between task files")
+                clash = set(base["arms"]) & set(t["arms"])
+                if clash:
+                    raise SystemExit(f"ARM_CONFLICT: {t['task_id']} {sorted(clash)}")
+                base["arms"] = {**base["arms"], **t["arms"]}
+            else:
+                merged[t["task_id"]] = dict(t, arms=dict(t["arms"]))
+    return list(merged.values())
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--tasks", type=Path, default=HERE / "tasks.jsonl")
-    ap.add_argument("--ledger", type=Path, required=True)
+    ap.add_argument("--tasks", type=Path, action="append")
+    ap.add_argument("--ledger", type=Path, action="append", required=True)
     args = ap.parse_args(argv)
     from run import load_ledger, load_tasks
 
-    report = grade_all(load_tasks(args.tasks), load_ledger(args.ledger))
+    tasks = merge_tasks([load_tasks(p) for p in (args.tasks or [HERE / "tasks.jsonl"])])
+    ledger = [r for p in args.ledger for r in load_ledger(p)]
+    report = grade_all(tasks, ledger)
     print(json.dumps(report, sort_keys=True, indent=1))
     return 0
 
