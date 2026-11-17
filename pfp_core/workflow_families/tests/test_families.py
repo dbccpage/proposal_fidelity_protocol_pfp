@@ -439,6 +439,46 @@ LAYER5_RESULTS = {
 
 
 LAYER6_RESULTS = {
+    ('WF14', 'two_signal_rules_admitted'): (
+        'RULES_ADMITTED',
+        {'antibodies': {'MALFORMED_JSON': 'Candidate', 'NONMONIC_LEADING_COEFFICIENT': 'Candidate',
+                         'RATIONAL_NONCANONICAL': 'Provisional', 'SIGN_MISMATCH': 'Candidate'},
+         'epitopes': {'CLEAN': 1, 'MALFORMED_JSON': 1, 'NONMONIC_LEADING_COEFFICIENT': 1,
+                      'RATIONAL_NONCANONICAL': 3, 'SIGN_MISMATCH': 1},
+         'rules': {'denominator_one': 'ADMITTED', 'leading_two': 'ADMITTED', 'single_quotes': 'ADMITTED'}},
+    ),
+    ('WF14', 'autoimmune_rule_killed'): (
+        'NO_AUTOIMMUNE_RULE',
+        {'antibodies': {'MALFORMED_JSON': 'Candidate', 'NONMONIC_LEADING_COEFFICIENT': 'Candidate',
+                         'RATIONAL_NONCANONICAL': 'Provisional', 'SIGN_MISMATCH': 'Candidate'},
+         'epitopes': {'CLEAN': 1, 'MALFORMED_JSON': 1, 'NONMONIC_LEADING_COEFFICIENT': 1,
+                      'RATIONAL_NONCANONICAL': 3, 'SIGN_MISMATCH': 1},
+         'failed': ['no_autoimmune_rule', 'every_rule_two_signal_admitted'],
+         'rules': {'any_reply': 'KILLED_BY_THYMUS', 'denominator_one': 'ADMITTED',
+                   'leading_two': 'ADMITTED', 'single_quotes': 'ADMITTED'}},
+    ),
+    ('WF14', 'pattern_only_on_clean_failure'): (
+        'EVERY_RULE_TWO_SIGNAL_ADMITTED',
+        {'antibodies': {'MALFORMED_JSON': 'Candidate', 'NONMONIC_LEADING_COEFFICIENT': 'Candidate',
+                         'RATIONAL_NONCANONICAL': 'Provisional', 'SIGN_MISMATCH': 'Candidate'},
+         'epitopes': {'CLEAN': 1, 'MALFORMED_JSON': 1, 'NONMONIC_LEADING_COEFFICIENT': 1,
+                      'RATIONAL_NONCANONICAL': 3, 'SIGN_MISMATCH': 1},
+         'failed': ['every_rule_two_signal_admitted'],
+         'rules': {'minus_six': 'DIAGNOSTIC_ONLY'}},
+    ),
+    ('WF14', 'mislabelled_epitope'): (
+        'EVERY_RULE_TWO_SIGNAL_ADMITTED',
+        {'antibodies': {'MALFORMED_JSON': 'Candidate', 'NONMONIC_LEADING_COEFFICIENT': 'Candidate',
+                         'RATIONAL_NONCANONICAL': 'Provisional', 'SIGN_MISMATCH': 'Candidate'},
+         'epitopes': {'CLEAN': 1, 'MALFORMED_JSON': 1, 'NONMONIC_LEADING_COEFFICIENT': 1,
+                      'RATIONAL_NONCANONICAL': 3, 'SIGN_MISMATCH': 1},
+         'failed': ['every_rule_two_signal_admitted'],
+         'rules': {'denominator_one': 'EPITOPE_MISMATCH'}},
+    ),
+    ('WF14', 'forged_self_panel_seal'): (
+        'SELF_PANEL_SEAL_BROKEN',
+        {},
+    ),
     ('WF18', 'replay_reproduces_every_grade'): (
         'REPLAY_REPRODUCED',
         {'cells': 3, 'mismatched': []},
@@ -515,7 +555,7 @@ def test_a_layer_5_fixture_ends_with_the_code_and_the_findings_its_name_says(wf_
 
 def test_the_layer_6_results_name_every_fixture_of_the_layer_6_families():
     families = {wf_id for wf_id, _name in LAYER6_RESULTS}
-    assert families == {'WF18', 'WF35'}
+    assert families == {'WF14', 'WF18', 'WF35'}
     assert set(LAYER6_RESULTS) == {(wf_id, name) for wf_id in families for name in REGISTRY[wf_id]().fixtures()}
 
 
@@ -642,7 +682,7 @@ def test_the_rust_host_lists_every_hosted_family_under_the_registry_s_names():
     listed = operad_host.result(operad_host.call(('family', 'list')))['families']
     assert listed == [{'workflow': wf_id, 'name': cls.spec.name, 'host_check': cls.spec.host_check_id}
                       for wf_id, cls in HOSTED.items()]
-    assert set(HOSTED) == {'WF6', 'WF7', 'WF8', 'WF9', 'WF10', 'WF11', 'WF12', 'WF13', 'WF16', 'WF17', 'WF18',
+    assert set(HOSTED) == {'WF6', 'WF7', 'WF8', 'WF9', 'WF10', 'WF11', 'WF12', 'WF13', 'WF14', 'WF16', 'WF17', 'WF18',
                            'WF20', 'WF21', 'WF23', 'WF24', 'WF25', 'WF26', 'WF27', 'WF29', 'WF30', 'WF31', 'WF32',
                            'WF33', 'WF35', 'WF36', 'WF38', 'WF39', 'WF40', 'WF42', 'WF43', 'WF44', 'WF45', 'WF46',
                            'WF47', 'WF48'}

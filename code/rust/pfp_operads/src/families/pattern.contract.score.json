@@ -1,0 +1,109 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "code/rust/pfp_operads/src/families/pattern.rs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/pattern.rs",
+      "language": "Rust",
+      "sha256": "a170e7c2d10ac009f14045eb12dbcce4500913e612c3cca2c5d82092a760c8dd"
+    },
+    "contract_urn": "urn:pfp-operads:families-pattern:v1",
+    "symbols": [
+      "MAX_LENGTH",
+      "MAX_BOUND",
+      "MAX_PRODUCT",
+      "Rejected",
+      "is_space",
+      "Hit",
+      "Pattern",
+      "compile"
+    ],
+    "owned_invariants": [
+      "A pattern is written in the syntax of Python's re and matched without regard to case. The module reads that syntax itself, applies the admission rule below, and matches with the regex crate on a pattern it writes from what it read, with every literal as a code point, so the matcher never sees the author's text.",
+      "A pattern is admitted when it has one to 256 characters that are not all white space, parses, has no backreference, no repeat inside a repeat, no alternation inside a repeat, every repeat bounded by 64, a product over every repeat of its width and over every alternation of its branches of at most 256, and cannot match the empty string. Each way it fails is its own PATTERN_ code.",
+      "The tree is the one Python builds: a common prefix of the branches of an alternation is moved in front of it, and an alternation of single characters or sets is one set.",
+      "Syntax Python accepts and this module does not read (anchors and word boundaries, groups other than (...) and (?:...), possessive repeats, octal and named escapes, surrogate escapes and repeat counts beyond the engine's range) is Unread, never guessed. A pattern whose compiled form exceeds 16 MiB is refused as PATTERN_COMPILE_LIMIT.",
+      "find gives the leftmost match, the preferred one among those that start there, with its start as a character offset."
+    ],
+    "boundaries": [
+      "The classes \\w and \\s follow the regex crate's Unicode tables, which differ from Python's at a few code points; a reference to a group that does not exist is refused as a backreference where Python calls it a syntax error.",
+      "Unread takes precedence over a refusal the rest of the pattern would earn, so the pattern is never partly judged.",
+      "Agreement with Python is shown on generated patterns and a hand-written table, not proven."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "code/rust/pfp_operads/src/families/pattern.rs",
+      "language": "Rust",
+      "sha256": "a170e7c2d10ac009f14045eb12dbcce4500913e612c3cca2c5d82092a760c8dd"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Typed refusals on every failure path, closed requests, exact unbounded integers and rationals, no float, no unwrap or expect.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "D"
+    },
+    "basis": {
+      "G1": "Module header declares AuthorityEffect None and the contract URN; public items match this contract and code/rust/pfp_operads/README.md. Not B: no requirement-to-symbol trace beyond the README and docs/plans/operads_redesign.md.",
+      "G2": "The limits are exact integers, and the count of a repeat is read in full up to the engine's range. Matches are the regex crate's on a pattern written without the author's text. Not B: tested on examples and generated tables, not proven; the matcher library is trusted.",
+      "G3": "Every failure is a typed Rejected value, refused with a code or unread with a name. No panicking unwrap or expect, and no index. Not B: panic-freedom is tested, not proven.",
+      "G4": "13 tests replay a table of patterns and texts whose matches and offsets Python gave and a table of patterns refused under the rule that applies, patterns at each limit, syntax the host does not read named and not guessed, the documented limits, a pattern that compiles past the size limit refused, white space as Python reads it, a pattern of white space only as empty, offsets counted in characters, the leftmost match with greedy and lazy repeats, a match that must cover a character, and a compiled pattern copied and reused. 13 mutants are recorded as demonstrably equivalent with their justification in the report. Mutation campaign R = 189/189. clippy -D warnings and rustfmt pass. Not B: mutants are hand-written one-line edits, not a generated campaign, and there are no generator-driven property tests.",
+      "G5": "Measured worst cyclomatic 21, cognitive complexity is not measured for Rust, nesting 4; ceiling D, recorded D."
+    },
+    "composite_grade": "D",
+    "score_token": "L4D",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-17T00:19:06Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pfp-operads-v16-test.run.json",
+        "sha256": "974d1ca60772be8a8a2620951efb0243500ce32bb4f596f07e1b191b300b26ff",
+        "note": "1291 tests: pfp_operads and core_operad_canon, locked build."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v16-clippy.run.json",
+        "sha256": "73eddccb2cbed3e3b2468863eb021182cc78a28150563f47dd10c33c63b36995",
+        "note": "clippy with -D warnings on both crates, all targets."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v16-fmt.run.json",
+        "sha256": "4c4d615842bf99a3099dae488b5822df774c4dd7b26e1ede7e05b9d280eead88",
+        "note": "rustfmt --check on both crates."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v16-metrics.run.json",
+        "sha256": "475454af240bd51f05764449a4399e5d585f09ea23ec3cb75f1b586dcf5bf0f2",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v16-metrics.json",
+        "sha256": "988df26061c93ac3c6bbd8d6f8e72d6f3054758fe216da5c37a2e66ec73a3b95",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 189,
+      "survived": 0,
+      "demonstrably_equivalent": 13,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-pfp-operads-families-pattern.mutation.json",
+        "sha256": "ef5737beb72325b780184037d635f6089fe15302422c51a961c2c718d4706ee8",
+        "note": "lexical campaign of one-line mutants, crate tests as oracle; 202 mutants"
+      }
+    }
+  },
+  "history": []
+}

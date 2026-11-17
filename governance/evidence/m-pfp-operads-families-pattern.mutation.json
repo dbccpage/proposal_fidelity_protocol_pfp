@@ -1,0 +1,1242 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_operads/src/families/pattern.rs",
+  "target_sha256": "a170e7c2d10ac009f14045eb12dbcce4500913e612c3cca2c5d82092a760c8dd",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_operads --test pattern",
+  "counts": {
+    "killed": 189,
+    "survived": 0,
+    "demonstrably_equivalent": 13,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "the length limit is one higher",
+      "old": "pub const MAX_LENGTH: usize = 256;",
+      "new": "pub const MAX_LENGTH: usize = 257;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the length limit is one lower",
+      "old": "pub const MAX_LENGTH: usize = 256;",
+      "new": "pub const MAX_LENGTH: usize = 255;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the bound limit is one higher",
+      "old": "pub const MAX_BOUND: u64 = 64;",
+      "new": "pub const MAX_BOUND: u64 = 65;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the bound limit is one lower",
+      "old": "pub const MAX_BOUND: u64 = 64;",
+      "new": "pub const MAX_BOUND: u64 = 63;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the product limit is one higher",
+      "old": "pub const MAX_PRODUCT: u64 = 256;",
+      "new": "pub const MAX_PRODUCT: u64 = 257;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the product limit is one lower",
+      "old": "pub const MAX_PRODUCT: u64 = 256;",
+      "new": "pub const MAX_PRODUCT: u64 = 255;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the engine limit is one lower",
+      "old": "const ENGINE_LIMIT: u64 = 4_294_967_295;",
+      "new": "const ENGINE_LIMIT: u64 = 4_294_967_294;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the engine limit is one higher",
+      "old": "const ENGINE_LIMIT: u64 = 4_294_967_295;",
+      "new": "const ENGINE_LIMIT: u64 = 4_294_967_296;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the size limit is small",
+      "old": "const SIZE_LIMIT: usize = 16 << 20;",
+      "new": "const SIZE_LIMIT: usize = 1 << 12;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the size limit is large",
+      "old": "const SIZE_LIMIT: usize = 16 << 20;",
+      "new": "const SIZE_LIMIT: usize = 1 << 40;",
+      "outcome": "killed"
+    },
+    {
+      "name": "white space has no unicode",
+      "old": "    point.is_whitespace() || ('\\u{1c}'..='\\u{1f}').contains(&point)",
+      "new": "    ('\\u{1c}'..='\\u{1f}').contains(&point)",
+      "outcome": "killed"
+    },
+    {
+      "name": "white space has no separators",
+      "old": "    point.is_whitespace() || ('\\u{1c}'..='\\u{1f}').contains(&point)",
+      "new": "    point.is_whitespace()",
+      "outcome": "killed"
+    },
+    {
+      "name": "the separators stop one short",
+      "old": "('\\u{1c}'..='\\u{1f}').contains(&point)",
+      "new": "('\\u{1c}'..='\\u{1e}').contains(&point)",
+      "outcome": "killed"
+    },
+    {
+      "name": "the separators start one late",
+      "old": "('\\u{1c}'..='\\u{1f}').contains(&point)",
+      "new": "('\\u{1d}'..='\\u{1f}').contains(&point)",
+      "outcome": "killed"
+    },
+    {
+      "name": "class read: 'd' => Category::Digit,",
+      "old": "            'd' => Category::Digit,",
+      "new": "            'd' => Category::NotDigit,",
+      "outcome": "killed"
+    },
+    {
+      "name": "class read: 'D' => Category::NotDigit,",
+      "old": "            'D' => Category::NotDigit,",
+      "new": "            'D' => Category::Digit,",
+      "outcome": "killed"
+    },
+    {
+      "name": "class read: 's' => Category::Space,",
+      "old": "            's' => Category::Space,",
+      "new": "            's' => Category::NotSpace,",
+      "outcome": "killed"
+    },
+    {
+      "name": "class read: 'S' => Category::NotSpace,",
+      "old": "            'S' => Category::NotSpace,",
+      "new": "            'S' => Category::Space,",
+      "outcome": "killed"
+    },
+    {
+      "name": "class read: 'w' => Category::Word,",
+      "old": "            'w' => Category::Word,",
+      "new": "            'w' => Category::NotWord,",
+      "outcome": "killed"
+    },
+    {
+      "name": "class read: 'W' => Category::NotWord,",
+      "old": "            'W' => Category::NotWord,",
+      "new": "            'W' => Category::Word,",
+      "outcome": "killed"
+    },
+    {
+      "name": "class written: Category::Digit => \"\\\\d\",",
+      "old": "            Category::Digit => \"\\\\d\",",
+      "new": "            Category::Digit => \"\\\\D\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "class written: Category::NotDigit => \"\\\\D\",",
+      "old": "            Category::NotDigit => \"\\\\D\",",
+      "new": "            Category::NotDigit => \"\\\\d\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "class written: Category::Space => \"\\\\s\",",
+      "old": "            Category::Space => \"\\\\s\",",
+      "new": "            Category::Space => \"\\\\S\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "class written: Category::NotSpace => \"\\\\S\",",
+      "old": "            Category::NotSpace => \"\\\\S\",",
+      "new": "            Category::NotSpace => \"\\\\s\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "class written: Category::Word => \"\\\\w\",",
+      "old": "            Category::Word => \"\\\\w\",",
+      "new": "            Category::Word => \"\\\\W\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "class written: Category::NotWord => \"\\\\W\",",
+      "old": "            Category::NotWord => \"\\\\W\",",
+      "new": "            Category::NotWord => \"\\\\w\",",
+      "outcome": "killed"
+    },
+    {
+      "name": "a group is the same as any node",
+      "old": "        (Node::Group(_) | Node::Repeat(_) | Node::Branch(_), _) => false,",
+      "new": "        (Node::Group(_) | Node::Repeat(_) | Node::Branch(_), _) => true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a group is the same as itself",
+      "old": "        (Node::Group(_) | Node::Repeat(_) | Node::Branch(_), _) => false,",
+      "new": "        (Node::Repeat(_) | Node::Branch(_), _) => false,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeat is the same as itself",
+      "old": "        (Node::Group(_) | Node::Repeat(_) | Node::Branch(_), _) => false,",
+      "new": "        (Node::Group(_) | Node::Branch(_), _) => false,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a branch is the same as itself",
+      "old": "        (Node::Group(_) | Node::Repeat(_) | Node::Branch(_), _) => false,",
+      "new": "        (Node::Group(_) | Node::Repeat(_), _) => false,",
+      "equivalent": "a sequence never holds a branch node itself: branches appear only inside a group or a repeat body, whose members are never compared, so the arm is never reached.",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "every other node is the same",
+      "old": "        _ => left == right,",
+      "new": "        _ => true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a single alternative is assembled",
+      "old": "    if branches.len() == 1 {",
+      "new": "    if branches.len() == 0 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "no single alternative is returned",
+      "old": "    if branches.len() == 1 {",
+      "new": "    if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a prefix needs one alternative",
+      "old": "            .all(|one| one.first().is_some_and(|n| same(head, n)))",
+      "new": "            .any(|one| one.first().is_some_and(|n| same(head, n)))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a prefix is compared with nothing",
+      "old": "            .all(|one| one.first().is_some_and(|n| same(head, n)))",
+      "new": "            .all(|one| one.first().is_some())",
+      "outcome": "killed"
+    },
+    {
+      "name": "a prefix is not taken from the first alternative",
+      "old": "        out.push(branches[0][0].clone());",
+      "new": "        out.push(branches[branches.len() - 1][0].clone());",
+      "equivalent": "the loop condition holds only when every alternative starts with the same node, so the first and the last alternative give the same prefix node.",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "a prefix is removed from the end",
+      "old": "            one.remove(0);",
+      "new": "            one.pop();",
+      "outcome": "killed"
+    },
+    {
+      "name": "a single point is not a set member",
+      "old": "        [Node::Point(point)] => {\n            items.push(Item::Point(*point));\n            true\n        }",
+      "new": "        [Node::Point(point)] => {\n            items.push(Item::Point(*point));\n            false\n        }",
+      "outcome": "killed"
+    },
+    {
+      "name": "a single point is dropped",
+      "old": "            items.push(Item::Point(*point));\n            true",
+      "new": "            let _ = point;\n            true",
+      "outcome": "killed"
+    },
+    {
+      "name": "a negated set is merged",
+      "old": "        [Node::Set {\n            negated: false,\n            items: inner,\n        }] => {",
+      "new": "        [Node::Set {\n            negated: true,\n            items: inner,\n        }] => {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a set is merged without its members",
+      "old": "            items.extend(inner.iter().copied());\n            true",
+      "new": "            let _ = inner;\n            true",
+      "outcome": "killed"
+    },
+    {
+      "name": "a set is merged and refused",
+      "old": "            items.extend(inner.iter().copied());\n            true",
+      "new": "            items.extend(inner.iter().copied());\n            false",
+      "outcome": "killed"
+    },
+    {
+      "name": "single characters are not a set",
+      "old": "    if single {\n        out.push(Node::Set {",
+      "new": "    if !single {\n        out.push(Node::Set {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a merged set keeps its duplicates",
+      "old": "            items: unique(items),\n        });\n    } else {",
+      "new": "            items,\n        });\n    } else {",
+      "equivalent": "a repeated member of a set matches the same text and the product and width rules do not read the members, so the set with and without duplicates is the same.",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "a set member is never unique",
+      "old": "        if !kept.contains(&item) {",
+      "new": "        if true {",
+      "equivalent": "a repeated member of a set matches the same text; the only place a set is tested for a single member, `set`, reads the unique members, and a node `Set` holding one point repeated matches the same text as `Point`.",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "a read character is not consumed",
+      "old": "        if next.is_some() {\n            self.at += 1;\n        }\n        next",
+      "new": "        if next.is_none() {\n            self.at += 1;\n        }\n        next",
+      "outcome": "killed"
+    },
+    {
+      "name": "only one bar is read",
+      "old": "        while self.eat('|') {",
+      "new": "        if self.eat('|') {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a bar does not end a sequence",
+      "old": "            if this == '|' {\n                break;\n            }",
+      "new": "            if this == 'x' {\n                break;\n            }",
+      "outcome": "killed"
+    },
+    {
+      "name": "a close at the top level is read",
+      "old": "                if nested {\n                    break;\n                }",
+      "new": "                if !nested {\n                    break;\n                }",
+      "outcome": "killed"
+    },
+    {
+      "name": "a close ends every sequence",
+      "old": "                if nested {\n                    break;\n                }",
+      "new": "                if true {\n                    break;\n                }",
+      "outcome": "killed"
+    },
+    {
+      "name": "a set is read as a point",
+      "old": "                '[' => nodes.push(self.set()?),",
+      "new": "                '[' => nodes.push(Node::Point('[')),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a dot is a point",
+      "old": "                '.' => nodes.push(Node::Any),",
+      "new": "                '.' => nodes.push(Node::Point('.')),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a bracket is no group",
+      "old": "                '(' => nodes.push(self.group()?),",
+      "new": "                '(' => nodes.push(Node::Point('(')),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a dollar is a point",
+      "old": "                '^' | '$' => return unread(\"an anchor\"),",
+      "new": "                '^' => return unread(\"an anchor\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a caret is a point",
+      "old": "                '^' | '$' => return unread(\"an anchor\"),",
+      "new": "                '$' => return unread(\"an anchor\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "an anchor is refused",
+      "old": "                '^' | '$' => return unread(\"an anchor\"),",
+      "new": "                '^' | '$' => return refused(\"PATTERN_SYNTAX\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a backslash is a point",
+      "old": "                '\\\\' => nodes.push(self.escape()?),",
+      "new": "                '\\\\' => nodes.push(Node::Point('\\\\')),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a star needs one",
+      "old": "                '*' => repeat(self, &mut nodes, 0, None)?,",
+      "new": "                '*' => repeat(self, &mut nodes, 1, None)?,",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "a repeat with no upper bound is refused by admission before its lower bound is read, so the lower bound of a star or a plus is never used."
+    },
+    {
+      "name": "a plus allows none",
+      "old": "                '+' => repeat(self, &mut nodes, 1, None)?,",
+      "new": "                '+' => repeat(self, &mut nodes, 0, None)?,",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "a repeat with no upper bound is refused by admission before its lower bound is read, so the lower bound of a star or a plus is never used."
+    },
+    {
+      "name": "a question mark allows two",
+      "old": "                '?' => repeat(self, &mut nodes, 0, Some(1))?,",
+      "new": "                '?' => repeat(self, &mut nodes, 0, Some(2))?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a question mark needs one",
+      "old": "                '?' => repeat(self, &mut nodes, 0, Some(1))?,",
+      "new": "                '?' => repeat(self, &mut nodes, 1, Some(1))?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a brace is a point",
+      "old": "                '{' => self.braces(&mut nodes)?,",
+      "new": "                '{' => nodes.push(Node::Point('{')),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a group takes a question mark",
+      "old": "        if self.eat('?') && !self.eat(':') {",
+      "new": "        if self.eat('?') || !self.eat(':') {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a non-capturing group is unread",
+      "old": "        if self.eat('?') && !self.eat(':') {",
+      "new": "        if self.eat('?') {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a plain group is unread",
+      "old": "        if self.eat('?') && !self.eat(':') {",
+      "new": "        if !self.eat('?') && !self.eat(':') {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a group need not close",
+      "old": "        if !self.eat(')') {\n            return refused(\"PATTERN_SYNTAX\");\n        }\n        Ok(Node::Group(inner))",
+      "new": "        if self.eat(')') {\n            return refused(\"PATTERN_SYNTAX\");\n        }\n        Ok(Node::Group(inner))",
+      "outcome": "killed"
+    },
+    {
+      "name": "a group reads at the top level",
+      "old": "        let inner = self.alternatives(true)?;",
+      "new": "        let inner = self.alternatives(false)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "digits take any character",
+      "old": "        while let Some(digit) = self.peek().filter(char::is_ascii_digit) {",
+      "new": "        while let Some(digit) = self.peek().filter(|c| c.is_alphanumeric()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "digits take no character",
+      "old": "        while let Some(digit) = self.peek().filter(char::is_ascii_digit) {",
+      "new": "        while let Some(digit) = self.peek().filter(|c| c.is_ascii_digit() && false) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty brace is a repeat",
+      "old": "        if self.peek() == Some('}') {",
+      "new": "        if self.peek() != Some('}') {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a brace count has no comma form",
+      "old": "        let high = if self.eat(',') {",
+      "new": "        let high = if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a single count is open",
+      "old": "        } else {\n            low.clone()\n        };",
+      "new": "        } else {\n            String::new()\n        };",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeat need not close",
+      "old": "        if !self.eat('}') {\n            self.at = start;",
+      "new": "        if self.eat('}') {\n            self.at = start;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a failed brace is not rewound",
+      "old": "            self.at = start;\n",
+      "new": "",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty count is zero",
+      "old": "            if text.is_empty() {\n                return Ok(None);\n            }",
+      "new": "            if text.is_empty() {\n                return Ok(Some(0));\n            }",
+      "outcome": "killed"
+    },
+    {
+      "name": "a count at the limit is read",
+      "old": "                Ok(number) if number < ENGINE_LIMIT => Ok(Some(number)),",
+      "new": "                Ok(number) if number <= ENGINE_LIMIT => Ok(Some(number)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a count over the limit is read",
+      "old": "                Ok(number) if number < ENGINE_LIMIT => Ok(Some(number)),",
+      "new": "                Ok(number) => Ok(Some(number)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty low is one",
+      "old": "(count(&low)?.unwrap_or(0), count(&high)?)",
+      "new": "(count(&low)?.unwrap_or(1), count(&high)?)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a count may be reversed",
+      "old": "        if high.is_some_and(|high| high < low) {",
+      "new": "        if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "equal counts are reversed",
+      "old": "        if high.is_some_and(|high| high < low) {",
+      "new": "        if high.is_some_and(|high| high <= low) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "only larger counts are reversed",
+      "old": "        if high.is_some_and(|high| high < low) {",
+      "new": "        if high.is_some_and(|high| high > low) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a digit class is a negated set",
+      "old": "        if let Some(class) = Category::read(letter) {\n            return Ok(Node::Set {\n                negated: false,",
+      "new": "        if let Some(class) = Category::read(letter) {\n            return Ok(Node::Set {\n                negated: true,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a class escape is no class",
+      "old": "        if let Some(class) = Category::read(letter) {",
+      "new": "        if let Some(class) = Category::read(letter).filter(|_| false) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the escape A is no anchor",
+      "old": "            'A' | 'Z' | 'b' | 'B' => unread(\"an anchor or a word boundary\"),",
+      "new": "            'Z' | 'b' | 'B' => unread(\"an anchor or a word boundary\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the escape Z is no anchor",
+      "old": "            'A' | 'Z' | 'b' | 'B' => unread(\"an anchor or a word boundary\"),",
+      "new": "            'A' | 'b' | 'B' => unread(\"an anchor or a word boundary\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the escape b is no anchor",
+      "old": "            'A' | 'Z' | 'b' | 'B' => unread(\"an anchor or a word boundary\"),",
+      "new": "            'A' | 'Z' | 'B' => unread(\"an anchor or a word boundary\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "the escape B is no anchor",
+      "old": "            'A' | 'Z' | 'b' | 'B' => unread(\"an anchor or a word boundary\"),",
+      "new": "            'A' | 'Z' | 'b' => unread(\"an anchor or a word boundary\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "an octal zero is refused",
+      "old": "            '0' => unread(\"an octal escape\"),",
+      "new": "            '0' => refused(\"PATTERN_SYNTAX\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a one is no backreference",
+      "old": "            '1'..='9' => {",
+      "new": "            '2'..='9' => {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an octal needs a digit seven",
+      "old": "                if ('1'..='7').contains(&letter) && octal(more(0)) && octal(more(1)) {",
+      "new": "                if ('1'..='6').contains(&letter) && octal(more(0)) && octal(more(1)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an octal takes an eight",
+      "old": "                if ('1'..='7').contains(&letter) && octal(more(0)) && octal(more(1)) {",
+      "new": "                if ('1'..='8').contains(&letter) && octal(more(0)) && octal(more(1)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an octal needs one more digit",
+      "old": "                if ('1'..='7').contains(&letter) && octal(more(0)) && octal(more(1)) {",
+      "new": "                if ('1'..='7').contains(&letter) && (octal(more(0)) || octal(more(1))) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an octal needs a digit at the wrong place",
+      "old": "                if ('1'..='7').contains(&letter) && octal(more(0)) && octal(more(1)) {",
+      "new": "                if ('1'..='7').contains(&letter) && octal(more(0)) && octal(more(2)) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an octal digit takes an eight",
+      "old": "                let octal = |point: Option<char>| point.is_some_and(|p| ('0'..='7').contains(&p));",
+      "new": "                let octal = |point: Option<char>| point.is_some_and(|p| ('0'..='8').contains(&p));",
+      "outcome": "killed"
+    },
+    {
+      "name": "an octal digit takes no zero",
+      "old": "                let octal = |point: Option<char>| point.is_some_and(|p| ('0'..='7').contains(&p));",
+      "new": "                let octal = |point: Option<char>| point.is_some_and(|p| ('1'..='7').contains(&p));",
+      "outcome": "killed"
+    },
+    {
+      "name": "an octal-like escape is unread",
+      "old": "                    unread(\"an octal escape\")\n                } else {\n                    refused(\"PATTERN_BACKREFERENCE\")",
+      "new": "                    refused(\"PATTERN_BACKREFERENCE\")\n                } else {\n                    unread(\"an octal escape\")",
+      "outcome": "killed"
+    },
+    {
+      "name": "an escape is no point",
+      "old": "            other => self.point(other, false).map(|atom| match atom {\n                Atom::Point(point) => Node::Point(point),",
+      "new": "            other => self.point(other, false).map(|atom| match atom {\n                Atom::Point(_) => Node::Any,",
+      "outcome": "killed"
+    },
+    {
+      "name": "escape point: 'a' => '\\u{7}',",
+      "old": "            'a' => '\\u{7}',",
+      "new": "            'a' => '\\u{8}',",
+      "outcome": "killed"
+    },
+    {
+      "name": "escape point: 'f' => '\\u{c}',",
+      "old": "            'f' => '\\u{c}',",
+      "new": "            'f' => '\\u{b}',",
+      "outcome": "killed"
+    },
+    {
+      "name": "escape point: 'n' => '\\n',",
+      "old": "            'n' => '\\n',",
+      "new": "            'n' => '\\r',",
+      "outcome": "killed"
+    },
+    {
+      "name": "escape point: 'r' => '\\r',",
+      "old": "            'r' => '\\r',",
+      "new": "            'r' => '\\n',",
+      "outcome": "killed"
+    },
+    {
+      "name": "escape point: 't' => '\\t',",
+      "old": "            't' => '\\t',",
+      "new": "            't' => ' ',",
+      "outcome": "killed"
+    },
+    {
+      "name": "escape point: 'v' => '\\u{b}',",
+      "old": "            'v' => '\\u{b}',",
+      "new": "            'v' => '\\u{c}',",
+      "outcome": "killed"
+    },
+    {
+      "name": "escape point: '\\\\' => '\\\\',",
+      "old": "            '\\\\' => '\\\\',",
+      "new": "            '\\\\' => '/',",
+      "outcome": "killed"
+    },
+    {
+      "name": "escape point: 'b' if in_set => '\\u{8}',",
+      "old": "            'b' if in_set => '\\u{8}',",
+      "new": "            'b' if in_set => '\\u{7}',",
+      "outcome": "killed"
+    },
+    {
+      "name": "a byte escape takes four digits",
+      "old": "            'x' => self.hex(2)?,",
+      "new": "            'x' => self.hex(4)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a short escape takes two digits",
+      "old": "            'u' => self.hex(4)?,",
+      "new": "            'u' => self.hex(2)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a long escape takes four digits",
+      "old": "            'U' => self.hex(8)?,",
+      "new": "            'U' => self.hex(4)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a named escape is read",
+      "old": "            'N' => return unread(\"a named escape\"),",
+      "new": "            'N' => return refused(\"PATTERN_SYNTAX\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a set octal takes an eight",
+      "old": "            '0'..='7' if in_set => return unread(\"an octal escape\"),",
+      "new": "            '0'..='8' if in_set => return unread(\"an octal escape\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a set octal takes no seven",
+      "old": "            '0'..='7' if in_set => return unread(\"an octal escape\"),",
+      "new": "            '0'..='6' if in_set => return unread(\"an octal escape\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a set octal is refused",
+      "old": "            '0'..='7' if in_set => return unread(\"an octal escape\"),",
+      "new": "            '0'..='7' if in_set => return refused(\"PATTERN_SYNTAX\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a set eight is read",
+      "old": "            '8' | '9' if in_set => return refused(\"PATTERN_SYNTAX\"),",
+      "new": "            '9' if in_set => return refused(\"PATTERN_SYNTAX\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a set nine is read",
+      "old": "            '8' | '9' if in_set => return refused(\"PATTERN_SYNTAX\"),",
+      "new": "            '8' if in_set => return refused(\"PATTERN_SYNTAX\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "an unknown letter escape is a point",
+      "old": "            other if other.is_ascii_alphabetic() => return refused(\"PATTERN_SYNTAX\"),",
+      "new": "            other if other.is_ascii_alphabetic() && false => return refused(\"PATTERN_SYNTAX\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "an unknown digit escape is refused",
+      "old": "            other if other.is_ascii_alphabetic() => return refused(\"PATTERN_SYNTAX\"),",
+      "new": "            other if other.is_ascii_alphanumeric() => return refused(\"PATTERN_SYNTAX\"),",
+      "equivalent": "a digit escape never reaches this arm: outside a set the escape reader handles 0 to 9, and inside a set the earlier arms take 0 to 7, 8 and 9.",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "an escape of a non-letter is refused",
+      "old": "            other if other.is_ascii_alphabetic() => return refused(\"PATTERN_SYNTAX\"),",
+      "new": "            other if !other.is_ascii_alphabetic() => return refused(\"PATTERN_SYNTAX\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a short hex escape is read",
+      "old": "        if digits.len() != width || !digits.chars().all(|d| d.is_ascii_hexdigit()) {",
+      "new": "        if digits.len() > width || !digits.chars().all(|d| d.is_ascii_hexdigit()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a hex escape needs no hex digit",
+      "old": "        if digits.len() != width || !digits.chars().all(|d| d.is_ascii_hexdigit()) {",
+      "new": "        if digits.len() != width || !digits.chars().any(|d| d.is_ascii_hexdigit()) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a hex escape is counted in characters",
+      "old": "        if digits.len() != width || !digits.chars().all(|d| d.is_ascii_hexdigit()) {",
+      "new": "        if digits.chars().count() != width || !digits.chars().all(|d| d.is_ascii_hexdigit()) {",
+      "equivalent": "a text that is not width bytes long but is width characters long holds a character outside ASCII, and the second test refuses it anyway.",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "a hex escape reads one digit short",
+      "old": "        self.at += width;",
+      "new": "        self.at += width - 1;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the last code point is refused",
+      "old": "            Ok(value) if value > 0x10_ffff => refused(\"PATTERN_SYNTAX\"),",
+      "new": "            Ok(value) if value >= 0x10_ffff => refused(\"PATTERN_SYNTAX\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a code point above the last is read",
+      "old": "            Ok(value) if value > 0x10_ffff => refused(\"PATTERN_SYNTAX\"),",
+      "new": "            Ok(value) if value > 0x11_ffff => refused(\"PATTERN_SYNTAX\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a surrogate is refused",
+      "old": "            Ok(value) => char::from_u32(value).map_or_else(|| unread(\"a surrogate escape\"), Ok),",
+      "new": "            Ok(value) => char::from_u32(value).map_or_else(|| refused(\"PATTERN_SYNTAX\"), Ok),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a set atom is always a point",
+      "old": "        if this != '\\\\' {\n            return Ok(Atom::Point(this));",
+      "new": "        if this == '\\\\' {\n            return Ok(Atom::Point(this));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a set class is no class",
+      "old": "        match Category::read(letter) {\n            Some(class) => Ok(Atom::Class(class)),",
+      "new": "        match Category::read(letter).filter(|_| false) {\n            Some(class) => Ok(Atom::Class(class)),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a set is never negated",
+      "old": "        let negated = self.eat('^');",
+      "new": "        let negated = false;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a set is always negated",
+      "old": "        let negated = self.eat('^');",
+      "new": "        let negated = true;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a close first in a set ends it",
+      "old": "            if this == ']' && !first {",
+      "new": "            if this == ']' {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a close never ends a set",
+      "old": "            if this == ']' && !first {",
+      "new": "            if this == ']' && false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the first member stays first",
+      "old": "            first = false;",
+      "new": "            first = true;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a range is read without a dash",
+      "old": "            if !self.eat('-') {\n                items.push(item(low));",
+      "new": "            if self.eat('-') {\n                items.push(item(low));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a dash before a close is a range",
+      "old": "            if that == ']' {\n                items.push(item(low));",
+      "new": "            if that == 'x' {\n                items.push(item(low));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a trailing dash is dropped",
+      "old": "                items.push(item(low));\n                items.push(Item::Point('-'));",
+      "new": "                items.push(item(low));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a trailing dash is another point",
+      "old": "                items.push(Item::Point('-'));",
+      "new": "                items.push(Item::Point('_'));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a reversed range is read",
+      "old": "                (Atom::Point(low), Atom::Point(high)) if low <= high => {",
+      "new": "                (Atom::Point(low), Atom::Point(high)) if true => {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a one-point range is refused",
+      "old": "                (Atom::Point(low), Atom::Point(high)) if low <= high => {",
+      "new": "                (Atom::Point(low), Atom::Point(high)) if low < high => {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a range is a pair of points",
+      "old": "                    items.push(Item::Range(low, high));",
+      "new": "                    items.push(Item::Point(low));\n                    items.push(Item::Point(high));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a negated point is not negated",
+      "old": "            [Item::Point(point)] if negated => Node::NotPoint(*point),",
+      "new": "            [Item::Point(point)] if negated => Node::Point(*point),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a plain point is negated",
+      "old": "            [Item::Point(point)] if negated => Node::NotPoint(*point),",
+      "new": "            [Item::Point(point)] if !negated => Node::NotPoint(*point),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a single point stays a set",
+      "old": "            [Item::Point(point)] => Node::Point(*point),",
+      "new": "            [Item::Point(point)] => Node::NotPoint(*point),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a set drops nothing",
+      "old": "        let items = unique(items);\n        Ok(match",
+      "new": "        let items = items;\n        Ok(match",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeat of nothing is read",
+      "old": "        None | Some(Node::Repeat(_)) => return refused(\"PATTERN_SYNTAX\"),",
+      "new": "        Some(Node::Repeat(_)) => return refused(\"PATTERN_SYNTAX\"),\n        None => vec![],",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeat of a repeat is read",
+      "old": "        None | Some(Node::Repeat(_)) => return refused(\"PATTERN_SYNTAX\"),",
+      "new": "        None => return refused(\"PATTERN_SYNTAX\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeat of a group keeps the group",
+      "old": "        Some(Node::Group(inner)) => inner,",
+      "new": "        Some(Node::Group(inner)) => vec![Node::Group(inner)],",
+      "equivalent": "the group is walked by every later rule as its members, in admission and in width, and is written as a group of its members, so wrapping it once more changes nothing a pattern can match or be refused for.",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "a repeat is never lazy",
+      "old": "    let lazy = parser.eat('?');",
+      "new": "    let lazy = false;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeat is always lazy",
+      "old": "    let lazy = parser.eat('?');",
+      "new": "    let lazy = !parser.eat('?');",
+      "outcome": "killed"
+    },
+    {
+      "name": "a lazy repeat may be possessive",
+      "old": "    if !lazy && parser.peek() == Some('+') {",
+      "new": "    if parser.peek() == Some('+') {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a possessive repeat is read",
+      "old": "    if !lazy && parser.peek() == Some('+') {",
+      "new": "    if !lazy && parser.peek() == Some('-') {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a product is a sum",
+      "old": "    *product *= factor;",
+      "new": "    *product += factor;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the product limit is inclusive",
+      "old": "    if *product > MAX_PRODUCT {",
+      "new": "    if *product >= MAX_PRODUCT {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a nested repeat is read",
+      "old": "                if inside {\n                    return refused(\"PATTERN_NESTED_QUANTIFIER\");",
+      "new": "                if false {\n                    return refused(\"PATTERN_NESTED_QUANTIFIER\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeat body is not inside",
+      "old": "                admit(&one.body, true, product)?;",
+      "new": "                admit(&one.body, false, product)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeat is always unbounded",
+      "old": "                let Some(high) = one.high else {\n                    return refused(\"PATTERN_UNBOUNDED_REPEAT\");\n                };",
+      "new": "                let Some(high) = one.high.or(Some(1)) else {\n                    return refused(\"PATTERN_UNBOUNDED_REPEAT\");\n                };",
+      "outcome": "killed"
+    },
+    {
+      "name": "the bound limit is inclusive",
+      "old": "                if high > MAX_BOUND {",
+      "new": "                if high >= MAX_BOUND {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the bound limit is not checked",
+      "old": "                if high > MAX_BOUND {",
+      "new": "                if false {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeat width is one short",
+      "old": "                multiply(product, high - one.low + 1)?;",
+      "new": "                multiply(product, high - one.low)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeat width is its bound",
+      "old": "                multiply(product, high - one.low + 1)?;",
+      "new": "                multiply(product, high + 1)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeat width is its low bound",
+      "old": "                multiply(product, high - one.low + 1)?;",
+      "new": "                multiply(product, one.low + 1)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeat has no width",
+      "old": "                multiply(product, high - one.low + 1)?;",
+      "new": "                multiply(product, 1)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "an alternation in a repeat is read",
+      "old": "                if inside {\n                    return refused(\"PATTERN_QUANTIFIED_ALTERNATION\");",
+      "new": "                if false {\n                    return refused(\"PATTERN_QUANTIFIED_ALTERNATION\");",
+      "outcome": "killed"
+    },
+    {
+      "name": "an alternation has no width",
+      "old": "                multiply(product, branches.len() as u64)?;",
+      "new": "                multiply(product, 1)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "an alternation has one branch too few",
+      "old": "                multiply(product, branches.len() as u64)?;",
+      "new": "                multiply(product, branches.len() as u64 - 1)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "an alternative is admitted outside any repeat",
+      "old": "                    admit(branch, inside, product)?;",
+      "new": "                    admit(branch, false, product)?;",
+      "equivalent": "an alternation is refused outright when inside is set, so every branch is walked with inside unset in any case.",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "a group inside a repeat is admitted outside it",
+      "old": "            Node::Group(inner) => admit(inner, inside, product)?,",
+      "new": "            Node::Group(inner) => admit(inner, false, product)?,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a point is narrow",
+      "old": "            Node::Point(_) | Node::Any | Node::NotPoint(_) | Node::Set { .. } => 1,",
+      "new": "            Node::Point(_) | Node::Any | Node::NotPoint(_) | Node::Set { .. } => 0,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a group is wide",
+      "old": "            Node::Group(inner) => narrowest(inner),",
+      "new": "            Node::Group(_) => 1,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a group is narrow",
+      "old": "            Node::Group(inner) => narrowest(inner),",
+      "new": "            Node::Group(_) => 0,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeat is as narrow as its low bound",
+      "old": "            Node::Repeat(one) => one.low.saturating_mul(narrowest(&one.body)),",
+      "new": "            Node::Repeat(one) => one.low,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeat is as narrow as its body",
+      "old": "            Node::Repeat(one) => one.low.saturating_mul(narrowest(&one.body)),",
+      "new": "            Node::Repeat(one) => narrowest(&one.body),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a branch is as wide as its widest",
+      "old": "            Node::Branch(branches) => branches.iter().map(|b| narrowest(b)).min().unwrap_or(0),",
+      "new": "            Node::Branch(branches) => branches.iter().map(|b| narrowest(b)).max().unwrap_or(0),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a branch without alternatives is wide",
+      "old": "            Node::Branch(branches) => branches.iter().map(|b| narrowest(b)).min().unwrap_or(0),",
+      "new": "            Node::Branch(branches) => branches.iter().map(|b| narrowest(b)).min().unwrap_or(1),",
+      "equivalent": "a branch node always holds at least two alternatives, so the default is never used.",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "a pattern is as narrow as its first node",
+      "old": "        .fold(0, u64::saturating_add)",
+      "new": "        .fold(0, |_, one| one)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a point is written as a letter",
+      "old": "    format!(\"\\\\x{{{:X}}}\", u32::from(point))",
+      "new": "    format!(\"{}\", point)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a range is written without its dash",
+      "old": "            out.push('-');\n            out.push_str(&written_point(*high));",
+      "new": "            out.push_str(&written_point(*high));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a range is written backwards",
+      "old": "            out.push_str(&written_point(*low));\n            out.push('-');\n            out.push_str(&written_point(*high));",
+      "new": "            out.push_str(&written_point(*high));\n            out.push('-');\n            out.push_str(&written_point(*low));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a class is written empty",
+      "old": "        Item::Class(class) => out.push_str(class.written()),",
+      "new": "        Item::Class(_) => {}",
+      "outcome": "killed"
+    },
+    {
+      "name": "a dot is written as a point",
+      "old": "            Node::Any => out.push('.'),",
+      "new": "            Node::Any => out.push_str(\"\\\\x{2E}\"),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a negated point is written plain",
+      "old": "                out.push_str(\"[^\");\n                out.push_str(&written_point(*point));",
+      "new": "                out.push_str(\"[\");\n                out.push_str(&written_point(*point));",
+      "outcome": "killed"
+    },
+    {
+      "name": "a negated set is written plain",
+      "old": "                if *negated {\n                    out.push('^');\n                }",
+      "new": "                if !*negated {\n                    out.push('^');\n                }",
+      "outcome": "killed"
+    },
+    {
+      "name": "a set is written without its members",
+      "old": "                items.iter().for_each(|one| written_item(one, out));",
+      "new": "                let _ = items;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a group is written capturing",
+      "old": "            Node::Group(inner) => {\n                out.push_str(\"(?:\");",
+      "new": "            Node::Group(inner) => {\n                out.push_str(\"(\");",
+      "outcome": "demonstrably_equivalent",
+      "equivalent": "the host reads only the overall match, which a capture group does not change; with the pinned regex crate (1.13.1) five groups of \\w{64} followed by further literals cross the 16 MiB compile limit at the same literal (the 9,868th) whether the groups capture or not."
+    },
+    {
+      "name": "a repeat is written without its low bound",
+      "old": "                    Some(high) => format!(\"{{{},{}}}\", one.low, high),",
+      "new": "                    Some(high) => format!(\"{{{},{}}}\", 0, high),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a repeat is written with swapped bounds",
+      "old": "                    Some(high) => format!(\"{{{},{}}}\", one.low, high),",
+      "new": "                    Some(high) => format!(\"{{{},{}}}\", high, one.low),",
+      "outcome": "killed"
+    },
+    {
+      "name": "an open repeat is written",
+      "old": "                    None => format!(\"{{{},}}\", one.low),",
+      "new": "                    None => format!(\"{{{},}}\", one.low + 1),",
+      "equivalent": "admission refuses every unbounded repeat before a pattern is written, so the arm is never reached.",
+      "outcome": "demonstrably_equivalent"
+    },
+    {
+      "name": "a lazy repeat is written greedy",
+      "old": "                if one.lazy {\n                    out.push('?');",
+      "new": "                if !one.lazy {\n                    out.push('?');",
+      "outcome": "killed"
+    },
+    {
+      "name": "a lazy repeat is never written lazy",
+      "old": "                if one.lazy {\n                    out.push('?');",
+      "new": "                if one.lazy && false {\n                    out.push('?');",
+      "outcome": "killed"
+    },
+    {
+      "name": "an alternation is written without bars",
+      "old": "                    if place > 0 {\n                        out.push('|');",
+      "new": "                    if place > 100 {\n                        out.push('|');",
+      "outcome": "killed"
+    },
+    {
+      "name": "an alternation bar starts it",
+      "old": "                    if place > 0 {\n                        out.push('|');",
+      "new": "                    if place >= 0 {\n                        out.push('|');",
+      "outcome": "killed"
+    },
+    {
+      "name": "a match starts in bytes",
+      "old": "            start: text[..found.start()].chars().count(),",
+      "new": "            start: found.start(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a match starts at zero",
+      "old": "            start: text[..found.start()].chars().count(),",
+      "new": "            start: 0,",
+      "outcome": "killed"
+    },
+    {
+      "name": "a match has no text",
+      "old": "            text: found.as_str().to_owned(),",
+      "new": "            text: String::new(),",
+      "outcome": "killed"
+    },
+    {
+      "name": "a pattern is empty when any character is space",
+      "old": "    if pattern.chars().all(is_space) {",
+      "new": "    if pattern.chars().any(is_space) {",
+      "outcome": "killed"
+    },
+    {
+      "name": "an empty pattern is read",
+      "old": "    if pattern.chars().all(is_space) {",
+      "new": "    if pattern.is_empty() {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the length is counted in bytes",
+      "old": "    if pattern.chars().count() > MAX_LENGTH {",
+      "new": "    if pattern.len() > MAX_LENGTH {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the length limit is inclusive",
+      "old": "    if pattern.chars().count() > MAX_LENGTH {",
+      "new": "    if pattern.chars().count() >= MAX_LENGTH {",
+      "outcome": "killed"
+    },
+    {
+      "name": "the product starts at zero",
+      "old": "    admit(&tree, false, &mut 1)?;",
+      "new": "    admit(&tree, false, &mut 0)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "the product starts at two",
+      "old": "    admit(&tree, false, &mut 1)?;",
+      "new": "    admit(&tree, false, &mut 2)?;",
+      "outcome": "killed"
+    },
+    {
+      "name": "a pattern one character wide is zero width",
+      "old": "    if narrowest(&tree) < 1 {",
+      "new": "    if narrowest(&tree) < 2 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "no pattern is zero width",
+      "old": "    if narrowest(&tree) < 1 {",
+      "new": "    if narrowest(&tree) < 0 {",
+      "outcome": "killed"
+    },
+    {
+      "name": "a pattern matches case",
+      "old": "        .case_insensitive(true)",
+      "new": "        .case_insensitive(false)",
+      "outcome": "killed"
+    },
+    {
+      "name": "a compile failure is another refusal",
+      "old": "        .or_else(|_| refused(\"PATTERN_COMPILE_LIMIT\"))",
+      "new": "        .or_else(|_| refused(\"PATTERN_SYNTAX\"))",
+      "outcome": "killed"
+    }
+  ]
+}

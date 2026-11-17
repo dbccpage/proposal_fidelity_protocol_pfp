@@ -56,13 +56,13 @@ from .layer6 import (
     EPITOPES,
     HOST_OBSERVER,
     SELF_PANEL,
-    ImmuneFailureClassification,
     _parse_coefficients,
     admit_rules,
     build_rules,
     canonical_rational,
     classify_reply,
     require_items,
+    sample_failures,
     text,
 )
 from .registry import register
@@ -283,7 +283,7 @@ class FailureDerivedRuleTransfer(WorkflowFamily):
         return judge(host, 'RULES_TRANSFER', rules=report['status'], gain=acc_rules - acc_base, held_out=len(held))
 
     def fixtures(self):
-        train = [{k: v for k, v in f.items() if k != 'provenance'} for f in ImmuneFailureClassification.failures()[:5]]
+        train = [{k: v for k, v in f.items() if k != 'provenance'} for f in sample_failures()[:5]]
         held = [{'id': 'h1', 'roots': [3, 4], 'text': text([1, '-7/1', 12])},
                 {'id': 'h2', 'roots': [2, 3], 'text': text([2, -10, 12])},
                 {'id': 'h3', 'roots': [4, 5], 'text': text([1, -9, 20])},

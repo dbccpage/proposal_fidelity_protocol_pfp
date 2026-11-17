@@ -27,8 +27,10 @@ pub mod cochain;
 pub mod domains;
 pub mod duality;
 pub mod fence;
+pub mod immune;
 pub mod labelled;
 pub mod monic;
+pub mod pattern;
 pub mod reading;
 pub mod sealed;
 pub mod wf06;
@@ -39,6 +41,7 @@ pub mod wf10;
 pub mod wf11;
 pub mod wf12;
 pub mod wf13;
+pub mod wf14;
 pub mod wf16;
 pub mod wf17;
 pub mod wf18;
@@ -117,6 +120,7 @@ pub const FAMILIES: &[&Family] = &[
     &wf11::FAMILY,
     &wf12::FAMILY,
     &wf13::FAMILY,
+    &wf14::FAMILY,
     &wf16::FAMILY,
     &wf17::FAMILY,
     &wf18::FAMILY,

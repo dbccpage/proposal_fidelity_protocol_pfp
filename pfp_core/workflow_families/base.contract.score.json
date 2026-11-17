@@ -1,0 +1,117 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "pfp_core/workflow_families/base.py",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp_core/workflow_families/base.py",
+      "language": "Python",
+      "sha256": "0607c17fb7e543a81a5434bb6a77686ea2f6ef1290f333bc6ba7938f9a5c2e39"
+    },
+    "contract_urn": "urn:pfp-core:workflow-families-base-py:v1",
+    "symbols": [
+      "AUTHORITY_NONE",
+      "CERTIFIED",
+      "TYPED_REFUSAL",
+      "REFUSED",
+      "VERDICTS",
+      "POSITIVE",
+      "canonical",
+      "_json_default",
+      "digest",
+      "WorkflowFamilySpecV1",
+      "Usage",
+      "Proposal",
+      "ProposalRequest",
+      "Proposer",
+      "FixtureProposer",
+      "CallableProposer",
+      "SealedLeakError",
+      "ANSWER_KEYS",
+      "sealed_literals",
+      "_leaks",
+      "prompt_leaks",
+      "Session",
+      "FamilyOutcomeV1",
+      "Verdict",
+      "certified",
+      "typed_refusal",
+      "refused",
+      "judge",
+      "HOST_PASS",
+      "host_passed",
+      "host_code",
+      "WorkflowFamily",
+      "HostedFamily",
+      "MalformedCandidateError",
+      "require",
+      "as_int",
+      "as_fraction",
+      "new_budget",
+      "run_fixture",
+      "spec_from"
+    ],
+    "owned_invariants": [
+      "Only a host check certifies. The verdicts are HOST_CERTIFIED, TYPED_REFUSAL and REFUSED, and a proposer, a detector or an adapter carries authority_effect None.",
+      "Every ask is reserved and settled against one WholeRunBudget before its reply is read, and a prompt that contains a sealed literal is refused before it is dispatched.",
+      "A HostedFamily checks nothing. It asks the host (pfp_operad family next) what to ask, sends each prompt, carries each reply back and takes the verdict and every predicate from the host (family judge). A sealed leak or a malformed task the host reports is raised as the same error a family raises.",
+      "When the detail of a hosted verdict carries ledger_failures, which the host returns only for a task that names a ledger_path, those entries are appended to that ledger file, named by the family, the run and the entry, and are left out of the verdict the caller sees."
+    ],
+    "boundaries": [
+      "A hosted family without the host binary gives no verdict; it raises the host's error.",
+      "The ledger write is the one side effect of a hosted family, and only for a task that names a ledger.",
+      "Families not yet moved to the host still check in Python through this module."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp_core/workflow_families/base.py",
+      "language": "Python",
+      "sha256": "0607c17fb7e543a81a5434bb6a77686ea2f6ef1290f333bc6ba7938f9a5c2e39"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "The shared runtime of the workflow families: the loop that asks a model, keeps the budget and the transcript, and, for a hosted family, carries the verdict the Rust host gives. L4 production integration scope; this level asserts integration craft, not algorithmic novelty.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "D",
+      "G5": "C"
+    },
+    "basis": {
+      "G1": "The module docstring states the role and the verdicts; the contract binds AuthorityEffect None and names every exported symbol. Not B: no requirement-to-symbol trace beyond docs/plans/operads_redesign.md.",
+      "G2": "Budgets are settled in integer microdollars by WholeRunBudget and rationals are read with Fraction and refuse floats; a verdict of a hosted family is the host's. Not B: tested on examples, not proven.",
+      "G3": "A malformed candidate is a typed MalformedCandidateError, a sealed leak is its own error, and the host's refusals are carried as they are. Not B: no closed table of error codes for this module.",
+      "G4": "D: executed regression and negative controls are source-bound. No implementation-mutation campaign was run on these bytes, so no mutation ratio is claimed. This is an explicit verification deficit, not an unassessed pass. The 870-test run covers every family through this runtime, and a test runs a hosted family against a ledger file and reads back the entries.",
+      "G5": "Measured worst cyclomatic 11, cognitive 21, nesting 2; ceiling C, recorded C."
+    },
+    "composite_grade": "D",
+    "score_token": "L4D",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-17T00:19:06Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/operad-host-workflow-tests-v16.run.json",
+        "sha256": "32c51e3d7da386e9effb1db7dd29ed69293213a0e348c0eed0f40391f501aa1e",
+        "note": "870 offline tests (pfp/workflows, pfp_core/workflow_families, exclusions) against the release build of pfp_operad 0.11.0; exact source inputs bound. No live model performance claim."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v16-metrics.run.json",
+        "sha256": "475454af240bd51f05764449a4399e5d585f09ea23ec3cb75f1b586dcf5bf0f2",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pfp-operads-v16-metrics.json",
+        "sha256": "988df26061c93ac3c6bbd8d6f8e72d6f3054758fe216da5c37a2e66ec73a3b95",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}
