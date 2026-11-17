@@ -214,6 +214,8 @@ eis/tests/unit/test_immune_system.py::TestEpistemicImmuneSystem::test_antimorphi
 eis/tests/unit/test_pharmacy_candidate_by_default.py::test_each_retired_id_is_reproduced_by_its_recorded_defect
 eis/tests/unit/test_pharmacy_candidate_by_default.py::test_the_three_phantoms_cannot_be_farmed_again
 eis/tests/unit/test_thymus_evaluation_error.py::test_invalid_pattern_surfaces_evaluation_error
+eis/tests/architecture/test_clean_architecture_ast_boundaries.py::CleanArchitectureBoundaryTests::test_use_cases_never_import_infrastructure
+operads/tests/unit/test_operad_type_registry.py::test_the_checked_in_registry_matches_every_source
 """
 
 
@@ -241,8 +243,42 @@ def test_v1rc_gates_deselect_pinned_red_operads_and_eis_nodes() -> None:
     ]
     expected = [line for line in _PINNED_RED_FENCE.splitlines() if line]
     assert listed == expected
-    assert len(listed) == 35
+    assert len(listed) == 37
     assert all(node.startswith(("operads/", "eis/")) for node in listed)
+
+
+def test_absent_host_projection_nodes_run_when_the_named_path_exists() -> None:
+    import conftest as root_conftest
+
+    rows = [
+        line.strip().split("\t")
+        for line in (REPO / ".github" / "pfp_v1rc_absent_host_nodes.txt").read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    ]
+    assert rows
+    assert len(rows) == 52
+    for node, relative in rows:
+        reason = root_conftest._host_absence_reason(node)
+        if (REPO / relative).exists():
+            assert reason is None
+        else:
+            assert reason == f"{relative} is absent"
+        hidden = root_conftest._host_absence_reason(node + "[case]")
+        assert hidden == reason
+
+
+def test_a_missing_projection_path_is_named_in_the_skip_reason() -> None:
+    import conftest as root_conftest
+
+    loader = root_conftest._absent_host_rows
+    previous = getattr(loader, "rows", None)
+    node = "operads/tests/unit/test_prompt_hierarchy.py::test_load_pfp_research_04_prompt_node"
+    loader.rows = ((node, "not-a-projection"),)
+    try:
+        assert root_conftest._host_absence_reason(node) == "not-a-projection is absent"
+        assert root_conftest._host_absence_reason(node + "[case]") == "not-a-projection is absent"
+    finally:
+        loader.rows = previous
 
 
 def test_editable_install_imports_pfp_core_without_a_path_hack() -> None:

@@ -274,10 +274,33 @@ def _harvest_absent() -> bool:
     return all(not path.is_file() for path in _HARVEST_FILES)
 
 
+def _absent_host_rows() -> tuple[tuple[str, str], ...]:
+    """Node ids that read an untracked projection, with the path they require."""
+    cached = getattr(_absent_host_rows, "rows", None)
+    if cached is not None:
+        return cached
+    path = _ROOT / ".github" / "pfp_v1rc_absent_host_nodes.txt"
+    rows: list[tuple[str, str]] = []
+    if path.is_file():
+        for raw in path.read_text(encoding="utf-8").splitlines():
+            line = raw.strip().strip("\r")
+            if not line or line.startswith("#"):
+                continue
+            node, relative = line.split("\t")
+            rows.append((node, relative))
+    found = tuple(rows)
+    _absent_host_rows.rows = found  # type: ignore[attr-defined]
+    return found
+
+
 def _host_absence_reason(nodeid: str) -> str | None:
     """Return a skip reason only when the named host object is absent."""
     if not nodeid.startswith(("operads/", "eis/", "pciv/")):
         return None
+    base = nodeid.split("[", 1)[0]
+    for node, relative in _absent_host_rows():
+        if base == node and not (_ROOT / relative).exists():
+            return f"{relative} is absent"
     checks = (
         (
             lambda: _any_named(nodeid, _EPISODE_TESTS) and _episode_sink_empty(),
