@@ -100,6 +100,59 @@ pub struct LineageEdgeWire {
     pub parent: String,
     pub child: String,
     pub witness: String,
+    /// Canonical JSON body the witness digest seals. When present it must hash to
+    /// `witness` and name this parent and child.
+    #[serde(default)]
+    pub witness_body: Option<String>,
+    /// PCIV relationship. Only inheritance relationships carry taint; a
+    /// `RetrievedPrecedent` reference edge does not. Absent means inheritance,
+    /// for callers that send only inheritance edges.
+    #[serde(default)]
+    pub relationship: Option<String>,
+}
+
+const INHERITANCE: [&str; 3] = ["DirectMutation", "Repair", "Retry"];
+const REFERENCE: [&str; 1] = ["RetrievedPrecedent"];
+const PLACEHOLDER_WITNESS: &str = "sha256:causal_witness_ok";
+
+fn is_sealed_digest(value: &str) -> bool {
+    value != PLACEHOLDER_WITNESS
+        && value.len() == 71
+        && value.starts_with("sha256:")
+        && value[7..]
+            .bytes()
+            .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+}
+
+/// Why an inheritance edge's witness does not hold, if it does not.
+fn witness_defect(edge: &LineageEdgeWire) -> Option<String> {
+    if !is_sealed_digest(&edge.witness) {
+        return Some(format!(
+            "edge {} -> {} carries no sealed witness digest",
+            edge.parent, edge.child
+        ));
+    }
+    let body = edge.witness_body.as_deref()?;
+    let digest = core_epistemic_immune_system::authenticated::bytes_digest(body.as_bytes());
+    if digest != edge.witness {
+        return Some(format!(
+            "edge {} -> {} witness digest does not match its body",
+            edge.parent, edge.child
+        ));
+    }
+    let named = serde_json::from_str::<serde_json::Value>(body)
+        .ok()
+        .is_some_and(|v| {
+            v["parent_id"].as_str() == Some(edge.parent.as_str())
+                && v["child_id"].as_str() == Some(edge.child.as_str())
+        });
+    if !named {
+        return Some(format!(
+            "edge {} -> {} witness does not name this parent and child",
+            edge.parent, edge.child
+        ));
+    }
+    None
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -310,12 +363,38 @@ fn has_directed_path(adj: &HashMap<String, Vec<String>>, from: &str, to: &str) -
     false
 }
 
+fn refuse(reason: String) -> Result<Outcome, String> {
+    let out = TaintRefusalOutput {
+        status: "REFUSED".to_string(),
+        reason,
+    };
+    let json = serde_json::to_string(&out).map_err(|e| e.to_string())?;
+    Ok(Outcome::Fail { json })
+}
+
 pub fn handle_taint(payload: &str) -> Result<Outcome, String> {
     let input: TaintInput =
         serde_json::from_str(payload).map_err(|e| format!("invalid taint input: {e}"))?;
 
-    let mut adj: HashMap<String, Vec<String>> = HashMap::new();
+    let mut inheritance: Vec<&LineageEdgeWire> = Vec::new();
     for edge in &input.edges {
+        let relationship = edge.relationship.as_deref().unwrap_or("DirectMutation");
+        if REFERENCE.contains(&relationship) {
+            continue;
+        }
+        if !INHERITANCE.contains(&relationship) {
+            return refuse(format!(
+                "CAUSAL_WITNESS_REQUIRED: relationship {relationship:?} is not a PCIV relation"
+            ));
+        }
+        if let Some(defect) = witness_defect(edge) {
+            return refuse(format!("CAUSAL_WITNESS_REQUIRED: {defect}"));
+        }
+        inheritance.push(edge);
+    }
+
+    let mut adj: HashMap<String, Vec<String>> = HashMap::new();
+    for edge in &inheritance {
         if edge.parent == edge.child || has_directed_path(&adj, &edge.child, &edge.parent) {
             let out = TaintRefusalOutput {
                 status: "REFUSED".to_string(),
@@ -330,7 +409,7 @@ pub fn handle_taint(payload: &str) -> Result<Outcome, String> {
     }
 
     let mut parent_map: HashMap<String, Vec<String>> = HashMap::new();
-    for edge in &input.edges {
+    for edge in &inheritance {
         parent_map
             .entry(edge.child.clone())
             .or_default()
