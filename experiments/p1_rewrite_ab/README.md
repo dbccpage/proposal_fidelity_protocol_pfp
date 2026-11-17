@@ -42,6 +42,34 @@ The source is omega_codex `education/3_minimal_symbol_systems/rewriting/rewritin
 
 **Tests.** The text is checked to be strict Gamma38, to parse as one packet, and to decode back to the instance's edges and flow. The parser refuses malformed packets.
 
+## Hodge rerun v2 (`hodge_v2.py`, `tasks_hodge_v2.jsonl`, 40 calls). RAN 2026-11-17
+
+**Why.** In the first live run, 21 of 25 MALFORMED Hodge replies wrote b0, b1 and euler_characteristic as strings. The v1 contract caused this: it calls those fields integers, then says "write every rational value as a string".
+
+**What v2 changes.** Only the system message, which now names those three fields as JSON integers. The instances, references, all four arms and the strict grader are unchanged. sha256 `f8b86bb3…80df`.
+
+**Result (gpt-5-mini, $0.40).** prose 7/10, wire_qed 7/10, wire 6/10, tier_s_qed 4/10; MALFORMED fell from 25 to 2. Receipts are in the anomalon project files under `reports/pfp_proving_plan_2026-11-17/p1_hodge_v2_2026-11-17/`.
+
+## H1: typed turn vs orchestrator prompt (`h1.py`, `tasks_h1.jsonl`, 60 calls)
+
+Both arms carry the same task text and answer contract. That is the P1 `prose` text: sums keep the trigger sentence, and Hodge uses the v2 contract.
+
+- **`orchestrator`:**
+  - system: a multi-agent "SolverAgent" persona plus the contract;
+  - user: the task prose.
+- **`typed`:**
+  - system: a typed-turn handler plus the contract;
+  - user: one `llm_turn_v1` request as JSON, which validates against `pfp/infrastructure/yaml/schemas/llm_turn_v1.schema.yaml`;
+  - reply: `{"task_id", "CANDIDATE", "AUTHORITY_EFFECT": "None"}`. `grade.py` unwraps it, and any wrapper fault grades MALFORMED.
+
+`run.py` sends the per-arm system message (`arm_system`). The P1 and v2 request bodies are unchanged: their ledger intent hashes reproduce. sha256 `482edbca1a16286d1c2c9666b6d9df9088cb8923d461859c64f42fbae85ee220`. Tests: `test_h1.py`, 5 tests, which need jsonschema and pyyaml. A wrapper-check injection turns 2 of them red.
+
+```powershell
+uv run --no-project python run.py --tasks tasks_h1.jsonl --ledger ledger_h1_dry.jsonl --dry-run
+uv run --no-project python run.py --tasks tasks_h1.jsonl --ledger ledger_h1_live.jsonl --env-file C:\Users\a343o\source\repos\anomalon\.env --confirm-live 750000
+uv run --no-project python grade.py --tasks tasks_h1.jsonl --ledger ledger_h1_live.jsonl | Set-Content -Encoding utf8 report_h1.json
+```
+
 ## Ledger binding and location (review of #152, 2026-11-17)
 
 - **Every record is bound to its exact request.** The request hash covers the system message, the arm's text, the model, the effort and the token limit. A result is bound to the intent before it. `run.py` refuses a ledger that holds any (task, arm) under another request (`LEDGER_REQUEST_MISMATCH`) before it sends anything, and `grade.py` refuses to grade one. So a v1 ledger can no longer satisfy or grade the v2 kit, which reuses the v1 task ids and arm names. `test_v1_ledger_cannot_count_as_v2` is the regression; removing either refusal turns it red. Disjoint arms, such as `tasks.jsonl` plus `tasks_tier_s.jsonl`, still share a ledger.

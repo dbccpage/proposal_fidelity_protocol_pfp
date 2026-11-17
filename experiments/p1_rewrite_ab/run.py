@@ -75,7 +75,7 @@ def request_body(task: dict, arm: str, model: str, effort: str | None) -> dict:
     body = {
         "model": model,
         "messages": [
-            {"role": "system", "content": task["system"]},
+            {"role": "system", "content": task.get("arm_system", {}).get(arm, task["system"])},
             {"role": "user", "content": task["arms"][arm]},
         ],
         "max_completion_tokens": task["max_completion_tokens"],
@@ -105,7 +105,13 @@ def http_sender(key: str, timeout: int = 600) -> Sender:
 
 def dry_sender(tasks: dict[str, dict]) -> Sender:
     def send(body: dict, task_id: str) -> tuple[int, bytes]:
-        content = json.dumps(tasks[task_id]["expected"], sort_keys=True)
+        task = tasks[task_id]
+        answer = task["expected"]
+        user = body["messages"][1]["content"]
+        for arm in task.get("wrapper", {}):
+            if task["arms"][arm] == user:  # a typed arm: reply in the typed wrapper
+                answer = {"task_id": task_id, "CANDIDATE": answer, "AUTHORITY_EFFECT": "None"}
+        content = json.dumps(answer, sort_keys=True)
         reply = {"choices": [{"message": {"content": content}, "finish_reason": "stop"}],
                  "model": body["model"], "usage": {"prompt_tokens": 0, "completion_tokens": 0}}
         return 200, json.dumps(reply).encode("utf-8")

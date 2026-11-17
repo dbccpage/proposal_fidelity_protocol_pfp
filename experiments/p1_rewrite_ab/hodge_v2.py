@@ -14,16 +14,26 @@ SYSTEM_V2 = (
     "such as \"-3/2\" or \"4\"."
 )
 def sha(text): return hashlib.sha256(text.encode("utf-8")).hexdigest()
-rows = []
-for line in (HERE / "tasks.jsonl").read_text(encoding="utf-8").splitlines():
-    t = json.loads(line)
-    if t["family"] != "H":
-        continue
-    arms = dict(t["arms"], tier_s_qed=tier_s.tier_s_qed(t["instance"]))
-    rows.append(dict(task_id=t["task_id"], family="H", instance=t["instance"], expected=t["expected"],
-                     arms=arms, arm_sha256={a: sha(x) for a, x in arms.items()},
-                     system=SYSTEM_V2, system_sha256=sha(SYSTEM_V2),
-                     max_completion_tokens=t["max_completion_tokens"], kit="hodge_v2"))
-body = "".join(json.dumps(r, sort_keys=True, ensure_ascii=False) + "\n" for r in rows)
-(HERE / "tasks_hodge_v2.jsonl").write_bytes(body.encode("utf-8"))
-print(f"wrote tasks_hodge_v2.jsonl: {len(rows)} tasks, {sum(len(r['arms']) for r in rows)} calls, sha256 {sha(body)}")
+def build():
+    rows = []
+    for line in (HERE / "tasks.jsonl").read_text(encoding="utf-8").splitlines():
+        t = json.loads(line)
+        if t["family"] != "H":
+            continue
+        arms = dict(t["arms"], tier_s_qed=tier_s.tier_s_qed(t["instance"]))
+        rows.append(dict(task_id=t["task_id"], family="H", instance=t["instance"], expected=t["expected"],
+                         arms=arms, arm_sha256={a: sha(x) for a, x in arms.items()},
+                         system=SYSTEM_V2, system_sha256=sha(SYSTEM_V2),
+                         max_completion_tokens=t["max_completion_tokens"], kit="hodge_v2"))
+    return rows
+
+
+def main():
+    rows = build()
+    body = "".join(json.dumps(r, sort_keys=True, ensure_ascii=False) + "\n" for r in rows)
+    (HERE / "tasks_hodge_v2.jsonl").write_bytes(body.encode("utf-8"))
+    print(f"wrote tasks_hodge_v2.jsonl: {len(rows)} tasks, {sum(len(r['arms']) for r in rows)} calls, sha256 {sha(body)}")
+
+
+if __name__ == "__main__":
+    main()

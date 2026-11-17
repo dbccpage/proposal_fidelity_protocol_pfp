@@ -34,9 +34,10 @@ import run  # noqa: E402
 INT = re.compile(r"-?(0|[1-9][0-9]*)")
 RAT = re.compile(r"-?(0|[1-9][0-9]*)(/[1-9][0-9]*)?")
 PAIRS = {
-    "S": [("plain", "prose"), ("wf5", "prose"), ("fenced", "prose"), ("wf5", "plain")],
+    "S": [("plain", "prose"), ("wf5", "prose"), ("fenced", "prose"), ("wf5", "plain"),
+          ("typed", "orchestrator")],
     "H": [("wire", "prose"), ("wire_qed", "wire"), ("wire_qed", "prose"),
-          ("tier_s_qed", "wire_qed"), ("tier_s_qed", "prose")],
+          ("tier_s_qed", "wire_qed"), ("tier_s_qed", "prose"), ("typed", "orchestrator")],
 }
 GRADES = ("CORRECT", "PULLED", "WRONG", "MALFORMED", "TRUNCATED", "NO_REPLY", "NOT_RUN")
 INT_FIELDS = ("b0", "b1", "euler_characteristic")
@@ -107,6 +108,22 @@ def grade_hodge(task: dict, obj: dict) -> str:
     return "CORRECT" if ok else "WRONG"
 
 
+TYPED_REPLY = {"task_id", "CANDIDATE", "AUTHORITY_EFFECT"}
+
+
+def unwrap(task: dict, arm: str | None, obj: dict) -> dict:
+    """H1 typed arm: the reply must be exactly the typed wrapper; any fault is MALFORMED."""
+    if arm not in task.get("wrapper", {}):
+        return obj
+    if set(obj) != TYPED_REPLY:
+        raise Malformed(f"typed reply fields {sorted(obj)}")
+    if obj["task_id"] != task["task_id"] or obj["AUTHORITY_EFFECT"] != "None":
+        raise Malformed("typed reply task_id or AUTHORITY_EFFECT")
+    if not isinstance(obj["CANDIDATE"], dict):
+        raise Malformed("CANDIDATE is not an object")
+    return obj["CANDIDATE"]
+
+
 def grade_result(task: dict, result: dict | None) -> str:
     if result is None or result["status"] != 200 or result.get("error"):
         return "NO_REPLY"
@@ -121,7 +138,7 @@ def grade_result(task: dict, result: dict | None) -> str:
     if not isinstance(content, str):
         return "MALFORMED"
     try:
-        obj = parse_object(content)
+        obj = unwrap(task, result.get("arm"), parse_object(content))
         return grade_sum(task, obj) if task["family"] == "S" else grade_hodge(task, obj)
     except Malformed:
         return "MALFORMED"
