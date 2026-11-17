@@ -24,6 +24,38 @@ def test_fixture_estate_seal_installs_when_the_container_imports() -> None:
     assert root_conftest._install_fixture_estate_seal.done is True
 
 
+def test_dev_extra_names_receipt_ledger_and_admission_imports() -> None:
+    import tomllib
+
+    manifest = tomllib.loads((REPO / "pyproject.toml").read_text(encoding="utf-8"))
+    dev = manifest["project"]["optional-dependencies"]["dev"]
+    names = {item.split("==", 1)[0].split(">=", 1)[0].lower() for item in dev}
+    assert "blake3" in names
+    assert "cryptography" in names
+
+
+def test_preloaded_host_module_still_refuses_optional_native_budget() -> None:
+    from adversary.infrastructure.providers.rust_budget import (
+        NativeBudgetUnavailable,
+        RustBudgetRuntime,
+    )
+    from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+
+    import conftest as root_conftest
+
+    assert RustSymbolGameHost is not None
+    assert "operating_system.adapters.rust_host.ffi" in sys.modules
+    dropped = root_conftest._drop_cached_operating_system_modules()
+    sys.modules["operating_system"] = None
+    try:
+        assert "operating_system.adapters.rust_host.ffi" not in sys.modules
+        with pytest.raises(NativeBudgetUnavailable, match="NATIVE_BUDGET_UNAVAILABLE"):
+            RustBudgetRuntime().invoke("state")
+    finally:
+        sys.modules.pop("operating_system", None)
+        root_conftest._restore_operating_system_modules(dropped)
+
+
 def test_fixture_estate_seal_stays_off_when_the_container_import_fails(monkeypatch) -> None:
     import conftest as root_conftest
 

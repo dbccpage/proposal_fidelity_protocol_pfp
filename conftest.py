@@ -642,6 +642,42 @@ def _pinned_red_nodeids() -> frozenset[str]:
     return ids
 
 
+def _drop_cached_operating_system_modules() -> dict[str, object]:
+    """Unload ``operating_system`` modules already imported in this session.
+
+    The optional native-budget refusal sets the parent module entry to None
+    and expects the following import to fail. A submodule left in
+    ``sys.modules`` by collection is still importable, so the host runs and
+    answers with a different refusal.
+    """
+    dropped: dict[str, object] = {}
+    for name in list(sys.modules):
+        if name == "operating_system" or name.startswith("operating_system."):
+            dropped[name] = sys.modules.pop(name)
+    return dropped
+
+
+def _restore_operating_system_modules(dropped: dict[str, object]) -> None:
+    for name in list(sys.modules):
+        if name == "operating_system" or name.startswith("operating_system."):
+            sys.modules.pop(name, None)
+    sys.modules.update(dropped)
+
+
+@pytest.hookimpl(wrapper=True)
+def pytest_runtest_protocol(item, nextitem):
+    """Give the optional-budget refusal a cold import cache for that one item."""
+    nodeid = item.nodeid.replace("\\", "/")
+    cold = nodeid.endswith("::test_missing_optional_native_budget_is_a_typed_refusal")
+    dropped = _drop_cached_operating_system_modules() if cold else None
+    try:
+        return (yield)
+    finally:
+        if dropped is not None:
+            _restore_operating_system_modules(dropped)
+        _ = nextitem
+
+
 def pytest_collection_modifyitems(config, items) -> None:
     """Skip a pinned red node, or an item whose historical host object is absent."""
     _install_fixture_estate_seal()
