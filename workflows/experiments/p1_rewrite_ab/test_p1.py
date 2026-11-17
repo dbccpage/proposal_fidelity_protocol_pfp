@@ -203,3 +203,29 @@ def test_merge_adds_the_tier_s_arm_and_its_pairs(tmp_path):
     assert not any(p["a"] == "tier_s_qed" for p in report["pairs"])  # no paired tasks yet
     with pytest.raises(SystemExit):
         grade.merge_tasks([TASKS, TASKS])
+
+
+HODGE_V2 = run.load_tasks(HERE / "tasks_hodge_v2.jsonl")
+
+
+def test_hodge_v2_fixes_only_the_contract_sentence():
+    assert run.sha((HERE / "tasks_hodge_v2.jsonl").read_bytes()) == (
+        "f8b86bb3034de7a62e267bc5abc242d5aa9b035d3daed83af3b4faa38a1080df")
+    assert len(HODGE_V2) == 10 and sum(len(t["arms"]) for t in HODGE_V2) == 40
+    v1s = {t["task_id"]: t for t in TIER_S}
+    for t in HODGE_V2:
+        old = BY_ID[t["task_id"]]
+        assert t["expected"] == old["expected"] and t["instance"] == old["instance"]
+        assert {a: t["arms"][a] for a in old["arms"]} == old["arms"]
+        assert t["arms"]["tier_s_qed"] == v1s[t["task_id"]]["arms"]["tier_s_qed"]
+        assert t["system"] != old["system"] and "JSON integers, not strings" in t["system"]
+
+
+def test_hodge_v2_dry_run_grades_all_correct_and_int_strings_stay_malformed(tmp_path):
+    run.run(HODGE_V2, tmp_path / "v2.jsonl", run.dry_sender({t["task_id"]: t for t in HODGE_V2}),
+            model=run.MODEL, effort="low", p_in=Fraction(1, 4), p_out=Fraction(2), cap_micro=750_000)
+    report = grade.grade_all(HODGE_V2, run.load_ledger(tmp_path / "v2.jsonl"))
+    assert all(report["arms"][f"H|{a}"]["CORRECT"] == 10 for a in ("prose", "wire", "wire_qed", "tier_s_qed"))
+    assert {(p["a"], p["b"]) for p in report["pairs"]} >= {("tier_s_qed", "wire_qed"), ("wire_qed", "prose")}
+    h = HODGE_V2[0]
+    assert grade.grade_result(h, result(json.dumps(dict(h["expected"], b0="1")))) == "MALFORMED"
