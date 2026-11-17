@@ -461,14 +461,19 @@ def _install_fixture_estate_seal() -> None:
     """Seal fixture estates at container start and again at compile time.
 
     Some fixtures write skill markdown only after the container exists. The
-    compile handler is the point that reads those files.
+    compile handler is the point that reads those files. Jobs that do not
+    install the operad container (missing ``blake3`` or ``adversary.stage``)
+    keep collecting; the seal stays off until that import succeeds.
     """
     if getattr(_install_fixture_estate_seal, "done", False):
         return
-    from operads.application.commands.compile_catalog import (  # noqa: PLC0415
-        CompileCatalogHandler,
-    )
-    from operads.infrastructure.bootstrap import OeopContainer  # noqa: PLC0415
+    try:
+        from operads.application.commands.compile_catalog import (  # noqa: PLC0415
+            CompileCatalogHandler,
+        )
+        from operads.infrastructure.bootstrap import OeopContainer  # noqa: PLC0415
+    except ImportError:
+        return
 
     original = OeopContainer.__init__
 

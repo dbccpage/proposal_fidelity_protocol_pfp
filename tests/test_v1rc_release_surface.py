@@ -5,6 +5,7 @@ AuthorityEffect: None.
 
 from __future__ import annotations
 
+import builtins
 import json
 import os
 import subprocess
@@ -15,6 +16,35 @@ from pathlib import Path
 import pytest
 
 REPO = Path(__file__).resolve().parents[1]
+
+
+def test_fixture_estate_seal_installs_when_the_container_imports() -> None:
+    import conftest as root_conftest
+
+    assert root_conftest._install_fixture_estate_seal.done is True
+
+
+def test_fixture_estate_seal_stays_off_when_the_container_import_fails(monkeypatch) -> None:
+    import conftest as root_conftest
+
+    seal = root_conftest._install_fixture_estate_seal
+    previous = bool(getattr(seal, "done", False))
+    seal.done = False
+    real_import = builtins.__import__
+
+    def _blocked(name, global_ns=None, local_ns=None, fromlist=(), level=0):
+        if name == "operads.infrastructure.bootstrap":
+            raise ImportError("absent host: operads.infrastructure.bootstrap")
+        return real_import(name, global_ns, local_ns, fromlist, level)
+
+    monkeypatch.setattr(builtins, "__import__", _blocked)
+    installed = True
+    try:
+        seal()
+        installed = bool(getattr(seal, "done", False))
+    finally:
+        seal.done = previous
+    assert installed is False
 
 
 def test_ddc_parser_imports_canon_letters_and_refuses_unknown_colour() -> None:
