@@ -158,3 +158,48 @@ def test_key_is_read_only_from_its_variable(tmp_path):
     env.write_text("OPENAI_API_KEY=\n", encoding="utf-8")
     with pytest.raises(SystemExit):
         run.read_key(env)
+
+
+import tier_s  # noqa: E402
+
+TIER_S = run.load_tasks(HERE / "tasks_tier_s.jsonl")
+
+
+def _decode_int(node):
+    return -int(node[1]) if isinstance(node, list) else int(node)
+
+
+def test_tier_s_arm_is_strict_gamma38_and_carries_the_instance():
+    assert run.sha((HERE / "tasks_tier_s.jsonl").read_bytes()) == (
+        "52a1e9bf37bfa80a0f41d14e4f41df573e30ec183ab229b43e27cee05ff7eca4")
+    for row in TIER_S:
+        text = row["arms"]["tier_s_qed"]
+        assert set(text) <= tier_s.GAMMA38, row["task_id"]
+        tree = tier_s.parse_all(text)
+        heads = {kid[0]: kid for kid in tree[1:]}
+        inst = BY_ID[row["task_id"]]["instance"]
+        assert [_decode_int(x) for x in heads["flow"][1:]] == inst["flow"]
+        assert [[int(e[1]), int(e[2])] for e in heads["edges"][1:]] == inst["edges"]
+        assert tree[-1] == ["terminal", ["qed", "exact"]]
+        assert row["expected"] == BY_ID[row["task_id"]]["expected"]
+
+
+def test_tier_s_parser_refuses_malformed_packets():
+    for bad in ("<a", "<<a>", "<a b>", "a", "<a><b>", "<A>", "<<a>,<b>>"):
+        with pytest.raises((ValueError, IndexError)):
+            tier_s.parse_all(bad)
+    assert tier_s.parse_all("<<a><<neg><2>>>") == ["a", ["neg", "2"]]
+
+
+def test_merge_adds_the_tier_s_arm_and_its_pairs(tmp_path):
+    merged = grade.merge_tasks([TASKS, TIER_S])
+    h00 = next(t for t in merged if t["task_id"] == "H00")
+    assert set(h00["arms"]) == {"prose", "wire", "wire_qed", "tier_s_qed"}
+    run.run(TIER_S, tmp_path / "s.jsonl", run.dry_sender({t["task_id"]: t for t in TIER_S}),
+            model=run.MODEL, effort="low", p_in=Fraction(1, 4), p_out=Fraction(2), cap_micro=750_000)
+    report = grade.grade_all(merged, run.load_ledger(tmp_path / "s.jsonl"))
+    assert report["arms"]["H|tier_s_qed"]["CORRECT"] == 10
+    assert report["arms"]["H|wire_qed"]["NOT_RUN"] == 10
+    assert not any(p["a"] == "tier_s_qed" for p in report["pairs"])  # no paired tasks yet
+    with pytest.raises(SystemExit):
+        grade.merge_tasks([TASKS, TASKS])
