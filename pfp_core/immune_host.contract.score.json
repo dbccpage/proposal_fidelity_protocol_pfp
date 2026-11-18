@@ -1,0 +1,102 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "pfp_core/immune_host.py",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp_core/immune_host.py",
+      "language": "Python",
+      "sha256": "7b30bf08f7026b1e2854b59c86c2a1b14b8e99b4b0e412099c7c6775be057834"
+    },
+    "contract_urn": "urn:pfp-core:immune-host:v1",
+    "symbols": [
+      "ImmuneHostError",
+      "_checkout_builds",
+      "binary",
+      "is_available",
+      "call",
+      "_as_rational",
+      "screen",
+      "decide",
+      "taint",
+      "select",
+      "exclusion"
+    ],
+    "owned_invariants": [
+      "The taint payload forwards witness, witness_body and relationship as given, with no default digest."
+    ],
+    "boundaries": [
+      "Subprocess transport only.",
+      "AuthorityEffect: None."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp_core/immune_host.py",
+      "language": "Python",
+      "sha256": "7b30bf08f7026b1e2854b59c86c2a1b14b8e99b4b0e412099c7c6775be057834"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "Production transport harness to the pfp_immune host binary.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "D",
+      "G5": "C"
+    },
+    "basis": {
+      "G1": "Docstring names each subcommand and AuthorityEffect: None.",
+      "G2": "Rationals cross the wire as exact strings.",
+      "G3": "No fallback digest: an edge without a witness raises KeyError in the caller instead of sending sha256:00.",
+      "G4": "Mutation R = 0.64 (41 killed, 23 survived). Every survivor is in transport code this change does not touch; the changed taint payload builder has no survivor. D band (R below 0.70) recorded as an explicit deficit.",
+      "G5": "Measured worst CCN 17; ceiling C."
+    },
+    "composite_grade": "D",
+    "score_token": "L4D",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-18T01:30:00Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pciv155-pfp-core-tests.run.json",
+        "sha256": "ccbad1eb411b83ae786c0bc64fb98f4f72c56bc6d6fe56b73fca3f5183bdac4f",
+        "note": "pytest pfp_core/tests with the release pfp_operad and debug pfp_immune hosts: all pass, 1 skipped."
+      },
+      {
+        "path": "governance/evidence/pciv155-ruff.run.json",
+        "sha256": "e4f1f0778c0c183e5e62a4e37afe41154da7e4c0566cfd7c665d5cea5a345b87",
+        "note": "ruff check on the four changed Python files: exit 0."
+      },
+      {
+        "path": "governance/evidence/pciv155-metrics.run.json",
+        "sha256": "1ab3e949b1ac911a7553e707289fba333b7d465f2868849de3eda8c7cb1bbe6d",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pciv155-metrics.json",
+        "sha256": "13d076a9bff87bc1868e0c65519ad4946c45d57ffb4295fa8972678af9cad882",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 41,
+      "survived": 23,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 0.640625,
+      "report": {
+        "path": "governance/evidence/m-pciv155-immune-host.mutation.json",
+        "sha256": "b42c1dd1a3622bcf9964bf8dc8a1358bf4056713200b1f18d4baf90d3ba8a24e",
+        "note": "AST campaign on immune_host.py against the same tests."
+      }
+    }
+  },
+  "history": []
+}

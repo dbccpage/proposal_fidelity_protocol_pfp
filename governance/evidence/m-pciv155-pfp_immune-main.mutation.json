@@ -1,0 +1,108 @@
+{
+  "schema": "pfp.lexical-mutation-report.v1",
+  "AuthorityEffect": "None",
+  "target": "code/rust/pfp_immune/src/main.rs",
+  "target_sha256": "d4f286cd2b221398e707e136815239db4c75dce3f0281c3b1c89cd4824759060",
+  "test_command": "cargo test --manifest-path code/rust/Cargo.toml -p pfp_immune",
+  "counts": {
+    "killed": 14,
+    "survived": 0,
+    "demonstrably_equivalent": 1,
+    "invalid": 0,
+    "inconclusive": 0,
+    "unrun": 0
+  },
+  "mutants": [
+    {
+      "name": "exit code inverted",
+      "old": "ExitCode::from(u8::from(!matches!(outcome, Outcome::Pass { .. })))",
+      "new": "ExitCode::from(u8::from(matches!(outcome, Outcome::Pass { .. })))",
+      "outcome": "killed"
+    },
+    {
+      "name": "usage errors exit one instead of two",
+      "old": "ExitCode::from(2)",
+      "new": "ExitCode::from(1)",
+      "outcome": "killed"
+    },
+    {
+      "name": "screen command routing altered",
+      "old": "\"screen\" => handle_screen(",
+      "new": "\"screen\" => handle_decide(",
+      "outcome": "killed"
+    },
+    {
+      "name": "decide command routing altered",
+      "old": "\"decide\" => handle_decide(",
+      "new": "\"decide\" => handle_screen(",
+      "outcome": "killed"
+    },
+    {
+      "name": "danger score comparison inverted",
+      "old": "danger_score > threshold",
+      "new": "danger_score < threshold",
+      "outcome": "killed"
+    },
+    {
+      "name": "taint propagation threshold altered",
+      "old": "tainted_parent_count >= 1",
+      "new": "tainted_parent_count < 1",
+      "outcome": "killed"
+    },
+    {
+      "name": "reserve 60/30/10 allocation collapsed",
+      "old": "PopulationPolicyV1::allocate_reserves(population.len())",
+      "new": "(population.len(), 0, 0)",
+      "outcome": "killed"
+    },
+    {
+      "name": "exclusion consensus min_families altered",
+      "old": "agreeing_families.len() >= 2",
+      "new": "agreeing_families.len() >= 999",
+      "outcome": "killed"
+    },
+    {
+      "name": "placeholder witness accepted",
+      "old": "value != PLACEHOLDER_WITNESS",
+      "new": "value == value",
+      "outcome": "demonstrably_equivalent",
+      "justification": "PLACEHOLDER_WITNESS \"sha256:causal_witness_ok\" is 24 bytes; the conjunct value.len() == 71 already rejects it, so removing the inequality cannot change any result. The test exit was 0 (survived) as run."
+    },
+    {
+      "name": "digest length check dropped",
+      "old": "value.len() == 71",
+      "new": "value.len() >= 7",
+      "outcome": "killed"
+    },
+    {
+      "name": "reference edges carry taint",
+      "old": "if REFERENCE.contains(&relationship) {",
+      "new": "if REFERENCE.contains(&\"\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "unknown relationship accepted",
+      "old": "if !INHERITANCE.contains(&relationship) {",
+      "new": "if INHERITANCE.contains(&\"\") {",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness body digest mismatch accepted",
+      "old": "if digest != edge.witness {",
+      "new": "if digest == \"\" {",
+      "outcome": "killed"
+    },
+    {
+      "name": "witness naming check dropped",
+      "old": "if !named {",
+      "new": "if named && !named {",
+      "outcome": "killed"
+    },
+    {
+      "name": "absent relationship treated as reference",
+      "old": "unwrap_or(\"DirectMutation\")",
+      "new": "unwrap_or(\"RetrievedPrecedent\")",
+      "outcome": "killed"
+    }
+  ]
+}

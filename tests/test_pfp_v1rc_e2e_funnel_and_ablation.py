@@ -120,7 +120,8 @@ SACROSANCT_PFP_CORE_FILES: tuple[str, ...] = (
     "pfp_core/__init__.py",
     "pfp_core/fidelity.py",
     "pfp_core/immunity.py",
-    "pfp_core/civilization.py",
+    # pfp_core/civilization.py released 2026-11-17, approved by the maintainer in
+    # the PR #155 thread: sealed-witness taint transport and reference edges.
     "pfp_core/operad_pipe.py",
 )
 

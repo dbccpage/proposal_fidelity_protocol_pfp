@@ -21,6 +21,7 @@ from pathlib import Path
 import pytest
 
 from eis.domain.value_objects import DetectorRule
+from pciv.domain.causal_witness import seal_causal_witness
 from pfp_core import immune_host
 from pfp_core.civilization import Candidate, Lineage
 from pfp_core.civilization import select as py_select
@@ -143,12 +144,19 @@ def test_decide_exact_rational_fractions(require_host):
 # 3. Taint Subcommand Parity
 # ---------------------------------------------------------------------------
 
+def _sealed_edge(parent: str, child: str) -> dict:
+    """An edge as Lineage.taint sends it: the sealed witness and the body it seals."""
+    witness = seal_causal_witness({"parent_id": parent, "child_id": child, "change": "mutation"})
+    return {
+        "parent": parent,
+        "child": child,
+        "witness": witness.receipt_sha256,
+        "witness_body": witness.canonical_body,
+    }
+
+
 def test_taint_dag_propagation(require_host):
-    edges = [
-        {"parent": "p0", "child": "p1", "witness": "w1"},
-        {"parent": "p1", "child": "p2", "witness": "w2"},
-        {"parent": "p2", "child": "p3", "witness": "w3"},
-    ]
+    edges = [_sealed_edge("p0", "p1"), _sealed_edge("p1", "p2"), _sealed_edge("p2", "p3")]
     res = immune_host.taint(edges, revoked_parents=["p1"])
     assert set(res["tainted_nodes"]) == {"p1", "p2", "p3"}
 
@@ -161,10 +169,7 @@ def test_taint_dag_propagation(require_host):
 
 
 def test_taint_cycle_refusal(require_host):
-    edges = [
-        {"parent": "a", "child": "b", "witness": "w1"},
-        {"parent": "b", "child": "a", "witness": "w2"},
-    ]
+    edges = [_sealed_edge("a", "b"), _sealed_edge("b", "a")]
     res = immune_host.taint(edges, revoked_parents=["a"])
     assert res["status"] == "REFUSED"
     assert "Cycle detected" in res["reason"]

@@ -187,7 +187,10 @@ def taint(edges: Sequence[Mapping[str, str]], revoked_parents: Sequence[str]) ->
             {
                 "parent": str(e["parent"]),
                 "child": str(e["child"]),
-                "witness": str(e.get("witness", "sha256:00")),
+                # No fallback digest: an edge without a witness is refused by the host.
+                "witness": str(e["witness"]),
+                **({"witness_body": str(e["witness_body"])} if "witness_body" in e else {}),
+                **({"relationship": str(e["relationship"])} if "relationship" in e else {}),
             }
             for e in edges
         ],

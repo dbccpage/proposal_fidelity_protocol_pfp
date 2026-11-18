@@ -24,9 +24,15 @@ fn run_cli(subcommand: &str, input_json: &Value) -> (i32, String, String) {
 
     let stdin_payload = serde_json::to_string(input_json).expect("failed to serialize payload");
     if let Some(mut stdin) = child.stdin.take() {
-        stdin
-            .write_all(stdin_payload.as_bytes())
-            .expect("failed to write to stdin");
+        // The binary may exit before reading stdin (an unknown subcommand, say);
+        // that closes the pipe and is not a test failure.
+        if let Err(error) = stdin.write_all(stdin_payload.as_bytes()) {
+            assert_eq!(
+                error.kind(),
+                std::io::ErrorKind::BrokenPipe,
+                "failed to write to stdin: {error}"
+            );
+        }
     }
 
     let output = child
@@ -50,9 +56,15 @@ fn run_cli_args(args: &[&str], stdin_payload: Option<&str>) -> (i32, String, Str
     let mut child = cmd.spawn().expect("failed to spawn pfp_immune binary");
     if let Some(payload) = stdin_payload {
         if let Some(mut stdin) = child.stdin.take() {
-            stdin
-                .write_all(payload.as_bytes())
-                .expect("failed to write to stdin");
+            // The binary may exit before reading stdin (an unknown subcommand, say);
+            // that closes the pipe and is not a test failure.
+            if let Err(error) = stdin.write_all(payload.as_bytes()) {
+                assert_eq!(
+                    error.kind(),
+                    std::io::ErrorKind::BrokenPipe,
+                    "failed to write to stdin: {error}"
+                );
+            }
         }
     }
 
@@ -307,6 +319,65 @@ fn test_taint_propagation_cascade() {
 
     let parsed: Value = serde_json::from_str(stdout.trim()).expect("valid JSON stdout");
     assert_eq!(parsed["tainted_nodes"], json!(["p0", "p1", "p2"]));
+}
+
+fn sealed(parent: &str, child: &str) -> (String, String) {
+    let body =
+        format!(r#"{{"change":"bounded repair","child_id":"{child}","parent_id":"{parent}"}}"#);
+    (
+        core_epistemic_immune_system::authenticated::bytes_digest(body.as_bytes()),
+        body,
+    )
+}
+
+fn taint_reason(edges: Value) -> Option<String> {
+    let (code, stdout, _) = run_cli("taint", &json!({"edges": edges, "revoked_parents": ["p"]}));
+    let parsed: Value = serde_json::from_str(stdout.trim()).expect("valid JSON stdout");
+    if code == 0 {
+        None
+    } else {
+        Some(parsed["reason"].as_str().unwrap_or_default().to_string())
+    }
+}
+
+#[test]
+fn test_taint_requires_sealed_witness_matching_its_edge() {
+    let (digest, body) = sealed("p", "c");
+    let ok = taint_reason(
+        json!([{"parent":"p","child":"c","witness":digest,"witness_body":body,"relationship":"DirectMutation"}]),
+    );
+    assert_eq!(ok, None);
+    let refused = [
+        json!([{"parent":"p","child":"c","witness":"sha256:00"}]),
+        json!([{"parent":"p","child":"c","witness":"sha256:causal_witness_ok"}]),
+        json!([{"parent":"p","child":"c","witness":digest,"witness_body":body.replace("bounded", "altered")}]),
+        json!([{"parent":"q","child":"c","witness":digest,"witness_body":body}]),
+        json!([{"parent":"p","child":"d","witness":digest,"witness_body":body}]),
+        json!([{"parent":"p","child":"c","witness":digest,"witness_body":body,"relationship":"SameObjective"}]),
+    ];
+    for edges in refused {
+        let reason = taint_reason(edges.clone()).unwrap_or_default();
+        assert!(
+            reason.starts_with("CAUSAL_WITNESS_REQUIRED"),
+            "{edges} -> {reason}"
+        );
+    }
+}
+
+#[test]
+fn test_reference_precedent_edge_carries_no_taint() {
+    let (digest, body) = sealed("p", "c");
+    let input = json!({
+        "edges": [
+            {"parent":"p","child":"c","witness":digest,"witness_body":body,"relationship":"Repair"},
+            {"parent":"p","child":"reader","witness":"sha256:00","relationship":"RetrievedPrecedent"}
+        ],
+        "revoked_parents": ["p"]
+    });
+    let (code, stdout, _) = run_cli("taint", &input);
+    assert_eq!(code, 0);
+    let parsed: Value = serde_json::from_str(stdout.trim()).expect("valid JSON stdout");
+    assert_eq!(parsed["tainted_nodes"], json!(["c", "p"]));
 }
 
 #[test]
