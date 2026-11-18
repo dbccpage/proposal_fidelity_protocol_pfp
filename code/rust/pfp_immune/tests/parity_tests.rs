@@ -24,9 +24,15 @@ fn run_cli(subcommand: &str, input_json: &Value) -> (i32, String, String) {
 
     let stdin_payload = serde_json::to_string(input_json).expect("failed to serialize payload");
     if let Some(mut stdin) = child.stdin.take() {
-        stdin
-            .write_all(stdin_payload.as_bytes())
-            .expect("failed to write to stdin");
+        // The binary may exit before reading stdin (an unknown subcommand, say);
+        // that closes the pipe and is not a test failure.
+        if let Err(error) = stdin.write_all(stdin_payload.as_bytes()) {
+            assert_eq!(
+                error.kind(),
+                std::io::ErrorKind::BrokenPipe,
+                "failed to write to stdin: {error}"
+            );
+        }
     }
 
     let output = child
@@ -50,9 +56,15 @@ fn run_cli_args(args: &[&str], stdin_payload: Option<&str>) -> (i32, String, Str
     let mut child = cmd.spawn().expect("failed to spawn pfp_immune binary");
     if let Some(payload) = stdin_payload {
         if let Some(mut stdin) = child.stdin.take() {
-            stdin
-                .write_all(payload.as_bytes())
-                .expect("failed to write to stdin");
+            // The binary may exit before reading stdin (an unknown subcommand, say);
+            // that closes the pipe and is not a test failure.
+            if let Err(error) = stdin.write_all(payload.as_bytes()) {
+                assert_eq!(
+                    error.kind(),
+                    std::io::ErrorKind::BrokenPipe,
+                    "failed to write to stdin: {error}"
+                );
+            }
         }
     }
 
