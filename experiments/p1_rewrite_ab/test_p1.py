@@ -1,6 +1,6 @@
 """P1 runner and grader tests. AuthorityEffect: None. No network.
 
-    python -m pytest workflows/experiments/p1_rewrite_ab/test_p1.py
+    python -m pytest experiments/p1_rewrite_ab/test_p1.py
 """
 
 from __future__ import annotations
@@ -203,3 +203,90 @@ def test_merge_adds_the_tier_s_arm_and_its_pairs(tmp_path):
     assert not any(p["a"] == "tier_s_qed" for p in report["pairs"])  # no paired tasks yet
     with pytest.raises(SystemExit):
         grade.merge_tasks([TASKS, TASKS])
+
+
+HODGE_V2 = run.load_tasks(HERE / "tasks_hodge_v2.jsonl")
+
+
+def test_hodge_v2_fixes_only_the_contract_sentence():
+    assert run.sha((HERE / "tasks_hodge_v2.jsonl").read_bytes()) == (
+        "f8b86bb3034de7a62e267bc5abc242d5aa9b035d3daed83af3b4faa38a1080df")
+    assert len(HODGE_V2) == 10 and sum(len(t["arms"]) for t in HODGE_V2) == 40
+    v1s = {t["task_id"]: t for t in TIER_S}
+    for t in HODGE_V2:
+        old = BY_ID[t["task_id"]]
+        assert t["expected"] == old["expected"] and t["instance"] == old["instance"]
+        assert {a: t["arms"][a] for a in old["arms"]} == old["arms"]
+        assert t["arms"]["tier_s_qed"] == v1s[t["task_id"]]["arms"]["tier_s_qed"]
+        assert t["system"] != old["system"] and "JSON integers, not strings" in t["system"]
+
+
+def test_hodge_v2_dry_run_grades_all_correct_and_int_strings_stay_malformed(tmp_path):
+    run.run(HODGE_V2, tmp_path / "v2.jsonl", run.dry_sender({t["task_id"]: t for t in HODGE_V2}),
+            model=run.MODEL, effort="low", p_in=Fraction(1, 4), p_out=Fraction(2), cap_micro=750_000)
+    report = grade.grade_all(HODGE_V2, run.load_ledger(tmp_path / "v2.jsonl"))
+    assert all(report["arms"][f"H|{a}"]["CORRECT"] == 10 for a in ("prose", "wire", "wire_qed", "tier_s_qed"))
+    assert {(p["a"], p["b"]) for p in report["pairs"]} >= {("tier_s_qed", "wire_qed"), ("wire_qed", "prose")}
+    h = HODGE_V2[0]
+    assert grade.grade_result(h, result(json.dumps(dict(h["expected"], b0="1")))) == "MALFORMED"
+
+
+def dry(tasks, ledger, effort="low"):
+    return run.run(tasks, ledger, run.dry_sender({t["task_id"]: t for t in tasks}), model=run.MODEL,
+                   effort=effort, p_in=Fraction(1, 4), p_out=Fraction(2), cap_micro=750_000)
+
+
+def test_v1_ledger_cannot_count_as_v2(tmp_path):
+    """Review of #152: v2 reuses the v1 task ids and arm names; a v1 ledger must not satisfy or grade v2."""
+    ledger = tmp_path / "shared.jsonl"
+    assert dry(TASKS, ledger)["sent"] == 110
+    assert dry(TIER_S, ledger)["sent"] == 10  # disjoint arms may share a ledger
+    before = ledger.read_bytes()
+    with pytest.raises(run.LedgerMismatch, match="LEDGER_REQUEST_MISMATCH: 40 "):
+        dry(HODGE_V2, ledger)
+    assert ledger.read_bytes() == before  # refused before any intent was written
+    with pytest.raises(run.LedgerMismatch, match="LEDGER_REQUEST_MISMATCH: 40 "):
+        grade.grade_all(HODGE_V2, run.load_ledger(ledger))
+    report = grade.grade_all(grade.merge_tasks([TASKS, TIER_S]), run.load_ledger(ledger))
+    assert all(row["CORRECT"] == sum(row.values()) for row in report["arms"].values())
+    assert report["calls"] == 120
+
+
+def test_another_effort_is_another_request(tmp_path):
+    ledger = tmp_path / "l.jsonl"
+    dry(HODGE_V2, ledger, effort="medium")
+    assert dry(HODGE_V2, ledger, effort="medium")["sent"] == 0
+    with pytest.raises(run.LedgerMismatch):
+        dry(HODGE_V2, ledger, effort="low")
+    report = grade.grade_all(HODGE_V2, run.load_ledger(ledger))  # rebuilt with the recorded effort
+    assert report["arms"]["H|prose"]["CORRECT"] == 10
+
+
+def test_result_must_bind_to_the_intent_before_it(tmp_path):
+    ledger = tmp_path / "l.jsonl"
+    dry(HODGE_V2, ledger)
+    records = run.load_ledger(ledger)
+    first_result = next(i for i, r in enumerate(records) if r["kind"] == "result")
+    assert records[first_result]["request_sha256"] == records[first_result - 1]["request_sha256"]
+    forged = [dict(r) for r in records]
+    forged[first_result]["request_sha256"] = "0" * 64
+    with pytest.raises(run.LedgerMismatch, match="LEDGER_RESULT_UNBOUND"):
+        grade.grade_all(HODGE_V2, forged)
+    orphan = records[:first_result - 1] + records[first_result:]
+    with pytest.raises(run.LedgerMismatch, match="LEDGER_ORPHAN_RESULT"):
+        grade.grade_all(HODGE_V2, orphan)
+
+
+def test_only_this_lab_is_outside_governance():
+    """Review of #152: the lab sits outside every governed root; no directory-name exclusion is used."""
+    root = HERE.parents[1]
+    sys.path.insert(0, str(root))
+    from governance.tools.checker import Repository
+
+    repo = Repository(root)
+    assert "experiments" not in repo.policy.exclusions.path_parts
+    assert all(repo.language(f"experiments/p1_rewrite_ab/{p.name}") is None for p in HERE.iterdir())
+    assert repo.language("pfp/experiments/runtime.py") == "Python"
+    assert repo.language("workflows/experiments/kit.py") == "Python"
+    assert repo.language("workflows/wf05_symbolic_packet/run.py") == "Python"
+    assert repo.language("lean4/experiments/Proof.lean") is not None

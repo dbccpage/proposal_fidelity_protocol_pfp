@@ -29,13 +29,15 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import hodge  # noqa: E402
+import run  # noqa: E402
 
 INT = re.compile(r"-?(0|[1-9][0-9]*)")
 RAT = re.compile(r"-?(0|[1-9][0-9]*)(/[1-9][0-9]*)?")
 PAIRS = {
-    "S": [("plain", "prose"), ("wf5", "prose"), ("fenced", "prose"), ("wf5", "plain")],
+    "S": [("plain", "prose"), ("wf5", "prose"), ("fenced", "prose"), ("wf5", "plain"),
+          ("typed", "orchestrator")],
     "H": [("wire", "prose"), ("wire_qed", "wire"), ("wire_qed", "prose"),
-          ("tier_s_qed", "wire_qed"), ("tier_s_qed", "prose")],
+          ("tier_s_qed", "wire_qed"), ("tier_s_qed", "prose"), ("typed", "orchestrator")],
 }
 GRADES = ("CORRECT", "PULLED", "WRONG", "MALFORMED", "TRUNCATED", "NO_REPLY", "NOT_RUN")
 INT_FIELDS = ("b0", "b1", "euler_characteristic")
@@ -106,6 +108,22 @@ def grade_hodge(task: dict, obj: dict) -> str:
     return "CORRECT" if ok else "WRONG"
 
 
+TYPED_REPLY = {"task_id", "CANDIDATE", "AUTHORITY_EFFECT"}
+
+
+def unwrap(task: dict, arm: str | None, obj: dict) -> dict:
+    """H1 typed arm: the reply must be exactly the typed wrapper; any fault is MALFORMED."""
+    if arm not in task.get("wrapper", {}):
+        return obj
+    if set(obj) != TYPED_REPLY:
+        raise Malformed(f"typed reply fields {sorted(obj)}")
+    if obj["task_id"] != task["task_id"] or obj["AUTHORITY_EFFECT"] != "None":
+        raise Malformed("typed reply task_id or AUTHORITY_EFFECT")
+    if not isinstance(obj["CANDIDATE"], dict):
+        raise Malformed("CANDIDATE is not an object")
+    return obj["CANDIDATE"]
+
+
 def grade_result(task: dict, result: dict | None) -> str:
     if result is None or result["status"] != 200 or result.get("error"):
         return "NO_REPLY"
@@ -120,7 +138,7 @@ def grade_result(task: dict, result: dict | None) -> str:
     if not isinstance(content, str):
         return "MALFORMED"
     try:
-        obj = parse_object(content)
+        obj = unwrap(task, result.get("arm"), parse_object(content))
         return grade_sum(task, obj) if task["family"] == "S" else grade_hodge(task, obj)
     except Malformed:
         return "MALFORMED"
@@ -134,9 +152,36 @@ def sign_test(b: int, c: int) -> Fraction:
     return min(Fraction(1), Fraction(2 * tail, 2**n))
 
 
+def bind(tasks: list[dict], ledger: list[dict]) -> tuple[dict[tuple[str, str], dict], set[tuple[str, str]]]:
+    """Keep only the records bound to the request each current (task, arm) would send.
+
+    The request is rebuilt from the task file with the model and effort its intent recorded, and its
+    hash must equal the intent's request_sha256. A (task, arm) the ledger holds only under another
+    request, such as an older kit that reused the task ids, refuses the whole grading.
+    """
+    seen, intents, results = run.ledger_index(ledger)
+    params = {(r["task_id"], r["arm"], r["request_sha256"]): (r["model"], r["effort"])
+              for r in ledger if r["kind"] == "intent"}
+    wanted: dict[tuple[str, str], str] = {}
+    for task in tasks:
+        for arm in task["arms"]:
+            key = (task["task_id"], arm)
+            for got in seen.get(key, ()):
+                if run.request_sha(task, arm, *params[(*key, got)]) == got:
+                    wanted[key] = got
+            wanted.setdefault(key, "")
+    bad = run.mismatches({k: v for k, v in seen.items() if k in wanted},
+                         {k: v for k, v in wanted.items() if k in seen})
+    if bad:
+        raise run.LedgerMismatch(f"LEDGER_REQUEST_MISMATCH: {len(bad)} (task, arm) pairs were sent as a "
+                                 f"request this task file does not make, first {bad[0]}")
+    bound = {k: results[(*k, v)] for k, v in wanted.items() if (*k, v) in results}
+    held = {k for k, v in wanted.items() if (*k, v) in intents}
+    return bound, held
+
+
 def grade_all(tasks: list[dict], ledger: list[dict]) -> dict:
-    results = {(r["task_id"], r["arm"]): r for r in ledger if r["kind"] == "result"}
-    intents = {(r["task_id"], r["arm"]) for r in ledger if r["kind"] == "intent"}
+    results, intents = bind(tasks, ledger)
     grades: dict[tuple[str, str], str] = {}
     for task in tasks:
         for arm in task["arms"]:
