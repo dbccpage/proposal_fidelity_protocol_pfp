@@ -130,3 +130,20 @@ def test_native_host_refuses_a_placeholder_witness_directly(monkeypatch):
           "witness_body": body}],
         ["p"],
     )
+
+
+def test_an_unknown_relationship_refuses(mode):
+    lineage = _lineage()
+    object.__setattr__(lineage.graph._edges[0], "relationship", "Inspired")
+    with pytest.raises(ValueError, match="CAUSAL_WITNESS_REQUIRED: 'Inspired' is not a PCIV relation"):
+        lineage.taint({"parent"})
+
+
+def test_a_native_refusal_is_raised_not_swallowed(monkeypatch):
+    monkeypatch.setattr(immune_host, "is_available", lambda: True)
+    monkeypatch.setattr(
+        immune_host, "taint",
+        lambda edges, seeds: {"status": "REFUSED", "reason": "LINEAGE_CYCLE_REFUSED: parent -> child"},
+    )
+    with pytest.raises(ValueError, match="LINEAGE_CYCLE_REFUSED: parent -> child"):
+        _lineage().taint({"parent"})

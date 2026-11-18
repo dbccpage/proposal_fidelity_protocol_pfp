@@ -7,7 +7,7 @@
     "artifact": {
       "path": "code/rust/pfp_immune/tests/parity_tests.rs",
       "language": "Rust",
-      "sha256": "901c6c6a1093fce6c2db73d4d59242f0024ef883c6e5cc40c64709c69329bf56"
+      "sha256": "6d5d23c0fe16a0f3bc2a621f29dff4c06000f14ac73331447193c579d8cfbe89"
     },
     "contract_urn": "urn:code-rust:tests:pfp-immune:parity-tests:v1",
     "symbols": [
@@ -22,6 +22,10 @@
       "test_decide_activation",
       "test_decide_boundary_equality",
       "test_taint_propagation_cascade",
+      "sealed",
+      "taint_reason",
+      "test_taint_requires_sealed_witness_matching_its_edge",
+      "test_reference_precedent_edge_carries_no_taint",
       "test_taint_cycle_detected",
       "test_select_population_10",
       "test_select_population_empty",
@@ -38,12 +42,11 @@
       "test_decide_division_by_zero_exits_two"
     ],
     "owned_invariants": [
-      "Exercises the compiled pfp_immune host binary via Command across all 5 subcommands.",
-      "Verifies exit code semantics: 0 for PASS, 1 for FAIL or refusal, 2 for syntax or I/O failure.",
-      "Validates against offline golden test vectors derived from Python fixtures."
+      "Exercises the compiled pfp_immune binary across all 5 subcommands.",
+      "Checks exit code semantics and the CAUSAL_WITNESS_REQUIRED refusals of the taint subcommand."
     ],
     "boundaries": [
-      "Integration test suite for pfp_immune binary target.",
+      "Integration test suite for the pfp_immune binary target.",
       "AuthorityEffect: None."
     ]
   },
@@ -53,7 +56,7 @@
     "artifact": {
       "path": "code/rust/pfp_immune/tests/parity_tests.rs",
       "language": "Rust",
-      "sha256": "901c6c6a1093fce6c2db73d4d59242f0024ef883c6e5cc40c64709c69329bf56"
+      "sha256": "6d5d23c0fe16a0f3bc2a621f29dff4c06000f14ac73331447193c579d8cfbe89"
     },
     "profile": "Exact",
     "level": "L2",
@@ -66,35 +69,143 @@
       "G5": "C"
     },
     "basis": {
-      "G1": "Each test function states the exact behaviour, exit code, and JSON payload it verifies.",
-      "G2": "Exact assertions on exit codes and stdout/stderr JSON responses.",
-      "G3": "Validates proper failure reporting on malformed inputs and error exits.",
-      "G4": "All 23 integration tests pass cleanly and kill all 8 mutants.",
-      "G5": "Linear test execution with low cyclomatic complexity."
+      "G1": "Each test names the behaviour, exit code and JSON payload it checks, including the new witness refusals.",
+      "G2": "Exact assertions on exit codes and stdout JSON.",
+      "G3": "Stdin helpers tolerate only a BrokenPipe from a binary that exits before reading; any other write error fails the test.",
+      "G4": "All parity tests pass on these bytes and kill the 14 non-equivalent main.rs mutants.",
+      "G5": "Linear tests; worst CCN 5."
     },
     "composite_grade": "C",
     "score_token": "L2C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-14T14:15:00Z",
+    "evaluation_timestamp": "2026-11-18T01:30:00Z",
     "evidence": [
       {
-        "path": "governance/evidence/eis-pciv-m5-test.run.json",
-        "sha256": "b51c0b34e6d337c6cb0b0a881dc268c4c15544074edc3b3172a97a21e52ef550",
-        "note": "23 parity and integration tests pass cleanly for pfp_immune."
+        "path": "governance/evidence/pciv155-pfp-immune-test.run.json",
+        "sha256": "8a015cbd3071b029db165c9473103586ff51933014146ada7914d322c2f05cf2",
+        "note": "cargo test -p pfp_immune: 25 parity tests and the crate's unit tests pass on these bytes."
       },
       {
-        "path": "governance/evidence/eis-pciv-m5-clippy.run.json",
-        "sha256": "5f6ddb65afe291ac3d8b3f26b3f6b61a2a0f17ebeb7daf519a28ef3cd2d05b85",
-        "note": "clippy with -D warnings passes cleanly with zero warnings."
+        "path": "governance/evidence/pciv155-pfp-immune-clippy.run.json",
+        "sha256": "1e574c779ca1544737d45ea870ece43d2f284525e041d186a330329d1eec7e2e",
+        "note": "cargo clippy --locked -p pfp_immune --all-targets --no-deps -D warnings: exit 0."
       },
       {
-        "path": "governance/evidence/eis-pciv-m5-fmt.run.json",
-        "sha256": "a12103517245dde74ba0ce73227cbd0dfb5a8e81eb8a559e0ca59b7723fc26ac",
-        "note": "rustfmt --check passes cleanly with zero diffs."
+        "path": "governance/evidence/pciv155-pfp-immune-fmt.run.json",
+        "sha256": "3c914fcf154aa4ef286c5facb89f16532064ebf7b038eb41787997dda1f76f71",
+        "note": "cargo fmt -p pfp_immune --check: exit 0."
+      },
+      {
+        "path": "governance/evidence/pciv155-metrics.run.json",
+        "sha256": "1ab3e949b1ac911a7553e707289fba333b7d465f2868849de3eda8c7cb1bbe6d",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pciv155-metrics.json",
+        "sha256": "13d076a9bff87bc1868e0c65519ad4946c45d57ffb4295fa8972678af9cad882",
+        "note": "Measured Gate 5 structure of every source this change touches."
       }
     ],
     "mutation_accounting": null
   },
-  "history": []
+  "history": [
+    {
+      "recorded_at": "2026-11-18T00:48:05.136396Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_immune/tests/parity_tests.rs",
+          "language": "Rust",
+          "sha256": "901c6c6a1093fce6c2db73d4d59242f0024ef883c6e5cc40c64709c69329bf56"
+        },
+        "contract_urn": "urn:code-rust:tests:pfp-immune:parity-tests:v1",
+        "symbols": [
+          "run_cli",
+          "run_cli_args",
+          "test_screen_autoimmune_purged",
+          "test_screen_all_admitted",
+          "test_screen_invalid_pattern",
+          "test_decide_pass",
+          "test_decide_diagnostic",
+          "test_decide_host_refusal",
+          "test_decide_activation",
+          "test_decide_boundary_equality",
+          "test_taint_propagation_cascade",
+          "test_taint_cycle_detected",
+          "test_select_population_10",
+          "test_select_population_empty",
+          "test_exclusion_probably_dead",
+          "test_exclusion_frontier_disagreement",
+          "test_exclusion_uncorroborated",
+          "test_help_flag_exits_two",
+          "test_help_short_flag_exits_two",
+          "test_usage_no_args_exits_two",
+          "test_unknown_subcommand_exits_two",
+          "test_malformed_json_exits_two",
+          "test_file_input_flag",
+          "test_missing_file_exits_two",
+          "test_decide_division_by_zero_exits_two"
+        ],
+        "owned_invariants": [
+          "Exercises the compiled pfp_immune host binary via Command across all 5 subcommands.",
+          "Verifies exit code semantics: 0 for PASS, 1 for FAIL or refusal, 2 for syntax or I/O failure.",
+          "Validates against offline golden test vectors derived from Python fixtures."
+        ],
+        "boundaries": [
+          "Integration test suite for pfp_immune binary target.",
+          "AuthorityEffect: None."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_immune/tests/parity_tests.rs",
+          "language": "Rust",
+          "sha256": "901c6c6a1093fce6c2db73d4d59242f0024ef883c6e5cc40c64709c69329bf56"
+        },
+        "profile": "Exact",
+        "level": "L2",
+        "level_basis": "Integration test harness in standard cargo layout.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "C"
+        },
+        "basis": {
+          "G1": "Each test function states the exact behaviour, exit code, and JSON payload it verifies.",
+          "G2": "Exact assertions on exit codes and stdout/stderr JSON responses.",
+          "G3": "Validates proper failure reporting on malformed inputs and error exits.",
+          "G4": "All 23 integration tests pass cleanly and kill all 8 mutants.",
+          "G5": "Linear test execution with low cyclomatic complexity."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T14:15:00Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/eis-pciv-m5-test.run.json",
+            "sha256": "b51c0b34e6d337c6cb0b0a881dc268c4c15544074edc3b3172a97a21e52ef550",
+            "note": "23 parity and integration tests pass cleanly for pfp_immune."
+          },
+          {
+            "path": "governance/evidence/eis-pciv-m5-clippy.run.json",
+            "sha256": "5f6ddb65afe291ac3d8b3f26b3f6b61a2a0f17ebeb7daf519a28ef3cd2d05b85",
+            "note": "clippy with -D warnings passes cleanly with zero warnings."
+          },
+          {
+            "path": "governance/evidence/eis-pciv-m5-fmt.run.json",
+            "sha256": "a12103517245dde74ba0ce73227cbd0dfb5a8e81eb8a559e0ca59b7723fc26ac",
+            "note": "rustfmt --check passes cleanly with zero diffs."
+          }
+        ],
+        "mutation_accounting": null
+      }
+    }
+  ]
 }

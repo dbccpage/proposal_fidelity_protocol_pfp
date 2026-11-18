@@ -1,0 +1,91 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "pfp_core/tests/test_civilization_witness_taint.py",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp_core/tests/test_civilization_witness_taint.py",
+      "language": "Python",
+      "sha256": "c688d766f81325ccf961941609f857509c12f4032c767fa6bf5fc187916c3943"
+    },
+    "contract_urn": "urn:pfp-core:tests-test_civilization_witness_taint-py:v1",
+    "symbols": [
+      "_use_native",
+      "mode",
+      "_lineage",
+      "test_native_transport_carries_the_actual_sealed_witness",
+      "test_reference_edges_carry_no_taint",
+      "test_reader_of_a_tainted_precedent_is_not_tainted",
+      "_tamper",
+      "_forged",
+      "test_unwitnessed_inheritance_edge_refuses",
+      "test_placeholder_digest_refuses",
+      "test_native_host_refuses_a_placeholder_witness_directly",
+      "test_an_unknown_relationship_refuses",
+      "test_a_native_refusal_is_raised_not_swallowed"
+    ],
+    "owned_invariants": [
+      "Covers the review findings on witness transport and reference edges, 2026-11-17."
+    ],
+    "boundaries": [
+      "Test module.",
+      "AuthorityEffect: None."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp_core/tests/test_civilization_witness_taint.py",
+      "language": "Python",
+      "sha256": "c688d766f81325ccf961941609f857509c12f4032c767fa6bf5fc187916c3943"
+    },
+    "profile": "Exact",
+    "level": "L2",
+    "level_basis": "L2 verification support: fixtures and finite negative controls in both fallback and native modes.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "C"
+    },
+    "basis": {
+      "G1": "Each test name states the claim it checks.",
+      "G2": "Expected tainted sets follow from the lineage written in the test.",
+      "G3": "Each refusal is asserted by its CAUSAL_WITNESS_REQUIRED or host reason text.",
+      "G4": "Runs in fallback and native modes; kills every mutant of the new witness code in civilization.py.",
+      "G5": "Worst CCN 3."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-11-18T01:30:00Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pciv155-pfp-core-tests.run.json",
+        "sha256": "ccbad1eb411b83ae786c0bc64fb98f4f72c56bc6d6fe56b73fca3f5183bdac4f",
+        "note": "pytest pfp_core/tests with the release pfp_operad and debug pfp_immune hosts: all pass, 1 skipped."
+      },
+      {
+        "path": "governance/evidence/pciv155-ruff.run.json",
+        "sha256": "e4f1f0778c0c183e5e62a4e37afe41154da7e4c0566cfd7c665d5cea5a345b87",
+        "note": "ruff check on the four changed Python files: exit 0."
+      },
+      {
+        "path": "governance/evidence/pciv155-metrics.run.json",
+        "sha256": "1ab3e949b1ac911a7553e707289fba333b7d465f2868849de3eda8c7cb1bbe6d",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pciv155-metrics.json",
+        "sha256": "13d076a9bff87bc1868e0c65519ad4946c45d57ffb4295fa8972678af9cad882",
+        "note": "Measured Gate 5 structure of every source this change touches."
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

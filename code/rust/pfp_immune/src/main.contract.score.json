@@ -7,7 +7,7 @@
     "artifact": {
       "path": "code/rust/pfp_immune/src/main.rs",
       "language": "Rust",
-      "sha256": "d13b59038bb49ebf7ee875445b59cb9f7a24efc564dc20cc13b11cb0dc5149c9"
+      "sha256": "d4f286cd2b221398e707e136815239db4c75dce3f0281c3b1c89cd4824759060"
     },
     "contract_urn": "urn:code-rust:pfp-immune:main:v1",
     "symbols": [
@@ -20,6 +20,11 @@
       "DecideInput",
       "DecideOutput",
       "LineageEdgeWire",
+      "INHERITANCE",
+      "REFERENCE",
+      "PLACEHOLDER_WITNESS",
+      "is_sealed_digest",
+      "witness_defect",
       "TaintInput",
       "TaintOutput",
       "TaintRefusalOutput",
@@ -31,21 +36,24 @@
       "ExclusionOutput",
       "handle_screen",
       "handle_decide",
+      "has_directed_path",
+      "refuse",
       "handle_taint",
       "handle_select",
       "handle_exclusion",
       "USAGE",
+      "read_payload",
       "run",
       "main"
     ],
     "owned_invariants": [
-      "Strict typing: all payload exchanges are structured Rust structs with serde deny_unknown_fields.",
-      "Zero floating point arithmetic: check paths use exact rationals via BigRational.",
-      "Subcommands execute screening, two-signal disposition, lineage taint, 60/30/10 reserve selection, and multi-family exclusion.",
+      "Strict typing: payloads are serde structs with deny_unknown_fields.",
+      "Zero floating point arithmetic: check paths use exact rationals.",
+      "Taint travels only over inheritance edges (DirectMutation, Repair, Retry) whose sealed witness hashes to its body and names the edge's parent and child; RetrievedPrecedent edges carry no taint.",
       "Exit code discipline: 0 for PASS, 1 for FAIL or refusal, 2 for syntax or I/O failure."
     ],
     "boundaries": [
-      "CLI presentation layer calling domain crates core_epistemic_immune_system and core_prompt_civilization.",
+      "CLI presentation layer calling core_epistemic_immune_system and core_prompt_civilization.",
       "AuthorityEffect: None."
     ]
   },
@@ -55,11 +63,11 @@
     "artifact": {
       "path": "code/rust/pfp_immune/src/main.rs",
       "language": "Rust",
-      "sha256": "d13b59038bb49ebf7ee875445b59cb9f7a24efc564dc20cc13b11cb0dc5149c9"
+      "sha256": "d4f286cd2b221398e707e136815239db4c75dce3f0281c3b1c89cd4824759060"
     },
     "profile": "Exact",
     "level": "L4",
-    "level_basis": "Production host binary entry point with strict typing, closed schemas, and exact rational arithmetic.",
+    "level_basis": "Production host binary entry point with closed schemas and exact rational arithmetic.",
     "gates": {
       "G1": "C",
       "G2": "C",
@@ -68,48 +76,171 @@
       "G5": "C"
     },
     "basis": {
-      "G1": "Module declares AuthorityEffect: None and unique contract URN. All symbols match public API.",
-      "G2": "Exact profile: check paths use BigRational and BigInt arithmetic without floating point numbers.",
-      "G3": "Closed JSON deserialization with deny_unknown_fields; syntax errors and divide by zero return typed error messages with exit 2.",
-      "G4": "23 integration tests pass exercising compiled binary. 8 decisive mutants killed (R = 1.0). Clippy and rustfmt pass cleanly.",
-      "G5": "Bounded control flow; worst cyclomatic complexity is within modular limits."
+      "G1": "Module declares AuthorityEffect: None and its contract URN; the taint subcommand now names which edges carry taint and why an edge is refused.",
+      "G2": "Exact profile: BigRational and BigInt only; witness digests are compared as exact strings over sha256 of the sealed body.",
+      "G3": "Unwitnessed, placeholder, altered or misnamed inheritance edges and unknown relationships refuse with CAUSAL_WITNESS_REQUIRED instead of being counted.",
+      "G4": "cargo test, clippy -D warnings and fmt pass on these bytes; mutation R = 1.00 (14 killed, 1 demonstrably equivalent).",
+      "G5": "Measured worst CCN 16, nesting 3; ceiling C."
     },
     "composite_grade": "C",
     "score_token": "L4C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-11-14T14:15:00Z",
+    "evaluation_timestamp": "2026-11-18T01:30:00Z",
     "evidence": [
       {
-        "path": "governance/evidence/eis-pciv-m5-test.run.json",
-        "sha256": "b51c0b34e6d337c6cb0b0a881dc268c4c15544074edc3b3172a97a21e52ef550",
-        "note": "23 parity and integration tests pass cleanly for pfp_immune."
+        "path": "governance/evidence/pciv155-pfp-immune-test.run.json",
+        "sha256": "8a015cbd3071b029db165c9473103586ff51933014146ada7914d322c2f05cf2",
+        "note": "cargo test -p pfp_immune: 25 parity tests and the crate's unit tests pass on these bytes."
       },
       {
-        "path": "governance/evidence/eis-pciv-m5-clippy.run.json",
-        "sha256": "5f6ddb65afe291ac3d8b3f26b3f6b61a2a0f17ebeb7daf519a28ef3cd2d05b85",
-        "note": "clippy with -D warnings passes cleanly with zero warnings."
+        "path": "governance/evidence/pciv155-pfp-immune-clippy.run.json",
+        "sha256": "1e574c779ca1544737d45ea870ece43d2f284525e041d186a330329d1eec7e2e",
+        "note": "cargo clippy --locked -p pfp_immune --all-targets --no-deps -D warnings: exit 0."
       },
       {
-        "path": "governance/evidence/eis-pciv-m5-fmt.run.json",
-        "sha256": "a12103517245dde74ba0ce73227cbd0dfb5a8e81eb8a559e0ca59b7723fc26ac",
-        "note": "rustfmt --check passes cleanly with zero diffs."
+        "path": "governance/evidence/pciv155-pfp-immune-fmt.run.json",
+        "sha256": "3c914fcf154aa4ef286c5facb89f16532064ebf7b038eb41787997dda1f76f71",
+        "note": "cargo fmt -p pfp_immune --check: exit 0."
+      },
+      {
+        "path": "governance/evidence/pciv155-metrics.run.json",
+        "sha256": "1ab3e949b1ac911a7553e707289fba333b7d465f2868849de3eda8c7cb1bbe6d",
+        "note": "The run that measured Gate 5 structure."
+      },
+      {
+        "path": "governance/evidence/pciv155-metrics.json",
+        "sha256": "13d076a9bff87bc1868e0c65519ad4946c45d57ffb4295fa8972678af9cad882",
+        "note": "Measured Gate 5 structure of every source this change touches."
       }
     ],
     "mutation_accounting": {
-      "killed": 8,
+      "killed": 14,
       "survived": 0,
-      "demonstrably_equivalent": 0,
+      "demonstrably_equivalent": 1,
       "invalid": 0,
       "inconclusive": 0,
       "unrun": 0,
       "conservative_ratio": 1.0,
       "report": {
-        "path": "governance/evidence/m-pfp_immune-main.mutation.json",
-        "sha256": "674f562c2d7c2de192dd15b9f936d1c29404a1737826fe1f588bbb8b7bf301b7",
-        "note": "lexical mutation report for pfp_immune main host binary"
+        "path": "governance/evidence/m-pciv155-pfp_immune-main.mutation.json",
+        "sha256": "be3a803b47f44d7ef285da07a86b319e4fb17a1d3f089670bbcf35cbc927d17e",
+        "note": "Lexical campaign on main.rs: the 8 earlier mutants plus 7 on the new witness checks; 1 equivalent with its reason written in the report."
       }
     }
   },
-  "history": []
+  "history": [
+    {
+      "recorded_at": "2026-11-18T00:48:04.931870Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_immune/src/main.rs",
+          "language": "Rust",
+          "sha256": "d13b59038bb49ebf7ee875445b59cb9f7a24efc564dc20cc13b11cb0dc5149c9"
+        },
+        "contract_urn": "urn:code-rust:pfp-immune:main:v1",
+        "symbols": [
+          "Outcome",
+          "WireRational",
+          "ScreenCandidateWire",
+          "ScreenInput",
+          "PurgedCandidateWire",
+          "ScreenOutput",
+          "DecideInput",
+          "DecideOutput",
+          "LineageEdgeWire",
+          "TaintInput",
+          "TaintOutput",
+          "TaintRefusalOutput",
+          "PopulationMemberWire",
+          "SelectInput",
+          "SelectOutput",
+          "ExclusionInput",
+          "FalsifierWire",
+          "ExclusionOutput",
+          "handle_screen",
+          "handle_decide",
+          "handle_taint",
+          "handle_select",
+          "handle_exclusion",
+          "USAGE",
+          "run",
+          "main"
+        ],
+        "owned_invariants": [
+          "Strict typing: all payload exchanges are structured Rust structs with serde deny_unknown_fields.",
+          "Zero floating point arithmetic: check paths use exact rationals via BigRational.",
+          "Subcommands execute screening, two-signal disposition, lineage taint, 60/30/10 reserve selection, and multi-family exclusion.",
+          "Exit code discipline: 0 for PASS, 1 for FAIL or refusal, 2 for syntax or I/O failure."
+        ],
+        "boundaries": [
+          "CLI presentation layer calling domain crates core_epistemic_immune_system and core_prompt_civilization.",
+          "AuthorityEffect: None."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "code/rust/pfp_immune/src/main.rs",
+          "language": "Rust",
+          "sha256": "d13b59038bb49ebf7ee875445b59cb9f7a24efc564dc20cc13b11cb0dc5149c9"
+        },
+        "profile": "Exact",
+        "level": "L4",
+        "level_basis": "Production host binary entry point with strict typing, closed schemas, and exact rational arithmetic.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "C"
+        },
+        "basis": {
+          "G1": "Module declares AuthorityEffect: None and unique contract URN. All symbols match public API.",
+          "G2": "Exact profile: check paths use BigRational and BigInt arithmetic without floating point numbers.",
+          "G3": "Closed JSON deserialization with deny_unknown_fields; syntax errors and divide by zero return typed error messages with exit 2.",
+          "G4": "23 integration tests pass exercising compiled binary. 8 decisive mutants killed (R = 1.0). Clippy and rustfmt pass cleanly.",
+          "G5": "Bounded control flow; worst cyclomatic complexity is within modular limits."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-11-14T14:15:00Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/eis-pciv-m5-test.run.json",
+            "sha256": "b51c0b34e6d337c6cb0b0a881dc268c4c15544074edc3b3172a97a21e52ef550",
+            "note": "23 parity and integration tests pass cleanly for pfp_immune."
+          },
+          {
+            "path": "governance/evidence/eis-pciv-m5-clippy.run.json",
+            "sha256": "5f6ddb65afe291ac3d8b3f26b3f6b61a2a0f17ebeb7daf519a28ef3cd2d05b85",
+            "note": "clippy with -D warnings passes cleanly with zero warnings."
+          },
+          {
+            "path": "governance/evidence/eis-pciv-m5-fmt.run.json",
+            "sha256": "a12103517245dde74ba0ce73227cbd0dfb5a8e81eb8a559e0ca59b7723fc26ac",
+            "note": "rustfmt --check passes cleanly with zero diffs."
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 8,
+          "survived": 0,
+          "demonstrably_equivalent": 0,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 1.0,
+          "report": {
+            "path": "governance/evidence/m-pfp_immune-main.mutation.json",
+            "sha256": "674f562c2d7c2de192dd15b9f936d1c29404a1737826fe1f588bbb8b7bf301b7",
+            "note": "lexical mutation report for pfp_immune main host binary"
+          }
+        }
+      }
+    }
+  ]
 }
