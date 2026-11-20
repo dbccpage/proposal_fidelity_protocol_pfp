@@ -183,7 +183,7 @@ def test_two_signal_signal1_alone_yields_diagnostic_only():
     s1 = Signal1Match(
         epitope_name="unreduced_rational",
         pattern_matched="2/2",
-        confidence=1.0,
+        confidence=1,
         offset=0,
         detector_id="syntax_linter",
     )
@@ -210,7 +210,7 @@ def test_two_signal_signal1_and_independent_host_danger_activates():
     s1 = Signal1Match(
         epitope_name="algebraic_flaw",
         pattern_matched="omega_err",
-        confidence=1.0,
+        confidence=1,
         offset=0,
         detector_id="charpoly_detector",
     )
@@ -241,7 +241,7 @@ def test_two_signal_signal1_and_critical_host_danger_quarantines():
     s1 = Signal1Match(
         epitope_name="bad_token",
         pattern_matched="err",
-        confidence=1.0,
+        confidence=1,
         offset=0,
         detector_id="detector_1",
     )
@@ -269,7 +269,7 @@ def test_two_signal_collapse_model_authored_danger_refused():
     s1 = Signal1Match(
         epitope_name="tag",
         pattern_matched="p",
-        confidence=1.0,
+        confidence=1,
         offset=0,
         detector_id="detector_1",
     )
@@ -294,7 +294,7 @@ def test_two_signal_collapse_derived_from_signal1_refused():
     s1 = Signal1Match(
         epitope_name="tag",
         pattern_matched="p",
-        confidence=1.0,
+        confidence=1,
         offset=0,
         detector_id="detector_1",
     )
@@ -316,7 +316,7 @@ def test_two_signal_collapse_forged_derived_danger_refused():
     s1 = Signal1Match(
         epitope_name="tag",
         pattern_matched="p",
-        confidence=1.0,
+        confidence=1,
         offset=0,
         detector_id="detector_1",
     )
@@ -345,7 +345,7 @@ def test_two_signal_collapse_duplicate_predicate_refused():
     s1 = Signal1Match(
         epitope_name="tag",
         pattern_matched="p",
-        confidence=1.0,
+        confidence=1,
         offset=0,
         detector_id="detector_1",
     )
@@ -371,7 +371,7 @@ def test_two_signal_collapse_overlapping_evidence_spans_refused():
     s1 = Signal1Match(
         epitope_name="token",
         pattern_matched="bad",
-        confidence=1.0,
+        confidence=1,
         offset=10,  # Characters 10..13
         detector_id="detector_1",
     )
@@ -398,7 +398,7 @@ def test_two_signal_unwitnessed_danger_refused():
     s1 = Signal1Match(
         epitope_name="token",
         pattern_matched="bad",
-        confidence=1.0,
+        confidence=1,
         offset=0,
         detector_id="detector_1",
     )
@@ -423,7 +423,7 @@ def test_two_signal_unregistered_danger_kind_refused():
     s1 = Signal1Match(
         epitope_name="token",
         pattern_matched="bad",
-        confidence=1.0,
+        confidence=1,
         offset=0,
         detector_id="detector_1",
     )
