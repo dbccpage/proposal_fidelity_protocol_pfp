@@ -66,7 +66,7 @@ class TestTwoSignalCollapseAttacks:
         return Signal1Match(
             epitope_name="unreduced_rational",
             pattern_matched='"q": "2/2"',
-            confidence=1.0,
+            confidence=1,
             offset=10,
             detector_id="regex_detector",
         )
@@ -238,7 +238,7 @@ class TestSignal1NormalizationVsGating:
         s1 = Signal1Match(
             epitope_name="fraction",
             pattern_matched='"2/2"',
-            confidence=1.0,
+            confidence=1,
             offset=0,
             detector_id="regex",
         )
@@ -271,7 +271,7 @@ class TestSignal1NormalizationVsGating:
         s1 = Signal1Match(
             epitope_name="format",
             pattern_matched="p",
-            confidence=1.0,
+            confidence=1,
             offset=0,
             detector_id="detector_1",
         )

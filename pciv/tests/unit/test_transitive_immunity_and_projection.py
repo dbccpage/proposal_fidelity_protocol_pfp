@@ -47,7 +47,9 @@ def test_fixed_point_taint_or_policy_is_permutation_invariant() -> None:
     # Legacy single-pass engine fails on reversed insertion order (demonstrating SYS-PCIV-009)
     legacy = LineageTaintEngineV1()
     legacy.mark_tainted("n0")
-    legacy.propagate_taint(list(reversed(chain_edges)))
+    reversed_edges = list(reversed(chain_edges))
+    legacy.propagate_taint(reversed_edges)
+    assert legacy.is_tainted("n1") is True
     assert legacy.is_tainted("n4") is False
 
     # FixedPointLineageTaintEngineV1 yields identical tainted set under all 24 permutations
