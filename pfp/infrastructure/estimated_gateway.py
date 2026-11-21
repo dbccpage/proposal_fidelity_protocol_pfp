@@ -1055,7 +1055,8 @@ class NativeAnthropicCampaign:
         if sha256(data).hexdigest()!=raw['sha256'].removeprefix('sha256:') or len(data)!=raw['bytes']:
             raise ValueError('REPLAY_RAW_MISMATCH')
         replay=self.transport.replay(request,raw=raw,status=original['status'])
-        if isinstance(replay,Err): raise ValueError(replay.error.code)
+        if isinstance(replay, Err):
+            raise ValueError(replay.error.code)
         observed=replay.value
         actual=observed.get('metered_cost_microusd')
         if (observed.get('dispatch')!='REPLIED' or observed.get('status')!=original['status']
@@ -1090,6 +1091,46 @@ class NativeAnthropicCampaign:
             cost_microusd=outcome.get("metered_cost_microusd"),
             cost_basis="METERED_ESTIMATE" if outcome.get("metered_cost_microusd") is not None else "UNKNOWN")
 
+    @staticmethod
+    def _prior_attempt_outcome(state, attempt_id, stage, request_digest):
+        terminal = {"settled", "not_sent", "conservatively_charged"}
+        attempts = state["attempts"]
+        previous = attempts.get(attempt_id)
+        if previous is not None:
+            if previous["request_sha256"] != request_digest or previous["stage"] != stage:
+                raise ValueError("ATTEMPT_BINDING_MISMATCH")
+            if previous["state"] not in terminal:
+                raise ValueError("UNRECONCILED_ATTEMPT")
+            return deepcopy(previous.get("outcome") or dict(
+                dispatch="OUTCOME_UNKNOWN", refusal=dict(code="HISTORICAL_AMBIGUOUS_CHARGED"),
+                authority_effect="None",
+            ))
+        if any(row["state"] not in terminal for row in attempts.values()):
+            raise ValueError("UNRECONCILED_ATTEMPT")
+        return None
+
+    @staticmethod
+    def _verify_retained_outcome(outcome):
+        raw = outcome.get("raw")
+        if raw:
+            data = Path(raw["path"]).read_bytes()
+            if sha256(data).hexdigest() != raw["sha256"].removeprefix("sha256:") or len(data) != raw["bytes"]:
+                raise ValueError("REPLAY_RAW_MISMATCH")
+            if outcome.get("dispatch") == "REPLIED":
+                body = json.loads(data)
+                blocks = body["content"]
+                observed = dict(
+                    id=body["id"], model=body["model"], stop_reason=body["stop_reason"],
+                    usage=body["usage"], assistant_message=dict(role="assistant", content=blocks),
+                    text="".join(block["text"] for block in blocks if block.get("type") == "text"),
+                    container_id=(body.get("container") or {}).get("id"),
+                )
+                if outcome.get("response") != observed:
+                    raise ValueError("REPLAY_RESPONSE_MISMATCH")
+        elif outcome.get("dispatch") == "REPLIED":
+            raise ValueError("REPLAY_RAW_MISSING")
+        return outcome
+
     def send(self, request, *, stage, attempt_id, raw_dir):
         if stage not in self.stage_caps or stage == "P0":
             raise ValueError("PAID_STAGE_REQUIRED")
@@ -1102,33 +1143,9 @@ class NativeAnthropicCampaign:
         raw_name = sha256(attempt_id.encode()).hexdigest()
         options = dict(raw_dir=str(Path(raw_dir).resolve()), raw_name=raw_name)
         with self.ledger.transaction(self.limit) as state:
-            previous = state["attempts"].get(attempt_id)
-            if previous:
-                if previous["request_sha256"] != request_digest or previous["stage"] != stage:
-                    raise ValueError("ATTEMPT_BINDING_MISMATCH")
-                if previous["state"] in {"settled", "not_sent", "conservatively_charged"}:
-                    outcome = deepcopy(previous.get("outcome") or dict(dispatch="OUTCOME_UNKNOWN",
-                        refusal=dict(code="HISTORICAL_AMBIGUOUS_CHARGED"), authority_effect="None"))
-                    raw = outcome.get("raw")
-                    if raw:
-                        data = Path(raw["path"]).read_bytes()
-                        if sha256(data).hexdigest() != raw["sha256"].removeprefix("sha256:") or len(data) != raw["bytes"]:
-                            raise ValueError("REPLAY_RAW_MISMATCH")
-                        if outcome.get('dispatch') == 'REPLIED':
-                            body=json.loads(data)
-                            blocks=body['content']
-                            observed=dict(id=body['id'],model=body['model'],stop_reason=body['stop_reason'],
-                                usage=body['usage'],assistant_message=dict(role='assistant',content=blocks),
-                                text=''.join(block['text'] for block in blocks if block.get('type')=='text'),
-                                container_id=(body.get('container') or {}).get('id'))
-                            if outcome.get('response') != observed:
-                                raise ValueError('REPLAY_RESPONSE_MISMATCH')
-                    elif outcome.get('dispatch') == 'REPLIED':
-                        raise ValueError('REPLAY_RAW_MISSING')
-                    return outcome
-                raise ValueError("UNRECONCILED_ATTEMPT")
-            if any(row["state"] not in {"settled", "not_sent", "conservatively_charged"} for row in state["attempts"].values()):
-                raise ValueError("UNRECONCILED_ATTEMPT")
+            prior = self._prior_attempt_outcome(state, attempt_id, stage, request_digest)
+        if prior is not None:
+            return self._verify_retained_outcome(prior)
         quoted = self.transport.send(request, **options, ceiling_microusd=0, quote_only=True)
         if isinstance(quoted, Err):
             raise ValueError(quoted.error.code)
@@ -1142,16 +1159,20 @@ class NativeAnthropicCampaign:
                 return dict(dispatch="NOT_SENT",refusal=dict(code="QUOTE_SCOPE_EXCEEDED"),
                     quote_microusd=quote,authority_effect="None")
         with self.ledger.transaction(self.limit) as state:
-            if (state["spent"] + quote > self.limit
-                    or state["stage_spent"][stage] + quote > self.stage_caps[stage]
-                    or self.stage_call_limits is not None and sum(row["stage"]==stage for row in state["attempts"].values()) >= self.stage_call_limits[stage]):
-                return dict(dispatch="NOT_SENT", refusal=dict(code="BUDGET_CENSORED"),
-                    quote_microusd=quote, authority_effect="None")
-            state["spent"] += quote
-            state["stage_spent"][stage] += quote
-            state["attempts"][attempt_id] = dict(state="reserved", stage=stage,
-                request_sha256=request_digest, reserved_microusd=quote, actual_microusd=None)
-            last = state["last_dispatch"]
+            prior = self._prior_attempt_outcome(state, attempt_id, stage, request_digest)
+            if prior is None:
+                if (state["spent"] + quote > self.limit
+                        or state["stage_spent"][stage] + quote > self.stage_caps[stage]
+                        or self.stage_call_limits is not None and sum(row["stage"]==stage for row in state["attempts"].values()) >= self.stage_call_limits[stage]):
+                    return dict(dispatch="NOT_SENT", refusal=dict(code="BUDGET_CENSORED"),
+                        quote_microusd=quote, authority_effect="None")
+                state["spent"] += quote
+                state["stage_spent"][stage] += quote
+                state["attempts"][attempt_id] = dict(state="reserved", stage=stage,
+                    request_sha256=request_digest, reserved_microusd=quote, actual_microusd=None)
+                last = state["last_dispatch"]
+        if prior is not None:
+            return self._verify_retained_outcome(prior)
         if last is not None:
             self._sleep(max(0, 2 - (self._clock() - last)))
         with self.ledger.transaction(self.limit) as state:
