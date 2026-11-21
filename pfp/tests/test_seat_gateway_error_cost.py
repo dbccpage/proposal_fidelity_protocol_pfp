@@ -1,8 +1,12 @@
 """Native transport accounting controls; synthetic outcomes, no sockets."""
-import pytest
 import json
+from concurrent.futures import ThreadPoolExecutor
 from hashlib import sha256
+from threading import Barrier, Event
+
+import pytest
 from operations.domain.rop.result import Ok
+
 from pfp.infrastructure.estimated_gateway import NativeAnthropicCampaign
 
 
@@ -30,10 +34,50 @@ def test_reservation_survives_exception_restart_and_no_fallback(tmp_path):
     with pytest.raises(TimeoutError):
         owner.send(dict(model='m'),stage='P1',attempt_id='a',raw_dir=tmp_path)
     assert owner.snapshot()['spent']==100
-    later=Transport(); reopened=campaign(tmp_path,later)
+    later = Transport()
+    reopened = campaign(tmp_path, later)
     with pytest.raises(ValueError,match='UNRECONCILED_ATTEMPT'):
         reopened.send(dict(model='other'),stage='P2',attempt_id='b',raw_dir=tmp_path)
     assert not later.calls
+
+
+def test_concurrent_workers_claim_and_send_one_attempt(tmp_path):
+    quotes_ready = Barrier(2, timeout=5)
+    release_reply = Event()
+
+    class ConcurrentTransport(Transport):
+        def send(self, request, **options):
+            if options.get("quote_only"):
+                quotes_ready.wait()
+                return super().send(request, **options)
+            reply = super().send(request, **options)
+            if len(self.calls) == 2:
+                release_reply.set()
+            assert release_reply.wait(timeout=5)
+            return reply
+
+    transport = ConcurrentTransport()
+    workers = [campaign(tmp_path, transport), campaign(tmp_path, transport)]
+
+    def dispatch(worker):
+        try:
+            return worker.send(
+                {"model": "m"}, stage="P1", attempt_id="shared-attempt", raw_dir=tmp_path,
+            )["dispatch"]
+        except ValueError as exc:
+            return str(exc)
+        finally:
+            release_reply.set()
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        results = list(pool.map(dispatch, workers))
+
+    assert len(transport.calls) == 1
+    assert sorted(results) == ["REPLIED", "UNRECONCILED_ATTEMPT"]
+    state = workers[0].snapshot()
+    assert state["spent"] == state["stage_spent"]["P1"] == 40
+    assert set(state["attempts"]) == {"shared-attempt"}
+    assert state["attempts"]["shared-attempt"]["state"] == "settled"
 
 
 def test_missing_usage_retains_hold_instead_of_zero(tmp_path):
@@ -46,7 +90,8 @@ def test_missing_usage_retains_hold_instead_of_zero(tmp_path):
 def test_settlement_and_replay_do_not_resend(tmp_path):
     raw=json.dumps(dict(type='message',id='message-1',model='m',content=[dict(type='text',text='candidate')],
         usage=dict(input_tokens=1,output_tokens=1),stop_reason='end_turn')).encode()
-    path=tmp_path/'reply.json'; path.write_bytes(raw)
+    path = tmp_path / "reply.json"
+    path.write_bytes(raw)
     response=dict(id='message-1',model='m',text='candidate',usage=dict(input_tokens=1,output_tokens=1),
         stop_reason='end_turn',assistant_message=dict(role='assistant',content=[dict(type='text',text='candidate')]),container_id=None)
     transport=Transport(dict(dispatch='REPLIED',response=response,metered_cost_microusd=40,
